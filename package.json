@@ -1,8 +1,8 @@
 {
-  "name": "hmpps-template-typescript",
+  "name": "hmpps-manage-a-supervision-ui",
   "version": "0.0.1",
-  "description": "HMPPS Typescript Template",
-  "repository": "git@github.com:ministryofjustice/hmpps-template-typescript.git",
+  "description": "Hmpps Manage A Supervision Ui",
+  "repository": "git@github.com:ministryofjustice/hmpps-manage-a-supervision-ui.git",
   "license": "MIT",
   "scripts": {
     "prepare": "husky",

@@ -23,11 +23,9 @@ export default function caseRoutes(router: Router, { hmppsAuthClient }: Services
       service: 'hmpps-manage-a-supervision-ui',
     })
     const [overview] = await Promise.all([masClient.getOverview(crn)])
-    const warnings: string[] = []
     res.render('pages/overview', {
       overview,
       crn,
-      warnings: warnings.map(warning => ({ text: warning })),
     })
   })
   get('/case/:crn/schedule', async (req, res, _next) => {
@@ -44,11 +42,9 @@ export default function caseRoutes(router: Router, { hmppsAuthClient }: Services
       service: 'hmpps-manage-a-supervision-ui',
     })
     const [overview] = await Promise.all([masClient.getOverview(crn)])
-    const warnings: string[] = []
     res.render('pages/schedule', {
       overview,
       crn,
-      warnings: warnings.map(warning => ({ text: warning })),
     })
   })
 }

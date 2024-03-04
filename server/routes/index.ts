@@ -1,16 +1,15 @@
-import { type RequestHandler, Router } from 'express'
+import { Router } from 'express'
 
-import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function routes(service: Services): Router {
+import startRoutes from './start'
+import searchRoutes from './search'
+import caseRoutes from './case'
+
+export default function routes(services: Services): Router {
   const router = Router()
-  const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
-
-  get('/', (req, res, next) => {
-    res.render('pages/index')
-  })
-
+  startRoutes(router)
+  searchRoutes(router, services)
+  caseRoutes(router, services)
   return router
 }

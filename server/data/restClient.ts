@@ -15,6 +15,7 @@ interface Request {
   headers?: Record<string, string>
   responseType?: string
   raw?: boolean
+  handle404?: boolean
 }
 
 interface RequestWithBody extends Request {
@@ -53,6 +54,7 @@ export default class RestClient {
     headers = {},
     responseType = '',
     raw = false,
+    handle404 = false,
   }: Request): Promise<Response> {
     logger.info(`${this.name} GET: ${path}`)
     try {
@@ -72,6 +74,7 @@ export default class RestClient {
 
       return raw ? result : result.body
     } catch (error) {
+      if (handle404 && error.response?.status === 404) return null
       const sanitisedError = sanitiseError(error)
       logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'GET'`)
       throw sanitisedError

@@ -1,0 +1,95 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/manage-users-api/users/me",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "staffId": 231232,
+          "username": "USER1",
+          "active": true,
+          "name": "john smith"
+        },
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/verification/token/verify",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "active": true
+        },
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8"
+        }
+      }
+    },
+    {
+      "id": "ddd92112-5010-4dc3-8f5b-57b4f15d02d5",
+      "request": {
+        "urlPattern": "/auth/oauth/token",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJVU0VSMSIsInNjb3BlIjpbInJlYWQiXSwiYXV0aF9zb3VyY2UiOiJkZWxpdXMiLCJhdXRob3JpdGllcyI6WyJST0xFX1RJRVJfU0VSVklDRV9VU0VSIl0sImp0aSI6IjgzYjUwYTEwLWNjYTYtNDFkYi05ODVmLWU4N2VmYjMwM2RkYiIsImNsaWVudF9pZCI6ImNsaWVudGlkIiwiaWF0IjoxNzAxOTUxMzY4LCJleHAiOjk5OTk5OTk5OTl9.9VZUnPCp893R-W54UPkgVnDVH6AY29GQpH0Qic9QdHA",
+          "token_type": "bearer",
+          "user_name": "USER1",
+          "expires_in": 599,
+          "scope": "read",
+          "internalUser": true
+        },
+        "headers": {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Location": "http://localhost:3007/sign-in/callback?code=codexxxx&state=stateyyyy"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/auth/oauth/authorize\\?response_type=code&redirect_uri=.+?&state=.+?&client_id=clientid",
+        "method": "GET"
+      },
+      "response": {
+        "status": 302,
+        "headers": {
+          "Content-Type": "text/html",
+          "Location": "http://localhost:3007/sign-in/callback?code=codexxxx&state={{ request.query.state }}"
+        },
+        "transformers": ["response-template"]
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/auth/sign-out.*",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "<html><body><h1>Sign in page</h1><a href='javascript:history.back()'>Sign in</a></body></html>",
+        "headers": {
+          "Content-Type": "text/html"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/favicon.ico",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200
+      }
+    }
+  ]
+}

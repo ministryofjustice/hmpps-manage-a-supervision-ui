@@ -1,0 +1,22 @@
+{% set html %}
+  <p class="govuk-notification-banner__heading">
+    We’re not ready to handle this case
+  </p>
+  <p>You may find that:</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>not all information is shown</li>
+    <li>some information shows incorrectly</li>
+  </ul>
+{% endset %}
+
+{% if data.features.showInappropriateCaseWarning %}
+  {{ govukNotificationBanner({
+    html: html
+  }) }}
+{% endif %}
+
+<h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+  <span class="govuk-caption-xl" ><abbr title="Case reference number" style="text-decoration: none">CRN</abbr>:
+  <span class="app-!-font-family-tabular" data-qa="crn">{{ crn }}</span></span>
+  <span data-qa='name'>{{ overview.personalDetails.name.forename }} {{ overview.personalDetails.name.surname }}</span>
+</h1>

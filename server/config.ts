@@ -41,6 +41,7 @@ export default {
   branchName: get('GIT_BRANCH', 'xxxxxxxxxxxxxxxxxxx', requiredInProduction),
   production,
   https: production,
+  env: get('ENVIRONMENT', 'local', requiredInProduction) as 'local' | 'dev' | 'preprod' | 'prod',
   staticResourceCacheDuration: '1h',
   redis: {
     enabled: get('REDIS_ENABLED', 'false', requiredInProduction) === 'true',
@@ -83,6 +84,22 @@ export default {
       },
       agent: new AgentConfig(Number(get('TOKEN_VERIFICATION_API_TIMEOUT_RESPONSE', 5000))),
       enabled: get('TOKEN_VERIFICATION_ENABLED', 'false') === 'true',
+    },
+    deliusIntegration: {
+      url: get('DELIUS_INTEGRATION_URL', 'http://localhost:8100', requiredInProduction),
+      timeout: {
+        response: Number(get('DELIUS_INTEGRATION_TIMEOUT_RESPONSE', 5000)),
+        deadline: Number(get('DELIUS_INTEGRATION_TIMEOUT_DEADLINE', 5000)),
+      },
+      agent: new AgentConfig(Number(get('DELIUS_INTEGRATION_TIMEOUT_RESPONSE', 5000))),
+    },
+    masApi: {
+      url: get('MAS_API_URL', 'http://localhost:8100', requiredInProduction),
+      timeout: {
+        response: Number(get('MAS_API_TIMEOUT_RESPONSE', 5000)),
+        deadline: Number(get('MAS_API_TIMEOUT_DEADLINE', 5000)),
+      },
+      agent: new AgentConfig(Number(get('MAS_API_TIMEOUT_RESPONSE', 5000))),
     },
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),

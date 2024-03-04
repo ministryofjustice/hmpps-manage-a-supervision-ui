@@ -4,8 +4,15 @@
 {% set mainClasses = "app-container govuk-body" %}
 
 {% block content %}
-
-  <h1>This site is under construction...</h1>
-  <p>Please check back later when there is content to view.</p>
-
+    <h1 class="govuk-heading-l">Manage a Supervision</h1>
+    <div class="govuk-grid-column-two-thirds">
+        <p>Not all cases are suitable for the Manage supervisions pilot. This service is only suitable for cases that have:</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>a test single community order</li>
+            <li>a RAR requirement, and no other requirements</li>
+        </ul>
+        {%- from "govuk/components/button/macro.njk" import govukButton -%}
+        {{ govukButton({ text: "Start now", href: "/search", isStartButton: true }) }}
+    </div>
 {% endblock %}
+

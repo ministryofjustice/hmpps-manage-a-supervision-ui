@@ -1,0 +1,286 @@
+{% extends "../partials/case.njk" %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/summary-list/macro.njk"        import govukSummaryList %}
+{% from "_components/summary-card/macro.njk"             import appSummaryCard %}
+{% set pageTitle = applicationName + " - Overview" %}
+{% set currentNavSection = 'overview' %}
+{% set currentSectionName = 'Overview' %}
+{% set appointmentsWithoutAnOutcomeCount = 1 %}
+{% set waitingForEvidenceCount = 1 %}
+
+{% block pageContent %}
+    {% if appointmentsWithoutAnOutcomeCount > 0 or waitingForEvidenceCount > 0 %}
+        {% set html %}
+            <h2 class="govuk-heading-m">You have appointments that need attention</h2>
+            <ul class="govuk-list govuk-!-margin-bottom-0">
+            {% if appointmentsWithoutAnOutcomeCount > 0 %}
+                <li>
+                    <a href="/record-an-outcome/{{ crn }}">You need to record an outcome for {{ appointmentsWithoutAnOutcomeCount }} {{ 'appointment' if appointmentsWithoutAnOutcomeCount == 1 else 'appointments' }}</a>
+                </li>
+            {% endif %}
+            {% if waitingForEvidenceCount > 0 %}
+                <li>
+                    <a href="/cases/{{ crn }}/activity-log/waiting-for-evidence">You have {{ waitingForEvidenceCount }} {{ 'absence that is' if waitingForEvidenceCount == 1 else 'absences that are' }} waiting for evidence</a>
+                </li>
+            {% endif %}
+            </ul>
+        {% endset %}
+        {{ govukNotificationBanner({ html: html }) }}
+    {% endif %}
+    {% set schedule %}
+        {% set nextApp = overview.schedule.nextAppointment %}
+            {% set nextAppointmentText %}
+                {% if nextApp %}
+                    {{ nextApp['date'] | dateWithDayAndWithoutYear }} at {{ nextApp['date'] | govukTime }} ({{ nextApp['description'] }})
+                {% else %}
+                    No appointments scheduled
+                {% endif %}
+        {% endset %}
+        {{ govukSummaryList({
+            rows: [
+              {
+                key: { html: '<span data-qa="nextAppointmentLabel">Next appointment</span>'},
+                value: { html: '<span data-qa="nextAppointmentValue">' + nextAppointmentText + '</span'}
+              }
+            ]
+            }) }}
+    {% endset %}
+
+    {{ appSummaryCard({
+      titleText: 'Schedule',
+      classes: ['govuk-!-margin-bottom-6 app-summary-card--large-title'],
+      attributes: {'data-qa': 'scheduleCard'},
+      html: schedule,
+      actions: {
+        items: [
+          {
+            text: 'View schedule',
+            href: crn + '/schedule'
+          }
+        ]
+      }
+    }) }}
+
+    {% set personalDetails %}
+        {% set dateOfBirthAndAge %}
+            {{ overview.personalDetails.dateOfBirth | dateWithYear }} ({{ overview.personalDetails.dateOfBirth | yearsSince }} years old)
+            {% set contactNumber %}
+                {% if overview.personalDetails.telephoneNumber  %}
+                    {{ overview.personalDetails.telephoneNumber }}<br />
+                {% endif %}
+                {% if overview.personalDetails.mobileNumber  %}
+                    {{ overview.personalDetails.mobileNumber }}<br />
+                {% endif %}
+            {% endset %}
+        {% endset %}
+
+        {% set circumstances %}
+            {% if overview.personalDetails.personalCircumstances.length > 0 %}
+                <ul class="govuk-list">
+                {% for circumstance in overview.personalDetails.personalCircumstances %}
+                    <li>
+                        {{ circumstance.type }}: {{ circumstance.subType }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                None
+            {% endif %}
+        {% endset %}
+
+        {% set disabilities %}
+            {% if overview.personalDetails.disabilities.length > 0 %}
+                <ul class="govuk-list">
+                    {% for disability in overview.personalDetails.disabilities %}
+                        <li>
+                            {{ disability.description }}:
+                        {% if overview.personalDetails.provisions.length > 0 %}
+                            {% set commaJoiner = joiner(', ') %}
+                            {% for adjustment in overview.personalDetails.provisions %}{{ commaJoiner() }}{{ adjustment.description }}{% endfor %}
+                        {% else %}
+                            No adjustments
+                        {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                None
+            {% endif %}
+        {% endset %}
+
+        {{ govukSummaryList({
+        rows: [
+          {
+            key: { html: '<span data-qa="nameLabel">Name</span>'},
+            value: { html: '<span data-qa="nameValue">' + overview.personalDetails.name | fullName + '</span>'}
+          },
+          {
+            key: { html: '<span data-qa="preferredNameLabel">Preferred name/Known as</span>'},
+            value: { html: '<span data-qa="preferredNameValue">' + overview.personalDetails.preferredName + '</span>'}
+          },
+          {
+            key: { html: '<span data-qa="preferredGenderLabel">Gender</span>'},
+            value: { html: '<span data-qa="preferredGenderValue">' + overview.personalDetails.preferredGender + '</span>'}
+          },
+          {
+            key: { html: '<span data-qa="dateOfBirthAndAgeLabel">Date of birth</span>'},
+            value: { html: '<span data-qa="dateOfBirthAndAgeValue">' + dateOfBirthAndAge + '</span>'}
+          },
+          {
+            key: { html: '<span data-qa="contactNumberLabel">Contact number</span>'},
+            value: { html: '<span class="app-!-font-family-tabular" data-qa="contactNumberValue">' + contactNumber + '</span>'}
+          },
+          {
+            key: { html: '<span data-qa="currentCircumstancesLabel">Current circumstances</span>'},
+            value: { html: '<span data-qa="currentCircumstancesValue">' + circumstances + '</span>'}
+          },
+          {
+            key: { html: '<span data-qa="disabilitiesAndAdjustmentsLabel">Disabilities and adjustments</span>'},
+            value: { html: '<span data-qa="disabilitiesAndAdjustmentsValue">' + disabilities + '</span>'}
+          }
+        ]
+      }) }}
+    {% endset %}
+
+    {{ appSummaryCard({
+      titleText: 'Personal details',
+      attributes: {'data-qa': 'personalDetailsCard'},
+      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+      html: personalDetails,
+      actions: {
+        items: [
+          {
+            text: 'View all personal details',
+            href: crn + '/personal-details'
+          }
+        ]
+      }
+    }) }}
+
+    {% set numberOfSentences = overview.sentences.length %}
+    {% for i in range(0, numberOfSentences) -%}
+        {% set sentence %}
+            {% set order %}
+                {% if overview.sentences[i].order  %}
+                    {{ overview.sentences[i].order.description }}<br />
+                    From {{ overview.sentences[i].order.startDate | dateWithNoDay }} to {{ overview.sentences[i].order.endDate | dateWithNoDay }}<br />
+                    {{  overview.sentences[i].order.startDate | monthsOrDaysElapsed }} elapsed
+                {% endif %}
+            {% endset %}
+            {% set requirements %}
+                {% if overview.sentences[i].rar %}
+                    {{ overview.sentences[i].rar.totalDays }} days RAR, {{ overview.sentences[i].rar.completed }} completed
+                {% endif %}
+            {% endset %}
+            {% set mainOffence %}
+                {{ overview.sentences[i].mainOffence.description }}
+                {%- if overview.sentences[i].additionalOffences.length > 0 %}
+                    {%- switch overview.sentences[i].additionalOffences.length -%}
+                        {%- case 1 -%}
+                            </br>1 additional offence
+                        {%- default -%}
+                            </br>{{ overview.sentences[i].additionalOffences.length }} additional offences
+                    {%- endswitch -%}
+                {% endif %}
+            {% endset %}
+            {{ govukSummaryList({
+            rows: [
+              {
+                key: { html: '<span data-qa="mainOffenceLabel">Main offence</span>'},
+                value: { html: '<span data-qa="mainOffenceValue">' + mainOffence + '</span>'}
+              },
+              {
+                key: { html: '<span data-qa="orderLabel">Order</span>'},
+                value: { html: '<span data-qa="orderValue">' + order + '</span>'}
+              },
+              {
+                key: { html: '<span data-qa="requirementsLabel">Requirements</span>' },
+                value: { html: '<span data-qa="requirementsValue">' + requirements + '</span>' }
+              }
+            ]
+          }) }}
+        {% endset %}
+
+        {{ appSummaryCard({
+            titleText: 'Sentence (' + overview.sentences[i].eventNumber + ')',
+            classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+            attributes: {'data-qa': 'sentence' + overview.sentences[i].eventNumber + 'Card'},
+            html: sentence,
+            actions: {
+              items: [
+                {
+                  text: 'View all sentence details',
+                  href: crn + '/sentence'
+                }
+              ]
+            }
+        }) }}
+    {%- endfor %}
+
+    {% set activityAndCompliance %}
+        {% set previousOrders %}
+            {% if overview.previousOrders %}
+                {% set total%}
+                {%- switch overview.previousOrders.count -%}
+                    {%- case 0 -%}
+                        No previous orders
+                    {%- default -%}
+                        {{ overview.previousOrders.count }} previous orders
+                {%- endswitch -%}
+                {% endset %}
+                {% set breaches %}
+                {%- switch overview.previousOrders.breaches -%}
+                    {%- case 0 -%}
+                        No breaches on previous orders
+                    {%- default -%}
+                        {{ overview.previousOrders.breaches }} breaches on previous orders
+                {%- endswitch -%}
+                {% endset %}
+                {{ total}}  ({{ breaches }})
+            {% endif %}
+        {% endset %}
+        {% set compliance %}
+            {% if overview.compliance %}
+                {{ overview.compliance.failureToComplyInLast12Months }} failure to comply within 12 months </br>
+                {{ overview.compliance.currentBreaches }} breaches on current order </br>
+                <a href="{{crn}}/compliance">View all compliance details</a>
+            {% else %}
+                None
+            {% endif %}
+        {% endset %}
+        {% set activity %}
+            {% if overview.activity %}
+                {{ overview.activity.nationalStandardsAppointments }} national standard appointments </br>
+                ? without a recorded outcome </br>
+                {{ overview.activity.complied }} compiled </br>
+                {{ overview.activity.acceptableAbsences }} acceptable absences </br>
+                {{ overview.activity.rescheduled }} rescheduled</br>
+                <a href={{crn}}/activityLog">View all compliance details</a>
+            {% else %}
+                None
+            {% endif %}
+        {% endset %}
+        {{ govukSummaryList({
+        rows: [
+          {
+            key: { html: '<span data-qa="previousOrdersLabel">Previous orders</span>'},
+            value: { html: '<span data-qa="previousOrdersValue">' + previousOrders + '</span>'}
+          },
+          {
+            key: { html: '<span data-qa="complianceLabel">Compliance</span>'},
+            value: { html: '<span data-qa="complianceValue">' + compliance + '</span>'}
+          },
+          {
+            key: { html: '<span data-qa="activityLogLabel">Activity log</span>'},
+            value: { html: '<span data-qa="activityLogValue">' + activity + '</span>'}
+          }
+        ]
+      }) }}
+    {% endset %}
+    {{ appSummaryCard({
+      titleText: 'Activity and compliance',
+      attributes: {'data-qa': 'activityAndComplianceCard'},
+      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+      html: activityAndCompliance
+    }) }}
+{% endblock %}

@@ -59,7 +59,7 @@ Run the following to grab client credentials from the dev namespace:
 ```shell
 kubectl -n hmpps-manage-a-supervision-dev get secret hmpps-manage-a-supervision-ui -o json \
 | jq -r '.data | map_values(@base64d) | to_entries[] | "\(.key)=\(.value)"' \
-| grep CLIENT >> .denv
+| grep CLIENT >> .env
 ```
 
 Then, start the UI service:

@@ -1,3 +1,7 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { DateTime } from 'luxon'
+import { Name } from '../data/masApiClient'
+
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
 
@@ -20,4 +24,45 @@ export const initialiseName = (fullName?: string): string | null => {
 
   const array = fullName.split(' ')
   return `${array[0][0]}. ${array.reverse()[0]}`
+}
+
+export const dateWithYear = (datetimeString: string): string | null => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  return DateTime.fromISO(datetimeString).toFormat('d MMMM yyyy')
+}
+
+export const dateWithDayAndWithoutYear = (datetimeString: string): string | null => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  return DateTime.fromISO(datetimeString).toFormat('cccc d MMMM')
+}
+
+export const yearsSince = (datetimeString: string): string | null => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  return DateTime.now().diff(DateTime.fromISO(datetimeString), ['years', 'months']).years.toString()
+}
+
+export const dateWithNoDay = (datetimeString: string): string | null => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  return DateTime.fromISO(datetimeString).toFormat('MMMM yyyy')
+}
+export const fullName = (name: Name): string => {
+  if (name === undefined || name === null) return ''
+  return `${name.forename} ${name.surname}`
+}
+
+export const monthsOrDaysElapsed = (datetimeString: string): string => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  const months = DateTime.now().diff(DateTime.fromISO(datetimeString), ['months', 'days']).months.toString()
+  const days = DateTime.now().diff(DateTime.fromISO(datetimeString), ['days', 'hours']).days.toString()
+  if (months === '0') {
+    return `${days} days`
+  }
+  return `${months} months`
+}
+
+export const govukTime = (datetimeString: string): string => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  const datetime = DateTime.fromISO(datetimeString)
+  const hourMinuteFormat = datetime.minute === 0 ? 'ha' : 'h:mma'
+  return datetime.toFormat(hourMinuteFormat).toLowerCase()
 }

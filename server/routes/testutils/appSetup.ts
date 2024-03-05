@@ -2,6 +2,9 @@ import express, { Express } from 'express'
 import cookieSession from 'cookie-session'
 import { NotFound } from 'http-errors'
 
+import CaseSearchService, {
+  CaseSearchOptions,
+} from '@ministryofjustice/probation-search-frontend/service/caseSearchService'
 import routes from '../index'
 import nunjucksSetup from '../../utils/nunjucksSetup'
 import errorHandler from '../../errorHandler'
@@ -56,7 +59,9 @@ function appSetup(services: Services, production: boolean, userSupplier: () => E
 
 export function appWithAllRoutes({
   production = false,
-  services = {},
+  services = {
+    searchService: new CaseSearchService({} as CaseSearchOptions),
+  },
   userSupplier = () => user,
 }: {
   production?: boolean

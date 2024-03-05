@@ -1,0 +1,270 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/overview/X000001",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personalDetails": {
+            "name": {
+              "forename": "Caroline",
+              "middleName": "Linda",
+              "surname": "Wolff"
+            },
+            "telephoneNumber": "0191278654",
+            "mobileNumber": "07989654824",
+            "preferredName": "Caz",
+            "preferredGender": "Female",
+            "dateOfBirth": "2002-01-09",
+            "disabilities": [
+              {
+                "description": "Dyslexia"
+              },
+              {
+                "description": "Arthritis"
+              }
+            ],
+            "provisions": [
+              {
+                "description": "Hand Rails"
+              },
+              {
+                "description": "Special Furniture"
+              }
+            ],
+            "personalCircumstances": [
+              {
+                "subType": "Life imprisonment (Adult)",
+                "type": "Committed/ Transferred to Crown"
+              }
+            ]
+          },
+          "previousOrders": {
+            "breaches": 0,
+            "count": 1
+          },
+          "schedule": {
+            "nextAppointment": {
+              "date": "2024-03-05T16:45:00",
+              "description": "Initial Appointment - In office (NS)"
+            }
+          },
+          "sentences": [
+            {
+              "additionalOffences": [
+                {
+                  "code": "9087",
+                  "description": "Burglary - 9087"
+                },
+                {
+                  "code": "9876",
+                  "description": "Arson - 9876"
+                }
+              ],
+              "eventNumber": "2",
+              "mainOffence": {
+                "code": "18502",
+                "description": "(Having possession a picklock or other implement with intent to break into any premises - 18502)"
+              },
+              "order": {
+                "description": "ORA Community Order",
+                "endDate": "2024-09-01",
+                "startDate": "2020-03-02"
+              },
+              "rar": {
+                "completed": 9,
+                "scheduled": 1,
+                "totalDays": 10
+              }
+            },
+            {
+              "additionalOffences": [],
+              "eventNumber": "3",
+              "mainOffence": {
+                "code": "18502",
+                "description": "Breach of Restraining Order (Protection from Harassment Act 1997) - 00831"
+              },
+              "order": {
+                "description": "12 month Community order",
+                "endDate": "2024-12-01",
+                "startDate": "2023-12-01"
+              },
+              "rar": {
+                "completed": 14,
+                "scheduled": 2,
+                "totalDays": 16
+              }
+            }
+          ],
+          "activity": {
+            "acceptableAbsences": 1,
+            "complied": 1,
+            "nationalStandardsAppointments": 5,
+            "rescheduled": 6
+          },
+          "compliance": {
+            "currentBreaches": 2,
+            "failureToComplyInLast12Months": 2
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/delius/person/X000001",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "crn": "X000001",
+          "name": {
+            "forenames": "Jane",
+            "surname": "Doe"
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/delius/tier-details/X000001",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "gender": "Female",
+          "currentTier": "UB2",
+          "registrations": [
+            {
+              "code": "MAPP",
+              "description": "MAPPA",
+              "level": "M1",
+              "date": "2023-12-07"
+            },
+            {
+              "code": "IIOM",
+              "description": "Integrated Offender Management",
+              "date": "2023-12-07"
+            },
+            {
+              "code": "RMRH",
+              "description": "Medium RoSH",
+              "date": "2023-12-07"
+            },
+            {
+              "code": "STRG",
+              "description": "Street Gangs",
+              "date": "2023-03-09"
+            },
+            {
+              "code": "OTHR",
+              "description": "Some other registration",
+              "date": "2023-03-09"
+            }
+          ],
+          "convictions": [
+            {
+              "sentenceTypeCode": "SC"
+            }
+          ],
+          "previousEnforcementActivity": true,
+          "rsrscore": 12.3,
+          "ogrsscore": 56.7
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/arns/tier-assessment/sections/X000001",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "assessment": {
+            "assessmentId": 1,
+            "completedDate": "2023-12-19T16:57:25",
+            "assessmentType": "LAYER3",
+            "status": "COMPLETE"
+          },
+          "accommodation": {
+            "linkedToReOffending": "No",
+            "linkedToHarm": "No",
+            "severity": "NO_NEED"
+          },
+          "educationTrainingEmployability": {
+            "linkedToReOffending": "Unknown",
+            "linkedToHarm": "Unknown",
+            "severity": "NO_NEED"
+          },
+          "relationships": {
+            "linkedToReOffending": "No",
+            "linkedToHarm": "No",
+            "parentalResponsibilities": "Yes",
+            "severity": "STANDARD"
+          },
+          "lifestyleAndAssociates": {
+            "linkedToReOffending": "Yes",
+            "linkedToHarm": "Yes",
+            "severity": "STANDARD"
+          },
+          "drugMisuse": {
+            "linkedToReOffending": "Unknown",
+            "linkedToHarm": "Unknown",
+            "severity": "NO_NEED"
+          },
+          "alcoholMisuse": {
+            "linkedToReOffending": "Yes",
+            "linkedToHarm": "No",
+            "severity": "STANDARD"
+          },
+          "thinkingAndBehaviour": {
+            "linkedToReOffending": "Yes",
+            "linkedToHarm": "Yes",
+            "impulsivity": "Significant",
+            "temperControl": "Some",
+            "severity": "SEVERE"
+          },
+          "attitudes": {
+            "linkedToReOffending": "No",
+            "linkedToHarm": "No",
+            "severity": "NO_NEED"
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/delius/users/.+/access/X000001",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "crn": "X000001",
+          "userRestricted": false,
+          "userExcluded": false
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

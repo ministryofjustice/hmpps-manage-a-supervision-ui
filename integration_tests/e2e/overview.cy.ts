@@ -26,9 +26,8 @@ context('Overview', () => {
     page
       .getRowData('personalDetails', 'currentCircumstances', 'Value')
       .should('contain.text', 'Committed/ Transferred to Crown: Life imprisonment (Adult)')
-    page
-      .getRowData('personalDetails', 'disabilitiesAndAdjustments', 'Value')
-      .should('contain.text', 'Special Furniture')
+    page.getRowData('personalDetails', 'disabilities', 'Value').should('contain.text', 'Dyslexia, Arthritis')
+    page.getRowData('personalDetails', 'adjustments', 'Value').should('contain.text', 'Hand Rails, Special Furniture')
     page
       .getRowData('sentence2', 'mainOffence', 'Value')
       .should(

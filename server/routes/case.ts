@@ -22,7 +22,7 @@ export default function caseRoutes(router: Router, { hmppsAuthClient }: Services
       correlationId: v4(),
       service: 'hmpps-manage-a-supervision-ui',
     })
-    const [overview] = await Promise.all([masClient.getOverview(crn)])
+    const overview = await masClient.getOverview(crn)
     res.render('pages/overview', {
       overview,
       crn,

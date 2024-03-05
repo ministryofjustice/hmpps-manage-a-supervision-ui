@@ -10,6 +10,6 @@ generic-service:
     HMPPS_AUTH_URL: "https://sign-in.hmpps.service.justice.gov.uk/auth"
     MANAGE_USERS_API_URL: "https://manage-users-api.hmpps.service.justice.gov.uk"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api.prison.service.justice.gov.uk"
-
+    ENVIRONMENT: prod
 generic-prometheus-alerts:
   alertSeverity: probation-integration-notifications

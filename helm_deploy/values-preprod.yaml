@@ -13,7 +13,7 @@ generic-service:
     MANAGE_USERS_API_URL: "https://manage-users-api-preprod.hmpps.service.justice.gov.uk"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
     ENVIRONMENT_NAME: PRE-PRODUCTION
-    ENVIRONMENT: dev
+    ENVIRONMENT: preprod
 
 generic-prometheus-alerts:
   alertSeverity: probation-integration-notifications

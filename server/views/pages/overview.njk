@@ -177,9 +177,9 @@
                 {%- if overview.sentences[i].additionalOffences.length > 0 %}
                     {%- switch overview.sentences[i].additionalOffences.length -%}
                         {%- case 1 -%}
-                            </br>1 additional offence
+                            <br/>1 additional offence
                         {%- default -%}
-                            </br>{{ overview.sentences[i].additionalOffences.length }} additional offences
+                            <br/>{{ overview.sentences[i].additionalOffences.length }} additional offences
                     {%- endswitch -%}
                 {% endif %}
             {% endset %}
@@ -241,8 +241,8 @@
         {% endset %}
         {% set compliance %}
             {% if overview.compliance %}
-                {{ overview.compliance.failureToComplyInLast12Months }} failure to comply within 12 months </br>
-                {{ overview.compliance.currentBreaches }} breaches on current order </br>
+                {{ overview.compliance.failureToComplyInLast12Months }} failure to comply within 12 months <br/>
+                {{ overview.compliance.currentBreaches }} breaches on current order <br/>
                 <a href="{{crn}}/compliance">View all compliance details</a>
             {% else %}
                 None
@@ -250,11 +250,11 @@
         {% endset %}
         {% set activity %}
             {% if overview.activity %}
-                {{ overview.activity.nationalStandardsAppointments }} national standard appointments </br>
-                ? without a recorded outcome </br>
-                {{ overview.activity.complied }} compiled </br>
-                {{ overview.activity.acceptableAbsences }} acceptable absences </br>
-                {{ overview.activity.rescheduled }} rescheduled</br>
+                {{ overview.activity.nationalStandardsAppointments }} national standard appointments <br/>
+                ? without a recorded outcome <br/>
+                {{ overview.activity.complied }} compiled <br/>
+                {{ overview.activity.acceptableAbsences }} acceptable absences <br/>
+                {{ overview.activity.rescheduled }} rescheduled<br/>
                 <a href={{crn}}/activityLog">View all compliance details</a>
             {% else %}
                 None

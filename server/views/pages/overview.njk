@@ -73,7 +73,6 @@
                 {% endif %}
             {% endset %}
         {% endset %}
-
         {% set circumstances %}
             {% if overview.personalDetails.personalCircumstances.length > 0 %}
                 <ul class="govuk-list">
@@ -89,22 +88,19 @@
         {% endset %}
 
         {% set disabilities %}
+            {% set commaJoiner = joiner(', ') %}
             {% if overview.personalDetails.disabilities.length > 0 %}
-                <ul class="govuk-list">
-                    {% for disability in overview.personalDetails.disabilities %}
-                        <li>
-                            {{ disability.description }}:
-                        {% if overview.personalDetails.provisions.length > 0 %}
-                            {% set commaJoiner = joiner(', ') %}
-                            {% for adjustment in overview.personalDetails.provisions %}{{ commaJoiner() }}{{ adjustment.description }}{% endfor %}
-                        {% else %}
-                            No adjustments
-                        {% endif %}
-                        </li>
-                    {% endfor %}
-                </ul>
+                {% for adjustment in overview.personalDetails.disabilities %}{{ commaJoiner() }}{{ adjustment.description }}{% endfor %}
             {% else %}
-                None
+                No disabilities
+            {% endif %}
+        {% endset %}
+        {% set adjustments %}
+            {% set commaJoiner = joiner(', ') %}
+            {% if overview.personalDetails.provisions.length > 0 %}
+                {% for provisions in overview.personalDetails.provisions %}{{ commaJoiner() }}{{ provisions.description }}{% endfor %}
+            {% else %}
+                No adjustments
             {% endif %}
         {% endset %}
 
@@ -117,7 +113,7 @@
           {
             key: { html: '<span data-qa="preferredNameLabel">Preferred name/Known as</span>'},
             value: { html: '<span data-qa="preferredNameValue">' + overview.personalDetails.preferredName + '</span>'}
-          },
+          } if (overview.personalDetails.preferredName),
           {
             key: { html: '<span data-qa="preferredGenderLabel">Gender</span>'},
             value: { html: '<span data-qa="preferredGenderValue">' + overview.personalDetails.preferredGender + '</span>'}
@@ -135,9 +131,14 @@
             value: { html: '<span data-qa="currentCircumstancesValue">' + circumstances + '</span>'}
           },
           {
-            key: { html: '<span data-qa="disabilitiesAndAdjustmentsLabel">Disabilities and adjustments</span>'},
-            value: { html: '<span data-qa="disabilitiesAndAdjustmentsValue">' + disabilities + '</span>'}
+            key: { html: '<span data-qa="disabilitiesLabel">Disabilities</span>'},
+            value: { html: '<span data-qa="disabilitiesValue">' + disabilities + '</span>'}
+          },
+          {
+            key: { html: '<span data-qa="adjustmentsLabel">Adjustments</span>'},
+            value: { html: '<span data-qa="adjustmentsValue">' + adjustments + '</span>'}
           }
+
         ]
       }) }}
     {% endset %}
@@ -158,28 +159,28 @@
     }) }}
 
     {% set numberOfSentences = overview.sentences.length %}
-    {% for i in range(0, numberOfSentences) -%}
-        {% set sentence %}
+    {% for sentence in overview.sentences|sort(attribute='eventNumber', reverse=true) %}
+        {% set sentenceHtml %}
             {% set order %}
-                {% if overview.sentences[i].order  %}
-                    {{ overview.sentences[i].order.description }}<br />
-                    From {{ overview.sentences[i].order.startDate | dateWithNoDay }} to {{ overview.sentences[i].order.endDate | dateWithNoDay }}<br />
-                    {{  overview.sentences[i].order.startDate | monthsOrDaysElapsed }} elapsed
+                {% if sentence.order  %}
+                    {{ sentence.order.description }}<br />
+                    From {{ sentence.order.startDate | dateWithNoDay }} to {{ sentence.order.endDate | dateWithNoDay }}<br />
+                    {{  sentence.order.startDate | monthsOrDaysElapsed }} elapsed
                 {% endif %}
             {% endset %}
             {% set requirements %}
-                {% if overview.sentences[i].rar %}
-                    {{ overview.sentences[i].rar.totalDays }} days RAR, {{ overview.sentences[i].rar.completed }} completed
+                {% if sentence.rar %}
+                    {{ sentence.rar.totalDays }} days RAR, {{ sentence.rar.completed }} completed
                 {% endif %}
             {% endset %}
             {% set mainOffence %}
-                {{ overview.sentences[i].mainOffence.description }}
-                {%- if overview.sentences[i].additionalOffences.length > 0 %}
-                    {%- switch overview.sentences[i].additionalOffences.length -%}
+                {{ sentence.mainOffence.description }}
+                {%- if sentence.additionalOffences.length > 0 %}
+                    {%- switch sentence.additionalOffences.length -%}
                         {%- case 1 -%}
                             <br/>1 additional offence
                         {%- default -%}
-                            <br/>{{ overview.sentences[i].additionalOffences.length }} additional offences
+                            <br/>{{ sentence.additionalOffences.length }} additional offences
                     {%- endswitch -%}
                 {% endif %}
             {% endset %}
@@ -202,10 +203,10 @@
         {% endset %}
 
         {{ appSummaryCard({
-            titleText: 'Sentence (' + overview.sentences[i].eventNumber + ')',
+            titleText: 'Sentence (' + sentence.eventNumber + ')',
             classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-            attributes: {'data-qa': 'sentence' + overview.sentences[i].eventNumber + 'Card'},
-            html: sentence,
+            attributes: {'data-qa': 'sentence' + sentence.eventNumber + 'Card'},
+            html: sentenceHtml,
             actions: {
               items: [
                 {

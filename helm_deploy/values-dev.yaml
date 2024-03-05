@@ -13,7 +13,8 @@ generic-service:
     MANAGE_USERS_API_URL: "https://manage-users-api-dev.hmpps.service.justice.gov.uk"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-dev.prison.service.justice.gov.uk"
     MAS_API_URL: "https://manage-supervision-and-delius-dev.hmpps.service.justice.gov.uk"
-    ENVIRONMENT_NAME: dev
+    ENVIRONMENT_NAME: DEV
+    ENVIRONMENT: dev
 
 generic-prometheus-alerts:
   alertSeverity: probation-integration-notifications

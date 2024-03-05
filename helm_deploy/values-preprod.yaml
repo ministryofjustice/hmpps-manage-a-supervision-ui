@@ -5,14 +5,15 @@ generic-service:
   replicaCount: 2
 
   ingress:
-    host: hmpps-manage-a-supervision-ui-preprod.hmpps.service.justice.gov.uk
+    host: manage-a-supervision-preprod.hmpps.service.justice.gov.uk
 
   env:
-    INGRESS_URL: "https://hmpps-manage-a-supervision-ui-preprod.hmpps.service.justice.gov.uk"
+    INGRESS_URL: "https://manage-a-supervision-preprod.hmpps.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in-preprod.hmpps.service.justice.gov.uk/auth"
     MANAGE_USERS_API_URL: "https://manage-users-api-preprod.hmpps.service.justice.gov.uk"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-preprod.prison.service.justice.gov.uk"
     ENVIRONMENT_NAME: PRE-PRODUCTION
+    ENVIRONMENT: dev
 
 generic-prometheus-alerts:
   alertSeverity: probation-integration-notifications

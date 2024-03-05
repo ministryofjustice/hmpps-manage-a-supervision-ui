@@ -56,7 +56,6 @@ generic-service:
       REDIS_AUTH_TOKEN: "auth_token"
     sqs-hmpps-audit-secret:
       AUDIT_SQS_QUEUE_URL: "sqs_queue_url"
-      AUDIT_SQS_QUEUE_NAME: "sqs_queue_name"
 
   allowlist:
     groups:

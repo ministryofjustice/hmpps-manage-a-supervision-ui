@@ -11,9 +11,7 @@ export const services = () => {
   const searchService = new CaseSearchService({
     oauthClient: hmppsAuthClient,
     environment: config.env,
-    extraColumns: [
-      { header: 'Tier', value: result => (result.currentTier ? result.currentTier.replace(/^U/, '') : '') },
-    ],
+    extraColumns: [],
   })
 
   return {

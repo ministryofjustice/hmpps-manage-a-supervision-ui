@@ -6,7 +6,13 @@ import {
   dateWithDayAndWithoutYear,
   dateWithNoDay,
   dateWithYear,
+  dateWithYearShortMonth,
   fullName,
+  getCurrentRisksToThemselves,
+  getPreviousRisksToThemselves,
+  getRiskFlags,
+  getRisksToThemselves,
+  getTagClass,
   govukTime,
   initialiseName,
   monthsOrDaysElapsed,
@@ -57,7 +63,13 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('dateWithDayAndWithoutYear', dateWithDayAndWithoutYear)
   njkEnv.addFilter('yearsSince', yearsSince)
   njkEnv.addFilter('dateWithNoDay', dateWithNoDay)
+  njkEnv.addFilter('dateWithYearShortMonth', dateWithYearShortMonth)
   njkEnv.addFilter('fullName', fullName)
   njkEnv.addFilter('monthsOrDaysElapsed', monthsOrDaysElapsed)
   njkEnv.addFilter('govukTime', govukTime)
+  njkEnv.addGlobal('getRisksToThemselves', getRisksToThemselves)
+  njkEnv.addGlobal('getCurrentRisksToThemselves', getCurrentRisksToThemselves)
+  njkEnv.addGlobal('getPreviousRisksToThemselves', getPreviousRisksToThemselves)
+  njkEnv.addGlobal('getTagClass', getTagClass)
+  njkEnv.addGlobal('getRiskFlags', getRiskFlags)
 }

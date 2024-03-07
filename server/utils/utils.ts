@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DateTime } from 'luxon'
 import { Name } from '../data/masApiClient'
+import { RiskScore, RiskSummary, RiskToSelf } from '../data/arnsApiClient'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -60,9 +61,71 @@ export const monthsOrDaysElapsed = (datetimeString: string): string => {
   return `${months} months`
 }
 
+export const dateWithYearShortMonth = (datetimeString: string): string => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  return DateTime.fromISO(datetimeString).toFormat('d MMM yyyy')
+}
+
 export const govukTime = (datetimeString: string): string => {
   if (!datetimeString || isBlank(datetimeString)) return null
   const datetime = DateTime.fromISO(datetimeString)
   const hourMinuteFormat = datetime.minute === 0 ? 'ha' : 'h:mma'
   return datetime.toFormat(hourMinuteFormat).toLowerCase()
+}
+
+export const getCurrentRisksToThemselves = (riskToSelf: RiskToSelf) => {
+  return getRisksToThemselves(riskToSelf, 'current')
+}
+
+export const getPreviousRisksToThemselves = (riskToSelf: RiskToSelf) => {
+  const currentRisks = getCurrentRisksToThemselves(riskToSelf)
+  const previousRisks = getRisksToThemselves(riskToSelf, 'previous')
+  return previousRisks.filter(risk => !currentRisks.includes(risk))
+}
+
+export const getRisksToThemselves = (riskToSelf: RiskToSelf, type: string) => {
+  const risksToThemselves: string[] = []
+  if (riskToSelf === undefined) return risksToThemselves
+  const typesOfRisk = [
+    { key: 'suicide', text: 'suicide' },
+    { key: 'selfHarm', text: 'self harm' },
+    { key: 'custody', text: 'coping in custody' },
+    { key: 'hostelSetting', text: 'coping in a hostel setting' },
+    { key: 'vulnerability', text: 'a vulnerability' },
+  ]
+
+  typesOfRisk.forEach(risk => {
+    if (riskToSelf?.[risk.key]?.[type]) {
+      if (riskToSelf[risk.key][type] === 'YES') {
+        risksToThemselves.push(risk.text)
+      }
+    }
+  })
+  return risksToThemselves
+}
+
+export const getRiskFlags = (riskSummary: RiskSummary) => {
+  const risks: [string, string][] = []
+  riskSummary?.summary?.riskInCommunity?.LOW?.map(risk => risks.push(['LOW', `${risk} in the community`]))
+  riskSummary?.summary?.riskInCommunity?.MEDIUM?.map(risk => risks.push(['MEDIUM', `${risk} in the community`]))
+  riskSummary?.summary?.riskInCommunity?.HIGH?.map(risk => risks.push(['HIGH', `${risk} in the community`]))
+  riskSummary?.summary?.riskInCustody?.LOW?.map(risk => risks.push(['LOW', `${risk} in custody`]))
+  riskSummary?.summary?.riskInCustody?.MEDIUM?.map(risk => risks.push(['MEDIUM', `${risk} in custody`]))
+  riskSummary?.summary?.riskInCustody?.HIGH?.map(risk => risks.push(['HIGH', `${risk} in custody`]))
+  return risks
+}
+
+export const getTagClass = (score: RiskScore) => {
+  switch (score) {
+    case 'LOW':
+      return 'govuk-tag--green'
+    case 'MEDIUM':
+      return 'govuk-tag--yellow'
+    case 'HIGH':
+      return 'govuk-tag--red'
+    case 'VERY_HIGH':
+      return 'govuk-tag--red'
+    default:
+      return 'govuk-tag--blue'
+  }
 }

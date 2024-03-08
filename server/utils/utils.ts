@@ -109,9 +109,11 @@ export const getRiskFlags = (riskSummary: RiskSummary) => {
   riskSummary?.summary?.riskInCommunity?.LOW?.map(risk => risks.push(['LOW', `${risk} in the community`]))
   riskSummary?.summary?.riskInCommunity?.MEDIUM?.map(risk => risks.push(['MEDIUM', `${risk} in the community`]))
   riskSummary?.summary?.riskInCommunity?.HIGH?.map(risk => risks.push(['HIGH', `${risk} in the community`]))
+  riskSummary?.summary?.riskInCommunity?.VERY_HIGH?.map(risk => risks.push(['VERY_HIGH', `${risk} in the community`]))
   riskSummary?.summary?.riskInCustody?.LOW?.map(risk => risks.push(['LOW', `${risk} in custody`]))
   riskSummary?.summary?.riskInCustody?.MEDIUM?.map(risk => risks.push(['MEDIUM', `${risk} in custody`]))
   riskSummary?.summary?.riskInCustody?.HIGH?.map(risk => risks.push(['HIGH', `${risk} in custody`]))
+  riskSummary?.summary?.riskInCustody?.VERY_HIGH?.map(risk => risks.push(['VERY_HIGH', `${risk} in custody`]))
   return risks
 }
 

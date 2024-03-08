@@ -195,7 +195,7 @@
         {% if riskFlagList.length > 0 %}
           <ul class="govuk-list">
             {% for risk in riskFlagList %}
-              <li>{{ risk[1] }} {{ govukTag({text: risk[0] ,classes: getTagClass(risk[0])}) }}</li>
+              <li>{{ risk[1] }} {{ govukTag({text: risk[0] | replace('_',' '),classes: getTagClass(risk[0])}) }}</li>
             {% endfor %}
           </ul>
         {% else %}
@@ -216,7 +216,7 @@
           {
             key: { html: '<span data-qa="roshLabel">Risk of serious harm (ROSH) in the community' + riskLastUpdated + '</span>' },
             value: { html: '<span data-qa="roshValue">' + govukTag({
-              text: risks.summary.overallRiskLevel,
+              text: risks.summary.overallRiskLevel | replace('_',' '),
               classes: getTagClass(risks.summary.overallRiskLevel)
             }) if hasRiskAssessment else 'There is no OASys risk assessment' + '</span>'}
           },

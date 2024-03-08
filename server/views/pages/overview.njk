@@ -158,6 +158,102 @@
       }
     }) }}
 
+    {% set hasRiskAssessment = risks.assessedOn %}
+    {% set risk %}
+      {% set riskToThemselves %}
+        {% set currentRisksToThemselves = getCurrentRisksToThemselves(risks.riskToSelf) %}
+        {% set previousRisksToThemselves = getPreviousRisksToThemselves(risks.riskToSelf) %}
+
+        {% if currentRisksToThemselves.length == 1 %}
+          <p>Immediate concerns about {{ currentRisksToThemselves[0] }}</p>
+        {% elseif currentRisksToThemselves.length > 0 %}
+          <p>Immediate concerns about:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            {% for risk in currentRisksToThemselves %}
+              <li>{{ risk }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% if previousRisksToThemselves.length == 1 %}
+          <p>Previous concerns about {{ previousRisksToThemselves[0] }}</p>
+        {% elseif previousRisksToThemselves.length > 0 %}
+          <p>Previous concerns about:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            {% for risk in previousRisksToThemselves %}
+              <li>{{ risk }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% if currentRisksToThemselves.length == 0 and previousRisksToThemselves.length == 0 %}
+          <p>No concerns</p>
+        {% endif %}
+      {% endset %}
+      {% set riskFlags %}
+        {% set riskFlagList = getRiskFlags(risks) %}
+        {% if riskFlagList.length > 0 %}
+          <table>
+            {% for risk in riskFlagList %}
+              <tr><td>{{ risk[1] }}</td> <td class="{{ getTagClass(risk[0]) }}" align="center" width="120">{{ risk[0] | replace('_',' ') }}</td></tr>
+            {% endfor %}
+          </table>
+        {% else %}
+          No risk flags
+        {% endif %}
+      {% endset %}
+      {% set riskLastUpdated %}
+        {% if hasRiskAssessment %}
+          <br />
+          <span class="govuk-!-font-size-16 govuk-!-font-weight-regular">
+            Last updated {{ risks.assessedOn | dateWithYearShortMonth }}
+          </span>
+        {% endif %}
+      {% endset %}
+      {% set overallRosh %}
+      {% if hasRiskAssessment %}
+      <table><tr>
+      <td class="{{ getTagClass(risks.summary.overallRiskLevel) }}" align="center" width="120">{{ risks.summary.overallRiskLevel | replace('_',' ') }}</td>
+      </table>
+      {% else %}
+        There is no OASys risk assessment
+      {% endif %}
+      {% endset %}
+
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: { html: '<span data-qa="roshLabel">Risk of serious harm (ROSH) in the community' + riskLastUpdated + '</span>' },
+            value: { html: '<span data-qa="roshValue">' + overallRosh  + '</span>'}
+          },
+          {
+            key: { html: '<span data-qa="harmToSelfLabel">Risk of serious harm to themselves' + riskLastUpdated + '</span>'},
+            value: { html: '<span data-qa="harmToSelfValue">' + riskToThemselves if hasRiskAssessment else 'There is no OASys risk assessment' + '</span>' }
+          },
+          {
+            key: { html: '<span data-qa="riskFlagsLabel">Risk flags</span>' },
+            value: { html: '<span data-qa="riskFlagsValue">' + riskFlags + '</span>'}
+          }
+        ]
+      }) }}
+    {% endset %}
+
+    {{ appSummaryCard({
+      titleText: 'Risk',
+      attributes: {'data-qa': 'riskCard'},
+      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+      html: risk,
+      actions: {
+        items: [
+          {
+            text: 'View all risk details',
+            href: crn + '/risk'
+          }
+        ]
+      }
+    }) }}
+
+
     {% set numberOfSentences = overview.sentences.length %}
     {% for sentence in overview.sentences|sort(attribute='eventNumber', reverse=true) %}
         {% set sentenceHtml %}

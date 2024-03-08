@@ -17,7 +17,7 @@ context('Overview', () => {
     page.getCardHeader('schedule').should('contain.text', 'Schedule')
     page
       .getRowData('schedule', 'nextAppointment', 'Value')
-      .should('contain.text', 'Tuesday 5 March at 4:45pm (Initial Appointment - In office (NS))')
+      .should('contain.text', 'Saturday 9 March at 2:59pm (Initial Appointment - In office (NS))')
     page.getRowData('personalDetails', 'name', 'Value').should('contain.text', 'Caroline Wolff')
     page.getRowData('personalDetails', 'preferredName', 'Value').should('contain.text', 'Caz')
     page.getRowData('personalDetails', 'preferredGender', 'Value').should('contain.text', 'Female')
@@ -50,5 +50,10 @@ context('Overview', () => {
     page
       .getRowData('activityAndCompliance', 'activityLog', 'Value')
       .should('contain.text', '5 national standard appointments')
+    page.getRowData('risk', 'rosh', 'Value').should('contain.text', 'HIGH')
+    page
+      .getRowData('risk', 'harmToSelf', 'Value')
+      .should('contain.text', 'Previous concerns about coping in a hostel setting')
+    page.getRowData('risk', 'riskFlags', 'Value').should('contain.text', 'Known Adult in the community')
   })
 })

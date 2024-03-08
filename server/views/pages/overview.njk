@@ -193,13 +193,11 @@
       {% set riskFlags %}
         {% set riskFlagList = getRiskFlags(risks) %}
         {% if riskFlagList.length > 0 %}
-          <ul class="govuk-list">
           <table>
             {% for risk in riskFlagList %}
-              <tr><td>{{ risk[1] }}</td> <td>{{ govukTag({text: risk[0] | replace('_',' '),classes: getTagClass(risk[0])}) }}</td></tr>
+              <tr><td>{{ risk[1] }}</td> <td class="{{ getTagClass(risk[0]) }}" align="center" width="120">{{ risk[0] | replace('_',' ') }}</td></tr>
             {% endfor %}
           </table>
-          </ul>
         {% else %}
           No risk flags
         {% endif %}
@@ -212,15 +210,21 @@
           </span>
         {% endif %}
       {% endset %}
+      {% set overallRosh %}
+      {% if hasRiskAssessment %}
+      <table><tr>
+      <td class="{{ getTagClass(risks.summary.overallRiskLevel) }}" align="center" width="120">{{ risks.summary.overallRiskLevel | replace('_',' ') }}</td>
+      </table>
+      {% else %}
+        There is no OASys risk assessment
+      {% endif %}
+      {% endset %}
 
       {{ govukSummaryList({
         rows: [
           {
             key: { html: '<span data-qa="roshLabel">Risk of serious harm (ROSH) in the community' + riskLastUpdated + '</span>' },
-            value: { html: '<span data-qa="roshValue">' + govukTag({
-              text: risks.summary.overallRiskLevel | replace('_',' '),
-              classes: getTagClass(risks.summary.overallRiskLevel)
-            }) if hasRiskAssessment else 'There is no OASys risk assessment' + '</span>'}
+            value: { html: '<span data-qa="harmToSelfLabel">' + overallRosh  + '</span>'}
           },
           {
             key: { html: '<span data-qa="harmToSelfLabel">Risk of serious harm to themselves' + riskLastUpdated + '</span>'},

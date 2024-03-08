@@ -194,9 +194,11 @@
         {% set riskFlagList = getRiskFlags(risks) %}
         {% if riskFlagList.length > 0 %}
           <ul class="govuk-list">
+          <table>
             {% for risk in riskFlagList %}
-              <li>{{ risk[1] }} {{ govukTag({text: risk[0] | replace('_',' '),classes: getTagClass(risk[0])}) }}</li>
+              <tr><td>{{ risk[1] }}</td> <td>{{ govukTag({text: risk[0] | replace('_',' '),classes: getTagClass(risk[0])}) }}</td></tr>
             {% endfor %}
+          </table>
           </ul>
         {% else %}
           No risk flags

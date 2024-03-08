@@ -191,11 +191,10 @@
         {% endif %}
       {% endset %}
       {% set riskFlags %}
-        {% set riskFlagList = getRiskFlags(risks) %}
+        {% set riskFlagList = overview.registrations %}
         {% if riskFlagList.length > 0 %}
-          <table>
             {% for risk in riskFlagList %}
-              <tr><td>{{ risk[1] }}</td> <td class="{{ getTagClass(risk[0]) }}" align="center" width="120">{{ risk[0] | replace('_',' ') }}</td></tr>
+              <li>{{ risk }}</li>
             {% endfor %}
           </table>
         {% else %}

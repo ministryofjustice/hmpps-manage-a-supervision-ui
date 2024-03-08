@@ -7,7 +7,6 @@ import {
   dateWithYear,
   dateWithYearShortMonth,
   fullName,
-  getRiskFlags,
   getRisksToThemselves,
   getTagClass,
   govukTime,
@@ -15,7 +14,7 @@ import {
   monthsOrDaysElapsed,
   yearsSince,
 } from './utils'
-import { RiskResponse, RiskScore, RiskSummary, RiskToSelf } from '../data/arnsApiClient'
+import { RiskResponse, RiskScore, RiskToSelf } from '../data/arnsApiClient'
 
 describe('convert to title case', () => {
   it.each([
@@ -168,51 +167,6 @@ describe('get risks to themselves', () => {
     ['Valid Risk to Self with type', riskOfSelfHarm2, 'current', ['suicide', 'self harm', 'coping in custody']],
   ])('%s getRisksToThemselves %s %s %s', (_: string, a: RiskToSelf, b: string, expected: string[]) => {
     expect(getRisksToThemselves(a, b)).toEqual(expected)
-  })
-})
-
-describe('get risk factors', () => {
-  const YES: RiskResponse = 'YES'
-  const HIGH: RiskScore = 'HIGH'
-  const riskToSelf = {
-    suicide: {
-      risk: YES,
-      previous: YES,
-      current: YES,
-      currentConcernsText: 'Meaningful content for AssSumm Testing - R8.1.1',
-    },
-  }
-  const riskSummary = {
-    riskToSelf,
-    summary: {
-      whoIsAtRisk: 'NOD-849Meaningful content for AssSumm Testing -  r10.1',
-      natureOfRisk: 'NOD-849 Meaningful content for AssSumm Testing -  r10.2',
-      riskImminence: 'NOD-849 R10.3Meaningful content for AssSumm Testing - ',
-      riskIncreaseFactors: 'NOD-849Meaningful content for AssSumm Testing -  R10.4',
-      riskMitigationFactors: 'NOD-849 Meaningful content for AssSumm Testing -  r10.5',
-      riskInCommunity: {
-        LOW: ['Children', 'Staff'],
-      },
-      riskInCustody: {
-        HIGH: ['Staff'],
-      },
-      overallRiskLevel: HIGH,
-    },
-  }
-
-  it.each([
-    [null, null, []],
-    [
-      'Valid Risk summary',
-      riskSummary,
-      [
-        ['LOW', 'Children in the community'],
-        ['LOW', 'Staff in the community'],
-        ['HIGH', 'Staff in custody'],
-      ],
-    ],
-  ])('%s getRiskFlags %s %s', (_: string, a: RiskSummary, expected: []) => {
-    expect(getRiskFlags(a)).toEqual(expected)
   })
 })
 

@@ -54,6 +54,6 @@ context('Overview', () => {
     page
       .getRowData('risk', 'harmToSelf', 'Value')
       .should('contain.text', 'Previous concerns about coping in a hostel setting')
-    page.getRowData('risk', 'riskFlags', 'Value').should('contain.text', 'Known Adult in the community')
+    page.getRowData('risk', 'riskFlags', 'Value').should('contain.text', 'Risk to Known Adult')
   })
 })

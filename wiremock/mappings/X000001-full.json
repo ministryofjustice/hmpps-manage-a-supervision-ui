@@ -108,7 +108,8 @@
           "compliance": {
             "currentBreaches": 2,
             "failureToComplyInLast12Months": 2
-          }
+          },
+          "registrations": ["Restraining Order", "Domestic Abuse Perpetrator", "Risk to Known Adult"]
         },
         "headers": {
           "Content-Type": "application/json"

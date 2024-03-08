@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DateTime } from 'luxon'
 import { Name } from '../data/masApiClient'
-import { RiskScore, RiskSummary, RiskToSelf } from '../data/arnsApiClient'
+import { RiskScore, RiskToSelf } from '../data/arnsApiClient'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -102,19 +102,6 @@ export const getRisksToThemselves = (riskToSelf: RiskToSelf, type: string) => {
     }
   })
   return risksToThemselves
-}
-
-export const getRiskFlags = (riskSummary: RiskSummary) => {
-  const risks: [string, string][] = []
-  riskSummary?.summary?.riskInCommunity?.LOW?.map(risk => risks.push(['LOW', `${risk} in the community`]))
-  riskSummary?.summary?.riskInCommunity?.MEDIUM?.map(risk => risks.push(['MEDIUM', `${risk} in the community`]))
-  riskSummary?.summary?.riskInCommunity?.HIGH?.map(risk => risks.push(['HIGH', `${risk} in the community`]))
-  riskSummary?.summary?.riskInCommunity?.VERY_HIGH?.map(risk => risks.push(['VERY_HIGH', `${risk} in the community`]))
-  riskSummary?.summary?.riskInCustody?.LOW?.map(risk => risks.push(['LOW', `${risk} in custody`]))
-  riskSummary?.summary?.riskInCustody?.MEDIUM?.map(risk => risks.push(['MEDIUM', `${risk} in custody`]))
-  riskSummary?.summary?.riskInCustody?.HIGH?.map(risk => risks.push(['HIGH', `${risk} in custody`]))
-  riskSummary?.summary?.riskInCustody?.VERY_HIGH?.map(risk => risks.push(['VERY_HIGH', `${risk} in custody`]))
-  return risks
 }
 
 export const getTagClass = (score: RiskScore) => {

@@ -10,7 +10,6 @@ import {
   fullName,
   getCurrentRisksToThemselves,
   getPreviousRisksToThemselves,
-  getRiskFlags,
   getRisksToThemselves,
   getTagClass,
   govukTime,
@@ -71,5 +70,4 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('getCurrentRisksToThemselves', getCurrentRisksToThemselves)
   njkEnv.addGlobal('getPreviousRisksToThemselves', getPreviousRisksToThemselves)
   njkEnv.addGlobal('getTagClass', getTagClass)
-  njkEnv.addGlobal('getRiskFlags', getRiskFlags)
 }

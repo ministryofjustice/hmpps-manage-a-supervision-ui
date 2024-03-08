@@ -18,6 +18,7 @@ export interface Overview {
   previousOrders: PreviousOrders
   schedule: Schedule
   sentences: Sentence[]
+  registrations: string[]
 }
 
 export interface Offence {

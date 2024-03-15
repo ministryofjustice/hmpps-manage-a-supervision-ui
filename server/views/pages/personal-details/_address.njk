@@ -1,0 +1,61 @@
+{% set addressTitle %}
+  {% if address.to %}
+    {{ address.status }} address – {{ address.from | dateWithYearShortMonth }} to {{ address.to | dateWithYearShortMonth }}
+  {% else %}
+    {{ address.status }} address – Since {{ address.from | dateWithYearShortMonth }}
+  {% endif %}
+{% endset %}
+
+{% set addressHtml %}
+  {% set fullAddress %}
+    {% if address.noFixedAbode %}
+      No fixed abode<br />
+      {{ address.type }}
+    {% endif %}
+
+    {{ addressToList(address).join('<br>') | safe }}
+  {% endset %}
+
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: { text: "Status" },
+        value: { html: address.status + ' address' }
+      },
+      {
+        key: { text: "Address" },
+        value: { html: fullAddress }
+      },
+      {
+        key: { text: "Address telephone" },
+        value: { html: address.telephoneNumber }
+      } if address.telephoneNumber,
+      {
+        key: { text: "Type of address" },
+        value: { html: address.type + (' (verified)' if address.typeVerified else ' (not verified)') }
+      } if address.type,
+      {
+        key: { text: "Start date" },
+        value: { html: address.startDate | dateWithYear }
+      },
+      {
+        key: { text: "End date" },
+        value: { html: address.endDate | dateWithYear }
+      } if address.endDate,
+      {
+        key: { text: "Notes" },
+        value: { html: address.notes | nl2br if address.notes else 'No notes' }
+      }
+    ]
+  }) }}
+
+  <p class="govuk-!-margin-bottom-0 govuk-!-margin-top-4 govuk-body-s govuk-hint-s">
+    {{ lastUpdatedBy(address.lastUpdated, address.lastUpdatedBy)}}
+  </p>
+{% endset %}
+
+{{ appSummaryCard({
+  titleText: addressTitle,
+  classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+  html: addressHtml
+}) }}

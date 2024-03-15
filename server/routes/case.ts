@@ -26,29 +26,9 @@ export default function caseRoutes(router: Router, { hmppsAuthClient }: Services
     })
 
     const [overview, risks] = await Promise.all([masClient.getOverview(crn), arnsClient.getRisks(crn)])
-
     res.render('pages/overview', {
       overview,
       risks,
-      crn,
-    })
-  })
-  get('/case/:crn/schedule', async (req, res, _next) => {
-    const { crn } = req.params
-    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
-    const masClient = new MasApiClient(token)
-
-    await auditService.sendAuditMessage({
-      action: 'VIEW_MAS_SCHEDULE',
-      who: res.locals.user.username,
-      subjectId: crn,
-      subjectType: 'CRN',
-      correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
-    })
-    const overview = await masClient.getOverview(crn)
-    res.render('pages/schedule', {
-      overview,
       crn,
     })
   })

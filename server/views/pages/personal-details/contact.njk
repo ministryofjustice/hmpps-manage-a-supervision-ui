@@ -1,0 +1,81 @@
+{% extends "../../partials/layout.njk" %}
+{% set title = personalContact.name | fullName  %}
+{% block pageTitle %}{{ title }}{% endblock %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Your cases",
+      href: "/search"
+    },
+    {
+      text: personalContact.personSummary.name | fullName,
+      href: "/case/" + crn
+    },
+    {
+      text: "Personal details",
+      href: "/case/" + crn + "/personal-details"
+    },
+    {
+      text: "Contact: " + title
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span class="govuk-caption-xl">{{ personalContact.relationshipType }}</span>
+      {{ title }}
+    </h1>
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "Name" },
+          value: { text: personalContact.name | fullName }
+        },
+        {
+          key: { text: "Relationship type" },
+          value: { text: personalContact.relationshipType }
+        },
+        {
+          key: { text: "Relationship" },
+          value: { text: personalContact.relationship }
+        },
+        {
+          key: { text: "Address" },
+          value: { html: addressToList(personalContact.address).join('<br>') }
+        } if personalContact.address,
+        {
+          key: { text: "Phone number" },
+          value: { html: personalContact.phone }
+        } if personalContact.phone,
+        {
+          key: { text: "Email" },
+          value: { html: personalContact.email }
+        } if personalContact.email,
+        {
+          key: { text: "Start date" },
+          value: { html: personalContact.startDate | dateWithYear }
+        } if personalContact.startDate,
+        {
+          key: { text: "Notes" },
+          value: { html: personalContact.notes if personalContact.notes else 'No notes' }
+        }
+      ]
+    }) }}
+
+    <p>
+      <a href="/case/{{ crn }}/handoff/delius">Change contact details</a>
+    </p>
+
+    <p class="govuk-!-margin-bottom-0 govuk-!-margin-top-4 govuk-body-s govuk-hint-s">
+      {{ lastUpdatedBy(personalContact.lastUpdated, personalContact.lastUpdatedBy)}}
+    </p>
+  </div>
+</div>
+{% endblock %}

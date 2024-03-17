@@ -92,28 +92,6 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
     document.pipe(res)
   })
 
-  get('/case/:crn/handoff/delius', async (req, res, _next) => {
-    const { crn } = req.params
-    const { documentId } = req.params
-    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
-    const masClient = new MasApiClient(token)
-
-    await auditService.sendAuditMessage({
-      action: 'VIEW_MAS_DOWNLOAD_DOCUMENT',
-      who: res.locals.user.username,
-      subjectId: crn,
-      subjectType: 'CRN',
-      correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
-    })
-
-    const personSummary = await masClient.getPersonSummary(crn)
-    res.render('pages/handoff/delius', {
-      personSummary,
-      crn,
-    })
-  })
-
   get('/case/:crn/handoff/:system', async (req, res, _next) => {
     const { crn } = req.params
     const { system } = req.params
@@ -121,7 +99,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
     const masClient = new MasApiClient(token)
 
     await auditService.sendAuditMessage({
-      action: `VIEW_MAS_HANDOFF_${system}`,
+      action: `VIEW_MAS_HANDOFF_${system.toUpperCase()}`,
       who: res.locals.user.username,
       subjectId: crn,
       subjectType: 'CRN',
@@ -132,6 +110,69 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
     const personSummary = await masClient.getPersonSummary(crn)
     res.render(`pages/handoff/${system}`, {
       personSummary,
+      crn,
+    })
+  })
+
+  get('/case/:crn/personal-details/disabilities', async (req, res, _next) => {
+    const { crn } = req.params
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+    const masClient = new MasApiClient(token)
+
+    await auditService.sendAuditMessage({
+      action: `VIEW_MAS_DISABILITIES`,
+      who: res.locals.user.username,
+      subjectId: crn,
+      subjectType: 'CRN',
+      correlationId: v4(),
+      service: 'hmpps-manage-a-supervision-ui',
+    })
+
+    const disabilities = await masClient.getPersonDisabilities(crn)
+    res.render(`pages/personal-details/disabilities`, {
+      disabilities,
+      crn,
+    })
+  })
+
+  get('/case/:crn/personal-details/adjustments', async (req, res, _next) => {
+    const { crn } = req.params
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+    const masClient = new MasApiClient(token)
+
+    await auditService.sendAuditMessage({
+      action: `VIEW_MAS_ADJUSTMENTS`,
+      who: res.locals.user.username,
+      subjectId: crn,
+      subjectType: 'CRN',
+      correlationId: v4(),
+      service: 'hmpps-manage-a-supervision-ui',
+    })
+
+    const adjustments = await masClient.getPersonAdjustments(crn)
+    res.render(`pages/personal-details/adjustments`, {
+      adjustments,
+      crn,
+    })
+  })
+
+  get('/case/:crn/personal-details/circumstances', async (req, res, _next) => {
+    const { crn } = req.params
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+    const masClient = new MasApiClient(token)
+
+    await auditService.sendAuditMessage({
+      action: `VIEW_MAS_CIRCUMSTANCES`,
+      who: res.locals.user.username,
+      subjectId: crn,
+      subjectType: 'CRN',
+      correlationId: v4(),
+      service: 'hmpps-manage-a-supervision-ui',
+    })
+
+    const circumstances = await masClient.getPersonCircumstances(crn)
+    res.render(`pages/personal-details/circumstances`, {
+      circumstances,
       crn,
     })
   })

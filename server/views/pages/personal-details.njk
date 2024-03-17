@@ -2,7 +2,6 @@
 {% set pageTitle = applicationName + " - Personal Details" %}
 {% set currentNavSection = 'personal-details' %}
 {% set currentSectionName = 'Personal Details' %}
-
 {% set headerPersonName = personalDetails.name.forename + ' ' + personalDetails.name.surname %}
 {% set headerCRN = crn %}
 
@@ -26,135 +25,135 @@
 
 {% block pageContent %}
     {% set contactDetails %}
-      {% set mainAddress = personalDetails.mainAddress %}
-      {% set address %}
-        {{ addressToList(mainAddress).join('<br>') | safe }}
+        {% set mainAddress = personalDetails.mainAddress %}
+            {% set address %}
+                {{ addressToList(mainAddress).join('<br>') | safe }}
+                {% set addressDetails %}
+                    {{ govukSummaryList({
+                        rows: [
+                          {
+                            key: { html: '<span data-qa="mainAddressTelephoneLabel">Address telephone</span>' },
+                            value: { html: '<span data-qa="addressTelephoneValue" class="app-!-font-family-tabular">' + mainAddress.telephoneNumber + '</span>' }
+                          } if mainAddress.telephoneNumber,
+                          {
+                            key: { html:  '<span data-qa="addressTypeLabel">Type of address</span>' },
+                            value: { html: '<span data-qa="addressTypeValue">' + mainAddress.type + (' (verified)' if mainAddress.verified else ' (not verified)') + '</span>' }
+                          },
+                          {
+                            key: { html: '<span data-qa="mainAddressStartDateLabel">Start date</span>' },
+                            value: { html: '<span data-qa="mainAddressStartDateValue">' + mainAddress.from | dateWithYear + '</span>' }
+                          },
+                          {
+                            key: { html: '<span data-qa="mainAddressNotesLabel">Notes</span>' },
+                            value: { html: '<span data-qa="mainAddressNotesValue">' + mainAddress.notes | nl2br if mainAddress.notes else 'No notes' + '</span>' }
+                          }
+                        ]
+                    }) }}
+            {% endset %}
 
-        {% set addressDetails %}
-          {{ govukSummaryList({
-            rows: [
-              {
-                key: { text: "Address telephone" },
-                value: { html: '<span class="app-!-font-family-tabular">' + mainAddress.telephoneNumber + '</span>' }
-              } if mainAddress.telephoneNumber,
-              {
-                key: { text: "Type of address" },
-                value: { html: mainAddress.type + (' (verified)' if mainAddress.verified else ' (not verified)') }
-              },
-              {
-                key: { text: "Start date" },
-                value: { html: mainAddress.from | dateWithYear }
-              },
-              {
-                key: { text: "Notes" },
-                value: { html: mainAddress.notes | nl2br if mainAddress.notes else 'No notes' }
-              }
-            ]
-          }) }}
+            {{ govukDetails({
+              summaryText: "View address details",
+              classes: 'govuk-!-margin-top-2 govuk-!-margin-bottom-0',
+              html: addressDetails
+            }) }}
         {% endset %}
 
-        {{ govukDetails({
-          summaryText: "View address details",
-          classes: 'govuk-!-margin-top-2 govuk-!-margin-bottom-0',
-          html: addressDetails
-        }) }}
-      {% endset %}
+        {% set personalContacts %}
+            {% if personalDetails.contacts.length > 0 %}
+              <ul class="govuk-list">
+                {% for contact in personalDetails.contacts %}
+                  <li>
+                    <p>
+                      {{ contact.relationshipType }}:<br />
+                      <a href="personal-details/personal-contact/{{ contact.contactId }}">{{ contact.name | fullName }} – {{ contact.relationship }}</a>
+                    </p>
+                  </li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              None
+            {% endif %}
+        {% endset %}
 
-      {% set personalContacts %}
-        {% if personalDetails.contacts.length > 0 %}
-          <ul class="govuk-list">
-            {% for contact in personalDetails.contacts %}
-              <li>
-                <p>
-                  {{ contact.relationshipType }}:<br />
-                  <a href="personal-details/personal-contact/{{ contact.contactId }}">{{ contact.name | fullName }} – {{ contact.relationship }}</a>
-                </p>
-              </li>
-            {% endfor %}
-          </ul>
-        {% else %}
-          None
-        {% endif %}
-      {% endset %}
+        {% set otherAddressesHtml %}
+            {% set otherAddressCount = personalDetails.otherAddressCount %}
+            {% set previousAddressCount = personalDetails.previousAddressCount %}
+            {% set hasOtherAddresses = otherAddressCount > 0 %}
+            {% set hasPreviousAddresses = previousAddressCount > 0 %}
 
-      {% set otherAddressesHtml %}
-        {% set otherAddressCount = personalDetails.otherAddressCount %}
-        {% set previousAddressCount = personalDetails.previousAddressCount %}
-        {% set hasOtherAddresses = otherAddressCount > 0 %}
-        {% set hasPreviousAddresses = previousAddressCount > 0 %}
+            {% if hasOtherAddresses or hasPreviousAddresses %}
+              {% set otherAddressString = '1 other address' if otherAddressCount == 1 else otherAddressCount + ' other addresses' %}
+              {% set previousAddressString = '1 previous address' if previousAddressCount == 1 else previousAddressCount + ' previous addresses' %}
 
-        {% if hasOtherAddresses or hasPreviousAddresses %}
-          {% set otherAddressString = '1 other address' if otherAddressCount == 1 else otherAddressCount + ' other addresses' %}
-          {% set previousAddressString = '1 previous address' if previousAddressCount == 1 else previousAddressCount + ' previous addresses' %}
+              {% if hasOtherAddresses and hasPreviousAddresses %}
+              <ul class="govuk-list">
+                <li>{{ otherAddressString }}</li>
+                <li>{{ previousAddressString }}</li>
+              </ul>
+              {% elseif hasOtherAddresses %}
+                {{ otherAddressString }}
+              {% else %}
+                {{ previousAddressString }}
+              {% endif %}
 
-          {% if hasOtherAddresses and hasPreviousAddresses %}
-          <ul class="govuk-list">
-            <li>{{ otherAddressString }}</li>
-            <li>{{ previousAddressString }}</li>
-          </ul>
-          {% elseif hasOtherAddresses %}
-            {{ otherAddressString }}
-          {% else %}
-            {{ previousAddressString }}
-          {% endif %}
+              <p>
+                <a href="personal-details/addresses">View all addresses</a>
+              </p>
+            {% else %}
+              No other addresses
+            {% endif %}
+        {% endset %}
 
-          <p>
-            <a href="personal-details/addresses">View all addresses</a>
-          </p>
-        {% else %}
-          No other addresses
-        {% endif %}
-      {% endset %}
+        {% set mainAddressWarningHtml %}
+            No main address<br />
+            <a href="#">Add a main address in Delius</a>
+        {% endset %}
 
-      {% set mainAddressWarningHtml %}
-        No main address<br />
-        <a href="#">Add a main address in Delius</a>
-      {% endset %}
-
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: { text: "Phone number" },
-            value: { html: ('<span class="app-!-font-family-tabular">' + personalDetails.telephoneNumber + '</span>') if personalDetails.telephoneNumber else 'No phone number' }
-          },
-            {
-              key: { text: "Mobile number" },
-              value: { html: ('<span class="app-!-font-family-tabular">' + personalDetails.mobileNumber + '</span>') if personalDetails.mobileNumber else 'No mobile number' }
-            },
-          {
-            key: { text: "Email address" },
-            value: { html: personalDetails.email or 'No email address' },
-            actions: {
-              items: [
+        {{ govukSummaryList({
+            rows: [
+              {
+                key: { html: '<span data-qa="telephoneNumberLabel">Phone number</span>' },
+                value: { html: ('<span data-qa="telephoneNumberValue" class="app-!-font-family-tabular">' + personalDetails.telephoneNumber + '</span>') if personalDetails.telephoneNumber else 'No phone number' }
+              },
                 {
-                  href: "/cases/" + CRN + "/personal-details/edit-email-address",
-                  text: "Change",
-                  visuallyHiddenText: "email address"
+                  key: { html: '<span data-qa="mobileNumberLabel">Mobile number</span>' },
+                  value: { html: ('<span data-qa="mobileNumberValue" class="app-!-font-family-tabular">' + personalDetails.mobileNumber + '</span>') if personalDetails.mobileNumber else 'No mobile number' }
+                },
+              {
+                key: { html: '<span data-qa="emailAddressLabel">Email address</span>' },
+                value: { html: '<span data-qa="emailAddressValue">' + personalDetails.email or 'No email address' + '</span>' },
+                actions: {
+                  items: [
+                    {
+                      href: "/case/" + crn + "/handoff/delius",
+                      text: "Change",
+                      visuallyHiddenText: "email address"
+                    }
+                  ]
                 }
-              ]
-            }
-          },
-          {
-            key: { html: 'Main address<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + mainAddress.lastUpdated | lastUpdatedDate + '</span>' },
-            value: { html: address }
-          },
-          {
-            key: { text: "Other addresses" },
-            value: { html: otherAddressesHtml }
-          },
-          {
-            key: { text: "Contacts" },
-            value: { html: personalContacts }
-          }
-        ]
-      }) }}
+              },
+              {
+                key: { html: '<span data-qa="mainAddressLabel">' + 'Main address<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + mainAddress.lastUpdated | lastUpdatedDate + '</span></span>' },
+                value: { html: '<span data-qa="mainAddressValue">' + address + '</br></span>' }
+              },
+              {
+                key: { html: '<span data-qa="otherAddressesLabel">Other addresses</span>' },
+                value: { html: '<span data-qa="otherAddressesValue">' + otherAddressesHtml + '</span>' }
+              },
+              {
+                key: { html: '<span data-qa="contactsLabel">Contacts</span>'},
+                value: { html: '<span data-qa="contactsLabel">' + personalContacts + '</span>' }
+              }
+            ]
+        }) }}
     {% endset %}
 
     {{ appSummaryCard({
-      titleText: "Contact details",
-      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-      html: contactDetails,
-      actions: {
+        attributes: {'data-qa': 'contactDetailsCard'},
+        titleText: "Contact details",
+        classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+        html: contactDetails,
+        actions: {
         items: [
           {
             href: "#",
@@ -165,194 +164,208 @@
     }) }}
 
     {% set personalDetailsHtml %}
-      {% set dateOfBirthAndAge %}
-        {{ personalDetails.dateOfBirth | dateWithYear }} ({{ personalDetails.dateOfBirth | yearsSince }} years
-      old)
-      {% endset %}
-
-      {% set disabilities %}
-        {% if personalDetails.disabilities.disabilities.length > 0 %}
-          <ul class="govuk-list">
-          {% for disability in personalDetails.disabilities.disabilities %}
-            <li>
-              {{ disability }}
-            </li>
-          {% endfor %}
-          </ul>
-          <p><a href="/cases/{{ crn }}/personal-details/disabilities-and-adjustments">View details and notes</a></p>
-        {% else %}
-          None
-        {% endif %}
-      {% endset %}
-
-         {% set adjustments %}
-           {% if personalDetails.provisions.provisions.length > 0 %}
-            <ul class="govuk-list">
-            {% for adjustment in personalDetails.provisions.provisions %}
-              <li>
-                {{ adjustment }}
-              </li>
-            {% endfor %}
-            </ul>
-            <p><a href="/cases/{{ CRN }}/personal-details/disabilities-and-adjustments">View details and notes</a></p>
-          {% else %}
-            None
-          {% endif %}
+        {% set dateOfBirthAndAge %}
+            {{ personalDetails.dateOfBirth | dateWithYear }} ({{ personalDetails.dateOfBirth | yearsSince }} years old)
         {% endset %}
 
-      {% set circumstances %}
-        {% if personalDetails.circumstances.circumstances.length > 0 %}
-          <ul class="govuk-list">
-          {% for circumstance in personalDetails.circumstances.circumstances %}
-            <li>
-              {{ circumstance.type }}: {{ circumstance.subType }}
-            </li>
-          {% endfor %}
-          </ul>
-          <p><a href="/cases/{{ CRN }}/personal-details/circumstances">View details and previous circumstances</a></p>
-        {% else %}
-          None
-        {% endif %}
-      {% endset %}
+        {% set disabilities %}
+            {% if personalDetails.disabilities.disabilities.length > 0 %}
+              <ul class="govuk-list">
+              {% for disability in personalDetails.disabilities.disabilities %}
+                <li>
+                  {{ disability }}
+                </li>
+              {% endfor %}
+              </ul>
+              <p><a href="/case/{{ crn }}/personal-details/disabilities">View details and notes</a></p>
+            {% else %}
+              None
+            {% endif %}
+        {% endset %}
 
-      {% set criminogenicNeeds %}
-        {% if criminogenicNeeds.length > 0 %}
-          <ul class="govuk-list">
-          {% for need in criminogenicNeeds %}
-            <li>
-              {{ need }}
-            </li>
-          {% endfor %}
-          </ul>
-        {% else %}
-          None
-        {% endif %}
+        {% set adjustments %}
+            {% if personalDetails.provisions.provisions.length > 0 %}
+                <ul class="govuk-list">
+                {% for adjustment in personalDetails.provisions.provisions %}
+                  <li>
+                    {{ adjustment }}
+                  </li>
+                {% endfor %}
+                </ul>
+                <p><a href="/case/{{ crn }}/personal-details/adjustments">View details and notes</a></p>
+            {% else %}
+            None
+            {% endif %}
+        {% endset %}
 
-        <p>
-          <a href="/case/{{ crn }}/handoff/oasys">View sentence plan in OASys</a>
-        </p>
-      {% endset %}
+        {% set circumstances %}
+            {% if personalDetails.circumstances.circumstances.length > 0 %}
+                <ul class="govuk-list">
+                {% for circumstance in personalDetails.circumstances.circumstances %}
+                <li>
+                  {{ circumstance.type }}: {{ circumstance.subType }}
+                </li>
+                {% endfor %}
+                </ul>
+                <p><a href="/case/{{ crn }}/personal-details/circumstances">View details and previous circumstances</a></p>
+            {% else %}
+                None
+            {% endif %}
+        {% endset %}
 
-      {% set documents %}
-        {% set documents = personalDetails.documents %}
-        <ul class="govuk-list govuk-!-margin-top-0">
-          {% if documents.length > 0 %}
-            {% for doc in documents %}
-            <li>
-              <a href="personal-details/documents/{{ doc.id }}/download" download="{{ doc.name }}">{{ doc.name }}</a><br>
-              <span class="govuk-!-font-size-16">
-                {% if doc.lastUpdated %}
-                  Last updated {{ doc.lastUpdated | lastUpdatedDate }}
+        {% set criminogenicNeeds %}
+            {% if criminogenicNeeds.length > 0 %}
+                <ul class="govuk-list">
+                    {% for need in criminogenicNeeds %}
+                    <li>
+                    {{ need }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                None
+            {% endif %}
+
+            <p>
+            <a href="/case/{{ crn }}/handoff/oasys">View sentence plan in OASys</a>
+            </p>
+        {% endset %}
+
+        {% set aliases %}
+            {% if personalDetails.aliases.length > 0 %}
+                <ul class="govuk-list">
+                {% for alias in personalDetails.aliases %}
+                     <li>
+                        {{ alias | fullName }}
+                     </li>
+                 {% endfor %}
+                 </ul>
+            {% else %}
+                 None known
+            {% endif %}
+        {% endset %}
+
+        {% set documents %}
+            {% set documents = personalDetails.documents %}
+                <ul class="govuk-list govuk-!-margin-top-0">
+                {% if documents.length > 0 %}
+                    {% for doc in documents %}
+                    <li>
+                        <a href="personal-details/documents/{{ doc.id }}/download" download="{{ doc.name }}">{{ doc.name }}</a><br>
+                            <span class="govuk-!-font-size-16">
+                            {% if doc.lastUpdated %}
+                            Last updated {{ doc.lastUpdated | lastUpdatedDate }}
+                        {% else %}
+                            Unavailable
+                        {% endif %}
+                        </span>
+                    </li>
+                    {% endfor %}
                 {% else %}
-                  Unavailable
+                    No personal documents
                 {% endif %}
-              </span>
-            </li>
-            {% endfor %}
-          {% else %}
-            No personal documents
-          {% endif %}
-        </ul>
-      {% endset %}
+            </ul>
+        {% endset %}
 
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: { text: "Name" },
-            value: { text: personalDetails.name | fullName }
-          },
-          {
-            key: { text: "Date of birth" },
-            value: { text: dateOfBirthAndAge }
-          },
-          {
-            key: { text: "Preferred name/Known as" },
-            value: { text: personalDetails.preferredNameKnownAs }
-          } if personalDetails.preferredNameKnownAs,
-          {
-            key: { text: "Aliases" },
-            value: { html: personalDetails.preferredName | default('None known', true) }
-          },
-          {
-            key: { text: "Previous name" },
-            value: { text: personalDetails.previousName }
-          } if personalDetails.previousName,
-          {
-            key: { text: "Preferred language" },
-            value: { text: personalDetails.preferredLanguage + ' (interpreter needed)' if personalDetails.interpreterNeeded else personalDetails.preferredLanguage }
-          } if personalDetails.preferredLanguage,
-          {
-            key: { html: 'Current circumstances<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + personalDetails.circumstances.lastUpdated | lastUpdatedDate + '</span>' },
-            value: { html: circumstances }
-          },
-          {
-            key: { html: 'Disabilities<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + personalDetails.disabilities.lastUpdated | lastUpdatedDate + '</span>' },
-            value: { html: disabilities }
-          },
-          {
-            key: { html: 'Adjustments<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + personalDetails.provisions.lastUpdated | lastUpdatedDate +'</span>' },
-            value: { html: adjustments }
-          },
-          {
-            key: { text: "Criminogenic needs" },
-            value: { html: criminogenicNeeds }
-          },
-          {
-            key: { text: "PNC" },
-            value: { html: '<span class="app-!-font-family-tabular">' + personalDetails.pnc  + '</span>' }
-          } if personalDetails.pnc,
-          {
-            key: { text: "CRN" },
-            value: { html: '<span class="app-!-font-family-tabular">' + personalDetails.crn + '</span>' }
-          },
-          {
-            key: { text: "Personal documents" },
-            value: { html: documents }
-          }
-        ]
-      }) }}
+        {{ govukSummaryList({
+            rows: [
+              {
+                key: { html: '<span data-qa="nameLabel">Name</span>' },
+                value: { html: '<span data-qa="nameValue">' + personalDetails.name | fullName + '</span>' }
+              },
+              {
+                key: { html: '<span data-qa="dateOfBirthLabel">Date of birth</span>' },
+                value: { html: '<span data-qa="dateOfBirthValue">' + dateOfBirthAndAge + '</span>'}
+              },
+              {
+                key: { html: '<span data-qa="preferredNameLabel">Preferred name/Known as</span>' },
+                value: { html: '<span data-qa="preferredNameValue">' + personalDetails.preferredName + '</span>'}
+              } if personalDetails.preferredName,
+              {
+                key: { html: '<span data-qa="aliasesLabel">Aliases</span>' },
+                value: { html:  '<span data-qa="aliasesValue">' + aliases + '</span>'}
+              },
+              {
+                key: { html: '<span data-qa="previousSurnameLabel">Previous surname</span>' },
+                value: { html: '<span data-qa="previousSurnameValue">' + personalDetails.previousSurname + '</span>'}
+              } if personalDetails.previousSurname,
+              {
+                key: { html: '<span data-qa="preferredLanguageLabel">Preferred language</span>' },
+                value: { html: '<span data-qa="preferredLanguageValue">' + personalDetails.preferredLanguage + ' (interpreter needed)' if personalDetails.requiresInterpreter else personalDetails.preferredLanguage  + '</span>' }
+              } if personalDetails.preferredLanguage,
+              {
+                key: { html: '<span data-qa="currentCircumstancesLabel">Current circumstances<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + personalDetails.circumstances.lastUpdated | lastUpdatedDate + '</span></span>' },
+                value: { html: '<span data-qa="currentCircumstancesValue">' + circumstances + '</span>' }
+              },
+              {
+                key: { html: '<span data-qa="disabilitiesLabel">Disabilities<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + personalDetails.disabilities.lastUpdated | lastUpdatedDate + '</span></span>' },
+                value: { html: '<span data-qa="disabilitiesValue">' + disabilities + '</span>' }
+              },
+              {
+                key: { html: '<span data-qa="adjustmentsLabel">Adjustments<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + personalDetails.provisions.lastUpdated | lastUpdatedDate +'</span></span>' },
+                value: { html: '<span data-qa="adjustmentsValue">' + adjustments + '</span>'}
+              },
+              {
+                key: { html: '<span data-qa="adjustmentsLabel">Criminogenic needs</span>' },
+                value: { html: '<span data-qa="adjustmentsLabel">' + criminogenicNeeds + '</span>' }
+              },
+              {
+                key: { html: '<span data-qa="pncLabel">PNC</span>' },
+                value: { html: '<span data-qa="pncValue" class="app-!-font-family-tabular">' + personalDetails.pnc  + '</span>' }
+              } if personalDetails.pnc,
+              {
+                key: { html: '<span data-qa="crnLabel">CRN</span>' },
+                value: { html: '<span data-qa="crnValue" class="app-!-font-family-tabular">' + personalDetails.crn + '</span>' }
+              },
+              {
+                key: { html: '<span data-qa="documentsLabel">Personal documents</span>' },
+                value: { html: '<span data-qa="documentsValue">' + documents + '</span>' }
+              }
+            ]
+        }) }}
     {% endset %}
 
     {{ appSummaryCard({
-      titleText: "Personal details",
-      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-      html: personalDetailsHtml,
-      actions: {}
+        attributes: {'data-qa': 'personalDetailsCard'},
+        titleText: "Personal details",
+        classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+        html: personalDetailsHtml,
+        actions: {}
     }) }}
 
     {% set equality %}
       {{ govukSummaryList({
         rows: [
           {
-            key: { text: "Religion or belief" },
-            value: { text: personalDetails.religionOrBelief }
+            key: { html: '<span data-qa="religionOrBeliefLabel">Religion or belief</span>' },
+            value: { html: '<span data-qa="religionOrBeliefLabel">' + personalDetails.religionOrBelief + '</span>' }
           },
           {
-            key: { text: "Sex" },
-            value: { text: personalDetails.sex }
+            key: { html: '<span data-qa="sexLabel">Sex</span>' },
+            value: { html: '<span data-qa="sexValue">' + personalDetails.sex + '</span>' }
           },
           {
-            key: { text: "Gender identity" },
-            value: { text: personalDetails.genderIdentity }
+            key: { html: '<span data-qa="genderIdentityLabel">Gender identity</span>' },
+            value: { html: '<span data-qa="genderIdentityValue">' + personalDetails.genderIdentity + '</span>' }
           } if personalDetails.genderIdentity,
           {
-            key: { text: "Self-described gender" },
-            value: { text: personalDetails.selfDescribedGender }
+            key: { html: '<span data-qa="selfDescribedGenderLabel">Self-described gender</span>' },
+            value: { html: '<span data-qa="selfDescribedGenderValue">' + personalDetails.selfDescribedGender + '</span>' }
           } if personalDetails.selfDescribedGender,
           {
-            key: { text: "Sexual orientation" },
-            value: { text: personalDetails.sexualOrientation }
+            key: { html: '<span data-qa="sexualOrientationLabel">Sexual orientation</span>' },
+            value: { html: '<span data-qa="sexualOrientationValue">' + personalDetails.sexualOrientation + '</span>' }
           }
         ]
       }) }}
-
-      <p class="govuk-!-margin-top-2 govuk-!-margin-bottom-0"><a href="#">View more on Delius</a></p>
+      <p class="govuk-!-margin-top-2 govuk-!-margin-bottom-0"><a href="/case/{{ crn }}/handoff/delius">View more on Delius</a></p>
     {% endset %}
 
     {{ appSummaryCard({
-      titleText: "Equality monitoring",
-      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-      html: equality,
-      actions: {}
+        attributes: {'data-qa': 'equalityMonitoringCard'},
+        titleText: "Equality monitoring",
+        classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+        html: equality,
+        actions: {}
     }) }}
 {% endblock %}

@@ -1,0 +1,65 @@
+{% extends "../../partials/layout.njk" %}
+{% set title = 'Disabilities' %}
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Your cases",
+      href: "/search"
+    },
+    {
+      text: disabilities.personSummary.name | fullName,
+      href: "/case/" + crn
+    },
+    {
+      text: "Personal details",
+      href: "/case/" + disabilities.personSummary.crn + "/personal-details"
+    },
+    {
+      text: title
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block pageTitle %}{{ title }}{% endblock %}
+
+{% block content %}
+
+{% for disability in disabilities.disabilities %}
+  {% set disabilitiesHtml %}
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "Disability" },
+          value: { text: disability.description }
+        },
+        {
+          key: { text: "Start date" },
+          value: { text: disability.startDate | dateWithYear }
+        },
+        {
+          key: { text: "End date" },
+          value: { text: disability.endDate | dateWithYear }
+        } if disability.endDate,
+        {
+          key: { text: "Notes" },
+          value: { text: disability.notes if disability.notes else 'No notes' }
+        }
+      ]
+    }) }}
+
+    <p class="govuk-!-margin-bottom-0 govuk-!-margin-top-4 govuk-body-s govuk-hint-s">
+        {{ lastUpdatedBy(disability.lastUpdated, disability.lastUpdatedBy)}}
+    </p>
+  {% endset %}
+
+  {{ appSummaryCard({
+    titleText: disability.description,
+    classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+    html: disabilitiesHtml,
+    actions: {}
+  }) }}
+{% endfor %}
+
+{% endblock %}

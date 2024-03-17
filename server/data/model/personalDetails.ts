@@ -1,14 +1,17 @@
-import { Name, PersonalCircumstance } from './common'
+// eslint-disable-next-line import/no-cycle
+import { Name, PersonalCircumstance, PersonSummary } from './common'
 
 export interface PersonalDetails {
   crn: string
   name: Name
   contacts: PersonalContact[]
-  mainAddress?: Address
-  otherAddresses: Address[]
+  mainAddress?: PersonAddress
+  otherAddresses: PersonAddress[]
   preferredGender: string
   dateOfBirth: string
   preferredName?: string
+  previousSurname?: string
+  aliases: Name[]
   telephoneNumber?: string
   mobileNumber?: string
   email?: string
@@ -28,6 +31,8 @@ export interface PersonalContact {
   relationshipType: string
   address?: Address
   notes?: string
+  lastUpdated?: string
+  lastUpdatedBy?: Name
 }
 
 export interface Address {
@@ -39,6 +44,7 @@ export interface Address {
   county?: string
   postcode?: string
   lastUpdated?: string
+  lastUpdatedBy?: Name
 }
 
 export interface PersonAddress extends Address {
@@ -67,4 +73,43 @@ export interface Document {
   id: string
   name: string
   lastUpdated?: string
+}
+
+export interface ProvisionOverview {
+  personSummary: PersonSummary
+  provisions: Provision[]
+}
+
+export interface Provision {
+  description: string
+  notes?: string
+  lastUpdated: string
+  lastUpdatedBy: Name
+}
+
+export interface CircumstanceOverview {
+  personSummary: PersonSummary
+  circumstances: Circumstance[]
+}
+
+export interface Circumstance {
+  type: string
+  subType: string
+  notes?: string
+  verified: boolean
+  startDate: string
+  lastUpdated: string
+  lastUpdatedBy: Name
+}
+
+export interface DisabilityOverview {
+  personSummary: PersonSummary
+  disabilities: Disability[]
+}
+
+export interface Disability {
+  description: string
+  notes?: string
+  lastUpdated: string
+  lastUpdatedBy: Name
 }

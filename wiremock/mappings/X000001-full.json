@@ -194,7 +194,7 @@
       "response": {
         "status": 200,
         "jsonBody": {
-          "crn": "X615013",
+          "crn": "X000001",
           "name": {
             "forename": "Eula",
             "middleName": "",
@@ -207,7 +207,7 @@
                   "forename": "Eula",
                   "surname": "Schmeler"
                 },
-                "crn": "X615013",
+                "crn": "X000001",
                 "dateOfBirth": "1979-08-18"
               },
               "contactId": 2500233993,
@@ -234,7 +234,7 @@
                   "forename": "Eula",
                   "surname": "Schmeler"
                 },
-                "crn": "X615013",
+                "crn": "X000001",
                 "dateOfBirth": "1979-08-18"
               },
               "contactId": 2500232995,
@@ -260,7 +260,7 @@
                   "forename": "Eula",
                   "surname": "Schmeler"
                 },
-                "crn": "X615013",
+                "crn": "X000001",
                 "dateOfBirth": "1979-08-18"
               },
               "contactId": 2500232996,
@@ -287,7 +287,7 @@
                   "forename": "Eula",
                   "surname": "Schmeler"
                 },
-                "crn": "X615013",
+                "crn": "X000001",
                 "dateOfBirth": "1979-08-18"
               },
               "contactId": 2500244492,
@@ -320,7 +320,10 @@
           "preferredGender": "Female",
           "dateOfBirth": "1979-08-18",
           "preferredLanguage": "Urdu",
+          "religionOrBelief" : "Scientology",
+          "sexualOrientation" : "Heterosexual",
           "genderIdentity": "Non-Binary",
+          "previousSurname": "Jones",
           "aliases": [
             {
               "forename": "John",
@@ -372,17 +375,17 @@
           "documents": [
             {
               "id": "83fdbf8a-a2f2-43b4-93ef-67e71c04fc58",
-              "name": "Eula-Schmeler-X615013-UPW.pdf",
+              "name": "Eula-Schmeler-X000001-UPW.pdf",
               "lastUpdated": "2023-04-06T11:06:25.672587+01:00"
             },
             {
               "id": "c2650260-9568-476e-a293-0b168027a5f1",
-              "name": "Eula-Schmeler-X615013-UPW.pdf",
+              "name": "Eula-Schmeler-X000001-UPW.pdf",
               "lastUpdated": "2023-04-06T11:09:45.860739+01:00"
             },
             {
               "id": "b82e444b-c77c-4d44-bf99-4ce4dc426ff4",
-              "name": "Eula-Schmeler-X615013-UPW.pdf",
+              "name": "Eula-Schmeler-X000001-UPW.pdf",
               "lastUpdated": "2023-04-06T11:21:17.06356+01:00"
             }
           ]
@@ -426,7 +429,7 @@
               "forename": "Eula",
               "surname": "Schmeler"
             },
-            "crn": "X615013",
+            "crn": "X000001",
             "dateOfBirth": "1979-08-18"
           },
           "contactId": 2500233993,
@@ -473,7 +476,7 @@
               "forename": "Eula",
               "surname": "Schmeler"
             },
-            "crn": "X615013",
+            "crn": "X000001",
             "dateOfBirth": "1979-08-18"
           },
           "contactId": 2500232995,
@@ -520,7 +523,7 @@
               "forename": "Eula",
               "surname": "Schmeler"
             },
-            "crn": "X615013",
+            "crn": "X000001",
             "dateOfBirth": "1979-08-18"
           },
           "contactId": 2500232996,
@@ -567,7 +570,7 @@
               "forename": "Eula",
               "surname": "Schmeler"
             },
-            "crn": "X615013",
+            "crn": "X000001",
             "dateOfBirth": "1979-08-18"
           },
           "contactId": 2500244492,
@@ -601,7 +604,7 @@
               "forename": "Eula",
               "surname": "Schmeler"
             },
-            "crn": "X615013",
+            "crn": "X000001",
             "dateOfBirth": "1979-08-18"
           },
           "mainAddress": {
@@ -610,6 +613,7 @@
             "town": "Sheffield",
             "county": "South Yorkshire",
             "postcode": "S3 7BS",
+            "telephoneNumber": "0191765438",
             "from": "2023-03-14",
             "verified": true,
             "lastUpdated": "2023-03-20",
@@ -675,9 +679,131 @@
             "forename": "Eula",
             "surname": "Schmeler"
           },
-          "crn": "X615013",
+          "crn": "X000001",
           "dateOfBirth": "1979-08-18",
           "pnc": "PNC/12345"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/personal-details/X000001/disabilities",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "disabilities": [
+            {
+              "description": "Dyslexia",
+              "notes": "Some notes",
+              "startDate": "2021-04-03",
+              "lastUpdated": "2023-03-20",
+              "lastUpdatedBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              }
+            },
+            {
+              "description": "Arthritis",
+              "notes": "Some notes",
+              "startDate": "2021-04-03",
+              "lastUpdated": "2023-03-20",
+              "lastUpdatedBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              }
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },{
+      "request": {
+        "urlPattern": "/mas/personal-details/X000001/provisions",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "provisions": [
+            {
+              "description": "Hand Rails",
+              "notes": "Some notes",
+              "startDate": "2021-04-03",
+              "lastUpdated": "2023-03-20",
+              "lastUpdatedBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              }
+            },
+            {
+              "description": "Special Furniture",
+              "notes": "Some notes",
+              "startDate": "2021-04-03",
+              "lastUpdated": "2023-03-20",
+              "lastUpdatedBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              }
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },{
+      "request": {
+        "urlPattern": "/mas/personal-details/X000001/circumstances",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "circumstances": [
+            {
+              "subType": "Life imprisonment (Adult)",
+              "type": "Committed/ Transferred to Crown",
+              "verified": true,
+              "startDate": "2021-04-03",
+              "notes": "Some notes",
+              "lastUpdated": "2023-03-20",
+              "lastUpdatedBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              }
+            }
+          ]
         },
         "headers": {
           "Content-Type": "application/json"

@@ -1,0 +1,66 @@
+{% extends "../../partials/layout.njk" %}
+{% set title = 'Adjustments' %}
+{% block pageTitle %}{{ title }}{% endblock %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Your cases",
+      href: "/search"
+    },
+    {
+      text: adjustments.personSummary.name | fullName,
+      href: "/case/" + crn
+    },
+    {
+      text: "Personal details",
+      href: "/case/" + adjustments.personSummary.crn + "/personal-details"
+    },
+    {
+      text: title
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+<h1 class="govuk-heading-xl">{{title}}</h1>
+
+{% for adjustment in adjustments.provisions %}
+  {% set adjustmentsHtml %}
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "Adjustment" },
+          value: { text: adjustment.description }
+        },
+        {
+          key: { text: "Start date" },
+          value: { text: adjustment.startDate | dateWithYear }
+        },
+        {
+          key: { text: "End date" },
+          value: { text: adjustment.endDate | dateWithYear }
+        } if disability.endDate,
+        {
+          key: { text: "Notes" },
+          value: { text: adjustment.notes if adjustment.notes else 'No notes' }
+        }
+      ]
+    }) }}
+
+    <p class="govuk-!-margin-bottom-0 govuk-!-margin-top-4 govuk-body-s govuk-hint-s">
+        {{ lastUpdatedBy(adjustment.lastUpdated, adjustment.lastUpdatedBy)}}
+    </p>
+  {% endset %}
+
+  {{ appSummaryCard({
+    titleText: adjustment.description,
+    classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+    html: adjustmentsHtml,
+    actions: {}
+  }) }}
+{% endfor %}
+
+{% endblock %}

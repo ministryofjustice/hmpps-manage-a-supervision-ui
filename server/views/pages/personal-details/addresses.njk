@@ -18,7 +18,7 @@
       href: "/case/" + crn + "/personal-details"
     },
     {
-      text: "Contact: " + title
+      text: title
     }
   ]
 }) }}
@@ -27,26 +27,33 @@
 {% block content %}
 <h1 class="govuk-heading-xl">{{ title }}</h1>
 
+
 <!-- {{ govukWarningText({
   html: 'There is no main address<br><a href="#">Add a main address in Delius</a>',
   iconFallbackText: 'Warning'
 }) }} -->
 
 {% set address = addressOverview.mainAddress %}
-{% include './_address.njk' %}
+<span data-qa="mainAddressSection">
+    {% include './_address.njk' %}
+</span>
 
 {% if addressOverview.otherAddresses.length > 0 %}
-  <h2 class="govuk-heading-l govuk-!-margin-top-8">Other addresses</h2>
-  {% for address in addressOverview.otherAddresses %}
-    {% include './_address.njk' %}
-  {% endfor %}
+    <h2 class="govuk-heading-l govuk-!-margin-top-8">Other addresses</h2>
+    {% for address in addressOverview.otherAddresses %}
+        <span data-qa="otherAddress{{loop.index}}Section">
+            {% include './_address.njk' %}
+        </span>
+    {% endfor %}
 {% endif %}
 
 {% if addressOverview.previousAddresses.length > 0 %}
-  <h2 class="govuk-heading-l govuk-!-margin-top-8">Previous addresses</h2>
-  {% for address in addressOverview.previousAddresses %}
-    {% include './_address.njk' %}
-  {% endfor %}
+    <h2 class="govuk-heading-l govuk-!-margin-top-8">Previous addresses</h2>
+    {% for address in addressOverview.previousAddresses %}
+        <span data-qa="previousAddress{{loop.index}}Section">
+            {% include './_address.njk' %}
+        </span>
+    {% endfor %}
 {% endif %}
 
 {% endblock %}

@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DateTime } from 'luxon'
-import slugify from 'slugify'
 import { RiskScore, RiskToSelf } from '../data/arnsApiClient'
 import { Name } from '../data/model/common'
 import { Address } from '../data/model/personalDetails'
@@ -144,10 +143,6 @@ export const addressToList = (address: Address): string[] => {
   }
 
   return addressArray
-}
-
-export const toSlug = (string: string) => {
-  return slugify(string, { lower: true })
 }
 
 export const lastUpdatedDate = (datetime: string) => {

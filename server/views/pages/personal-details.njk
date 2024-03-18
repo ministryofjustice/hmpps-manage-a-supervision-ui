@@ -142,7 +142,7 @@
               },
               {
                 key: { html: '<span data-qa="contactsLabel">Contacts</span>'},
-                value: { html: '<span data-qa="contactsLabel">' + personalContacts + '</span>' }
+                value: { html: '<span data-qa="contactsValue">' + personalContacts + '</span>' }
               }
             ]
         }) }}
@@ -254,7 +254,7 @@
                         <a href="personal-details/documents/{{ doc.id }}/download" download="{{ doc.name }}">{{ doc.name }}</a><br>
                             <span class="govuk-!-font-size-16">
                             {% if doc.lastUpdated %}
-                            Last updated {{ doc.lastUpdated | lastUpdatedDate }}
+                            {{ doc.lastUpdated | lastUpdatedDate }}
                         {% else %}
                             Unavailable
                         {% endif %}
@@ -291,7 +291,7 @@
               } if personalDetails.previousSurname,
               {
                 key: { html: '<span data-qa="preferredLanguageLabel">Preferred language</span>' },
-                value: { html: '<span data-qa="preferredLanguageValue">' + personalDetails.preferredLanguage + ' (interpreter needed)' if personalDetails.requiresInterpreter else personalDetails.preferredLanguage  + '</span>' }
+                value: { html: '<span data-qa="preferredLanguageValue">' + personalDetails.preferredLanguage + ' (interpreter needed) </span>' if personalDetails.requiresInterpreter else '<span data-qa="preferredLanguageValue">' + personalDetails.preferredLanguage  + '</span>' }
               } if personalDetails.preferredLanguage,
               {
                 key: { html: '<span data-qa="currentCircumstancesLabel">Current circumstances<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + personalDetails.circumstances.lastUpdated | lastUpdatedDate + '</span></span>' },
@@ -306,8 +306,8 @@
                 value: { html: '<span data-qa="adjustmentsValue">' + adjustments + '</span>'}
               },
               {
-                key: { html: '<span data-qa="adjustmentsLabel">Criminogenic needs</span>' },
-                value: { html: '<span data-qa="adjustmentsLabel">' + criminogenicNeeds + '</span>' }
+                key: { html: '<span data-qa="criminogenicNeedsLabel">Criminogenic needs</span>' },
+                value: { html: '<span data-qa="criminogenicNeedsValue">' + criminogenicNeeds + '</span>' }
               },
               {
                 key: { html: '<span data-qa="pncLabel">PNC</span>' },
@@ -338,7 +338,7 @@
         rows: [
           {
             key: { html: '<span data-qa="religionOrBeliefLabel">Religion or belief</span>' },
-            value: { html: '<span data-qa="religionOrBeliefLabel">' + personalDetails.religionOrBelief + '</span>' }
+            value: { html: '<span data-qa="religionOrBeliefValue">' + personalDetails.religionOrBelief + '</span>' }
           },
           {
             key: { html: '<span data-qa="sexLabel">Sex</span>' },

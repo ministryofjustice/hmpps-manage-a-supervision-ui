@@ -19,7 +19,6 @@ import {
   lastUpdatedBy,
   lastUpdatedDate,
   monthsOrDaysElapsed,
-  toSlug,
   yearsSince,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
@@ -71,7 +70,6 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('fullName', fullName)
   njkEnv.addFilter('monthsOrDaysElapsed', monthsOrDaysElapsed)
   njkEnv.addFilter('govukTime', govukTime)
-  njkEnv.addFilter('toSlug', toSlug)
   njkEnv.addFilter('lastUpdatedDate', lastUpdatedDate)
   njkEnv.addFilter('deliusDateFormat', deliusDateFormat)
   njkEnv.addGlobal('getRisksToThemselves', getRisksToThemselves)

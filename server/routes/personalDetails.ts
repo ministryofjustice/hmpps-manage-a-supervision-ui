@@ -53,7 +53,6 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
 
   get('/case/:crn/personal-details/addresses', async (req, res, _next) => {
     const { crn } = req.params
-    const { id } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
 

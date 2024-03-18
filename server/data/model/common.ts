@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import { PersonAddress } from './personalDetails'
 
 export interface Name {
@@ -23,4 +24,3 @@ export interface PersonSummary {
   pnc?: string
   dateOfBirth: string
 }
-

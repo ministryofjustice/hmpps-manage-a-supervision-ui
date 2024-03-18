@@ -28,43 +28,43 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">
-      <span class="govuk-caption-xl">{{ personalContact.relationshipType }}</span>
-      {{ title }}
+      <span data-qa="contactRelationshipTypeHeaderValue" class="govuk-caption-xl">{{ personalContact.relationshipType }}</span>
+      <span data-qa="contactNameHeaderValue">{{ title }}</span>
     </h1>
 
     {{ govukSummaryList({
       rows: [
         {
-          key: { text: "Name" },
-          value: { text: personalContact.name | fullName }
+          key: { html: '<span data-qa="contactNameLabel">Name</span>' },
+          value: { html: '<span data-qa="contactNameValue">' + personalContact.name | fullName + '</span>' }
         },
         {
-          key: { text: "Relationship type" },
-          value: { text: personalContact.relationshipType }
+          key: { html:  '<span data-qa="contactRelationshipTypeLabel">Relationship type</span>' },
+          value: { html: '<span data-qa="contactRelationshipTypeValue">' + personalContact.relationshipType + '</span>' }
         },
         {
-          key: { text: "Relationship" },
-          value: { text: personalContact.relationship }
+          key: { html: '<span data-qa="contactRelationshipLabel">Relationship</span>' },
+          value: { html: '<span data-qa="contactRelationshipValue">' + personalContact.relationship + '</span>' }
         },
         {
-          key: { text: "Address" },
-          value: { html: addressToList(personalContact.address).join('<br>') }
+          key: { html: '<span data-qa="contactAddressLabel">Address</span>' },
+          value: { html: '<span data-qa="contactAddressValue">' + addressToList(personalContact.address).join('<br>') + '</span>' }
         } if personalContact.address,
         {
-          key: { text: "Phone number" },
-          value: { html: personalContact.phone }
+          key: { html: '<span data-qa="contactPhoneLabel">Phone number</span>' },
+          value: { html: '<span data-qa="contactPhoneValue">' + personalContact.phone + '</span>' }
         } if personalContact.phone,
         {
-          key: { text: "Email" },
-          value: { html: personalContact.email }
+          key: { html: '<span data-qa="contactEmailLabel">Email</span>' },
+          value: { html: '<span data-qa="contactEmailValue">' + personalContact.email +'</span>'}
         } if personalContact.email,
         {
-          key: { text: "Start date" },
-          value: { html: personalContact.startDate | dateWithYear }
+          key: { html: '<span data-qa="contactStartDateLabel">Start date</span>' },
+          value: { html: '<span data-qa="contactStartDateLabel">' + personalContact.startDate | dateWithYear +  '</span>'}
         } if personalContact.startDate,
         {
-          key: { text: "Notes" },
-          value: { html: personalContact.notes if personalContact.notes else 'No notes' }
+          key: { html: '<span data-qa="contactNotesLabel">Notes</span>' },
+          value: { html:  '<span data-qa="contactNotesValue">' + personalContact.notes + '</span>' if personalContact.notes else '<span data-qa="contactNotesValue">No notes</span>' }
         }
       ]
     }) }}
@@ -74,7 +74,7 @@
     </p>
 
     <p class="govuk-!-margin-bottom-0 govuk-!-margin-top-4 govuk-body-s govuk-hint-s">
-      {{ lastUpdatedBy(personalContact.lastUpdated, personalContact.lastUpdatedBy)}}
+      <span data-qa="lastUpdatedByValue">{{ lastUpdatedBy(personalContact.lastUpdated, personalContact.lastUpdatedBy)}}</span>
     </p>
   </div>
 </div>

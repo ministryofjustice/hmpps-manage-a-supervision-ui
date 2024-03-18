@@ -8,7 +8,7 @@ import {
   PersonalDetails,
   ProvisionOverview,
 } from './model/personalDetails'
-import { AddressOverview, PersonalCircumstance, PersonSummary } from './model/common'
+import { AddressOverview, PersonSummary } from './model/common'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {

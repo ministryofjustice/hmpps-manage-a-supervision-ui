@@ -320,8 +320,8 @@
           "preferredGender": "Female",
           "dateOfBirth": "1979-08-18",
           "preferredLanguage": "Urdu",
-          "religionOrBelief" : "Scientology",
-          "sexualOrientation" : "Heterosexual",
+          "religionOrBelief": "Scientology",
+          "sexualOrientation": "Heterosexual",
           "genderIdentity": "Non-Binary",
           "previousSurname": "Jones",
           "aliases": [
@@ -618,6 +618,7 @@
             "verified": true,
             "lastUpdated": "2023-03-20",
             "type": "Householder (Owner - freehold or leasehold)",
+            "notes": "Some Notes",
             "status": "Main",
             "lastUpdatedBy": {
               "forename": "Paul",
@@ -632,7 +633,7 @@
               "county": "South Yorkshire",
               "postcode": "S3 7BS",
               "from": "2023-03-14",
-              "verified": true,
+              "verified": false,
               "lastUpdated": "2023-03-20",
               "type": "Householder (Owner - freehold or leasehold)",
               "status": "Postal",
@@ -655,6 +656,7 @@
               "lastUpdated": "2023-03-20",
               "type": "Householder (Owner - freehold or leasehold)",
               "status": "Previous",
+              "notes": "Left this property",
               "lastUpdatedBy": {
                 "forename": "Jim",
                 "surname": "Smith"
@@ -731,7 +733,8 @@
           "Content-Type": "application/json"
         }
       }
-    },{
+    },
+    {
       "request": {
         "urlPattern": "/mas/personal-details/X000001/provisions",
         "method": "GET"
@@ -774,7 +777,8 @@
           "Content-Type": "application/json"
         }
       }
-    },{
+    },
+    {
       "request": {
         "urlPattern": "/mas/personal-details/X000001/circumstances",
         "method": "GET"

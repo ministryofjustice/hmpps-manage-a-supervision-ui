@@ -47,7 +47,17 @@ export interface Address {
   lastUpdatedBy?: Name
 }
 
-export interface PersonAddress extends Address {
+export interface PersonAddress {
+  buildingName?: string
+  buildingNumber?: string
+  streetName?: string
+  district?: string
+  town?: string
+  county?: string
+  postcode?: string
+  telephoneNumber?: string
+  lastUpdated?: string
+  lastUpdatedBy?: Name
   from: string
   to: string
   type?: string

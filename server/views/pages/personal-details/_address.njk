@@ -19,43 +19,43 @@
   {{ govukSummaryList({
     rows: [
       {
-        key: { text: "Status" },
-        value: { html: address.status + ' address' }
+        key: { html: '<span data-qa="addressStatusLabel">Status</span>' },
+        value: { html: '<span data-qa="addressStatusValue">' + address.status + ' address</span>' }
       },
       {
-        key: { text: "Address" },
-        value: { html: fullAddress }
+        key: { html: '<span data-qa="addressLabel">Address</span>' },
+        value: { html: '<span data-qa="addressValue">' + fullAddress + '</span>' }
       },
       {
-        key: { text: "Address telephone" },
-        value: { html: address.telephoneNumber }
+        key: { html: '<span data-qa="addressTelephoneLabel">Address telephone</span>' },
+        value: { html: '<span data-qa="addressTelephoneValue">' + address.telephoneNumber + '</span>' }
       } if address.telephoneNumber,
       {
-        key: { text: "Type of address" },
-        value: { html: address.type + (' (verified)' if address.typeVerified else ' (not verified)') }
+        key: { html: '<span data-qa="addressTypeLabel">Type of address</span>' },
+        value: { html: '<span data-qa="addressTypeValue">' + address.type + (' (verified)</span>' if address.verified else ' (not verified)') + '</span>' }
       } if address.type,
       {
-        key: { text: "Start date" },
-        value: { html: address.from | dateWithYear }
+        key: { html: '<span data-qa="addressStartDateLabel">Start date</span>' },
+        value: { html: '<span data-qa="addressStartDateValue">' + address.from | dateWithYear + '</span>'}
       },
       {
-        key: { text: "End date" },
-        value: { html: address.endDate | dateWithYear }
+        key: { html: '<span data-qa="addressEndDateLabel">End date</span>' },
+        value: { html: '<span data-qa="addressEndDateValue">' + address.endDate | dateWithYear + '</span>' }
       } if address.endDate,
       {
-        key: { text: "Notes" },
-        value: { html: address.notes | nl2br if address.notes else 'No notes' }
+        key: { html: '<span data-qa="addressNotesLabel">Notes</span>' },
+        value: { html: '<span data-qa="addressNotesValue">' + address.notes + '</span>' | nl2br if address.notes else '<span data-qa="addressNotesValue">No notes</span>'}
       }
     ]
   }) }}
 
   <p class="govuk-!-margin-bottom-0 govuk-!-margin-top-4 govuk-body-s govuk-hint-s">
-    {{ lastUpdatedBy(address.lastUpdated, address.lastUpdatedBy)}}
+    <span data-qa="addressLastUpdatedByValue">{{ lastUpdatedBy(address.lastUpdated, address.lastUpdatedBy)}}</span>
   </p>
 {% endset %}
 
 {{ appSummaryCard({
-  titleText: addressTitle,
-  classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-  html: addressHtml
+    titleText: addressTitle,
+    classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+    html: addressHtml
 }) }}

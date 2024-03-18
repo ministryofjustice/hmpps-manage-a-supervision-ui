@@ -1,0 +1,70 @@
+{% extends "../../partials/layout.njk" %}
+{% set title = 'Personal circumstances' %}
+{% block pageTitle %}{{ title }}{% endblock %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Your cases",
+      href: "/search"
+    },
+    {
+      text: circumstances.personSummary.name | fullName,
+      href: "/case/" + crn
+    },
+    {
+      text: "Personal details",
+      href: "/case/" + crn + "/personal-details"
+    },
+    {
+      text: title
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+<h1 class="govuk-heading-xl">{{title}}</h1>
+
+{% for circumstance in circumstances.circumstances %}
+  {% set circumstanceHtml %}
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "Type" },
+          value: { html: circumstance.type }
+        },
+        {
+          key: { text: "Sub-type" },
+          value: { text: circumstance.subType  }
+        },
+        {
+          key: { text: "Start date" },
+          value: { text: circumstance.startDate | dateWithYear }
+        },
+        {
+          key: { text: "Verified?" },
+          value: { text: 'Yes' if circumstance.verified else 'No' }
+        },
+        {
+          key: { text: "Notes" },
+          value: { text: circumstance.notes if circumstance.notes else 'No notes' }
+        }
+      ]
+    }) }}
+
+    <p class="govuk-!-margin-bottom-0 govuk-!-margin-top-4 govuk-body-s govuk-hint-s">
+      {{ lastUpdatedBy(circumstance.lastUpdated, circumstance.lastUpdatedBy)}}
+    </p>
+  {% endset %}
+
+  {{ appSummaryCard({
+    titleHtml: '<span class="govuk-!-font-weight-regular govuk-!-font-size-19">' + circumstance.type + '</span><br />' + circumstance.subType,
+    classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+    html: circumstanceHtml,
+    actions: {}
+  }) }}
+{% endfor %}
+
+{% endblock %}

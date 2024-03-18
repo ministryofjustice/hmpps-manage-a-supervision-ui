@@ -3,10 +3,12 @@ import path from 'path'
 import nunjucks from 'nunjucks'
 import express from 'express'
 import {
+  addressToList,
   dateWithDayAndWithoutYear,
   dateWithNoDay,
   dateWithYear,
   dateWithYearShortMonth,
+  deliusDateFormat,
   fullName,
   getCurrentRisksToThemselves,
   getPreviousRisksToThemselves,
@@ -14,6 +16,8 @@ import {
   getTagClass,
   govukTime,
   initialiseName,
+  lastUpdatedBy,
+  lastUpdatedDate,
   monthsOrDaysElapsed,
   yearsSince,
 } from './utils'
@@ -66,8 +70,12 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('fullName', fullName)
   njkEnv.addFilter('monthsOrDaysElapsed', monthsOrDaysElapsed)
   njkEnv.addFilter('govukTime', govukTime)
+  njkEnv.addFilter('lastUpdatedDate', lastUpdatedDate)
+  njkEnv.addFilter('deliusDateFormat', deliusDateFormat)
   njkEnv.addGlobal('getRisksToThemselves', getRisksToThemselves)
   njkEnv.addGlobal('getCurrentRisksToThemselves', getCurrentRisksToThemselves)
   njkEnv.addGlobal('getPreviousRisksToThemselves', getPreviousRisksToThemselves)
   njkEnv.addGlobal('getTagClass', getTagClass)
+  njkEnv.addGlobal('addressToList', addressToList)
+  njkEnv.addGlobal('lastUpdatedBy', lastUpdatedBy)
 }

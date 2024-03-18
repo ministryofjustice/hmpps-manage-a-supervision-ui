@@ -1,12 +1,26 @@
 {% extends "../partials/case.njk" %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-{% from "govuk/components/summary-list/macro.njk"        import govukSummaryList %}
-{% from "_components/summary-card/macro.njk"             import appSummaryCard %}
 {% set pageTitle = applicationName + " - Overview" %}
 {% set currentNavSection = 'overview' %}
 {% set currentSectionName = 'Overview' %}
 {% set appointmentsWithoutAnOutcomeCount = 1 %}
 {% set waitingForEvidenceCount = 1 %}
+{% set headerPersonName = overview.personalDetails.name.forename + ' ' + overview.personalDetails.name.surname %}
+{% set headerCRN = crn %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+      items: [
+        {
+          text: "Your cases",
+          href: "/search"
+        },
+        {
+          text: headerPersonName
+        }
+      ]
+    }) }}
+{% endblock %}
 
 {% block pageContent %}
     {% if appointmentsWithoutAnOutcomeCount > 0 or waitingForEvidenceCount > 0 %}

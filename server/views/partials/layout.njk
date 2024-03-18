@@ -1,4 +1,14 @@
 {% extends "govuk/template.njk" %}
+{% from "govuk/components/summary-list/macro.njk"        import govukSummaryList %}
+{% from "_components/summary-card/macro.njk"             import appSummaryCard %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/warning-text/macro.njk"        import govukWarningText %}
+{% from "govuk/components/tag/macro.njk"                 import govukTag %}
+{% from "govuk/components/details/macro.njk"                 import govukDetails %}
 
 {% block head %}
   <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet"/>

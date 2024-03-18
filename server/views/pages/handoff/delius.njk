@@ -1,0 +1,89 @@
+{% extends "../../partials/layout.njk" %}
+{% set title = 'Continue on National Delius' %}
+{% block pageTitle %}{{ title }}{% endblock %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Your cases",
+      href: "/search"
+    },
+    {
+      text: personSummary.name | fullName,
+      href: "/case/" + crn
+    },
+    {
+      text: title
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">{{title}}</h1>
+
+    <p>You’ll need to use National Delius to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>make changes to data</li>
+      <li>view certain information, such as previous orders or NSIs</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">Go directly to {{ case.personalDetails.name }} on Delius</h2>
+
+    <p>
+      <a href="#">Open {{ case.personalDetails.name }}’s contact log on Delius</a><br />
+      <span class="govuk-!-font-size-16">Link opens in a new window</span>
+    </p>
+
+    <h2 class="govuk-heading-m">Go to the Delius homepage</h2>
+
+    <p>Or you can use the following information to find {{ case.personalDetails.name }} on Delius:</p>
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: 'Name'
+          },
+          value: {
+            text: personSummary.name | fullName
+          }
+        },
+        {
+          key: {
+            text: 'Date of birth'
+          },
+          value: {
+            text: personSummary.dateOfBirth | deliusDateFormat
+          }
+        },
+        {
+          key: {
+            text: 'CRN'
+          },
+          value: {
+            text: personSummary.crn
+          }
+        },
+        {
+          key: {
+            text: 'PNC'
+          },
+          value: {
+            text: personSummary.pnc
+          }
+        }
+      ]
+    }) }}
+
+    <p>
+      <a href="#">Open the Delius homepage</a><br />
+      <span class="govuk-!-font-size-16">Link opens in a new window</span>
+    </p>
+  </div>
+</div>
+{% endblock %}

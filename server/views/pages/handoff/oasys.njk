@@ -1,0 +1,89 @@
+{% extends "../../partials/layout.njk" %}
+{% set title = 'Continue on OASys' %}
+{% block pageTitle %}{{ title }}{% endblock %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Your cases",
+      href: "/search"
+    },
+    {
+      text: personSummary.name | fullName,
+      href: "/case/" + crn
+    },
+    {
+      text: title
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">{{title}}</h1>
+
+    <p>You’ll need to use OASys to:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>make changes to data</li>
+      <li>view certain information, such as risk management plans and detailed risk information</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">Go directly to {{ case.personalDetails.name }} on OASys</h2>
+
+    <p>
+      <a href="#">Open on OASys</a><br />
+      <span class="govuk-!-font-size-16">Link opens in a new window</span>
+    </p>
+
+    <h2 class="govuk-heading-m">Go to the OASys homepage</h2>
+
+    <p>You can use the following information to find {{ case.personalDetails.name }} on OASys:</p>
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: 'Name'
+          },
+          value: {
+            text: personSummary.name | fullName
+          }
+        },
+        {
+          key: {
+            text: 'Date of birth'
+          },
+          value: {
+            text: personSummary.dateOfBirth | deliusDateFormat
+          }
+        },
+        {
+          key: {
+            text: 'CRN'
+          },
+          value: {
+            text: personSummary.crn
+          }
+        },
+        {
+          key: {
+            text: 'PNC'
+          },
+          value: {
+            text: personSummary.pnc
+          }
+        }
+      ]
+    }) }}
+
+    <p>
+      <a href="#">Open the OASys homepage</a><br />
+      <span class="govuk-!-font-size-16">Link opens in a new window</span>
+    </p>
+  </div>
+</div>
+{% endblock %}

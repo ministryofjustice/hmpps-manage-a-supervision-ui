@@ -1,5 +1,14 @@
 import config from '../config'
 import RestClient from './restClient'
+import { Overview } from './model/overview'
+import {
+  CircumstanceOverview,
+  DisabilityOverview,
+  PersonalContact,
+  PersonalDetails,
+  ProvisionOverview,
+} from './model/personalDetails'
+import { AddressOverview, PersonSummary } from './model/common'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -9,94 +18,36 @@ export default class MasApiClient extends RestClient {
   async getOverview(crn: string): Promise<Overview | null> {
     return this.get({ path: `/overview/${crn}`, handle404: true })
   }
-}
 
-export interface Overview {
-  activity?: Activity
-  compliance?: Compliance
-  personalDetails: PersonalDetails
-  previousOrders: PreviousOrders
-  schedule: Schedule
-  sentences: Sentence[]
-  registrations: string[]
-}
+  async getPersonalDetails(crn: string): Promise<PersonalDetails | null> {
+    return this.get({ path: `/personal-details/${crn}`, handle404: true })
+  }
 
-export interface Offence {
-  code: string
-  description: string
-}
+  async getPersonalContact(crn: string, id: string): Promise<PersonalContact | null> {
+    return this.get({ path: `/personal-details/${crn}/personal-contact/${id}`, handle404: true })
+  }
 
-export interface Sentence {
-  additionalOffences: Offence[]
-  mainOffence: Offence
-  order?: Order
-  rar?: Rar
-}
+  async getPersonalAddresses(crn: string): Promise<AddressOverview | null> {
+    return this.get({ path: `/personal-details/${crn}/addresses`, handle404: true })
+  }
 
-export interface Rar {
-  completed: number
-  scheduled: number
-  totalDays: number
-}
+  async getPersonSummary(crn: string): Promise<PersonSummary | null> {
+    return this.get({ path: `/personal-details/${crn}/summary`, handle404: true })
+  }
 
-export interface Order {
-  description: string
-  endDate?: string
-  startDate: string
-}
+  async getPersonDisabilities(crn: string): Promise<DisabilityOverview | null> {
+    return this.get({ path: `/personal-details/${crn}/disabilities`, handle404: true })
+  }
 
-export interface PreviousOrders {
-  breaches: number
-  count: number
-}
+  async getPersonAdjustments(crn: string): Promise<ProvisionOverview | null> {
+    return this.get({ path: `/personal-details/${crn}/provisions`, handle404: true })
+  }
 
-export interface Schedule {
-  nextAppointment?: NextAppointment
-}
+  async getPersonCircumstances(crn: string): Promise<CircumstanceOverview | null> {
+    return this.get({ path: `/personal-details/${crn}/circumstances`, handle404: true })
+  }
 
-export interface NextAppointment {
-  date: string
-  description: string
-}
-
-export interface PersonalDetails {
-  name: Name
-  preferredGender: string
-  preferredName?: string
-  telephoneNumber?: string
-  mobileNumber?: string
-  disabilities: Disability[]
-  provisions: Provision[]
-  personalCircumstances: PersonalCircumstance[]
-  dateOfBirth: string
-}
-export interface Disability {
-  description: string
-}
-
-export interface Provision {
-  description: string
-}
-
-export interface PersonalCircumstance {
-  subType: string
-  type: string
-}
-
-export interface Name {
-  forename: string
-  middleName?: string
-  surname: string
-}
-
-export interface Activity {
-  acceptableAbsences: number
-  complied: number
-  nationalStandardsAppointments: number
-  rescheduled: number
-}
-
-export interface Compliance {
-  currentBreaches: number
-  failureToComplyInLast12Months: number
+  async downloadDocument(crn: string, documentId: string) {
+    return this.stream({ path: `/personal-details/${crn}/document/${documentId}` })
+  }
 }

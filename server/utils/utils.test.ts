@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DateTime } from 'luxon'
-import { Name } from '../data/masApiClient'
+
 import {
   convertToTitleCase,
   dateWithDayAndWithoutYear,
@@ -15,6 +15,7 @@ import {
   yearsSince,
 } from './utils'
 import { RiskResponse, RiskScore, RiskToSelf } from '../data/arnsApiClient'
+import { Name } from '../data/model/common'
 
 describe('convert to title case', () => {
   it.each([

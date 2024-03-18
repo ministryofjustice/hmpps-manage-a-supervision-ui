@@ -1,7 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DateTime } from 'luxon'
-import { Name } from '../data/masApiClient'
 import { RiskScore, RiskToSelf } from '../data/arnsApiClient'
+import { Name } from '../data/model/common'
+import { Address } from '../data/model/personalDetails'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -117,4 +118,41 @@ export const getTagClass = (score: RiskScore) => {
     default:
       return 'govuk-tag--blue'
   }
+}
+
+export const addressToList = (address: Address): string[] => {
+  const addressArray: string[] = []
+  let buildingNumber = ''
+  if (address?.buildingName) {
+    addressArray.push(address?.buildingName)
+  }
+  if (address?.buildingNumber) {
+    buildingNumber = `${address?.buildingNumber} `
+  }
+  if (address?.streetName) {
+    addressArray.push(`${buildingNumber}${address?.streetName}`)
+  }
+  if (address?.town) {
+    addressArray.push(address?.town)
+  }
+  if (address?.county) {
+    addressArray.push(address?.county)
+  }
+  if (address?.postcode) {
+    addressArray.push(address?.postcode)
+  }
+
+  return addressArray
+}
+
+export const lastUpdatedDate = (datetime: string) => {
+  return datetime ? `Last updated ${dateWithYearShortMonth(datetime)}` : ''
+}
+
+export const lastUpdatedBy = (datetime: string, name: Name) => {
+  return datetime ? `Last updated by ${fullName(name)} on ${dateWithYearShortMonth(datetime)}` : ''
+}
+
+export const deliusDateFormat = (datetime: string) => {
+  return DateTime.fromISO(datetime).toFormat('dd/MM/yyyy')
 }

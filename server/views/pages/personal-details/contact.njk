@@ -1,0 +1,81 @@
+{% extends "../../partials/layout.njk" %}
+{% set title = personalContact.name | fullName  %}
+{% block pageTitle %}{{ title }}{% endblock %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Your cases",
+      href: "/search"
+    },
+    {
+      text: personalContact.personSummary.name | fullName,
+      href: "/case/" + crn
+    },
+    {
+      text: "Personal details",
+      href: "/case/" + crn + "/personal-details"
+    },
+    {
+      text: "Contact: " + title
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">
+      <span data-qa="contactRelationshipTypeHeaderValue" class="govuk-caption-xl">{{ personalContact.relationshipType }}</span>
+      <span data-qa="contactNameHeaderValue">{{ title }}</span>
+    </h1>
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { html: '<span data-qa="contactNameLabel">Name</span>' },
+          value: { html: '<span data-qa="contactNameValue">' + personalContact.name | fullName + '</span>' }
+        },
+        {
+          key: { html:  '<span data-qa="contactRelationshipTypeLabel">Relationship type</span>' },
+          value: { html: '<span data-qa="contactRelationshipTypeValue">' + personalContact.relationshipType + '</span>' }
+        },
+        {
+          key: { html: '<span data-qa="contactRelationshipLabel">Relationship</span>' },
+          value: { html: '<span data-qa="contactRelationshipValue">' + personalContact.relationship + '</span>' }
+        },
+        {
+          key: { html: '<span data-qa="contactAddressLabel">Address</span>' },
+          value: { html: '<span data-qa="contactAddressValue">' + addressToList(personalContact.address).join('<br>') + '</span>' }
+        } if personalContact.address,
+        {
+          key: { html: '<span data-qa="contactPhoneLabel">Phone number</span>' },
+          value: { html: '<span data-qa="contactPhoneValue">' + personalContact.phone + '</span>' }
+        } if personalContact.phone,
+        {
+          key: { html: '<span data-qa="contactEmailLabel">Email</span>' },
+          value: { html: '<span data-qa="contactEmailValue">' + personalContact.email +'</span>'}
+        } if personalContact.email,
+        {
+          key: { html: '<span data-qa="contactStartDateLabel">Start date</span>' },
+          value: { html: '<span data-qa="contactStartDateLabel">' + personalContact.startDate | dateWithYear +  '</span>'}
+        } if personalContact.startDate,
+        {
+          key: { html: '<span data-qa="contactNotesLabel">Notes</span>' },
+          value: { html:  '<span data-qa="contactNotesValue">' + personalContact.notes + '</span>' if personalContact.notes else '<span data-qa="contactNotesValue">No notes</span>' }
+        }
+      ]
+    }) }}
+
+    <p>
+      <a href="/case/{{ crn }}/handoff/delius">Change contact details</a>
+    </p>
+
+    <p class="govuk-!-margin-bottom-0 govuk-!-margin-top-4 govuk-body-s govuk-hint-s">
+      <span data-qa="lastUpdatedByValue">{{ lastUpdatedBy(personalContact.lastUpdated, personalContact.lastUpdatedBy)}}</span>
+    </p>
+  </div>
+</div>
+{% endblock %}

@@ -47,7 +47,7 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/personal-details/${crn}/circumstances`, handle404: true })
   }
 
-  async downloadDocument(crn: string, documentId: string) {
-    return this.stream({ path: `/personal-details/${crn}/document/${documentId}` })
+  async downloadDocument(crn: string, documentId: string): Promise<Response> {
+    return this.get({ path: `/personal-details/${crn}/document/${documentId}`, raw: true, responseType: 'arrayBuffer' })
   }
 }

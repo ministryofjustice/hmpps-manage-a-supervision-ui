@@ -87,8 +87,9 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       service: 'hmpps-manage-a-supervision-ui',
     })
 
-    const document = await masClient.downloadDocument(crn, documentId)
-    document.pipe(res)
+    const response = await masClient.downloadDocument(crn, documentId)
+    res.set(response.headers)
+    res.send(response.body)
   })
 
   get('/case/:crn/handoff/:system', async (req, res, _next) => {

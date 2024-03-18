@@ -26,36 +26,43 @@
 {% block pageContent %}
     {% set contactDetails %}
         {% set mainAddress = personalDetails.mainAddress %}
-            {% set address %}
-                {{ addressToList(mainAddress).join('<br>') | safe }}
-                {% set addressDetails %}
-                    {{ govukSummaryList({
-                        rows: [
-                          {
-                            key: { html: '<span data-qa="mainAddressTelephoneLabel">Address telephone</span>' },
-                            value: { html: '<span data-qa="addressTelephoneValue" class="app-!-font-family-tabular">' + mainAddress.telephoneNumber + '</span>' }
-                          } if mainAddress.telephoneNumber,
-                          {
-                            key: { html:  '<span data-qa="addressTypeLabel">Type of address</span>' },
-                            value: { html: '<span data-qa="addressTypeValue">' + mainAddress.type + (' (verified)' if mainAddress.verified else ' (not verified)') + '</span>' }
-                          },
-                          {
-                            key: { html: '<span data-qa="mainAddressStartDateLabel">Start date</span>' },
-                            value: { html: '<span data-qa="mainAddressStartDateValue">' + mainAddress.from | dateWithYear + '</span>' }
-                          },
-                          {
-                            key: { html: '<span data-qa="mainAddressNotesLabel">Notes</span>' },
-                            value: { html: '<span data-qa="mainAddressNotesValue">' + mainAddress.notes | nl2br if mainAddress.notes else 'No notes' + '</span>' }
-                          }
-                        ]
-                    }) }}
-            {% endset %}
 
-            {{ govukDetails({
-              summaryText: "View address details",
-              classes: 'govuk-!-margin-top-2 govuk-!-margin-bottom-0',
-              html: addressDetails
-            }) }}
+            {% set address %}
+                {% if personalDetails.mainAddress %}
+                    {{ addressToList(mainAddress).join('<br>') | safe }}
+                    {% set addressDetails %}
+                        {{ govukSummaryList({
+                            rows: [
+                              {
+                                key: { html: '<span data-qa="mainAddressTelephoneLabel">Address telephone</span>' },
+                                value: { html: '<span data-qa="addressTelephoneValue" class="app-!-font-family-tabular">' + mainAddress.telephoneNumber + '</span>' }
+                              } if mainAddress.telephoneNumber,
+                              {
+                                key: { html:  '<span data-qa="addressTypeLabel">Type of address</span>' },
+                                value: { html: '<span data-qa="addressTypeValue">' + mainAddress.type + (' (verified)' if mainAddress.verified else ' (not verified)') + '</span>' }
+                              },
+                              {
+                                key: { html: '<span data-qa="mainAddressStartDateLabel">Start date</span>' },
+                                value: { html: '<span data-qa="mainAddressStartDateValue">' + mainAddress.from | dateWithYear + '</span>' }
+                              },
+                              {
+                                key: { html: '<span data-qa="mainAddressNotesLabel">Notes</span>' },
+                                value: { html: '<span data-qa="mainAddressNotesValue">' + mainAddress.notes | nl2br if mainAddress.notes else 'No notes' + '</span>' }
+                              }
+                            ]
+                        }) }}
+                {% endset %}
+
+                {{ govukDetails({
+                  summaryText: "View address details",
+                  classes: 'govuk-!-margin-top-2 govuk-!-margin-bottom-0',
+                  html: addressDetails
+                }) }}
+
+            {% else %}
+                No main address<br />
+                <a href="/case/{{ crn }}/handoff/delius">Add a main address in Delius</a>
+            {% endif %}
         {% endset %}
 
         {% set personalContacts %}
@@ -113,15 +120,15 @@
             rows: [
               {
                 key: { html: '<span data-qa="telephoneNumberLabel">Phone number</span>' },
-                value: { html: ('<span data-qa="telephoneNumberValue" class="app-!-font-family-tabular">' + personalDetails.telephoneNumber + '</span>') if personalDetails.telephoneNumber else 'No phone number' }
+                value: { html: ('<span data-qa="telephoneNumberValue" class="app-!-font-family-tabular">' + personalDetails.telephoneNumber + '</span>') if personalDetails.telephoneNumber else '<span data-qa="telephoneNumberValue">No phone number</span>' }
               },
                 {
                   key: { html: '<span data-qa="mobileNumberLabel">Mobile number</span>' },
-                  value: { html: ('<span data-qa="mobileNumberValue" class="app-!-font-family-tabular">' + personalDetails.mobileNumber + '</span>') if personalDetails.mobileNumber else 'No mobile number' }
+                  value: { html: ('<span data-qa="mobileNumberValue" class="app-!-font-family-tabular">' + personalDetails.mobileNumber + '</span>') if personalDetails.mobileNumber else '<span data-qa="mobileNumberValue">No mobile number</span>' }
                 },
               {
                 key: { html: '<span data-qa="emailAddressLabel">Email address</span>' },
-                value: { html: '<span data-qa="emailAddressValue">' + personalDetails.email or 'No email address' + '</span>' },
+                value: { html: '<span data-qa="emailAddressValue">' + personalDetails.email + '</span>' if personalDetails.email else '<span data-qa="emailAddressValue">No email address</span>' },
                 actions: {
                   items: [
                     {
@@ -339,7 +346,7 @@
           {
             key: { html: '<span data-qa="religionOrBeliefLabel">Religion or belief</span>' },
             value: { html: '<span data-qa="religionOrBeliefValue">' + personalDetails.religionOrBelief + '</span>' }
-          },
+          } if personalDetails.religionOrBelief,
           {
             key: { html: '<span data-qa="sexLabel">Sex</span>' },
             value: { html: '<span data-qa="sexValue">' + personalDetails.sex + '</span>' }
@@ -355,7 +362,7 @@
           {
             key: { html: '<span data-qa="sexualOrientationLabel">Sexual orientation</span>' },
             value: { html: '<span data-qa="sexualOrientationValue">' + personalDetails.sexualOrientation + '</span>' }
-          }
+          } if personalDetails.sexualOrientation
         ]
       }) }}
       <p class="govuk-!-margin-top-2 govuk-!-margin-bottom-0"><a href="/case/{{ crn }}/handoff/delius">View more on Delius</a></p>

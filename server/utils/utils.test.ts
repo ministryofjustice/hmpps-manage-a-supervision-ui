@@ -196,7 +196,7 @@ describe('get delius deep link', () => {
       'present',
       'ContactList',
       '1234',
-      'http://ndelius-dummy-url/NDelius-war/delius/JSP/deeplink.xhtml?component=ContactList&offenderId=1234',
+      'https://ndelius-dummy-url/NDelius-war/delius/JSP/deeplink.xhtml?component=ContactList&offenderId=1234',
     ],
   ])('%s deliusDeepLinkUrl(%s, %s)', (_: string, a: string, b: string, expected: string) => {
     expect(deliusDeepLinkUrl(a, b)).toEqual(expected)
@@ -204,7 +204,10 @@ describe('get delius deep link', () => {
 })
 
 describe('get deliuus homepage link', () => {
-  it.each([['Get link', 'http://ndelius-dummy-url']])('%s deliusDeepLinkUrl(%s, %s)', (_: string, expected: string) => {
-    expect(deliusHomepageUrl()).toEqual(expected)
-  })
+  it.each([['Get link', 'https://ndelius-dummy-url']])(
+    '%s deliusDeepLinkUrl(%s, %s)',
+    (_: string, expected: string) => {
+      expect(deliusHomepageUrl()).toEqual(expected)
+    },
+  )
 })

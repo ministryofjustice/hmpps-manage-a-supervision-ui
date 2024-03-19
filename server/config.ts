@@ -55,7 +55,7 @@ export default {
     expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 120)),
   },
   delius: {
-    link: get('DELIUS_LINK', 'http://ndelius-dummy-url', requiredInProduction),
+    link: get('DELIUS_LINK', 'https://ndelius-dummy-url', requiredInProduction),
   },
   apis: {
     hmppsAuth: {

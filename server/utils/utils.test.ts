@@ -6,6 +6,8 @@ import {
   dateWithDayAndWithoutYear,
   dateWithYear,
   dateWithYearShortMonth,
+  deliusDeepLinkUrl,
+  deliusHomepageUrl,
   fullName,
   getRisksToThemselves,
   getTagClass,
@@ -184,5 +186,25 @@ describe('get tag class', () => {
     ['Very High', VERY_HIGH, 'govuk-tag--red'],
   ])('%s getTagClass(%s, %s)', (_: string, a: RiskScore, expected: string) => {
     expect(getTagClass(a)).toEqual(expected)
+  })
+})
+
+describe('get delius deep link', () => {
+  it.each([
+    ['null', null, null, ''],
+    [
+      'present',
+      'ContactList',
+      '1234',
+      'http://ndelius-dummy-url/NDelius-war/delius/JSP/deeplink.xhtml?component=ContactList&offenderId=1234',
+    ],
+  ])('%s deliusDeepLinkUrl(%s, %s)', (_: string, a: string, b: string, expected: string) => {
+    expect(deliusDeepLinkUrl(a, b)).toEqual(expected)
+  })
+})
+
+describe('get deliuus homepage link', () => {
+  it.each([['Get link', 'http://ndelius-dummy-url']])('%s deliusDeepLinkUrl(%s, %s)', (_: string, expected: string) => {
+    expect(deliusHomepageUrl()).toEqual(expected)
   })
 })

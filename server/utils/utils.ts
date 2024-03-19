@@ -3,6 +3,7 @@ import { DateTime } from 'luxon'
 import { RiskScore, RiskToSelf } from '../data/arnsApiClient'
 import { Name } from '../data/model/common'
 import { Address } from '../data/model/personalDetails'
+import config from '../config'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -155,4 +156,15 @@ export const lastUpdatedBy = (datetime: string, name: Name) => {
 
 export const deliusDateFormat = (datetime: string) => {
   return DateTime.fromISO(datetime).toFormat('dd/MM/yyyy')
+}
+
+export const deliusDeepLinkUrl = (component: string, offenderId: string) => {
+  if (!component || !offenderId) {
+    return ''
+  }
+  return `${config.delius.link}/NDelius-war/delius/JSP/deeplink.xhtml?component=${component}&offenderId=${offenderId}`
+}
+
+export const deliusHomepageUrl = () => {
+  return `${config.delius.link}`
 }

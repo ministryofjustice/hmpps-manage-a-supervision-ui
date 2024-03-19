@@ -59,6 +59,7 @@ generic-service:
   allowlist:
     groups:
       - internal
+      - unilink_staff
 
   serviceAccountName: manage-a-supervision-ui
 

@@ -9,6 +9,8 @@ import {
   dateWithYear,
   dateWithYearShortMonth,
   deliusDateFormat,
+  deliusDeepLinkUrl,
+  deliusHomepageUrl,
   fullName,
   getCurrentRisksToThemselves,
   getPreviousRisksToThemselves,
@@ -78,4 +80,6 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('getTagClass', getTagClass)
   njkEnv.addGlobal('addressToList', addressToList)
   njkEnv.addGlobal('lastUpdatedBy', lastUpdatedBy)
+  njkEnv.addGlobal('deliusDeepLinkUrl', deliusDeepLinkUrl)
+  njkEnv.addGlobal('deliusHomepageUrl', deliusHomepageUrl)
 }

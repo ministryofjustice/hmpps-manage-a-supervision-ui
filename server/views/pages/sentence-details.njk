@@ -1,0 +1,11 @@
+{% extends "../partials/case.njk" %}
+{% set pageTitle = applicationName + " - Sentence Details" %}
+{% set currentNavSection = 'sentence-details' %}
+{% set currentSectionName = 'Sentence' %}
+{% set headerPersonName = sentenceDetails.name.forename + ' ' + sentenceDetails.name.surname %}
+{% set headerCRN = crn %}
+
+{% for item in sentences %}
+    Value: {{ item }}
+{% endfor %}
+

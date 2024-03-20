@@ -1,0 +1,70 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/sentence/X000001",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "name": {
+            "forename": "Caroline",
+            "middleName": "Linda",
+            "surname": "Wolff"
+          },
+          "sentences": [
+            {
+              "offence": {
+                "offence": {
+                  "description": "Murder",
+                  "count": 1
+                },
+                "dateOfOffence": "2024-03-20",
+                "notes": "overview",
+                "additionalOffences": [
+                  {
+                    "description": "Burglary",
+                    "count": 1
+                  },
+                  {
+                    "description": "Assault",
+                    "count": 1
+                  }
+                ]
+              },
+              "conviction": {
+                "sentencingCourt": "Hull Court",
+                "responsibleCourt": "Birmingham Court",
+                "convictionDate": "2024-03-20",
+                "additionalSentences": [
+                  {
+                    "length": 3,
+                    "description": "Disqualified from Driving"
+                  }
+                ]
+              }
+            },
+            {
+              "offence": {
+                "offence": {
+                  "description": "Another Murder",
+                  "count": 1
+                },
+                "dateOfOffence": "2024-03-20",
+                "notes": "overview",
+                "additionalOffences": []
+              },
+              "conviction": {
+                "additionalSentences": []
+              }
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

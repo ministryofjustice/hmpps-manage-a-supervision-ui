@@ -5,7 +5,42 @@
 {% set headerPersonName = sentenceDetails.name.forename + ' ' + sentenceDetails.name.surname %}
 {% set headerCRN = crn %}
 
-{% for item in sentences %}
-    Value: {{ item }}
-{% endfor %}
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+      items: [
+        {
+          text: "Your cases",
+          href: "/search"
+        },
+        {
+          text: headerPersonName,
+          href: "/case/" + crn
+        },
+        {
+          text: currentSectionName
+        }
+      ]
+    }) }}
+{% endblock %}
+
+{% block pageContent %}
+    {% set offence %}
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: { text: "Main offence" },
+            value: { html: ' aaa' }
+          }
+        ]
+      }) }}
+    {% endset %}
+
+    {{ appSummaryCard({
+      titleText: 'Offence',
+      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+      html: offence
+    }) }}
+{% endblock %}
+
+
 

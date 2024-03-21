@@ -42,6 +42,26 @@
         {% set additionalSentences %}
             {% for additionalSentence in sentence.conviction.additionalSentences %}
                 {% set detailsHtml %}
+                  {{ govukSummaryList({
+                    rows: [
+                      {
+                        key: { text: 'Sentence' },
+                        value: { text: additionalSentence.description }
+                      },
+                      {
+                        key: { text: 'Value' },
+                        value: { text: additionalSentence.value }
+                      } if additionalSentence.value,
+                      {
+                        key: { text: 'Length' },
+                        value: { text: additionalSentence.length }
+                      } if additionalSentence.length,
+                      {
+                        key: { text: 'Notes' },
+                        value: { html: additionalSentence.notes | nl2br if additionalSentence.notes else 'No notes' }
+                      }
+                    ]
+                  }) }}
                 {% endset %}
                 {{ govukDetails({
                   classes: 'govuk-!-margin-bottom-1',

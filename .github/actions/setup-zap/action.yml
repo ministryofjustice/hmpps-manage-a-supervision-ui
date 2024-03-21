@@ -1,0 +1,44 @@
+name: Setup OWASP ZAP
+description: Installs the OWASP ZAP tool
+
+inputs:
+  version:
+    description: ZAP version, defaults to latest
+    default: latest
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: 11
+
+    - name: Get ZAP version
+      id: latest
+      run: |
+        if [ "$version" = "latest" ]; then
+          version=$(curl -fsSL https://raw.githubusercontent.com/zaproxy/zap-admin/master/ZapVersions.xml | grep '<version>' | sed 's/.*<version>//;s/<\/version>.*//')
+        fi
+        echo "version=$version" | tee -a "$GITHUB_OUTPUT"
+      env:
+        version: ${{ inputs.version }}
+      shell: bash
+
+    - name: Install ZAP
+      run: |
+        if [ -d "${tool_cache}/zap/${version}" ]; then
+          echo "Using cached ZAP $version"
+        else
+          curl -fsSL "https://github.com/zaproxy/zaproxy/releases/download/v${version}/ZAP_${version}_Linux.tar.gz" | tar -xz
+          mkdir -p "${tool_cache}/zap" "${tool_cache}/bin"
+          mv ZAP_* "${tool_cache}/zap/${version}"
+          ln -sf "${tool_cache}/zap/${version}/zap.sh" "${tool_cache}/bin/owasp-zap"
+        fi
+        echo "${tool_cache}/bin" >> "$GITHUB_PATH"
+      env:
+        tool_cache: ${{ runner.tool_cache }}
+        version: ${{ steps.latest.outputs.version }}
+      shell: bash
+

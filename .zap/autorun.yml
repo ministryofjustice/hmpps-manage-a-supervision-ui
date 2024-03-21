@@ -25,8 +25,8 @@ env:
       users:
       - name: "TestUser"
         credentials:
-          username: "AutomatedTestUser"
-          password: "oz5eo2OhceesheN7"
+          username: "$ZAP_USERNAME"
+          password: "$ZAP_PASSWORD"
   parameters:
     failOnError: true
     failOnWarning: false

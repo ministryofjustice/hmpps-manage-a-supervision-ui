@@ -1,0 +1,1988 @@
+{
+	"@programName": "ZAP",
+	"@version": "2.14.0",
+	"@generated": "Thu, 21 Mar 2024 10:34:22",
+	"site":[ 
+		{
+			"@name": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk",
+			"@host": "manage-a-supervision-dev.hmpps.service.justice.gov.uk",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+				{
+					"pluginid": "10055",
+					"alertRef": "10055-4",
+					"alert": "CSP: Wildcard Directive",
+					"name": "CSP: Wildcard Directive",
+					"riskcode": "2",
+					"confidence": "3",
+					"riskdesc": "Medium (High)",
+					"desc": "<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks. Including (but not limited to) Cross Site Scripting (XSS), and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page \u2014 covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>",
+					"instances":[ 
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets",
+							"method": "GET",
+							"param": "Content-Security-Policy",
+							"attack": "",
+							"evidence": "default-src 'none'",
+							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts",
+							"method": "GET",
+							"param": "Content-Security-Policy",
+							"attack": "",
+							"evidence": "default-src 'none'",
+							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk",
+							"method": "GET",
+							"param": "Content-Security-Policy",
+							"attack": "",
+							"evidence": "default-src 'none'",
+							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images",
+							"method": "GET",
+							"param": "Content-Security-Policy",
+							"attack": "",
+							"evidence": "default-src 'none'",
+							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj",
+							"method": "GET",
+							"param": "Content-Security-Policy",
+							"attack": "",
+							"evidence": "default-src 'none'",
+							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets",
+							"method": "GET",
+							"param": "Content-Security-Policy",
+							"attack": "",
+							"evidence": "default-src 'none'",
+							"otherinfo": "The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: \nframe-ancestors, form-action\n\nThe directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything."
+						}
+					],
+					"count": "6",
+					"solution": "<p>Ensure that your web server, application server, load balancer, etc. is properly configured to set the Content-Security-Policy header.</p>",
+					"otherinfo": "<p>The following directives either allow wildcard sources (or ancestors), are not defined, or are overly broadly defined: </p><p>frame-ancestors, form-action</p><p></p><p>The directive(s): frame-ancestors, form-action are among the directives that do not fallback to default-src, missing/excluding them is the same as allowing anything.</p>",
+					"reference": "<p>http://www.w3.org/TR/CSP2/</p><p>http://www.w3.org/TR/CSP/</p><p>http://caniuse.com/#search=content+security+policy</p><p>http://content-security-policy.com/</p><p>https://github.com/shapesecurity/salvation</p><p>https://developers.google.com/web/fundamentals/security/csp#policy_applies_to_a_wide_variety_of_resources</p>",
+					"cweid": "693",
+					"wascid": "15",
+					"sourceid": "88"
+				},
+				{
+					"pluginid": "2",
+					"alertRef": "2",
+					"alert": "Private IP Disclosure",
+					"name": "Private IP Disclosure",
+					"riskcode": "1",
+					"confidence": "2",
+					"riskdesc": "Low (Medium)",
+					"desc": "<p>A private IP (such as 10.x.x.x, 172.x.x.x, 192.168.x.x) or an Amazon EC2 private hostname (for example, ip-10-0-56-78) has been found in the HTTP response body. This information might be helpful for further attacks targeting internal systems.</p>",
+					"instances":[ 
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "10.02.68.86",
+							"otherinfo": "10.02.68.86\n"
+						}
+					],
+					"count": "1",
+					"solution": "<p>Remove the private IP address from the HTTP response body.  For comments, use JSP/ASP/PHP comment instead of HTML/JavaScript comment which can be seen by client browsers.</p>",
+					"otherinfo": "<p>10.02.68.86</p><p></p>",
+					"reference": "<p>https://tools.ietf.org/html/rfc1918</p>",
+					"cweid": "200",
+					"wascid": "13",
+					"sourceid": "175"
+				},
+				{
+					"pluginid": "10096",
+					"alertRef": "10096",
+					"alert": "Timestamp Disclosure - Unix",
+					"name": "Timestamp Disclosure - Unix",
+					"riskcode": "1",
+					"confidence": "1",
+					"riskdesc": "Low (Low)",
+					"desc": "<p>A timestamp was disclosed by the application/web server - Unix</p>",
+					"instances":[ 
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "1428571429",
+							"otherinfo": "1428571429, which evaluates to: 2015-04-09 09:23:49"
+						}
+					],
+					"count": "1",
+					"solution": "<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p>",
+					"otherinfo": "<p>1428571429, which evaluates to: 2015-04-09 09:23:49</p>",
+					"reference": "<p>http://projects.webappsec.org/w/page/13246936/Information%20Leakage</p>",
+					"cweid": "200",
+					"wascid": "13",
+					"sourceid": "125"
+				},
+				{
+					"pluginid": "10027",
+					"alertRef": "10027",
+					"alert": "Information Disclosure - Suspicious Comments",
+					"name": "Information Disclosure - Suspicious Comments",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "Informational (Low)",
+					"desc": "<p>The response appears to contain suspicious comments which may help an attacker. Note: Matches made within script blocks or files are against the entire content not only comments.</p>",
+					"instances":[ 
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk/govuk-frontend.min.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "select",
+							"otherinfo": "The following pattern was used: \\bSELECT\\b and was detected in the element starting with: \"const version=\"5.1.0\";function mergeConfigs(...t){function flattenObject(t){const e={};return function flattenLoop(t,n){for(cons\", see evidence field for the suspicious comment/snippet."
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govukFrontendInit.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "from",
+							"otherinfo": "The following pattern was used: \\bFROM\\b and was detected in the element starting with: \"import { initAll } from '/assets/govuk/govuk-frontend.min.js'\", see evidence field for the suspicious comment/snippet."
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj/all.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "select",
+							"otherinfo": "The following pattern was used: \\bSELECT\\b and was detected 6 times, the first in the element starting with: \"  var $multiSelects = scope.querySelectorAll('[data-module=\"moj-multi-select\"]');\", see evidence field for the suspicious comment/snippet."
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj/all.js",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "user",
+							"otherinfo": "The following pattern was used: \\bUSER\\b and was detected 2 times, the first in the element starting with: \"  // Allow the user to initialise MOJ Frontend in only certain sections of the page\", see evidence field for the suspicious comment/snippet."
+						}
+					],
+					"count": "4",
+					"solution": "<p>Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.</p>",
+					"otherinfo": "<p>The following pattern was used: \\bSELECT\\b and was detected in the element starting with: \"const version=\"5.1.0\";function mergeConfigs(...t){function flattenObject(t){const e={};return function flattenLoop(t,n){for(cons\", see evidence field for the suspicious comment/snippet.</p>",
+					"reference": "",
+					"cweid": "200",
+					"wascid": "13",
+					"sourceid": "109"
+				},
+				{
+					"pluginid": "10109",
+					"alertRef": "10109",
+					"alert": "Modern Web Application",
+					"name": "Modern Web Application",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.</p>",
+					"instances":[ 
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/handoff/oasys",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "<a href=\"#\">Open on OASys</a>",
+							"otherinfo": "Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application."
+						}
+					],
+					"count": "1",
+					"solution": "<p>This is an informational alert and so no changes are required.</p>",
+					"otherinfo": "<p>Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application.</p>",
+					"reference": "",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "274"
+				},
+				{
+					"pluginid": "10015",
+					"alertRef": "10015",
+					"alert": "Re-examine Cache-control Directives",
+					"name": "Re-examine Cache-control Directives",
+					"riskcode": "0",
+					"confidence": "1",
+					"riskdesc": "Informational (Low)",
+					"desc": "<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>",
+					"instances":[ 
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/manifest.json",
+							"method": "GET",
+							"param": "cache-control",
+							"attack": "",
+							"evidence": "public, max-age=3600",
+							"otherinfo": ""
+						}
+					],
+					"count": "1",
+					"solution": "<p>For secure content, ensure the cache-control HTTP header is set with \"no-cache, no-store, must-revalidate\". If an asset should be cached consider setting the directives \"public, max-age, immutable\".</p>",
+					"otherinfo": "",
+					"reference": "<p>https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</p><p>https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</p><p>https://grayduck.mn/2021/09/13/cache-control-recommendations/</p>",
+					"cweid": "525",
+					"wascid": "13",
+					"sourceid": "178"
+				},
+				{
+					"pluginid": "10112",
+					"alertRef": "10112",
+					"alert": "Session Management Response Identified",
+					"name": "Session Management Response Identified",
+					"riskcode": "0",
+					"confidence": "2",
+					"riskdesc": "Informational (Medium)",
+					"desc": "<p>The given response has been identified as containing a session management token. The 'Other Info' field contains a set of header tokens that can be used in the Header Based Session Management Method. If the request is in a context which has a Session Management Method set to \"Auto-Detect\" then this rule will change the session management to use the tokens identified.</p>",
+					"instances":[ 
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-TK-D9MnvRqgaHYZKL4oTsVR4ZrvzD6A.NYgSEqJXQGPDLOBHooTAPQLWL0%2Fo15uSeqr%2FlFSdRiE",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0TFQH-wDkS26JiCB9oXGgEfTJlzjysHZ.UCra8JWU%2FWYgbGMMRjFa4BOnyJqDstqO7PFLucitPVQ",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0hZsvkVux4esNVWCapD7J-eBDpfrI6Ee.284r8wS3%2Fccmkpf8stDDQRcPECs%2FVAcXgKRZrrQn8NU",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A29va0YrR7kTQOwVXDUl-d35MffLhqcJU.w3PIPOAkj4gRVYRVXffKhBSMw2kPcGflQonApO11ng0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAx5NhckAa3wZOFgxgv6KD-yx7-bufiHM.jnOOrq1ecEWpvQr4FG3QVTsBePRjVPuMY5jhqIa7WCM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3ABo2Pl3ansrPi91PKpS_JW0a_LC88VBts.YQHvKIs%2FaRyT5FKavJ%2Bntesvg0E1RJ%2F7T8x%2BDj596fs",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AN0rZRJ4FEQWYt789AVMvedHHHfFsR2ZJ.SM9J5YZ2xn4NzQu%2B5e4VVrtD0Q0GIqV69Nlm4nei5xg",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AZkixW956LaoZRFAVYtRWKVYCnPw7ZXXC.CrFqWph9EjXgg%2BrDVNJ82cei%2FkqHZumqnhvqx5Snz%2BM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Al0cccqt_IABXIK26HTIkLHtt6AsATRCN.To%2FZESEbiUTNECP6BRAg9n8yYVMBw8o5RYhNJQjFGfM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AnocWrU7CbUCub0HMBhnaAs1G8mYBbD08.oNOZ5qSci1BWhwR0zKP7YJMae5rUcF%2FD1%2FY%2BbZnKoSE",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/account-details",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/bold-b542beb274-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/bold-b542beb274-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/bold-b542beb274-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/bold-b542beb274-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/bold-b542beb274-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/bold-b542beb274-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/bold-b542beb274-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/bold-b542beb274-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/bold-b542beb274-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/light-94a07e06a1-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/light-94a07e06a1-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/light-94a07e06a1-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/light-94a07e06a1-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/light-94a07e06a1-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/light-94a07e06a1-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/light-94a07e06a1-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/light-94a07e06a1-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/fonts/light-94a07e06a1-v2.woff2",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk/govuk-frontend.min.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk/govuk-frontend.min.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk/govuk-frontend.min.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk/govuk-frontend.min.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk/govuk-frontend.min.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk/govuk-frontend.min.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk/govuk-frontend.min.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk/govuk-frontend.min.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk/govuk-frontend.min.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govukFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govukFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govukFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govukFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govukFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govukFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govukFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govukFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govukFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.ico",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3APXKEHVWbAAvTBKw8qJr9ZOY2ck1RnfrN.2AVwdxWHe6%2FgHDpYGS7QJ82Xbu8h0SKCDGDUqb5pxhM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-crest.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-crest.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-crest.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-crest.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-crest.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-crest.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-crest.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-crest.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-crest.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3ABo2Pl3ansrPi91PKpS_JW0a_LC88VBts.YQHvKIs%2FaRyT5FKavJ%2Bntesvg0E1RJ%2F7T8x%2BDj596fs",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-mask.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3ABo2Pl3ansrPi91PKpS_JW0a_LC88VBts.YQHvKIs%2FaRyT5FKavJ%2Bntesvg0E1RJ%2F7T8x%2BDj596fs",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/manifest.json",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3ABo2Pl3ansrPi91PKpS_JW0a_LC88VBts.YQHvKIs%2FaRyT5FKavJ%2Bntesvg0E1RJ%2F7T8x%2BDj596fs",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj/all.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj/all.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj/all.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj/all.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj/all.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj/all.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj/all.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj/all.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj/all.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/mojFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/mojFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/mojFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/mojFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/mojFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/mojFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/mojFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/mojFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/mojFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/autherror",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/activity-log",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/compliance",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/handoff/delius",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/handoff/oasys",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/personal-details",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/personal-details/addresses",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/personal-details/adjustments",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/personal-details/circumstances",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/personal-details/disabilities",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/personal-details/documents/5135ac4d-238c-43c7-ae6f-0c1c2367296b/download",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/personal-details/personal-contact/2500286992",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/risk",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/schedule",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/sentence",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/cases/X756510/activity-log/waiting-for-evidence",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/record-an-outcome/X756510",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/robots.txt",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/search",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A4sJstcU2dLfZ7PwLR06G0wjil1HfWqu_.WXq%2Bs2R5ES7nVLs%2BCXKapZcMFIy%2Ffj4%2F2EiKamMheUQ",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AB9KNP-n5j1fRDxkj5J8QlDniXef4CTbi.jieH%2BMAF%2BDdEIucsjub%2F4xodKjxJ3EmRpAFCMoMAK04",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3ANrCEfQ0EPsT1rGiVYJeiMbnUSCtezdCN.fh%2BmvYPyT8wd7mJ616dptdHX9iyaiGYD6lxXfN%2BnUBY",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3ATrse0lD08UdGtTtg4fPH-GLjjsEUJhFb.B0l%2FkF%2BLHIRWqlbVrou02DgLxC6a6ESv%2B8qUSxkZVYc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A_0g_CG3are9eXHyDv0z7NKDg4PjYKqPw.7W7GOpw2x5jvaCpb3ZIXyeCb4lVZdLYOn6uBd45xO1s",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AcsTKgwRefCb_lQrusiTNN9FcOKrmpJkz.YCNK%2FiR9kTHXfMalk8lvv3UiUjQ0ggJX1wS9IXZii%2BI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Afge-DRkcUW419lP2BO_YcT2SjAJ8NQ7v.blAwg4olUR6CRo%2B4C4LA0W1GzGBAlLXvC1Eg2Xv9ek0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Ah0VGxo5B-1vIPhdx3uXlbMMTGZzGvivC.iHvnqCTogD8aIxN1Uza0DOBq7bU%2BA%2BT6HzmXqYt9Vcw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Avy6JpoP3So6KEoQ3TbsO-7-cJPoMTcdF.ulSEDbX5N1WeiI0BPUoAt0g%2BPXVlFtRdCDWxNgXfogM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback?code=-CleyZ&state=P4p5RAp56dNK8pOGa2MQN97m",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback?code=1By2lF&state=R8iRmh4Fnzujrmmqq7rS8dXU",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback?code=7VTdDs&state=BCb8cDY1VKhegVCbGKq7FJ5K",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback?code=eIZBL6&state=GzcXttebZ1lkKU3YcLn0Fqq6",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback?code=ktG18y&state=JlUsvhJTO9QPmZw4yQwuvrH9",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback?code=NohfkW&state=tov94S7MzDeDE8OHClMzK5Vt",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback?code=oMOtMn&state=uSMXlpzpwSzIRpnJv7OGLZ8B",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback?code=ur-que&state=WWNjG2lZI3zTP1zyvOQe5MTa",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback?code=WsRcRb&state=OLzE1q3NWXYDWukVAFQdNH9b",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sitemap.xml",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/search",
+							"method": "POST",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0hZsvkVux4esNVWCapD7J-eBDpfrI6Ee.284r8wS3%2Fccmkpf8stDDQRcPECs%2FVAcXgKRZrrQn8NU",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3ABo2Pl3ansrPi91PKpS_JW0a_LC88VBts.YQHvKIs%2FaRyT5FKavJ%2Bntesvg0E1RJ%2F7T8x%2BDj596fs",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AnocWrU7CbUCub0HMBhnaAs1G8mYBbD08.oNOZ5qSci1BWhwR0zKP7YJMae5rUcF%2FD1%2FY%2BbZnKoSE",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/account-details",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/6355703942438660005",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govuk/8807579115417605799",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govukFrontendInit.js",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.ico",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-doy8WSMA-rH0Vkrkom3dmcxozbUsuZd.ltgqm1S4EMfnsIvRgSZOq3UVBx7kNg%2B%2B8fKmLXAy3SM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A0QPZrTCEUDLzkVjPGCFFvIFCZ5GcztV1.AE0ZgO8RaNHXMOv8HrYoKACOzc%2FESq%2BtXYuSSotXg34",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/govuk-icon-180.png",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AxNtaNToSL3iMwxKSJ5sr47o9RgzJCxzE.LMQhcgLoUa5JA3HOJ3Mm%2FnfHr86TwHhzLWsWBdrJPho",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/moj/8533006742390800189",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/5698645059132419872",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a=..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2FWindows%2Fsystem.ini",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Aw-Kt_sWi3YftIbs8EvS5t0ZutDBXGv4o.%2BL%2B9ZtyIqj8fM2I%2FJf8Mv5mIlc4Muo5m8S0%2FjbU4DpI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a=..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5CWindows%5Csystem.ini",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AYS_apuQKXWQekUMPmymOq8ZGD5D-39IO.kpnRgtm5dYesrcsJx5jCn9tbljDKM7WE6E0vLiJJks0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a=c%3A%2FWindows%2Fsystem.ini",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A-I-NPmytuhpTnoExEtNEe3-2ISaNJioX.IzG4de%2Fd%2FtDnew%2BOfr%2FK5I%2FhRsr7vYrJEXx6s1JiBIc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?e33e35a=c%3A%5CWindows%5Csystem.ini",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AAzGAFs_2bk6Wqe4-s-OdlAmllwokRe3i.KDX1FwOrOcFxURmyqhwCRPvomlOrxjcmZ5ASxmTkjxw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/handoff/delius",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/handoff/oasys",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/personal-details/addresses",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/personal-details/disabilities",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/personal-details/documents/5135ac4d-238c-43c7-ae6f-0c1c2367296b/2849097457330272970",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/personal-details/documents/5135ac4d-238c-43c7-ae6f-0c1c2367296b/download",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/personal-details/personal-contact/2500286992",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/58972760458083873",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A4sJstcU2dLfZ7PwLR06G0wjil1HfWqu_.WXq%2Bs2R5ES7nVLs%2BCXKapZcMFIy%2Ffj4%2F2EiKamMheUQ",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AB9KNP-n5j1fRDxkj5J8QlDniXef4CTbi.jieH%2BMAF%2BDdEIucsjub%2F4xodKjxJ3EmRpAFCMoMAK04",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3ANrCEfQ0EPsT1rGiVYJeiMbnUSCtezdCN.fh%2BmvYPyT8wd7mJ616dptdHX9iyaiGYD6lxXfN%2BnUBY",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3ATrse0lD08UdGtTtg4fPH-GLjjsEUJhFb.B0l%2FkF%2BLHIRWqlbVrou02DgLxC6a6ESv%2B8qUSxkZVYc",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A_0g_CG3are9eXHyDv0z7NKDg4PjYKqPw.7W7GOpw2x5jvaCpb3ZIXyeCb4lVZdLYOn6uBd45xO1s",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3AcsTKgwRefCb_lQrusiTNN9FcOKrmpJkz.YCNK%2FiR9kTHXfMalk8lvv3UiUjQ0ggJX1wS9IXZii%2BI",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Afge-DRkcUW419lP2BO_YcT2SjAJ8NQ7v.blAwg4olUR6CRo%2B4C4LA0W1GzGBAlLXvC1Eg2Xv9ek0",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Ah0VGxo5B-1vIPhdx3uXlbMMTGZzGvivC.iHvnqCTogD8aIxN1Uza0DOBq7bU%2BA%2BT6HzmXqYt9Vcw",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Avy6JpoP3So6KEoQ3TbsO-7-cJPoMTcdF.ulSEDbX5N1WeiI0BPUoAt0g%2BPXVlFtRdCDWxNgXfogM",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sitemap.xml",
+							"method": "GET",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3Am7HVFbxRMrLhnBDfw2hJyKqlH6mMBtcG.mkKHaqFsJCGt%2B1c6jKLn%2BuvFV5%2BA6Mwz%2FPkHukxaGno",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/search",
+							"method": "POST",
+							"param": "hmpps-manage-a-supervision-ui.session",
+							"attack": "",
+							"evidence": "s%3A60g8L26C-LVvXNjANBDZLGS4Os7CV_OD.Jj7iqISa8G9LbOORNM%2B4nri5gL1UsrhGpSvGu48S4uo",
+							"otherinfo": "\ncookie:hmpps-manage-a-supervision-ui.session"
+						}
+					],
+					"count": "215",
+					"solution": "<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>",
+					"otherinfo": "<p></p><p>cookie:hmpps-manage-a-supervision-ui.session</p>",
+					"reference": "<p>https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id</p>",
+					"cweid": "-1",
+					"wascid": "-1",
+					"sourceid": "51"
+				}
+			]
+		},
+		{
+			"@name": "https://sign-in-dev.hmpps.service.justice.gov.uk",
+			"@host": "sign-in-dev.hmpps.service.justice.gov.uk",
+			"@port": "443",
+			"@ssl": "true",
+			"alerts": [ 
+			]
+		}
+	]
+}

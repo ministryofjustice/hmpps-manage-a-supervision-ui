@@ -24,22 +24,24 @@
 {% endblock %}
 
 {% block pageContent %}
-    {% set offence %}
-      {{ govukSummaryList({
-        rows: [
-          {
-            key: { text: "Main offence" },
-            value: { html: ' aaa' }
-          }
-        ]
-      }) }}
-    {% endset %}
+    {% for sentence in sentenceDetails.sentences %}
+        {% set offence %}
+          {{ govukSummaryList({
+            rows: [
+              {
+                key: { text: "Main offence" },
+                value: { html: ' aaa' }
+              }
+            ]
+          }) }}
+        {% endset %}
 
-    {{ appSummaryCard({
-      titleText: 'Offence',
-      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-      html: offence
-    }) }}
+        {{ appSummaryCard({
+          titleText: 'Offence',
+          classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+          html: offence
+        }) }}
+    {%- endfor %}
 {% endblock %}
 
 

@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-cycle
-import { Name } from './common'
 import { Sentence } from './overview'
 
 export interface SentenceDetails {
@@ -7,11 +6,14 @@ export interface SentenceDetails {
   sentences: Sentence[]
 }
 
-export interface Offence {
+export interface Sentence {
+  offence: OffenceDetails
+}
+export interface OffenceDetails {
   mainOffence: string
   offenceDate: string
   notes: string
-  additionalOffences: string
+  additionalOffences: []
 }
 
 export interface Conviction {

@@ -6,7 +6,9 @@ export interface SentenceDetails {
 }
 
 export interface Sentence {
+  eventNumber: string
   offence: OffenceDetails
+  conviction: Conviction
 }
 export interface OffenceDetails {
   mainOffence: string

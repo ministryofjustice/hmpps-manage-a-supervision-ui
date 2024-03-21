@@ -1,7 +1,6 @@
 {% extends "../partials/case.njk" %}
 {% set pageTitle = applicationName + " - Sentence Details" %}
 {% set currentNavSection = 'sentence-details' %}
-{% set currentSectionName = 'Sentence' %}
 {% set headerPersonName = sentenceDetails.name.forename + ' ' + sentenceDetails.name.surname %}
 {% set headerCRN = crn %}
 
@@ -25,7 +24,9 @@
 
 {% block pageContent %}
     {% for sentence in sentenceDetails.sentences %}
-         {% set hasAdditionalOffences = sentence.offence.additionalOffences and sentence.offence.additionalOffences.length > 0 %}
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-7" data-qa="pageHeading">Sentence: {{ sentence.eventNumber }}</h1>
+
+        {% set hasAdditionalOffences = sentence.offence.additionalOffences and sentence.offence.additionalOffences.length > 0 %}
             {% set additionalOffences %}
             {% if hasAdditionalOffences %}
               <ol class="govuk-list{% if sentence.offence.additionalOffences > 1 %} govuk-list--number{% endif %}">
@@ -36,7 +37,7 @@
 
               <a href="/cases/{{ crn }}/sentence/offences">View additional offence details</a>
             {% endif %}
-        {% endset %}
+       {% endset %}
 
         {% set hasAdditionalSentences = sentence.conviction.additionalSentences and sentence.conviction.additionalSentences.length > 0 %}
         {% set additionalSentences %}

@@ -18,7 +18,7 @@
               "offence": {
                 "offence": {
                   "description": "Murder",
-                  "count": 1
+                  "count": 3
                 },
                 "dateOfOffence": "2024-03-20",
                 "notes": "overview",
@@ -52,7 +52,7 @@
                   "count": 1
                 },
                 "dateOfOffence": "2024-03-20",
-                "notes": "overview",
+                "notes": "",
                 "additionalOffences": []
               },
               "conviction": {

@@ -27,7 +27,7 @@
     {% for sentence in sentenceDetails.sentences %}
          {% set hasAdditionalOffences = sentence.offence.additionalOffences and sentence.offence.additionalOffences.length > 0 %}
             {% set additionalOffences %}
-              {% if hasAdditionalOffences %}
+            {% if hasAdditionalOffences %}
               <ol class="govuk-list{% if sentence.offence.additionalOffences > 1 %} govuk-list--number{% endif %}">
                 {% for additionalOffence in sentence.offence.additionalOffences %}
                   <li>{{ additionalOffence.description }} ({{ additionalOffence.count }} count)</li>
@@ -35,8 +35,21 @@
               </ol>
 
               <a href="/cases/{{ crn }}/sentence/offences">View additional offence details</a>
-              {% endif %}
-         {% endset %}
+            {% endif %}
+        {% endset %}
+
+        {% set hasAdditionalSentences = sentence.conviction.additionalSentences and sentence.conviction.additionalSentences.length > 0 %}
+        {% set additionalSentences %}
+            {% for additionalSentence in sentence.conviction.additionalSentences %}
+                {% set detailsHtml %}
+                {% endset %}
+                {{ govukDetails({
+                  classes: 'govuk-!-margin-bottom-1',
+                  summaryText: additionalSentence.description,
+                  html: detailsHtml
+                }) }}
+            {% endfor %}
+        {% endset %}
 
         {% set offence %}
           {{ govukSummaryList({
@@ -95,7 +108,6 @@
           classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
           html: conviction
         }) }}
-
     {%- endfor %}
 {% endblock %}
 

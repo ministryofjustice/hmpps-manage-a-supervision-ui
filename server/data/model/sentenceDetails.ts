@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-cycle
-import { Sentence } from './overview'
 
 export interface SentenceDetails {
   crn: string

@@ -28,9 +28,9 @@
          {% set hasAdditionalOffences = sentence.offence.additionalOffences and sentence.offence.additionalOffences.length > 0 %}
             {% set additionalOffences %}
               {% if hasAdditionalOffences %}
-              <ol class="govuk-list{% if case.currentOrder.additionalOffences.length > 1 %} govuk-list--number{% endif %}">
-                {% for additionalOffence in case.currentOrder.additionalOffences %}
-                  <li>{{ additionalOffence.subCategoryDescription }} (1 count)</li>
+              <ol class="govuk-list{% if sentence.offence.additionalOffences > 1 %} govuk-list--number{% endif %}">
+                {% for additionalOffence in sentence.offence.additionalOffences %}
+                  <li>{{ additionalOffence.description }} ({{ additionalOffence.count }} count)</li>
                 {% endfor %}
               </ol>
 

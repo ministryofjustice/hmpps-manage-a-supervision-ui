@@ -61,10 +61,39 @@
           }) }}
         {% endset %}
 
+        {% set conviction %}
+              {{ govukSummaryList({
+                rows: [
+                  {
+                    key: { text: "Sentencing court" },
+                    value: { html: sentence.conviction.sentencingCourt | nl2br if sentence.conviction.sentencingCourt else 'No court details' }
+                  },
+                  {
+                    key: { text: "Responsible court" },
+                    value: { html: sentence.conviction.responsibleCourt | nl2br if sentence.conviction.responsibleCourt else 'No court details' }
+                  },
+                  {
+                    key: { text: "Conviction date" },
+                    value: { html: sentence.conviction.convictionDate | nl2br if sentence.conviction.responsibleCourt | dateWithYear else 'No conviction date' }
+                  },
+                  {
+                    key: { text: "Additional sentences" },
+                    value: { html: additionalSentences if hasAdditionalSentences else 'No additional sentences' }
+                  }
+                ]
+              }) }}
+        {% endset %}
+
         {{ appSummaryCard({
           titleText: 'Offence',
           classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
           html: offence
+        }) }}
+
+        {{ appSummaryCard({
+          titleText: 'Conviction',
+          classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+          html: conviction
         }) }}
 
     {%- endfor %}

@@ -74,7 +74,7 @@
             rows: [
               {
                 key: { text: "Main offence" },
-                value: { html: sentence.offenceDetails.offence.description + ' (' + sentence.offenceDetails.offence.count + ' count)' }
+                value: { html: '<span data-qa="mainOffenceValue">' + sentence.offenceDetails.offence.description + ' (' + sentence.offenceDetails.offence.count + ' count)' + '</span>' }
               },
               {
                 key: { text: "Offence date" },
@@ -82,11 +82,11 @@
               },
               {
                 key: { text: "Notes" },
-                value: { html: sentence.offenceDetails.notes | nl2br if sentence.offenceDetails.notes else 'No notes' }
+                value: { html: '<span data-qa="offenceNotesValue">' + sentence.offenceDetails.notes | nl2br if sentence.offenceDetails.notes else 'No notes' + '</span>' }
               },
               {
                 key: { text: "Additional offences" },
-                value: { html: additionalOffences if hasAdditionalOffences else 'No additional offences' }
+                value: { html: '<span data-qa="additionalOffencesValue">' + additionalOffences if hasAdditionalOffences else 'No additional offences' + '</span>' }
               }
             ]
           }) }}

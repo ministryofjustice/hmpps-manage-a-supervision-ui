@@ -22,7 +22,15 @@ context('Sentence', () => {
     page.getCardHeader('conviction').should('contain.text', 'Conviction')
     page.getCardHeader('conviction').should('have.length', 2)
 
+    page.getRowDataIndex('offence', 'mainOffence', 'Value', 0).should('contain.text', 'Murder (3 count)')
+    page.getRowDataIndex('offence', 'mainOffence', 'Value', 1).should('contain.text', 'Another Murder (1 count)')
+
     page.getRowDataIndex('offence', 'dateOfOffence', 'Value', 0).should('contain.text', '20 March 2024')
     page.getRowDataIndex('offence', 'dateOfOffence', 'Value', 1).should('contain.text', '20 January 2024')
+
+    page.getRowDataIndex('offence', 'offenceNotes', 'Value', 0).should('contain.text', 'overview')
+    // page.getRowDataIndex('offence', 'offenceNotes', 'Value', 1).should('contain.text', 'No notes')
+
+    // page.getRowDataIndex('offence', 'additionalOffences', 'Value', 1).should('contain.text', 'No Additional offences')
   })
 })

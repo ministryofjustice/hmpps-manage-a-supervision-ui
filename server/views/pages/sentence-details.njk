@@ -78,7 +78,7 @@
               },
               {
                 key: { text: "Offence date" },
-                value: { text: sentence.offenceDetails.dateOfOffence | dateWithYear }
+                value: { html: '<span data-qa="dateOfOffenceValue">' + sentence.offenceDetails.dateOfOffence | dateWithYear + '</span>' }
               },
               {
                 key: { text: "Notes" },

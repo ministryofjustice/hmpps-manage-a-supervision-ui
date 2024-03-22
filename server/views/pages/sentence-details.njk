@@ -97,7 +97,7 @@
                 rows: [
                   {
                     key: { text: "Sentencing court" },
-                    value: { html: sentence.conviction.sentencingCourt | nl2br if sentence.conviction.sentencingCourt else 'No court details' }
+                    value: { html: '<span data-qa="sentencingCourtValue">' + sentence.conviction.sentencingCourt | nl2br if sentence.conviction.sentencingCourt else 'No court details' + '</span>' }
                   },
                   {
                     key: { text: "Responsible court" },

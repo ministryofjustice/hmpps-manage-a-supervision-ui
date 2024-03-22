@@ -58,7 +58,7 @@ jobs:
     parameters:
       context: "HMPPSAuth"
       user: "TestUser"
-      maxScanDurationInMins: 30
+      maxScanDurationInMins: 60
   - name: "HTML Report"
     type: report
     parameters:

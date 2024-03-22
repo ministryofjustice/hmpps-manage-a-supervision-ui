@@ -23,7 +23,6 @@ export default function sentenceDetailRoutes(router: Router, { hmppsAuthClient }
     })
 
     const sentenceDetails = await masClient.getSentenceDetails(crn)
-    console.info(sentenceDetails)
     res.render('pages/sentence-details', {
       sentenceDetails,
       crn,

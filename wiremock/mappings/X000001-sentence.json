@@ -16,7 +16,7 @@
           "sentences": [
             {
               "eventNumber": 3,
-              "offence": {
+              "offenceDetails": {
                 "offence": {
                   "description": "Murder",
                   "count": 3
@@ -48,7 +48,7 @@
             },
             {
               "eventNumber": 1,
-              "offence": {
+              "offenceDetails": {
                 "offence": {
                   "description": "Another Murder",
                   "count": 1

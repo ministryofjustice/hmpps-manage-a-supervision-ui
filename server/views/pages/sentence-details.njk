@@ -26,11 +26,11 @@
     {% for sentence in sentenceDetails.sentences %}
         <h1 class="govuk-heading-l govuk-!-margin-bottom-7" data-qa="pageHeading">Sentence: {{ sentence.eventNumber }}</h1>
 
-        {% set hasAdditionalOffences = sentence.offence.additionalOffences and sentence.offence.additionalOffences.length > 0 %}
+        {% set hasAdditionalOffences = sentence.offenceDetails.additionalOffences and sentence.offenceDetails.additionalOffences.length > 0 %}
             {% set additionalOffences %}
             {% if hasAdditionalOffences %}
-              <ol class="govuk-list{% if sentence.offence.additionalOffences > 1 %} govuk-list--number{% endif %}">
-                {% for additionalOffence in sentence.offence.additionalOffences %}
+              <ol class="govuk-list{% if sentence.offenceDetails.additionalOffences > 1 %} govuk-list--number{% endif %}">
+                {% for additionalOffence in sentence.offenceDetails.additionalOffences %}
                   <li>{{ additionalOffence.description }} ({{ additionalOffence.count }} count)</li>
                 {% endfor %}
               </ol>
@@ -77,15 +77,15 @@
             rows: [
               {
                 key: { text: "Main offence" },
-                value: { html: sentence.offence.offence.description + ' (' + sentence.offence.offence.count + ' count)' }
+                value: { html: sentence.offenceDetails.offence.description + ' (' + sentence.offenceDetails.offence.count + ' count)' }
               },
               {
                 key: { text: "Offence date" },
-                value: { text: sentence.offence.dateOfOffence | dateWithYear }
+                value: { text: sentence.offenceDetails.dateOfOffence | dateWithYear }
               },
               {
                 key: { text: "Notes" },
-                value: { html: sentence.offence.notes | nl2br if sentence.offence.notes else 'No notes' }
+                value: { html: sentence.offenceDetails.notes | nl2br if sentence.offenceDetails.notes else 'No notes' }
               },
               {
                 key: { text: "Additional offences" },

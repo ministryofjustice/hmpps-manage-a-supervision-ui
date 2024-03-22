@@ -116,12 +116,14 @@
         {% endset %}
 
         {{ appSummaryCard({
+          attributes: {'data-qa': 'offenceCard'},
           titleText: 'Offence',
           classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
           html: offence
         }) }}
 
         {{ appSummaryCard({
+          attributes: {'data-qa': 'convictionCard'},
           titleText: 'Conviction',
           classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
           html: conviction

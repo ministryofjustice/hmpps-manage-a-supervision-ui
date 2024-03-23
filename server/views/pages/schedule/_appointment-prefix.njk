@@ -1,0 +1,7 @@
+{% if appointment.isInitial %}
+  Initial appointment
+{% elseif appointment.nationalStandard %}
+  National standard appointment
+{% else %}
+  Appointment
+{% endif %}

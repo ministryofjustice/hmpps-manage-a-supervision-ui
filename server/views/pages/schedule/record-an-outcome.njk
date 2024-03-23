@@ -1,0 +1,27 @@
+{% extends "./_form.njk" %}
+{% set headerPersonName = schedule.personSummary.name.forename + ' ' + schedule.personSummary.name.surname %}
+{% set title = "Which appointment are you recording an outcome for?" if actionType == "outcome" else "Which appointment?" %}
+{% set action = '/case/' + crn + '/record-an-outcome/' + actionType %}
+
+{% block form %}
+    {% set errorList = [{ text: errorMessages.appointment.text, href: "#appointment-id" } if errorMessages.appointment else None ] | reject("undefined") %}
+        {% if errorList | length > 0 %}
+          {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+          {{ govukErrorSummary({ titleText: "There is a problem", errorList: errorList }) }}
+        {% endif %}
+    {% set appointmentRadioItems = [] %}
+
+    {% for appointment in getAppointmentsToAction(schedule.appointments, actionType) %}
+        {% set appointmentRadioItems = (appointmentRadioItems.push({
+          html: '<strong>' + appointment.type + '</strong><br />' + appointment.startDateTime | dateWithDayAndWithoutYear +
+                  ' from ' + appointment.startDateTime | govukTime + ' to ' + appointment.endDateTime | govukTime,
+          value: appointment.id
+        }), appointmentRadioItems) %}
+    {% endfor %}
+    {{ govukRadios({
+           name: "appointment-id",
+           fieldset: {},
+           items: appointmentRadioItems
+        })
+    }}
+{% endblock %}

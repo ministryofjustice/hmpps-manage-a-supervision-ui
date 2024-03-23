@@ -8,19 +8,25 @@ import {
   dateWithNoDay,
   dateWithYear,
   dateWithYearShortMonth,
+  dayOfWeek,
   deliusDateFormat,
   deliusDeepLinkUrl,
   deliusHomepageUrl,
   fullName,
+  getAppointmentsToAction,
   getCurrentRisksToThemselves,
   getPreviousRisksToThemselves,
   getRisksToThemselves,
   getTagClass,
   govukTime,
   initialiseName,
+  isInThePast,
+  isToday,
   lastUpdatedBy,
   lastUpdatedDate,
   monthsOrDaysElapsed,
+  scheduledAppointments,
+  toYesNo,
   yearsSince,
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
@@ -74,6 +80,8 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('govukTime', govukTime)
   njkEnv.addFilter('lastUpdatedDate', lastUpdatedDate)
   njkEnv.addFilter('deliusDateFormat', deliusDateFormat)
+  njkEnv.addFilter('dayOfWeek', dayOfWeek)
+  njkEnv.addFilter('toYesNo', toYesNo)
   njkEnv.addGlobal('getRisksToThemselves', getRisksToThemselves)
   njkEnv.addGlobal('getCurrentRisksToThemselves', getCurrentRisksToThemselves)
   njkEnv.addGlobal('getPreviousRisksToThemselves', getPreviousRisksToThemselves)
@@ -82,4 +90,8 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('lastUpdatedBy', lastUpdatedBy)
   njkEnv.addGlobal('deliusDeepLinkUrl', deliusDeepLinkUrl)
   njkEnv.addGlobal('deliusHomepageUrl', deliusHomepageUrl)
+  njkEnv.addGlobal('scheduledAppointments', scheduledAppointments)
+  njkEnv.addGlobal('isToday', isToday)
+  njkEnv.addGlobal('isInThePast', isInThePast)
+  njkEnv.addGlobal('getAppointmentsToAction', getAppointmentsToAction)
 }

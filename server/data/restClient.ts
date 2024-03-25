@@ -4,10 +4,11 @@ import Agent, { HttpsAgent } from 'agentkeepalive'
 import superagent from 'superagent'
 
 import logger from '../../logger'
+import type { UnsanitisedError } from '../sanitisedError'
 import sanitiseError from '../sanitisedError'
 import type { ApiConfig } from '../config'
-import type { UnsanitisedError } from '../sanitisedError'
 import { restClientMetricsMiddleware } from './restClientMetricsMiddleware'
+import { ErrorSummaryItem } from './model/common'
 
 interface Request {
   path: string
@@ -16,6 +17,8 @@ interface Request {
   responseType?: string
   raw?: boolean
   handle404?: boolean
+  handle500?: boolean
+  errorMessageFor500?: string
 }
 
 interface RequestWithBody extends Request {
@@ -55,6 +58,8 @@ export default class RestClient {
     responseType = '',
     raw = false,
     handle404 = false,
+    handle500 = false,
+    errorMessageFor500 = '',
   }: Request): Promise<Response> {
     logger.info(`${this.name} GET: ${path}`)
     try {
@@ -74,6 +79,13 @@ export default class RestClient {
 
       return raw ? result : result.body
     } catch (error) {
+      if (handle500 && error.response?.status === 500) {
+        const warnings: ErrorSummaryItem[] = []
+        warnings.push({ text: errorMessageFor500 })
+        error.response.errors = warnings
+        logger.info('Handling 500 ')
+        return error.response
+      }
       if (handle404 && error.response?.status === 404) return null
       const sanitisedError = sanitiseError(error)
       logger.warn({ ...sanitisedError }, `Error calling ${this.name}, path: '${path}', verb: 'GET'`)

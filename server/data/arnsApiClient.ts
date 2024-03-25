@@ -1,13 +1,21 @@
 import config from '../config'
+// eslint-disable-next-line import/no-cycle
 import RestClient from './restClient'
+import { ErrorSummary, ErrorSummaryItem } from './model/common'
 
 export default class ArnsApiClient extends RestClient {
   constructor(token: string) {
     super('Assess Risks and Needs API', config.apis.arnsApi, token)
   }
 
-  async getRisks(crn: string): Promise<RiskSummary | null> {
-    return this.get({ path: `/risks/crn/${crn}`, handle404: true })
+  async getRisks(crn: string): Promise<RiskSummary | ErrorSummary | null> {
+    return this.get({
+      path: `/risks/crn/${crn}`,
+      handle404: true,
+      handle500: true,
+      errorMessageFor500:
+        'OAsys is experiencing technical difficulties. It has not been possible to provide the Risk information held in OASys',
+    })
   }
 }
 
@@ -34,8 +42,9 @@ export interface RiskToSelf {
 }
 
 export interface RiskSummary {
-  riskToSelf: RiskToSelf
-  summary: {
+  errors?: ErrorSummaryItem[]
+  riskToSelf?: RiskToSelf
+  summary?: {
     whoIsAtRisk?: string | null
     natureOfRisk?: string | null
     riskImminence?: string | null

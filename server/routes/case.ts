@@ -1,5 +1,4 @@
 import { type RequestHandler, Router } from 'express'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { auditService } from '@ministryofjustice/hmpps-audit-client'
 import { v4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'
@@ -26,6 +25,7 @@ export default function caseRoutes(router: Router, { hmppsAuthClient }: Services
     })
 
     const [overview, risks] = await Promise.all([masClient.getOverview(crn), arnsClient.getRisks(crn)])
+
     res.render('pages/overview', {
       overview,
       risks,

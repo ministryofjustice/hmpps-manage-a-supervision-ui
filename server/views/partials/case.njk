@@ -7,8 +7,8 @@
 {% if currentSectionName %}
     <h1 class="govuk-heading-l govuk-!-margin-bottom-7" data-qa="pageHeading">{{ currentSectionName }}</h1>
 {% endif %}
-{% if warnings.length %}
-    {{ govukErrorSummary({ titleText: "There is a problem", errorList: warnings }) }}
+{% if risks.errors.length > 0 %}
+    <span data-qa="riskErrors">{{ govukErrorSummary({ titleText: "There is a problem", errorList: risks.errors }) }}</span>
 {% endif %}
 {% block pageContent %}{% endblock %}
 {% endblock %}

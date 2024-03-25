@@ -56,4 +56,22 @@ context('Overview', () => {
       .should('contain.text', 'Previous concerns about coping in a hostel setting')
     page.getRowData('risk', 'riskFlags', 'Value').should('contain.text', 'Risk to Known Adult')
   })
+  it('Risk information is not provided due to 500 from ARNS', () => {
+    cy.visit('/case/X000002')
+    const page = Page.verifyOnPage(OverviewPage)
+    page.headerCrn().should('contain.text', 'X000002')
+    page.headerName().should('contain.text', 'Caroline Wolff')
+    page.pageHeading().should('contain.text', 'Overview')
+    page.getTab('overview').should('contain.text', 'Overview')
+    page.getTab('personalDetails').should('contain.text', 'Personal details')
+    page.getTab('risk').should('contain.text', 'Risk')
+    page.getTab('sentence').should('contain.text', 'Sentence')
+    page.getTab('activityLog').should('contain.text', 'Activity log')
+    page.getTab('compliance').should('contain.text', 'Compliance')
+    page.getCardHeader('schedule').should('contain.text', 'Schedule')
+    cy.get(`[data-qa=riskErrors]`).should(
+      'contain.text',
+      'OAsys is experiencing technical difficulties. It has not been possible to provide the Risk information held in OASys',
+    )
+  })
 })

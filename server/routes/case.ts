@@ -1,5 +1,4 @@
 import { type RequestHandler, Router } from 'express'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { auditService } from '@ministryofjustice/hmpps-audit-client'
 import { v4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'

@@ -31,5 +31,7 @@ context('Sentence', () => {
     page.getRowDataIndex('offence', 'offenceNotes', 'Value', 0).should('contain.text', 'overview')
 
     page.getRowDataIndex('conviction', 'sentencingCourt', 'Value', 0).should('contain.text', 'Hull Court')
+    page.getRowDataIndex('conviction', 'responsibleCourt', 'Value', 0).should('contain.text', 'Birmingham Court')
+    page.getRowDataIndex('conviction', 'convictionDate', 'Value', 0).should('contain.text', 'Hull Court')
   })
 })

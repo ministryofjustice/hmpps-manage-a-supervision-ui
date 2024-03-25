@@ -101,15 +101,15 @@
                   },
                   {
                     key: { text: "Responsible court" },
-                    value: { html: sentence.conviction.responsibleCourt | nl2br if sentence.conviction.responsibleCourt else 'No court details' }
+                    value: { html: '<span data-qa="responsibleCourtValue">' + sentence.conviction.responsibleCourt | nl2br if sentence.conviction.responsibleCourt else 'No court details' + '</span>' }
                   },
                   {
                     key: { text: "Conviction date" },
-                    value: { html: sentence.conviction.convictionDate | nl2br if sentence.conviction.responsibleCourt | dateWithYear else 'No conviction date' }
+                    value: { html: '<span data-qa="convictionDateValue">' + sentence.conviction.convictionDate | nl2br if sentence.conviction.responsibleCourt | dateWithYear else 'No conviction date' + '</span>'}
                   },
                   {
                     key: { text: "Additional sentences" },
-                    value: { html: additionalSentences if hasAdditionalSentences else 'No additional sentences' }
+                    value: { html: '<span data-qa="additionalSentencesValue">' + additionalSentences if hasAdditionalSentences else 'No additional sentences' + '</span>'}
                   }
                 ]
               }) }}

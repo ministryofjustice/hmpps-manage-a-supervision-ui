@@ -9,7 +9,7 @@ import {
   PersonalDetails,
   ProvisionOverview,
 } from './model/personalDetails'
-import { AddressOverview, ErrorSummary, PersonSummary } from './model/common'
+import { AddressOverview, PersonSummary } from './model/common'
 import { SentenceDetails } from './model/sentenceDetails'
 
 export default class MasApiClient extends RestClient {
@@ -17,27 +17,27 @@ export default class MasApiClient extends RestClient {
     super('Manage a Supervision API', config.apis.masApi, token)
   }
 
-  async getOverview(crn: string): Promise<Overview | ErrorSummary | null> {
+  async getOverview(crn: string): Promise<Overview | null> {
     return this.get({ path: `/overview/${crn}`, handle404: false })
   }
 
-  async getSentenceDetails(crn: string): Promise<SentenceDetails | ErrorSummary | null> {
+  async getSentenceDetails(crn: string): Promise<SentenceDetails | null> {
     return this.get({ path: `/sentence/${crn}`, handle404: false })
   }
 
-  async getPersonalDetails(crn: string): Promise<PersonalDetails | ErrorSummary | null> {
+  async getPersonalDetails(crn: string): Promise<PersonalDetails | null> {
     return this.get({ path: `/personal-details/${crn}`, handle404: false })
   }
 
-  async getPersonalContact(crn: string, id: string): Promise<PersonalContact | ErrorSummary | null> {
+  async getPersonalContact(crn: string, id: string): Promise<PersonalContact | null> {
     return this.get({ path: `/personal-details/${crn}/personal-contact/${id}`, handle404: false })
   }
 
-  async getPersonalAddresses(crn: string): Promise<AddressOverview | ErrorSummary | null> {
+  async getPersonalAddresses(crn: string): Promise<AddressOverview | null> {
     return this.get({ path: `/personal-details/${crn}/addresses`, handle404: false })
   }
 
-  async getPersonSummary(crn: string): Promise<PersonSummary | ErrorSummary | null> {
+  async getPersonSummary(crn: string): Promise<PersonSummary | null> {
     return this.get({ path: `/personal-details/${crn}/summary`, handle404: false })
   }
 
@@ -61,7 +61,7 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/schedule/${crn}/${type}`, handle404: false })
   }
 
-  async getPersonAppointment(crn: string, appointmentId: string): Promise<PersonAppointment | ErrorSummary | null> {
+  async getPersonAppointment(crn: string, appointmentId: string): Promise<PersonAppointment | null> {
     return this.get({ path: `/schedule/${crn}/appointment/${appointmentId}`, handle404: false })
   }
 }

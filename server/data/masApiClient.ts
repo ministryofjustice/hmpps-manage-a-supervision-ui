@@ -1,6 +1,7 @@
 import config from '../config'
 import RestClient from './restClient'
 import { Overview } from './model/overview'
+import { PersonAppointment, Schedule } from './model/schedule'
 import {
   CircumstanceOverview,
   DisabilityOverview,
@@ -54,5 +55,13 @@ export default class MasApiClient extends RestClient {
 
   async downloadDocument(crn: string, documentId: string): Promise<Response> {
     return this.get({ path: `/personal-details/${crn}/document/${documentId}`, raw: true, responseType: 'arrayBuffer' })
+  }
+
+  async getPersonSchedule(crn: string, type: string): Promise<Schedule | null> {
+    return this.get({ path: `/schedule/${crn}/${type}`, handle404: true })
+  }
+
+  async getPersonAppointment(crn: string, appointmentId: string): Promise<PersonAppointment | null> {
+    return this.get({ path: `/schedule/${crn}/appointment/${appointmentId}`, handle404: true })
   }
 }

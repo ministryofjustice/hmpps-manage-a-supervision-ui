@@ -4,6 +4,8 @@ import { RiskScore, RiskToSelf } from '../data/arnsApiClient'
 import { Name } from '../data/model/common'
 import { Address } from '../data/model/personalDetails'
 import config from '../config'
+import { Appointment } from '../data/model/schedule'
+import logger from '../../logger'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -167,4 +169,58 @@ export const deliusDeepLinkUrl = (component: string, offenderId: string) => {
 
 export const deliusHomepageUrl = () => {
   return `${config.delius.link}`
+}
+
+export const isInThePast = (datetimeString: string) => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  logger.info(`Time now is ${DateTime.now().toString()}`)
+
+  return DateTime.now() > DateTime.fromISO(datetimeString)
+}
+
+export const isToday = (datetimeString: string) => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  return DateTime.fromISO(datetimeString).hasSame(DateTime.now(), 'day')
+}
+
+export const dayOfWeek = (datetimeString: string) => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  return DateTime.fromISO(datetimeString).toFormat('cccc')
+}
+
+export const scheduledAppointments = (appointments: Appointment[]): Appointment[] => {
+  return (
+    // Show future appointments and any appointments that are today
+    appointments
+      .filter(entry => !isInThePast(entry.startDateTime))
+      .sort((a, b) => (a.startDateTime > b.startDateTime ? 1 : -1))
+  )
+}
+
+export const pastAppointments = (appointments: Appointment[]): Appointment[] => {
+  return (
+    // Show future appointments and any appointments that are today
+    appointments
+      .filter(entry => isInThePast(entry.startDateTime))
+      .sort((a, b) => (a.startDateTime > b.startDateTime ? 1 : -1))
+  )
+}
+
+export const getAppointmentsToAction = (appointments: Appointment[], type: string): Appointment[] => {
+  if (type === 'evidence') {
+    return pastAppointments(appointments).filter(entry => entry.absentWaitingEvidence === true)
+  }
+  return pastAppointments(appointments).filter(
+    entry =>
+      entry.hasOutcome === false &&
+      (entry.absentWaitingEvidence === false || entry.absentWaitingEvidence === undefined),
+  )
+}
+
+export const toYesNo = (value: boolean) => {
+  if (value == null) return 'Not known'
+  if (!value) {
+    return 'No'
+  }
+  return 'Yes'
 }

@@ -1,0 +1,121 @@
+{% extends "../../partials/layout.njk" %}
+{% set appointment = personAppointment.appointment %}
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Your cases",
+      href: "/search"
+    },
+    {
+      text: personAppointment.personSummary.name | fullName,
+      href: "/case/" + crn
+    },
+    {
+      text: "Schedule",
+      href: "/case/" + crn + "/schedule"
+    },
+    {
+      text: appointment.type
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% set appointmentType = 'Previous' if isInThePast(appointment.startDateTime) else 'Upcoming' %}
+{% set title = appointment.type + ' with ' + appointment.officerName | fullName %}
+{% set isOutcomeRecorded = appointment.hasOutcome  %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">
+      <span class="govuk-caption-xl" data-qa="appointmentType">
+      {% include './_appointment-prefix.njk' %}</span>
+      <span data-qa="appointmentTitle">{{ title }}</span>
+      {% if isInThePast(appointment.startDateTime) %}
+        <div class="govuk-!-margin-top-1" data-qa="complianceTag">
+          {{ appComplianceTag({ entry: appointment }) }}
+        </div>
+      {% endif %}
+    </h1>
+  </div>
+</div>
+
+{% if appointmentType === 'Previous' and not isOutcomeRecorded and not entry.rescheduled %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="note-panel govuk-!-margin-bottom-6">
+        {{ govukWarningText({
+          html: 'Outcome not recorded<br /><a href="/case/' + crn + '/handoff/delius">Record an outcome</a>',
+          iconFallbackText: 'Warning',
+          classes: 'govuk-!-margin-bottom-0'
+        }) }}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if appointment.wasAbsent === true and appointment.acceptableAbsence === false %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="note-panel govuk-!-margin-bottom-6">
+        {{ govukWarningText({
+          html: 'Absent and waiting for evidence<br /><a href="/change-outcome/' + crn + '/' + appointment.id + '">Change outcome</a>',
+          iconFallbackText: 'Warning',
+          classes: 'govuk-!-margin-bottom-0'
+        }) }}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if appointmentType === 'upcoming' %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <ul class="govuk-list govuk-!-margin-bottom-7">
+      <li><a href="/record-an-outcome/{{ crn }}/{{ appointment.id }}">Record an outcome</a></li>
+      <li><a href="/arrange-appointment/{{ CRN }}/{{ appointment.id  }}/cancel">Cancel appointment</a></li>
+    </ul>
+  </div>
+</div>
+{% endif %}
+
+{% set notesEditPath = "/cases/" + crn + "/activity-log/activity/" + sessionId + '/notes' %}
+{% set sensitiveEditPath = "/cases/" + crn + "/activity-log/activity/" + sessionId + '/edit-sensitive' %}
+
+{% set appointmentDetails %}
+  {% set showAction = false %}
+  {% set noMargin = true %}
+  {% set appointment = entry %}
+  {% include './_appointment-details.njk' %}
+{% endset %}
+
+{{ appSummaryCard({
+  attributes: {'data-qa': 'appointmentDetailsCard'},
+  titleText: 'Appointment details',
+  classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+  html: appointmentDetails
+}) }}
+
+{% if isOutcomeRecorded %}
+  {% set outcomeDetails %}
+    {% set noMargin = true %}
+    {% include './_outcome-details.njk' %}
+  {% endset %}
+
+  {{ appSummaryCard({
+    attributes: {'data-qa': 'outcomeDetailsCard'},
+    titleText: 'Outcome details',
+    classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+    html: outcomeDetails
+  }) }}
+{% endif %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body-s govuk-hint-s">Last updated by {{ lastUpdatedBy(appointment.lastUpdated, appointment.lastUpdatedBy) }}</p>
+  </div>
+</div>
+
+{% endblock %}

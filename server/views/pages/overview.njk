@@ -3,8 +3,8 @@
 {% set pageTitle = applicationName + " - Overview" %}
 {% set currentNavSection = 'overview' %}
 {% set currentSectionName = 'Overview' %}
-{% set appointmentsWithoutAnOutcomeCount = 1 %}
-{% set waitingForEvidenceCount = 1 %}
+{% set appointmentsWithoutAnOutcomeCount = overview.appointmentsWithoutOutcome %}
+{% set waitingForEvidenceCount = overview.absencesWithoutEvidence  %}
 {% set headerPersonName = overview.personalDetails.name.forename + ' ' + overview.personalDetails.name.surname %}
 {% set headerCRN = crn %}
 
@@ -29,12 +29,12 @@
             <ul class="govuk-list govuk-!-margin-bottom-0">
             {% if appointmentsWithoutAnOutcomeCount > 0 %}
                 <li>
-                    <a href="/record-an-outcome/{{ crn }}">You need to record an outcome for {{ appointmentsWithoutAnOutcomeCount }} {{ 'appointment' if appointmentsWithoutAnOutcomeCount == 1 else 'appointments' }}</a>
+                    <a href="/case/{{ crn }}/record-an-outcome/outcome">You need to record an outcome for {{ appointmentsWithoutAnOutcomeCount }} {{ 'appointment' if appointmentsWithoutAnOutcomeCount == 1 else 'appointments' }}</a>
                 </li>
             {% endif %}
             {% if waitingForEvidenceCount > 0 %}
                 <li>
-                    <a href="/cases/{{ crn }}/activity-log/waiting-for-evidence">You have {{ waitingForEvidenceCount }} {{ 'absence that is' if waitingForEvidenceCount == 1 else 'absences that are' }} waiting for evidence</a>
+                    <a href="/case/{{ crn }}/record-an-outcome/evidence">You have {{ waitingForEvidenceCount }} {{ 'absence that is' if waitingForEvidenceCount == 1 else 'absences that are' }} waiting for evidence</a>
                 </li>
             {% endif %}
             </ul>

@@ -1,0 +1,36 @@
+name: Check
+# Check source code before merging
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Lint changes
+        uses: github/super-linter/slim@v5
+        env:
+          DEFAULT_BRANCH: main
+          VALIDATE_ALL_CODEBASE: false # changes only
+          VALIDATE_BASH: true
+          VALIDATE_BASH_EXEC: true
+          VALIDATE_DOCKERFILE_HADOLINT: true
+          VALIDATE_GITHUB_ACTIONS: true
+          VALIDATE_RUBY: true
+          VALIDATE_XML: true
+          VALIDATE_YAML: true
+          LINTER_RULES_PATH: /
+          GITHUB_ACTIONS_CONFIG_FILE: .github/actionlint.yml
+          GITHUB_ACTIONS_COMMAND_ARGS: -ignore=SC.+:info:.+
+          GITHUB_TOKEN: ${{ github.token }}

@@ -1,0 +1,484 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/schedule/X000001/upcoming",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "appointments": [
+            {
+              "id": 1,
+              "type": "Phone call",
+              "startDateTime": "2044-12-22T09:15:00.382936Z[Europe/London]",
+              "endDateTime": "2044-12-22T09:30:00.382936Z[Europe/London]",
+              "rarToolKit": "Choices and Changes",
+              "isSensitive": false,
+              "hasOutcome": false,
+              "wasAbsent": true,
+              "notes": "Some notes",
+              "officerName": {
+                "forename": "Terry",
+                "surname": "Jones"
+              },
+              "lastUpdated": "2023-03-20",
+              "lastUpdatedBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              }
+            },
+            {
+              "id": 2,
+              "type": "Video call",
+              "startDateTime": "2045-03-22T10:15:00.382936Z[Europe/London]",
+              "endDateTime": "2045-03-22T10:30:00.382936Z[Europe/London]",
+              "rarToolKit": "Choices and Changes",
+              "isSensitive": false,
+              "hasOutcome": false,
+              "wasAbsent": true,
+              "notes": "Some notes",
+              "officerName": {
+                "forename": "William",
+                "surname": "Philips"
+              },
+              "lastUpdated": "2023-03-20",
+              "lastUpdatedBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              }
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/schedule/X000001/previous",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "appointments": [
+            {
+              "id": 3,
+              "type": "Video call",
+              "startDateTime": "2024-02-12T10:15:00.382936Z[Europe/London]",
+              "endDateTime": "2024-02-12T10:30:00.382936Z[Europe/London]",
+              "rarToolKit": "Choices and Changes",
+              "isSensitive": false,
+              "hasOutcome": false,
+              "wasAbsent": true,
+              "absentWaitingEvidence": true,
+              "notes": "Some notes",
+              "lastUpdated": "2023-03-20",
+              "officerName": {
+                "forename": "Paulie",
+                "surname": "Walnuts"
+              },
+              "lastUpdatedBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              }
+            },
+            {
+              "id": 4,
+              "type": "Phone call",
+              "startDateTime": "2024-03-22T08:15:00.382936Z[Europe/London]",
+              "endDateTime": "2024-03-22T08:30:00.382936Z[Europe/London]",
+              "rarToolKit": "Choices and Changes",
+              "isSensitive": false,
+              "hasOutcome": false,
+              "wasAbsent": true,
+              "notes": "Some notes",
+              "officerName": {
+                "forename": "Steve",
+                "surname": "Bruce"
+              },
+              "lastUpdated": "2023-03-20",
+              "lastUpdatedBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              }
+            },
+            {
+              "id": 5,
+              "type": "Phone call",
+              "startDateTime": "2024-03-21T10:15:00.382936Z[Europe/London]",
+              "endDateTime": "2024-03-21T10:30:00.382936Z[Europe/London]",
+              "rarToolKit": "Choices and Changes",
+              "isSensitive": false,
+              "hasOutcome": false,
+              "wasAbsent": true,
+              "notes": "Some notes",
+              "lastUpdated": "2023-03-20",
+              "officerName": {
+                "forename": "Terry",
+                "surname": "Jones"
+              },
+              "lastUpdatedBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              }
+            },
+            {
+              "id": 6,
+              "type": "Other call",
+              "startDateTime": "2024-02-21T10:15:00.382936Z[Europe/London]",
+              "endDateTime": "2024-02-21T10:30:00.382936Z[Europe/London]",
+              "rarToolKit": "Choices and Changes",
+              "isSensitive": false,
+              "hasOutcome": false,
+              "wasAbsent": true,
+              "notes": "Some notes",
+              "lastUpdated": "2023-03-20",
+              "officerName": {
+                "forename": "Terry",
+                "surname": "Jones"
+              },
+              "lastUpdatedBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              }
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/schedule/X000001/appointment/1",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "appointment": {
+            "id": 1,
+            "type": "Phone call",
+            "startDateTime": "2024-12-22T09:15:00.382936Z[Europe/London]",
+            "endDateTime": "2024-12-22T09:30:00.382936Z[Europe/London]",
+            "rarToolKit": "Choices and Changes",
+            "isSensitive": false,
+            "hasOutcome": false,
+            "wasAbsent": true,
+            "notes": "Some notes",
+            "officerName": {
+              "forename": "Terry",
+              "surname": "Jones"
+            },
+            "lastUpdated": "2023-03-20",
+            "lastUpdatedBy": {
+              "forename": "Paul",
+              "surname": "Smith"
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/schedule/X000001/appointment/2",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "appointment": {
+            "id": 2,
+            "type": "Video call",
+            "startDateTime": "2025-03-22T10:15:00.382936Z[Europe/London]",
+            "endDateTime": "2025-03-22T10:30:00.382936Z[Europe/London]",
+            "rarToolKit": "Choices and Changes",
+            "isSensitive": false,
+            "hasOutcome": false,
+            "wasAbsent": true,
+            "notes": "Some notes",
+            "officerName": {
+              "forename": "William",
+              "surname": "Philips"
+            },
+            "lastUpdated": "2023-03-20",
+            "lastUpdatedBy": {
+              "forename": "Paul",
+              "surname": "Smith"
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/schedule/X000001/appointment/3",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "appointment": {
+            "id": 3,
+            "type": "Video call",
+            "startDateTime": "2024-02-12T10:15:00.382936Z[Europe/London]",
+            "endDateTime": "2024-02-12T10:30:00.382936Z[Europe/London]",
+            "rarToolKit": "Choices and Changes",
+            "isSensitive": false,
+            "hasOutcome": false,
+            "absentWaitingEvidence": false,
+            "wasAbsent": true,
+            "notes": "Some notes",
+            "lastUpdated": "2023-03-20",
+            "officerName": {
+              "forename": "Paulie",
+              "surname": "Walnuts"
+            },
+            "lastUpdatedBy": {
+              "forename": "Paul",
+              "surname": "Smith"
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/schedule/X000001/appointment/4",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "appointment": {
+            "id": 4,
+            "type": "Phone call",
+            "startDateTime": "2024-03-22T08:15:00.382936Z[Europe/London]",
+            "endDateTime": "2024-03-22T08:30:00.382936Z[Europe/London]",
+            "rarToolKit": "Choices and Changes",
+            "isSensitive": false,
+            "isInitial": true,
+            "didTheyComply": false,
+            "nonComplianceReason": "Some reason",
+            "acceptableAbsenceReason": "Some absence reason",
+            "wasAcceptableAbsence": true,
+            "enforcementAction": "Enforcement Action",
+            "repeating": true,
+            "rarCategory": "Choices and Changes",
+            "hasOutcome": true,
+            "wasAbsent": true,
+            "acceptableAbsence": true,
+            "notes": "Some notes",
+            "officerName": {
+              "forename": "Steve",
+              "surname": "Bruce"
+            },
+            "lastUpdated": "2023-03-20",
+            "lastUpdatedBy": {
+              "forename": "Paul",
+              "surname": "Smith"
+            },
+            "documents": [
+              {
+                "id": "83fdbf8a-a2f2-43b4-93ef-67e71c04fc58",
+                "name": "Eula-Schmeler-X000001-UPW.pdf",
+                "lastUpdated": "2023-04-06T11:06:25.672587+01:00"
+              },
+              {
+                "id": "c2650260-9568-476e-a293-0b168027a5f1",
+                "name": "Eula-Schmeler-X000001-UPW.pdf",
+                "lastUpdated": "2023-04-06T11:09:45.860739+01:00"
+              },
+              {
+                "id": "b82e444b-c77c-4d44-bf99-4ce4dc426ff4",
+                "name": "Eula-Schmeler-X000001-UPW.pdf",
+                "lastUpdated": "2023-04-06T11:21:17.06356+01:00"
+              }
+            ]
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/schedule/X000001/appointment/5",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "appointment": {
+            "id": 5,
+            "type": "Phone call",
+            "startDateTime": "2024-03-21T10:15:00.382936Z[Europe/London]",
+            "endDateTime": "2024-03-21T10:30:00.382936Z[Europe/London]",
+            "rarToolKit": "Choices and Changes",
+            "isSensitive": false,
+            "hasOutcome": false,
+            "wasAbsent": true,
+            "notes": "Some notes",
+            "lastUpdated": "2023-03-20",
+            "officerName": {
+              "forename": "Terry",
+              "surname": "Jones"
+            },
+            "lastUpdatedBy": {
+              "forename": "Paul",
+              "surname": "Smith"
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/schedule/X000001/appointment/6",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "appointment": {
+            "id": 6,
+            "type": "Other call",
+            "startDateTime": "2024-02-21T10:15:00.382936Z[Europe/London]",
+            "endDateTime": "2024-02-21T10:30:00.382936Z[Europe/London]",
+            "rarToolKit": "Choices and Changes",
+            "isSensitive": false,
+            "didTheyComply": false,
+            "hasOutcome": false,
+            "wasAbsent": true,
+            "notes": "Some notes",
+            "location": {
+              "buildingName": "The Building",
+              "buildingNumber": "77",
+              "streetName": "Some Street",
+              "district": "Some City Centre",
+              "town": "London",
+              "county": "Essex",
+              "postcode": "NW10 1EP",
+              "lastUpdated": "2023-03-14",
+              "lastUpdatedBy": {
+                "forename": "Jiminy",
+                "surname": "Cricket"
+              }
+            },
+            "documents": [
+              {
+                "id": "83fdbf8a-a2f2-43b4-93ef-67e71c04fc58",
+                "name": "Eula-Schmeler-X000001-UPW.pdf",
+                "lastUpdated": "2023-04-06T11:06:25.672587+01:00"
+              },
+              {
+                "id": "c2650260-9568-476e-a293-0b168027a5f1",
+                "name": "Eula-Schmeler-X000001-UPW.pdf",
+                "lastUpdated": "2023-04-06T11:09:45.860739+01:00"
+              },
+              {
+                "id": "b82e444b-c77c-4d44-bf99-4ce4dc426ff4",
+                "name": "Eula-Schmeler-X000001-UPW.pdf",
+                "lastUpdated": "2023-04-06T11:21:17.06356+01:00"
+              }
+            ],
+            "lastUpdated": "2023-03-20",
+            "officerName": {
+              "forename": "Terry",
+              "surname": "Jones"
+            },
+            "lastUpdatedBy": {
+              "forename": "Paul",
+              "surname": "Smith"
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

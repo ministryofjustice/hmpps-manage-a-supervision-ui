@@ -1,0 +1,114 @@
+name: Security
+
+on:
+  schedule:
+    - cron: "30 8 * * MON-FRI" # Every weekday at 08:30 UTC
+  workflow_dispatch:
+
+jobs:
+  zap:
+    runs-on: moj-cloud-platform
+    env:
+      CONFIG_FILE: ${{ github.workspace }}/.zap/autorun.yml
+      REPORT_DIR: ${{ github.workspace }}/.zap/zap-report
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup ZAP
+        uses: ./.github/actions/setup-zap
+
+      - name: Setup Firefox
+        id: firefox
+        uses: browser-actions/setup-firefox@233224b712fc07910ded8c15fb95a555c86da76f # v1
+        with:
+          firefox-version: latest-esr
+
+      - name: Replace variables in config file
+        run: envsubst < "$CONFIG_FILE" > "$CONFIG_FILE.tmp" && mv "$CONFIG_FILE.tmp" "$CONFIG_FILE" && cat "$CONFIG_FILE"
+        env:
+          ZAP_USERNAME: ${{ secrets.ZAP_USERNAME }}
+          ZAP_PASSWORD: ${{ secrets.ZAP_PASSWORD }}
+        shell: bash
+
+      - name: Run scan
+        run: owasp-zap -cmd -autorun "$CONFIG_FILE" -config selenium.firefoxBinary="$FIREFOX_BINARY"
+        env:
+          FIREFOX_BINARY: ${{ steps.firefox.outputs.firefox-path }}
+        shell: bash
+
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-report
+          path: ${{ env.REPORT_DIR }}
+
+      - name: Publish HTML report
+        uses: JamesIves/github-pages-deploy-action@65b5dfd4f5bcd3a7403bbc2959c144256167464e # v4.5.0
+        with:
+          folder: ${{ env.REPORT_DIR }}
+          target-folder: zap-report
+
+      - name: Add HTML report URL to the job summary
+        run: echo '[🛡️ OWASP ZAP Report](https://ministryofjustice.github.io/hmpps-manage-a-supervision-ui/zap-report)' | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Parse JSON report
+        id: json
+        run: |
+          risk_counts=$(jq -r '[.site[].alerts[]] | group_by(.riskcode) | map({ (.[0].riskcode): length }) | add' "$JSON_FILE")
+          echo "info=$(echo "$risk_counts" | jq '."0" // 0')" | tee -a "$GITHUB_OUTPUT"
+          echo "low=$(echo "$risk_counts" | jq '."1" // 0')" | tee -a "$GITHUB_OUTPUT"
+          echo "medium=$(echo "$risk_counts" | jq '."2" // 0')" | tee -a "$GITHUB_OUTPUT"
+          echo "high=$(echo "$risk_counts" | jq '."3" // 0')" | tee -a "$GITHUB_OUTPUT"
+        env:
+          JSON_FILE: ${{ env.REPORT_DIR }}/report.json
+        shell: bash
+
+      - name: Send message to Slack
+        uses: slackapi/slack-github-action@6c661ce58804a1a20f6dc5fbee7f0381b469e001 # v1.25.0
+        if: steps.json.outputs.high != '0' || steps.json.outputs.medium != '0'
+        with:
+          channel-id: probation-integration-notifications
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "🛡️ *Manage a Supervision* ZAP report"
+                  }
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "mrkdwn",
+                      "text": ">${{ steps.json.outputs.high }} high risk, ${{ steps.json.outputs.medium }} medium risk, and ${{ steps.json.outputs.low }} low risk issues were found."
+                    }
+                  ]
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "📈 Report"
+                      },
+                      "url": "https://ministryofjustice.github.io/hmpps-manage-a-supervision-ui/zap-report"
+                    },
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "📝 Logs"
+                      },
+                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

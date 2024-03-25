@@ -8,7 +8,10 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "govuk/components/warning-text/macro.njk"        import govukWarningText %}
 {% from "govuk/components/tag/macro.njk"                 import govukTag %}
-{% from "govuk/components/details/macro.njk"                 import govukDetails %}
+{% from "govuk/components/button/macro.njk"              import govukButton %}
+{% from "govuk/components/details/macro.njk"             import govukDetails %}
+{% from "_components/compliance-tag/macro.njk"           import appComplianceTag %}
+{% from "govuk/components/radios/macro.njk"             import govukRadios %}
 
 {% block head %}
   <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet"/>

@@ -7,6 +7,7 @@ import searchRoutes from './search'
 import caseRoutes from './case'
 import personalDetailRoutes from './personalDetails'
 import sentenceDetailRoutes from './sentenceDetails'
+import scheduleRoutes from './schedule'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -15,5 +16,6 @@ export default function routes(services: Services): Router {
   caseRoutes(router, services)
   personalDetailRoutes(router, services)
   sentenceDetailRoutes(router, services)
+  scheduleRoutes(router, services)
   return router
 }

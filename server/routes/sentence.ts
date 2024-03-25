@@ -11,9 +11,6 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
   get('/case/:crn/sentence', async (req, res, _next) => {
     const { crn } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
-    const masClient = new MasApiClient(token)
-
-    const sentenceDetails = await masClient.getSentenceDetails(crn)
 
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_SENTENCE',
@@ -23,6 +20,10 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       correlationId: v4(),
       service: 'hmpps-manage-a-supervision-ui',
     })
+
+    const masClient = new MasApiClient(token)
+
+    const sentenceDetails = await masClient.getSentenceDetails(crn)
 
     res.render('pages/sentence', {
       sentenceDetails,

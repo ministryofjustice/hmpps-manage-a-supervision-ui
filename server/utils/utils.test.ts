@@ -6,19 +6,54 @@ import {
   dateWithDayAndWithoutYear,
   dateWithYear,
   dateWithYearShortMonth,
+  dayOfWeek,
   deliusDeepLinkUrl,
   deliusHomepageUrl,
   fullName,
+  getAppointmentsToAction,
   getRisksToThemselves,
   getTagClass,
   govukTime,
   initialiseName,
+  isInThePast,
+  isToday,
   monthsOrDaysElapsed,
+  pastAppointments,
+  scheduledAppointments,
+  toYesNo,
   yearsSince,
 } from './utils'
 import { RiskResponse, RiskScore, RiskToSelf } from '../data/arnsApiClient'
 import { Name } from '../data/model/common'
+import { Appointment } from '../data/model/schedule'
 
+const appointments = [
+  {
+    startDateTime: DateTime.now().plus({ days: 4 }).toString(),
+  },
+  {
+    startDateTime: DateTime.now().plus({ days: 3 }).toString(),
+  },
+  {
+    startDateTime: DateTime.now().plus({ days: 2 }).toString(),
+  },
+  {
+    startDateTime: DateTime.now().minus({ days: 1 }).toString(),
+    hasOutcome: true,
+  },
+  {
+    startDateTime: DateTime.now().minus({ days: 2 }).toString(),
+    absentWaitingEvidence: true,
+  },
+  {
+    startDateTime: DateTime.now().minus({ days: 3 }).toString(),
+    hasOutcome: false,
+  },
+  {
+    startDateTime: DateTime.now().minus({ days: 4 }).toString(),
+    hasOutcome: true,
+  },
+]
 describe('convert to title case', () => {
   it.each([
     [null, null, ''],
@@ -92,7 +127,7 @@ describe('months or days elapsed since', () => {
   it.each([
     [null, null, null],
     ['Empty string', '', null],
-    ['Months elapsed ', '1998-05-25T09:08:34.123', '309 months'],
+    ['Months elapsed ', DateTime.now().minus({ months: 309 }), '309 months'],
     ['Days elapsed ', DateTime.now().minus({ days: 5 }), '5 days'],
   ])('%s monthsOrDaysElapsed(%s, %s)', (_: string, a: string, expected: string) => {
     expect(monthsOrDaysElapsed(a)).toEqual(expected)
@@ -210,4 +245,64 @@ describe('get deliuus homepage link', () => {
       expect(deliusHomepageUrl()).toEqual(expected)
     },
   )
+})
+
+describe('is in the past', () => {
+  it.each([
+    ['Null', null, null],
+    ['False', DateTime.now().plus({ days: 1 }).toString(), false],
+    ['True', DateTime.now().minus({ days: 1 }).toString(), true],
+  ])('%s isInThePast(%s, %s)', (_: string, a: string, expected: boolean) => {
+    expect(isInThePast(a)).toEqual(expected)
+  })
+})
+
+describe('is today', () => {
+  it.each([
+    ['Null', null, null],
+    ['False', DateTime.now().plus({ days: 1 }).toString(), false],
+    ['True', DateTime.now().toString(), true],
+  ])('%s isToday(%s, %s)', (_: string, a: string, expected: boolean) => {
+    expect(isToday(a)).toEqual(expected)
+  })
+})
+
+describe('gets day of week', () => {
+  it.each([
+    ['Null', null, null],
+    ['gets day', DateTime.fromSQL('2020-09-10').toString(), 'Thursday'],
+  ])('%s dayOfWeek(%s, %s)', (_: string, a: string, expected: string) => {
+    expect(dayOfWeek(a)).toEqual(expected)
+  })
+})
+
+describe('boolean to yes or no', () => {
+  it.each([
+    ['Not known', null, 'Not known'],
+    ['Yes', true, 'Yes'],
+    ['No', false, 'No'],
+  ])('%s toYesNo(%s, %s)', (_: string, a: boolean, expected: string) => {
+    expect(toYesNo(a)).toEqual(expected)
+  })
+})
+
+describe('scheduled appointments', () => {
+  it.each([['Filters correctly', appointments]])('%s scheduledAppointments(%s, %s)', (_: string, a: Appointment[]) => {
+    expect(scheduledAppointments(a)[0]).toEqual(appointments[2])
+  })
+})
+
+describe('past appointments', () => {
+  it.each([['Filters correctly', appointments]])('%s pastAppointments(%s, %s)', (_: string, a: Appointment[]) => {
+    expect(pastAppointments(a)[0]).toEqual(appointments[6])
+  })
+})
+
+describe('appointments to action', () => {
+  it.each([
+    ['Filters absent awating evidence', appointments, 'evidence', appointments[4]],
+    ['Filters no outcome', appointments, 'outcome', appointments[5]],
+  ])('%s getAppointmentsToAction(%s, %s)', (_: string, a: Appointment[], b: string, appointment: Appointment) => {
+    expect(getAppointmentsToAction(a, b)[0]).toEqual(appointment)
+  })
 })

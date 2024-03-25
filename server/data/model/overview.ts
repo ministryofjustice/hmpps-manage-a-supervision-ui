@@ -1,6 +1,8 @@
 import { Name, PersonalCircumstance } from './common'
 
 export interface Overview {
+  appointmentsWithoutOutcome: number
+  absencesWithoutEvidence: number
   activity?: Activity
   compliance?: Compliance
   personalDetails: PersonalDetails

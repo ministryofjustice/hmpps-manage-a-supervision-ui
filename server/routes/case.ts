@@ -25,7 +25,6 @@ export default function caseRoutes(router: Router, { hmppsAuthClient }: Services
     })
 
     const [overview, risks] = await Promise.all([masClient.getOverview(crn), arnsClient.getRisks(crn)])
-
     res.render('pages/overview', {
       overview,
       risks,

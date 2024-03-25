@@ -14,7 +14,7 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
     const masClient = new MasApiClient(token)
 
     await auditService.sendAuditMessage({
-      action: 'VIEW_MAS_PERSONAL_DETAILS',
+      action: 'VIEW_MAS_SENTENCE',
       who: res.locals.user.username,
       subjectId: crn,
       subjectType: 'CRN',

@@ -11,13 +11,11 @@
     } if appointment.description,
     {
       key: { html: '<span data-qa="appointmentRescheduleLabel">Reschedule</span>' },
-      value: { html: '<span data-qa="appointmentRescheduleValue>Requested by ' + appointment.rescheduledBy | fullName + '</span>'}
+      value: { html: '<span data-qa="appointmentRescheduleValue">Requested by ' + appointment.rescheduledBy | fullName + '</span>'}
     } if appointment.rescheduledBy,
     {
       key: { html: '<span data-qa="rearrangingLabel">Reason for rearranging</span>' },
-      value: {
-        html: '<span data-qa="rearrangingValue">' + appointment.rearrangeOrCancelReason + '</span>'
-      },
+      value: { html: '<span data-qa="rearrangingValue">' + appointment.rearrangeOrCancelReason + '</span>' },
       actions: {
         items: [
           {

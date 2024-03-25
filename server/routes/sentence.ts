@@ -5,7 +5,7 @@ import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 
-export default function sentenceDetailRoutes(router: Router, { hmppsAuthClient }: Services) {
+export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
 
   get('/case/:crn/sentence', async (req, res, _next) => {
@@ -23,7 +23,7 @@ export default function sentenceDetailRoutes(router: Router, { hmppsAuthClient }
     })
 
     const sentenceDetails = await masClient.getSentenceDetails(crn)
-    res.render('pages/sentence-details', {
+    res.render('pages/sentence', {
       sentenceDetails,
       crn,
     })

@@ -4,7 +4,9 @@
 {% block content %}
 {% include "../partials/case-user-banner.njk" %}
 {% include "../partials/case-nav.njk" %}
-<h1 class="govuk-heading-l govuk-!-margin-bottom-7" data-qa="pageHeading">{{ currentSectionName }}</h1>
+{% if currentSectionName %}
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-7" data-qa="pageHeading">{{ currentSectionName }}</h1>
+{% endif %}
 {% if warnings.length %}
     {{ govukErrorSummary({ titleText: "There is a problem", errorList: warnings }) }}
 {% endif %}

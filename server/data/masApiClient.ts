@@ -10,6 +10,7 @@ import {
   ProvisionOverview,
 } from './model/personalDetails'
 import { AddressOverview, PersonSummary } from './model/common'
+import { SentenceDetails } from './model/sentenceDetails'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -18,6 +19,10 @@ export default class MasApiClient extends RestClient {
 
   async getOverview(crn: string): Promise<Overview | null> {
     return this.get({ path: `/overview/${crn}`, handle404: true })
+  }
+
+  async getSentenceDetails(crn: string): Promise<SentenceDetails | null> {
+    return this.get({ path: `/sentence/${crn}`, handle404: true })
   }
 
   async getPersonalDetails(crn: string): Promise<PersonalDetails | null> {

@@ -30,4 +30,11 @@ export default abstract class Page {
   getRowData = (cardName: string, rowName: string, type: string): PageElement => {
     return cy.get(`[data-qa=${cardName}Card]`).within(() => cy.get(`[data-qa=${rowName}${type}]`))
   }
+
+  getRowDataIndex = (cardName: string, rowName: string, type: string, index: number): PageElement => {
+    return cy
+      .get(`[data-qa=${cardName}Card]`)
+      .eq(index)
+      .within(() => cy.get(`[data-qa=${rowName}${type}]`))
+  }
 }

@@ -1,0 +1,135 @@
+{% extends "../partials/case.njk" %}
+{% set pageTitle = applicationName + " - Sentence Details" %}
+{% set currentNavSection = 'sentence' %}
+{% set headerPersonName = sentenceDetails.name.forename + ' ' + sentenceDetails.name.surname %}
+{% set headerCRN = crn %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+      items: [
+        {
+          text: "Your cases",
+          href: "/search"
+        },
+        {
+          text: headerPersonName,
+          href: "/case/" + crn
+        }
+      ]
+    }) }}
+{% endblock %}
+
+{% block pageContent %}
+    {% for sentence in sentenceDetails.sentences %}
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-7" data-qa="pageHeading">Sentence: {{ sentence.eventNumber }}</h1>
+
+        {% set hasAdditionalOffences = sentence.offenceDetails.additionalOffences and sentence.offenceDetails.additionalOffences.length > 0 %}
+            {% set additionalOffences %}
+            {% if hasAdditionalOffences %}
+              <ol class="govuk-list{% if sentence.offenceDetails.additionalOffences > 1 %} govuk-list--number{% endif %}">
+                {% for additionalOffence in sentence.offenceDetails.additionalOffences %}
+                  <li>{{ additionalOffence.description }} ({{ additionalOffence.count }} count)</li>
+                {% endfor %}
+              </ol>
+
+              <a href="/cases/{{ crn }}/sentence/offences">View additional offence details</a>
+            {% endif %}
+       {% endset %}
+
+        {% set hasAdditionalSentences = sentence.conviction.additionalSentences and sentence.conviction.additionalSentences.length > 0 %}
+        {% set additionalSentences %}
+            {% for additionalSentence in sentence.conviction.additionalSentences %}
+                {% set detailsHtml %}
+                  {{ govukSummaryList({
+                    rows: [
+                      {
+                        key: { text: 'Sentence' },
+                        value: { text: additionalSentence.description }
+                      },
+                      {
+                        key: { text: 'Value' },
+                        value: { text: additionalSentence.value }
+                      } if additionalSentence.value,
+                      {
+                        key: { text: 'Length' },
+                        value: { text: additionalSentence.length }
+                      } if additionalSentence.length,
+                      {
+                        key: { text: 'Notes' },
+                        value: { html: additionalSentence.notes | nl2br if additionalSentence.notes else 'No notes' }
+                      }
+                    ]
+                  }) }}
+                {% endset %}
+                {{ govukDetails({
+                  classes: 'govuk-!-margin-bottom-1',
+                  summaryText: additionalSentence.description,
+                  html: detailsHtml
+                }) }}
+            {% endfor %}
+        {% endset %}
+
+        {% set offence %}
+          {{ govukSummaryList({
+            rows: [
+              {
+                key: { text: "Main offence" },
+                value: { html: '<span data-qa="mainOffenceValue">' + sentence.offenceDetails.offence.description + ' (' + sentence.offenceDetails.offence.count + ' count)' + '</span>' }
+              },
+              {
+                key: { text: "Offence date" },
+                value: { html: '<span data-qa="dateOfOffenceValue">' + sentence.offenceDetails.dateOfOffence | dateWithYear + '</span>' }
+              },
+              {
+                key: { text: "Notes" },
+                value: { html: '<span data-qa="offenceNotesValue">' + sentence.offenceDetails.notes | nl2br if sentence.offenceDetails.notes else 'No notes' + '</span>' }
+              },
+              {
+                key: { text: "Additional offences" },
+                value: { html: '<span data-qa="additionalOffencesValue">' + additionalOffences if hasAdditionalOffences else 'No additional offences' + '</span>' }
+              }
+            ]
+          }) }}
+        {% endset %}
+
+        {% set conviction %}
+              {{ govukSummaryList({
+                rows: [
+                  {
+                    key: { text: "Sentencing court" },
+                    value: { html: '<span data-qa="sentencingCourtValue">' + sentence.conviction.sentencingCourt | nl2br if sentence.conviction.sentencingCourt else 'No court details' + '</span>' }
+                  },
+                  {
+                    key: { text: "Responsible court" },
+                    value: { html: '<span data-qa="responsibleCourtValue">' + sentence.conviction.responsibleCourt | nl2br if sentence.conviction.responsibleCourt else 'No court details' + '</span>' }
+                  },
+                  {
+                    key: { text: "Conviction date" },
+                    value: { html: '<span data-qa="convictionDateValue">' + sentence.conviction.convictionDate | nl2br if sentence.conviction.responsibleCourt | dateWithYear else 'No conviction date' + '</span>'}
+                  },
+                  {
+                    key: { text: "Additional sentences" },
+                    value: { html: '<span data-qa="additionalSentencesValue">' + additionalSentences if hasAdditionalSentences else 'No additional sentences' + '</span>'}
+                  }
+                ]
+              }) }}
+        {% endset %}
+
+        {{ appSummaryCard({
+          attributes: {'data-qa': 'offenceCard'},
+          titleText: 'Offence',
+          classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+          html: offence
+        }) }}
+
+        {{ appSummaryCard({
+          attributes: {'data-qa': 'convictionCard'},
+          titleText: 'Conviction',
+          classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+          html: conviction
+        }) }}
+    {%- endfor %}
+{% endblock %}
+
+
+

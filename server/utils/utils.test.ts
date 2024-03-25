@@ -92,7 +92,7 @@ describe('months or days elapsed since', () => {
   it.each([
     [null, null, null],
     ['Empty string', '', null],
-    ['Months elapsed ', '1998-05-25T09:08:34.123', '309 months'],
+    ['Months elapsed ', '1998-05-25T09:08:34.123', '310 months'],
     ['Days elapsed ', DateTime.now().minus({ days: 5 }), '5 days'],
   ])('%s monthsOrDaysElapsed(%s, %s)', (_: string, a: string, expected: string) => {
     expect(monthsOrDaysElapsed(a)).toEqual(expected)

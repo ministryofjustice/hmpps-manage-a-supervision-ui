@@ -13,6 +13,8 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
 
+    const sentenceDetails = await masClient.getSentenceDetails(crn)
+
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_SENTENCE',
       who: res.locals.user.username,
@@ -22,7 +24,6 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       service: 'hmpps-manage-a-supervision-ui',
     })
 
-    const sentenceDetails = await masClient.getSentenceDetails(crn)
     res.render('pages/sentence', {
       sentenceDetails,
       crn,

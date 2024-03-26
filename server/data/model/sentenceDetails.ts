@@ -11,10 +11,10 @@ export interface Sentence {
   conviction: Conviction
 }
 export interface OffenceDetails {
-  mainOffence: string
+  mainOffence: Offence
   offenceDate: string
   notes: string
-  additionalOffences: []
+  additionalOffences: Offence[]
 }
 
 export interface Conviction {
@@ -22,4 +22,9 @@ export interface Conviction {
   responsibleCourt: string
   convictionDate: string
   additionalSentences: string
+}
+
+export interface Offence {
+  code: string
+  description: string
 }

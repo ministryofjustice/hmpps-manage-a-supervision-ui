@@ -1,0 +1,36 @@
+<table class="govuk-table govuk-!-margin-top-4">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th class="govuk-table__header" style="width: 200px">Date</th>
+      <th class="govuk-table__header">Activity</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    {% for entry in entries %}
+      {% set lastDate = lastEntry.startDateTime | compactActivityLogDate %}
+      {% set thisDate = entry.startDateTime | compactActivityLogDate %}
+      {% if lastDate != thisDate %}
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">{{ thisDate }}</td>
+          <td class="govuk-table__cell">
+            <ul class="govuk-list govuk-!-margin-bottom-0 app-activity-log-day-items">
+      {% endif %}
+
+      <li>
+        {% if entry.isSystemContact === true %}
+          <div class="govuk-hint govuk-!-margin-bottom-1">
+            <a href="#" class="app-!-inherit-colour">{{ entry.type }}<span class="govuk-visually-hidden"> on {{ thisDate }}</span></a>
+          </div>
+        {% else %}
+          {% include "./_compact-timeline-entry.njk" %}
+        {% endif %}
+      </li>
+      {% set lastEntry = entry %}
+    {% endfor %}
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>

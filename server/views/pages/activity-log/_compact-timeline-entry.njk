@@ -1,0 +1,30 @@
+{% set hasOutcomeBeenConfirmed = entry.didTheyComply === true or entry.rescheduled === true%}
+{% set hasAppointmentStartTimePassed = isInThePast(entry.startDateTime) %}
+{% set shouldPromptToRecordAnOutcome = (not hasOutcomeBeenConfirmed) and hasAppointmentStartTimePassed %}
+
+{% set titleHtml %}
+  <p class="govuk-body govuk-!-margin-bottom-1">
+    <a href="/cases/{{ CRN }}/activity-log/activity/{{ entry.sessionId }}">
+      {% if entry.isAppointment === true %}
+        {{ appComplianceTag({ entry: entry, classes: 'govuk-!-margin-left-2', compact: true }) }}
+        {{ entry.type }} at&nbsp;{{ entry.startDateTime | govukTime }}
+      {% elseif entry.isCommunication %}
+        {% include './_communication-title.njk' %} at&nbsp;{{ entry.startDateTime | govukTime }}
+      {% else %}
+        {{ entry.type }}
+      {% endif %}
+      <span class="govuk-visually-hidden"> on {{ thisDate }}
+    </a>
+    <br /><a href="#" class="govuk-!-font-weight-bold">Record an outcome</a>
+  </p>
+{% endset %}
+
+{% set html %}
+  {% include './_timeline-notes.njk' %}
+{% endset %}
+
+{% set actionsHtml %}
+    {{ appComplianceTag({ entry: entry, classes: 'govuk-!-margin-left-2' }) }}
+{% endset %}
+
+{{ titleHtml | safe }}

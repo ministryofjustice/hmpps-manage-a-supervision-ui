@@ -25,7 +25,7 @@ import {
 } from './utils'
 import { RiskResponse, RiskScore, RiskToSelf } from '../data/arnsApiClient'
 import { Name } from '../data/model/common'
-import { Appointment } from '../data/model/schedule'
+import { Activity } from '../data/model/schedule'
 
 const appointments = [
   {
@@ -287,13 +287,13 @@ describe('boolean to yes or no', () => {
 })
 
 describe('scheduled appointments', () => {
-  it.each([['Filters correctly', appointments]])('%s scheduledAppointments(%s, %s)', (_: string, a: Appointment[]) => {
+  it.each([['Filters correctly', appointments]])('%s scheduledAppointments(%s, %s)', (_: string, a: Activity[]) => {
     expect(scheduledAppointments(a)[0]).toEqual(appointments[2])
   })
 })
 
 describe('past appointments', () => {
-  it.each([['Filters correctly', appointments]])('%s pastAppointments(%s, %s)', (_: string, a: Appointment[]) => {
+  it.each([['Filters correctly', appointments]])('%s pastAppointments(%s, %s)', (_: string, a: Activity[]) => {
     expect(pastAppointments(a)[0]).toEqual(appointments[6])
   })
 })
@@ -302,7 +302,7 @@ describe('appointments to action', () => {
   it.each([
     ['Filters absent awating evidence', appointments, 'evidence', appointments[4]],
     ['Filters no outcome', appointments, 'outcome', appointments[5]],
-  ])('%s getAppointmentsToAction(%s, %s)', (_: string, a: Appointment[], b: string, appointment: Appointment) => {
+  ])('%s getAppointmentsToAction(%s, %s)', (_: string, a: Activity[], b: string, appointment: Activity) => {
     expect(getAppointmentsToAction(a, b)[0]).toEqual(appointment)
   })
 })

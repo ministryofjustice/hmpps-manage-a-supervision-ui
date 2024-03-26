@@ -3,10 +3,10 @@ import { Document, Address } from './personalDetails'
 
 export interface Schedule {
   personSummary: PersonSummary
-  appointments: Appointment[]
+  appointments: Activity[]
 }
 
-export interface Appointment {
+export interface Activity {
   id?: string
   type?: string
   startDateTime?: string
@@ -20,6 +20,8 @@ export interface Appointment {
   isInitial?: boolean
   isNationalStandard?: boolean
   rescheduled?: boolean
+  rescheduledStaff?: boolean,
+  rescheduledPop?: boolean,
   didTheyComply?: boolean
   absentWaitingEvidence?: boolean
   rearrangeOrCancelReason?: string
@@ -31,11 +33,18 @@ export interface Appointment {
   acceptableAbsence?: boolean
   acceptableAbsenceReason?: string
   location?: Address
+  action?: string
+  isSystemContact?: boolean
+  isAppointment?: boolean
+  isEmailOrTextFromPop?: boolean
+  isPhoneCallFromPop?: boolean
+  isEmailOrTextToPop?: boolean
+  isPhoneCallToPop?: boolean
   lastUpdated?: string
   lastUpdatedBy?: Name
 }
 
 export interface PersonAppointment {
   personSummary: PersonSummary
-  appointment: Appointment
+  appointment: Activity
 }

@@ -1,0 +1,92 @@
+
+{% set documents %}
+  <ul class="govuk-list">
+    {% for document in entry.documents %}
+      <li {% if loop.last %}class="govuk-!-margin-bottom-0"{% endif %}>
+      <a href="/case/{{ crn }}/personal-details/documents/{{ doc.id }}/download" download="{{ document.name }}">{{ document.name }}</a>
+      </li>
+    {% endfor %}
+    </ul>
+{% endset %}
+
+{{ govukWarningText({
+  html: 'Absent and waiting for evidence<br /><a href="/case/' + crn +'/schedule/appointment' + entry.id + '">Change outcome</a>',
+  iconFallbackText: 'Warning'
+}) if entry.acceptableAbsence === null }}
+
+{% if
+  entry.rarCategory or
+  entry.acceptableAbsence === true or
+  entry.didTheyComply === false or
+  entry.rescheduled or
+  entry.description or
+  entry.action or
+  entry.documents.length > 0 %}
+{{ govukSummaryList({
+  classes: 'govuk-!-margin-bottom-0',
+  rows: [
+    {
+      key: {
+        text: 'Description'
+      },
+      value: {
+          text: entry.description
+      }
+    } if entry.description,
+    {
+      key: {
+        text: 'RAR activity'
+      },
+      value: {
+          text: entry.rarCategory
+      }
+    } if entry.rarCategory,
+    {
+      key: { text: "Reschedule" },
+      value: { text: "Requested by " + personSummary.name | fullName if entry.rescheduledPop == true else entry.rescheduledBy | fullName }
+    } if entry.rescheduledBy,
+    {
+      key: { text: "Reason for not complying" },
+      value: { text: entry.nonComplianceReason }
+    } if entry.didTheyComply === false,
+    {
+      key: { text: "Reason for absence" },
+      value: { text: entry.acceptableAbsenceReason if entry.acceptableAbsence === true }
+    } if entry.acceptableAbsenceReason,
+    {
+      key: { text: "Enforcement" },
+      value: { html: entry.action }
+    } if entry.action,
+    {
+      key: { text: "Documents" },
+      value: { html: documents }
+    } if entry.documents.length > 0
+  }
+}) }}
+
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-margin-top-1">
+{% endif %}
+
+{% set showNotesDetails = entry.notes and (entry.notes.length > 250 or entry.sensitive) %}
+{% set notes %}
+  {% if entry.notes %}
+    <p class="govuk-!-margin-bottom-0">{{ entry.notes | nl2br | safe }}</p>
+  {% endif %}
+{% endset %}
+
+{% if showNotesDetails %}
+  {{ govukDetails({
+    summaryText: "Notes (sensitive)" if entry.isSensitive else "Notes",
+    html: notes,
+    open: loop.index < 4,
+    classes: 'govuk-!-margin-bottom-0'
+  }) }}
+{% elseif not entry.notes %}
+  {% if entry.isSensitive %}
+    <p class="govuk-!-margin-bottom-0">Sensitive (No notes)</p>
+  {% else %}
+    <p class="govuk-!-margin-bottom-0">No notes</p>
+  {% endif %}
+{% else %}
+  {{ notes | safe }}
+{% endif %}

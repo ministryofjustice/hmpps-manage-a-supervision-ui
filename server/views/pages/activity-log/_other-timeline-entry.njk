@@ -1,0 +1,38 @@
+{% set titleHtml %}
+  <a href="/case/{{ crn }}/schedule/appointment/{{ entry.id }}" class="govuk-!-font-weight-bold">
+    {{ entry.type }}<span class="govuk-visually-hidden"> on {{ thisDate }}</span>
+  </a>
+{% endset %}
+
+{% set actionsHtml %}
+  {% if entry.rarCategory %}
+    {{ govukTag({text: 'RAR', classes: 'govuk-tag--purple'}) }}
+  {% endif %}
+
+  {% if entry.didTheyComply === true %}
+    {{ govukTag({text: 'Complied', classes: 'govuk-tag--green'}) }}
+  {% elseif entry.didTheyComply === false %}
+    {{ govukTag({text: 'Failed to comply', classes: 'govuk-tag--red'}) }}
+  {% elseif entry.wasAbsent === true %}
+    {% if entry.acceptableAbsence === true %}
+      {{ govukTag({text: 'Acceptable absence', classes: 'govuk-tag--green'}) }}
+    {% else %}
+      {{ govukTag({text: 'Unacceptable absence', classes: 'govuk-tag--red'}) }}
+    {% endif %}
+  {% endif %}
+
+  {% if entry.isSensitive === true %}
+    {{ govukTag({ text: "Sensitive", classes: "govuk-tag--grey" }) }}
+  {% endif %}
+{% endset %}
+
+{% set html %}
+  {% include './_timeline-notes.njk' %}
+{% endset %}
+
+{{ appSummaryCard({
+  titleHtml: titleHtml,
+  classes: 'govuk-!-margin-bottom-2 app-summary-card--white-header',
+  html: html,
+  actionsHtml: actionsHtml
+}) }}

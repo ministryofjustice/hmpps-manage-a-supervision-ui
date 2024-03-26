@@ -21,7 +21,7 @@
 
 {% block pageContent %}
     {% for sentence in sentenceDetails.sentences %}
-        <h1 class="govuk-heading-l govuk-!-margin-bottom-7" data-qa="pageHeading">Sentence: {{ sentence.eventNumber }}</h1>
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-7" data-qa="pageHeading">Sentence: {{ sentence.offenceDetails.eventNumber }}</h1>
 
         {% set hasAdditionalOffences = sentence.offenceDetails.additionalOffences and sentence.offenceDetails.additionalOffences.length > 0 %}
             {% set additionalOffences %}

@@ -11,6 +11,15 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
   get('/case/:crn/activity-log', async (req, res, _next) => {
     const { crn } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+    const masClient = new MasApiClient(token)
+
+    if (req.query.view === 'compact') {
+      res.locals.compactView = true
+    } else {
+      res.locals.defaultView = true
+    }
+
+    const personActivity = await masClient.getPersonActivityLog(crn)
 
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_ACTIVITY_LOG',
@@ -20,17 +29,6 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       correlationId: v4(),
       service: 'hmpps-manage-a-supervision-ui',
     })
-
-    const masClient = new MasApiClient(token)
-
-    const personActivity = await masClient.getPersonActivityLog(crn)
-
-    if (req.query.view === 'compact') {
-      res.locals.compactView = true
-    } else {
-      res.locals.defaultView = true
-    }
-
     res.render('pages/activity-log', {
       personActivity,
       crn,
@@ -71,14 +69,6 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     const { crn, id } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
 
-    await auditService.sendAuditMessage({
-      action: 'VIEW_MAS_ACTIVITY_LOG_DETAIL',
-      who: res.locals.user.username,
-      subjectId: crn,
-      subjectType: 'CRN',
-      correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
-    })
     const masClient = new MasApiClient(token)
     const personAppointment = await masClient.getPersonAppointment(crn, id)
     const isActivityLog = true
@@ -88,6 +78,16 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     if (req.query.view) {
       queryParams.push(`view=${req.query.view}`)
     }
+
+    await auditService.sendAuditMessage({
+      action: 'VIEW_MAS_ACTIVITY_LOG_DETAIL',
+      who: res.locals.user.username,
+      subjectId: crn,
+      subjectType: 'CRN',
+      correlationId: v4(),
+      service: 'hmpps-manage-a-supervision-ui',
+    })
+
     res.render('pages/schedule/appointment', {
       category,
       queryParams,

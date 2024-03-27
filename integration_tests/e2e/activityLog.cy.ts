@@ -32,11 +32,6 @@ context('Appointment', () => {
     const page = Page.verifyOnPage(ActivityLogPage)
     page.getCardHeader('timeline1').should('contain.text', 'Waiting for evidence')
   })
-  it('Activity log page is rendered with without-outcome filter', () => {
-    cy.visit('/case/X000001/activity-log/waiting-for-evidence')
-    const page = Page.verifyOnPage(ActivityLogPage)
-    page.getCardHeader('timeline1').should('contain.text', 'Waiting for evidence')
-  })
   it('Activity log page is rendered with complied-appointments filter', () => {
     cy.visit('/case/X000001/activity-log/complied-appointments')
     const page = Page.verifyOnPage(ActivityLogPage)
@@ -46,6 +41,11 @@ context('Appointment', () => {
     cy.visit('/case/X000001/activity-log/all-failure-to-comply-appointments')
     const page = Page.verifyOnPage(ActivityLogPage)
     page.getCardHeader('timeline1').should('contain.text', 'Failed to comply')
+  })
+  it('Activity log page is rendered waiting-for-evidence filter', () => {
+    cy.visit('/case/X000001/activity-log/waiting-for-evidence')
+    const page = Page.verifyOnPage(ActivityLogPage)
+    page.getCardHeader('timeline1').should('contain.text', 'Waiting for evidence')
   })
   it('Activity log page is rendered with acceptable absence filter', () => {
     cy.visit('/case/X000001/activity-log/acceptable-absence-appointments')

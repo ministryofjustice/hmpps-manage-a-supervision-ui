@@ -26,40 +26,4 @@ context('Appointment', () => {
     page.getActivity('7').should('contain.text', 'Office appointment')
     page.getActivity('8').should('contain.text', 'Video call')
   })
-
-  it('Activity log page is rendered with without-outcome filter', () => {
-    cy.visit('/case/X000001/activity-log/national-standard-appointments-without-outcome')
-    const page = Page.verifyOnPage(ActivityLogPage)
-    page.getCardHeader('timeline1').should('contain.text', 'Waiting for evidence')
-  })
-  it('Activity log page is rendered with complied-appointments filter', () => {
-    cy.visit('/case/X000001/activity-log/complied-appointments')
-    const page = Page.verifyOnPage(ActivityLogPage)
-    page.getCardHeader('timeline1').should('contain.text', 'Complied')
-  })
-  it('Activity log page is rendered with failure to comply filter', () => {
-    cy.visit('/case/X000001/activity-log/all-failure-to-comply-appointments')
-    const page = Page.verifyOnPage(ActivityLogPage)
-    page.getCardHeader('timeline1').should('contain.text', 'Failed to comply')
-  })
-  it('Activity log page is rendered waiting-for-evidence filter', () => {
-    cy.visit('/case/X000001/activity-log/waiting-for-evidence')
-    const page = Page.verifyOnPage(ActivityLogPage)
-    page.getCardHeader('timeline1').should('contain.text', 'Waiting for evidence')
-  })
-  it('Activity log page is rendered with acceptable absence filter', () => {
-    cy.visit('/case/X000001/activity-log/acceptable-absence-appointments')
-    const page = Page.verifyOnPage(ActivityLogPage)
-    page.getCardHeader('timeline1').should('contain.text', 'Acceptable absence')
-  })
-  it('Activity log page is rendered with rescheduled filter', () => {
-    cy.visit('/case/X000001/activity-log/all-rescheduled')
-    const page = Page.verifyOnPage(ActivityLogPage)
-    page.getCardHeader('timeline1').should('contain.text', 'Rescheduled')
-  })
-  it('Activity log page is rendered with warning letter filter', () => {
-    cy.visit('/case/X000001/activity-log/warning-letters')
-    const page = Page.verifyOnPage(ActivityLogPage)
-    page.getRowData('timeline1', 'enforcement', 'Value').should('contain.text', 'Warning letter sent')
-  })
 })

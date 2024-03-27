@@ -4,7 +4,6 @@
       text: 'Add to log',
       href: '/case/' + crn + '/handoff/delius'
     }) }}
-
     {% if category %}
       <p>
         <a href="/case/{{ crn }}/activity-log{{ '?view=compact' if compactView }}">Remove all filters</a>
@@ -26,82 +25,5 @@
       <li><a {% if category == 'all-rescheduled' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/all-rescheduled{{ '?view=compact' if compactView }}">Rescheduled</a></li>
       <li><a {% if category == 'warning-letters' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/warning-letters{{ '?view=compact' if compactView }}">Warning letters</a></li>
     </ul>
-
-    {% if data.features.filters %}
-      {{ govukButton({
-        html: 'Apply filters',
-        classes: 'govuk-button--secondary',
-        href: '#'
-      }) }}
-
-      {{ govukCheckboxes({
-        classes: "govuk-checkboxes--small",
-        fieldset: {
-          legend: {
-            text: "Type of contact",
-            classes: "govuk-fieldset__legend--s"
-          }
-        },
-        items: [
-          {
-            text: "Appointment"
-          },
-          {
-            text: "Communication"
-          },
-          {
-            text: "Notes"
-          }
-        ]
-      } | decorateFormAttributes(['contact-filter-type'])) }}
-
-      {{ govukCheckboxes({
-        classes: "govuk-checkboxes--small",
-        fieldset: {
-          legend: {
-            text: "Appointments",
-            classes: "govuk-fieldset__legend--s"
-          }
-        },
-        items: [
-          {
-            text: "Complied"
-          },
-          {
-            text: "Failed to comply"
-          },
-          {
-            text: "Absent"
-          },
-          {
-            text: "RAR"
-          },
-          {
-            text: "No notes"
-          }
-        ]
-      } | decorateFormAttributes(['contact-filter-type'])) }}
-
-      {{ govukCheckboxes({
-        classes: "govuk-checkboxes--small",
-        fieldset: {
-          legend: {
-            text: "Communications",
-            classes: "govuk-fieldset__legend--s"
-          }
-        },
-        items: [
-          {
-            text: "Phone call"
-          },
-          {
-            text: "Text message"
-          },
-          {
-            text: "Email"
-          }
-        ]
-      } | decorateFormAttributes(['contact-filter-type'])) }}
-    {% endif %}
   </div>
 </div>

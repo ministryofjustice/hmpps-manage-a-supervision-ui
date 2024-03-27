@@ -25,7 +25,8 @@ export default abstract class Page {
 
   getTab = (tabName: string): PageElement => cy.get(`[data-qa=${tabName}Tab]`)
 
-  getCardHeader = (cardName: string): PageElement => cy.get(`[data-qa=${cardName}Card]`)
+  getCardHeader = (cardName: string): PageElement =>
+    cy.get(`[class=app-summary-card__header]`).get(`[data-qa=${cardName}Card]`)
 
   getRowData = (cardName: string, rowName: string, type: string): PageElement => {
     return cy.get(`[data-qa=${cardName}Card]`).within(() => cy.get(`[data-qa=${rowName}${type}]`))

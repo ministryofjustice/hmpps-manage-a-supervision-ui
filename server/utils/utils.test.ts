@@ -2,6 +2,9 @@
 import { DateTime } from 'luxon'
 
 import {
+  activityLog,
+  activityLogDate,
+  compactActivityLogDate,
   convertToTitleCase,
   dateWithDayAndWithoutYear,
   dateWithYear,
@@ -39,11 +42,15 @@ const appointments = [
   },
   {
     startDateTime: DateTime.now().minus({ days: 1 }).toString(),
+    isNationalStandard: true,
+    isAppointment: true,
     hasOutcome: true,
   },
   {
     startDateTime: DateTime.now().minus({ days: 2 }).toString(),
+    isNationalStandard: true,
     absentWaitingEvidence: true,
+    isAppointment: true,
   },
   {
     startDateTime: DateTime.now().minus({ days: 3 }).toString(),
@@ -304,5 +311,32 @@ describe('appointments to action', () => {
     ['Filters no outcome', appointments, 'outcome', appointments[5]],
   ])('%s getAppointmentsToAction(%s, %s)', (_: string, a: Activity[], b: string, appointment: Activity) => {
     expect(getAppointmentsToAction(a, b)[0]).toEqual(appointment)
+  })
+})
+
+describe('compact Activity log date', () => {
+  it.each([
+    ['Null', null, null],
+    ['gets day', '2024-05-25T09:08:34.123', 'Sat 25 May 2024'],
+  ])('%s compactActivityLogDate(%s, %s)', (_: string, a: string, expected: string) => {
+    expect(compactActivityLogDate(a)).toEqual(expected)
+  })
+})
+
+describe('Activity log date', () => {
+  it.each([
+    ['Null', null, null],
+    ['gets day', '2024-05-25T09:08:34.123', 'Saturday 25 May 2024'],
+  ])('%s activityLogDate(%s, %s)', (_: string, a: string, expected: string) => {
+    expect(activityLogDate(a)).toEqual(expected)
+  })
+})
+
+describe('filters activity log', () => {
+  it.each([
+    ['Filters absent awaiting evidence', appointments, 'waiting-for-evidence', appointments[4]],
+    ['Filters no outcome', appointments, 'national-standard-appointments-without-outcome', appointments[3]],
+  ])('%s activityLog(%s, %s)', (_: string, a: Activity[], b: string, appointment: Activity) => {
+    expect(activityLog(a, b)[0]).toEqual(appointment)
   })
 })

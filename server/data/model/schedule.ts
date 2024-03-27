@@ -20,8 +20,8 @@ export interface Activity {
   isInitial?: boolean
   isNationalStandard?: boolean
   rescheduled?: boolean
-  rescheduledStaff?: boolean,
-  rescheduledPop?: boolean,
+  rescheduledStaff?: boolean
+  rescheduledPop?: boolean
   didTheyComply?: boolean
   absentWaitingEvidence?: boolean
   rearrangeOrCancelReason?: string

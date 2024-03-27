@@ -3,8 +3,10 @@ import path from 'path'
 import nunjucks from 'nunjucks'
 import express from 'express'
 import {
-  activityLog, activityLogDate,
-  addressToList, compactActivityLogDate,
+  activityLog,
+  activityLogDate,
+  addressToList,
+  compactActivityLogDate,
   dateWithDayAndWithoutYear,
   dateWithNoDay,
   dateWithYear,
@@ -12,7 +14,7 @@ import {
   dayOfWeek,
   deliusDateFormat,
   deliusDeepLinkUrl,
-  deliusHomepageUrl, filterEntriesByCategory,
+  deliusHomepageUrl,
   fullName,
   getAppointmentsToAction,
   getCurrentRisksToThemselves,

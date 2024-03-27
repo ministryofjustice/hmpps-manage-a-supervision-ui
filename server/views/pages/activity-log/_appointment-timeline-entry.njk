@@ -5,7 +5,7 @@
 
 {% set titleHtml %}
   <span class="govuk-heading-s govuk-!-margin-bottom-0">
-    <a href="/case/{{ crn }}/schedule/appointment/{{ entry.id }}">{{ entry.type }} at&nbsp;{{ entry.startDateTime | govukTime }}<span class="govuk-visually-hidden"> on {{ thisDate }}</span></a>
+    <a href="/case/{{ crn }}/activity-log/activity/{{ entry.id }}?category={{ category }}&view=default"">{{ entry.type }} at {{ entry.startDateTime | govukTime }}<span class="govuk-visually-hidden"> on {{ thisDate }}</span></a>
   </span>
 
   <span class="govuk-!-font-size-16">
@@ -26,6 +26,7 @@
 {% endset %}
 
 {{ appSummaryCard({
+  attributes: {'data-qa': 'timeline' + loop.index + 'Card'},
   titleHtml: titleHtml,
   classes: 'govuk-!-margin-bottom-2',
   html: html,

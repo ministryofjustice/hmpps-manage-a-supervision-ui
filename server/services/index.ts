@@ -13,7 +13,6 @@ export const services = () => {
     environment: config.env,
     extraColumns: [],
   })
-
   return {
     applicationInfo,
     hmppsAuthClient,

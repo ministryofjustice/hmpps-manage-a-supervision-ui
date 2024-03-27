@@ -10,14 +10,13 @@
       {% set lastDate = lastEntry.startDateTime | compactActivityLogDate %}
       {% set thisDate = entry.startDateTime | compactActivityLogDate %}
       {% if lastDate != thisDate %}
-          </td>
+      </td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">{{ thisDate }}</td>
           <td class="govuk-table__cell">
             <ul class="govuk-list govuk-!-margin-bottom-0 app-activity-log-day-items">
       {% endif %}
-
       <li>
         {% if entry.isSystemContact === true %}
           <div class="govuk-hint govuk-!-margin-bottom-1">
@@ -26,11 +25,11 @@
         {% else %}
           {% include "./_compact-timeline-entry.njk" %}
         {% endif %}
-      </li>
+        </li>
       {% set lastEntry = entry %}
     {% endfor %}
-        </ul>
-      </td>
+    </ul>
+    </td>
     </tr>
   </tbody>
 </table>

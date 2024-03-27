@@ -278,6 +278,7 @@ export const filterEntriesByCategory = (category: string) => {
 }
 
 export const activityLogDate = (datetimeString: string) => {
+  if (!datetimeString || isBlank(datetimeString)) return null
   const date = DateTime.fromISO(datetimeString)
   if (date.hasSame(DateTime.local(), 'day')) {
     return 'Today'
@@ -289,6 +290,7 @@ export const activityLogDate = (datetimeString: string) => {
 }
 
 export const compactActivityLogDate = (datetimeString: string) => {
+  if (!datetimeString || isBlank(datetimeString)) return null
   const date = DateTime.fromISO(datetimeString)
   if (date.hasSame(DateTime.local(), 'day')) {
     return 'Today'

@@ -1,0 +1,30 @@
+{% set html %}
+  <p>Change how the activity log looks:</p>
+  <p>
+    {% if compactView %}
+      <a href="?" class="govuk-!-font-weight-bold">Default view</a>
+    {% else %}
+      <span class="govuk-!-font-weight-bold">Default view</span>
+    {% endif %}
+    <br />
+    Displays notes and details for each activity
+  </p>
+
+  <p>
+    {% if defaultView %}
+      <a href="?view=compact" class="govuk-!-font-weight-bold">Compact view</a>
+    {% else %}
+      <span class="govuk-!-font-weight-bold">Compact view</span>
+    {% endif %}
+    <br />
+    Displays a condensed list of activity
+  </p>
+{% endset %}
+
+{{ govukDetails({
+  summaryText: "Switch view",
+  html: html,
+  classes: "govuk-!-margin-bottom-0"
+}) }}
+
+<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">

@@ -4,8 +4,7 @@ import { RiskScore, RiskToSelf } from '../data/arnsApiClient'
 import { Name } from '../data/model/common'
 import { Address } from '../data/model/personalDetails'
 import config from '../config'
-import { Appointment } from '../data/model/schedule'
-import logger from '../../logger'
+import { Activity } from '../data/model/schedule'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -173,8 +172,6 @@ export const deliusHomepageUrl = () => {
 
 export const isInThePast = (datetimeString: string) => {
   if (!datetimeString || isBlank(datetimeString)) return null
-  logger.info(`Time now is ${DateTime.now().toString()}`)
-
   return DateTime.now() > DateTime.fromISO(datetimeString)
 }
 
@@ -188,7 +185,7 @@ export const dayOfWeek = (datetimeString: string) => {
   return DateTime.fromISO(datetimeString).toFormat('cccc')
 }
 
-export const scheduledAppointments = (appointments: Appointment[]): Appointment[] => {
+export const scheduledAppointments = (appointments: Activity[]): Activity[] => {
   return (
     // Show future appointments and any appointments that are today
     appointments
@@ -197,7 +194,7 @@ export const scheduledAppointments = (appointments: Appointment[]): Appointment[
   )
 }
 
-export const pastAppointments = (appointments: Appointment[]): Appointment[] => {
+export const pastAppointments = (appointments: Activity[]): Activity[] => {
   return (
     // Show future appointments and any appointments that are today
     appointments
@@ -206,7 +203,7 @@ export const pastAppointments = (appointments: Appointment[]): Appointment[] => 
   )
 }
 
-export const getAppointmentsToAction = (appointments: Appointment[], type: string): Appointment[] => {
+export const getAppointmentsToAction = (appointments: Activity[], type: string): Activity[] => {
   if (type === 'evidence') {
     return pastAppointments(appointments).filter(entry => entry.absentWaitingEvidence === true)
   }
@@ -223,4 +220,89 @@ export const toYesNo = (value: boolean) => {
     return 'No'
   }
   return 'Yes'
+}
+
+export const filterEntriesByCategory = (category: string) => {
+  return function filterActivity(activity: Activity) {
+    const { isAppointment } = activity
+    const isPastAppointment = isAppointment && isInThePast(activity.startDateTime)
+    const { isNationalStandard } = activity
+    const isRescheduled = activity.rescheduled && isNationalStandard
+    const hasOutcome = activity.didTheyComply !== undefined || isRescheduled
+    const { wasAbsent } = activity
+    const acceptableAbsence = wasAbsent && activity.acceptableAbsence === true
+    const unacceptableAbsence = wasAbsent && activity.acceptableAbsence === false
+    const waitingForEvidence = activity.absentWaitingEvidence === true
+    const complied = activity.didTheyComply === true
+    const attendedDidNotComply = activity.didTheyComply === false
+
+    switch (category) {
+      case 'all-appointments':
+        return isAppointment
+      case 'other-communication':
+        return !isAppointment
+      case 'previous-appointments':
+        return isPastAppointment
+      case 'national-standard-appointments':
+        return isPastAppointment && isNationalStandard
+      case 'national-standard-appointments-without-outcome':
+        return isPastAppointment && isNationalStandard && !hasOutcome
+      case 'complied-appointments':
+        return isPastAppointment && complied && isNationalStandard
+      case 'acceptable-absence-appointments':
+        return isPastAppointment && acceptableAbsence && isNationalStandard
+      case 'unacceptable-absence-appointments':
+        return isPastAppointment && unacceptableAbsence && isNationalStandard
+      case 'waiting-for-evidence':
+        return isPastAppointment && waitingForEvidence && isNationalStandard
+      case 'attended-but-did-not-comply-appointments':
+        return isPastAppointment && attendedDidNotComply && isNationalStandard
+      case 'all-failure-to-comply-appointments':
+        return isPastAppointment && (attendedDidNotComply || unacceptableAbsence) && isNationalStandard
+      case 'upcoming-appointments':
+        return isAppointment && !isPastAppointment
+      case 'warning-letters':
+        return activity.action != null
+      case 'all-previous-activity':
+        return isPastAppointment || !isAppointment
+      case 'all-rescheduled':
+        return isRescheduled
+      case 'rescheduled-by-staff':
+        return isRescheduled && activity.rescheduledStaff === true
+      case 'rescheduled-by-person-on-probation':
+        return isRescheduled && activity.rescheduledPop === true
+      default:
+        return true
+    }
+  }
+}
+
+export const activityLogDate = (datetimeString: string) => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  const date = DateTime.fromISO(datetimeString)
+  if (date.hasSame(DateTime.local(), 'day')) {
+    return 'Today'
+  }
+  if (date.hasSame(DateTime.local().minus({ days: 1 }), 'day')) {
+    return 'Yesterday'
+  }
+  return date.toFormat('cccc d MMMM yyyy')
+}
+
+export const compactActivityLogDate = (datetimeString: string) => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  const date = DateTime.fromISO(datetimeString)
+  if (date.hasSame(DateTime.local(), 'day')) {
+    return 'Today'
+  }
+
+  if (date.hasSame(DateTime.local().minus({ days: 1 }), 'day')) {
+    return 'Yesterday'
+  }
+
+  return date.toFormat('ccc d MMM yyyy')
+}
+
+export const activityLog = (contacts: Activity[], category: string) => {
+  return contacts.filter(filterEntriesByCategory(category)).sort((a, b) => (a.startDateTime < b.startDateTime ? 1 : -1))
 }

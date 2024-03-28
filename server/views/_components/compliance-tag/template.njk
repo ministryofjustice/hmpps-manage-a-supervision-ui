@@ -15,7 +15,7 @@
   {% set shorthand = '✘' %}
   {% set colour = 'red' %}
 {% elseif entry.wasAbsent === true %}
-  {% if entry?.acceptableAbsence === true %}
+  {% if entry.acceptableAbsence === true %}
     {% set text = 'Acceptable absence' %}
     {% set shorthand = '✓' %}
     {% set colour = 'green' %}

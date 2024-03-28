@@ -3,7 +3,10 @@ import path from 'path'
 import nunjucks from 'nunjucks'
 import express from 'express'
 import {
+  activityLog,
+  activityLogDate,
   addressToList,
+  compactActivityLogDate,
   dateWithDayAndWithoutYear,
   dateWithNoDay,
   dateWithYear,
@@ -82,6 +85,9 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('deliusDateFormat', deliusDateFormat)
   njkEnv.addFilter('dayOfWeek', dayOfWeek)
   njkEnv.addFilter('toYesNo', toYesNo)
+  njkEnv.addFilter('compactActivityLogDate', compactActivityLogDate)
+  njkEnv.addFilter('activityLogDate', activityLogDate)
+  njkEnv.addGlobal('activityLog', activityLog)
   njkEnv.addGlobal('getRisksToThemselves', getRisksToThemselves)
   njkEnv.addGlobal('getCurrentRisksToThemselves', getCurrentRisksToThemselves)
   njkEnv.addGlobal('getPreviousRisksToThemselves', getPreviousRisksToThemselves)

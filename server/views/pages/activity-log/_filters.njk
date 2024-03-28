@@ -1,0 +1,29 @@
+<div class="govuk-grid-column-one-third">
+  <div class="app-card">
+    {{ govukButton({
+      text: 'Add to log',
+      href: '/case/' + crn + '/handoff/delius'
+    }) }}
+    {% if category %}
+      <p>
+        <a href="/case/{{ crn }}/activity-log{{ '?view=compact' if compactView }}">Remove all filters</a>
+      </p>
+    {% endif %}
+
+    <h4 class="govuk-heading-m">
+      Compliance filters
+    </h4>
+    <p>Filter the activity log by National Standard (NS) activities:</p>
+
+    <ul class="govuk-list govuk-!-margin-bottom-0">
+      <li><a {% if category == 'national-standard-appointments' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/national-standard-appointments{{ '?view=compact' if compactView }}">Appointments</a></li>
+      <li><a {% if category == 'national-standard-appointments-without-outcome' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/national-standard-appointments-without-outcome{{ '?view=compact' if compactView }}">Without an outcome</a></li>
+      <li><a {% if category == 'waiting-for-evidence' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/waiting-for-evidence{{ '?view=compact' if compactView }}">Absences waiting for evidence</a></li>
+      <li><a {% if category == 'complied-appointments' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/complied-appointments{{ '?view=compact' if compactView }}">Complied appointments</a></li>
+      <li><a {% if category == 'all-failure-to-comply-appointments' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/all-failure-to-comply-appointments{{ '?view=compact' if compactView }}">Failures to comply</a></li>
+      <li><a {% if category == 'acceptable-absence-appointments' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/acceptable-absence-appointments{{ '?view=compact' if compactView }}">Acceptable absences</a></li>
+      <li><a {% if category == 'all-rescheduled' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/all-rescheduled{{ '?view=compact' if compactView }}">Rescheduled</a></li>
+      <li><a {% if category == 'warning-letters' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/warning-letters{{ '?view=compact' if compactView }}">Warning letters</a></li>
+    </ul>
+  </div>
+</div>

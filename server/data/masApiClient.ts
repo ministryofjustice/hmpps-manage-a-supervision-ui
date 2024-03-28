@@ -11,6 +11,7 @@ import {
 } from './model/personalDetails'
 import { AddressOverview, PersonSummary } from './model/common'
 import { SentenceDetails } from './model/sentenceDetails'
+import { PersonActivity } from './model/activityLog'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -63,5 +64,9 @@ export default class MasApiClient extends RestClient {
 
   async getPersonAppointment(crn: string, appointmentId: string): Promise<PersonAppointment | null> {
     return this.get({ path: `/schedule/${crn}/appointment/${appointmentId}`, handle404: false })
+  }
+
+  async getPersonActivityLog(crn: string): Promise<PersonActivity> {
+    return this.get({ path: `/activity/${crn}`, handle404: false })
   }
 }

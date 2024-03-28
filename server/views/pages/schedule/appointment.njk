@@ -1,5 +1,9 @@
 {% extends "../../partials/layout.njk" %}
 {% set appointment = personAppointment.appointment %}
+
+{% set extraBreadcrumb = '?' + queryParams.join('&') if queryParams.length > 0  else ''  %}
+{% set category = '/' + category + '/' + extraBreadcrumb if category else extraBreadcrumb  %}
+
 {% block beforeContent %}
 {{ govukBreadcrumbs({
   items: [
@@ -12,8 +16,8 @@
       href: "/case/" + crn
     },
     {
-      text: "Schedule",
-      href: "/case/" + crn + "/schedule"
+      text: "Schedule" if not isActivityLog else "Activity log",
+      href: "/case/" + crn + "/schedule" if not isActivityLog else "/case/" + crn + "/activity-log" + category
     },
     {
       text: appointment.type

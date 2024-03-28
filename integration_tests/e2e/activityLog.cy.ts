@@ -1,7 +1,7 @@
 import Page from '../pages/page'
 import ActivityLogPage from '../pages/activityLog'
 
-context('Appointment', () => {
+context('Activity log', () => {
   it('Activity log page is rendered in default view', () => {
     cy.visit('/case/X000001/activity-log')
     const page = Page.verifyOnPage(ActivityLogPage)

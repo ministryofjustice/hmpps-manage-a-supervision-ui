@@ -72,6 +72,29 @@
         {% set hasRequirements = sentence.requirements and sentence.requirements.length > 0 %}
         {% set requirements %}
             {% for requirement in sentence.requirements %}
+                {% set requirementHtml %}
+                  {{ govukSummaryList({
+                    rows: [
+                      {
+                        key: { text: 'Length' },
+                        value: { text: requirement.rar.totalDays + ' days'}
+                      },
+                      {
+                        key: { text: 'Progress' },
+                        value: { text: requirement.rar.completed + ' days'}
+                      },
+                      {
+                        key: { text: 'Progress' },
+                        value: { text: requirement.notes}
+                      }
+                    ]
+                  }) }}
+                {% endset %}
+                {{ govukDetails({
+                  classes: 'govuk-!-margin-bottom-1',
+                  summaryText: requirement.rar.totalDays + ' days RAR, ' + requirement.rar.completed + ' completed',
+                  html: requirementHtml
+                }) }}
             {% endfor %}
         {% endset %}
 
@@ -139,6 +162,10 @@
                   {
                     key: { text: "Time elapsed" },
                     value: { html: '<span data-qa="orderTimeElapsedValue">' + sentence.order.startDate | monthsOrDaysElapsed + ' (of ' + sentence.order.length + ' months)' | nl2br if sentence.order.startDate else 'No details'  + '</span>' }
+                  },
+                  {
+                    key: { text: "Requirements" },
+                    value: { html: '<span data-qa="requirementsValue">' + requirements if hasRequirements else 'No requirements' + '</span>'}
                   }
                 ]
               }) }}

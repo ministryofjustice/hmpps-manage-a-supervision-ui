@@ -44,7 +44,26 @@
                     "description": "Disqualified from Driving"
                   }
                 ]
-              }
+              },
+              "order": {
+                "description": "Default Sentence Type",
+                "length": 12,
+                "endDate": "2025-03-19",
+                "startDate": "2024-03-19"
+              },
+              "requirements": [
+                {
+                  "description": "Main",
+                  "codeDescription": "High Intensity",
+                  "length": 12,
+                  "notes": "my notes",
+                  "rar": {
+                    "completed": 1,
+                    "scheduled": 0,
+                    "totalDays": 1
+                  }
+                }
+              ]
             },
             {
               "offenceDetails": {
@@ -59,7 +78,8 @@
               },
               "conviction": {
                 "additionalSentences": []
-              }
+              },
+              "requirements": []
             }
           ]
         },

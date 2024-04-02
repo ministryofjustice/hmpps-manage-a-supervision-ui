@@ -69,6 +69,12 @@
             {% endfor %}
         {% endset %}
 
+        {% set hasRequirements = sentence.requirements and sentence.requirements.length > 0 %}
+        {% set requirements %}
+            {% for requirement in sentence.requirements %}
+            {% endfor %}
+        {% endset %}
+
         {% set offence %}
           {{ govukSummaryList({
             rows: [
@@ -105,7 +111,7 @@
                   },
                   {
                     key: { text: "Conviction date" },
-                    value: { html: '<span data-qa="convictionDateValue">' + sentence.conviction.convictionDate | nl2br if sentence.conviction.responsibleCourt | dateWithYear else 'No conviction date' + '</span>'}
+                    value: { html: '<span data-qa="convictionDateValue">' + sentence.conviction.convictionDate | dateWithYear | nl2br if sentence.conviction.convictionDate  else 'No conviction date' + '</span>'}
                   },
                   {
                     key: { text: "Additional sentences" },
@@ -114,6 +120,30 @@
                 ]
               }) }}
         {% endset %}
+
+        {% set sentence %}
+              {{ govukSummaryList({
+                rows: [
+                  {
+                    key: { text: "Order" },
+                    value: { html: '<span data-qa="orderDescriptionValue">' + sentence.order.description | nl2br if sentence.order.description else 'No order details' + '</span>' }
+                  },
+                  {
+                    key: { text: "Start date" },
+                    value: { html: '<span data-qa="orderStartDateValue">' + sentence.order.startDate | dateWithYear | nl2br if sentence.order.startDate else 'No start date details' + '</span>' }
+                  },
+                  {
+                    key: { text: "End date" },
+                    value: { html: '<span data-qa="orderEndDateValue">' + sentence.order.endDate | dateWithYear | nl2br if sentence.order.endDate else 'No end date details' + '</span>' }
+                  },
+                  {
+                    key: { text: "Time elapsed" },
+                    value: { html: '<span data-qa="orderTimeElapsedValue">' + sentence.order.startDate | monthsOrDaysElapsed + ' (of ' + sentence.order.length + ' months)' | nl2br if sentence.order.startDate else 'No details'  + '</span>' }
+                  }
+                ]
+              }) }}
+        {% endset %}
+
 
         {{ appSummaryCard({
           attributes: {'data-qa': 'offenceCard'},
@@ -127,6 +157,13 @@
           titleText: 'Conviction',
           classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
           html: conviction
+        }) }}
+
+        {{ appSummaryCard({
+          attributes: {'data-qa': 'sentenceCard'},
+          titleText: 'Sentence',
+          classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+          html: sentence
         }) }}
     {%- endfor %}
 {% endblock %}

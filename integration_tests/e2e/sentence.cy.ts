@@ -21,6 +21,8 @@ context('Sentence', () => {
     page.getCardHeader('offence').should('have.length', 2)
     page.getCardHeader('conviction').should('contain.text', 'Conviction')
     page.getCardHeader('conviction').should('have.length', 2)
+    page.getCardHeader('sentence').should('contain.text', 'Sentence')
+    page.getCardHeader('sentence').should('have.length', 2)
 
     page.getRowDataIndex('offence', 'mainOffence', 'Value', 0).should('contain.text', 'Murder (3 count)')
     page.getRowDataIndex('offence', 'mainOffence', 'Value', 1).should('contain.text', 'Another Murder (1 count)')
@@ -33,5 +35,9 @@ context('Sentence', () => {
     page.getRowDataIndex('conviction', 'sentencingCourt', 'Value', 0).should('contain.text', 'Hull Court')
     page.getRowDataIndex('conviction', 'responsibleCourt', 'Value', 0).should('contain.text', 'Birmingham Court')
     page.getRowDataIndex('conviction', 'convictionDate', 'Value', 0).should('contain.text', 'Hull Court')
+
+    page.getRowDataIndex('sentence', 'orderDescription', 'Value', 0).should('contain.text', 'Default Sentence Type')
+    page.getRowDataIndex('sentence', 'orderStartDate', 'Value', 0).should('contain.text', '19 March 2024')
+    page.getRowDataIndex('sentence', 'orderEndDate', 'Value', 0).should('contain.text', '19 March 2025')
   })
 })

@@ -3,6 +3,8 @@
 export interface SentenceDetails {
   crn: string
   sentences: Sentence[]
+  order: Order
+  requirements: Requirement[]
 }
 
 export interface Sentence {
@@ -27,4 +29,23 @@ export interface Conviction {
 export interface Offence {
   code: string
   description: string
+}
+
+export interface Order {
+  description: string
+  length: string
+  startDate: string
+}
+
+export interface Requirement {
+  description: string
+  codeDescription: string
+  length: string
+  rar: Rar
+}
+
+export interface Rar {
+  completed: string
+  scheduled: string
+  totalDays: string
 }

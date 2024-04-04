@@ -353,7 +353,7 @@ describe('removes empty array', () => {
   })
 })
 
-describe('removes empty array', () => {
+describe('gets risks with score', () => {
   const array: string[] = ['Children', 'Staff']
   const risk: Partial<Record<RiskScore, string[]>> = { VERY_HIGH: array }
   it.each([['Filters empty object', risk, 'VERY_HIGH', array]])(
@@ -364,11 +364,11 @@ describe('removes empty array', () => {
   )
 })
 
-describe('removes empty array', () => {
-  it.each([['Time from to', '2024-05-25T09:08:34.123', '2024-05-25T10:08:34.123', '9:08am to 10:08am']])(
-    '%s timeFromTo(%s, %s)',
-    (_: string, a: string, b: string, expected: string) => {
-      expect(timeFromTo(a, b)).toEqual(expected)
-    },
-  )
+describe('renders time from and to', () => {
+  it.each([
+    ['Time from to', '2024-05-25T09:08:34.123', '2024-05-25T10:08:34.123', '9:08am to 10:08am'],
+    ['Time from only', '2024-05-25T09:08:34.123', null, '9:08am'],
+  ])('%s timeFromTo(%s, %s)', (_: string, a: string, b: string, expected: string) => {
+    expect(timeFromTo(a, b)).toEqual(expected)
+  })
 })

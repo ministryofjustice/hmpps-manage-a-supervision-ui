@@ -5,6 +5,7 @@ export interface SentenceDetails {
   sentences: Sentence[]
   order: Order
   requirements: Requirement[]
+  courtDocuments: CourtDocument[]
 }
 
 export interface Sentence {
@@ -48,4 +49,10 @@ export interface Rar {
   completed: string
   scheduled: string
   totalDays: string
+}
+
+export interface CourtDocument {
+  id: string
+  lastSaved: string
+  documentName: string
 }

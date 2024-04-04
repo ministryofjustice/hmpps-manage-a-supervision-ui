@@ -63,6 +63,23 @@
                     "totalDays": 1
                   }
                 }
+              ],
+              "courtDocuments": [
+                {
+                  "id": 115,
+                  "lastSaved": "2024-04-03",
+                  "documentName": "Pre-sentence report"
+                },
+                {
+                  "id": 116,
+                  "lastSaved": "2024-04-01",
+                  "documentName": "CPS Pack"
+                },
+                {
+                  "id": 111,
+                  "lastSaved": "",
+                  "documentName": "Previous convictions"
+                }
               ]
             },
             {

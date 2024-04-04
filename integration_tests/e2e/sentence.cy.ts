@@ -39,5 +39,21 @@ context('Sentence', () => {
     page.getRowDataIndex('sentence', 'orderDescription', 'Value', 0).should('contain.text', 'Default Sentence Type')
     page.getRowDataIndex('sentence', 'orderStartDate', 'Value', 0).should('contain.text', '19 March 2024')
     page.getRowDataIndex('sentence', 'orderEndDate', 'Value', 0).should('contain.text', '19 March 2025')
+
+    page
+      .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
+      .within(() => cy.get('ul > li').its('length').should('equal', 3))
+
+    page
+      .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
+      .within(() => cy.get('ul > li:first').get('a').invoke('attr', 'href').should('equal', '/document/115'))
+
+    page
+      .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
+      .within(() => cy.get('ul > li:first').should('contain.text', 'Pre-sentence report'))
+
+    page
+      .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
+      .within(() => cy.get('ul > li:first').should('contain.text', 'Last updated 3 Apr 2024'))
   })
 })

@@ -24,7 +24,7 @@
         <h1 class="govuk-heading-l govuk-!-margin-bottom-7" data-qa="pageHeading">Sentence: {{ sentence.offenceDetails.eventNumber }}</h1>
 
         {% set hasAdditionalOffences = sentence.offenceDetails.additionalOffences and sentence.offenceDetails.additionalOffences.length > 0 %}
-            {% set additionalOffences %}
+        {% set additionalOffences %}
             {% if hasAdditionalOffences %}
               <ol class="govuk-list{% if sentence.offenceDetails.additionalOffences > 1 %} govuk-list--number{% endif %}">
                 {% for additionalOffence in sentence.offenceDetails.additionalOffences %}
@@ -34,7 +34,25 @@
 
               <a href="/cases/{{ crn }}/sentence/offences">View additional offence details</a>
             {% endif %}
-       {% endset %}
+        {% endset %}
+
+        {% set hasCourtDocuments = sentence.courtDocuments and sentence.courtDocuments.length > 0 %}
+        {% set courtDocuments %}
+          <ul class="govuk-list govuk-!-margin-top-0">
+            {% for doc in sentence.courtDocuments %}
+            <li>
+              <a href=/document/{{ doc.id }}>{{ doc.documentName }}</a><br>
+              <span class="govuk-!-font-size-16">
+                {% if doc.lastSaved %}
+                  Last updated {{ doc.lastSaved | dateWithYearShortMonth }}
+                {% else %}
+                  Unavailable
+                {% endif %}
+              </span>
+            </li>
+            {% endfor %}
+          </ul>
+        {% endset %}
 
         {% set hasAdditionalSentences = sentence.conviction.additionalSentences and sentence.conviction.additionalSentences.length > 0 %}
         {% set additionalSentences %}
@@ -166,6 +184,10 @@
                   {
                     key: { text: "Requirements" },
                     value: { html: '<span data-qa="requirementsValue">' + requirements if hasRequirements else 'No requirements' + '</span>'}
+                  },
+                  {
+                    key: { text: "Court Document" },
+                    value: { html: '<span data-qa="courtDocumentsValue">' + courtDocuments if hasCourtDocuments else 'No court documents' + '</span>' }
                   }
                 ]
               }) }}

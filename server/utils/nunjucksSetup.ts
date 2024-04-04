@@ -20,6 +20,7 @@ import {
   getCurrentRisksToThemselves,
   getPreviousRisksToThemselves,
   getRisksToThemselves,
+  getRisksWithScore,
   getTagClass,
   govukTime,
   initialiseName,
@@ -28,6 +29,7 @@ import {
   lastUpdatedBy,
   lastUpdatedDate,
   monthsOrDaysElapsed,
+  removeEmpty,
   scheduledAppointments,
   toYesNo,
   yearsSince,
@@ -87,6 +89,8 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('toYesNo', toYesNo)
   njkEnv.addFilter('compactActivityLogDate', compactActivityLogDate)
   njkEnv.addFilter('activityLogDate', activityLogDate)
+  njkEnv.addFilter('removeEmpty', removeEmpty)
+  njkEnv.addGlobal('getRisksWithScore', getRisksWithScore)
   njkEnv.addGlobal('activityLog', activityLog)
   njkEnv.addGlobal('getRisksToThemselves', getRisksToThemselves)
   njkEnv.addGlobal('getCurrentRisksToThemselves', getCurrentRisksToThemselves)

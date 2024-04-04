@@ -15,6 +15,7 @@ import {
   fullName,
   getAppointmentsToAction,
   getRisksToThemselves,
+  getRisksWithScore,
   getTagClass,
   govukTime,
   initialiseName,
@@ -22,6 +23,7 @@ import {
   isToday,
   monthsOrDaysElapsed,
   pastAppointments,
+  removeEmpty,
   scheduledAppointments,
   toYesNo,
   yearsSince,
@@ -339,4 +341,24 @@ describe('filters activity log', () => {
   ])('%s activityLog(%s, %s)', (_: string, a: Activity[], b: string, appointment: Activity) => {
     expect(activityLog(a, b)[0]).toEqual(appointment)
   })
+})
+
+describe('removes empty array', () => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  const arr: never[] = [{ value: 'a value' }, {}]
+  it.each([['Filters empty object', arr, 1]])('%s removeEmpty(%s, %s)', (_: string, a: never[], size: number) => {
+    expect(removeEmpty(a).length).toEqual(size)
+  })
+})
+
+describe('removes empty array', () => {
+  const array: string[] = ['Children', 'Staff']
+  const risk: Partial<Record<RiskScore, string[]>> = { VERY_HIGH: array }
+  it.each([['Filters empty object', risk, 'VERY_HIGH', array]])(
+    '%s activityLog(%s, %s)',
+    (_: string, a: Partial<Record<RiskScore, string[]>>, b: RiskScore, expected: string[]) => {
+      expect(getRisksWithScore(a, b)).toEqual(expected)
+    },
+  )
 })

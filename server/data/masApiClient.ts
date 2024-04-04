@@ -12,6 +12,7 @@ import {
 import { AddressOverview, PersonSummary } from './model/common'
 import { SentenceDetails } from './model/sentenceDetails'
 import { PersonActivity } from './model/activityLog'
+import { PersonRiskFlag, PersonRiskFlags } from './model/risk'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -68,5 +69,13 @@ export default class MasApiClient extends RestClient {
 
   async getPersonActivityLog(crn: string): Promise<PersonActivity> {
     return this.get({ path: `/activity/${crn}`, handle404: false })
+  }
+
+  async getPersonRiskFlags(crn: string): Promise<PersonRiskFlags> {
+    return this.get({ path: `/risk-flags/${crn}`, handle404: false })
+  }
+
+  async getPersonRiskFlag(crn: string, id: string): Promise<PersonRiskFlag> {
+    return this.get({ path: `/risk-flags/${crn}/${id}`, handle404: false })
   }
 }

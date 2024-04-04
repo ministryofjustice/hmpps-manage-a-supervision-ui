@@ -1,0 +1,105 @@
+
+{% set veryHighRisks = getRisksWithScore(risks.summary.riskInCommunity, 'VERY_HIGH') %}
+{% set highRisks = getRisksWithScore(risks.summary.riskInCommunity, 'HIGH') %}
+{% set mediumRisks = getRisksWithScore(risks.summary.riskInCommunity, 'MEDIUM') %}
+{% set lowRisks = getRisksWithScore(risks.summary.riskInCommunity, 'LOW') %}
+
+{% set roshHtml %}
+  {% set overallRiskHtml %}
+    <p>
+      {{ govukTag({
+        text: risks.summary.overallRiskLevel + ' risk of serious harm',
+        classes: getTagClass(risks.summary.overallRiskLevel)
+      }) }}
+    </p>
+    <!-- <p>There are identifiable indicators of risk of serious harm. The offender has the potential to cause serious harm but is unlikely to do so unless there is a change in circumstances, for example, failure to take medication, loss of accommodation, relationship breakdown, drug or alcohol misuse.</p> -->
+  {% endset %}
+
+  {% set veryHighRiskOfHarm %}
+    <ul class="govuk-list">
+      {% for risk in veryHighRisks %}
+        <li>{{ risk }}</li>
+      {% endfor %}
+    </ul>
+  {% endset %}
+
+  {% set highRiskOfHarm %}
+    <ul class="govuk-list">
+      {% for risk in highRisks %}
+        <li>{{ risk }}</li>
+      {% endfor %}
+    </ul>
+  {% endset %}
+
+  {% set mediumRiskOfHarm %}
+    <ul class="govuk-list">
+      {% for risk in mediumRisks %}
+        <li>{{ risk }}</li>
+      {% endfor %}
+    </ul>
+  {% endset %}
+
+  {% set lowRiskOfHarm %}
+    <ul class="govuk-list">
+      {% for risk in lowRisks %}
+        <li>{{ risk }}</li>
+      {% endfor %}
+    </ul>
+  {% endset %}
+
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: { text: "Overall" },
+        value: { html: '<span data-qa="overallValue">' + overallRiskHtml + '</span>' }
+      },
+      {
+        key: { text: "Very high risk" },
+        value: { html: '<span data-qa="veryHighValue">' + veryHighRiskOfHarm + '</span>'}
+      } if veryHighRisks.length > 0,
+      {
+        key: { text: "High risk" },
+        value: { html: '<span data-qa="highValue">' + highRiskOfHarm + '</span>' }
+      } if highRisks.length > 0 ,
+      {
+        key: { text: "Medium risk" },
+        value: { html: '<span data-qa="mediumValue">' + mediumRiskOfHarm + '</span>' }
+      } if mediumRisks.length > 0,
+      {
+        key: { text: "Low risk" },
+        value: { html: '<span data-qa="lowValue">' + lowRiskOfHarm + '</span>' }
+      } if lowRisks.length > 0,
+      {
+        key: { text: "Who is at risk" },
+        value: { html: '<span data-qa="whoValue">' + risks.summary.whoIsAtRisk | nl2br + '</span>' if risks.summary.whoIsAtRisk else '<span data-qa="whoValue">No detail given</span>' }
+      },
+      {
+        key: { text: "Nature of risk" },
+        value: { html: '<span data-qa="natureValue">' + risks.summary.natureOfRisk | nl2br + '</span>' if risks.summary.natureOfRisk else '<span data-qa="natureValue">No detail given' }
+      },
+      {
+        key: { text: "When is risk greatest" },
+        value: { html: '<span data-qa="imminenceValue">' + risks.summary.riskImminence | nl2br + '</span>' if risks.summary.riskImminence else '<span data-qa="imminenceValue">No detail given</span>' }
+      }
+    ]
+  }) }}
+
+  <p class="govuk-!-margin-bottom-0 govuk-!-margin-top-4 govuk-body-s govuk-hint-s">
+    OASys assessment completed on {{ risks.assessedOn | dateWithYear }}
+  </p>
+{% endset %}
+
+{{ appSummaryCard({
+  attributes: {'data-qa': 'riskOfHarmInCommunityCard'},
+  titleText: "Risk of serious harm (ROSH) in the community",
+  classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+  html: roshHtml,
+  actions: {
+    items: [
+      {
+        href: "/case/" + crn + "/handoff/oasys",
+        text: "View OASys"
+      }
+    ]
+  }
+}) }}

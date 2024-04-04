@@ -1,0 +1,197 @@
+{% extends "../../partials/layout.njk" %}
+{% set title = personRiskFlag.riskFlag.description %}
+{% set removed = personRiskFlag.riskFlag.removed %}
+{% set flag = personRiskFlag.riskFlag %}
+
+{% block pageTitle %}{{ title }}{% endblock %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Your cases",
+      href: "/search"
+    },
+    {
+      text: personRiskFlag.personSummary.name | fullName,
+      href: "/case/" + crn
+    },
+    {
+      text: "Risk",
+      href: "/case/" + crn + "/risk"
+    },
+    {
+      text: "Removed risk flags",
+      href: "/case/" + crn + "/risk/removed-risk-flags"
+    } if removed,
+    {
+      text: title
+    }
+  ] | removeEmpty
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">
+      <span class="govuk-caption-xl">{{ 'Removed risk flag' if removed else 'Risk flag' }}</span>
+      {{ title }}
+    </h1>
+  </div>
+</div>
+
+<!-- {{ govukButton({
+  text: 'Review or amend flag',
+  href: '#'
+}) }} -->
+{% for removal in flag.removalHistory %}
+
+{% set removedFlagSummaryList %}
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: {
+          text: "Date removed"
+        },
+        value: {
+          html: '<span data-qa="removalDateValue">' + removal.removalDate | dateWithYear + ' by ' + removal.removedBy | fullName + '</span>'
+        }
+      } if removed,
+      {
+        key: {
+          text: "Why it was removed"
+        },
+        value: {
+          html: '<span data-qa="removalNotesValue">' + removal.notes + '</span>' if removal.notes else '<span data-qa="removalNotesValue">No notes given</span>'
+        }
+      } if removed
+    ]
+  }) }}
+{% endset %}
+
+{% if removed %}
+  {{ appSummaryCard({
+    attributes: {'data-qa': 'riskFlagRemovedCard'},
+    titleText: "Flag removed",
+    classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+    html: removedFlagSummaryList
+  }) }}
+{% endif %}
+
+{% endfor %}
+
+{% set aboutThisFlagSummaryList %}
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: {
+          text: "Notes"
+        },
+        value: {
+          html: '<span data-qa="riskFlagNotesValue">' + personRiskFlag.riskFlag.notes + '</span>' if personRiskFlag.riskFlag.notes else '<span data-qa="riskFlagNotesValue">No notes</span>'
+        },
+        actions: {
+          items: [
+            {
+              href: "/case/" + crn + "/handoff/delius",
+              text: "Change",
+              visuallyHiddenText: "notes"
+            }
+          ]
+        }
+      },
+      {
+        key: {
+          text: "Next review"
+        },
+        value: {
+          html: '<span data-qa="nextReviewDateValue">' + personRiskFlag.riskFlag.nextReviewDate | dateWithYear + '</span>'
+        },
+        actions: {
+          items: [
+            {
+              href: "/case/" + crn + "/handoff/delius",
+              text: "Review risk flag"
+            }
+          ]
+        }
+      } if not removed,
+      {
+        key: {
+          text: "Most recent review"
+        },
+        value: {
+          html: '<span data-qa="mostRecentReviewDateValue">' + personRiskFlag.riskFlag.mostRecentReviewDate | dateWithYear + ' by ' + personRiskFlag.riskFlag.createdBy | fullName + '</span>' if personRiskFlag.riskFlag.mostRecentReviewDate else '<span data-qa="mostRecentReviewDateValue">Not reviewed yet</span>'
+        },
+        actions: {
+          items: [
+            {
+              href: "/case/" + crn + "/handoff/delius",
+              text: "View review"
+            }
+          ]
+        } if flag.mostRecentReviewDate
+      },
+      {
+        key: {
+          text: "Date added"
+        },
+        value: {
+          html: '<span data-qa="createdDateValue">' + personRiskFlag.riskFlag.createdDate | dateWithYear + " by " + personRiskFlag.riskFlag.createdBy | fullName + '</span>'
+        }
+      }
+    ]
+  }) }}
+{% endset %}
+
+
+{{ appSummaryCard({
+  attributes: {'data-qa': 'riskFlagCard'},
+  titleText: "Before it was removed" if removed else "About this flag",
+  classes: 'govuk-!-margin-bottom-8 app-summary-card--large-title',
+  html: aboutThisFlagSummaryList,
+  actions: {
+    items: [
+      {
+        href: "/case/" + crn + "/handoff/delius",
+        text: "Remove this flag on Delius"
+      }
+    ]
+  } if not removed
+}) }}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h2 class="govuk-heading-l">Guidance using this risk flag</h2>
+    <h3 class="govuk-heading-m">Purpose of use</h3>
+
+    <p>To identify offenders convicted under the Sexual Offences Act 2003 and therefore subject to the notification period and requirements of the Sex Offender Register.</p>
+
+    <h3 class="govuk-heading-m">Suggested review frequency</h3>
+
+    <p>Every 3 months</p>
+
+    <h3 class="govuk-heading-m">Termination</h3>
+
+    <p>Remove at termination, except for life sentences.</p>
+
+    <h3 class="govuk-heading-m">Further information</h3>
+
+    <p>Notification Periods for offenders sentenced under the Sexual Offences Act 2003:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>Imprisonment for a fixed period of 30 months or more, Imprisonment for an indefinite period, imprisonment for public protection, or admission to hospital under restriction order, or subject to an Order for Lifelong Restriction: Indefinitely </li>
+      <li>Imprisonment for more than 6 months but less than 30 months: 10 years</li>
+      <li>Imprisonment for 6 months or less, or admission to hospital without restriction order: 7 years</li>
+      <li>Caution: 2 years</li>
+      <li>Conditional discharge or (in Scotland) a probation order: Period of discharge or probation</li>
+      <li>Any other: 5 years</li>
+      <li>Finite notification periods are halved if the person is under 18 when convicted or cautioned.</li>
+    </ul>
+
+    <p>If an offender is on the register for an indefinite period they can apply to the police area managing them to come off the register 15 years from their initial notification (if made upon release from prison) or first registration upon release from custody (in case they registered upon conviction).</p>
+
+    <p>(Also extended licences will impact on this as well and will render people to be placed on the register indefinitely – stated case is R v Wiles.)
+  </div>
+</div>
+{% endblock %}

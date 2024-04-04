@@ -31,6 +31,7 @@ import {
   monthsOrDaysElapsed,
   removeEmpty,
   scheduledAppointments,
+  timeFromTo,
   toYesNo,
   yearsSince,
 } from './utils'
@@ -90,6 +91,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('compactActivityLogDate', compactActivityLogDate)
   njkEnv.addFilter('activityLogDate', activityLogDate)
   njkEnv.addFilter('removeEmpty', removeEmpty)
+  njkEnv.addGlobal('timeFromTo', timeFromTo)
   njkEnv.addGlobal('getRisksWithScore', getRisksWithScore)
   njkEnv.addGlobal('activityLog', activityLog)
   njkEnv.addGlobal('getRisksToThemselves', getRisksToThemselves)

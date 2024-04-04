@@ -39,7 +39,7 @@
     },
     {
       key: { html:  '<span data-qa="timeLabel">Time</span>' },
-      value: { html: '<span data-qa="timeValue">' + appointment.startDateTime | govukTime + ' to ' + appointment.endDateTime | govukTime + '</span>'}
+      value: { html: '<span data-qa="timeValue">' + timeFromTo(appointment.startDateTime, appointment.endDateTime) + '</span>'}
     },
     {
       key: { html: '<span data-qa="repeatingLabel">Repeating appointment</span>' },

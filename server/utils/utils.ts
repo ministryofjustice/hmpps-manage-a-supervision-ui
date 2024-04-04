@@ -222,6 +222,14 @@ export const toYesNo = (value: boolean) => {
   return 'Yes'
 }
 
+export const getRisksWithScore = (risk: Partial<Record<RiskScore, string[]>>, score: RiskScore): string[] => {
+  const risks: string[] = []
+  if (risk[score]) {
+    return risk[score]
+  }
+  return risks
+}
+
 export const filterEntriesByCategory = (category: string) => {
   return function filterActivity(activity: Activity) {
     const { isAppointment } = activity
@@ -301,6 +309,10 @@ export const compactActivityLogDate = (datetimeString: string) => {
   }
 
   return date.toFormat('ccc d MMM yyyy')
+}
+
+export const removeEmpty = (array: never[]) => {
+  return array.filter((value: NonNullable<unknown>) => Object.keys(value).length !== 0)
 }
 
 export const activityLog = (contacts: Activity[], category: string) => {

@@ -174,7 +174,8 @@
             "riskInCommunity": {
               "LOW": ["Children", "Staff"],
               "MEDIUM": ["Known Adult"],
-              "HIGH": ["Public"]
+              "HIGH": ["Public"],
+              "VERY_HIGH": ["Staff"]
             },
             "riskInCustody": {
               "LOW": ["Children", "Public", "Known Adult", "Staff", "Prisoners"]

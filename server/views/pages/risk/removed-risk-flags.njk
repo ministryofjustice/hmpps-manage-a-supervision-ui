@@ -1,0 +1,63 @@
+{% extends "../../partials/layout.njk" %}
+{% set title = "Removed risk flags" %}
+{% block pageTitle %}{{ title }}{% endblock %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Your cases",
+      href: "/cases"
+    },
+    {
+      text: personRisk.personSummary.name | fullName,
+      href: "/cases/" + crm
+    },
+    {
+      text: "Risk",
+      href: "/case/" + crn + "/risk"
+    },
+    {
+      text: title
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">
+      {{ title }}
+    </h1>
+  </div>
+</div>
+
+{% set removedRiskFlagsCount = personRisk.removedRiskFlags.length %}
+{% if removedRiskFlagsCount > 0 %}
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th class="govuk-table__header" style="width: 30%">Flag</th>
+        <th class="govuk-table__header" style="width: 55%">Why flag was removed</th>
+        <th class="govuk-table__header" style="width: 20%">Date removed</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body" data-qa="removedRisksCard">
+      {% for flag in personRisk.removedRiskFlags %}
+          {% if flag.removalHistory.length > 0 %}
+              {% set removal = flag.removalHistory[0] %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell" data-qa="removedRisk{{loop.index}}Value"><a href="/case/{{ crn }}/risk/flag/{{ flag.id }}">{{ flag.description }}</a></td>
+                <td class="govuk-table__cell">{{ removal.notes or 'No notes given' }}</td>
+                <td class="govuk-table__cell">{{ removal.removalDate | dateWithYear }}</td>
+              </tr>
+          {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No risk flags have been removed.</p>
+{% endif %}
+
+{% endblock %}

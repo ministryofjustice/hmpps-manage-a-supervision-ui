@@ -227,7 +227,7 @@
       {% set overallRosh %}
       {% if hasRiskAssessment %}
       <table><tr>
-      <td class="govuk-tag {{ getTagClass(risks.summary.overallRiskLevel) }}" align="center" width="120">{{ risks.summary.overallRiskLevel | replace('_',' ') }}</td>
+      <td class="govuk-tag {{ getTagClass(risks.summary.overallRiskLevel) }}" align="center">{{ risks.summary.overallRiskLevel + ' risk of serious harm' | replace('_',' ') }}</td>
       </table>
       {% else %}
         There is no OASys risk assessment

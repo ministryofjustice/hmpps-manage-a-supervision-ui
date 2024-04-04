@@ -1,0 +1,55 @@
+{% set riskFlags %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      {% if case.riskFlags.length == 0 %}
+        <p><strong>There are no current risk flags. Add risk flags in Delius.</strong></p>
+      {% endif %}
+      <p>Risk flags (registrations) show circumstances that need prominent and constant visibility. Review flags regularly, and remove them when they are no longer appropriate.</p>
+    </div>
+  </div>
+
+  {% if personRisk.riskFlags.length > 0 %}
+    <table class="govuk-table govuk-!-margin-bottom-4">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th class="govuk-table__header" style="width: 30%">Flag</th>
+          <th class="govuk-table__header" style="width: 55%">Notes</th>
+          <th class="govuk-table__header" style="width: 15%">Review due</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        {% for flag in personRisk.riskFlags %}
+          {% if not flag.rosh %}
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell" data-qa="risk{{loop.index}}DescriptionValue"><a href="/case/{{ crn }}/risk/flag/{{ flag.id }}">{{ flag.description }}</a></td>
+              <td class="govuk-table__cell" data-qa="risk{{loop.index}}NotesValue">{{ flag.notes or 'No notes' }}</td>
+              <td class="govuk-table__cell" data-qa="risk{{loop.index}}NextReviewDateValue">{{ flag.nextReviewDate | dateWithYear }}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+  {% set removedRiskFlagsCount = personRisk.removedRiskFlags.length %}
+  {% if removedRiskFlagsCount > 0 %}
+    <p class="govuk-!-margin-bottom-0">
+      <a href="/case/{{ crn }}/risk/removed-risk-flags">View removed risk flags ({{ removedRiskFlagsCount }})</a>
+    </p>
+  {% endif %}
+{% endset %}
+
+{{ appSummaryCard({
+  attributes: {'data-qa': 'riskFlagsCard'},
+  titleText: "Risk flags",
+  classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+  html: riskFlags,
+  actions: {
+    items: [
+      {
+        href: '/case/' + crn + '/handoff/delius',
+        text: "Add a risk flag in Delius"
+      }
+    ]
+  }
+}) }}

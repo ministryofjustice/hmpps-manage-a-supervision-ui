@@ -1,0 +1,42 @@
+{% extends "../partials/case.njk" %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% set pageTitle = applicationName + " - Risk" %}
+{% set currentNavSection = 'risk' %}
+{% set currentSectionName = 'Risk' %}
+{% set headerPersonName = personRisk.personSummary.name | fullName %}
+{% set headerCRN = crn %}
+{% set hasRiskAssessment = risks.assessedOn %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+      items: [
+        {
+          text: "Your cases",
+          href: "/search"
+        },
+        {
+          text: headerPersonName,
+          href: "/case/" + crn
+        },
+        {
+          text: currentSectionName
+        }
+      ]
+    }) }}
+{% endblock %}
+
+{% block pageContent %}
+
+  {% if hasRiskAssessment %}
+    {% include './risk/_risk-in-the-community.njk' %}
+    {% include './risk/_risk-to-themselves.njk' %}
+  {% else %}
+    {% set html %}
+      <h2 class="govuk-heading-m">There is no OASys risk assessment for {{ overview.personalDetails.name | fullName }}</h2>
+      {% include './risk/_no-oasys-risk-assessment.njk' %}
+    {% endset %}
+    {{ govukNotificationBanner({ html: html }) }}
+  {% endif %}
+  {% include './risk/_risk-flags.njk' %}
+
+{% endblock %}

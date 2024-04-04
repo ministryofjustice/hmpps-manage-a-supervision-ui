@@ -1,0 +1,378 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/risk-flags/X000001",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "riskFlags": [
+            {
+              "id": 1,
+              "description": "Restraining Order",
+              "notes": "Some notes",
+              "nextReviewDate": "2025-08-18",
+              "mostRecentReviewDate": "2023-12-18",
+              "createdDate": "2022-12-18",
+              "createdBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              },
+              "removed": false
+            },
+            {
+              "id": 2,
+              "description": "Domestic Abuse Perpetrator",
+              "notes": "Some notes",
+              "nextReviewDate": "2025-08-18",
+              "mostRecentReviewDate": "2023-12-18",
+              "createdDate": "2022-12-18",
+              "createdBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              },
+              "removed": false
+            },
+            {
+              "id": 3,
+              "description": "Risk to Known Adult",
+              "notes": "Some notes",
+              "nextReviewDate": "2025-08-18",
+              "mostRecentReviewDate": "2023-12-18",
+              "createdDate": "2022-12-18",
+              "createdBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              },
+              "removed": false
+            }
+          ],
+          "removedRiskFlags": [
+            {
+              "id": 4,
+              "description": "Restraining Order",
+              "notes": "Some notes",
+              "nextReviewDate": "2025-08-18",
+              "mostRecentReviewDate": "2023-12-18",
+              "createdDate": "2022-12-18",
+              "createdBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              },
+              "removed": true,
+              "removalHistory": [
+                {
+                  "notes": "Some removal notes",
+                  "removalDate": "2022-11-18",
+                  "removedBy": {
+                    "forename": "Paul",
+                    "surname": "Smith"
+                  }
+                }
+              ]
+            },
+            {
+              "id": 5,
+              "description": "Domestic Abuse Perpetrator",
+              "notes": "Some notes",
+              "nextReviewDate": "2025-08-18",
+              "mostRecentReviewDate": "2023-12-18",
+              "createdDate": "2022-12-18",
+              "createdBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              },
+              "removed": true,
+              "removalHistory": [
+                {
+                  "notes": "Some removal notes",
+                  "removalDate": "2022-11-18",
+                  "removedBy": {
+                    "forename": "Paul",
+                    "surname": "Smith"
+                  }
+                }
+              ]
+            },
+            {
+              "id": 6,
+              "description": "Risk to Known Adult",
+              "notes": "Some notes",
+              "nextReviewDate": "2025-08-18",
+              "mostRecentReviewDate": "2023-12-18",
+              "createdDate": "2022-12-18",
+              "createdBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              },
+              "removed": true,
+              "removalHistory": [
+                {
+                  "notes": "Some removal notes",
+                  "removalDate": "2022-11-18",
+                  "removedBy": {
+                    "forename": "Paul",
+                    "surname": "Smith"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/risk-flags/X000001/1",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eulaaaa",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "riskFlag": {
+            "id": 2,
+            "description": "Restraining Order",
+            "notes": "Some notes",
+            "nextReviewDate": "2025-08-12",
+            "mostRecentReviewDate": "2023-12-12",
+            "createdDate": "2022-12-12",
+            "createdBy": {
+              "forename": "Paul",
+              "surname": "Smith"
+            },
+            "removed": false
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/risk-flags/X000001/2",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "riskFlag": {
+            "id": 2,
+            "description": "Domestic Abuse Perpetrator",
+            "notes": "Some notes",
+            "nextReviewDate": "2025-08-18",
+            "mostRecentReviewDate": "2023-12-18",
+            "createdDate": "2022-12-18",
+            "createdBy": {
+              "forename": "Paul",
+              "surname": "Smith"
+            },
+            "removed": false
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/risk-flags/X000001/3",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "riskFlag": {
+            "id": 3,
+            "description": "Risk to Known Adult",
+            "notes": "Some notes",
+            "nextReviewDate": "2025-08-18",
+            "mostRecentReviewDate": "2023-12-18",
+            "createdDate": "2022-12-18",
+            "createdBy": {
+              "forename": "Paul",
+              "surname": "Smith"
+            },
+            "removed": false
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/risk-flags/X000001/4",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eulaaaa",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "riskFlag": {
+            "id": 4,
+            "description": "Restraining Order",
+            "notes": "Some notes",
+            "nextReviewDate": "2025-08-12",
+            "mostRecentReviewDate": "2023-12-12",
+            "createdDate": "2022-12-12",
+            "createdBy": {
+              "forename": "Paul",
+              "surname": "Smith"
+            },
+            "removed": true,
+            "removalHistory": [
+              {
+                "notes": "Some removal notes",
+                "removalDate": "2022-11-18",
+                "removedBy": {
+                  "forename": "Paul",
+                  "surname": "Smith"
+                }
+              }
+            ]
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/risk-flags/X000001/5",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "riskFlag": {
+            "id": 5,
+            "description": "Domestic Abuse Perpetrator",
+            "notes": "Some notes",
+            "nextReviewDate": "2025-08-18",
+            "mostRecentReviewDate": "2023-12-18",
+            "createdDate": "2022-12-18",
+            "createdBy": {
+              "forename": "Paul",
+              "surname": "Smith"
+            },
+            "removed": true,
+            "removalHistory": [
+              {
+                "notes": "Some removal notes",
+                "removalDate": "2022-11-18",
+                "removedBy": {
+                  "forename": "Paul",
+                  "surname": "Smith"
+                }
+              }
+            ]
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/risk-flags/X000001/6",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "riskFlag": {
+            "id": 6,
+            "description": "Risk to Known Adult",
+            "notes": "Some notes",
+            "nextReviewDate": "2025-08-18",
+            "mostRecentReviewDate": "2023-12-18",
+            "createdDate": "2022-12-18",
+            "createdBy": {
+              "forename": "Paul",
+              "surname": "Smith"
+            },
+            "removed": true,
+            "removalHistory": [
+              {
+                "notes": "Some removal notes",
+                "removalDate": "2022-11-18",
+                "removedBy": {
+                  "forename": "Paul",
+                  "surname": "Smith"
+                }
+              }
+            ]
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

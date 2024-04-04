@@ -25,6 +25,7 @@ import {
   pastAppointments,
   removeEmpty,
   scheduledAppointments,
+  timeFromTo,
   toYesNo,
   yearsSince,
 } from './utils'
@@ -104,8 +105,8 @@ describe('initialise name', () => {
 
 describe('date with year', () => {
   it.each([
-    [null, null, null],
-    ['Empty string', '', null],
+    [null, null, ''],
+    ['Empty string', '', ''],
     ['Date string ', '2023-05-25T09:08:34.123', '25 May 2023'],
   ])('%s dateWithYear(%s, %s)', (_: string, a: string, expected: string) => {
     expect(dateWithYear(a)).toEqual(expected)
@@ -352,13 +353,22 @@ describe('removes empty array', () => {
   })
 })
 
-describe('removes empty array', () => {
+describe('gets risks with score', () => {
   const array: string[] = ['Children', 'Staff']
   const risk: Partial<Record<RiskScore, string[]>> = { VERY_HIGH: array }
   it.each([['Filters empty object', risk, 'VERY_HIGH', array]])(
-    '%s activityLog(%s, %s)',
+    '%s getRisksWithScore(%s, %s)',
     (_: string, a: Partial<Record<RiskScore, string[]>>, b: RiskScore, expected: string[]) => {
       expect(getRisksWithScore(a, b)).toEqual(expected)
     },
   )
+})
+
+describe('renders time from and to', () => {
+  it.each([
+    ['Time from to', '2024-05-25T09:08:34.123', '2024-05-25T10:08:34.123', '9:08am to 10:08am'],
+    ['Time from only', '2024-05-25T09:08:34.123', null, '9:08am'],
+  ])('%s timeFromTo(%s, %s)', (_: string, a: string, b: string, expected: string) => {
+    expect(timeFromTo(a, b)).toEqual(expected)
+  })
 })

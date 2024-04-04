@@ -31,7 +31,7 @@ export const initialiseName = (fullName?: string): string | null => {
 }
 
 export const dateWithYear = (datetimeString: string): string | null => {
-  if (!datetimeString || isBlank(datetimeString)) return null
+  if (!datetimeString || isBlank(datetimeString)) return ''
   return DateTime.fromISO(datetimeString).toFormat('d MMMM yyyy')
 }
 
@@ -317,4 +317,13 @@ export const removeEmpty = (array: never[]) => {
 
 export const activityLog = (contacts: Activity[], category: string) => {
   return contacts.filter(filterEntriesByCategory(category)).sort((a, b) => (a.startDateTime < b.startDateTime ? 1 : -1))
+}
+
+export const timeFromTo = (from: string, to: string) => {
+  const timeFrom = govukTime(from)
+  const timeTo = govukTime(to)
+  if (timeTo === null) {
+    return timeFrom
+  }
+  return `${timeFrom} to ${timeTo}`
 }

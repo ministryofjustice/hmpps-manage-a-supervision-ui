@@ -14,7 +14,7 @@
     {% for appointment in getAppointmentsToAction(schedule.appointments, actionType) %}
         {% set appointmentRadioItems = (appointmentRadioItems.push({
           html: '<strong>' + appointment.type + '</strong><br />' + appointment.startDateTime | dateWithDayAndWithoutYear +
-                  ' from ' + appointment.startDateTime | govukTime + ' to ' + appointment.endDateTime | govukTime,
+                  ' from ' + timeFromTo(appointment.startDateTime, appointment.endDateTime),
           value: appointment.id
         }), appointmentRadioItems) %}
     {% endfor %}

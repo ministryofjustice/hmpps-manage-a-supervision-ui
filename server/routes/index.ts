@@ -10,6 +10,7 @@ import sentenceRoutes from './sentence'
 import scheduleRoutes from './schedule'
 import activityLogRoutes from './activityLog'
 import risksRoutes from './risks'
+import complianceRoutes from './compliance'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -21,5 +22,6 @@ export default function routes(services: Services): Router {
   scheduleRoutes(router, services)
   risksRoutes(router, services)
   activityLogRoutes(router, services)
+  complianceRoutes(router, services)
   return router
 }

@@ -31,14 +31,18 @@ export interface Rar {
 }
 
 export interface Order {
+  status?: string
+  mainOffence?: string
   description: string
   endDate?: string
   startDate: string
+  breaches?: number
 }
 
 export interface PreviousOrders {
   breaches: number
   count: number
+  orders?: Order[]
 }
 
 export interface Schedule {

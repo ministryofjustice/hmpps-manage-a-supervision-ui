@@ -28,14 +28,23 @@
 
 {% block pageContent %}
 
-<!-- <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    {{ govukWarningText({
-      html: 'There are multiple breach NSIs in progress on Delius.<br />Use Delius to check and correct any problems.<div class="govuk-!-margin-top-1"><a href="#"">Go to Delius</a></div>',
-      iconFallbackText: 'Warning'
-    }) }}
-  </div>
-</div> -->
+{% set showWarning = false %}
+{% for sentence in personCompliance.currentSentences %}
+    {% if sentence.compliance.currentBreaches > 0 %}
+        {% set showWarning = true %}
+    {% endif %}
+{% endfor %}
+
+{% if showWarning === true %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        {{ govukWarningText({
+          html: 'There are multiple breach NSIs in progress on Delius.<br />Use Delius to check and correct any problems.<div class="govuk-!-margin-top-1"><a href="/case/' + crn + '/handoff/delius">Go to Delius</a></div>',
+          iconFallbackText: 'Warning'
+        }) }}
+      </div>
+    </div>
+{% endif %}
 
 <p class="govuk-!-margin-bottom-6">
   <a href="/case/{{ crn }}/handoff/delius">Use Delius to start a breach</a>

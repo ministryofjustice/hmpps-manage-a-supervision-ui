@@ -1,35 +1,35 @@
-{% for compliance in personCompliance.currentSentences %}
-    {% set failureToComplyCount = compliance.failureToComplyCount %}
-    {% set unacceptableAbsenceCount = compliance.unacceptableAbsenceCount %}
-    {% set attendedButDidNotComplyCount = compliance.attendedButDidNotComplyCount  %}
-    {% set outcomeNotRecordedCount = compliance.outcomeNotRecordedCount %}
-    {% set waitingForEvidenceCount = compliance.waitingForEvidenceCount  %}
-    {% set rescheduledCount = compliance.rescheduledCount %}
-    {% set absentCount = compliance.absentCount %}
-    {% set rescheduledByStaffCount = compliance.rescheduledByStaffCount %}
-    {% set rescheduledByPersonOnProbationCount = compliance.rescheduledByPersonOnProbationCount %}
-    {% set lettersCount = compliance.lettersCount %}
-    {% set nationalStandardAppointmentsCount = compliance.nationalStandardAppointmentsCount %}
-    {% set compliedAppointmentsCount = compliance.compliedAppointmentsCount %}
+{% for sentence in personCompliance.currentSentences %}
+    {% set failureToComplyCount = sentence.compliance.failureToComplyCount %}
+    {% set unacceptableAbsenceCount = sentence.activity.unacceptableAbsenceCount %}
+    {% set attendedButDidNotComplyCount = sentence.activity.attendedButDidNotComplyCount  %}
+    {% set outcomeNotRecordedCount = sentence.activity.outcomeNotRecordedCount %}
+    {% set waitingForEvidenceCount = sentence.activity.waitingForEvidenceCount  %}
+    {% set rescheduledCount = sentence.activity.rescheduledCount %}
+    {% set absentCount = sentence.activity.absentCount %}
+    {% set rescheduledByStaffCount = sentence.activity.rescheduledByStaffCount %}
+    {% set rescheduledByPersonOnProbationCount = sentence.activity.rescheduledByPersonOnProbationCount %}
+    {% set lettersCount = sentence.activity.lettersCount %}
+    {% set nationalStandardAppointmentsCount = sentence.activity.nationalStandardAppointmentsCount %}
+    {% set compliedAppointmentsCount = sentence.activity.compliedAppointmentsCount %}
 
-    {% set complianceStatus = getComplianceStatus(failureToComplyCount, compliance.breachStarted) %}
+    {% set complianceStatus = getComplianceStatus(failureToComplyCount, sentence.compliance.breachStarted) %}
 
-    {% if compliance.rar %}
+    {% if sentence.rar %}
         {% set requirements %}
-            {{ compliance.rar.totalDays }} days RAR, {{ compliance.rar.completed }} completed
+            {{ sentence.rar.totalDays }} days RAR, {{ sentence.rar.completed }} completed
         {% endset %}
     {% else %}
         {% set requirements = false %}
     {% endif %}
 
 
-    {% if not compliance.activeBreach and not compliance.rar %}
+    {% if not sentence.activeBreach and not sentence.rar %}
         {% set lastSentence = "--last"  %}
     {% else %}
         {% set lastSentence = ""  %}
     {% endif %}
 
-    {% if compliance.activeBreach and not compliance.rar %}
+    {% if sentence.activeBreach and not sentence.rar %}
         {% set lastBreach = "--last"  %}
     {% else %}
         {% set lastBreach = ""  %}
@@ -47,7 +47,7 @@
 
     {% set breachesOnCurrentOrder %}
       <ul class="govuk-list">
-        {% if compliance.breachStarted %}<li>A breach is in progress</li>{% endif %}
+        {% if sentence.compliance.breachStarted %}<li>A breach is in progress</li>{% endif %}
         <li>{% include './_breaches-on-current-order.njk' %}</li>
       </ul>
     {% endset %}
@@ -60,7 +60,7 @@
               text: 'Main offence'
             },
             value: {
-              html: compliance.mainOffence.description
+              html: '<span data-qa="mainOffenceDescriptionValue">' + sentence.mainOffence.description + '</span>'
             }
           },
           {
@@ -68,7 +68,7 @@
               text: 'Order'
             },
             value: {
-              html: compliance.order.description + ' (' +  compliance.order.startDate | monthsOrDaysElapsed + ' elapsed)'
+              html: '<span data-qa="orderDescriptionValue">' + sentence.order.description + ' (' +  sentence.order.startDate | monthsOrDaysElapsed + ' elapsed)</span>'
             }
           },
           {
@@ -76,7 +76,7 @@
               text: 'Start date'
             },
             value: {
-              html: compliance.order.startDate | dateWithYear
+              html: '<span data-qa="startDateValue">' + sentence.order.startDate | dateWithYear + '</span>'
             }
           },
           {
@@ -84,7 +84,7 @@
               text: 'Breaches'
             },
             value: {
-              html: breachesOnCurrentOrder
+              html: '<span data-qa="breachValue">' + breachesOnCurrentOrder + '</span>'
             }
           }
         ]
@@ -92,8 +92,9 @@
     {% endset %}
 
     {{ appSummaryCard({
+      attributes: {'data-qa': 'sentence' + loop.index + 'Card'},
       classes: 'app-summary-card--compliance' + lastSentence + ' app-summary-card--large-title',
-      titleText: "Sentence",
+      titleText: 'Sentence (' + sentence.eventNumber + ')',
       html: orderDetailsList,
       actions: {
         items: [
@@ -105,7 +106,7 @@
       }
     }) }}
 
-    {% if compliance.activeBreach %}
+    {% if sentence.activeBreach %}
       {% set breachList %}
         {{ govukSummaryList({
           rows: [
@@ -114,7 +115,7 @@
                 text: 'Breach started'
               },
               value: {
-                html: compliance.activeBreach.startDate
+                html:  '<span data-qa="startDateValue">' + sentence.activeBreach.startDate | dateWithYear + '</span>'
               }
             },
             {
@@ -122,7 +123,7 @@
                 text: 'Status'
               },
               value: {
-                html: compliance.activeBreach.status
+                html:  '<span data-qa="statusValue">' + sentence.activeBreach.status + '</span>'
               }
             }
           ]
@@ -130,6 +131,7 @@
       {% endset %}
 
       {{ appSummaryCard({
+        attributes: {'data-qa': 'breach' + loop.index + 'Card'},
         classes: 'app-summary-card--compliance' + lastBreach + ' app-summary-card--large-title',
         titleText: "Breach details",
         html: breachList,
@@ -185,8 +187,6 @@
     {% endset %}
 
     {% set rescheduledHtml %}
-
-
       {% if rescheduledCount == 0 %}
         None
       {% elseif rescheduledByStaffCount == 0 %}
@@ -226,7 +226,7 @@
                   text: 'Appointments'
                 },
                 value: {
-                  html: '<a href="/case/' + crn + '/activity-log/national-standard-appointments">' + nationalStandardAppointmentsCount + ' national standard appointments</a>'
+                  html: '<span data-qa="appointmentsValue"><a href="/case/' + crn + '/activity-log/national-standard-appointments">' + nationalStandardAppointmentsCount + ' national standard appointments</a></span>'
                 }
               },
               {
@@ -234,7 +234,7 @@
                   text: 'Without an outcome'
                 },
                 value: {
-                  html: '<a href="/case/' + crn + '/activity-log/national-standard-appointments-without-outcome">' + outcomeNotRecordedCount + ' without a recorded outcome</a>'
+                  html: '<span data-qa="withoutOutcomeValue"><a href="/case/' + crn + '/activity-log/national-standard-appointments-without-outcome">' + outcomeNotRecordedCount + ' without a recorded outcome</a></span>'
                 }
               } if outcomeNotRecordedCount > 0,
               {
@@ -242,7 +242,7 @@
                   text: 'Waiting for evidence'
                 },
                 value: {
-                  html: waitingForEvidenceHtml
+                  html: '<span data-qa="waitingForEvidenceValue">' + waitingForEvidenceHtml + '</span>'
                 }
               } if waitingForEvidenceCount > 0,
               {
@@ -250,7 +250,7 @@
                   text: 'Complied'
                 },
                 value: {
-                  html: '<a href="/case/' + crn + '/activity-log/complied-appointments">' + compliedAppointmentsCount + ' complied</a>'
+                  html: '<span data-qa="compliedValue"><a href="/case/' + crn + '/activity-log/complied-appointments">' + compliedAppointmentsCount + ' complied</a></span>'
                 }
               },
               {
@@ -258,7 +258,7 @@
                   html: 'Failures to comply<br>within 12 months'
                 },
                 value: {
-                  html: failureToComplyHtml
+                  html: '<span data-qa="failureToComplyValue">' + failureToComplyHtml + '</span>'
                 }
               },
               {
@@ -266,15 +266,15 @@
                   html: 'Warning letters sent within 12 months'
                 },
                 value: {
-                  html: warningLettersHtml
+                  html: '<span data-qa="warningLetterValue">' + warningLettersHtml + '</span>'
                 }
-              } if data.features.showWarningLetters,
+              },
               {
                 key: {
                   text: 'Acceptable absences'
                 },
                 value: {
-                  html: acceptableAbsencesHtml
+                  html: '<span data-qa="acceptableAbsencesValue">' + acceptableAbsencesHtml + '</span>'
                 }
               },
               {
@@ -282,7 +282,7 @@
                   text: 'Rescheduled'
                 },
                 value: {
-                  html: rescheduledHtml
+                  html: '<span data-qa="rescheduledValue">' + rescheduledHtml + '</span>'
                 }
               }
             ]
@@ -290,7 +290,8 @@
         {% endset %}
 
         {{ appSummaryCard({
-          classes: "govuk-!-margin-bottom-6 app-summary-card--compliance-last app-summary-card--large-title",
+          attributes: {'data-qa': 'activity' + loop.index + 'Card'},
+          classes: 'govuk-!-margin-bottom-6 app-summary-card--compliance-last app-summary-card--large-title',
           titleHtml: '<span class="govuk-!-font-size-19 govuk-!-font-weight-regular">Requirement</span><br />' + requirements,
           html: rarList
         }) }}

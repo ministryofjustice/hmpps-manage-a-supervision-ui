@@ -102,14 +102,25 @@
             }
           ],
           "activity": {
-            "acceptableAbsences": 1,
-            "complied": 1,
-            "nationalStandardsAppointments": 5,
-            "rescheduled": 6
+            "acceptableAbsenceCount": 1,
+            "unacceptableAbsenceCount": 2,
+            "attendedButDidNotComplyCount": 2,
+            "outcomeNotRecordedCount": 2,
+            "waitingForEvidenceCount": 2,
+            "rescheduledCount": 2,
+            "absentCount": 2,
+            "rescheduledByStaffCount": 2,
+            "rescheduledByPersonOnProbationCount": 2,
+            "lettersCount": 2,
+            "nationalStandardAppointmentsCount": 2,
+            "compliedAppointmentsCount": 3
           },
           "compliance": {
             "currentBreaches": 2,
-            "failureToComplyInLast12Months": 2
+            "breachStarted": true,
+            "breachesOnCurrentOrderCount": 1,
+            "priorBreachesOnCurrentOrderCount": 1,
+            "failureToComplyCount": 3
           },
           "registrations": ["Restraining Order", "Domestic Abuse Perpetrator", "Risk to Known Adult"]
         },

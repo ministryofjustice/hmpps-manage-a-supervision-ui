@@ -351,22 +351,39 @@
             {% endif %}
         {% endset %}
         {% set compliance %}
-            {% if overview.compliance %}
-                {{ overview.compliance.failureToComplyInLast12Months }} failure to comply within 12 months <br/>
-                {{ overview.compliance.currentBreaches }} breaches on current order <br/>
-                <a href="{{crn}}/compliance">View all compliance details</a>
+            {% if overview.compliance.breachStarted %}
+              {%- switch overview.compliance.priorBreachesOnCurrentOrderCount -%}
+                {%- case 0 -%}
+                  No prior breaches on current order
+                {%- case 1 -%}
+                  1 prior breach on current order
+                {%- default -%}
+                  {{ overview.compliance.priorBreachesOnCurrentOrderCount }} prior breaches on current order
+              {%- endswitch -%}
             {% else %}
-                None
+              {%- switch overview.compliance.breachesOnCurrentOrderCount -%}
+                {%- case 0 -%}
+                  No breaches on current order
+                {%- case 1 -%}
+                  1 breach on current order
+                {%- default -%}
+                  {{ overview.compliance.breachesOnCurrentOrderCount }} breaches on current order
+              {%- endswitch -%}
             {% endif %}
+            <p>
+                <a href={{crn}}/compliance>View all compliance details</a>
+            </p>
         {% endset %}
         {% set activity %}
             {% if overview.activity %}
-                {{ overview.activity.nationalStandardsAppointments }} national standard appointments <br/>
-                ? without a recorded outcome <br/>
-                {{ overview.activity.complied }} compiled <br/>
-                {{ overview.activity.acceptableAbsences }} acceptable absences <br/>
-                {{ overview.activity.rescheduled }} rescheduled<br/>
-                <a href={{crn}}/activityLog">View all compliance details</a>
+                {{ overview.activity.nationalStandardAppointmentsCount }} national standard appointments <br/>
+                {{ overview.activity.outcomeNotRecordedCount }} without a recorded outcome <br/>
+                {{ overview.activity.compliedAppointmentsCount }} compiled <br/>
+                {{ overview.activity.acceptableAbsenceCount }} acceptable absences <br/>
+                {{ overview.activity.rescheduledCount }} rescheduled<br/>
+                <p>
+                    <a href={{crn}}/activity-log>View all activity details</a>
+                </p>
             {% else %}
                 None
             {% endif %}

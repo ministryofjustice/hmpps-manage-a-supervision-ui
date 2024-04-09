@@ -14,6 +14,7 @@ import {
   deliusHomepageUrl,
   fullName,
   getAppointmentsToAction,
+  getComplianceStatus,
   getRisksToThemselves,
   getRisksWithScore,
   getTagClass,
@@ -370,5 +371,22 @@ describe('renders time from and to', () => {
     ['Time from only', '2024-05-25T09:08:34.123', null, '9:08am'],
   ])('%s timeFromTo(%s, %s)', (_: string, a: string, b: string, expected: string) => {
     expect(timeFromTo(a, b)).toEqual(expected)
+  })
+})
+
+describe('Gets compliance status', () => {
+  it.each([
+    ['Returns breach in progress', 2, true, { text: 'Breach in progress', panelClass: 'app-compliance-panel--red' }],
+    [
+      'Returns failure to comply',
+      2,
+      false,
+      {
+        text: '2 failures to comply within 12 months. No breach in progress yet.',
+        panelClass: 'app-compliance-panel--red',
+      },
+    ],
+  ])('%s timeFromTo(%s, %s)', (_: string, a: number, b: boolean, expected: { text: string; panelClass: string }) => {
+    expect(getComplianceStatus(a, b)).toEqual(expected)
   })
 })

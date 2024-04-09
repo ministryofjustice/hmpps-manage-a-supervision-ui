@@ -3,7 +3,7 @@ import { Name, PersonalCircumstance } from './common'
 export interface Overview {
   appointmentsWithoutOutcome: number
   absencesWithoutEvidence: number
-  activity?: Activity
+  activity?: ActivityCount
   compliance?: Compliance
   personalDetails: PersonalDetails
   previousOrders: PreviousOrders
@@ -73,14 +73,25 @@ export interface Provision {
   description: string
 }
 
-export interface Activity {
-  acceptableAbsences: number
-  complied: number
-  nationalStandardsAppointments: number
-  rescheduled: number
+export interface ActivityCount {
+  unacceptableAbsenceCount: number
+  attendedButDidNotComplyCount: number
+  outcomeNotRecordedCount: number
+  waitingForEvidenceCount: number
+  rescheduledCount: number
+  absentCount: number
+  rescheduledByStaffCount: number
+  rescheduledByPersonOnProbationCount: number
+  lettersCount: number
+  nationalStandardAppointmentsCount: number
+  compliedAppointmentsCount: number
 }
 
 export interface Compliance {
   currentBreaches: number
+  priorBreachesOnCurrentOrderCount: number
   failureToComplyInLast12Months: number
+  breachStarted: boolean
+  breachesOnCurrentOrderCount: number
+  failureToComplyCount: number
 }

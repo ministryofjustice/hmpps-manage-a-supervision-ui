@@ -19,7 +19,7 @@
                       text: 'Main offence'
                     },
                     value: {
-                      html: order.mainOffence
+                      html: '<span data-qa="mainOffenceDescriptionValue">' + order.mainOffence + '</span>'
                     }
                   },
                   {
@@ -27,7 +27,7 @@
                       text: 'Status'
                     },
                     value: {
-                      html: order.status
+                      html:  '<span data-qa="statusValue">' + order.status + '</span>'
                     }
                   },
                   {
@@ -35,7 +35,7 @@
                       text: 'Start date'
                     },
                     value: {
-                      html: order.startDate | dateWithYear
+                      html: '<span data-qa="startDateValue">' + order.startDate | dateWithYear + '</span>'
                     }
                   },
                   {
@@ -43,7 +43,7 @@
                       text: 'End date'
                     },
                     value: {
-                      html: order.endDate | dateWithYear
+                      html: '<span data-qa="endDateValue">' + order.endDate | dateWithYear + '</span>'
                     }
                   },
                   {
@@ -51,7 +51,7 @@
                       text: 'Breaches'
                     },
                     value: {
-                      html: breaches
+                      html:  '<span data-qa="breachesValue">' + breaches + '</span>'
                     }
                   }
                 ]
@@ -59,7 +59,8 @@
             {% endset %}
 
             {{ appSummaryCard({
-              classes: "govuk-!-margin-bottom-6",
+              attributes: {'data-qa': 'previousOrder' + loop.index + 'Card'},
+              classes: 'govuk-!-margin-bottom-6',
               titleText: order.description + ' (Ended ' + order.endDate | dateWithYear + ')',
               html: previousOrder,
               actions: {

@@ -1,19 +1,19 @@
-{% if compliance.breachStarted %}
-  {%- switch compliance.breachesOnCurrentOrderCount -%}
+{% if sentence.compliance.breachStarted %}
+  {%- switch sentence.compliance.priorBreachesOnCurrentOrderCount -%}
     {%- case 0 -%}
       No prior breaches on current order
     {%- case 1 -%}
       1 prior breach on current order
     {%- default -%}
-      {{ compliance.breachesOnCurrentOrderCount }} prior breaches on current order
+      {{ sentence.compliance.priorBreachesOnCurrentOrderCount }} prior breaches on current order
   {%- endswitch -%}
 {% else %}
-  {%- switch compliance.breachesOnCurrentOrderCount -%}
+  {%- switch sentence.compliance.breachesOnCurrentOrderCount -%}
     {%- case 0 -%}
       No breaches on current order
     {%- case 1 -%}
       1 breach on current order
     {%- default -%}
-      {{ compliance.breachesOnCurrentOrderCount }} breaches on current order
+      {{ sentence.compliance.breachesOnCurrentOrderCount }} breaches on current order
   {%- endswitch -%}
 {% endif %}

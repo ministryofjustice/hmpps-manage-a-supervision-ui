@@ -1,0 +1,85 @@
+<h2 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-top-8 govuk-!-margin-bottom-5">Previous orders</h2>
+{% if personCompliance.previousOrders.count > 0 %}
+    <p>{{ personCompliance.previousOrders.count }} previous orders ({{ personCompliance.previousOrders.breaches}} breaches on previous orders)<br />Last ended on {{ personCompliance.previousOrders.lastEndedDate | dateWithYear }}.</p>
+    {% if personCompliance.previousOrders.orders.length > 0 %}
+        <h3 class="govuk-heading-s">Previous orders ending within the last 2 years</h3>
+        {% for order in personCompliance.previousOrders.orders %}
+            {% set breaches %}
+                {% if order.breaches > 0 %}
+                    {{ order.breaches }}
+                {% else %}
+                    None
+                {% endif %}
+            {% endset %}
+            {% set previousOrder %}
+              {{ govukSummaryList({
+                rows: [
+                  {
+                    key: {
+                      text: 'Main offence'
+                    },
+                    value: {
+                      html: '<span data-qa="mainOffenceDescriptionValue">' + order.mainOffence + '</span>'
+                    }
+                  },
+                  {
+                    key: {
+                      text: 'Status'
+                    },
+                    value: {
+                      html:  '<span data-qa="statusValue">' + order.status + '</span>'
+                    }
+                  },
+                  {
+                    key: {
+                      text: 'Start date'
+                    },
+                    value: {
+                      html: '<span data-qa="startDateValue">' + order.startDate | dateWithYear + '</span>'
+                    }
+                  },
+                  {
+                    key: {
+                      text: 'End date'
+                    },
+                    value: {
+                      html: '<span data-qa="endDateValue">' + order.endDate | dateWithYear + '</span>'
+                    }
+                  },
+                  {
+                    key: {
+                      text: 'Breaches'
+                    },
+                    value: {
+                      html:  '<span data-qa="breachesValue">' + breaches + '</span>'
+                    }
+                  }
+                ]
+              }) }}
+            {% endset %}
+
+            {{ appSummaryCard({
+              attributes: {'data-qa': 'previousOrder' + loop.index + 'Card'},
+              classes: 'govuk-!-margin-bottom-6',
+              titleText: order.description + ' (Ended ' + order.endDate | dateWithYear + ')',
+              html: previousOrder,
+              actions: {
+                items: [
+                  {
+                    text: 'View order',
+                    href: '#'
+                  }
+                ]
+              }
+            }) }}
+        {% endfor %}
+        <p><a href="/case/{{ crn }}/sentence/previous-orders">View all previous orders</a></p>
+    {% else %}
+        <h3 class="govuk-heading-s">Previous orders ending within the last 2 years</h3>
+    {% endif %}
+{% else %}
+
+<p>There are no previous orders.</p>
+
+{% endif %}
+

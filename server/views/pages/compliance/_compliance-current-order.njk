@@ -1,0 +1,299 @@
+{% for sentence in personCompliance.currentSentences %}
+    {% set failureToComplyCount = sentence.compliance.failureToComplyCount %}
+    {% set unacceptableAbsenceCount = sentence.activity.unacceptableAbsenceCount %}
+    {% set attendedButDidNotComplyCount = sentence.activity.attendedButDidNotComplyCount  %}
+    {% set outcomeNotRecordedCount = sentence.activity.outcomeNotRecordedCount %}
+    {% set waitingForEvidenceCount = sentence.activity.waitingForEvidenceCount  %}
+    {% set rescheduledCount = sentence.activity.rescheduledCount %}
+    {% set absentCount = sentence.activity.absentCount %}
+    {% set rescheduledByStaffCount = sentence.activity.rescheduledByStaffCount %}
+    {% set rescheduledByPersonOnProbationCount = sentence.activity.rescheduledByPersonOnProbationCount %}
+    {% set lettersCount = sentence.activity.lettersCount %}
+    {% set nationalStandardAppointmentsCount = sentence.activity.nationalStandardAppointmentsCount %}
+    {% set compliedAppointmentsCount = sentence.activity.compliedAppointmentsCount %}
+
+    {% set complianceStatus = getComplianceStatus(failureToComplyCount, sentence.compliance.breachStarted) %}
+
+    {% if sentence.rar %}
+        {% set requirements %}
+            {{ sentence.rar.totalDays }} days RAR, {{ sentence.rar.completed }} completed
+        {% endset %}
+    {% else %}
+        {% set requirements = false %}
+    {% endif %}
+
+
+    {% if not sentence.activeBreach and not sentence.rar %}
+        {% set lastSentence = "--last"  %}
+    {% else %}
+        {% set lastSentence = ""  %}
+    {% endif %}
+
+    {% if sentence.activeBreach and not sentence.rar %}
+        {% set lastBreach = "--last"  %}
+    {% else %}
+        {% set lastBreach = ""  %}
+    {% endif %}
+
+    <div class="app-compliance-panel {{ complianceStatus.panelClass }}">
+      <p class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold">
+      {% if failureToComplyCount >= 2 %}
+        {{ complianceStatus.text }} – <a href = "/case/{{ crn }}/handoff/delius">Start a breach</a>
+      {% else %}
+        {{ complianceStatus.text }}
+      {% endif %}
+      </p>
+    </div>
+
+    {% set breachesOnCurrentOrder %}
+      <ul class="govuk-list">
+        {% if sentence.compliance.breachStarted %}<li>A breach is in progress</li>{% endif %}
+        <li>{% include './_breaches-on-current-order.njk' %}</li>
+      </ul>
+    {% endset %}
+
+    {% set orderDetailsList %}
+      {{ govukSummaryList({
+        rows: [
+          {
+            key: {
+              text: 'Main offence'
+            },
+            value: {
+              html: '<span data-qa="mainOffenceDescriptionValue">' + sentence.mainOffence.description + '</span>'
+            }
+          },
+          {
+            key: {
+              text: 'Order'
+            },
+            value: {
+              html: '<span data-qa="orderDescriptionValue">' + sentence.order.description + ' (' +  sentence.order.startDate | monthsOrDaysElapsed + ' elapsed)</span>'
+            }
+          },
+          {
+            key: {
+              text: 'Start date'
+            },
+            value: {
+              html: '<span data-qa="startDateValue">' + sentence.order.startDate | dateWithYear + '</span>'
+            }
+          },
+          {
+            key: {
+              text: 'Breaches'
+            },
+            value: {
+              html: '<span data-qa="breachValue">' + breachesOnCurrentOrder + '</span>'
+            }
+          }
+        ]
+      }) }}
+    {% endset %}
+
+    {{ appSummaryCard({
+      attributes: {'data-qa': 'sentence' + loop.index + 'Card'},
+      classes: 'app-summary-card--compliance' + lastSentence + ' app-summary-card--large-title',
+      titleText: 'Sentence (' + sentence.eventNumber + ')',
+      html: orderDetailsList,
+      actions: {
+        items: [
+          {
+            text: 'View sentence details',
+            href: '/case/'+ crn + '/sentence'
+          }
+        ]
+      }
+    }) }}
+
+    {% if sentence.activeBreach %}
+      {% set breachList %}
+        {{ govukSummaryList({
+          rows: [
+            {
+              key: {
+                text: 'Breach started'
+              },
+              value: {
+                html:  '<span data-qa="startDateValue">' + sentence.activeBreach.startDate | dateWithYear + '</span>'
+              }
+            },
+            {
+              key: {
+                text: 'Status'
+              },
+              value: {
+                html:  '<span data-qa="statusValue">' + sentence.activeBreach.status + '</span>'
+              }
+            }
+          ]
+        }) }}
+      {% endset %}
+
+      {{ appSummaryCard({
+        attributes: {'data-qa': 'breach' + loop.index + 'Card'},
+        classes: 'app-summary-card--compliance' + lastBreach + ' app-summary-card--large-title',
+        titleText: "Breach details",
+        html: breachList,
+        actions: {
+          items: [
+            {
+              href: "",
+              text: "View in Delius",
+              visuallyHiddenText: "name"
+            }
+          ]
+        }
+      }) }}
+    {% endif %}
+
+    {% set failureToComplyHtml %}
+      {% if failureToComplyCount == 0 %}
+        None
+      {% elseif attendedButDidNotComplyCount == 0 %}
+        <a href="/case/{{ crn }}/activity-log/all-failure-to-comply-appointments">
+          {% if unacceptableAbsenceCount == 1 %}1 unacceptable absence{% else %}{{ unacceptableAbsenceCount }} unacceptable absences{% endif %}
+        </a>
+      {% elseif unacceptableAbsenceCount == 0 %}
+        <a href="/case/{{ crn }}/activity-log/all-failure-to-comply-appointments">
+          {% if attendedButDidNotComplyCount == 1 %}1 failure{% else %}{{ attendedButDidNotComplyCount }} failures{% endif %} to comply because of behaviour
+        </a>
+      {% else %}
+        <p><a href="/case/{{ crn }}/activity-log/all-failure-to-comply-appointments">{{ failureToComplyCount }} failures to comply</a>:</p>
+        <ul class="govuk-list govuk-!-margin-top-2">
+          <li>{{ unacceptableAbsenceCount }} unacceptable absence</li>
+          <li>{{ attendedButDidNotComplyCount }} failure to comply because of behaviour</li>
+        </ul>
+      {% endif %}
+    {% endset %}
+
+    {% set acceptableAbsencesHtml %}
+
+      {% if absentCount > 0 %}
+        <a href="/case/{{ crn }}/activity-log/acceptable-absence-appointments">{{ absentCount }} acceptable absences</a>
+      {% else %}
+        None
+      {% endif %}
+    {% endset %}
+
+    {% set waitingForEvidenceHtml %}
+      {% if waitingForEvidenceCount > 0 %}
+        <a href="/case/{{ crn }}/activity-log/waiting-for-evidence">{{ waitingForEvidenceCount }} absence waiting for evidence</a>
+      {% elseif waitingForEvidenceCount > 0 %}
+        <a href="/case/{{ crn }}/activity-log/waiting-for-evidence">{{ waitingForEvidenceCount }} absences waiting for evidence</a>
+      {% else %}
+        None
+      {% endif %}
+    {% endset %}
+
+    {% set rescheduledHtml %}
+      {% if rescheduledCount == 0 %}
+        None
+      {% elseif rescheduledByStaffCount == 0 %}
+        <a href="/case/{{ crn }}/activity-log/all-rescheduled">
+          {{ rescheduledByPersonOnProbationCount }} requested by {{ personCompliance.personSummary.name | fullName }}
+        </a>
+      {% elseif rescheduledByPersonOnProbationCount == 0 %}
+        <a href="/case/{{ crn }}/activity-log/all-rescheduled">
+          {{ rescheduledByStaffCount }} requested by staff
+        </a>
+      {% else %}
+        <p><a href="/case/{{ crn }}/activity-log/all-rescheduled">{{ rescheduledCount }} rescheduled</a>:</p>
+        <ul class="govuk-list govuk-!-margin-top-2">
+          <li>{{ rescheduledByPersonOnProbationCount }} requested by {{ personCompliance.personSummary.name | fullName }}</li>
+          <li>{{ rescheduledByStaffCount }} requested  by staff</li>
+        </ul>
+      {% endif %}
+    {% endset %}
+
+    {% set warningLettersHtml %}
+
+      {% if lettersCount === 1 %}
+        <a href="/case/{{ crn }}/activity-log/warning-letters">First warning letter sent</a>
+      {% elif lettersCount > 1 %}
+        <a href="/case/{{ crn }}/activity-log/warning-letters">{{ lettersCount }} letters sent</a>
+      {% else %}
+        None
+      {% endif %}
+    {% endset %}
+
+    {% if requirements %}
+        {% set rarList %}
+          {{ govukSummaryList({
+            rows: [
+              {
+                key: {
+                  text: 'Appointments'
+                },
+                value: {
+                  html: '<span data-qa="appointmentsValue"><a href="/case/' + crn + '/activity-log/national-standard-appointments">' + nationalStandardAppointmentsCount + ' national standard appointments</a></span>'
+                }
+              },
+              {
+                key: {
+                  text: 'Without an outcome'
+                },
+                value: {
+                  html: '<span data-qa="withoutOutcomeValue"><a href="/case/' + crn + '/activity-log/national-standard-appointments-without-outcome">' + outcomeNotRecordedCount + ' without a recorded outcome</a></span>'
+                }
+              } if outcomeNotRecordedCount > 0,
+              {
+                key: {
+                  text: 'Waiting for evidence'
+                },
+                value: {
+                  html: '<span data-qa="waitingForEvidenceValue">' + waitingForEvidenceHtml + '</span>'
+                }
+              } if waitingForEvidenceCount > 0,
+              {
+                key: {
+                  text: 'Complied'
+                },
+                value: {
+                  html: '<span data-qa="compliedValue"><a href="/case/' + crn + '/activity-log/complied-appointments">' + compliedAppointmentsCount + ' complied</a></span>'
+                }
+              },
+              {
+                key: {
+                  html: 'Failures to comply<br>within 12 months'
+                },
+                value: {
+                  html: '<span data-qa="failureToComplyValue">' + failureToComplyHtml + '</span>'
+                }
+              },
+              {
+                key: {
+                  html: 'Warning letters sent within 12 months'
+                },
+                value: {
+                  html: '<span data-qa="warningLetterValue">' + warningLettersHtml + '</span>'
+                }
+              },
+              {
+                key: {
+                  text: 'Acceptable absences'
+                },
+                value: {
+                  html: '<span data-qa="acceptableAbsencesValue">' + acceptableAbsencesHtml + '</span>'
+                }
+              },
+              {
+                key: {
+                  text: 'Rescheduled'
+                },
+                value: {
+                  html: '<span data-qa="rescheduledValue">' + rescheduledHtml + '</span>'
+                }
+              }
+            ]
+          }) }}
+        {% endset %}
+
+        {{ appSummaryCard({
+          attributes: {'data-qa': 'activity' + loop.index + 'Card'},
+          classes: 'govuk-!-margin-bottom-6 app-summary-card--compliance-last app-summary-card--large-title',
+          titleHtml: '<span class="govuk-!-font-size-19 govuk-!-font-weight-regular">Requirement</span><br />' + requirements,
+          html: rarList
+        }) }}
+    {% endif %}
+{% endfor %}

@@ -46,10 +46,10 @@ context('Overview', () => {
       .should('contain.text', '1 previous orders (No breaches on previous orders)')
     page
       .getRowData('activityAndCompliance', 'compliance', 'Value')
-      .should('contain.text', '2 failure to comply within 12 months')
+      .should('contain.text', '2 without a recorded outcome')
     page
       .getRowData('activityAndCompliance', 'activityLog', 'Value')
-      .should('contain.text', '5 national standard appointments')
+      .should('contain.text', '2 national standard appointments')
     page.getRowData('risk', 'rosh', 'Value').should('contain.text', 'HIGH')
     page
       .getRowData('risk', 'harmToSelf', 'Value')

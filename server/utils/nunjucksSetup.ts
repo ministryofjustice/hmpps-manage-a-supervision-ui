@@ -17,6 +17,7 @@ import {
   deliusHomepageUrl,
   fullName,
   getAppointmentsToAction,
+  getComplianceStatus,
   getCurrentRisksToThemselves,
   getPreviousRisksToThemselves,
   getRisksToThemselves,
@@ -91,6 +92,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('compactActivityLogDate', compactActivityLogDate)
   njkEnv.addFilter('activityLogDate', activityLogDate)
   njkEnv.addFilter('removeEmpty', removeEmpty)
+  njkEnv.addGlobal('getComplianceStatus', getComplianceStatus)
   njkEnv.addGlobal('timeFromTo', timeFromTo)
   njkEnv.addGlobal('getRisksWithScore', getRisksWithScore)
   njkEnv.addGlobal('activityLog', activityLog)

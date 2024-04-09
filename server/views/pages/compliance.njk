@@ -1,0 +1,57 @@
+{% extends "../partials/case.njk" %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% set pageTitle = applicationName + " - Compliance" %}
+{% set currentSectionName = 'Compliance' %}
+{% set title = 'Compliance' %}
+{% set currentNavSection = 'compliance' %}
+{% set headerPersonName = personCompliance.personSummary.name | fullName %}
+{% set headerCRN = personCompliance.personSummary.crn %}
+{% block pageTitle %}{{ title }}{% endblock %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+        {
+          text: "Your cases",
+          href: "/search"
+        },
+        {
+          text: headerPersonName,
+          href: "/case/" + crn
+        },
+        {
+          text: currentSectionName
+        }
+  ]
+}) }}
+{% endblock %}
+
+{% block pageContent %}
+
+{% set showWarning = false %}
+{% for sentence in personCompliance.currentSentences %}
+    {% if sentence.compliance.currentBreaches > 0 %}
+        {% set showWarning = true %}
+    {% endif %}
+{% endfor %}
+
+{% if showWarning === true %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        {{ govukWarningText({
+          html: 'There are multiple breach NSIs in progress on Delius.<br />Use Delius to check and correct any problems.<div class="govuk-!-margin-top-1"><a href="/case/' + crn + '/handoff/delius">Go to Delius</a></div>',
+          iconFallbackText: 'Warning'
+        }) }}
+      </div>
+    </div>
+{% endif %}
+
+<p class="govuk-!-margin-bottom-6">
+  <a href="/case/{{ crn }}/handoff/delius">Use Delius to start a breach</a>
+</p>
+
+{% include './compliance/_compliance-current-order.njk' %}
+{% include './compliance/_compliance-previous-orders.njk' %}
+
+
+{% endblock %}

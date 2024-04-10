@@ -71,7 +71,7 @@ context('Overview', () => {
     page.getCardHeader('schedule').should('contain.text', 'Schedule')
     cy.get(`[data-qa=riskErrors]`).should(
       'contain.text',
-      'OAsys is experiencing technical difficulties. It has not been possible to provide the Risk information held in OASys',
+      'OASys is experiencing technical difficulties. It has not been possible to provide the Risk information held in OASys',
     )
   })
 })

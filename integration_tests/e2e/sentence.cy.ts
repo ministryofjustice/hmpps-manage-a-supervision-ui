@@ -79,5 +79,22 @@ context('Sentence', () => {
     page
       .getCardHeader('probationHistory')
       .within(() => cy.get('.govuk-summary-list__key').eq(0).should('contain.text', 'Previous orders'))
+    page
+      .getCardHeader('probationHistory')
+      .within(() => cy.get('.govuk-summary-list__key').eq(1).should('contain.text', 'Previous breaches'))
+    page
+      .getCardHeader('probationHistory')
+      .within(() => cy.get('.govuk-summary-list__key').eq(2).should('contain.text', 'Previous professional contacts'))
+    page
+      .getCardHeader('probationHistory')
+      .within(() => cy.get('.govuk-summary-list__value').eq(1).should('contain.text', '2 previous breaches'))
+    page
+      .getCardHeader('probationHistory')
+      .within(() => cy.get('a').eq(0).invoke('attr', 'href').should('equal', '/cases/X000001/sentence/previous-orders'))
+    page
+      .getCardHeader('probationHistory')
+      .within(() =>
+        cy.get('a').eq(1).invoke('attr', 'href').should('equal', '/cases/X000001/address-book-professional'),
+      )
   })
 })

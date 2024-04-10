@@ -46,8 +46,22 @@ context('Sentence', () => {
       .within(() => cy.get('.govuk-summary-list__value').eq(3).should('contain.text', 'No additional offences'))
 
     page.getRowDataIndex('conviction', 'sentencingCourt', 'Value', 0).should('contain.text', 'Hull Court')
+    page
+      .getCardHeader('conviction')
+      .eq(1)
+      .within(() => cy.get('.govuk-summary-list__value').eq(0).should('contain.text', 'No court details'))
+
     page.getRowDataIndex('conviction', 'responsibleCourt', 'Value', 0).should('contain.text', 'Birmingham Court')
+    page
+      .getCardHeader('conviction')
+      .eq(1)
+      .within(() => cy.get('.govuk-summary-list__value').eq(1).should('contain.text', 'No court details'))
+
     page.getRowDataIndex('conviction', 'convictionDate', 'Value', 0).should('contain.text', 'Hull Court')
+    page
+      .getCardHeader('conviction')
+      .eq(1)
+      .within(() => cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'No conviction date'))
 
     page.getRowDataIndex('sentence', 'orderDescription', 'Value', 0).should('contain.text', 'Default Sentence Type')
     page.getRowDataIndex('sentence', 'orderStartDate', 'Value', 0).should('contain.text', '19 March 2024')

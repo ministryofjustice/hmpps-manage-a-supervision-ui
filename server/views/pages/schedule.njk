@@ -50,7 +50,7 @@
             {{ entry.startDateTime | dayOfWeek }} {{ entry.startDateTime | dateWithYear }}
           {% endif %}
         </td>
-        <td class="govuk-table__cell">{{ entry.startDateTime | govukTime }} to {{ entry.endDateTime | govukTime }}</td>
+        <td class="govuk-table__cell">{{ timeFromTo(entry.startDateTime, entry.endDateTime) }}</td>
         <td class="govuk-table__cell"><a href="/case/{{ crn }}/schedule/appointment/{{ entry.id }}">{{ entry.type }} with {{ entry.officerName | fullName }}</a></td>
       </tr>
     {% endfor %}

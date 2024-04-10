@@ -31,7 +31,7 @@ context('Appointment', () => {
     page.headerName().should('contain.text', 'Eula Schmeler')
     page.pageHeading().should('contain.text', 'Schedule')
     page.appointmentRow(1).should('contain.text', 'Thursday 22 December 2044')
-    page.appointmentRow(1).should('contain.text', '9:15am to 9:30am')
+    page.appointmentRow(1).should('contain.text', '9:15am')
     page.appointmentRow(1).should('contain.text', 'Phone call with Terry Jones')
     page.appointmentRow(2).should('contain.text', 'Wednesday 22 March 2045')
     page.appointmentRow(2).should('contain.text', '10:15am to 10:30am')

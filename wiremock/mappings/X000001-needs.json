@@ -1,0 +1,76 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/arns/needs/crn/X000001",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "identifiedNeeds": [
+            {
+              "section": "DRUG_MISUSE",
+              "name": "Drug misuse",
+              "riskOfHarm": false,
+              "riskOfReoffending": false,
+              "severity": "SEVERE"
+            },
+            {
+              "section": "ACCOMMODATION",
+              "name": "Accommodation",
+              "riskOfHarm": false,
+              "riskOfReoffending": false,
+              "severity": "SEVERE"
+            },
+            {
+              "section": "EDUCATION_TRAINING_AND_EMPLOYABILITY",
+              "name": "Education, Training and Employability",
+              "riskOfHarm": false,
+              "riskOfReoffending": false,
+              "severity": "SEVERE"
+            },
+            {
+              "section": "RELATIONSHIPS",
+              "name": "Relationships",
+              "riskOfHarm": false,
+              "riskOfReoffending": false,
+              "severity": "SEVERE"
+            },
+            {
+              "section": "LIFESTYLE_AND_ASSOCIATES",
+              "name": "Lifestyle and Associates",
+              "riskOfHarm": false,
+              "riskOfReoffending": false,
+              "severity": "SEVERE"
+            },
+            {
+              "section": "ALCOHOL_MISUSE",
+              "name": "Alcohol Misuse",
+              "riskOfHarm": false,
+              "riskOfReoffending": false,
+              "severity": "SEVERE"
+            },
+            {
+              "section": "THINKING_AND_BEHAVIOUR",
+              "name": "Thinking and Behaviour",
+              "riskOfHarm": false,
+              "riskOfReoffending": false,
+              "severity": "SEVERE"
+            },
+            {
+              "section": "ATTITUDE",
+              "name": "Attitudes",
+              "riskOfHarm": false,
+              "riskOfReoffending": false,
+              "severity": "SEVERE"
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

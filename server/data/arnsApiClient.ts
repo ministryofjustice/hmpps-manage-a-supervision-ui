@@ -14,7 +14,17 @@ export default class ArnsApiClient extends RestClient {
       handle404: true,
       handle500: true,
       errorMessageFor500:
-        'OAsys is experiencing technical difficulties. It has not been possible to provide the Risk information held in OASys',
+        'OASys is experiencing technical difficulties. It has not been possible to provide the Risk information held in OASys',
+    })
+  }
+
+  async getNeeds(crn: string): Promise<Needs | ErrorSummary | null> {
+    return this.get({
+      path: `/needs/crn/${crn}`,
+      handle404: true,
+      handle500: true,
+      errorMessageFor500:
+        'OASys is experiencing technical difficulties. It has not been possible to provide the Criminogenic needs information held in OASys',
     })
   }
 }
@@ -55,4 +65,16 @@ export interface RiskSummary {
     overallRiskLevel: RiskScore
   }
   assessedOn?: string | null
+}
+
+export interface Needs {
+  identifiedNeeds: Needs[]
+}
+
+export interface Need {
+  section: string
+  name: string
+  riskOfHarm: false
+  riskOfReoffending: false
+  severity: string
 }

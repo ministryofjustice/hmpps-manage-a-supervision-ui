@@ -35,7 +35,9 @@ context('Personal Details', () => {
       .getRowData('personalDetails', 'disabilities', 'Value')
       .should('contain.text', 'Mental Health related disabilities')
     page.getRowData('personalDetails', 'adjustments', 'Value').should('contain.text', 'Handrails')
-    page.getRowData('personalDetails', 'criminogenicNeeds', 'Value').should('contain.text', 'None')
+    page
+      .getRowData('personalDetails', 'criminogenicNeeds', 'Value')
+      .should('contain.text', 'Education, Training and Employability')
     page.getRowData('personalDetails', 'crn', 'Value').should('contain.text', 'X000001')
     page.getRowData('personalDetails', 'documents', 'Value').should('contain.text', 'Eula-Schmeler-X000001-UPW.pdf')
 

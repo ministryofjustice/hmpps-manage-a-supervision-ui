@@ -4,6 +4,7 @@ import { v4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
+import ArnsApiClient from '../data/arnsApiClient'
 
 export default function personalDetailRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -12,6 +13,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
     const { crn } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
+    const arnsClient = new ArnsApiClient(token)
 
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_PERSONAL_DETAILS',
@@ -21,10 +23,10 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       correlationId: v4(),
       service: 'hmpps-manage-a-supervision-ui',
     })
-
-    const personalDetails = await masClient.getPersonalDetails(crn)
+    const [personalDetails, needs] = await Promise.all([masClient.getPersonalDetails(crn), arnsClient.getNeeds(crn)])
     res.render('pages/personal-details', {
       personalDetails,
+      needs,
       crn,
     })
   })

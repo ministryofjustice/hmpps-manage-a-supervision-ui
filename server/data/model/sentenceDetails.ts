@@ -6,6 +6,7 @@ export interface SentenceDetails {
   order: Order
   requirements: Requirement[]
   courtDocuments: CourtDocument[]
+  probationHistory: ProbationHistory
 }
 
 export interface Sentence {
@@ -55,4 +56,11 @@ export interface CourtDocument {
   id: string
   lastSaved: string
   documentName: string
+}
+
+export interface ProbationHistory {
+  numberOfTerminatedEvents: number
+  dateOfMostRecentTerminatedEvent: string
+  numberOfTerminatedEventBreaches: number
+  numberOfProfessionalContacts: number
 }

@@ -98,7 +98,13 @@
               },
               "requirements": []
             }
-          ]
+          ],
+          "probationHistory": {
+            "numberOfTerminatedEvents": 2,
+            "dateOfMostRecentTerminatedEvent": "2011-01-21",
+            "numberOfTerminatedEventBreaches": 2,
+            "numberOfProfessionalContacts": 3
+          }
         },
         "headers": {
           "Content-Type": "application/json"

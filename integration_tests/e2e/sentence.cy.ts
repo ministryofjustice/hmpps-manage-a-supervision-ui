@@ -33,6 +33,17 @@ context('Sentence', () => {
     page.getRowDataIndex('offence', 'dateOfOffence', 'Value', 1).should('contain.text', '20 January 2024')
 
     page.getRowDataIndex('offence', 'offenceNotes', 'Value', 0).should('contain.text', 'overview')
+    page
+      .getCardHeader('offence')
+      .eq(1)
+      .within(() => cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'No notes'))
+
+    page.getRowDataIndex('offence', 'additionalOffences', 'Value', 0).should('contain.text', 'Burglary (2 count)')
+    page.getRowDataIndex('offence', 'additionalOffences', 'Value', 0).should('contain.text', 'Assault (1 count)')
+    page
+      .getCardHeader('offence')
+      .eq(1)
+      .within(() => cy.get('.govuk-summary-list__value').eq(3).should('contain.text', 'No additional offences'))
 
     page.getRowDataIndex('conviction', 'sentencingCourt', 'Value', 0).should('contain.text', 'Hull Court')
     page.getRowDataIndex('conviction', 'responsibleCourt', 'Value', 0).should('contain.text', 'Birmingham Court')

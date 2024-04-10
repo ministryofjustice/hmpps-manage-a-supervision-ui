@@ -10,62 +10,65 @@
         "jsonBody": {
           "identifiedNeeds": [
             {
-              "section": "DRUG_MISUSE",
-              "name": "Drug misuse",
-              "riskOfHarm": false,
-              "riskOfReoffending": false,
-              "severity": "SEVERE"
-            },
-            {
               "section": "ACCOMMODATION",
               "name": "Accommodation",
-              "riskOfHarm": false,
-              "riskOfReoffending": false,
-              "severity": "SEVERE"
+              "riskOfHarm": true,
+              "riskOfReoffending": true,
+              "severity": "STANDARD"
             },
             {
               "section": "EDUCATION_TRAINING_AND_EMPLOYABILITY",
               "name": "Education, Training and Employability",
-              "riskOfHarm": false,
-              "riskOfReoffending": false,
-              "severity": "SEVERE"
+              "riskOfHarm": true,
+              "riskOfReoffending": true,
+              "severity": "STANDARD"
             },
             {
               "section": "RELATIONSHIPS",
               "name": "Relationships",
-              "riskOfHarm": false,
-              "riskOfReoffending": false,
+              "riskOfHarm": true,
+              "riskOfReoffending": true,
               "severity": "SEVERE"
             },
             {
               "section": "LIFESTYLE_AND_ASSOCIATES",
               "name": "Lifestyle and Associates",
-              "riskOfHarm": false,
-              "riskOfReoffending": false,
+              "riskOfHarm": true,
+              "riskOfReoffending": true,
               "severity": "SEVERE"
+            },
+            {
+              "section": "DRUG_MISUSE",
+              "name": "Drug Misuse",
+              "riskOfHarm": true,
+              "riskOfReoffending": true,
+              "severity": "STANDARD"
             },
             {
               "section": "ALCOHOL_MISUSE",
               "name": "Alcohol Misuse",
-              "riskOfHarm": false,
-              "riskOfReoffending": false,
-              "severity": "SEVERE"
+              "riskOfHarm": true,
+              "riskOfReoffending": true,
+              "severity": "STANDARD"
             },
             {
               "section": "THINKING_AND_BEHAVIOUR",
               "name": "Thinking and Behaviour",
-              "riskOfHarm": false,
-              "riskOfReoffending": false,
+              "riskOfHarm": true,
+              "riskOfReoffending": true,
               "severity": "SEVERE"
             },
             {
               "section": "ATTITUDE",
               "name": "Attitudes",
-              "riskOfHarm": false,
-              "riskOfReoffending": false,
-              "severity": "SEVERE"
+              "riskOfHarm": true,
+              "riskOfReoffending": true,
+              "severity": "STANDARD"
             }
-          ]
+          ],
+          "notIdentifiedNeeds": [],
+          "unansweredNeeds": [],
+          "assessedOn": "2023-07-26T11:29:10"
         },
         "headers": {
           "Content-Type": "application/json"

@@ -33,10 +33,35 @@ context('Sentence', () => {
     page.getRowDataIndex('offence', 'dateOfOffence', 'Value', 1).should('contain.text', '20 January 2024')
 
     page.getRowDataIndex('offence', 'offenceNotes', 'Value', 0).should('contain.text', 'overview')
+    page
+      .getCardHeader('offence')
+      .eq(1)
+      .within(() => cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'No notes'))
+
+    page.getRowDataIndex('offence', 'additionalOffences', 'Value', 0).should('contain.text', 'Burglary (2 count)')
+    page.getRowDataIndex('offence', 'additionalOffences', 'Value', 0).should('contain.text', 'Assault (1 count)')
+    page
+      .getCardHeader('offence')
+      .eq(1)
+      .within(() => cy.get('.govuk-summary-list__value').eq(3).should('contain.text', 'No additional offences'))
 
     page.getRowDataIndex('conviction', 'sentencingCourt', 'Value', 0).should('contain.text', 'Hull Court')
+    page
+      .getCardHeader('conviction')
+      .eq(1)
+      .within(() => cy.get('.govuk-summary-list__value').eq(0).should('contain.text', 'No court details'))
+
     page.getRowDataIndex('conviction', 'responsibleCourt', 'Value', 0).should('contain.text', 'Birmingham Court')
+    page
+      .getCardHeader('conviction')
+      .eq(1)
+      .within(() => cy.get('.govuk-summary-list__value').eq(1).should('contain.text', 'No court details'))
+
     page.getRowDataIndex('conviction', 'convictionDate', 'Value', 0).should('contain.text', 'Hull Court')
+    page
+      .getCardHeader('conviction')
+      .eq(1)
+      .within(() => cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'No conviction date'))
 
     page.getRowDataIndex('sentence', 'orderDescription', 'Value', 0).should('contain.text', 'Default Sentence Type')
     page.getRowDataIndex('sentence', 'orderStartDate', 'Value', 0).should('contain.text', '19 March 2024')
@@ -48,7 +73,13 @@ context('Sentence', () => {
 
     page
       .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
-      .within(() => cy.get('ul > li:first').get('a').invoke('attr', 'href').should('equal', '/document/115'))
+      .within(() =>
+        cy
+          .get('ul > li:first')
+          .get('a')
+          .invoke('attr', 'href')
+          .should('equal', 'personal-details/documents/4d74f43c-5b42-4317-852e-56c7d29b610b/download'),
+      )
     page
       .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
       .within(() => cy.get('ul > li:first').should('contain.text', 'Pre-sentence report'))
@@ -58,7 +89,14 @@ context('Sentence', () => {
 
     page
       .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
-      .within(() => cy.get('ul > li').get('a').eq(1).invoke('attr', 'href').should('equal', '/document/116'))
+      .within(() =>
+        cy
+          .get('ul > li')
+          .get('a')
+          .eq(1)
+          .invoke('attr', 'href')
+          .should('equal', 'personal-details/documents/6037becb-0d0c-44e1-8727-193f22df0494/download'),
+      )
     page
       .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
       .within(() => cy.get('ul > li').eq(1).should('contain.text', 'CPS Pack'))
@@ -68,7 +106,14 @@ context('Sentence', () => {
 
     page
       .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
-      .within(() => cy.get('ul > li').get('a').eq(2).invoke('attr', 'href').should('equal', '/document/111'))
+      .within(() =>
+        cy
+          .get('ul > li')
+          .get('a')
+          .eq(2)
+          .invoke('attr', 'href')
+          .should('equal', 'personal-details/documents/d072ed9a-999f-4333-a116-a871a845aeb3/download'),
+      )
     page
       .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
       .within(() => cy.get('ul > li').eq(2).should('contain.text', 'Previous convictions'))
@@ -90,11 +135,9 @@ context('Sentence', () => {
       .within(() => cy.get('.govuk-summary-list__value').eq(1).should('contain.text', '2 previous breaches'))
     page
       .getCardHeader('probationHistory')
-      .within(() => cy.get('a').eq(0).invoke('attr', 'href').should('equal', '/cases/X000001/sentence/previous-orders'))
+      .within(() => cy.get('a').eq(0).invoke('attr', 'href').should('equal', '/case/X000001/sentence/previous-orders'))
     page
       .getCardHeader('probationHistory')
-      .within(() =>
-        cy.get('a').eq(1).invoke('attr', 'href').should('equal', '/cases/X000001/address-book-professional'),
-      )
+      .within(() => cy.get('a').eq(1).invoke('attr', 'href').should('equal', '/case/X000001/address-book-professional'))
   })
 })

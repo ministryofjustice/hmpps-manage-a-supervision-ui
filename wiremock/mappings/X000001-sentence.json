@@ -66,17 +66,17 @@
               ],
               "courtDocuments": [
                 {
-                  "id": 115,
+                  "id": "4d74f43c-5b42-4317-852e-56c7d29b610b",
                   "lastSaved": "2024-04-03",
                   "documentName": "Pre-sentence report"
                 },
                 {
-                  "id": 116,
+                  "id": "6037becb-0d0c-44e1-8727-193f22df0494",
                   "lastSaved": "2024-04-01",
                   "documentName": "CPS Pack"
                 },
                 {
-                  "id": 111,
+                  "id": "d072ed9a-999f-4333-a116-a871a845aeb3",
                   "lastSaved": "",
                   "documentName": "Previous convictions"
                 }
@@ -108,6 +108,27 @@
         },
         "headers": {
           "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/personal-details/X000001/document/4d74f43c-5b42-4317-852e-56c7d29b610b",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "bodyFileName": "document.pdf",
+        "headers": {
+          "content-type": "application/msword;charset=UTF-8",
+          "content-length": "14812",
+          "content-disposition": "attachment; filename=\"doc1\"; filename*=UTF-8''doc1",
+          "accept-ranges": "bytes",
+          "content-range": "bytes 0-14811/14812",
+          "cache-control": "max-age=0,  must-revalidate",
+          "etag": "1699630109776",
+          "last-modified": "Fri, 10 Nov 2023 15:28:29 GMT",
+          "Custom-Alfresco-Header": "should be ignored"
         }
       }
     }

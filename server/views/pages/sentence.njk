@@ -32,7 +32,7 @@
                 {% endfor %}
               </ol>
 
-              <a href="/cases/{{ crn }}/sentence/offences">View additional offence details</a>
+              <a href="/case/{{ crn }}/sentence/offences">View additional offence details</a>
             {% endif %}
         {% endset %}
 
@@ -41,7 +41,7 @@
           <ul class="govuk-list govuk-!-margin-top-0">
             {% for doc in sentence.courtDocuments %}
             <li>
-              <a href=/document/{{ doc.id }}>{{ doc.documentName }}</a><br>
+              <a href="personal-details/documents/{{ doc.id }}/download" download="{{ doc.documentName }}">{{ doc.documentName }}</a><br>
               <span class="govuk-!-font-size-16">
                 {% if doc.lastSaved %}
                   Last updated {{ doc.lastSaved | dateWithYearShortMonth }}
@@ -219,10 +219,10 @@
     {% set history %}
         {% set previousOrders %}
             {% if sentenceDetails.probationHistory.numberOfTerminatedEvents == 1 %}
-              <a href="/cases/{{ crn }}/sentence/previous-orders">1 previous order</a><br />
+              <a href="/case/{{ crn }}/sentence/previous-orders">1 previous order</a><br />
               Last ended on {{ sentenceDetails.probationHistory.dateOfMostRecentTerminatedEvent | dateWithYearShortMonth }}
             {% elseif sentenceDetails.probationHistory.numberOfTerminatedEvents > 1 %}
-              <a href="/cases/{{ crn }}/sentence/previous-orders">{{ sentenceDetails.probationHistory.numberOfTerminatedEvents }} previous orders</a><br />
+              <a href="/case/{{ crn }}/sentence/previous-orders">{{ sentenceDetails.probationHistory.numberOfTerminatedEvents }} previous orders</a><br />
               Last ended on {{ sentenceDetails.probationHistory.dateOfMostRecentTerminatedEvent | dateWithYearShortMonth }}
             {% else %}
               No previous orders
@@ -231,9 +231,9 @@
 
         {% set previousProfessionalContacts %}
             {% if sentenceDetails.probationHistory.numberOfProfessionalContacts == 1 %}
-             <a href="/cases/{{ crn }}/address-book-professional">1 contact</a>
+             <a href="/case/{{ crn }}/address-book-professional">1 contact</a>
             {% elseif sentenceDetails.probationHistory.numberOfProfessionalContacts > 1 %}
-              <a href="/cases/{{ crn }}/address-book-professional">{{ sentenceDetails.probationHistory.numberOfProfessionalContacts }} contacts</a>
+              <a href="/case/{{ crn }}/address-book-professional">{{ sentenceDetails.probationHistory.numberOfProfessionalContacts }} contacts</a>
             {% else %}
               No previous professional contacts
             {% endif %}

@@ -55,13 +55,13 @@
                 {
                   "code": "F",
                   "actualStartDate": "2024-04-12",
-                  "description": "1 days RAR, 1 completed",
+                  "description": "12 days RAR, 1 completed",
                   "length": 12,
                   "notes": "my notes",
                   "rar": {
                     "completed": 1,
-                    "scheduled": 0,
-                    "totalDays": 1
+                    "scheduled": 11,
+                    "totalDays": 12
                   }
                 },
                 {

@@ -96,11 +96,31 @@
                       {
                         key: { text: 'Length' },
                         value: { text: requirement.length + ' days'}
-                      },
+                      } if requirement.length,
                       {
                         key: { text: 'Progress' },
                         value: { text: requirement.rar.completed + ' days'}
                       } if requirement.code == 'F',
+                      {
+                        key: { text: "Expected start date" },
+                        value: { text: requirement.expectedStartDate | dateWithYear }
+                      } if requirement.expectedStartDate and not requirement.actualStartDate,
+                      {
+                        key: { text: "Start date" },
+                        value: { text: requirement.actualStartDate | dateWithYear }
+                      } if requirement.actualStartDate,
+                      {
+                        key: { text: "Expected end date" },
+                        value: { text: requirement.expectedEndDate | dateWithYear }
+                      } if requirement.expectedEndDate and not requirement.actualEndDate,
+                      {
+                          key: { text: "End date" },
+                          value: { text: requirement.actualEndDate | dateWithYear }
+                      } if requirement.actualEndDate,
+                      {
+                        key: { text: "Termination reason" },
+                        value: { text: requirement.terminationReason }
+                      } if requirement.terminationReason,
                       {
                         key: { text: 'Notes' },
                         value: { text: requirement.notes}

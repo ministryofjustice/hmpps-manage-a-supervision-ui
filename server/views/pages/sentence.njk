@@ -95,14 +95,14 @@
                     rows: [
                       {
                         key: { text: 'Length' },
-                        value: { text: requirement.rar.totalDays + ' days'}
+                        value: { text: requirement.length + ' days'}
                       },
                       {
                         key: { text: 'Progress' },
                         value: { text: requirement.rar.completed + ' days'}
-                      },
+                      } if requirement.code == 'F',
                       {
-                        key: { text: 'Progress' },
+                        key: { text: 'Notes' },
                         value: { text: requirement.notes}
                       }
                     ]
@@ -110,7 +110,7 @@
                 {% endset %}
                 {{ govukDetails({
                   classes: 'govuk-!-margin-bottom-1',
-                  summaryText: requirement.rar.totalDays + ' days RAR, ' + requirement.rar.completed + ' completed',
+                  summaryText: requirement.description,
                   html: requirementHtml
                 }) }}
             {% endfor %}

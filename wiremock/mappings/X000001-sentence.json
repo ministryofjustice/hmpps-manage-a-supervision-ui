@@ -53,14 +53,31 @@
               },
               "requirements": [
                 {
-                  "description": "Main",
-                  "codeDescription": "High Intensity",
+                  "code": "F",
+                  "actualStartDate": "2024-04-12",
+                  "description": "1 days RAR, 1 completed",
                   "length": 12,
                   "notes": "my notes",
                   "rar": {
                     "completed": 1,
                     "scheduled": 0,
                     "totalDays": 1
+                  }
+                },
+                {
+                  "code": "RM49",
+                  "expectedStartDate": "2024-01-07",
+                  "actualStartDate": "2024-01-12",
+                  "expectedEndDate": "2024-03-10",
+                  "actualEndDate": "2024-01-09",
+                  "terminationReason": "Expired (Normal)",
+                  "description": "Curfew (Electronic Monitored)",
+                  "length": "10",
+                  "notes": "curfew notes",
+                  "rar": {
+                    "completed": 0,
+                    "scheduled": 0,
+                    "totalDays": 0
                   }
                 }
               ],

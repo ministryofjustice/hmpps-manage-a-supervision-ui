@@ -40,9 +40,16 @@ export interface Order {
 }
 
 export interface Requirement {
+  code: string
+  expectedStartDate: string
+  actualStartDate: string
+  expectedEndDate: string
+  actualEndDate: string
+  terminationReason: string
   description: string
   codeDescription: string
   length: string
+  notes: string
   rar: Rar
 }
 

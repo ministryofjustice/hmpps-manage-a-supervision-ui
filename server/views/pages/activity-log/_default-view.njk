@@ -9,7 +9,7 @@
 
   {% if entry.isSystemContact %}
     <div class="govuk-hint govuk-!-margin-bottom-2 govuk-!-margin-left-3">
-      <a href="#" class="app-!-inherit-colour">{{ entry.type }}<span class="govuk-visually-hidden"> on {{ thisDate }}</span></a>
+      <a href="/case/{{ crn }}/activity-log/activity/{{ entry.id }}?category={{ category }}&view=default&requirement={{ requirement }}"" class="app-!-inherit-colour">{{ entry.type }}<span class="govuk-visually-hidden"> on {{ thisDate }}</span></a>
     </div>
   {% elseif entry.isAppointment %}
     {% include "./_appointment-timeline-entry.njk" %}

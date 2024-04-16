@@ -6,7 +6,8 @@
 {% set headerPersonName = personActivity.personSummary.name.forename + ' ' + personActivity.personSummary.name.surname %}
 {% set headerCRN = personActivity.personSummary.crn %}
 {% set personSummary = personActivity.personSummary %}
-{% set entries = activityLog(personActivity.activities, category or 'all-previous-activity') %}
+{% set entries = activityLog(personActivity.activities, category or 'all-previous-activity', requirement) %}
+{% set requirements = getDistinctRequirements(personActivity.activities) %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({

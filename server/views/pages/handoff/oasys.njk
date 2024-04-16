@@ -35,7 +35,7 @@
     <h2 class="govuk-heading-m">Go directly to {{ case.personalDetails.name }} on OASys</h2>
 
     <p>
-      <a href="#">Open on OASys</a><br />
+      <a href="{{ oaSysUrl() }}" target="_blank">Open on OASys</a><br />
       <span class="govuk-!-font-size-16">Link opens in a new window</span>
     </p>
 
@@ -81,7 +81,7 @@
     }) }}
 
     <p>
-      <a href="#">Open the OASys homepage</a><br />
+      <a href="{{ oaSysUrl() }}" target="_blank">Open the OASys homepage</a><br />
       <span class="govuk-!-font-size-16">Link opens in a new window</span>
     </p>
   </div>

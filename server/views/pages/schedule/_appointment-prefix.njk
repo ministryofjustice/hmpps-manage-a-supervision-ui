@@ -1,7 +1,11 @@
 {% if appointment.isInitial %}
   Initial appointment
-{% elseif appointment.nationalStandard %}
+{% elseif appointment.isNationalStandard %}
   National standard appointment
-{% else %}
+{% elseif appointment.isAppointment %}
   Appointment
+{% elseif appointment.isCommunication %}
+  Communication
+{% elseif appointment.isSystemGenerated %}
+  System Generated
 {% endif %}

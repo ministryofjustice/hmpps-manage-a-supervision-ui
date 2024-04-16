@@ -1,19 +1,13 @@
-{%- if entry.action -%}
+{% if entry.action %}
   {{ entry.action }}
-{%- else -%}
-    {% if entry.isEmailOrTextToPop === true %}
-        Email/Text to {{ personSummary.name | fullName }}
-    {% endif %}
-
-    {% if entry.isEmailOrTextFromPop === true %}
-        Email or Text from {{ personSummary.name | fullName }}
-    {% endif %}
-
-    {% if entry.isPhoneCallToPop === true %}
-        Phone call to {{  personSummary.name | fullName }}
-    {% endif %}
-
-    {% if entry.isPhoneCallFromPop === true %}
-        Phone call from {{ personSummary.name | fullName }}
-    {% endif %}
-{%- endif -%}
+{% elseif entry.isEmailOrTextToPop === true %}
+    Email/Text to {{ personSummary.name | fullName }}
+{% elseif entry.isEmailOrTextFromPop === true %}
+   Email or Text from {{ personSummary.name | fullName }}
+{% elseif entry.isPhoneCallToPop === true %}
+   Phone call to {{  personSummary.name | fullName }}
+{% elseif entry.isPhoneCallFromPop === true %}
+   Phone call from {{ personSummary.name | fullName }}
+{% else %}
+    {{ entry.type }}
+{% endif %}

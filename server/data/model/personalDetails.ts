@@ -36,6 +36,7 @@ export interface PersonalContact {
 }
 
 export interface Address {
+  officeName?: string
   buildingName?: string
   buildingNumber?: string
   streetName?: string
@@ -43,6 +44,7 @@ export interface Address {
   town?: string
   county?: string
   postcode?: string
+  ldu?: string
   lastUpdated?: string
   lastUpdatedBy?: Name
 }

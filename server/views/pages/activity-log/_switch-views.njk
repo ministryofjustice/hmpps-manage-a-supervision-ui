@@ -2,7 +2,7 @@
   <p>Change how the activity log looks:</p>
   <p>
     {% if compactView %}
-      <a href="?" class="govuk-!-font-weight-bold">Default view</a>
+      <a href="?requirement={{ requirement }}" class="govuk-!-font-weight-bold">Default view</a>
     {% else %}
       <span class="govuk-!-font-weight-bold">Default view</span>
     {% endif %}
@@ -12,7 +12,7 @@
 
   <p>
     {% if defaultView %}
-      <a href="?view=compact" class="govuk-!-font-weight-bold">Compact view</a>
+      <a href="?view=compact&requirement={{ requirement }}" class="govuk-!-font-weight-bold">Compact view</a>
     {% else %}
       <span class="govuk-!-font-weight-bold">Compact view</span>
     {% endif %}

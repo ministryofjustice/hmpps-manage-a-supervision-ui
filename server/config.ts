@@ -57,6 +57,9 @@ export default {
   delius: {
     link: get('DELIUS_LINK', 'https://ndelius-dummy-url', requiredInProduction),
   },
+  oaSys: {
+    link: get('OASYS_LINK', 'https://oasys-dummy-url', requiredInProduction),
+  },
   apis: {
     hmppsAuth: {
       url: get('HMPPS_AUTH_URL', 'http://localhost:9090/auth', requiredInProduction),

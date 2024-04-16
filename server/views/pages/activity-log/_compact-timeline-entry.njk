@@ -1,10 +1,10 @@
-{% set hasOutcomeBeenConfirmed = entry.didTheyComply === true or entry.rescheduled === true%}
+{% set hasOutcomeBeenConfirmed = entry.didTheyComply === true or entry.rescheduled === true %}
 {% set hasAppointmentStartTimePassed = isInThePast(entry.startDateTime) %}
-{% set shouldPromptToRecordAnOutcome = (not hasOutcomeBeenConfirmed) and hasAppointmentStartTimePassed %}
+{% set shouldPromptToRecordAnOutcome = (entry.hasOutcome === false) and hasAppointmentStartTimePassed %}
 
 {% set titleHtml %}
   <p class="govuk-body govuk-!-margin-bottom-1" data-qa="timeline{{ loop.index }}Card">
-    <a href="/case/{{ crn }}/activity-log/activity/{{ entry.id }}?category={{ category }}&view=compact"">
+    <a href="/case/{{ crn }}/activity-log/activity/{{ entry.id }}?category={{ category }}&view=compact&requirement={{ requirement }}"">
       {% if entry.isAppointment === true %}
         {{ appComplianceTag({ entry: entry, classes: 'govuk-!-margin-left-2', compact: true }) }}
         {{ entry.type }} at&nbsp;{{ entry.startDateTime | govukTime }}
@@ -15,7 +15,9 @@
       {% endif %}
       <span class="govuk-visually-hidden"> on {{ thisDate }}
     </a>
-    <br /><a href="#" class="govuk-!-font-weight-bold">Record an outcome</a>
+     {% if shouldPromptToRecordAnOutcome %}
+        <br /><a href="#" class="govuk-!-font-weight-bold">Record an outcome</a>
+     {% endif %}
   </p>
 {% endset %}
 

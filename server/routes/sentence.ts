@@ -46,10 +46,10 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
 
     const masClient = new MasApiClient(token)
 
-    const previousOrders = await masClient.getSentencePreviousOrders(crn)
+    const previousOrderHistory = await masClient.getSentencePreviousOrders(crn)
 
     res.render('pages/previous-orders', {
-      previousOrders,
+      previousOrderHistory,
       crn,
     })
   })

@@ -8,6 +8,11 @@
       "response": {
         "status": 200,
         "jsonBody": {
+          "name": {
+            "forename": "Eula",
+            "middleName": "",
+            "surname": "Schmeler"
+          },
           "previousOrders": [
             {
               "title": "CJA - Std Determinate Custody (16 Months)",

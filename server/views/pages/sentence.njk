@@ -239,10 +239,10 @@
     {% set history %}
         {% set previousOrders %}
             {% if sentenceDetails.probationHistory.numberOfTerminatedEvents == 1 %}
-              <a href="/case/{{ crn }}/sentence/previous-orders">1 previous order</a><br />
+              <a href="/case/sentence/{{ crn }}/previous-orders">1 previous order</a><br />
               Last ended on {{ sentenceDetails.probationHistory.dateOfMostRecentTerminatedEvent | dateWithYearShortMonth }}
             {% elseif sentenceDetails.probationHistory.numberOfTerminatedEvents > 1 %}
-              <a href="/case/{{ crn }}/sentence/previous-orders">{{ sentenceDetails.probationHistory.numberOfTerminatedEvents }} previous orders</a><br />
+              <a href="/case/sentence/{{ crn }}/previous-orders">{{ sentenceDetails.probationHistory.numberOfTerminatedEvents }} previous orders</a><br />
               Last ended on {{ sentenceDetails.probationHistory.dateOfMostRecentTerminatedEvent | dateWithYearShortMonth }}
             {% else %}
               No previous orders

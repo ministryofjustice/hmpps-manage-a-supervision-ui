@@ -23,6 +23,7 @@ import {
   isInThePast,
   isToday,
   monthsOrDaysElapsed,
+  oaSysUrl,
   pastAppointments,
   removeEmpty,
   scheduledAppointments,
@@ -249,13 +250,19 @@ describe('get delius deep link', () => {
   })
 })
 
-describe('get deliuus homepage link', () => {
+describe('get delius homepage link', () => {
   it.each([['Get link', 'https://ndelius-dummy-url']])(
     '%s deliusDeepLinkUrl(%s, %s)',
     (_: string, expected: string) => {
       expect(deliusHomepageUrl()).toEqual(expected)
     },
   )
+})
+
+describe('get oaSys homepage link', () => {
+  it.each([['Get link', 'https://oasys-dummy-url']])('%s oaSysUrl()', (_: string, expected: string) => {
+    expect(oaSysUrl()).toEqual(expected)
+  })
 })
 
 describe('is in the past', () => {
@@ -390,5 +397,11 @@ describe('Gets compliance status', () => {
     ],
   ])('%s timeFromTo(%s, %s)', (_: string, a: number, b: boolean, expected: { text: string; panelClass: string }) => {
     expect(getComplianceStatus(a, b)).toEqual(expected)
+  })
+})
+
+describe('get distinct requirements', () => {
+  it.each([['Filters correctly', appointments]])('%s pastAppointments(%s, %s)', (_: string, a: Activity[]) => {
+    expect(pastAppointments(a)[0]).toEqual(appointments[6])
   })
 })

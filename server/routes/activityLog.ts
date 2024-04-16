@@ -1,6 +1,8 @@
 import { type RequestHandler, Router } from 'express'
 import { auditService } from '@ministryofjustice/hmpps-audit-client'
 import { v4 } from 'uuid'
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Query } from 'express-serve-static-core'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
@@ -19,7 +21,13 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       res.locals.defaultView = true
     }
 
+    if (req.query.requirement) {
+      res.locals.requirement = req.query.requirement
+    }
+
     const personActivity = await masClient.getPersonActivityLog(crn)
+
+    const queryParams = getQueryString(req.query)
 
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_ACTIVITY_LOG',
@@ -32,6 +40,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     res.render('pages/activity-log', {
       personActivity,
       crn,
+      queryParams,
     })
   })
 
@@ -58,9 +67,16 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       res.locals.defaultView = true
     }
 
+    if (req.query.requirement) {
+      res.locals.requirement = req.query.requirement
+    }
+
+    const queryParams = getQueryString(req.query)
+
     res.render('pages/activity-log', {
       category,
       personActivity,
+      queryParams,
       crn,
     })
   })
@@ -72,12 +88,9 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     const masClient = new MasApiClient(token)
     const personAppointment = await masClient.getPersonAppointment(crn, id)
     const isActivityLog = true
-    const queryParams: string[] = []
+    const queryParams = getQueryString(req.query)
 
     const { category } = req.query
-    if (req.query.view) {
-      queryParams.push(`view=${req.query.view}`)
-    }
 
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_ACTIVITY_LOG_DETAIL',
@@ -96,4 +109,16 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       isActivityLog,
     })
   })
+
+  function getQueryString(params: Query): string[] {
+    const queryParams: string[] = []
+    if (params.view) {
+      queryParams.push(`view=${params.view}`)
+    }
+
+    if (params.requirement) {
+      queryParams.push(`requirement=${params.requirement}`)
+    }
+    return queryParams
+  }
 }

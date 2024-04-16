@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DateTime } from 'luxon'
+import slugify from 'slugify'
 import { RiskScore, RiskToSelf } from '../data/arnsApiClient'
 import { Name } from '../data/model/common'
 import { Address } from '../data/model/personalDetails'
@@ -125,6 +126,9 @@ export const getTagClass = (score: RiskScore) => {
 export const addressToList = (address: Address): string[] => {
   const addressArray: string[] = []
   let buildingNumber = ''
+  if (address?.officeName) {
+    addressArray.push(address?.officeName)
+  }
   if (address?.buildingName) {
     addressArray.push(address?.buildingName)
   }
@@ -136,6 +140,15 @@ export const addressToList = (address: Address): string[] => {
   }
   if (address?.town) {
     addressArray.push(address?.town)
+  }
+  if (address?.county) {
+    addressArray.push(address?.county)
+  }
+  if (address?.district) {
+    addressArray.push(address?.district)
+  }
+  if (address?.ldu) {
+    addressArray.push(address?.ldu)
   }
   if (address?.county) {
     addressArray.push(address?.county)
@@ -164,6 +177,10 @@ export const deliusDeepLinkUrl = (component: string, offenderId: string) => {
     return ''
   }
   return `${config.delius.link}/NDelius-war/delius/JSP/deeplink.xhtml?component=${component}&offenderId=${offenderId}`
+}
+
+export const oaSysUrl = () => {
+  return `${config.oaSys.link}`
 }
 
 export const deliusHomepageUrl = () => {
@@ -315,8 +332,14 @@ export const removeEmpty = (array: never[]) => {
   return array.filter((value: NonNullable<unknown>) => Object.keys(value).length !== 0)
 }
 
-export const activityLog = (contacts: Activity[], category: string) => {
-  return contacts.filter(filterEntriesByCategory(category)).sort((a, b) => (a.startDateTime < b.startDateTime ? 1 : -1))
+export const activityLog = (contacts: Activity[], category: string, requirement?: string) => {
+  let ret = contacts
+    .filter(filterEntriesByCategory(category))
+    .sort((a, b) => (a.startDateTime < b.startDateTime ? 1 : -1))
+  if (requirement) {
+    ret = ret.filter(entry => entry.rarCategory && toSlug(entry.rarCategory) === toSlug(requirement))
+  }
+  return ret
 }
 
 export const timeFromTo = (from: string, to: string) => {
@@ -355,4 +378,13 @@ export const getComplianceStatus = (failureToComplyCount: number, breachStarted:
   }
 
   return status
+}
+
+export const getDistinctRequirements = (appointments: Activity[]): string[] => {
+  const rqmts = appointments.flatMap(entry => (entry.rarCategory ? entry.rarCategory : []))
+  return rqmts.filter((n, i) => rqmts.indexOf(n) === i)
+}
+
+export const toSlug = (string: string) => {
+  return slugify(string, { lower: true })
 }

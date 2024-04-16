@@ -19,6 +19,7 @@ import {
   getAppointmentsToAction,
   getComplianceStatus,
   getCurrentRisksToThemselves,
+  getDistinctRequirements,
   getPreviousRisksToThemselves,
   getRisksToThemselves,
   getRisksWithScore,
@@ -30,9 +31,11 @@ import {
   lastUpdatedBy,
   lastUpdatedDate,
   monthsOrDaysElapsed,
+  oaSysUrl,
   removeEmpty,
   scheduledAppointments,
   timeFromTo,
+  toSlug,
   toYesNo,
   yearsSince,
 } from './utils'
@@ -92,6 +95,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('compactActivityLogDate', compactActivityLogDate)
   njkEnv.addFilter('activityLogDate', activityLogDate)
   njkEnv.addFilter('removeEmpty', removeEmpty)
+  njkEnv.addFilter('toSlug', toSlug)
   njkEnv.addGlobal('getComplianceStatus', getComplianceStatus)
   njkEnv.addGlobal('timeFromTo', timeFromTo)
   njkEnv.addGlobal('getRisksWithScore', getRisksWithScore)
@@ -103,9 +107,11 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('addressToList', addressToList)
   njkEnv.addGlobal('lastUpdatedBy', lastUpdatedBy)
   njkEnv.addGlobal('deliusDeepLinkUrl', deliusDeepLinkUrl)
+  njkEnv.addGlobal('oaSysUrl', oaSysUrl)
   njkEnv.addGlobal('deliusHomepageUrl', deliusHomepageUrl)
   njkEnv.addGlobal('scheduledAppointments', scheduledAppointments)
   njkEnv.addGlobal('isToday', isToday)
   njkEnv.addGlobal('isInThePast', isInThePast)
   njkEnv.addGlobal('getAppointmentsToAction', getAppointmentsToAction)
+  njkEnv.addGlobal('getDistinctRequirements', getDistinctRequirements)
 }

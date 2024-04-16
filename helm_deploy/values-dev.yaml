@@ -15,6 +15,7 @@ generic-service:
     MAS_API_URL: "https://manage-supervision-and-delius-dev.hmpps.service.justice.gov.uk"
     ARNS_API_URL: "https://assess-risks-and-needs-dev.hmpps.service.justice.gov.uk"
     DELIUS_LINK: "https://ndelius.test.probation.service.justice.gov.uk"
+    OASYS_LINK: "https://t2.oasys.service.justice.gov.uk"
     ENVIRONMENT_NAME: DEV
     ENVIRONMENT: dev
 

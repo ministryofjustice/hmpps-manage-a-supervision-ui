@@ -1,5 +1,5 @@
 {% set hasAppointmentStartTimePassed = isInThePast(entry.startDateTime) %}
-{% set shouldPromptToRecordAnOutcome = entry.hasOutcome === false and entry.wasAbsent === false and hasAppointmentStartTimePassed %}
+{% set shouldPromptToRecordAnOutcome = entry.hasOutcome === false and entry.wasAbsent === false and hasAppointmentStartTimePassed and not entry.didTheyComply %}
 {% set appointment = entry %}
 
 {% set titleHtml %}

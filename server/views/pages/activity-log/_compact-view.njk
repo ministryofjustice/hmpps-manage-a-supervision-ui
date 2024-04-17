@@ -18,7 +18,7 @@
             <ul class="govuk-list govuk-!-margin-bottom-0 app-activity-log-day-items">
       {% endif %}
       <li>
-        {% if entry.isSystemContact === true %}
+        {% if entry.isSystemContact === true and entry.isAppointment === false and entry.isCommunication === false %}
           <div class="govuk-hint govuk-!-margin-bottom-1">
             <a href="/case/{{ crn }}/activity-log/activity/{{ entry.id }}?category={{ category }}&view=compact&requirement={{ requirement }}"" class="app-!-inherit-colour">{{ entry.type }}<span class="govuk-visually-hidden"> on {{ thisDate }}</span></a>
           </div>

@@ -36,6 +36,7 @@ export interface Activity {
   action?: string
   isSystemContact?: boolean
   isAppointment?: boolean
+  isCommunication?: boolean
   isEmailOrTextFromPop?: boolean
   isPhoneCallFromPop?: boolean
   isEmailOrTextToPop?: boolean

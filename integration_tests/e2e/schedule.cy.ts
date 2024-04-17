@@ -8,7 +8,7 @@ context('Appointment', () => {
     const page = Page.verifyOnPage(AppointmentPage)
     page.appointmentType().should('contain.text', 'Initial appointment')
     page.appointmentTitle().should('contain.text', 'Phone call with Steve Bruce')
-    page.complianceTag().should('contain.text', 'Failed to comply')
+    page.complianceTag().should('contain.text', 'Acceptable absence')
     page.getCardHeader('appointmentDetails').should('contain.text', 'Appointment details')
     page.getRowData('appointmentDetails', 'type', 'Value').should('contain.text', 'Previous')
     page.getRowData('appointmentDetails', 'date', 'Value').should('contain.text', 'Friday 22 March')

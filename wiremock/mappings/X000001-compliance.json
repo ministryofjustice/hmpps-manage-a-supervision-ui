@@ -70,7 +70,8 @@
                 "completed": 9,
                 "scheduled": 1,
                 "totalDays": 10
-              }
+              },
+              "rarCategory": "RAR Category"
             },
             {
               "eventNumber": "1",

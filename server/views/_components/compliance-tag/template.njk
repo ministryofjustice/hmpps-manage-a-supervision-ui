@@ -10,10 +10,6 @@
   {% set text = 'Complied' %}
   {% set shorthand = '✓' %}
   {% set colour = 'green' %}
-{% elseif entry.didTheyComply === false %}
-  {% set text = 'Failed to comply' %}
-  {% set shorthand = '✘' %}
-  {% set colour = 'red' %}
 {% elseif entry.wasAbsent === true %}
   {% if entry.acceptableAbsence === true %}
     {% set text = 'Acceptable absence' %}
@@ -23,11 +19,15 @@
     {% set text = 'Waiting for evidence' %}
     {% set shorthand = '?' %}
     {% set colour = 'yellow' %}
-  {% else %}
+  {% elseif entry.acceptableAbsence === false %}
     {% set text = 'Unacceptable absence' %}
     {% set shorthand = '✘' %}
     {% set colour = 'red' %}
   {% endif %}
+{% elseif entry.didTheyComply === false %}
+  {% set text = 'Failed to comply' %}
+  {% set shorthand = '✘' %}
+  {% set colour = 'red' %}
 {% endif %}
 
 {% set tagClasses = 'app-compliance-tag govuk-tag--' + colour + ' ' + params.classes + (' app-compliance-tag--compact' if isCompact) %}

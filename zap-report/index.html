@@ -17,7 +17,7 @@
 		<p>
 			<span>Generated with</span> <a href="https://zaproxy.org"><img
 				src="index/zap32x32.png" alt="The ZAP logo" class="zap-logo">ZAP</a>
-			<span>on Mon 15 Apr 2024, at 09:35:51</span>
+			<span>on Wed 17 Apr 2024, at 09:35:38</span>
 		</p>
 		<p>ZAP Version: 2.14.0</p>
 	</header>
@@ -56,12 +56,12 @@
 							
 							
 							
-							
-							
 							<li><a
-								href="#alerts--risk-3-confidence-1"><span>Risk</span>=<span
+								href="#alerts--risk-3-confidence-2"><span>Risk</span>=<span
 									class="risk-level">High</span>, <span>Confidence</span>=<span
-									class="confidence-level">Low</span> <span>(1)</span></a></li>
+									class="confidence-level">Medium</span> <span>(1)</span></a></li>
+							
+							
 							
 							
 							  
@@ -243,10 +243,10 @@
 								class="additional-info-percentages">(0.0%)</span></td>
 							<td><span>0</span><br> <span
 								class="additional-info-percentages">(0.0%)</span></td>
-							<td><span>0</span><br> <span
-								class="additional-info-percentages">(0.0%)</span></td>
 							<td><span>1</span><br> <span
 								class="additional-info-percentages">(12.5%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
 							<td><span>0</span><br> <span
 								class="additional-info-percentages">(0.0%)</span></td>
 							<td><span>1</span><br> <span class="additional-info-percentages">(12.5%)</span></td>
@@ -302,10 +302,10 @@
 								class="additional-info-percentages">(0.0%)</span></td>
 							<td><span>1</span><br> <span
 								class="additional-info-percentages">(12.5%)</span></td>
-							<td><span>3</span><br> <span
-								class="additional-info-percentages">(37.5%)</span></td>
 							<td><span>4</span><br> <span
 								class="additional-info-percentages">(50.0%)</span></td>
+							<td><span>3</span><br> <span
+								class="additional-info-percentages">(37.5%)</span></td>
 							<td><span>0</span><br> <span
 								class="additional-info-percentages">(0.0%)</span></td>
 							<td><span>8</span><br> <span
@@ -411,7 +411,7 @@
 					<tbody>
 						<tr>
 							<th scope="row"><a
-								href="#alert-type-0">Path Traversal</a></th>
+								href="#alert-type-0">SQL Injection - PostgreSQL - Time Based</a></th>
 							<td class="risk-level">High</td>
 							<td><span>1</span><br> <span
 								class="additional-info-percentages">(12.5%)</span></td>
@@ -448,8 +448,8 @@
 							<th scope="row"><a
 								href="#alert-type-5">Modern Web Application</a></th>
 							<td class="risk-level">Informational</td>
-							<td><span>15</span><br> <span
-								class="additional-info-percentages">(187.5%)</span></td>
+							<td><span>12</span><br> <span
+								class="additional-info-percentages">(150.0%)</span></td>
 						</tr>
 						<tr>
 							<th scope="row"><a
@@ -462,8 +462,8 @@
 							<th scope="row"><a
 								href="#alert-type-7">Session Management Response Identified</a></th>
 							<td class="risk-level">Informational</td>
-							<td><span>3119</span><br> <span
-								class="additional-info-percentages">(38,987.5%)</span></td>
+							<td><span>4164</span><br> <span
+								class="additional-info-percentages">(52,050.0%)</span></td>
 						</tr>
 					</tbody>
 					<tfoot>
@@ -486,13 +486,11 @@
 				
 				
 				
-				
-				
-				<li id="alerts--risk-3-confidence-1">
+				<li id="alerts--risk-3-confidence-2">
 					<h3>
 						<span>Risk</span>=<span
 							class="risk-level">High</span>, <span>Confidence</span>=<span
-							class="confidence-level">Low</span> <span>(1)</span>
+							class="confidence-level">Medium</span> <span>(1)</span>
 					</h3>
 					<ol>
 						
@@ -505,12 +503,12 @@
 								<li>
 									<h5>
 										<a
-											href="#alert-type-0">Path Traversal</a> <span>(1)</span>
+											href="#alert-type-0">SQL Injection - PostgreSQL - Time Based</a> <span>(1)</span>
 									</h5>
 									<ol>
 										<li><details>
 												<summary>
-													<span class="request-method-n-url">POST https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/record-an-outcome/outcome</span>
+													<span class="request-method-n-url">GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/activity-log/activity/2507169072?category&amp;requirement&amp;view=compact</span>
 												</summary>
 												
 <table class="alerts-table">
@@ -519,13 +517,13 @@
 		<td>
 			<ul class="alert-tags-list">
 				<li>
-					<span><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">OWASP_2021_A01</a></span> 
+					<span><a href="https://owasp.org/Top10/A03_2021-Injection/">OWASP_2021_A03</a></span> 
 				</li>
 				<li>
-					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/01-Testing_Directory_Traversal_File_Include">WSTG-v42-ATHZ-01</a></span> 
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/05-Testing_for_SQL_Injection">WSTG-v42-INPV-05</a></span> 
 				</li>
 				<li>
-					<span><a href="https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html">OWASP_2017_A05</a></span> 
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A1_2017-Injection.html">OWASP_2017_A01</a></span> 
 				</li>
 			</ul>
 		</td>
@@ -533,38 +531,34 @@
 	<tr>
 		<th scope="row">Alert description</th>
 		<td> 
-<p>The Path Traversal attack technique allows an attacker access to files, directories, and commands that potentially reside outside the web document root directory. An attacker may manipulate a URL in such a way that the web site will execute or reveal the contents of arbitrary files anywhere on the web server. Any device that exposes an HTTP-based interface is potentially vulnerable to Path Traversal.</p>
-
-<p>Most web sites restrict user access to a specific portion of the file-system, typically called the &quot;web document root&quot; or &quot;CGI root&quot; directory. These directories contain the files intended for user access and the executable necessary to drive web application functionality. To access files or execute commands anywhere on the file-system, Path Traversal attacks will utilize the ability of special-characters sequences.</p>
-
-<p>The most basic Path Traversal attack uses the &quot;../&quot; special-character sequence to alter the resource location requested in the URL. Although most popular web servers will prevent this technique from escaping the web document root, alternate encodings of the &quot;../&quot; sequence may help bypass the security filters. These method variations include valid and invalid Unicode-encoding (&quot;..%u2216&quot; or &quot;..%c0%af&quot;) of the forward slash character, backslash characters (&quot;..\&quot;) on Windows-based servers, URL encoded characters &quot;%2e%2e%2f&quot;), and double URL encoding (&quot;..%255c&quot;) of the backslash character.</p>
-
-<p>Even if the web server properly restricts Path Traversal attempts in the URL path, a web application itself may still be vulnerable due to improper handling of user-supplied input. This is a common problem of web applications that use template mechanisms or load static text from files. In variations of the attack, the original URL parameter value is substituted with the file name of one of the web application&#39;s dynamic scripts. Consequently, the results can reveal source code because the file is interpreted as text instead of an executable script. These techniques often employ additional special characters such as the dot (&quot;.&quot;) to reveal the listing of the current working directory, or &quot;%00&quot; NULL characters in order to bypass rudimentary file extension checks.</p>
+<p>SQL injection may be possible.</p>
  </td>
 	</tr>
-	
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>The query time is controllable using parameter value [case when cast(pg_sleep(15) as varchar) &gt; &#39;&#39; then 0 else 1 end], which caused the request to take [40,038] milliseconds, when the original unmodified query with value [compact] took [101] milliseconds </p>
+ </td>
+	</tr>
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (657 bytes)</summary>
+				<summary>Request line and header section (581 bytes)</summary>
 				
-				<pre><code>POST https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/record-an-outcome/outcome HTTP/1.1
+				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/activity-log/activity/2507169072?category=&amp;requirement=&amp;view=case+when+cast%28pg_sleep%2815%29+as+varchar%29+%3E+%27%27+then+0+else+1+end HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
 user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
 pragma: no-cache
 cache-control: no-cache
-content-type: application/x-www-form-urlencoded
-referer: https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/record-an-outcome/outcome
-content-length: 68
-Cookie: hmpps-manage-a-supervision-ui.session=s%3AlPbNILzWJHlPRBVglOZvAksoefd6thW4.iXDBp%2F68b8wBbXL2hd8aRuKMSF0WK2FVRjWKTVufRH8
+referer: https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/activity-log?requirement&amp;view=compact
 
 </code></pre>
 				
 				
 			</details> <details class="request-body" open="open">
-				<summary>Request body (68 bytes)</summary>
+				<summary>Request body (0 bytes)</summary>
 				
-				<pre><code>_csrf=gW7Ummmb-VbJttITsylus-kI7yV9uFGVW-rg&amp;appointment-id=%5Coutcome</code></pre>
+				<pre><code></code></pre>
 				
 				
 			</details></td>
@@ -572,78 +566,56 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3AlPbNILzWJHlPRBVglOZvAksoefd6th
 	<tr>
 		<th scope="row">Response</th>
 		<td><details open="open">
-				<summary>Status line and header section (1372 bytes)</summary>
+				<summary>Status line and header section (14 bytes)</summary>
 				
-				<pre><code>HTTP/1.1 302 Found
-Date: Mon, 15 Apr 2024 08:42:15 GMT
-Content-Type: text/plain; charset=utf-8
-Content-Length: 208
-Connection: keep-alive
-request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; &#39;nonce-35e5b5fcb9177b06f20c4b2480469390&#39;;style-src &#39;self&#39; &#39;nonce-35e5b5fcb9177b06f20c4b2480469390&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
-Cross-Origin-Embedder-Policy: require-corp
-Cross-Origin-Opener-Policy: same-origin
-Cross-Origin-Resource-Policy: same-origin
-Origin-Agent-Cluster: ?1
-Referrer-Policy: no-referrer
-Strict-Transport-Security: max-age=15724800; includeSubDomains
-X-Content-Type-Options: nosniff
-X-DNS-Prefetch-Control: off
-X-Download-Options: noopen
-X-Frame-Options: SAMEORIGIN
-X-Permitted-Cross-Domain-Policies: none
-X-XSS-Protection: 0
-X-Request-Id: 963df2bc1a1bf122ec04e46c3900fe8a
-Surrogate-Control: no-store
-Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate
-Expires: 0
-Location: https://sign-in-dev.hmpps.service.justice.gov.uk/auth/sign-out?client_id=hmpps-manage-a-supervision-ui-client-1&amp;redirect_uri=https://manage-a-supervision-dev.hmpps.service.justice.gov.uk
-Vary: Accept, Accept-Encoding
+				<pre><code>HTTP/1.0 0
 
 </code></pre>
 				
 				
 			</details> <details class="response-body" open="open">
-				<summary>Response body (208 bytes)</summary>
+				<summary>Response body (0 bytes)</summary>
 				
-				<pre><code>Found. Redirecting to https://sign-in-dev.hmpps.service.justice.gov.uk/auth/sign-out?client_id=hmpps-manage-a-supervision-ui-client-1&amp;redirect_uri=https://manage-a-supervision-dev.hmpps.service.justice.gov.uk</code></pre>
+				<pre><code></code></pre>
 				
 				
 			</details></td>
 	</tr>
 	<tr>
 		<th scope="row">Parameter</th>
-		<td><pre><code>appointment-id</code></pre></td>
+		<td><pre><code>view</code></pre></td>
 	</tr>
 	<tr>
 		<th scope="row">Attack</th>
-		<td><pre><code>\outcome</code></pre></td>
+		<td><pre><code>field: [view], value [case when cast(pg_sleep(15) as varchar) &gt; &#39;&#39; then 0 else 1 end]</code></pre></td>
 	</tr>
 	
 	<tr>
 		<th scope="row">Solution</th>
 		<td> 
-<p>Assume all input is malicious. Use an &quot;accept known good&quot; input validation strategy, i.e., use an allow list of acceptable inputs that strictly conform to specifications. Reject any input that does not strictly conform to specifications, or transform it into something that does. Do not rely exclusively on looking for malicious or malformed inputs (i.e., do not rely on a deny list). However, deny lists can be useful for detecting potential attacks or determining which inputs are so malformed that they should be rejected outright.</p>
+<p>Do not trust client side input, even if there is client side validation in place.</p>
 
-<p>When performing input validation, consider all potentially relevant properties, including length, type of input, the full range of acceptable values, missing or extra inputs, syntax, consistency across related fields, and conformance to business rules. As an example of business rule logic, &quot;boat&quot; may be syntactically valid because it only contains alphanumeric characters, but it is not valid if you are expecting colors such as &quot;red&quot; or &quot;blue.&quot;</p>
+<p>In general, type check all data on the server side.</p>
 
-<p>For filenames, use stringent allow lists that limit the character set to be used. If feasible, only allow a single &quot;.&quot; character in the filename to avoid weaknesses, and exclude directory separators such as &quot;/&quot;. Use an allow list of allowable file extensions.</p>
+<p>If the application uses JDBC, use PreparedStatement or CallableStatement, with parameters passed by &#39;?&#39;</p>
 
-<p>Warning: if you attempt to cleanse your data, then do so that the end result is not in the form that can be dangerous. A sanitizing mechanism can remove characters such as &#39;.&#39; and &#39;;&#39; which may be required for some exploits. An attacker can try to fool the sanitizing mechanism into &quot;cleaning&quot; data into a dangerous form. Suppose the attacker injects a &#39;.&#39; inside a filename (e.g. &quot;sensi.tiveFile&quot;) and the sanitizing mechanism removes the character resulting in the valid filename, &quot;sensitiveFile&quot;. If the input data are now assumed to be safe, then the file may be compromised. </p>
+<p>If the application uses ASP, use ADO Command Objects with strong type checking and parameterized queries.</p>
 
-<p>Inputs should be decoded and canonicalized to the application&#39;s current internal representation before being validated. Make sure that your application does not decode the same input twice. Such errors could be used to bypass allow list schemes by introducing dangerous inputs after they have been checked.</p>
+<p>If database Stored Procedures can be used, use them.</p>
 
-<p>Use a built-in path canonicalization function (such as realpath() in C) that produces the canonical version of the pathname, which effectively removes &quot;..&quot; sequences and symbolic links.</p>
+<p>Do *not* concatenate strings into queries in the stored procedure, or use &#39;exec&#39;, &#39;exec immediate&#39;, or equivalent functionality!</p>
 
-<p>Run your code using the lowest privileges that are required to accomplish the necessary tasks. If possible, create isolated accounts with limited privileges that are only used for a single task. That way, a successful attack will not immediately give the attacker access to the rest of the software or its environment. For example, database applications rarely need to run as the database administrator, especially in day-to-day operations.</p>
+<p>Do not create dynamic SQL queries using simple string concatenation.</p>
 
-<p>When the set of acceptable objects, such as filenames or URLs, is limited or known, create a mapping from a set of fixed input values (such as numeric IDs) to the actual filenames or URLs, and reject all other inputs.</p>
+<p>Escape all data received from the client.</p>
 
-<p>Run your code in a &quot;jail&quot; or similar sandbox environment that enforces strict boundaries between the process and the operating system. This may effectively restrict which files can be accessed in a particular directory or which commands can be executed by your software.</p>
+<p>Apply an &#39;allow list&#39; of allowed characters, or a &#39;deny list&#39; of disallowed characters in user input.</p>
 
-<p>OS-level examples include the Unix chroot jail, AppArmor, and SELinux. In general, managed code may provide some protection. For example, java.io.FilePermission in the Java SecurityManager allows you to specify restrictions on file operations.</p>
+<p>Apply the principle of least privilege by using the least privileged database user possible.</p>
 
-<p>This may not be a feasible solution, and it only limits the impact to the operating system; the rest of your application may still be subject to compromise.</p>
+<p>In particular, avoid using the &#39;sa&#39; or &#39;db-owner&#39; database users. This does not eliminate SQL injection, but minimizes its impact.</p>
+
+<p>Grant the minimum database access that is necessary for the application.</p>
  </td>
 	</tr>
 </table>
@@ -659,6 +631,8 @@ Vary: Accept, Accept-Encoding
 						
 					</ol>
 				</li>
+				
+				
 				
 				
 				  
@@ -723,14 +697,14 @@ Vary: Accept, Accept-Encoding
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (448 bytes)</summary>
+				<summary>Request line and header section (442 bytes)</summary>
 				
 				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
 user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
 pragma: no-cache
 cache-control: no-cache
-Cookie: hmpps-manage-a-supervision-ui.session=s%3AaeNrMMgHlIJpDAHlv3QFRY9MX5GKY2VS.6lu8%2BuEy28Ucn1gDoIHXY8H8KCffrZt94NzLy%2F%2B0KfA
+Cookie: hmpps-manage-a-supervision-ui.session=s%3AcgSpnPR4oV4RFn1zTBaIYEs0nmWOz8El.Eu9zvdiKN8dgqJ0sCNqQ7jtqnV2wopZHdWcdMwAOEU0
 
 </code></pre>
 				
@@ -746,10 +720,10 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3AaeNrMMgHlIJpDAHlv3QFRY9MX5GKY2
 	<tr>
 		<th scope="row">Response</th>
 		<td><details open="open">
-				<summary>Status line and header section (970 bytes)</summary>
+				<summary>Status line and header section (964 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 301 Moved Permanently
-Date: Mon, 15 Apr 2024 08:34:58 GMT
+Date: Wed, 17 Apr 2024 08:34:31 GMT
 Content-Type: text/html; charset=UTF-8
 Content-Length: 179
 Connection: keep-alive
@@ -767,10 +741,10 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: 292faebbfb2d1185d92e7416638b3439
+X-Request-Id: 50de4f5e5ada6625c6c9dfea780b4cd1
 Location: /assets/
 Vary: Accept-Encoding
-Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AaeNrMMgHlIJpDAHlv3QFRY9MX5GKY2VS.6lu8%2BuEy28Ucn1gDoIHXY8H8KCffrZt94NzLy%2F%2B0KfA; Path=/; Expires=Mon, 15 Apr 2024 10:34:58 GMT; HttpOnly; Secure; SameSite=Lax
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AcgSpnPR4oV4RFn1zTBaIYEs0nmWOz8El.Eu9zvdiKN8dgqJ0sCNqQ7jtqnV2wopZHdWcdMwAOEU0; Path=/; Expires=Wed, 17 Apr 2024 10:34:31 GMT; HttpOnly; Secure; SameSite=Lax
 
 </code></pre>
 				
@@ -887,7 +861,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AaeNrMMgHlIJpDAHlv3QFRY9MX5
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (551 bytes)</summary>
+				<summary>Request line and header section (549 bytes)</summary>
 				
 				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
@@ -895,7 +869,7 @@ user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 pragma: no-cache
 cache-control: no-cache
 referer: https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sitemap.xml
-Cookie: hmpps-manage-a-supervision-ui.session=s%3AaeNrMMgHlIJpDAHlv3QFRY9MX5GKY2VS.6lu8%2BuEy28Ucn1gDoIHXY8H8KCffrZt94NzLy%2F%2B0KfA
+Cookie: hmpps-manage-a-supervision-ui.session=s%3AdXHSzx1_x6k6ON7OzFxrJ9UkziT3IFO2.8ZgF4pgMc4p7rY8fK%2F1q7m6cTdsPIT0S7CQq8p%2BKra0
 
 </code></pre>
 				
@@ -911,15 +885,15 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3AaeNrMMgHlIJpDAHlv3QFRY9MX5GKY2
 	<tr>
 		<th scope="row">Response</th>
 		<td><details open="open">
-				<summary>Status line and header section (1384 bytes)</summary>
+				<summary>Status line and header section (1388 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200 OK
-Date: Mon, 15 Apr 2024 08:34:59 GMT
+Date: Wed, 17 Apr 2024 08:34:32 GMT
 Content-Type: image/svg+xml
 Content-Length: 1846
 Connection: keep-alive
 request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; &#39;nonce-60b17df713aa40e3a709a310d0454452&#39;;style-src &#39;self&#39; &#39;nonce-60b17df713aa40e3a709a310d0454452&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; &#39;nonce-fa60649f4834be91e0c2e10fce484084&#39;;style-src &#39;self&#39; &#39;nonce-fa60649f4834be91e0c2e10fce484084&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
 Cross-Origin-Embedder-Policy: require-corp
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-origin
@@ -932,13 +906,13 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: f9b1ba3e159e81dccfee6f6a3be4d6dd
+X-Request-Id: 31b8f2088a5a4c4af8ec4f8e1f0da1e5
 Accept-Ranges: bytes
 Cache-Control: public, max-age=3600
-Last-Modified: Mon, 15 Apr 2024 08:20:10 GMT
-ETag: W/&quot;736-18ee0d79a90&quot;
+Last-Modified: Tue, 16 Apr 2024 15:05:13 GMT
+ETag: W/&quot;736-18ee770cc28&quot;
 Vary: Accept-Encoding
-Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AoIUe-93CNxG0ULXMIBy0M8kaFRuWZFKj.7qlo2UoFlviDsLq4yfO6clEkDn2wspPwHBwPLobXyU8; Path=/; Expires=Mon, 15 Apr 2024 10:34:59 GMT; HttpOnly; Secure; SameSite=Lax
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AdXHSzx1_x6k6ON7OzFxrJ9UkziT3IFO2.8ZgF4pgMc4p7rY8fK%2F1q7m6cTdsPIT0S7CQq8p%2BKra0; Path=/; Expires=Wed, 17 Apr 2024 10:34:32 GMT; HttpOnly; Secure; SameSite=Lax
 
 </code></pre>
 				
@@ -1000,7 +974,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AoIUe-93CNxG0ULXMIBy0M8kaFR
 									<ol>
 										<li><details>
 												<summary>
-													<span class="request-method-n-url">GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?2eb17fb</span>
+													<span class="request-method-n-url">GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?57f50b4</span>
 												</summary>
 												
 <table class="alerts-table">
@@ -1032,14 +1006,14 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AoIUe-93CNxG0ULXMIBy0M8kaFR
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (484 bytes)</summary>
+				<summary>Request line and header section (478 bytes)</summary>
 				
-				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?2eb17fb HTTP/1.1
+				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?57f50b4 HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
 user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
 pragma: no-cache
 cache-control: no-cache
-Cookie: hmpps-manage-a-supervision-ui.session=s%3AaeNrMMgHlIJpDAHlv3QFRY9MX5GKY2VS.6lu8%2BuEy28Ucn1gDoIHXY8H8KCffrZt94NzLy%2F%2B0KfA
+Cookie: hmpps-manage-a-supervision-ui.session=s%3AcgSpnPR4oV4RFn1zTBaIYEs0nmWOz8El.Eu9zvdiKN8dgqJ0sCNqQ7jtqnV2wopZHdWcdMwAOEU0
 
 </code></pre>
 				
@@ -1055,15 +1029,15 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3AaeNrMMgHlIJpDAHlv3QFRY9MX5GKY2
 	<tr>
 		<th scope="row">Response</th>
 		<td><details open="open">
-				<summary>Status line and header section (1404 bytes)</summary>
+				<summary>Status line and header section (1398 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200 OK
-Date: Mon, 15 Apr 2024 08:34:58 GMT
+Date: Wed, 17 Apr 2024 08:34:32 GMT
 Content-Type: text/css; charset=UTF-8
 Content-Length: 187280
 Connection: keep-alive
 request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; &#39;nonce-e836f8c708c714a6c4c137e989910623&#39;;style-src &#39;self&#39; &#39;nonce-e836f8c708c714a6c4c137e989910623&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; &#39;nonce-aa01d83c5615c9cb94b967623fd7081b&#39;;style-src &#39;self&#39; &#39;nonce-aa01d83c5615c9cb94b967623fd7081b&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
 Cross-Origin-Embedder-Policy: require-corp
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-origin
@@ -1076,13 +1050,13 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: 3028c0fe9cdb7c43342c933cbd71300b
+X-Request-Id: 1d6c816eebd317b11498369059213457
 Accept-Ranges: bytes
 Cache-Control: public, max-age=3600
-Last-Modified: Mon, 15 Apr 2024 08:20:18 GMT
-ETag: W/&quot;2db90-18ee0d7b9d0&quot;
+Last-Modified: Tue, 16 Apr 2024 15:05:22 GMT
+ETag: W/&quot;2db90-18ee770ef50&quot;
 Vary: Accept-Encoding
-Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AaeNrMMgHlIJpDAHlv3QFRY9MX5GKY2VS.6lu8%2BuEy28Ucn1gDoIHXY8H8KCffrZt94NzLy%2F%2B0KfA; Path=/; Expires=Mon, 15 Apr 2024 10:34:58 GMT; HttpOnly; Secure; SameSite=Lax
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AcgSpnPR4oV4RFn1zTBaIYEs0nmWOz8El.Eu9zvdiKN8dgqJ0sCNqQ7jtqnV2wopZHdWcdMwAOEU0; Path=/; Expires=Wed, 17 Apr 2024 10:34:32 GMT; HttpOnly; Secure; SameSite=Lax
 
 </code></pre>
 				
@@ -1178,7 +1152,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AaeNrMMgHlIJpDAHlv3QFRY9MX5
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (546 bytes)</summary>
+				<summary>Request line and header section (544 bytes)</summary>
 				
 				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/compliance HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
@@ -1186,7 +1160,7 @@ user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 pragma: no-cache
 cache-control: no-cache
 referer: https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510
-Cookie: hmpps-manage-a-supervision-ui.session=s%3Ak8m8xlb739AiAEBDkPZQKzoUz9q28_fL.vHqYFzqlw19Wny8R4RwTCXg9hjk9%2FL68IUsSrMfxw4w
+Cookie: hmpps-manage-a-supervision-ui.session=s%3AJ_WHFDDR5QJPk8XXF6wus-LiotxXD60f.P4VDgR9CCblscSiUucQNKTbGWFw5aIyeJ3zC3o5MZws
 
 </code></pre>
 				
@@ -1202,15 +1176,15 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3Ak8m8xlb739AiAEBDkPZQKzoUz9q28_
 	<tr>
 		<th scope="row">Response</th>
 		<td><details open="open">
-				<summary>Status line and header section (1421 bytes)</summary>
+				<summary>Status line and header section (1419 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200 OK
-Date: Mon, 15 Apr 2024 08:35:17 GMT
+Date: Wed, 17 Apr 2024 08:35:01 GMT
 Content-Type: text/html; charset=utf-8
 Content-Length: 45365
 Connection: keep-alive
 request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; &#39;nonce-143623e0c8343baa6861997996502959&#39;;style-src &#39;self&#39; &#39;nonce-143623e0c8343baa6861997996502959&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; &#39;nonce-7e8cd256e6c0e18a9f9e73d100158ee6&#39;;style-src &#39;self&#39; &#39;nonce-7e8cd256e6c0e18a9f9e73d100158ee6&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
 Cross-Origin-Embedder-Policy: require-corp
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-origin
@@ -1223,13 +1197,13 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: 9c3664313df45decc7a7357871444cf7
+X-Request-Id: 2fd71993ae1f797634778461be64f454
 Surrogate-Control: no-store
 Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate
 Expires: 0
-ETag: W/&quot;b135-7ywPeODOFpNLIggX3hstq3LKx2Y&quot;
+ETag: W/&quot;b135-kpsFa7ZyCO3IFttDFaP26cx/NJs&quot;
 Vary: Accept-Encoding
-Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3Ak8m8xlb739AiAEBDkPZQKzoUz9q28_fL.vHqYFzqlw19Wny8R4RwTCXg9hjk9%2FL68IUsSrMfxw4w; Path=/; Expires=Mon, 15 Apr 2024 10:35:17 GMT; HttpOnly; Secure; SameSite=Lax
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AJ_WHFDDR5QJPk8XXF6wus-LiotxXD60f.P4VDgR9CCblscSiUucQNKTbGWFw5aIyeJ3zC3o5MZws; Path=/; Expires=Wed, 17 Apr 2024 10:35:01 GMT; HttpOnly; Secure; SameSite=Lax
 
 </code></pre>
 				
@@ -1254,12 +1228,12 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3Ak8m8xlb739AiAEBDkPZQKzoUz9
     
 
     
-  &lt;link href=&quot;/assets/stylesheets/application.css?2eb17fb&quot; rel=&quot;stylesheet&quot;/&gt;
+  &lt;link href=&quot;/assets/stylesheets/application.css?57f50b4&quot; rel=&quot;stylesheet&quot;/&gt;
 
     
   &lt;/head&gt;
   &lt;body class=&quot;govuk-template__body&quot;&gt;
-    &lt;script nonce=&quot;143623e0c8343baa6861997996502959&quot;&gt;document.body.className += &#39; js-enabled&#39; + (&#39;noModule&#39; in HTMLScriptElement.prototype ? &#39; govuk-frontend-supported&#39; : &#39;&#39;);&lt;/script&gt;
+    &lt;script nonce=&quot;7e8cd256e6c0e18a9f9e73d100158ee6&quot;&gt;document.body.className += &#39; js-enabled&#39; + (&#39;noModule&#39; in HTMLScriptElement.prototype ? &#39; govuk-frontend-supported&#39; : &#39;&#39;);&lt;/script&gt;
     
 
 
@@ -1612,7 +1586,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3Ak8m8xlb739AiAEBDkPZQKzoUz9
             Appointments
           &lt;/dt&gt;
           &lt;dd class=&quot;govuk-summary-list__value&quot;&gt;
-            &lt;span data-qa=&quot;appointmentsValue&quot;&gt;&lt;a href=&quot;/case/X756510/activity-log/national-standard-appointments&quot;&gt;3 national standard appointments&lt;/a&gt;&lt;/span&gt;
+            &lt;span data-qa=&quot;appointmentsValue&quot;&gt;&lt;a href=&quot;/case/X756510/activity-log/national-standard-appointments&quot;&gt;2 national standard appointments&lt;/a&gt;&lt;/span&gt;
           &lt;/dd&gt;
           
         &lt;/div&gt;
@@ -1624,7 +1598,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3Ak8m8xlb739AiAEBDkPZQKzoUz9
             Without an outcome
           &lt;/dt&gt;
           &lt;dd class=&quot;govuk-summary-list__value&quot;&gt;
-            &lt;span data-qa=&quot;withoutOutcomeValue&quot;&gt;&lt;a href=&quot;/case/X756510/activity-log/national-standard-appointments-without-outcome&quot;&gt;2 without a recorded outcome&lt;/a&gt;&lt;/span&gt;
+            &lt;span data-qa=&quot;withoutOutcomeValue&quot;&gt;&lt;a href=&quot;/case/X756510/activity-log/national-standard-appointments-without-outcome&quot;&gt;1 without a recorded outcome&lt;/a&gt;&lt;/span&gt;
           &lt;/dd&gt;
           
         &lt;/div&gt;
@@ -1638,7 +1612,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3Ak8m8xlb739AiAEBDkPZQKzoUz9
             Complied
           &lt;/dt&gt;
           &lt;dd class=&quot;govuk-summary-list__value&quot;&gt;
-            &lt;span data-qa=&quot;compliedValue&quot;&gt;&lt;a href=&quot;/case/X756510/activity-log/complied-appointments&quot;&gt;5 complied&lt;/a&gt;&lt;/span&gt;
+            &lt;span data-qa=&quot;compliedValue&quot;&gt;&lt;a href=&quot;/case/X756510/activity-log/complied-appointments&quot;&gt;4 complied&lt;/a&gt;&lt;/span&gt;
           &lt;/dd&gt;
           
         &lt;/div&gt;
@@ -2403,10 +2377,10 @@ Sec-Fetch-User: ?1
 				<summary>Status line and header section (1623 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 302
-Date: Mon, 15 Apr 2024 08:34:51 GMT
+Date: Wed, 17 Apr 2024 08:34:25 GMT
 Content-Length: 0
 Connection: keep-alive
-Set-Cookie: jwtSession=eyJhbGciOiJSUzI1NiJ9.eyJqdGkiOiJkMmViZjY3YS0zYThkLTQ1NDMtODJlNC1iM2RhYWRmMzQwMmMiLCJzdWIiOiJBVVRPTUFURURURVNUVVNFUiIsImF1dGhvcml0aWVzIjoiUk9MRV9QUkVQQVJFX0FfQ0FTRSxST0xFX1BGX1NURF9QUk9CQVRJT04sUk9MRV9HTE9CQUxfU0VBUkNILFJPTEVfUEZfQVBQUk9WQUwsUk9MRV9QRl9OQVRJT05BTF9SRUFERVIsUk9MRV9QRl9IUSxST0xFX0xJQ0VOQ0VfQUNPLFJPTEVfTUFOQUdFX0FfV09SS0ZPUkNFX0FMTE9DQVRFLFJPTEVfV09SS0xPQURfTUVBU1VSRU1FTlQsUk9MRV9NQUtFX1JFQ0FMTF9ERUNJU0lPTixST0xFX1NPQ19DT01NVU5JVFksUk9MRV9USUVSX1NFUlZJQ0VfVVNFUixST0xFX0xJQ0VOQ0VfUk8sUk9MRV9MSUNFTkNFX1JPX1JFQURfT05MWSxST0xFX0xJQ0VOQ0VfVkFSWSxST0xFX1BST0JBVElPTiIsIm5hbWUiOiJBdXRvbWF0ZWRUZXN0VXNlciBBdXRvbWF0ZWRUZXN0VXNlciIsImF1dGhfc291cmNlIjoiZGVsaXVzIiwidXNlcl9pZCI6IjI1MDAyNTM1OTEiLCJwYXNzZWRfbWZhIjpmYWxzZSwiZXhwIjoxNzEzMjEzMjkxfQ.CoxTIKtRARYSbyOtDlEqYleITbFONkIWOQUXQZzz6J5QKUHDeudX0E5IcMIGFLedNkJXKiGxT6U05-uktXfnRsTw2dbTpL4fWSS3cBCFAOMbROSWYHZByjAgiNoHn4GrwmogCG1EbS94poZgq3htKD3-CQIavQTRUJOsj6ge0f6CrZZjG8T8NOU3SDcL10929iSa8yDxxmwVDicNFyHRxu7IoHFz5mcAhU7275XxbybCVCsAIbmHBNb03MHMhaEzkRmsYdsO_GcegXGh8JUaXynrh581_k0ff9iMUYz4TbQuHh5gFGztEibPnEbGaGgYBzcNh6ysrppGcSATGlQyfw; Max-Age=43200; Expires=Mon, 15 Apr 2024 20:34:51 GMT; Path=/auth; Secure; HttpOnly
+Set-Cookie: jwtSession=eyJhbGciOiJSUzI1NiJ9.eyJqdGkiOiIxOGZlYjJiNS1iMTNmLTQ0ZWYtYTE0NC1mOTQ4NmIzMDFmMGYiLCJzdWIiOiJBVVRPTUFURURURVNUVVNFUiIsImF1dGhvcml0aWVzIjoiUk9MRV9QUkVQQVJFX0FfQ0FTRSxST0xFX1BGX1NURF9QUk9CQVRJT04sUk9MRV9HTE9CQUxfU0VBUkNILFJPTEVfUEZfQVBQUk9WQUwsUk9MRV9QRl9OQVRJT05BTF9SRUFERVIsUk9MRV9QRl9IUSxST0xFX0xJQ0VOQ0VfQUNPLFJPTEVfTUFOQUdFX0FfV09SS0ZPUkNFX0FMTE9DQVRFLFJPTEVfV09SS0xPQURfTUVBU1VSRU1FTlQsUk9MRV9NQUtFX1JFQ0FMTF9ERUNJU0lPTixST0xFX1NPQ19DT01NVU5JVFksUk9MRV9USUVSX1NFUlZJQ0VfVVNFUixST0xFX0xJQ0VOQ0VfUk8sUk9MRV9MSUNFTkNFX1JPX1JFQURfT05MWSxST0xFX0xJQ0VOQ0VfVkFSWSxST0xFX1BST0JBVElPTiIsIm5hbWUiOiJBdXRvbWF0ZWRUZXN0VXNlciBBdXRvbWF0ZWRUZXN0VXNlciIsImF1dGhfc291cmNlIjoiZGVsaXVzIiwidXNlcl9pZCI6IjI1MDAyNTM1OTEiLCJwYXNzZWRfbWZhIjpmYWxzZSwiZXhwIjoxNzEzMzg2MDY1fQ.XGXWO6hLbMATyHMIGHkUE8PCSw3c9CLFqDADZQuFZowDsKjh-a0_X0JPm9IBwYFUcJm0uGHp0tJxll7jxO0AirKmpRCH1Z_ViBCygMzkWH5McZKTByt07Ld-EBLtGcpq3hKEXvQXWswIcI39AyliITwzPcxiDy9iwEBYD-UdCxad2hRVzrf2h8h-21hGQd0aPgWijUrQIz-B-nWiV8mygNH6E5ltPA7V25PEILGs5x2e9GnP67oPFuQtVRZiocTsfiCf0oKPjFUMFM70ZrBujdZ-KR5_kI4y390Dcof4VxzEJxtS9DPpTb1k2h5-pecVXy4ZnAMGq4euR6rTK7UfcA; Max-Age=43200; Expires=Wed, 17 Apr 2024 20:34:25 GMT; Path=/auth; Secure; HttpOnly
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -2434,7 +2408,7 @@ Location: https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/
 	
 	<tr>
 		<th scope="row">Evidence</th>
-		<td><pre><code>eyJhbGciOiJSUzI1NiJ9.eyJqdGkiOiJkMmViZjY3YS0zYThkLTQ1NDMtODJlNC1iM2RhYWRmMzQwMmMiLCJzdWIiOiJBVVRPTUFURURURVNUVVNFUiIsImF1dGhvcml0aWVzIjoiUk9MRV9QUkVQQVJFX0FfQ0FTRSxST0xFX1BGX1NURF9QUk9CQVRJT04sUk9MRV9HTE9CQUxfU0VBUkNILFJPTEVfUEZfQVBQUk9WQUwsUk9MRV9QRl9OQVRJT05BTF9SRUFERVIsUk9MRV9QRl9IUSxST0xFX0xJQ0VOQ0VfQUNPLFJPTEVfTUFOQUdFX0FfV09SS0ZPUkNFX0FMTE9DQVRFLFJPTEVfV09SS0xPQURfTUVBU1VSRU1FTlQsUk9MRV9NQUtFX1JFQ0FMTF9ERUNJU0lPTixST0xFX1NPQ19DT01NVU5JVFksUk9MRV9USUVSX1NFUlZJQ0VfVVNFUixST0xFX0xJQ0VOQ0VfUk8sUk9MRV9MSUNFTkNFX1JPX1JFQURfT05MWSxST0xFX0xJQ0VOQ0VfVkFSWSxST0xFX1BST0JBVElPTiIsIm5hbWUiOiJBdXRvbWF0ZWRUZXN0VXNlciBBdXRvbWF0ZWRUZXN0VXNlciIsImF1dGhfc291cmNlIjoiZGVsaXVzIiwidXNlcl9pZCI6IjI1MDAyNTM1OTEiLCJwYXNzZWRfbWZhIjpmYWxzZSwiZXhwIjoxNzEzMjEzMjkxfQ.CoxTIKtRARYSbyOtDlEqYleITbFONkIWOQUXQZzz6J5QKUHDeudX0E5IcMIGFLedNkJXKiGxT6U05-uktXfnRsTw2dbTpL4fWSS3cBCFAOMbROSWYHZByjAgiNoHn4GrwmogCG1EbS94poZgq3htKD3-CQIavQTRUJOsj6ge0f6CrZZjG8T8NOU3SDcL10929iSa8yDxxmwVDicNFyHRxu7IoHFz5mcAhU7275XxbybCVCsAIbmHBNb03MHMhaEzkRmsYdsO_GcegXGh8JUaXynrh581_k0ff9iMUYz4TbQuHh5gFGztEibPnEbGaGgYBzcNh6ysrppGcSATGlQyfw</code></pre></td>
+		<td><pre><code>eyJhbGciOiJSUzI1NiJ9.eyJqdGkiOiIxOGZlYjJiNS1iMTNmLTQ0ZWYtYTE0NC1mOTQ4NmIzMDFmMGYiLCJzdWIiOiJBVVRPTUFURURURVNUVVNFUiIsImF1dGhvcml0aWVzIjoiUk9MRV9QUkVQQVJFX0FfQ0FTRSxST0xFX1BGX1NURF9QUk9CQVRJT04sUk9MRV9HTE9CQUxfU0VBUkNILFJPTEVfUEZfQVBQUk9WQUwsUk9MRV9QRl9OQVRJT05BTF9SRUFERVIsUk9MRV9QRl9IUSxST0xFX0xJQ0VOQ0VfQUNPLFJPTEVfTUFOQUdFX0FfV09SS0ZPUkNFX0FMTE9DQVRFLFJPTEVfV09SS0xPQURfTUVBU1VSRU1FTlQsUk9MRV9NQUtFX1JFQ0FMTF9ERUNJU0lPTixST0xFX1NPQ19DT01NVU5JVFksUk9MRV9USUVSX1NFUlZJQ0VfVVNFUixST0xFX0xJQ0VOQ0VfUk8sUk9MRV9MSUNFTkNFX1JPX1JFQURfT05MWSxST0xFX0xJQ0VOQ0VfVkFSWSxST0xFX1BST0JBVElPTiIsIm5hbWUiOiJBdXRvbWF0ZWRUZXN0VXNlciBBdXRvbWF0ZWRUZXN0VXNlciIsImF1dGhfc291cmNlIjoiZGVsaXVzIiwidXNlcl9pZCI6IjI1MDAyNTM1OTEiLCJwYXNzZWRfbWZhIjpmYWxzZSwiZXhwIjoxNzEzMzg2MDY1fQ.XGXWO6hLbMATyHMIGHkUE8PCSw3c9CLFqDADZQuFZowDsKjh-a0_X0JPm9IBwYFUcJm0uGHp0tJxll7jxO0AirKmpRCH1Z_ViBCygMzkWH5McZKTByt07Ld-EBLtGcpq3hKEXvQXWswIcI39AyliITwzPcxiDy9iwEBYD-UdCxad2hRVzrf2h8h-21hGQd0aPgWijUrQIz-B-nWiV8mygNH6E5ltPA7V25PEILGs5x2e9GnP67oPFuQtVRZiocTsfiCf0oKPjFUMFM70ZrBujdZ-KR5_kI4y390Dcof4VxzEJxtS9DPpTb1k2h5-pecVXy4ZnAMGq4euR6rTK7UfcA</code></pre></td>
 	</tr>
 	<tr>
 		<th scope="row">Solution</th>
@@ -2511,14 +2485,14 @@ Location: https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (469 bytes)</summary>
+				<summary>Request line and header section (463 bytes)</summary>
 				
 				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/govukFrontendInit.js HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
 user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36
 pragma: no-cache
 cache-control: no-cache
-Cookie: hmpps-manage-a-supervision-ui.session=s%3AaeNrMMgHlIJpDAHlv3QFRY9MX5GKY2VS.6lu8%2BuEy28Ucn1gDoIHXY8H8KCffrZt94NzLy%2F%2B0KfA
+Cookie: hmpps-manage-a-supervision-ui.session=s%3AcgSpnPR4oV4RFn1zTBaIYEs0nmWOz8El.Eu9zvdiKN8dgqJ0sCNqQ7jtqnV2wopZHdWcdMwAOEU0
 
 </code></pre>
 				
@@ -2534,15 +2508,15 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3AaeNrMMgHlIJpDAHlv3QFRY9MX5GKY2
 	<tr>
 		<th scope="row">Response</th>
 		<td><details open="open">
-				<summary>Status line and header section (1411 bytes)</summary>
+				<summary>Status line and header section (1405 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200 OK
-Date: Mon, 15 Apr 2024 08:34:58 GMT
+Date: Wed, 17 Apr 2024 08:34:32 GMT
 Content-Type: application/javascript; charset=UTF-8
 Content-Length: 73
 Connection: keep-alive
 request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; &#39;nonce-9427cc821212faf8b1b767da5d72e5f0&#39;;style-src &#39;self&#39; &#39;nonce-9427cc821212faf8b1b767da5d72e5f0&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; &#39;nonce-0475d2d059876ad3290503973cd7fc4e&#39;;style-src &#39;self&#39; &#39;nonce-0475d2d059876ad3290503973cd7fc4e&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
 Cross-Origin-Embedder-Policy: require-corp
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-origin
@@ -2555,13 +2529,13 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: 7b9ca31d5fc7a5c5a07452bc93510edb
+X-Request-Id: c98f7de9cbfe12ff2d4aaf78f66020fc
 Accept-Ranges: bytes
 Cache-Control: public, max-age=3600
-Last-Modified: Mon, 15 Apr 2024 08:19:35 GMT
-ETag: W/&quot;49-18ee0d711d8&quot;
+Last-Modified: Tue, 16 Apr 2024 15:04:37 GMT
+ETag: W/&quot;49-18ee7703f88&quot;
 Vary: Accept-Encoding
-Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AaeNrMMgHlIJpDAHlv3QFRY9MX5GKY2VS.6lu8%2BuEy28Ucn1gDoIHXY8H8KCffrZt94NzLy%2F%2B0KfA; Path=/; Expires=Mon, 15 Apr 2024 10:34:58 GMT; HttpOnly; Secure; SameSite=Lax
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AcgSpnPR4oV4RFn1zTBaIYEs0nmWOz8El.Eu9zvdiKN8dgqJ0sCNqQ7jtqnV2wopZHdWcdMwAOEU0; Path=/; Expires=Wed, 17 Apr 2024 10:34:32 GMT; HttpOnly; Secure; SameSite=Lax
 
 </code></pre>
 				
@@ -2635,7 +2609,7 @@ user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 pragma: no-cache
 cache-control: no-cache
 referer: https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sitemap.xml
-Cookie: hmpps-manage-a-supervision-ui.session=s%3Ak8m8xlb739AiAEBDkPZQKzoUz9q28_fL.vHqYFzqlw19Wny8R4RwTCXg9hjk9%2FL68IUsSrMfxw4w
+Cookie: hmpps-manage-a-supervision-ui.session=s%3Af15aCgkLroR5k5QfrTP34kkp63tuwxP5.0VkvoWawWca0gWkBpKAqHtMB8%2BooIFls34vDH24alZ0
 
 </code></pre>
 				
@@ -2654,12 +2628,12 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3Ak8m8xlb739AiAEBDkPZQKzoUz9q28_
 				<summary>Status line and header section (1403 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200 OK
-Date: Mon, 15 Apr 2024 08:35:15 GMT
+Date: Wed, 17 Apr 2024 08:34:48 GMT
 Content-Type: application/json; charset=UTF-8
 Content-Length: 800
 Connection: keep-alive
 request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; &#39;nonce-ea141b1c9c91c31cc34235e631b0b427&#39;;style-src &#39;self&#39; &#39;nonce-ea141b1c9c91c31cc34235e631b0b427&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; &#39;nonce-ad8dd729bbc6b853c1fa0084b62ef71c&#39;;style-src &#39;self&#39; &#39;nonce-ad8dd729bbc6b853c1fa0084b62ef71c&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
 Cross-Origin-Embedder-Policy: require-corp
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-origin
@@ -2672,13 +2646,13 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: 1657cc41f81a6fda4dbe8f88be024a25
+X-Request-Id: 745a5718c221d0b4a0dbeb4c6e73a408
 Accept-Ranges: bytes
 Cache-Control: public, max-age=3600
-Last-Modified: Mon, 15 Apr 2024 08:20:10 GMT
-ETag: W/&quot;320-18ee0d79a90&quot;
+Last-Modified: Tue, 16 Apr 2024 15:05:12 GMT
+ETag: W/&quot;320-18ee770c840&quot;
 Vary: Accept-Encoding
-Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3Ak8m8xlb739AiAEBDkPZQKzoUz9q28_fL.vHqYFzqlw19Wny8R4RwTCXg9hjk9%2FL68IUsSrMfxw4w; Path=/; Expires=Mon, 15 Apr 2024 10:35:15 GMT; HttpOnly; Secure; SameSite=Lax
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3A00ljLbFyfLoEkubhMDO76dAV9T9xBa3-.rRiTSqM5PSgfWFrW1YU4LcFwJk21jISCHMgGjiZ%2BWqw; Path=/; Expires=Wed, 17 Apr 2024 10:34:48 GMT; HttpOnly; Secure; SameSite=Lax
 
 </code></pre>
 				
@@ -2773,34 +2747,32 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3Ak8m8xlb739AiAEBDkPZQKzoUz9
 				<ol>
 					<li
 						id="alert-type-0">
-						<h4>Path Traversal</h4>
+						<h4>SQL Injection - PostgreSQL - Time Based</h4>
 						<table class="alert-types-table">
 							<tr>
 								<th scope="row">Source</th>
 								<td>
 									
 									   <span>raised by an active scanner</span> <span>(<a
-										href="https://www.zaproxy.org/docs/alerts/6/">Path Traversal</a>)
+										href="https://www.zaproxy.org/docs/alerts/40022/">SQL Injection - PostgreSQL</a>)
 									</span>   
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">CWE ID</th>
 								<td><a
-									href="https://cwe.mitre.org/data/definitions/22.html">22</a></td>
+									href="https://cwe.mitre.org/data/definitions/89.html">89</a></td>
 							</tr>
 							<tr>
 								<th scope="row">WASC ID</th>
-								<td>33</td>
+								<td>19</td>
 							</tr>
 							<tr>
 								<th scope="row">Reference</th>
 								<td>
 									<ol>
 										<li><a
-											href="http://projects.webappsec.org/Path-Traversal">http://projects.webappsec.org/Path-Traversal</a></li>
-										<li><a
-											href="https://cwe.mitre.org/data/definitions/22.html">https://cwe.mitre.org/data/definitions/22.html</a></li>
+											href="https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</a></li>
 									</ol>
 								</td>
 							</tr>

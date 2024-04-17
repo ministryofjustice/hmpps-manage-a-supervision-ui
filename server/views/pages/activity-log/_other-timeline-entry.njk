@@ -1,3 +1,6 @@
+{% set hasAppointmentStartTimePassed = isInThePast(entry.startDateTime) %}
+{% set shouldPromptToRecordAnOutcome = entry.hasOutcome === false and entry.wasAbsent === false and hasAppointmentStartTimePassed and not entry.didTheyComply %}
+
 {% set titleHtml %}
   <a href="/case/{{ crn }}/activity-log/activity/{{ entry.id }}?category={{ category }}&view=default&requirement={{ requirement }}"" class="govuk-!-font-weight-bold">
     {{ entry.type }}<span class="govuk-visually-hidden"> on {{ thisDate }}</span>
@@ -9,16 +12,10 @@
     {{ govukTag({text: 'RAR', classes: 'govuk-tag--purple'}) }}
   {% endif %}
 
-  {% if entry.didTheyComply === true %}
-    {{ govukTag({text: 'Complied', classes: 'govuk-tag--green'}) }}
-  {% elseif entry.didTheyComply === false %}
-    {{ govukTag({text: 'Failed to comply', classes: 'govuk-tag--red'}) }}
-  {% elseif entry.wasAbsent === true %}
-    {% if entry.acceptableAbsence === true %}
-      {{ govukTag({text: 'Acceptable absence', classes: 'govuk-tag--green'}) }}
-    {% else %}
-      {{ govukTag({text: 'Unacceptable absence', classes: 'govuk-tag--red'}) }}
-    {% endif %}
+  {% if shouldPromptToRecordAnOutcome %}
+     <a href="/case/{{ crn }}/handoff/delius" class="govuk-!-margin-left-2">Record an outcome</a>
+  {% else %}
+     {{ appComplianceTag({ entry: entry, classes: 'govuk-!-margin-left-2' }) }}
   {% endif %}
 
   {% if entry.isSensitive === true %}

@@ -7,14 +7,15 @@
     </p>
   {% endif %}
 
-  {% if entry.isSystemContact %}
-    <div class="govuk-hint govuk-!-margin-bottom-2 govuk-!-margin-left-3">
-      <a href="/case/{{ crn }}/activity-log/activity/{{ entry.id }}?category={{ category }}&view=default&requirement={{ requirement }}"" class="app-!-inherit-colour">{{ entry.type }}<span class="govuk-visually-hidden"> on {{ thisDate }}</span></a>
-    </div>
-  {% elseif entry.isAppointment %}
+
+  {% if entry.isAppointment %}
     {% include "./_appointment-timeline-entry.njk" %}
   {% elseif entry.isCommunication %}
     {% include "./_communication-timeline-entry.njk" %}
+  {% elseif entry.isSystemContact %}
+      <div class="govuk-hint govuk-!-margin-bottom-2 govuk-!-margin-left-3">
+        <a href="/case/{{ crn }}/activity-log/activity/{{ entry.id }}?category={{ category }}&view=default&requirement={{ requirement }}"" class="app-!-inherit-colour">{{ entry.type }}<span class="govuk-visually-hidden"> on {{ thisDate }}</span></a>
+      </div>
   {% else %}
     {% include "./_other-timeline-entry.njk" %}
   {% endif %}

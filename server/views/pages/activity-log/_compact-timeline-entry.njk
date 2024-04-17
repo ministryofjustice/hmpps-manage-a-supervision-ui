@@ -1,6 +1,6 @@
 {% set hasOutcomeBeenConfirmed = entry.didTheyComply === true or entry.rescheduled === true %}
 {% set hasAppointmentStartTimePassed = isInThePast(entry.startDateTime) %}
-{% set shouldPromptToRecordAnOutcome = (entry.hasOutcome === false) and hasAppointmentStartTimePassed %}
+{% set shouldPromptToRecordAnOutcome = entry.hasOutcome === false and entry.wasAbsent === false and hasAppointmentStartTimePassed %}
 
 {% set titleHtml %}
   <p class="govuk-body govuk-!-margin-bottom-1" data-qa="timeline{{ loop.index }}Card">

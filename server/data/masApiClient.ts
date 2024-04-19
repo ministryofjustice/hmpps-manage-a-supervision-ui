@@ -14,7 +14,7 @@ import { SentenceDetails } from './model/sentenceDetails'
 import { PersonActivity } from './model/activityLog'
 import { PersonRiskFlag, PersonRiskFlags } from './model/risk'
 import { PersonCompliance } from './model/compliance'
-import { previousOrderHistory } from './model/previousOrderHistory'
+import { PreviousOrderHistory } from './model/previousOrderHistory'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -29,7 +29,7 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/sentence/${crn}`, handle404: false })
   }
 
-  async getSentencePreviousOrders(crn: string): Promise<previousOrderHistory | null> {
+  async getSentencePreviousOrders(crn: string): Promise<PreviousOrderHistory | null> {
     return this.get({ path: `/sentence/${crn}/previous-orders`, handle404: false })
   }
 

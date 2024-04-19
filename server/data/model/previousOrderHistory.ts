@@ -2,12 +2,12 @@
 
 import { Name } from './common'
 
-export interface previousOrderHistory {
+export interface PreviousOrderHistory {
   name: Name
-  previousOrders: previousOrder[]
+  previousOrders: PreviousOrder[]
 }
 
-export interface previousOrder {
+export interface PreviousOrder {
   title: string
   description: string
   terminationDate: string

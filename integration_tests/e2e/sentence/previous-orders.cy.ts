@@ -1,6 +1,3 @@
-import Page from '../../pages/page'
-import PreviousOrdersPage from '../../pages/sentence/previous-orders'
-
 context('Sentence', () => {
   it('Sentence page is rendered', () => {
     cy.visit('/case/sentence/X000001/previous-orders')

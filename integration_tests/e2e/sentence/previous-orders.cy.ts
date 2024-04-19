@@ -1,6 +1,6 @@
 context('Sentence', () => {
   it('Sentence page is rendered', () => {
-    cy.visit('/case/sentence/X000001/previous-orders')
+    cy.visit('/case/X000001/sentence/previous-orders')
     cy.get('h2').contains('Previous orders')
 
     cy.get('p')

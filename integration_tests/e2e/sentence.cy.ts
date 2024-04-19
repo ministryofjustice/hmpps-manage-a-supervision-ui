@@ -135,7 +135,7 @@ context('Sentence', () => {
       .within(() => cy.get('.govuk-summary-list__value').eq(1).should('contain.text', '2 previous breaches'))
     page
       .getCardHeader('probationHistory')
-      .within(() => cy.get('a').eq(0).invoke('attr', 'href').should('equal', '/case/sentence/X000001/previous-orders'))
+      .within(() => cy.get('a').eq(0).invoke('attr', 'href').should('equal', '/case/X000001/sentence/previous-orders'))
     page
       .getCardHeader('probationHistory')
       .within(() => cy.get('a').eq(1).invoke('attr', 'href').should('equal', '/case/X000001/address-book-professional'))

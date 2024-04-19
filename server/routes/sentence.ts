@@ -31,7 +31,7 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
     })
   })
 
-  get('/case/sentence/:crn/previous-orders', async (req, res, _next) => {
+  get('/case/:crn/sentence/previous-orders', async (req, res, _next) => {
     const { crn } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
 

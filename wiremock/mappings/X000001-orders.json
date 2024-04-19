@@ -1,0 +1,35 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/sentence/X000001/previous-orders",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "name": {
+            "forename": "Eula",
+            "middleName": "",
+            "surname": "Schmeler"
+          },
+          "previousOrders": [
+            {
+              "title": "CJA - Std Determinate Custody (16 Months)",
+              "description": "Merchant Shipping Acts - 15000",
+              "terminationDate": "2024-04-09"
+            },
+            {
+              "title": "CJA - Std Determinate Custody (12 Months)",
+              "description": "Army - offences associated with - 15300",
+              "terminationDate": "2024-04-08"
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

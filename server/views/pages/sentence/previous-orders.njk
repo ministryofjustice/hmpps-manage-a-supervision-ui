@@ -1,0 +1,47 @@
+{% extends "../../partials/layout.njk" %}
+{% set headerPersonName = previousOrderHistory.name.forename + ' ' + previousOrderHistory.name.surname %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Your cases",
+      href: "/search"
+    },
+    {
+      text: headerPersonName,
+      href: "/case/" + crn
+    },
+    {
+      text: "Sentence",
+      href: "/case/" + crn + "/sentence"
+    },
+    {
+      text: "Previous Orders"
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+    <div class="govuk-!-margin-bottom-8">
+      <h2 class="govuk-heading-xl">Previous orders</h2>
+    </div>
+
+    {% for order in previousOrderHistory.previousOrders %}
+        <p class="govuk-heading-s govuk-!-margin-bottom-0">
+          <a class="govuk-link govuk-link--no-visited-state" href="/case/{{ crn }}/handoff/delius">
+            {{ order.title }}
+          </a>
+        </p>
+
+        <table class="govuk-table app-table govuk-!-margin-top-0 govuk-!-margin-bottom-3">
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">{{ order.description }}</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">Ended on {{ order.terminationDate | dateWithYearShortMonth }}</td>
+            </tr>
+          </tbody>
+        </table>
+    {% endfor %}
+{% endblock %}

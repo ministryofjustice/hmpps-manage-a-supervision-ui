@@ -69,10 +69,10 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
 
     const masClient = new MasApiClient(token)
 
-    const offenceDetails = await masClient.getSentenceOffences(crn, eventNumber)
+    const offences = await masClient.getSentenceOffences(crn, eventNumber)
 
-    res.render('pages/sentence/offence-details', {
-      offenceDetails,
+    res.render('pages/sentence/offences', {
+      offences,
       crn,
     })
   })

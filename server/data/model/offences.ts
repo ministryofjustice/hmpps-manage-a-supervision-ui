@@ -2,7 +2,7 @@
 
 import { Name } from './common'
 
-export interface OffenceDetails {
+export interface Offences {
   name: Name
   mainOffence: Offence
   mainOffenceNotes: string

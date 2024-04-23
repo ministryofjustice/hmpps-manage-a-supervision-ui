@@ -1,6 +1,6 @@
 {% extends "../../partials/layout.njk" %}
 {% set title = 'Offences' %}
-{% set headerPersonName = offenceDetails.name.forename + ' ' + offenceDetails.name.surname %}
+{% set headerPersonName = offences.name.forename + ' ' + offences.name.surname %}
 
 {% block beforeContent %}
 {{ govukBreadcrumbs({
@@ -27,14 +27,14 @@
 {% block content %}
     <h1 class="govuk-heading-xl">{{ title }}</h1>
 
-    {% set offence = offenceDetails.mainOffence %}
+    {% set offence = offences.mainOffence %}
     {% set mainOffence = true %}
     {% include './_offence.njk' %}
 
     {% set mainOffence = false %}
-    {% if offenceDetails.additionalOffences and offenceDetails.additionalOffences.length > 0 %}
+    {% if offences.additionalOffences and offences.additionalOffences.length > 0 %}
       <h2 class="govuk-heading-l govuk-!-margin-top-8">Additional offences</h2>
-      {% for offence in offenceDetails.additionalOffences %}
+      {% for offence in offences.additionalOffences %}
         {% include './_offence.njk' %}
       {% endfor %}
     {% endif %}

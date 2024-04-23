@@ -31,7 +31,7 @@
       } if offence.date,
       {
         key: { text: "Notes" },
-        value: { html: offenceDetails.mainOffenceNotes | nl2br if offenceDetails.mainOffenceNotes else 'No notes' }
+        value: { html: offences.mainOffenceNotes | nl2br if offences.mainOffenceNotes else 'No notes' }
       } if mainOffence
     ]
   }) }}

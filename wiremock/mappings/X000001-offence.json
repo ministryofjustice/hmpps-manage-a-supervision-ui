@@ -14,24 +14,27 @@
             "surname": "Schmeler"
           },
           "mainOffence": {
-            "description": "Murder",
-            "category": "Murder",
-            "code": "MAIN",
-            "dateOfOffence": "2024-04-23"
+            "description": "Possessing etc firearm or ammunition without firearm certificate (Group 1) - 08103",
+            "category": "Firearms offences",
+            "code": "08103",
+            "dateOfOffence": "2024-04-23",
+            "count": 1
           },
           "mainOffenceNotes": "overview",
           "additionalOffences": [
             {
-              "description": "Burglary",
-              "category": "Burglary",
-              "code": "ADD1",
-              "dateOfOffence": "2024-04-23"
+              "description": "Endangering railway passengers - 00600",
+              "category": "Endangering railway passengers",
+              "code": "00600",
+              "dateOfOffence": "2024-04-23",
+              "count": 1
             },
             {
-              "description": "Assault",
-              "category": "Assault",
+              "description": "Contravene court remedy order (S.42) - 08505",
+              "category": "Health and Safety at Work etc Act 1974",
               "code": "ADD2",
-              "dateOfOffence": "2024-04-23"
+              "dateOfOffence": "2024-04-23",
+              "count": 3
             }
           ]
         },

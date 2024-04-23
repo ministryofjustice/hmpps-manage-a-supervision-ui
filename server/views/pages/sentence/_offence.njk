@@ -1,0 +1,44 @@
+{% set offenceTitle %}
+  {% if mainOffence %}
+    Main offence
+  {% else %}
+    Additional offence ({{ offence.subCategoryId }})
+  {% endif %}
+{% endset %}
+
+{% set offenceHtml %}
+  {% set countText %}
+    {% if offence.count == 1 %}
+      (1&nbsp;count)
+    {% else %}
+      ({{ offence.count }}&nbsp;counts)
+    {% endif %}
+  {% endset %}
+
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: { text: "Offence" },
+        value: { html: offence.description + ' ' + countText }
+      },
+      {
+        key: { text: "Category" },
+        value: { html: offence.category }
+      },
+      {
+        key: { text: "Offence date" },
+        value: { html: offence.dateOfOffence | dateWithYear }
+      } if offence.date,
+      {
+        key: { text: "Notes" },
+        value: { html: offenceDetails.mainOffenceNotes | nl2br if offenceDetails.mainOffenceNotes else 'No notes' }
+      } if mainOffence
+    ]
+  }) }}
+{% endset %}
+
+{{ appSummaryCard({
+  titleText: offenceTitle,
+  classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+  html: offenceHtml
+}) }}

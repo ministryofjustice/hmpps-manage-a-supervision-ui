@@ -1,0 +1,44 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/sentence/X000001/offences/3",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "name": {
+            "forename": "Eula",
+            "middleName": "",
+            "surname": "Schmeler"
+          },
+          "mainOffence": {
+            "description": "Murder",
+            "category": "Murder",
+            "code": "MAIN",
+            "dateOfOffence": "2024-04-23"
+          },
+          "mainOffenceNotes": "overview",
+          "additionalOffences": [
+            {
+              "description": "Burglary",
+              "category": "Burglary",
+              "code": "ADD1",
+              "dateOfOffence": "2024-04-23"
+            },
+            {
+              "description": "Assault",
+              "category": "Assault",
+              "code": "ADD2",
+              "dateOfOffence": "2024-04-23"
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

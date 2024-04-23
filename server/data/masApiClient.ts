@@ -15,6 +15,7 @@ import { PersonActivity } from './model/activityLog'
 import { PersonRiskFlag, PersonRiskFlags } from './model/risk'
 import { PersonCompliance } from './model/compliance'
 import { PreviousOrderHistory } from './model/previousOrderHistory'
+import { OffenceDetails } from './model/offenceDetails'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -31,6 +32,10 @@ export default class MasApiClient extends RestClient {
 
   async getSentencePreviousOrders(crn: string): Promise<PreviousOrderHistory | null> {
     return this.get({ path: `/sentence/${crn}/previous-orders`, handle404: false })
+  }
+
+  async getSentenceOffences(crn: string, eventNumber: string): Promise<OffenceDetails | null> {
+    return this.get({ path: `/sentence/${crn}/offences/${eventNumber}`, handle404: false })
   }
 
   async getPersonalDetails(crn: string): Promise<PersonalDetails | null> {

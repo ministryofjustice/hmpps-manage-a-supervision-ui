@@ -53,4 +53,27 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       crn,
     })
   })
+
+  get('/case/:crn/sentence/offences/:eventNumber', async (req, res, _next) => {
+    const { crn, eventNumber } = req.params
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+
+    await auditService.sendAuditMessage({
+      action: 'VIEW_MAS_SENTENCE_OFFENCE_DETAILS',
+      who: res.locals.user.username,
+      subjectId: crn,
+      subjectType: 'CRN',
+      correlationId: v4(),
+      service: 'hmpps-manage-a-supervision-ui',
+    })
+
+    const masClient = new MasApiClient(token)
+
+    const offenceDetails = await masClient.getSentenceOffences(crn, eventNumber)
+
+    res.render('pages/sentence/offence-details', {
+      offenceDetails,
+      crn,
+    })
+  })
 }

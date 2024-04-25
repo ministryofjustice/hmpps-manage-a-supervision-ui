@@ -38,4 +38,16 @@ export default abstract class Page {
       .eq(index)
       .within(() => cy.get(`[data-qa=${rowName}${type}]`))
   }
+
+  assertPageElementAtIndexWithin = (
+    element: string,
+    index: number,
+    withinElement: string,
+    withinIndex: number,
+    value: string,
+  ) => {
+    cy.get(element)
+      .eq(index)
+      .within(() => cy.get(withinElement).eq(withinIndex).contains(value))
+  }
 }

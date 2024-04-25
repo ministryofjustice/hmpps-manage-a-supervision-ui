@@ -1,0 +1,41 @@
+{% extends "../../partials/layout.njk" %}
+{% set title = 'Offences' %}
+{% set headerPersonName = offences.name.forename + ' ' + offences.name.surname %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Your cases",
+      href: "/search"
+    },
+    {
+      text: headerPersonName,
+      href: "/case/" + crn
+    },
+    {
+      text: "Sentence",
+      href: "/case/" + crn + "/sentence"
+    },
+    {
+      text: title
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+    <h1 class="govuk-heading-xl">{{ title }}</h1>
+
+    {% set offence = offences.mainOffence %}
+    {% set mainOffence = true %}
+    {% include './_offence.njk' %}
+
+    {% set mainOffence = false %}
+    {% if offences.additionalOffences and offences.additionalOffences.length > 0 %}
+      <h2 class="govuk-heading-l govuk-!-margin-top-8">Additional offences</h2>
+      {% for offence in offences.additionalOffences %}
+        {% include './_offence.njk' %}
+      {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -121,7 +121,7 @@
     "prom-client": "^15.1.2",
     "redis": "^4.6.13",
     "slugify": "^1.6.6",
-    "superagent": "^8.1.2",
+    "superagent": "^9.0.1",
     "url-value-parser": "^2.2.0",
     "uuid": "^9.0.1",
     "wiremock": "^3.5.3"

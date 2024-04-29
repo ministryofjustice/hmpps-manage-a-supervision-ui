@@ -16,6 +16,7 @@ import { PersonRiskFlag, PersonRiskFlags } from './model/risk'
 import { PersonCompliance } from './model/compliance'
 import { PreviousOrderHistory } from './model/previousOrderHistory'
 import { Offences } from './model/offences'
+import { CaseAccess } from './model/caseAccess'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -92,5 +93,9 @@ export default class MasApiClient extends RestClient {
 
   async getPersonCompliance(crn: string): Promise<PersonCompliance> {
     return this.get({ path: `/compliance/${crn}`, handle404: false })
+  }
+
+  async getUserAccess(username: string, crn: string): Promise<CaseAccess> {
+    return this.get({ path: `/user/${username}/access/${crn}`, handle404: false })
   }
 }

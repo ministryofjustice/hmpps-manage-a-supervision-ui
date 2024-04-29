@@ -1,0 +1,25 @@
+{% extends "../_form.njk" %}
+{% set title = "Select a team" %}
+{% set action = '/team/case' %}
+{% set backLink = '/case' %}
+{% block form %}
+    {% set errorList = [{ text: errorMessages.text, href: "#team-code" } if errorMessages else None ] | reject("undefined") %}
+        {% if errorList | length > 0 %}
+          {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+          {{ govukErrorSummary({ titleText: "There is a problem", errorList: errorList }) }}
+        {% endif %}
+    {% set teamRadioItems = [] %}
+
+    {% for team in userTeams.teams %}
+        {% set teamRadioItems = (teamRadioItems.push({
+          html: team.description ,
+          value: team.code
+        }), teamRadioItems) %}
+    {% endfor %}
+    {{ govukRadios({
+           name: "team-code",
+           fieldset: {},
+           items: teamRadioItems
+        })
+    }}
+{% endblock %}

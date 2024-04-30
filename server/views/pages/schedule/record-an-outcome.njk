@@ -1,8 +1,8 @@
-{% extends "./_form.njk" %}
+{% extends "../_form.njk" %}
 {% set headerPersonName = schedule.personSummary.name.forename + ' ' + schedule.personSummary.name.surname %}
 {% set title = "Which appointment are you recording an outcome for?" if actionType == "outcome" else "Which appointment?" %}
 {% set action = '/case/' + crn + '/record-an-outcome/' + actionType %}
-
+{% set backLink = '/case/' + crn %}
 {% block form %}
     {% set errorList = [{ text: errorMessages.appointment.text, href: "#appointment-id" } if errorMessages.appointment else None ] | reject("undefined") %}
         {% if errorList | length > 0 %}

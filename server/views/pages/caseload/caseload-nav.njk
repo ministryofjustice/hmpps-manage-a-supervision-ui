@@ -1,0 +1,22 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <nav class="moj-sub-navigation" aria-label="Sub navigation" data-qa="caseloadNavigation">
+      <ul class="moj-sub-navigation__list">
+        <li class="moj-sub-navigation__item" data-qa="overviewTab">
+          <a class="moj-sub-navigation__link govuk-link--no-visited-state"
+            {% if currentNavSection == 'yourCases' %}
+            aria-current="page"
+            {% endif %}
+            href="/case">Your cases</a>
+        </li>
+        <li class="moj-sub-navigation__item" data-qa="scheduleTab">
+          <a class="moj-sub-navigation__link govuk-link--no-visited-state"
+            {% if currentNavSection == 'teamCases' %}
+            aria-current="page"
+            {% endif %}
+            href="/teams">Team cases</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

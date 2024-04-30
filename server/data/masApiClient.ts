@@ -16,6 +16,7 @@ import { PersonRiskFlag, PersonRiskFlags } from './model/risk'
 import { PersonCompliance } from './model/compliance'
 import { PreviousOrderHistory } from './model/previousOrderHistory'
 import { Offences } from './model/offences'
+import { TeamCaseload, UserCaseload, UserTeam } from './model/caseload'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -92,5 +93,21 @@ export default class MasApiClient extends RestClient {
 
   async getPersonCompliance(crn: string): Promise<PersonCompliance> {
     return this.get({ path: `/compliance/${crn}`, handle404: false })
+  }
+
+  async getUserCaseload(username: string): Promise<UserCaseload> {
+    return this.get({ path: `/caseload/user/${username}`, handle404: false })
+  }
+
+  async getUserTeams(username: string): Promise<UserTeam> {
+    return this.get({ path: `/caseload/user/${username}/teams`, handle404: false })
+  }
+
+  async getTeamCaseload(teamCode: string, page: string): Promise<TeamCaseload> {
+    let pageQuery = ''
+    if (page) {
+      pageQuery = `?page=${page}`
+    }
+    return this.get({ path: `/caseload/team/${teamCode}${pageQuery}`, handle404: false })
   }
 }

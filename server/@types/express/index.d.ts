@@ -7,6 +7,7 @@ declare module 'express-session' {
   interface SessionData {
     returnTo: string
     nowInMinutes: number
+    mas?: Mas.MasData
   }
 }
 
@@ -25,6 +26,13 @@ export declare global {
 
     interface Locals {
       user: Express.User
+    }
+  }
+
+  namespace Mas {
+    interface MasData {
+      provider?: string
+      team?: string
     }
   }
 }

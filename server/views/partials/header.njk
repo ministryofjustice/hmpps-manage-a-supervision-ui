@@ -1,5 +1,5 @@
 {% from "govuk/components/tag/macro.njk" import govukTag %}
-<header class="hmpps-header" role="banner">
+<header class="moj-header" role="banner">
   <div class="hmpps-header__container">
     <div class="hmpps-header__title">
       <a class="hmpps-header__link hmpps-header__title__organisation-name" href="/">
@@ -42,3 +42,24 @@
     </nav>
   </div>
 </header>
+{% if user %}
+<div class="moj-primary-navigation">
+<div class="moj-primary-navigation__container">
+  <div class="app-organisation-nav-title">
+    <span class="govuk-body-s"><strong>{{ caseload.provider }}</strong></span>
+  </div>
+  <div class="moj-primary-navigation__nav">
+    <nav class="moj-primary-navigation" aria-label="Primary navigation">
+      <ul class="moj-primary-navigation__list">
+        <li class="moj-primary-navigation__item">
+          <a class="moj-primary-navigation__link" {% if myCases %}aria-current="cases"{% endif %} href="/case">Your cases</a>
+        </li>
+        <li class="moj-primary-navigation__item">
+          <a class="moj-primary-navigation__link" {% if search %}aria-current="page"{% endif %} href="/search">Search</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+</div>
+{% endif %}

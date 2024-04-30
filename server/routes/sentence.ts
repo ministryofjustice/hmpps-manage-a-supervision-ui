@@ -4,6 +4,7 @@ import { v4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
+import { ProfessionalContact } from '../data/model/professionalContact'
 
 export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -73,6 +74,29 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
 
     res.render('pages/sentence/offences', {
       offences,
+      crn,
+    })
+  })
+
+  get('/case/:crn/address-book-professional', async (req, res, _next) => {
+    const { crn, eventNumber } = req.params
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+
+    await auditService.sendAuditMessage({
+      action: 'VIEW_MAS_SENTENCE_PROFESSIONAL_CONTACTS',
+      who: res.locals.user.username,
+      subjectId: crn,
+      subjectType: 'CRN',
+      correlationId: v4(),
+      service: 'hmpps-manage-a-supervision-ui',
+    })
+
+    const masClient = new MasApiClient(token)
+
+    const professionalContact = await masClient.getContacts(crn, eventNumber)
+
+    res.render('pages/address-book-professional', {
+      professionalContact,
       crn,
     })
   })

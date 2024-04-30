@@ -1,0 +1,55 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/sentence/X000001/contacts",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "name": {
+            "forename": "Eula",
+            "middleName": "",
+            "surname": "Schmeler"
+          },
+          "mainOffence": {
+            "description": "Possessing etc firearm or ammunition without firearm certificate (Group 1) - 08103",
+            "category": "Firearms offences",
+            "code": "08103",
+            "date": "2024-04-23",
+            "count": 1,
+            "notes": "overview"
+          },
+          "contacts": [
+            {
+              "name": "Peter Parker",
+              "email": "peter.parker@moj.gov.uk",
+              "telephoneNumber": "07321165373",
+              "provider": "London",
+              "probationDeliveryUnit": "N07 Cluster 1",
+              "team": "OMU B"
+            },
+            {
+              "name": "Bruce Wayne",
+              "provider": "Leicester",
+              "probationDeliveryUnit": "Leicestershire All",
+              "team": "OMU B",
+              "allocatedUntil": "2024-04-30"
+            },
+            {
+              "name": "Jon Smith",
+              "provider": "Public Protection Unit",
+              "probationDeliveryUnit": "Bradford",
+              "team": "CPA West Yorkshire",
+              "allocatedUntil": "2026-06-30"
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{% extends "../partials/layout.njk" %}
+{% set title = 'Professional contacts' %}
+{% block pageTitle %}{{ title }}{% endblock %}
+{% set headerPersonName = professionalContact.name.forename + ' ' + professionalContact.name.surname %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "Your cases",
+      href: "/case"
+    },
+    {
+      text: headerPersonName,
+      href: "/case/" + crn
+    },
+    {
+      text: "Sentence",
+      href: "/case/" + crn + "/sentence"
+    },
+    {
+      text: title
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+    <h1 class="govuk-heading-xl">{{ title }}</h1>
+{% endblock %}
+

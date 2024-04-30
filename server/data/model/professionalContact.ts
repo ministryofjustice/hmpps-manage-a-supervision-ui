@@ -8,7 +8,8 @@ export interface ProfessionalContact {
 }
 
 export interface Contact {
-  phone: string
+  name: string
+  telephoneNumber: string
   email: string
   provider: string
   probationDeliveryUnit: string

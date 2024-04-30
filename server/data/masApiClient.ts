@@ -113,6 +113,6 @@ export default class MasApiClient extends RestClient {
   }
 
   async getUserAccess(username: string, crn: string): Promise<CaseAccess> {
-    return this.get({ path: `/user/${username}/access/${crn}`, handle404: false }) 
+    return this.get({ path: `/user/${username}/access/${crn}`, handle404: false })
   }
 }

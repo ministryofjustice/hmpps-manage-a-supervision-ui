@@ -5,10 +5,6 @@
 {% set pageTitle = applicationName + " - Search" %}
 {% set mainClasses = "app-container govuk-body" %}
 
-{% block beforeContent %}
-    {{ govukBackLink({ text: "Back", href: "/" }) }}
-{% endblock %}
-
 {% block content %}
     {{ caseSearch({ id: "search", results: searchResults }) }}
 {% endblock %}

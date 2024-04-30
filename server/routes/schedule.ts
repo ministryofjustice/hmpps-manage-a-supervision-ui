@@ -5,6 +5,7 @@ import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import logger from '../../logger'
+import { ErrorMessages } from '../data/model/caseload'
 
 export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -95,8 +96,4 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
       res.redirect(`/case/${crn}/schedule/appointment/${req.body['appointment-id']}`)
     }
   })
-}
-
-interface ErrorMessages {
-  [key: string]: { text: string }
 }

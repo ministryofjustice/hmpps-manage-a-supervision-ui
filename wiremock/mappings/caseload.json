@@ -1,0 +1,617 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/caseload/user/USER1",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "provider": "London",
+          "staff": {
+            "forename": "Paul",
+            "surname": "McPhee"
+          },
+          "caseload": [
+            {
+              "caseName": {
+                "forename": "James",
+                "middleName": "Douglas",
+                "surname": "Morrison"
+              },
+              "crn": "X000001"
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPathPattern": "/mas/caseload/team/N07T01",
+        "method": "GET",
+        "queryParameters": {
+          "page": {
+            "equalTo": "0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "totalPages": 30,
+          "totalElements": 29090,
+          "pageSize": 10,
+          "provider": "London",
+          "team": {
+            "description": "OMU A",
+            "code": "N07T01"
+          },
+          "caseload": [
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "AutoTestFirstName -ueocswot",
+                "middleName": "AutoTestSecondName -umaixqis AutoTestThirdName -ftmjnetw",
+                "surname": "AutoTestSurname -cpjtgqxm"
+              },
+              "crn": "X410375"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Sophie",
+                  "surname": "Pheim"
+                },
+                "code": "N07P009"
+              },
+              "caseName": {
+                "forename": "GuyCosHH",
+                "middleName": "ZZ ZZ",
+                "surname": "MerRedHH"
+              },
+              "crn": "X268435"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "Tester",
+                "middleName": "hi hi",
+                "surname": "Testing-ufctdent"
+              },
+              "crn": "X348116"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "Tester",
+                "middleName": "hi hi",
+                "surname": "Testing-yamnfrnh"
+              },
+              "crn": "X339840"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Armand",
+                  "surname": "McCage"
+                },
+                "code": "N07P006"
+              },
+              "caseName": {
+                "forename": "sp",
+                "middleName": "",
+                "surname": "new-off-event-two"
+              },
+              "crn": "X307444"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "Tester",
+                "middleName": "hi hi",
+                "surname": "Testing-iuiwkktb"
+              },
+              "crn": "X343266"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "AutoTestFirstName -eitlcatq",
+                "middleName": "AutoTestSecondName -latatipt AutoTestThirdName -nvagefbh",
+                "surname": "AutoTestSurname -mkswpqsf"
+              },
+              "crn": "X412403"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Sophie",
+                  "surname": "Pheim"
+                },
+                "code": "N07P009"
+              },
+              "caseName": {
+                "forename": "TomRugMM",
+                "middleName": "ZZ ZZ",
+                "surname": "CamTanWW"
+              },
+              "crn": "X288542"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Andy",
+                  "surname": "Adamczak"
+                },
+                "code": "N07A065"
+              },
+              "caseName": {
+                "forename": "untermreqone",
+                "middleName": "",
+                "surname": "untermreqone"
+              },
+              "crn": "X421012"
+            },
+
+            {
+              "staff": {
+                "name": {
+                  "forename": "Titus",
+                  "surname": "Cobio"
+                },
+                "code": "N07P002"
+              },
+              "caseName": {
+                "forename": "FirstNameA -rmlckuad",
+                "middleName": "SecondNameA -rrpuhpbd ThirdNameA -acctgibp",
+                "surname": "SurnameA -abdqdynj"
+              },
+              "crn": "X667023"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "FirstNameA -lharymlu",
+                "middleName": "SecondNameA -cgqehgcr ThirdNameA -vcrieglc",
+                "surname": "SurnameA -ckaaxavx"
+              },
+              "crn": "X667143"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Titus",
+                  "surname": "Cobio"
+                },
+                "code": "N07P002"
+              },
+              "caseName": {
+                "forename": "FirstNameA -wnycpvge",
+                "middleName": "SecondNameA -ardsqqvw ThirdNameA -mxtncnuv",
+                "surname": "SurnameA -qrtbwaxi"
+              },
+              "crn": "X667727"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "FirstNameA -jqbbkfhx",
+                "middleName": "SecondNameA -geiatdms ThirdNameA -lmncocge",
+                "surname": "SurnameA -hrlosloy"
+              },
+              "crn": "X667821"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Titus",
+                  "surname": "Cobio"
+                },
+                "code": "N07P002"
+              },
+              "caseName": {
+                "forename": "FirstNameA -sdabvtki",
+                "middleName": "SecondNameA -hhwnmfvv ThirdNameA -pnjrfvki",
+                "surname": "SurnameA -kbbaslqs"
+              },
+              "crn": "X668531"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Titus",
+                  "surname": "Cobio"
+                },
+                "code": "N07P002"
+              },
+              "caseName": {
+                "forename": "FirstNameA -wxgyyymn",
+                "middleName": "SecondNameA -ielltgvw ThirdNameA -uweqmlho",
+                "surname": "SurnameA -npnniqpk"
+              },
+              "crn": "X668547"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "FirstNameA -fuadcsah",
+                "middleName": "SecondNameA -bbjwisdf ThirdNameA -pedtrqof",
+                "surname": "SurnameA -asgogvbn"
+              },
+              "crn": "X668625"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Titus",
+                  "surname": "Cobio"
+                },
+                "code": "N07P002"
+              },
+              "caseName": {
+                "forename": "FirstNameA -rvkvkyny",
+                "middleName": "SecondNameA -jdephipd ThirdNameA -ikoinvhu",
+                "surname": "SurnameA -ddxbwuyj"
+              },
+              "crn": "X669734"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Titus",
+                  "surname": "Cobio"
+                },
+                "code": "N07P002"
+              },
+              "caseName": {
+                "forename": "sat",
+                "middleName": "",
+                "surname": "enforce"
+              },
+              "crn": "X042926"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "FirstNameA -gjnasyna",
+                "middleName": "SecondNameA -yddgypcm ThirdNameA -vjrucwat",
+                "surname": "SurnameA -bvushpvi"
+              },
+              "crn": "X578048"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "FirstNameA -hothsjka",
+                "middleName": "SecondNameA -urmjfaac ThirdNameA -yxylmlrk",
+                "surname": "SurnameA -eihejthm"
+              },
+              "crn": "X573047"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "AutoTestFirstName -pvkoqtix",
+                "middleName": "",
+                "surname": "AutoTestSurname -plpaojpe"
+              },
+              "crn": "X358531"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "AutoTestFirstName -uhlcaxhr",
+                "middleName": "AutoTestSecondName -gpccmolb AutoTestThirdName -qwymjnkx",
+                "surname": "AutoTestSurname -kctawbeb"
+              },
+              "crn": "X362745"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Titus",
+                  "surname": "Cobio"
+                },
+                "code": "N07P002"
+              },
+              "caseName": {
+                "forename": "FirstNameA -fujnvhnv",
+                "middleName": "SecondNameA -ggarhvak ThirdNameA -guvetshu",
+                "surname": "SurnameA -piqjujve"
+              },
+              "crn": "X613664"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Titus",
+                  "surname": "Cobio"
+                },
+                "code": "N07P002"
+              },
+              "caseName": {
+                "forename": "FirstNameA -ciltxehj",
+                "middleName": "SecondNameA -xpaecafm ThirdNameA -ssrefppm",
+                "surname": "SurnameA -aabmpvma"
+              },
+              "crn": "X613670"
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/caseload/team/N03N03",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "totalPages": 30,
+          "totalElements": 29090,
+          "pageSize": 10,
+          "provider": "London",
+          "team": {
+            "description": "Team 2",
+            "code": "N03N03"
+          },
+          "caseload": [
+            {
+              "caseName": {
+                "forename": "James",
+                "middleName": "Douglas",
+                "surname": "Morrison"
+              },
+              "crn": "X000001"
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPathPattern": "/mas/caseload/team/N07T01",
+        "method": "GET",
+        "queryParameters": {
+          "page": {
+            "equalTo": "1"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "totalPages": 30,
+          "totalElements": 29090,
+          "pageSize": 10,
+          "provider": "London",
+          "team": {
+            "description": "OMU A",
+            "code": "N07T01"
+          },
+          "caseload": [
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "AutoTestFirstName -ueocswot",
+                "middleName": "AutoTestSecondName -umaixqis AutoTestThirdName -ftmjnetw",
+                "surname": "AutoTestSurname -cpjtgqxm"
+              },
+              "crn": "X410375"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Archibald",
+                  "surname": "Queeny"
+                },
+                "code": "N07P007"
+              },
+              "caseName": {
+                "forename": "AutoTestFirstName -uhlcaxhr",
+                "middleName": "AutoTestSecondName -gpccmolb AutoTestThirdName -qwymjnkx",
+                "surname": "AutoTestSurname -kctawbeb"
+              },
+              "crn": "X362745"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Titus",
+                  "surname": "Cobio"
+                },
+                "code": "N07P002"
+              },
+              "caseName": {
+                "forename": "FirstNameA -fujnvhnv",
+                "middleName": "SecondNameA -ggarhvak ThirdNameA -guvetshu",
+                "surname": "SurnameA -piqjujve"
+              },
+              "crn": "X613664"
+            },
+            {
+              "staff": {
+                "name": {
+                  "forename": "Titus",
+                  "surname": "Cobio"
+                },
+                "code": "N07P002"
+              },
+              "caseName": {
+                "forename": "FirstNameA -ciltxehj",
+                "middleName": "SecondNameA -xpaecafm ThirdNameA -ssrefppm",
+                "surname": "SurnameA -aabmpvma"
+              },
+              "crn": "X613670"
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/caseload/team/N03N03",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "totalPages": 30,
+          "totalElements": 29090,
+          "pageSize": 10,
+          "provider": "London",
+          "team": {
+            "description": "Team 2",
+            "code": "N03N03"
+          },
+          "caseload": [
+            {
+              "caseName": {
+                "forename": "James",
+                "middleName": "Douglas",
+                "surname": "Morrison"
+              },
+              "crn": "X000001"
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/caseload/user/USER1/teams",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "provider": "London",
+          "teams": [
+            {
+              "description": "OMU A",
+              "code": "N07T01"
+            },
+            {
+              "description": "Application Support",
+              "code": "N03N03"
+            },
+            {
+              "description": "NPS - Wrexham - Team 1",
+              "code": "N03F01"
+            },
+            {
+              "description": "Automated Allocation Team",
+              "code": "N07AAT"
+            },
+            {
+              "description": "Automated Allocation Team",
+              "code": "N59AAT"
+            },
+            {
+              "description": "Homelessness Prevention Team,",
+              "code": "N07HPT"
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

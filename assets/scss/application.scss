@@ -12,13 +12,3 @@ $govuk-page-width: $moj-page-width;
 @import './components/card';
 @import 'assets/scss/local';
 
-.app-organisation-nav-title {
-  float: right;
-  padding-top: 19px;
-}
-
-.border-bottom:after {
-  content: "";
-  display: block;
-  border-bottom: 1px solid #b1b4b6;
-}

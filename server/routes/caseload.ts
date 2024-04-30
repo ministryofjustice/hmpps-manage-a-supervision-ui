@@ -38,7 +38,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
 
-    if (!req.session.mas) {
+    if (req.session.mas === undefined || req.session.mas.team === undefined) {
       req.session.mas = {}
       await auditService.sendAuditMessage({
         action: 'VIEW_MAS_TEAMS',
@@ -60,6 +60,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
   get('/change-team', async (req, res, _next) => {
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
+    const currentTeam = req.session?.mas?.team ? req.session?.mas?.team : undefined
 
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_TEAMS',
@@ -72,6 +73,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
     const userTeams = await masClient.getUserTeams(res.locals.user.username)
     res.render('pages/caseload/select-team', {
       userTeams,
+      currentTeam,
     })
   })
 
@@ -115,7 +117,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
     req.session.mas.team = req.body['team-code']
     const errorMessages: ErrorMessages = {}
     if (req.body['team-code'] == null) {
-      logger.info('Appointment not selected')
+      logger.info('Team not selected')
       errorMessages.team = { text: 'Please select a team' }
       const userTeams = await masClient.getUserTeams(res.locals.user.username)
       res.render('pages/caseload/select-team', {

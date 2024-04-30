@@ -40,7 +40,7 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/sentence/${crn}/offences/${eventNumber}`, handle404: false })
   }
 
-  async getContacts(crn: string, eventNumber: string): Promise<ProfessionalContact | null> {
+  async getContacts(crn: string): Promise<ProfessionalContact | null> {
     return this.get({ path: `/sentence/${crn}/contacts`, handle404: false })
   }
 

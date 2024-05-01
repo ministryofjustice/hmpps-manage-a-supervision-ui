@@ -1,0 +1,22 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/user/.*/access/X000003",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "crn": "X000003",
+          "userExcluded": true,
+          "userRestricted": true,
+          "restrictionMessage": "You are restricted from viewing this case."
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

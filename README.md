@@ -1,9 +1,10 @@
-# Tier UI
+# Manage a Supervision UI
 
-[![Repository Standards](https://img.shields.io/badge/dynamic/json?color=blue&logo=github&label=MoJ%20Compliant&query=%24.message&url=https%3A%2F%2Foperations-engineering-reports.cloud-platform.service.justice.gov.uk%2Fapi%2Fv1%2Fcompliant_public_repositories%2Fhmpps-tier-ui)](https://operations-engineering-reports.cloud-platform.service.justice.gov.uk/public-report/hmpps-tier-ui "Link to report")
+[![Repository Standards](https://img.shields.io/badge/dynamic/json?color=blue&logo=github&label=MoJ%20Compliant&query=%24.message&url=https%3A%2F%2Foperations-engineering-reports.cloud-platform.service.justice.gov.uk%2Fapi%2Fv1%2Fcompliant_public_repositories%2Fhmpps-manage-a-supervision-ui)](https://operations-engineering-reports.cloud-platform.service.justice.gov.uk/public-report/hmpps-manage-a-supervision-ui "Link to report")
 
-User interface for [HMPPS Manage a supervision](https://github.com/ministryofjustice/hmpps-tier).
-Try it out in the dev environment: https://tier-dev.hmpps.service.justice.gov.uk
+User interface for the Manage a Supervision service.
+
+Try it out in the dev environment: https://manage-a-supervision-dev.hmpps.service.justice.gov.uk
 
 ## Get started
 
@@ -11,7 +12,7 @@ Try it out in the dev environment: https://tier-dev.hmpps.service.justice.gov.uk
 
 You'll need to install:
 
-* [Node 21.x](https://nodejs.org/download/release/latest-v21.x)*
+* [Node 20.x](https://nodejs.org/download/release/latest-v20.x)*
 * [Docker](https://www.docker.com/)
 
 *If you're already using [nvm](https://github.com/nvm-sh/nvm) or [fnm](https://github.com/Schniz/fnm), run:

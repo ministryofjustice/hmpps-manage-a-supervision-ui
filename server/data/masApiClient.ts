@@ -17,6 +17,7 @@ import { PersonCompliance } from './model/compliance'
 import { PreviousOrderHistory } from './model/previousOrderHistory'
 import { Offences } from './model/offences'
 import { TeamCaseload, UserCaseload, UserTeam } from './model/caseload'
+import { CaseAccess } from './model/caseAccess'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -109,5 +110,9 @@ export default class MasApiClient extends RestClient {
       pageQuery = `?page=${page}`
     }
     return this.get({ path: `/caseload/team/${teamCode}${pageQuery}`, handle404: false })
+  }
+
+  async getUserAccess(username: string, crn: string): Promise<CaseAccess> {
+    return this.get({ path: `/user/${username}/access/${crn}`, handle404: false })
   }
 }

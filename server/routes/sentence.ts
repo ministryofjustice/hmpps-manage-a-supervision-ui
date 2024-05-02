@@ -76,4 +76,27 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       crn,
     })
   })
+
+  get('/case/:crn/address-book-professional', async (req, res, _next) => {
+    const { crn } = req.params
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+
+    await auditService.sendAuditMessage({
+      action: 'VIEW_MAS_SENTENCE_PROFESSIONAL_CONTACTS',
+      who: res.locals.user.username,
+      subjectId: crn,
+      subjectType: 'CRN',
+      correlationId: v4(),
+      service: 'hmpps-manage-a-supervision-ui',
+    })
+
+    const masClient = new MasApiClient(token)
+
+    const professionalContact = await masClient.getContacts(crn)
+
+    res.render('pages/address-book-professional', {
+      professionalContact,
+      crn,
+    })
+  })
 }

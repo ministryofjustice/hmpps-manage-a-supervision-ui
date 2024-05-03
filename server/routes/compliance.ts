@@ -4,6 +4,7 @@ import { v4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
+import TierApiClient from '../data/tierApiClient'
 
 export default function complianceRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -22,10 +23,15 @@ export default function complianceRoutes(router: Router, { hmppsAuthClient }: Se
     })
 
     const masClient = new MasApiClient(token)
+    const tierClient = new TierApiClient(token)
 
-    const personCompliance = await masClient.getPersonCompliance(crn)
+    const [personCompliance, tierCalculation] = await Promise.all([
+      masClient.getPersonCompliance(crn),
+      tierClient.getCalculationDetails(crn),
+    ])
     res.render('pages/compliance', {
       personCompliance,
+      tierCalculation,
       crn,
     })
   })

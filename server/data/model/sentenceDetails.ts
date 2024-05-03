@@ -1,7 +1,9 @@
 // eslint-disable-next-line import/no-cycle
 
+import { PersonSummary } from './common'
+
 export interface SentenceDetails {
-  crn: string
+  personSummary: PersonSummary
   sentences: Sentence[]
   order: Order
   requirements: Requirement[]

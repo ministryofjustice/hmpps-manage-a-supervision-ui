@@ -5,6 +5,7 @@ import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import ArnsApiClient from '../data/arnsApiClient'
+import TierApiClient from '../data/tierApiClient'
 
 export default function risksRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -24,12 +25,18 @@ export default function risksRoutes(router: Router, { hmppsAuthClient }: Service
 
     const arnsClient = new ArnsApiClient(token)
     const masClient = new MasApiClient(token)
+    const tierClient = new TierApiClient(token)
 
-    const [personRisk, risks] = await Promise.all([masClient.getPersonRiskFlags(crn), arnsClient.getRisks(crn)])
+    const [personRisk, risks, tierCalculation] = await Promise.all([
+      masClient.getPersonRiskFlags(crn),
+      arnsClient.getRisks(crn),
+      tierClient.getCalculationDetails(crn),
+    ])
     res.render('pages/risk', {
       personRisk,
       risks,
       crn,
+      tierCalculation,
     })
   })
 

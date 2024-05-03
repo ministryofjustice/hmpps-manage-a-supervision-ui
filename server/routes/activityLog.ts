@@ -6,6 +6,7 @@ import { Query } from 'express-serve-static-core'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
+import TierApiClient from '../data/tierApiClient'
 
 export default function activityLogRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -14,6 +15,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     const { crn } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
+    const tierClient = new TierApiClient(token)
 
     if (req.query.view === 'compact') {
       res.locals.compactView = true
@@ -25,7 +27,10 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       res.locals.requirement = req.query.requirement
     }
 
-    const personActivity = await masClient.getPersonActivityLog(crn)
+    const [personActivity, tierCalculation] = await Promise.all([
+      masClient.getPersonActivityLog(crn),
+      tierClient.getCalculationDetails(crn),
+    ])
 
     const queryParams = getQueryString(req.query)
 
@@ -41,6 +46,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       personActivity,
       crn,
       queryParams,
+      tierCalculation,
     })
   })
 
@@ -58,8 +64,12 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     })
 
     const masClient = new MasApiClient(token)
+    const tierClient = new TierApiClient(token)
 
-    const personActivity = await masClient.getPersonActivityLog(crn)
+    const [personActivity, tierCalculation] = await Promise.all([
+      masClient.getPersonActivityLog(crn),
+      tierClient.getCalculationDetails(crn),
+    ])
 
     if (req.query.view === 'compact') {
       res.locals.compactView = true
@@ -78,6 +88,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       personActivity,
       queryParams,
       crn,
+      tierCalculation,
     })
   })
 
@@ -86,7 +97,11 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
 
     const masClient = new MasApiClient(token)
-    const personAppointment = await masClient.getPersonAppointment(crn, id)
+    const tierClient = new TierApiClient(token)
+    const [personAppointment, tierCalculation] = await Promise.all([
+      masClient.getPersonAppointment(crn, id),
+      tierClient.getCalculationDetails(crn),
+    ])
     const isActivityLog = true
     const queryParams = getQueryString(req.query)
 
@@ -107,6 +122,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       personAppointment,
       crn,
       isActivityLog,
+      tierCalculation,
     })
   })
 

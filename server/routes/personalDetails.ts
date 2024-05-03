@@ -5,6 +5,7 @@ import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import ArnsApiClient from '../data/arnsApiClient'
+import TierApiClient from '../data/tierApiClient'
 
 export default function personalDetailRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -14,6 +15,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
     const arnsClient = new ArnsApiClient(token)
+    const tierClient = new TierApiClient(token)
 
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_PERSONAL_DETAILS',
@@ -23,10 +25,15 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       correlationId: v4(),
       service: 'hmpps-manage-a-supervision-ui',
     })
-    const [personalDetails, needs] = await Promise.all([masClient.getPersonalDetails(crn), arnsClient.getNeeds(crn)])
+    const [personalDetails, needs, tierCalculation] = await Promise.all([
+      masClient.getPersonalDetails(crn),
+      arnsClient.getNeeds(crn),
+      tierClient.getCalculationDetails(crn),
+    ])
     res.render('pages/personal-details', {
       personalDetails,
       needs,
+      tierCalculation,
       crn,
     })
   })
@@ -36,6 +43,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
     const { id } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
+    const tierClient = new TierApiClient(token)
 
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_PERSONAL_CONTACT',
@@ -46,9 +54,14 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       service: 'hmpps-manage-a-supervision-ui',
     })
 
-    const personalContact = await masClient.getPersonalContact(crn, id)
+    const [personalContact, tierCalculation] = await Promise.all([
+      masClient.getPersonalContact(crn, id),
+      tierClient.getCalculationDetails(crn),
+    ])
+
     res.render('pages/personal-details/contact', {
       personalContact,
+      tierCalculation,
       crn,
     })
   })

@@ -5,6 +5,8 @@
 {% set currentSectionName = 'Schedule' %}
 {% set headerPersonName = schedule.personSummary.name.forename + ' ' + schedule.personSummary.name.surname %}
 {% set headerCRN = schedule.personSummary.crn %}
+{% set headerDob = schedule.personSummary.dateOfBirth  %}
+{% set headerGender = schedule.personSummary.gender  %}
 {% set appointments = scheduledAppointments(schedule.appointments) %}
 {% set scheduledAppointmentsCount = appointments | length %}
 

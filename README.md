@@ -51,6 +51,8 @@ HMPPS_AUTH_URL=https://sign-in-dev.hmpps.service.justice.gov.uk/auth
 MANAGE_USERS_API_URL=https://manage-users-api-dev.hmpps.service.justice.gov.uk
 MAS_API_URL=https://manage-supervision-and-delius-dev.hmpps.service.justice.gov.uk
 ARNS_API_URL=https://assess-risks-and-needs-dev.hmpps.service.justice.gov.uk
+TIER_API_URL="https://hmpps-tier-dev.hmpps.service.justice.gov.uk"
+TIER_LINK="https://tier-dev.hmpps.service.justice.gov.uk/case"
 DELIUS_LINK=https://ndelius.test.probation.service.justice.gov.uk
 
 ```

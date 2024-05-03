@@ -7,6 +7,8 @@
 {% set waitingForEvidenceCount = overview.absencesWithoutEvidence  %}
 {% set headerPersonName = overview.personalDetails.name.forename + ' ' + overview.personalDetails.name.surname %}
 {% set headerCRN = crn %}
+{% set headerDob = overview.personalDetails.dateOfBirth  %}
+{% set headerGender = overview.personalDetails.preferredGender  %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -410,5 +412,30 @@
       attributes: {'data-qa': 'activityAndComplianceCard'},
       classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
       html: activityAndCompliance
+    }) }}
+    {% set miscellaneous %}
+        {% set tier %}
+            {% if tierCalculation.tierScore %}
+                <p>{{ tierCalculation.tierScore }}</p>
+                <p><a href="{{ tierLink(crn) }}" target="_blank">View all tier information</a></br>
+                <span class="govuk-!-font-size-16">Link opens in a new window</span></p>
+            {% else %}
+                No tier information available
+            {% endif %}
+        {% endset %}
+        {{ govukSummaryList({
+            rows: [
+              {
+                  key: { html: '<span data-qa="tierLabel">Tier<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + tierCalculation.calculationDate | lastUpdatedDate + '</span></span>' },
+                  value: { html: '<span data-qa="tierValue">' + tier + '</span>' }
+              }
+            ]
+        }) }}
+    {% endset %}
+    {{ appSummaryCard({
+      titleText: 'Miscellaneous',
+      attributes: {'data-qa': 'miscellaneousCard'},
+      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+      html: miscellaneous
     }) }}
 {% endblock %}

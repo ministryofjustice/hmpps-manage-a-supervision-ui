@@ -27,6 +27,7 @@ import {
   pastAppointments,
   removeEmpty,
   scheduledAppointments,
+  tierLink,
   timeFromTo,
   toYesNo,
   yearsSince,
@@ -403,5 +404,14 @@ describe('Gets compliance status', () => {
 describe('get distinct requirements', () => {
   it.each([['Filters correctly', appointments]])('%s pastAppointments(%s, %s)', (_: string, a: Activity[]) => {
     expect(pastAppointments(a)[0]).toEqual(appointments[6])
+  })
+})
+
+describe('tier link', () => {
+  it.each([
+    ['Returns empty', null, ''],
+    ['Returns link', 'X000001', 'https://tier-dummy-url/X000001'],
+  ])('%s tierLink(%s, %s)', (_: string, a: string, expected: string) => {
+    expect(tierLink(a)).toEqual(expected)
   })
 })

@@ -4,6 +4,7 @@ import { v4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
+import TierApiClient from '../data/tierApiClient'
 
 export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -22,12 +23,17 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
     })
 
     const masClient = new MasApiClient(token)
+    const tierClient = new TierApiClient(token)
 
-    const sentenceDetails = await masClient.getSentenceDetails(crn)
+    const [sentenceDetails, tierCalculation] = await Promise.all([
+      masClient.getSentenceDetails(crn),
+      tierClient.getCalculationDetails(crn),
+    ])
 
     res.render('pages/sentence', {
       sentenceDetails,
       crn,
+      tierCalculation,
     })
   })
 

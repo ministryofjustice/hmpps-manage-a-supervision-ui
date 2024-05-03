@@ -34,6 +34,7 @@ import {
   oaSysUrl,
   removeEmpty,
   scheduledAppointments,
+  tierLink,
   timeFromTo,
   toSlug,
   toYesNo,
@@ -114,4 +115,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('isInThePast', isInThePast)
   njkEnv.addGlobal('getAppointmentsToAction', getAppointmentsToAction)
   njkEnv.addGlobal('getDistinctRequirements', getDistinctRequirements)
+  njkEnv.addGlobal('tierLink', tierLink)
 }

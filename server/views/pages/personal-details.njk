@@ -4,6 +4,8 @@
 {% set currentSectionName = 'Personal Details' %}
 {% set headerPersonName = personalDetails.name.forename + ' ' + personalDetails.name.surname %}
 {% set headerCRN = crn %}
+{% set headerDob = personalDetails.dateOfBirth  %}
+{% set headerGender = personalDetails.preferredGender  %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({

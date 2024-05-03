@@ -1,8 +1,11 @@
 {% extends "../partials/case.njk" %}
 {% set pageTitle = applicationName + " - Sentence Details" %}
 {% set currentNavSection = 'sentence' %}
-{% set headerPersonName = sentenceDetails.name.forename + ' ' + sentenceDetails.name.surname %}
+{% set currentSectionName = 'Sentence' %}
+{% set headerPersonName = sentenceDetails.personSummary.name.forename + ' ' + sentenceDetails.personSummary.name.surname %}
 {% set headerCRN = crn %}
+{% set headerDob = sentenceDetails.personSummary.dateOfBirth  %}
+{% set headerGender = sentenceDetails.personSummary.gender  %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -14,6 +17,9 @@
         {
           text: headerPersonName,
           href: "/case/" + crn
+        },
+        {
+          text: currentSectionName
         }
       ]
     }) }}

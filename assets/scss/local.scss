@@ -12,3 +12,11 @@
   display: block;
   border-bottom: 1px solid #b1b4b6;
 }
+
+.inline-list-from-tablet {
+  > li {
+    @include govuk-media-query($from: tablet) {
+      display: inline;
+    }
+  }
+}

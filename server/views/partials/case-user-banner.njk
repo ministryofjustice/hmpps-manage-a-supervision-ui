@@ -15,8 +15,23 @@
   }) }}
 {% endif %}
 
+<div class='govuk-!-margin-bottom-1'>
+    <ul class="govuk-list govuk-caption-m inline-list-from-tablet">
+        <li>CRN:
+            <span data-qa='crn'>{{ headerCRN }}</span>
+            <span class='govuk-!-padding-left-3 govuk-!-padding-right-3 hide-mobile'>|</span>
+        </li>
+        <li>Date of birth:
+            <span data-qa='headerDateOfBirthValue'>{{ headerDob | dateWithYear }}</span>
+            (age <span data-qa='headerDateOfBirthAge'>{{ headerDob | yearsSince }}</span>)
+            <span class='govuk-!-padding-left-3 govuk-!-padding-right-3 hide-mobile'>|</span>
+        </li>
+        <li>Tier:
+            <span data-qa='tierValue'>{{ tierCalculation.tierScore }}</span>
+        </li>
+    </ul>
+</div>
+
 <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
-  <span class="govuk-caption-xl" ><abbr title="Case reference number" style="text-decoration: none">CRN</abbr>:
-  <span class="app-!-font-family-tabular" data-qa="crn">{{ headerCRN }}</span></span>
   <span data-qa='name'>{{ headerPersonName }}</span>
 </h1>

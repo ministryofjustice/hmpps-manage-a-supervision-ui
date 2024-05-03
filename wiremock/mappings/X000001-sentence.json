@@ -8,10 +8,13 @@
       "response": {
         "status": 200,
         "jsonBody": {
-          "name": {
-            "forename": "Eula",
-            "middleName": "",
-            "surname": "Schmeler"
+          "personSummary": {
+            "name": {
+              "forename": "Eula",
+              "surname": "Schmeler"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
           },
           "sentences": [
             {

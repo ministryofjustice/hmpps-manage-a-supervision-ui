@@ -5,6 +5,8 @@
 {% set currentSectionName = 'Activity log' %}
 {% set headerPersonName = personActivity.personSummary.name.forename + ' ' + personActivity.personSummary.name.surname %}
 {% set headerCRN = personActivity.personSummary.crn %}
+{% set headerDob = personActivity.personSummary.dateOfBirth  %}
+{% set headerGender = personActivity.personSummary.gender  %}
 {% set personSummary = personActivity.personSummary %}
 {% set entries = activityLog(personActivity.activities, category or 'all-previous-activity', requirement) %}
 {% set requirements = getDistinctRequirements(personActivity.activities) %}

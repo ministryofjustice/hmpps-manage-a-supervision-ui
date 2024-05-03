@@ -6,6 +6,8 @@
 {% set currentNavSection = 'compliance' %}
 {% set headerPersonName = personCompliance.personSummary.name | fullName %}
 {% set headerCRN = personCompliance.personSummary.crn %}
+{% set headerDob = personCompliance.personSummary.dateOfBirth  %}
+{% set headerGender = personCompliance.personSummary.gender  %}
 {% block pageTitle %}{{ title }}{% endblock %}
 
 {% block beforeContent %}

@@ -60,6 +60,9 @@ export default {
   oaSys: {
     link: get('OASYS_LINK', 'https://oasys-dummy-url', requiredInProduction),
   },
+  tier: {
+    link: get('TIER_LINK', 'https://tier-dummy-url', requiredInProduction),
+  },
   apis: {
     hmppsAuth: {
       url: get('HMPPS_AUTH_URL', 'http://localhost:9090/auth', requiredInProduction),
@@ -106,6 +109,14 @@ export default {
         deadline: Number(get('ARNS_API_TIMEOUT_DEADLINE', 10000)),
       },
       agent: new AgentConfig(Number(get('ARNS_API_TIMEOUT_RESPONSE', 10000))),
+    },
+    tierApi: {
+      url: get('TIER_API_URL', 'http://localhost:8100', requiredInProduction),
+      timeout: {
+        response: Number(get('TIER_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('TIER_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('TIER_API_TIMEOUT_RESPONSE', 10000))),
     },
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),

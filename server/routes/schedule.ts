@@ -6,6 +6,7 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import logger from '../../logger'
 import { ErrorMessages } from '../data/model/caseload'
+import TierApiClient from '../data/tierApiClient'
 
 export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -15,6 +16,7 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
     const { crn } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
+    const tierClient = new TierApiClient(token)
 
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_SCHEDULE',
@@ -25,10 +27,14 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
       service: 'hmpps-manage-a-supervision-ui',
     })
 
-    const schedule = await masClient.getPersonSchedule(crn, 'upcoming')
+    const [schedule, tierCalculation] = await Promise.all([
+      masClient.getPersonSchedule(crn, 'upcoming'),
+      tierClient.getCalculationDetails(crn),
+    ])
     res.render('pages/schedule', {
       schedule,
       crn,
+      tierCalculation,
     })
   })
 

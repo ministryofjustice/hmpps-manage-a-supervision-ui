@@ -55,8 +55,9 @@ context('Overview', () => {
       .getRowData('risk', 'harmToSelf', 'Value')
       .should('contain.text', 'Previous concerns about coping in a hostel setting')
     page.getRowData('risk', 'riskFlags', 'Value').should('contain.text', 'Risk to Known Adult')
+    page.getRowData('miscellaneous', 'tier', 'Value').should('contain.text', 'B2')
   })
-  it('Risk information is not provided due to 500 from ARNS', () => {
+  it('Risk information and tier is not provided due to 500 from ARNS and TIER', () => {
     cy.visit('/case/X000002')
     const page = Page.verifyOnPage(OverviewPage)
     page.headerCrn().should('contain.text', 'X000002')
@@ -69,9 +70,13 @@ context('Overview', () => {
     page.getTab('activityLog').should('contain.text', 'Activity log')
     page.getTab('compliance').should('contain.text', 'Compliance')
     page.getCardHeader('schedule').should('contain.text', 'Schedule')
-    cy.get(`[data-qa=riskErrors]`).should(
+    cy.get(`[data-qa=errors]`).should(
       'contain.text',
       'OASys is experiencing technical difficulties. It has not been possible to provide the Risk information held in OASys',
+    )
+    cy.get(`[data-qa=errors]`).should(
+      'contain.text',
+      'The tier service is experiencing technical difficulties. It has not been possible to provide tier information',
     )
   })
 })

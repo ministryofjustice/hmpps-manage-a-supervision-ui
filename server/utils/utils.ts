@@ -179,6 +179,13 @@ export const deliusDeepLinkUrl = (component: string, offenderId: string) => {
   return `${config.delius.link}/NDelius-war/delius/JSP/deeplink.xhtml?component=${component}&offenderId=${offenderId}`
 }
 
+export const tierLink = (crn: string) => {
+  if (!crn) {
+    return ''
+  }
+  return `${config.tier.link}/${crn}`
+}
+
 export const oaSysUrl = () => {
   return `${config.oaSys.link}`
 }

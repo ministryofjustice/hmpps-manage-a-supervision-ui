@@ -10,7 +10,9 @@
         <p data-qa="change-team">
             Showing:
             <span class="govuk-body govuk-!-font-weight-bold" data-qa="caseload-names">{{ caseload.team.description }}</span>
-            <a class="govuk-link govuk-!-margin-left-3" href="/change-team" data-qa="change-team-link">Change team</a>
+            {% if teamCount > 1 %}
+                <a class="govuk-link govuk-!-margin-left-3" href="/change-team" data-qa="change-team-link">Change team</a>
+            {% endif %}
         </p>
     </div>
     {% endif %}
@@ -48,6 +50,13 @@
           {{ govukPagination({ previous: { href: pagination.prev }, next: { href: pagination.next }, items: pagination.items }) }}
          {% endif %}
      {% else %}
-        <p>No cases to show</p>
+        {% if currentNavSection == 'teamCases' and teamCount == 0 %}
+            <p>You are not currently assigned to any team</p>
+        {% elseif currentNavSection == 'teamCases' and teamCount > 0 %}
+            <p>{{ caseload.team.description }} has not been allocated to any cases</p>
+        {% elseif currentNavSection == 'yourCases' %}
+            <p>You have not been allocated to any cases</p>
+        {% endif %}
+        <p><a href="/search" target="_blank">Find a person on probation</a></br>
      {% endif %}
 {% endblock %}

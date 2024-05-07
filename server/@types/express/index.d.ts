@@ -33,6 +33,7 @@ export declare global {
     interface MasData {
       provider?: string
       team?: string
+      teamCount: number
     }
   }
 }

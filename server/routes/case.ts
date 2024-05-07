@@ -10,6 +10,10 @@ import TierApiClient from '../data/tierApiClient'
 export default function caseRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
 
+  get('/', async (_req, res, _next) => {
+    res.redirect('/case')
+  })
+
   get('/case/:crn', async (req, res, _next) => {
     const { crn } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)

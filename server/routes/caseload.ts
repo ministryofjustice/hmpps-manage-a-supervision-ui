@@ -39,19 +39,32 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
     const masClient = new MasApiClient(token)
 
     if (req.session.mas === undefined || req.session.mas.team === undefined) {
-      req.session.mas = {}
-      await auditService.sendAuditMessage({
-        action: 'VIEW_MAS_TEAMS',
-        who: res.locals.user.username,
-        subjectId: res.locals.user.username,
-        subjectType: 'USER',
-        correlationId: v4(),
-        service: 'hmpps-manage-a-supervision-ui',
-      })
       const userTeams = await masClient.getUserTeams(res.locals.user.username)
-      res.render('pages/caseload/select-team', {
-        userTeams,
-      })
+      req.session.mas = { teamCount: userTeams.teams.length }
+      switch (userTeams.teams.length) {
+        case 1: {
+          req.session.mas.team = userTeams.teams[0].code
+          res.redirect(`/team/case`)
+          break
+        }
+        case 0: {
+          res.redirect(`/team/case`)
+          break
+        }
+        default: {
+          await auditService.sendAuditMessage({
+            action: 'VIEW_MAS_TEAMS',
+            who: res.locals.user.username,
+            subjectId: res.locals.user.username,
+            subjectType: 'USER',
+            correlationId: v4(),
+            service: 'hmpps-manage-a-supervision-ui',
+          })
+          res.render('pages/caseload/select-team', {
+            userTeams,
+          })
+        }
+      }
     } else {
       res.redirect(`/team/case`)
     }
@@ -80,10 +93,11 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
   get('/team/case', async (req, res, _next) => {
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
-    if (req.session.mas === undefined || req.session.mas.team === undefined) {
+    if (req.session.mas === undefined || (req.session.mas.teamCount > 0 && req.session.mas.team === undefined)) {
       res.redirect('/teams')
     } else {
       const teamCode = req.session.mas.team
+      const { teamCount } = req.session.mas
       await auditService.sendAuditMessage({
         action: 'VIEW_MAS_CASELOAD_TEAM',
         who: res.locals.user.username,
@@ -94,7 +108,10 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
       })
       const pageNum: number = req.query.page ? Number.parseInt(req.query.page as string, 10) : 1
       const currentNavSection = 'teamCases'
-      const caseload = await masClient.getTeamCaseload(teamCode, (pageNum - 1).toString())
+      const caseload =
+        teamCount > 0
+          ? await masClient.getTeamCaseload(teamCode, (pageNum - 1).toString())
+          : { totalPages: 0, totalElements: 0, pageSize: 0 }
 
       const pagination: Pagination = getPaginationLinks(
         req.query.page ? Number.parseInt(req.query.page as string, 10) : 1,
@@ -107,6 +124,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
         pagination,
         caseload,
         currentNavSection,
+        teamCount,
       })
     }
   })
@@ -114,7 +132,6 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
   post('/team/case', async (req, res, _next) => {
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
-    req.session.mas.team = req.body['team-code']
     const errorMessages: ErrorMessages = {}
     if (req.body['team-code'] == null) {
       logger.info('Team not selected')
@@ -125,7 +142,8 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
         userTeams,
       })
     } else {
-      res.redirect(`/team/case`)
+      req.session.mas.team = req.body['team-code']
+      res.redirect(`/teams`)
     }
   })
 }

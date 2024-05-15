@@ -5,16 +5,16 @@ import { PersonSummary } from './common'
 export interface SentenceDetails {
   personSummary: PersonSummary
   sentences: Sentence[]
-  order: Order
-  requirements: Requirement[]
-  courtDocuments: CourtDocument[]
   probationHistory: ProbationHistory
 }
 
 export interface Sentence {
-  eventNumber: string
-  offence: OffenceDetails
+  offenceDetails: OffenceDetails
   conviction: Conviction
+  order: Order
+  requirements: Requirement[]
+  courtDocuments: CourtDocument[]
+  unpaidWorkProgress: string
 }
 export interface OffenceDetails {
   mainOffence: Offence

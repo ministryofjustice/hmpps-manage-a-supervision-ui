@@ -212,6 +212,10 @@
                     value: { html: '<span data-qa="requirementsValue">' + requirements if hasRequirements else 'No requirements' + '</span>'}
                   },
                   {
+                    key: { text: "Unpaid Work Progress" },
+                    value: { html: '<span data-qa="unpaidWorkProgress">' + sentence.unpaidWorkProgress + '</span>' }
+                  } if sentence.unpaidWorkProgress,
+                  {
                     key: { text: "Court Documents" },
                     value: { html: '<span data-qa="courtDocumentsValue">' + courtDocuments if hasCourtDocuments else 'No court documents' + '</span>' }
                   }

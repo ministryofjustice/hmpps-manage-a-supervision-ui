@@ -78,6 +78,14 @@
                   "length": "10",
                   "lengthUnitValue": "Hours",
                   "notes": "curfew notes"
+                },
+                {
+                  "code": "W",
+                  "actualStartDate": "2015-05-22",
+                  "description": "Unpaid Work - Regular",
+                  "length": 100,
+                  "lengthUnitValue": "Hours",
+                  "notes": "unpaid work notes"
                 }
               ],
               "courtDocuments": [
@@ -96,7 +104,8 @@
                   "lastSaved": "",
                   "documentName": "Previous convictions"
                 }
-              ]
+              ],
+              "unpaidWorkProgress": "7 minutes completed (of 100 hours)"
             },
             {
               "offenceDetails": {

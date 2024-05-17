@@ -194,6 +194,10 @@ export const deliusHomepageUrl = () => {
   return `${config.delius.link}`
 }
 
+export const sentencePlanLink = () => {
+  return `${config.sentencePlan.link}`
+}
+
 export const isInThePast = (datetimeString: string) => {
   if (!datetimeString || isBlank(datetimeString)) return null
   return DateTime.now() > DateTime.fromISO(datetimeString)

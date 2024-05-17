@@ -64,7 +64,7 @@ export default {
     link: get('TIER_LINK', 'https://tier-dummy-url', requiredInProduction),
   },
   sentencePlan: {
-    link: get('SENTENCE_PLAN_LINK', 'https://sentence-plan-dev.hmpps.service.justice.gov.uk', requiredInProduction),
+    link: get('SENTENCE_PLAN_LINK', 'https://sentence-plan-dummy-url', requiredInProduction),
   },
   apis: {
     hmppsAuth: {

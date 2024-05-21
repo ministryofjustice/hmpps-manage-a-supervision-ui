@@ -236,12 +236,9 @@
             {% endif %}
 
             <p>
-            <a href="/case/{{ crn }}/handoff/oasys">View sentence plan in OASys</a>
+            <a href="{{ sentencePlanLink() }}" target="_blank">View sentence plan</a>
             </p>
 
-            <p>
-            <a href="{{ sentencePlanLink() }}" target="_blank">View sentence plan in UI</a>
-            </p>
         {% endset %}
 
         {% set aliases %}

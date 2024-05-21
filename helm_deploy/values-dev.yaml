@@ -18,7 +18,7 @@ generic-service:
     DELIUS_LINK: "https://ndelius.test.probation.service.justice.gov.uk"
     OASYS_LINK: "https://t2.oasys.service.justice.gov.uk"
     TIER_LINK: "https://tier-dev.hmpps.service.justice.gov.uk/case"
-    SENTENCE_PLAN_LINK: "https://sentence-plan-dev.hmpps.service.justice.gov.uk"
+    SENTENCE_PLAN_LINK: "https://sentence-plan-dev.hmpps.service.justice.gov.uk/about-pop"
     ENVIRONMENT_NAME: DEV
     ENVIRONMENT: dev
 

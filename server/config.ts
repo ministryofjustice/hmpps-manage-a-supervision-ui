@@ -63,6 +63,9 @@ export default {
   tier: {
     link: get('TIER_LINK', 'https://tier-dummy-url', requiredInProduction),
   },
+  sentencePlan: {
+    link: get('SENTENCE_PLAN_LINK', 'https://sentence-plan-dummy-url', requiredInProduction),
+  },
   apis: {
     hmppsAuth: {
       url: get('HMPPS_AUTH_URL', 'http://localhost:9090/auth', requiredInProduction),

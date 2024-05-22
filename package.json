@@ -96,7 +96,7 @@
   "dependencies": {
     "@ministryofjustice/frontend": "^2.1.3",
     "@ministryofjustice/hmpps-audit-client": "^1.0.20",
-    "@ministryofjustice/probation-search-frontend": "^2.1.2",
+    "@ministryofjustice/probation-search-frontend": "^2.1.3",
     "agentkeepalive": "^4.5.0",
     "applicationinsights": "^2.9.5",
     "body-parser": "^1.20.2",
@@ -119,7 +119,7 @@
     "passport": "^0.7.0",
     "passport-oauth2": "^1.8.0",
     "prom-client": "^15.1.2",
-    "redis": "^4.6.13",
+    "redis": "^4.6.14",
     "slugify": "^1.6.6",
     "superagent": "^9.0.2",
     "url-value-parser": "^2.2.0",
@@ -172,7 +172,7 @@
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
     "prettier-plugin-jinja-template": "^1.4.0",
-    "sass": "^1.77.1",
+    "sass": "^1.77.2",
     "supertest": "^7.0.0",
     "ts-jest": "^29.1.2",
     "typescript": "^5.4.5"

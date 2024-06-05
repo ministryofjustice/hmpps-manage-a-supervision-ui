@@ -54,6 +54,8 @@ ARNS_API_URL=https://assess-risks-and-needs-dev.hmpps.service.justice.gov.uk
 TIER_API_URL="https://hmpps-tier-dev.hmpps.service.justice.gov.uk"
 TIER_LINK="https://tier-dev.hmpps.service.justice.gov.uk/case"
 DELIUS_LINK=https://ndelius.test.probation.service.justice.gov.uk
+INTERVENTIONS_API_URL=http://localhost:9091/interventions
+INTERVENTIONS_LINK=https://hmpps-interventions-ui-dev.apps.live-1.cloud-platform.service.justice.gov.uk
 
 ```
 

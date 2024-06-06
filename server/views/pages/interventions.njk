@@ -1,0 +1,125 @@
+{% extends "../partials/case.njk" %}
+{% set pageTitle = applicationName + " - Interventions" %}
+{% set currentNavSection = 'interventions' %}
+{% set currentSectionName = 'Interventions' %}
+{% set headerPersonName = personSummary.name.forename + ' ' + personSummary.name.surname %}
+{% set headerCRN = crn %}
+{% set headerDob = personSummary.dateOfBirth  %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+      items: [
+        {
+          text: "Your cases",
+          href: "/case"
+        },
+        {
+          text: headerPersonName,
+          href: "/case/" + crn
+        },
+        {
+          text: currentSectionName
+        }
+      ]
+    }) }}
+{% endblock %}
+
+{% block pageContent %}
+<div>
+    {% set rows = [] %}
+    {% for intervention in interventions %}
+        {% set status %}
+            {% if intervention.isDraft === true %}
+               <span class="govuk-tag govuk-tag--yellow" align="center">Draft</span>
+            {% elseif intervention.referralConcludedAt %}
+               <span class="govuk-tag govuk-tag--green" align="center">Completed</span>
+            {% else %}
+               <span class="govuk-tag govuk-tag--yellow" align="center">Open</span>
+            {% endif %}
+        {% endset %}
+
+        {% set rows = (rows.push(
+          [
+            {
+                html: '<span data-qa = "referralSentAt' + loop.index + 'Value">' + intervention.referralSentAt | dateWithYear + '</span>',
+                classes: "columnWidth30 verticalAlign"
+            } if intervention.referralSentAt,
+            {
+                html: '<span data-qa = "referralReferenceNumber' + loop.index + 'Value">' + intervention.referenceNumber + '</span>',
+                classes: "columnWidth15 verticalAlign"
+            } if intervention.referenceNumber,
+            {
+                html: '<span data-qa = "referralInterventionTitle' + loop.index + 'Value">' + intervention.interventionTitle + '</span>',
+                classes: "columnWidth15 verticalAlign"
+            } if intervention.interventionTitle,
+            {
+                html: '<span data-qa = "referralProvider' + loop.index + 'Value">' + intervention.serviceProviderName + '</span>',
+                classes: "columnWidth15 verticalAlign"
+            } if intervention.serviceProviderName,
+            {
+                html: '<span data-qa = "caseworker' + loop.index + 'Value">' + intervention.responsibleOfficer + '</span>',
+                classes: "columnWidth15 verticalAlign"
+            } if intervention.responsibleOfficer,
+            {
+                html: '<span data-qa = "referralStatus' + loop.index + 'Value">' + status + '</span>',
+                classes: "columnWidth15 verticalAlign"
+            },
+            {
+                html: '<a href="' + interventionsLink(intervention.id) + '" target="_blank">View</a>' ,
+                classes: "columnWidth15 verticalAlign"
+            }
+          ]
+        ), rows) %}
+    {% endfor %}
+
+    {{ govukTable({
+     attributes: {
+       'data-module': 'moj-sortable-table',
+       'data-qa': 'interventionsCard'
+     },
+     head: [
+        {
+            text: "Date Sent",
+            attributes: {
+                "aria-sort": "ascending"
+            }
+        },
+        {
+            text: "Referral",
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        {
+            text: "Intervention Type",
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        {
+            text: "Provider",
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        {
+            text: "Caseworker",
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        {
+            text: "Status",
+            attributes: {
+                "aria-sort": "none"
+            }
+        },
+        {
+            text: "Action",
+            classes: "non-sortable__sortable-table-header"
+        }
+     ],
+     rows: rows
+   }) }}
+   </div>
+{% endblock %}

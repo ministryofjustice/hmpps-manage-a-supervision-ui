@@ -24,6 +24,9 @@ export default function setUpStaticResources(): Router {
   ).forEach(dir => {
     router.use('/assets', express.static(path.join(process.cwd(), dir), cacheControl))
   })
+  ;['/node_modules/jquery/dist/jquery.min.js'].forEach(dir => {
+    router.use('/assets/js/jquery.min.js', express.static(path.join(process.cwd(), dir), cacheControl))
+  })
 
   // Don't cache dynamic resources
   router.use(noCache())

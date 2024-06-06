@@ -26,6 +26,7 @@ import {
   getTagClass,
   govukTime,
   initialiseName,
+  interventionsLink,
   isInThePast,
   isToday,
   lastUpdatedBy,
@@ -118,4 +119,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('getDistinctRequirements', getDistinctRequirements)
   njkEnv.addGlobal('tierLink', tierLink)
   njkEnv.addGlobal('sentencePlanLink', sentencePlanLink)
+  njkEnv.addGlobal('interventionsLink', interventionsLink)
 }

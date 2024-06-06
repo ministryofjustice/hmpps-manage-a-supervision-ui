@@ -186,6 +186,13 @@ export const tierLink = (crn: string) => {
   return `${config.tier.link}/${crn}`
 }
 
+export const interventionsLink = (referralId: string) => {
+  if (!referralId) {
+    return ''
+  }
+  return `${config.interventions.link}/probation-practitioner/referrals/${referralId}/progress`
+}
+
 export const oaSysUrl = () => {
   return `${config.oaSys.link}`
 }

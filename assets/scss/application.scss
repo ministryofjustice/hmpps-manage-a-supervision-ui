@@ -11,4 +11,8 @@ $govuk-page-width: $moj-page-width;
 @import './components/summary-card';
 @import './components/card';
 @import 'assets/scss/local';
+@import "../../node_modules/govuk-frontend/dist/govuk/base";
+@import "../../node_modules/@ministryofjustice/frontend/moj/components/sortable-table/_sortable-table";
+@import './components/sortable-table';
+
 

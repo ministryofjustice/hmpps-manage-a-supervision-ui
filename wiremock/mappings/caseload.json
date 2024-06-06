@@ -2,12 +2,22 @@
   "mappings": [
     {
       "request": {
-        "urlPattern": "/mas/caseload/user/USER1",
-        "method": "GET"
+        "urlPathPattern": "/mas/caseload/user/USER1",
+        "method": "GET",
+        "queryParameters": {
+          "size": {
+            "equalTo": "10"
+          },
+          "page": {
+            "equalTo": "0"
+          }
+        }
       },
       "response": {
         "status": 200,
         "jsonBody": {
+          "totalPages": 30,
+          "totalElements": 29090,
           "provider": "London",
           "staff": {
             "forename": "Paul",
@@ -34,6 +44,9 @@
         "urlPathPattern": "/mas/caseload/team/N07T01",
         "method": "GET",
         "queryParameters": {
+          "size": {
+            "equalTo": "10"
+          },
           "page": {
             "equalTo": "0"
           }

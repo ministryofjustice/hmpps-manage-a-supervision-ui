@@ -58,6 +58,19 @@
           "Content-Type": "application/json"
         }
       }
+    },
+    {
+      "request": {
+        "urlPattern": "/interventions/probation-case/X000002/referral",
+        "method": "GET"
+      },
+      "response": {
+        "status": 500,
+        "jsonBody": { "message": "Error" },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
     }
   ]
 }

@@ -27,8 +27,20 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
     })
 
     const currentNavSection = 'yourCases'
-    const caseload = await masClient.getUserCaseload(res.locals.user.username)
+    const pageNum: number = req.query.page ? Number.parseInt(req.query.page as string, 10) : 1
+
+    const caseload = await masClient.getUserCaseload(res.locals.user.username, (pageNum - 1).toString())
+
+    const pagination: Pagination = getPaginationLinks(
+      req.query.page ? Number.parseInt(req.query.page as string, 10) : 1,
+      caseload.totalPages,
+      caseload.totalElements,
+      page => addParameters(req, { page: page.toString() }),
+      caseload.pageSize,
+    )
+
     res.render('pages/caseload/minimal-cases', {
+      pagination,
       caseload,
       currentNavSection,
     })

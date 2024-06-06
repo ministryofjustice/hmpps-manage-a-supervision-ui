@@ -1,6 +1,9 @@
 import { Name } from './common'
 
 export interface UserCaseload {
+  totalPages: number
+  totalElements: number
+  pageSize: number
   provider: string
   staff: Name
   caseload: Caseload[]

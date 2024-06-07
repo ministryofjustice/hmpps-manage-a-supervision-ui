@@ -12,6 +12,7 @@ import risksRoutes from './risks'
 import complianceRoutes from './compliance'
 import caseloadRoutes from './caseload'
 import accessibilityInfoRoutes from './accessibilityInfoRoutes'
+import interventionsRoutes from './interventions'
 
 export default function routes(services: Services): Router {
   const router = Router()
@@ -25,5 +26,6 @@ export default function routes(services: Services): Router {
   complianceRoutes(router, services)
   caseloadRoutes(router, services)
   accessibilityInfoRoutes(router)
+  interventionsRoutes(router, services)
   return router
 }

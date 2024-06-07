@@ -101,8 +101,12 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/compliance/${crn}`, handle404: false })
   }
 
-  async getUserCaseload(username: string): Promise<UserCaseload> {
-    return this.get({ path: `/caseload/user/${username}`, handle404: false })
+  async getUserCaseload(username: string, page: string): Promise<UserCaseload> {
+    let pageQuery = '?size=10'
+    if (page) {
+      pageQuery = `${pageQuery}&page=${page}`
+    }
+    return this.get({ path: `/caseload/user/${username}${pageQuery}`, handle404: false })
   }
 
   async getUserTeams(username: string): Promise<UserTeam> {
@@ -110,9 +114,9 @@ export default class MasApiClient extends RestClient {
   }
 
   async getTeamCaseload(teamCode: string, page: string): Promise<TeamCaseload> {
-    let pageQuery = ''
+    let pageQuery = '?size=10'
     if (page) {
-      pageQuery = `?page=${page}`
+      pageQuery = `${pageQuery}&page=${page}`
     }
     return this.get({ path: `/caseload/team/${teamCode}${pageQuery}`, handle404: false })
   }

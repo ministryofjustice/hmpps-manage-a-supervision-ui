@@ -66,6 +66,9 @@ export default {
   sentencePlan: {
     link: get('SENTENCE_PLAN_LINK', 'https://sentence-plan-dummy-url', requiredInProduction),
   },
+  interventions: {
+    link: get('INTERVENTIONS_LINK', 'https://interventions-dummy-url', requiredInProduction),
+  },
   apis: {
     hmppsAuth: {
       url: get('HMPPS_AUTH_URL', 'http://localhost:9090/auth', requiredInProduction),
@@ -120,6 +123,14 @@ export default {
         deadline: Number(get('TIER_API_TIMEOUT_DEADLINE', 10000)),
       },
       agent: new AgentConfig(Number(get('TIER_API_TIMEOUT_RESPONSE', 10000))),
+    },
+    interventionsApi: {
+      url: get('INTERVENTIONS_API_URL', 'http://localhost:8100', requiredInProduction),
+      timeout: {
+        response: Number(get('INTERVENTIONS_API_TIMEOUT_RESPONSE', 10000)),
+        deadline: Number(get('INTERVENTIONS_API_TIMEOUT_DEADLINE', 10000)),
+      },
+      agent: new AgentConfig(Number(get('INTERVENTIONS_API_TIMEOUT_RESPONSE', 10000))),
     },
   },
   domain: get('INGRESS_URL', 'http://localhost:3000', requiredInProduction),

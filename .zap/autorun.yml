@@ -43,7 +43,7 @@ jobs:
     type: script
     parameters:
       action: "add"
-      type: "active"
+      type: "standalone"
       engine: "ECMAScript : Oracle Nashorn"
       name: "traverse.js"
       file: "traverse.js"

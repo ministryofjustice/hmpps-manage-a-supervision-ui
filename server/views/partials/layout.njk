@@ -29,7 +29,18 @@
 
 {% block bodyStart %}
 {% endblock %}
-
+{% block footer %}
+  {{ govukFooter({
+        meta: {
+          items: [
+            {
+              href: "/accessibility-info",
+              text: "Accessibility"
+            }
+          ]
+        }
+      }) }}
+{% endblock %}
 {% block bodyEnd %}
   <script type="module" src="/assets/govukFrontendInit.js"></script>
   <script src="/assets/moj/all.js"></script>

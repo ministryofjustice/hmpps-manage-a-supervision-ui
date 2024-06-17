@@ -406,3 +406,6 @@ export const getDistinctRequirements = (appointments: Activity[]): string[] => {
 export const toSlug = (string: string) => {
   return slugify(string, { lower: true })
 }
+
+export const makePageTitle = ({ pageHeading, hasErrors }: { pageHeading: string; hasErrors: boolean }) =>
+  `${hasErrors ? 'Error: ' : ''}${pageHeading} - ${config.applicationName}`

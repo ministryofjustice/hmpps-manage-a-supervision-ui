@@ -10,13 +10,10 @@ context('Interventions', () => {
     page.pageHeading().should('contain.text', 'Interventions')
 
     page
-      .getRowData('interventions', 'referralInterventionTitle1', 'Value')
-      .should('contain.text', 'Accommodation Services - North West')
-    page
-      .getRowData('interventions', 'referralInterventionTitle2', 'Value')
+      .getRowData('interventions', 'referralInterventionTitle3', 'Value')
       .should('contain.text', 'Other Services - North West')
     page
-      .getRowData('interventions', 'referralInterventionTitle3', 'Value')
+      .getRowData('interventions', 'referralInterventionTitle1', 'Value')
       .should('contain.text', 'Accommodation Services - North East')
     page.getRowData('interventions', 'referralReferenceNumber3', 'Value').should('contain.text', 'AB2495DC')
     page.getRowData('interventions', 'referralReferenceNumber1', 'Value').should('contain.text', 'AC2495AC')

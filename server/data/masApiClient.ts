@@ -106,7 +106,7 @@ export default class MasApiClient extends RestClient {
     if (page) {
       pageQuery = `${pageQuery}&page=${page}`
     }
-    return this.get({ path: `/caseload/user/${username}${pageQuery}`, handle404: false })
+    return this.get({ path: `/caseload/user/${username}${pageQuery}`, handle404: true })
   }
 
   async getUserTeams(username: string): Promise<UserTeam> {
@@ -118,7 +118,7 @@ export default class MasApiClient extends RestClient {
     if (page) {
       pageQuery = `${pageQuery}&page=${page}`
     }
-    return this.get({ path: `/caseload/team/${teamCode}${pageQuery}`, handle404: false })
+    return this.get({ path: `/caseload/team/${teamCode}${pageQuery}`, handle404: true })
   }
 
   async getUserAccess(username: string, crn: string): Promise<CaseAccess> {

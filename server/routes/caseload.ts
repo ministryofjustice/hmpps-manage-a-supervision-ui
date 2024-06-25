@@ -31,19 +31,23 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
 
     const caseload = await masClient.getUserCaseload(res.locals.user.username, (pageNum - 1).toString())
 
-    const pagination: Pagination = getPaginationLinks(
-      req.query.page ? Number.parseInt(req.query.page as string, 10) : 1,
-      caseload.totalPages,
-      caseload.totalElements,
-      page => addParameters(req, { page: page.toString() }),
-      caseload.pageSize,
-    )
+    if (caseload == null || caseload?.totalPages === 0) {
+      res.redirect('/search')
+    } else {
+      const pagination: Pagination = getPaginationLinks(
+        req.query.page ? Number.parseInt(req.query.page as string, 10) : 1,
+        caseload?.totalPages || 0,
+        caseload?.totalElements || 0,
+        page => addParameters(req, { page: page.toString() }),
+        caseload?.pageSize || 0,
+      )
 
-    res.render('pages/caseload/minimal-cases', {
-      pagination,
-      caseload,
-      currentNavSection,
-    })
+      res.render('pages/caseload/minimal-cases', {
+        pagination,
+        caseload,
+        currentNavSection,
+      })
+    }
   })
 
   get('/teams', async (req, res, _next) => {
@@ -127,10 +131,10 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
 
       const pagination: Pagination = getPaginationLinks(
         req.query.page ? Number.parseInt(req.query.page as string, 10) : 1,
-        caseload.totalPages,
-        caseload.totalElements,
+        caseload?.totalPages || 0,
+        caseload?.totalElements || 0,
         page => addParameters(req, { page: page.toString() }),
-        caseload.pageSize,
+        caseload?.pageSize || 0,
       )
       res.render('pages/caseload/minimal-cases', {
         pagination,

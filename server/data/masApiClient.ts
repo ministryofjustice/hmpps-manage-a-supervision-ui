@@ -110,7 +110,7 @@ export default class MasApiClient extends RestClient {
   }
 
   async getUserTeams(username: string): Promise<UserTeam> {
-    return this.get({ path: `/caseload/user/${username}/teams`, handle404: false })
+    return this.get({ path: `/caseload/user/${username}/teams`, handle404: true })
   }
 
   async getTeamCaseload(teamCode: string, page: string): Promise<TeamCaseload> {

@@ -1,5 +1,6 @@
 {% extends "./caseload.njk" %}
 {% set hasCases = caseload.caseload | length > 0 %}
+{% set hasStaff = caseload !== null %}
 {% set title = 'Your cases' %}
 {% block pageTitle %}{{ title }}{% endblock %}
 
@@ -51,11 +52,19 @@
          {% endif %}
      {% else %}
         {% if currentNavSection == 'teamCases' and teamCount == 0 %}
-            <p>You are not currently assigned to any team</p>
+            {% if hasStaffRecord === false %}
+                <p>You do not have a Delius staff record. Please contact the Delius team</p>
+             {% else %}
+                <p>You are not currently assigned to any team</p>
+            {% endif %}
         {% elseif currentNavSection == 'teamCases' and teamCount > 0 %}
             <p>{{ caseload.team.description }} has not been allocated to any cases</p>
         {% elseif currentNavSection == 'yourCases' %}
-            <p>You have not been allocated to any cases</p>
+            {% if hasStaff === false %}
+                <p>You do not have a Delius staff record. Please contact the Delius team</p>
+            {% else %}
+                <p>You have not been allocated to any cases</p>
+            {% endif %}
         {% endif %}
         <p><a href="/search">Find a person on probation</a></br>
      {% endif %}

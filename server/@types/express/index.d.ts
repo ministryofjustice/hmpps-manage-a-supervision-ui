@@ -31,6 +31,7 @@ export declare global {
 
   namespace Mas {
     interface MasData {
+      hasStaffRecord: boolean
       provider?: string
       team?: string
       teamCount: number

@@ -1,6 +1,6 @@
 generic-service:
   nameOverride: hmpps-manage-a-supervision-ui
-  productId: "HMPPS518" # productId for the product that this belongs too, i.e. DPS001, see README.md for details
+  productId: "HMPPS543" # productId for the product that this belongs too, i.e. DPS001, see README.md for details
   replicaCount: 4
 
   image:

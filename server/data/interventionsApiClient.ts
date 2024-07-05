@@ -13,7 +13,7 @@ export default class InterventionsApiClient extends RestClient {
       handle404: true,
       handle500: true,
       errorMessageFor500:
-        'The interventions service is experiencing technical difficulties. It has not been possible to provide tier information',
+        'The interventions service is experiencing technical difficulties. It has not been possible to provide intervention information',
     })
   }
 }

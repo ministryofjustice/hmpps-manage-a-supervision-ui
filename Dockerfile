@@ -36,9 +36,11 @@ FROM base as build
 ARG BUILD_NUMBER
 ARG GIT_REF
 ARG GIT_BRANCH
+ARG SENTRY_AUTH_TOKEN
+ENV SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
 
 RUN apt-get update && \
-        apt-get install -y make python g++
+        apt-get install -y make python g++ ca-certificates
 
 COPY package*.json ./
 RUN CYPRESS_INSTALL_BINARY=0 npm ci --no-audit

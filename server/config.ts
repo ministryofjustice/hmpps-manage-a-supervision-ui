@@ -55,6 +55,13 @@ export default {
     secret: get('SESSION_SECRET', 'app-insecure-default-session', requiredInProduction),
     expiryMinutes: Number(get('WEB_SESSION_TIMEOUT_IN_MINUTES', 120)),
   },
+  sentry: {
+    dsn: process.env.SENTRY_DSN,
+    loaderScriptId: process.env.SENTRY_LOADER_SCRIPT_ID,
+    tracesSampleRate: Number(get('SENTRY_TRACES_SAMPLE_RATE', 0.05)),
+    replaySampleRate: Number(get('SENTRY_REPLAY_SAMPLE_RATE', 0.0)),
+    replayOnErrorSampleRate: Number(get('SENTRY_REPLAY_ON_ERROR_SAMPLE_RATE', 0.1)),
+  },
   delius: {
     link: get('DELIUS_LINK', 'https://ndelius-dummy-url', requiredInProduction),
   },

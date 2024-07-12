@@ -12,8 +12,6 @@ export default function authorisationMiddleware(allowedRoles: string[] = []): Re
         authorities?: string[]
         auth_source?: string
       }
-      logger.info(`Auth source is ${authSource}`)
-      logger.info(`Authorities ${authorities}`)
 
       if (
         authSource !== 'delius' ||

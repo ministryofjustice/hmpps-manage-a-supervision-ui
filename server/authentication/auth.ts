@@ -1,10 +1,9 @@
-import passport, { Strategy } from 'passport'
+import passport from 'passport'
 import { Strategy as OAuth2Strategy } from 'passport-oauth2'
 import type { RequestHandler } from 'express'
 import config from '../config'
 import generateOauthClientToken from './clientCredentials'
 import type { TokenVerifier } from '../data/tokenVerification'
-import createUserToken from '../testutils/createUserToken'
 
 passport.serializeUser((user, done) => {
   // Not used but required for Passport
@@ -45,22 +44,6 @@ function init(): void {
   )
 
   passport.use('oauth2', oauth2Strategy)
-  const localStrategy = new (class extends Strategy {
-    authenticate() {
-      const payload = {
-        user_name: 'user1',
-        name: 'Test User',
-        displayName: 'Test User',
-        authorities: ['ROLE_MANAGE_SUPERVISIONS'],
-        authSource: 'delius',
-        active: true,
-      }
-      const token = createUserToken(payload)
-      const roles = payload.authorities.map(authority => authority.replace(/^ROLE_/, ''))
-      this.success({ token, roles, ...payload })
-    }
-  })()
-  passport.use('local', localStrategy)
 }
 
 export default {

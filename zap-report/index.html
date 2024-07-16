@@ -17,7 +17,7 @@
 		<p>
 			<span>Generated with</span> <a href="https://zaproxy.org"><img
 				src="index/zap32x32.png" alt="The ZAP logo" class="zap-logo">ZAP</a>
-			<span>on Mon 15 Jul 2024, at 09:41:44</span>
+			<span>on Tue 16 Jul 2024, at 09:41:19</span>
 		</p>
 		<p>ZAP Version: 2.15.0</p>
 		<p>
@@ -409,15 +409,15 @@
 							<th scope="row"><a
 								href="#alert-type-1">Application Error Disclosure</a></th>
 							<td class="risk-level">Low</td>
-							<td><span>5</span><br> <span
-								class="additional-info-percentages">(50.0%)</span></td>
+							<td><span>8</span><br> <span
+								class="additional-info-percentages">(80.0%)</span></td>
 						</tr>
 						<tr>
 							<th scope="row"><a
 								href="#alert-type-2">Cross-Domain JavaScript Source File Inclusion</a></th>
 							<td class="risk-level">Low</td>
-							<td><span>1364</span><br> <span
-								class="additional-info-percentages">(13,640.0%)</span></td>
+							<td><span>1681</span><br> <span
+								class="additional-info-percentages">(16,810.0%)</span></td>
 						</tr>
 						<tr>
 							<th scope="row"><a
@@ -437,8 +437,8 @@
 							<th scope="row"><a
 								href="#alert-type-5">Information Disclosure - Suspicious Comments</a></th>
 							<td class="risk-level">Informational</td>
-							<td><span>1369</span><br> <span
-								class="additional-info-percentages">(13,690.0%)</span></td>
+							<td><span>1686</span><br> <span
+								class="additional-info-percentages">(16,860.0%)</span></td>
 						</tr>
 						<tr>
 							<th scope="row"><a
@@ -458,15 +458,15 @@
 							<th scope="row"><a
 								href="#alert-type-8">Session Management Response Identified</a></th>
 							<td class="risk-level">Informational</td>
-							<td><span>1388</span><br> <span
-								class="additional-info-percentages">(13,880.0%)</span></td>
+							<td><span>1206</span><br> <span
+								class="additional-info-percentages">(12,060.0%)</span></td>
 						</tr>
 						<tr>
 							<th scope="row"><a
 								href="#alert-type-9">User Controllable HTML Element Attribute (Potential XSS)</a></th>
 							<td class="risk-level">Informational</td>
-							<td><span>1</span><br> <span
-								class="additional-info-percentages">(10.0%)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(20.0%)</span></td>
 						</tr>
 					</tbody>
 					<tfoot>
@@ -513,7 +513,7 @@
 									<ol>
 										<li><details>
 												<summary>
-													<span class="request-method-n-url">POST https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/team/case</span>
+													<span class="request-method-n-url">POST https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/record-an-outcome/outcome</span>
 												</summary>
 												
 <table class="alerts-table">
@@ -552,25 +552,25 @@
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (564 bytes)</summary>
+				<summary>Request line and header section (624 bytes)</summary>
 				
-				<pre><code>POST https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/team/case HTTP/1.1
+				<pre><code>POST https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/record-an-outcome/outcome HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
 user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0
 pragma: no-cache
 cache-control: no-cache
 content-type: application/x-www-form-urlencoded
-referer: https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/teams
-content-length: 57
-Cookie: hmpps-manage-a-supervision-ui.session=s%3A8OctXGMNMumC7T9BuHTvteTmu_R2aHZc.xUenUUpg5kB8iyXnCEhIu%2FAH1QeAFwKQZ0tpHSPqzkk
+referer: https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/record-an-outcome/outcome
+content-length: 68
+Cookie: hmpps-manage-a-supervision-ui.session=s%3AW-Anfk4lfswzmlu7XicHhZcpozEYWMUk.5w5zpEZoCeXMB3w7IqHX28cc4Fppl6p7Y3R4WVzIIoQ
 
 </code></pre>
 				
 				
 			</details> <details class="request-body" open="open">
-				<summary>Request body (57 bytes)</summary>
+				<summary>Request body (68 bytes)</summary>
 				
-				<pre><code>_csrf=S3tU4jy9-2h3GYqJ4lC8RqlovfUfjlG9-MMk&amp;team-code=case</code></pre>
+				<pre><code>_csrf=YJN0fMti-AsKUzqjsAtCnoJ5WW5lpJVd63O4&amp;appointment-id=%5Coutcome</code></pre>
 				
 				
 			</details></td>
@@ -581,12 +581,12 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3A8OctXGMNMumC7T9BuHTvteTmu_R2aH
 				<summary>Status line and header section (1492 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 302 Found
-Date: Mon, 15 Jul 2024 08:57:29 GMT
+Date: Tue, 16 Jul 2024 08:48:04 GMT
 Content-Type: text/plain; charset=utf-8
 Content-Length: 208
 Connection: keep-alive
 request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-08b1a7e20908fd3b766b8331547e1467&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-08b1a7e20908fd3b766b8331547e1467&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-83ab295f64c80a763c6c460c8c445d6d&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-83ab295f64c80a763c6c460c8c445d6d&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
 Cross-Origin-Embedder-Policy: require-corp
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-origin
@@ -599,7 +599,7 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: 3c9d07f33e3c6349c5899c4be4698fc1
+X-Request-Id: 6135147d9f202d09d75c9bcee2ce5f8f
 Surrogate-Control: no-store
 Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate
 Expires: 0
@@ -619,11 +619,11 @@ Vary: Accept, Accept-Encoding
 	</tr>
 	<tr>
 		<th scope="row">Parameter</th>
-		<td><pre><code>team-code</code></pre></td>
+		<td><pre><code>appointment-id</code></pre></td>
 	</tr>
 	<tr>
 		<th scope="row">Attack</th>
-		<td><pre><code>case</code></pre></td>
+		<td><pre><code>\outcome</code></pre></td>
 	</tr>
 	
 	<tr>
@@ -732,7 +732,7 @@ Vary: Accept, Accept-Encoding
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (507 bytes)</summary>
+				<summary>Request line and header section (509 bytes)</summary>
 				
 				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/accessibility-info HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
@@ -740,7 +740,7 @@ user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 F
 pragma: no-cache
 cache-control: no-cache
 referer: https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sitemap.xml
-Cookie: hmpps-manage-a-supervision-ui.session=s%3AiDOWfK95jHHKqcfnjK_8zWtX--s50y_w.67PDRQfWBXibdMRq7julYjLuuzm0mXSfpeptaf1IBuo
+Cookie: hmpps-manage-a-supervision-ui.session=s%3AlvKZ2TJKpD-wcYmbHOVVH_heUrRbZC3u.TyLJEFq8QAyfiiPnq4h0foZ3i4NVrgO%2BdjuQgHIO37w
 
 </code></pre>
 				
@@ -756,15 +756,15 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3AiDOWfK95jHHKqcfnjK_8zWtX--s50y
 	<tr>
 		<th scope="row">Response</th>
 		<td><details open="open">
-				<summary>Status line and header section (1558 bytes)</summary>
+				<summary>Status line and header section (1560 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 500 Internal Server Error
-Date: Mon, 15 Jul 2024 08:37:27 GMT
+Date: Tue, 16 Jul 2024 08:36:51 GMT
 Content-Type: text/html; charset=utf-8
 Content-Length: 27876
 Connection: keep-alive
 request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-245cbeafd0ab97e6b437505b5d5dc96c&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-245cbeafd0ab97e6b437505b5d5dc96c&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-16686d9971e98b46fbdfc5509584622a&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-16686d9971e98b46fbdfc5509584622a&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
 Cross-Origin-Embedder-Policy: require-corp
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-origin
@@ -777,13 +777,13 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: df5424e9b387526565ffc64125fdb947
+X-Request-Id: 23d7b54ddfdd419b95fe47e5aac024e9
 Surrogate-Control: no-store
 Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate
 Expires: 0
-ETag: W/&quot;6ce4-dVEpI0hdcJ9fVICMennaH1PLFY4&quot;
+ETag: W/&quot;6ce4-qIylSIDxi7GM7lFMZEuH60yi1wI&quot;
 Vary: Accept-Encoding
-Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AiDOWfK95jHHKqcfnjK_8zWtX--s50y_w.67PDRQfWBXibdMRq7julYjLuuzm0mXSfpeptaf1IBuo; Path=/; Expires=Mon, 15 Jul 2024 10:37:27 GMT; HttpOnly; Secure; SameSite=Lax
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AlvKZ2TJKpD-wcYmbHOVVH_heUrRbZC3u.TyLJEFq8QAyfiiPnq4h0foZ3i4NVrgO%2BdjuQgHIO37w; Path=/; Expires=Tue, 16 Jul 2024 10:36:51 GMT; HttpOnly; Secure; SameSite=Lax
 
 </code></pre>
 				
@@ -813,7 +813,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AiDOWfK95jHHKqcfnjK_8zWtX--
     
   &lt;/head&gt;
   &lt;body class=&quot;govuk-template__body&quot;&gt;
-    &lt;script nonce=&quot;245cbeafd0ab97e6b437505b5d5dc96c&quot;&gt;document.body.className += &#39; js-enabled&#39; + (&#39;noModule&#39; in HTMLScriptElement.prototype ? &#39; govuk-frontend-supported&#39; : &#39;&#39;);&lt;/script&gt;
+    &lt;script nonce=&quot;16686d9971e98b46fbdfc5509584622a&quot;&gt;document.body.className += &#39; js-enabled&#39; + (&#39;noModule&#39; in HTMLScriptElement.prototype ? &#39; govuk-frontend-supported&#39; : &#39;&#39;);&lt;/script&gt;
     
 
 
@@ -976,7 +976,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AiDOWfK95jHHKqcfnjK_8zWtX--
 
     
   
-    &lt;script nonce=&quot;245cbeafd0ab97e6b437505b5d5dc96c&quot;&gt;
+    &lt;script nonce=&quot;16686d9971e98b46fbdfc5509584622a&quot;&gt;
       window.sentryOnLoad = function() {
         Sentry.init({
           release: &quot;hmpps-manage-a-supervision-ui@0f3bf98&quot;,
@@ -990,7 +990,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AiDOWfK95jHHKqcfnjK_8zWtX--
         });
       };
     &lt;/script&gt;
-    &lt;script src=&quot;https://js.sentry-cdn.com/36e33e201cbd88c93dba4216ff8df154.min.js&quot; nonce=&quot;245cbeafd0ab97e6b437505b5d5dc96c&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://js.sentry-cdn.com/36e33e201cbd88c93dba4216ff8df154.min.js&quot; nonce=&quot;16686d9971e98b46fbdfc5509584622a&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
   
   &lt;script type=&quot;module&quot; src=&quot;/assets/govukFrontendInit.js&quot;&gt;&lt;/script&gt;
   &lt;script src=&quot;/assets/moj/all.js&quot;&gt;&lt;/script&gt;
@@ -1059,7 +1059,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AiDOWfK95jHHKqcfnjK_8zWtX--
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (632 bytes)</summary>
+				<summary>Request line and header section (630 bytes)</summary>
 				
 				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/ HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
@@ -1072,7 +1072,7 @@ Sec-Fetch-Dest: document
 Sec-Fetch-Mode: navigate
 Sec-Fetch-Site: none
 Sec-Fetch-User: ?1
-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vXGr0i_g.xz7GIeioC9%2B%2FQy864zzAqSqlOJyG8lhYQDZVKaiETr4
+Cookie: hmpps-manage-a-supervision-ui.session=s%3APHfkBnwfGJ2yirUyBeYDvvpg8SYMT4bE.vSa7K1eQW8g1t2srtg%2BwlQNW13aYpr1FJ7WrxTKKvw8
 
 </code></pre>
 				
@@ -1088,15 +1088,15 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vXGr0i
 	<tr>
 		<th scope="row">Response</th>
 		<td><details open="open">
-				<summary>Status line and header section (1543 bytes)</summary>
+				<summary>Status line and header section (1541 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200 OK
-Date: Mon, 15 Jul 2024 08:36:24 GMT
+Date: Tue, 16 Jul 2024 08:36:00 GMT
 Content-Type: text/html; charset=utf-8
 Content-Length: 34943
 Connection: keep-alive
 request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-2be0ebaf0b83306be23934ca0c9f5fc9&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-2be0ebaf0b83306be23934ca0c9f5fc9&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-9b18882dbc997722e2308982173b267b&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-9b18882dbc997722e2308982173b267b&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
 Cross-Origin-Embedder-Policy: require-corp
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-origin
@@ -1109,13 +1109,13 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: c48dc71e3ec18fd0812a26881cad8588
+X-Request-Id: 0ca298ae3e71cd088d7f4ff54c552c9d
 Surrogate-Control: no-store
 Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate
 Expires: 0
-ETag: W/&quot;887f-8lPMso9IMNucrJ8itgZxdzzRhRo&quot;
+ETag: W/&quot;887f-nlNLEFiWQ4klo84jKHJWJhj+94s&quot;
 Vary: Accept-Encoding
-Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vXGr0i_g.xz7GIeioC9%2B%2FQy864zzAqSqlOJyG8lhYQDZVKaiETr4; Path=/; Expires=Mon, 15 Jul 2024 10:36:24 GMT; HttpOnly; Secure; SameSite=Lax
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3APHfkBnwfGJ2yirUyBeYDvvpg8SYMT4bE.vSa7K1eQW8g1t2srtg%2BwlQNW13aYpr1FJ7WrxTKKvw8; Path=/; Expires=Tue, 16 Jul 2024 10:36:00 GMT; HttpOnly; Secure; SameSite=Lax
 
 </code></pre>
 				
@@ -1145,7 +1145,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vX
     
   &lt;/head&gt;
   &lt;body class=&quot;govuk-template__body&quot;&gt;
-    &lt;script nonce=&quot;2be0ebaf0b83306be23934ca0c9f5fc9&quot;&gt;document.body.className += &#39; js-enabled&#39; + (&#39;noModule&#39; in HTMLScriptElement.prototype ? &#39; govuk-frontend-supported&#39; : &#39;&#39;);&lt;/script&gt;
+    &lt;script nonce=&quot;9b18882dbc997722e2308982173b267b&quot;&gt;document.body.className += &#39; js-enabled&#39; + (&#39;noModule&#39; in HTMLScriptElement.prototype ? &#39; govuk-frontend-supported&#39; : &#39;&#39;);&lt;/script&gt;
     
 
 
@@ -1267,7 +1267,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vX
 
     
         
-            &lt;p&gt;Showing 1 to 0 of 43 cases.&lt;/p&gt;
+            &lt;p&gt;Showing 1 to 0 of 44 cases.&lt;/p&gt;
          
          &lt;table class=&quot;govuk-table&quot;&gt;
            &lt;thead class=&quot;govuk-table__head&quot;&gt;
@@ -1501,7 +1501,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vX
 
     
   
-    &lt;script nonce=&quot;2be0ebaf0b83306be23934ca0c9f5fc9&quot;&gt;
+    &lt;script nonce=&quot;9b18882dbc997722e2308982173b267b&quot;&gt;
       window.sentryOnLoad = function() {
         Sentry.init({
           release: &quot;hmpps-manage-a-supervision-ui@0f3bf98&quot;,
@@ -1515,7 +1515,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vX
         });
       };
     &lt;/script&gt;
-    &lt;script src=&quot;https://js.sentry-cdn.com/36e33e201cbd88c93dba4216ff8df154.min.js&quot; nonce=&quot;2be0ebaf0b83306be23934ca0c9f5fc9&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://js.sentry-cdn.com/36e33e201cbd88c93dba4216ff8df154.min.js&quot; nonce=&quot;9b18882dbc997722e2308982173b267b&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
   
   &lt;script type=&quot;module&quot; src=&quot;/assets/govukFrontendInit.js&quot;&gt;&lt;/script&gt;
   &lt;script src=&quot;/assets/moj/all.js&quot;&gt;&lt;/script&gt;
@@ -1538,7 +1538,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vX
 	
 	<tr>
 		<th scope="row">Evidence</th>
-		<td><pre><code>&lt;script src=&quot;https://js.sentry-cdn.com/36e33e201cbd88c93dba4216ff8df154.min.js&quot; nonce=&quot;2be0ebaf0b83306be23934ca0c9f5fc9&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</code></pre></td>
+		<td><pre><code>&lt;script src=&quot;https://js.sentry-cdn.com/36e33e201cbd88c93dba4216ff8df154.min.js&quot; nonce=&quot;9b18882dbc997722e2308982173b267b&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</code></pre></td>
 	</tr>
 	<tr>
 		<th scope="row">Solution</th>
@@ -1595,7 +1595,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vX
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (546 bytes)</summary>
+				<summary>Request line and header section (548 bytes)</summary>
 				
 				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/images/favicon.svg HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
@@ -1606,7 +1606,7 @@ Connection: keep-alive
 Sec-Fetch-Dest: image
 Sec-Fetch-Mode: no-cors
 Sec-Fetch-Site: same-origin
-Cookie: hmpps-manage-a-supervision-ui.session=s%3A4DAxpSPMBpP5DvmNSP589uxYsVkBbEs8.N4tui8JstaEKWCumW5pXgLCPeBlIvsEA3u7bWtSZSV8
+Cookie: hmpps-manage-a-supervision-ui.session=s%3APHfkBnwfGJ2yirUyBeYDvvpg8SYMT4bE.vSa7K1eQW8g1t2srtg%2BwlQNW13aYpr1FJ7WrxTKKvw8
 
 </code></pre>
 				
@@ -1622,15 +1622,15 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3A4DAxpSPMBpP5DvmNSP589uxYsVkBbE
 	<tr>
 		<th scope="row">Response</th>
 		<td><details open="open">
-				<summary>Status line and header section (1504 bytes)</summary>
+				<summary>Status line and header section (1506 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200 OK
-Date: Mon, 15 Jul 2024 08:37:10 GMT
+Date: Tue, 16 Jul 2024 08:36:01 GMT
 Content-Type: image/svg+xml
 Content-Length: 1846
 Connection: keep-alive
 request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-ad004c1a3502621d35f964113513d3ac&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-ad004c1a3502621d35f964113513d3ac&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-4a1051c97bfe3ce39f755f3df39d8054&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-4a1051c97bfe3ce39f755f3df39d8054&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
 Cross-Origin-Embedder-Policy: require-corp
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-origin
@@ -1643,13 +1643,13 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: eaecc532c0d861722ac504f0b62eaae4
+X-Request-Id: 29a56d4b6ddb47136c8686a69ab4dee6
 Accept-Ranges: bytes
 Cache-Control: public, max-age=3600
 Last-Modified: Fri, 12 Jul 2024 12:57:30 GMT
 ETag: W/&quot;736-190a7052290&quot;
 Vary: Accept-Encoding
-Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3A4DAxpSPMBpP5DvmNSP589uxYsVkBbEs8.N4tui8JstaEKWCumW5pXgLCPeBlIvsEA3u7bWtSZSV8; Path=/; Expires=Mon, 15 Jul 2024 10:37:10 GMT; HttpOnly; Secure; SameSite=Lax
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3APHfkBnwfGJ2yirUyBeYDvvpg8SYMT4bE.vSa7K1eQW8g1t2srtg%2BwlQNW13aYpr1FJ7WrxTKKvw8; Path=/; Expires=Tue, 16 Jul 2024 10:36:01 GMT; HttpOnly; Secure; SameSite=Lax
 
 </code></pre>
 				
@@ -1746,7 +1746,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3A4DAxpSPMBpP5DvmNSP589uxYsV
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (560 bytes)</summary>
+				<summary>Request line and header section (558 bytes)</summary>
 				
 				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/stylesheets/application.css?0f3bf98 HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
@@ -1757,7 +1757,7 @@ Connection: keep-alive
 Sec-Fetch-Dest: style
 Sec-Fetch-Mode: no-cors
 Sec-Fetch-Site: same-origin
-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vXGr0i_g.xz7GIeioC9%2B%2FQy864zzAqSqlOJyG8lhYQDZVKaiETr4
+Cookie: hmpps-manage-a-supervision-ui.session=s%3APHfkBnwfGJ2yirUyBeYDvvpg8SYMT4bE.vSa7K1eQW8g1t2srtg%2BwlQNW13aYpr1FJ7WrxTKKvw8
 
 </code></pre>
 				
@@ -1773,15 +1773,15 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vXGr0i
 	<tr>
 		<th scope="row">Response</th>
 		<td><details open="open">
-				<summary>Status line and header section (1522 bytes)</summary>
+				<summary>Status line and header section (1520 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200 OK
-Date: Mon, 15 Jul 2024 08:36:24 GMT
+Date: Tue, 16 Jul 2024 08:36:00 GMT
 Content-Type: text/css; charset=UTF-8
 Content-Length: 189153
 Connection: keep-alive
 request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-cf177da5bb626e850926449d1ea380df&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-cf177da5bb626e850926449d1ea380df&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-e0924611f9bb18f2d370fb4d44cb6f7b&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-e0924611f9bb18f2d370fb4d44cb6f7b&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
 Cross-Origin-Embedder-Policy: require-corp
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-origin
@@ -1794,13 +1794,13 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: 1d5ee28249d113ad9f9e426b64b892b8
+X-Request-Id: f0c6c0be39cff510004d55290859ae8d
 Accept-Ranges: bytes
 Cache-Control: public, max-age=3600
 Last-Modified: Fri, 12 Jul 2024 12:57:42 GMT
 ETag: W/&quot;2e2e1-190a7055170&quot;
 Vary: Accept-Encoding
-Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vXGr0i_g.xz7GIeioC9%2B%2FQy864zzAqSqlOJyG8lhYQDZVKaiETr4; Path=/; Expires=Mon, 15 Jul 2024 10:36:24 GMT; HttpOnly; Secure; SameSite=Lax
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3APHfkBnwfGJ2yirUyBeYDvvpg8SYMT4bE.vSa7K1eQW8g1t2srtg%2BwlQNW13aYpr1FJ7WrxTKKvw8; Path=/; Expires=Tue, 16 Jul 2024 10:36:00 GMT; HttpOnly; Secure; SameSite=Lax
 
 </code></pre>
 				
@@ -1929,13 +1929,13 @@ Sec-Fetch-User: ?1
 				<summary>Status line and header section (568 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200
-Date: Mon, 15 Jul 2024 08:36:17 GMT
+Date: Tue, 16 Jul 2024 08:35:54 GMT
 Content-Type: text/html;charset=UTF-8
 Connection: keep-alive
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Set-Cookie: XSRF-TOKEN=4800f595-8b7f-44bc-bd86-21c43fea2d39; Path=/auth; Secure
+Set-Cookie: XSRF-TOKEN=2fda0e1c-9f31-4ce6-9ec1-0c89b7a8b23e; Path=/auth; Secure
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -2063,7 +2063,7 @@ content-length: 30752
   &lt;/div&gt;
   
   
-  &lt;form action=&quot;/auth/sign-in&quot; method=&quot;POST&quot; id=&quot;loginForm&quot; class=&quot;govuk-grid-column-two-thirds&quot;&gt;&lt;input type=&quot;hidden&quot; name=&quot;_csrf&quot; value=&quot;4800f595-8b7f-44bc-bd86-21c43fea2d39&quot;/&gt;
+  &lt;form action=&quot;/auth/sign-in&quot; method=&quot;POST&quot; id=&quot;loginForm&quot; class=&quot;govuk-grid-column-two-thirds&quot;&gt;&lt;input type=&quot;hidden&quot; name=&quot;_csrf&quot; value=&quot;2fda0e1c-9f31-4ce6-9ec1-0c89b7a8b23e&quot;/&gt;
     &lt;h1 class=&quot;govuk-heading-l&quot;&gt;Sign in&lt;/h1&gt;
     &lt;input type=&quot;hidden&quot; name=&quot;redirect_uri&quot; value=&quot;https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback&quot; /&gt;
 
@@ -2270,13 +2270,13 @@ Sec-Fetch-User: ?1
 				<summary>Status line and header section (568 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200
-Date: Mon, 15 Jul 2024 08:36:17 GMT
+Date: Tue, 16 Jul 2024 08:35:54 GMT
 Content-Type: text/html;charset=UTF-8
 Connection: keep-alive
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Set-Cookie: XSRF-TOKEN=4800f595-8b7f-44bc-bd86-21c43fea2d39; Path=/auth; Secure
+Set-Cookie: XSRF-TOKEN=2fda0e1c-9f31-4ce6-9ec1-0c89b7a8b23e; Path=/auth; Secure
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -2404,7 +2404,7 @@ content-length: 30752
   &lt;/div&gt;
   
   
-  &lt;form action=&quot;/auth/sign-in&quot; method=&quot;POST&quot; id=&quot;loginForm&quot; class=&quot;govuk-grid-column-two-thirds&quot;&gt;&lt;input type=&quot;hidden&quot; name=&quot;_csrf&quot; value=&quot;4800f595-8b7f-44bc-bd86-21c43fea2d39&quot;/&gt;
+  &lt;form action=&quot;/auth/sign-in&quot; method=&quot;POST&quot; id=&quot;loginForm&quot; class=&quot;govuk-grid-column-two-thirds&quot;&gt;&lt;input type=&quot;hidden&quot; name=&quot;_csrf&quot; value=&quot;2fda0e1c-9f31-4ce6-9ec1-0c89b7a8b23e&quot;/&gt;
     &lt;h1 class=&quot;govuk-heading-l&quot;&gt;Sign in&lt;/h1&gt;
     &lt;input type=&quot;hidden&quot; name=&quot;redirect_uri&quot; value=&quot;https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback&quot; /&gt;
 
@@ -2530,7 +2530,7 @@ content-length: 30752
 	
 	<tr>
 		<th scope="row">Evidence</th>
-		<td><pre><code>4800f595-8b7f-44bc-bd86-21c43fea2d39</code></pre></td>
+		<td><pre><code>2fda0e1c-9f31-4ce6-9ec1-0c89b7a8b23e</code></pre></td>
 	</tr>
 	<tr>
 		<th scope="row">Solution</th>
@@ -2604,7 +2604,7 @@ content-length: 30752
 	<tr>
 		<th scope="row">Other info</th>
 		<td> 
-<p>The following pattern was used: \bUSER\b and was detected in the element starting with: &quot;&lt;script nonce=&quot;2be0ebaf0b83306be23934ca0c9f5fc9&quot;&gt;</p>
+<p>The following pattern was used: \bUSER\b and was detected in the element starting with: &quot;&lt;script nonce=&quot;9b18882dbc997722e2308982173b267b&quot;&gt;</p>
 
 <p>      window.sentryOnLoad = function() {</p>
 
@@ -2616,7 +2616,7 @@ content-length: 30752
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (632 bytes)</summary>
+				<summary>Request line and header section (630 bytes)</summary>
 				
 				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/ HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
@@ -2629,7 +2629,7 @@ Sec-Fetch-Dest: document
 Sec-Fetch-Mode: navigate
 Sec-Fetch-Site: none
 Sec-Fetch-User: ?1
-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vXGr0i_g.xz7GIeioC9%2B%2FQy864zzAqSqlOJyG8lhYQDZVKaiETr4
+Cookie: hmpps-manage-a-supervision-ui.session=s%3APHfkBnwfGJ2yirUyBeYDvvpg8SYMT4bE.vSa7K1eQW8g1t2srtg%2BwlQNW13aYpr1FJ7WrxTKKvw8
 
 </code></pre>
 				
@@ -2645,15 +2645,15 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vXGr0i
 	<tr>
 		<th scope="row">Response</th>
 		<td><details open="open">
-				<summary>Status line and header section (1543 bytes)</summary>
+				<summary>Status line and header section (1541 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200 OK
-Date: Mon, 15 Jul 2024 08:36:24 GMT
+Date: Tue, 16 Jul 2024 08:36:00 GMT
 Content-Type: text/html; charset=utf-8
 Content-Length: 34943
 Connection: keep-alive
 request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-2be0ebaf0b83306be23934ca0c9f5fc9&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-2be0ebaf0b83306be23934ca0c9f5fc9&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-9b18882dbc997722e2308982173b267b&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-9b18882dbc997722e2308982173b267b&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
 Cross-Origin-Embedder-Policy: require-corp
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-origin
@@ -2666,13 +2666,13 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: c48dc71e3ec18fd0812a26881cad8588
+X-Request-Id: 0ca298ae3e71cd088d7f4ff54c552c9d
 Surrogate-Control: no-store
 Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate
 Expires: 0
-ETag: W/&quot;887f-8lPMso9IMNucrJ8itgZxdzzRhRo&quot;
+ETag: W/&quot;887f-nlNLEFiWQ4klo84jKHJWJhj+94s&quot;
 Vary: Accept-Encoding
-Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vXGr0i_g.xz7GIeioC9%2B%2FQy864zzAqSqlOJyG8lhYQDZVKaiETr4; Path=/; Expires=Mon, 15 Jul 2024 10:36:24 GMT; HttpOnly; Secure; SameSite=Lax
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3APHfkBnwfGJ2yirUyBeYDvvpg8SYMT4bE.vSa7K1eQW8g1t2srtg%2BwlQNW13aYpr1FJ7WrxTKKvw8; Path=/; Expires=Tue, 16 Jul 2024 10:36:00 GMT; HttpOnly; Secure; SameSite=Lax
 
 </code></pre>
 				
@@ -2702,7 +2702,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vX
     
   &lt;/head&gt;
   &lt;body class=&quot;govuk-template__body&quot;&gt;
-    &lt;script nonce=&quot;2be0ebaf0b83306be23934ca0c9f5fc9&quot;&gt;document.body.className += &#39; js-enabled&#39; + (&#39;noModule&#39; in HTMLScriptElement.prototype ? &#39; govuk-frontend-supported&#39; : &#39;&#39;);&lt;/script&gt;
+    &lt;script nonce=&quot;9b18882dbc997722e2308982173b267b&quot;&gt;document.body.className += &#39; js-enabled&#39; + (&#39;noModule&#39; in HTMLScriptElement.prototype ? &#39; govuk-frontend-supported&#39; : &#39;&#39;);&lt;/script&gt;
     
 
 
@@ -2824,7 +2824,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vX
 
     
         
-            &lt;p&gt;Showing 1 to 0 of 43 cases.&lt;/p&gt;
+            &lt;p&gt;Showing 1 to 0 of 44 cases.&lt;/p&gt;
          
          &lt;table class=&quot;govuk-table&quot;&gt;
            &lt;thead class=&quot;govuk-table__head&quot;&gt;
@@ -3058,7 +3058,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vX
 
     
   
-    &lt;script nonce=&quot;2be0ebaf0b83306be23934ca0c9f5fc9&quot;&gt;
+    &lt;script nonce=&quot;9b18882dbc997722e2308982173b267b&quot;&gt;
       window.sentryOnLoad = function() {
         Sentry.init({
           release: &quot;hmpps-manage-a-supervision-ui@0f3bf98&quot;,
@@ -3072,7 +3072,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vX
         });
       };
     &lt;/script&gt;
-    &lt;script src=&quot;https://js.sentry-cdn.com/36e33e201cbd88c93dba4216ff8df154.min.js&quot; nonce=&quot;2be0ebaf0b83306be23934ca0c9f5fc9&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://js.sentry-cdn.com/36e33e201cbd88c93dba4216ff8df154.min.js&quot; nonce=&quot;9b18882dbc997722e2308982173b267b&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
   
   &lt;script type=&quot;module&quot; src=&quot;/assets/govukFrontendInit.js&quot;&gt;&lt;/script&gt;
   &lt;script src=&quot;/assets/moj/all.js&quot;&gt;&lt;/script&gt;
@@ -3141,7 +3141,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AywvhKVm9aPLipcqPc8DvQ7K7vX
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (509 bytes)</summary>
+				<summary>Request line and header section (511 bytes)</summary>
 				
 				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/assets/manifest.json HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
@@ -3149,7 +3149,7 @@ user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 F
 pragma: no-cache
 cache-control: no-cache
 referer: https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sitemap.xml
-Cookie: hmpps-manage-a-supervision-ui.session=s%3AiDOWfK95jHHKqcfnjK_8zWtX--s50y_w.67PDRQfWBXibdMRq7julYjLuuzm0mXSfpeptaf1IBuo
+Cookie: hmpps-manage-a-supervision-ui.session=s%3AlvKZ2TJKpD-wcYmbHOVVH_heUrRbZC3u.TyLJEFq8QAyfiiPnq4h0foZ3i4NVrgO%2BdjuQgHIO37w
 
 </code></pre>
 				
@@ -3165,15 +3165,15 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3AiDOWfK95jHHKqcfnjK_8zWtX--s50y
 	<tr>
 		<th scope="row">Response</th>
 		<td><details open="open">
-				<summary>Status line and header section (1521 bytes)</summary>
+				<summary>Status line and header section (1523 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200 OK
-Date: Mon, 15 Jul 2024 08:37:27 GMT
+Date: Tue, 16 Jul 2024 08:36:55 GMT
 Content-Type: application/json; charset=UTF-8
 Content-Length: 800
 Connection: keep-alive
 request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-4c659d230117c48cbb97734f9097dd6a&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-4c659d230117c48cbb97734f9097dd6a&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-853f878b7467981416a465ec6d33e722&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-853f878b7467981416a465ec6d33e722&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
 Cross-Origin-Embedder-Policy: require-corp
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-origin
@@ -3186,13 +3186,13 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: 59c6ce8b3261529de170824fba4a6be0
+X-Request-Id: e84d40cae7b2c5f0a62cb35725da41ec
 Accept-Ranges: bytes
 Cache-Control: public, max-age=3600
 Last-Modified: Fri, 12 Jul 2024 12:57:29 GMT
 ETag: W/&quot;320-190a7051ea8&quot;
 Vary: Accept-Encoding
-Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AiDOWfK95jHHKqcfnjK_8zWtX--s50y_w.67PDRQfWBXibdMRq7julYjLuuzm0mXSfpeptaf1IBuo; Path=/; Expires=Mon, 15 Jul 2024 10:37:27 GMT; HttpOnly; Secure; SameSite=Lax
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AlvKZ2TJKpD-wcYmbHOVVH_heUrRbZC3u.TyLJEFq8QAyfiiPnq4h0foZ3i4NVrgO%2BdjuQgHIO37w; Path=/; Expires=Tue, 16 Jul 2024 10:36:55 GMT; HttpOnly; Secure; SameSite=Lax
 
 </code></pre>
 				
@@ -3362,13 +3362,13 @@ Sec-Fetch-User: ?1
 				<summary>Status line and header section (568 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200
-Date: Mon, 15 Jul 2024 08:36:17 GMT
+Date: Tue, 16 Jul 2024 08:35:54 GMT
 Content-Type: text/html;charset=UTF-8
 Connection: keep-alive
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Set-Cookie: XSRF-TOKEN=4800f595-8b7f-44bc-bd86-21c43fea2d39; Path=/auth; Secure
+Set-Cookie: XSRF-TOKEN=2fda0e1c-9f31-4ce6-9ec1-0c89b7a8b23e; Path=/auth; Secure
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -3496,7 +3496,7 @@ content-length: 30752
   &lt;/div&gt;
   
   
-  &lt;form action=&quot;/auth/sign-in&quot; method=&quot;POST&quot; id=&quot;loginForm&quot; class=&quot;govuk-grid-column-two-thirds&quot;&gt;&lt;input type=&quot;hidden&quot; name=&quot;_csrf&quot; value=&quot;4800f595-8b7f-44bc-bd86-21c43fea2d39&quot;/&gt;
+  &lt;form action=&quot;/auth/sign-in&quot; method=&quot;POST&quot; id=&quot;loginForm&quot; class=&quot;govuk-grid-column-two-thirds&quot;&gt;&lt;input type=&quot;hidden&quot; name=&quot;_csrf&quot; value=&quot;2fda0e1c-9f31-4ce6-9ec1-0c89b7a8b23e&quot;/&gt;
     &lt;h1 class=&quot;govuk-heading-l&quot;&gt;Sign in&lt;/h1&gt;
     &lt;input type=&quot;hidden&quot; name=&quot;redirect_uri&quot; value=&quot;https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback&quot; /&gt;
 

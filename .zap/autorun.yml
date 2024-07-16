@@ -64,9 +64,25 @@ jobs:
     parameters:
       reportDir: "zap-report"
       reportFile: "index.html"
+    risks:
+      - high
+      - medium
+      - low
+    confidences:
+      - high
+    sites:
+      - "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk"
   - name: "JSON Report"
     type: report
     parameters:
       template: "traditional-json"
       reportDir: "zap-report"
       reportFile: "report.json"
+    risks:
+      - high
+      - medium
+      - low
+    confidences:
+      - high
+    sites:
+      - "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk"

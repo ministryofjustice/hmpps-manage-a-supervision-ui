@@ -6,5 +6,6 @@ context('Your cases', () => {
     cy.visit('/case')
     const page = Page.verifyOnPage(YourCasesPage)
     page.getRowData('yourCases', 'case1', 'Value').should('contain.text', 'James Morrison')
+    page.getPagination().should('contain.text', 'Showing 1 to 10 of 29,090 cases.')
   })
 })

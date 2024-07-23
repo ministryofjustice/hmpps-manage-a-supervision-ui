@@ -110,6 +110,7 @@ export default {
     },
     masApi: {
       url: get('MAS_API_URL', 'http://localhost:8100', requiredInProduction),
+      pageSize: 10,
       timeout: {
         response: Number(get('MAS_API_TIMEOUT_RESPONSE', 5000)),
         deadline: Number(get('MAS_API_TIMEOUT_DEADLINE', 5000)),

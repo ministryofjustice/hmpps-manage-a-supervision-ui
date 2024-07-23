@@ -20,7 +20,7 @@
 
     {% if hasCases === true %}
         {% if pagination.items | length > 1 %}
-            <p>Showing {{ pagination.from }} to {{ pagination.to }} of {{ pagination.total }} cases.</p>
+            <p data-qa="pagination">Showing {{ pagination.from }} to {{ pagination.to }} of {{ pagination.total }} cases.</p>
          {% endif %}
          <table class="govuk-table">
            <thead class="govuk-table__head">

@@ -8,6 +8,7 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import logger from '../../logger'
 import { ErrorMessages, UserCaseload } from '../data/model/caseload'
+import config from '../config'
 
 export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -29,7 +30,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
   get('/case', async (req, res, _next) => {
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
-    const pageNum: number = req.query.page ? Number.parseInt(req.query.page as string, 10) : 1
+    const pageNum: number = req.query.page ? Number.parseInt(req.query.page as string, config.apis.masApi.pageSize) : 1
     const caseload = await masClient.getUserCaseload(res.locals.user.username, (pageNum - 1).toString())
     await showCaseload(req, res, caseload)
   })
@@ -45,11 +46,11 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
       service: 'hmpps-manage-a-supervision-ui',
     })
     const pagination: Pagination = getPaginationLinks(
-      req.query.page ? Number.parseInt(req.query.page as string, 10) : 1,
+      req.query.page ? Number.parseInt(req.query.page as string, config.apis.masApi.pageSize) : 1,
       caseload?.totalPages || 0,
       caseload?.totalElements || 0,
       page => addParameters(req, { page: page.toString() }),
-      caseload?.pageSize || 0,
+      caseload?.pageSize || config.apis.masApi.pageSize,
     )
     res.render('pages/caseload/minimal-cases', {
       pagination,
@@ -131,7 +132,9 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
         correlationId: v4(),
         service: 'hmpps-manage-a-supervision-ui',
       })
-      const pageNum: number = req.query.page ? Number.parseInt(req.query.page as string, 10) : 1
+      const pageNum: number = req.query.page
+        ? Number.parseInt(req.query.page as string, config.apis.masApi.pageSize)
+        : 1
       const currentNavSection = 'teamCases'
       const caseload =
         teamCount > 0
@@ -139,11 +142,11 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
           : { totalPages: 0, totalElements: 0, pageSize: 0 }
 
       const pagination: Pagination = getPaginationLinks(
-        req.query.page ? Number.parseInt(req.query.page as string, 10) : 1,
+        req.query.page ? Number.parseInt(req.query.page as string, config.apis.masApi.pageSize) : 1,
         caseload?.totalPages || 0,
         caseload?.totalElements || 0,
         page => addParameters(req, { page: page.toString() }),
-        caseload?.pageSize || 0,
+        caseload?.pageSize || config.apis.masApi.pageSize,
       )
       res.render('pages/caseload/minimal-cases', {
         pagination,

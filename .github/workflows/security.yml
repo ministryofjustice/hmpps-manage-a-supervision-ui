@@ -19,7 +19,7 @@ jobs:
 
       - name: Setup Firefox
         id: firefox
-        uses: browser-actions/setup-firefox@7eb6921a7449833b6356d5b61f7bba79b4e65ed3 # v1
+        uses: browser-actions/setup-firefox@955a5d42b5f068a8917c6a4ff1656a2235c66dfb # v1
         with:
           firefox-version: latest-esr
 
@@ -43,7 +43,7 @@ jobs:
           path: ${{ env.REPORT_DIR }}
 
       - name: Publish HTML report
-        uses: JamesIves/github-pages-deploy-action@5c6e9e9f3672ce8fd37b9856193d2a537941e66c # v4.6.1
+        uses: JamesIves/github-pages-deploy-action@94f3c658273cf92fb48ef99e5fbc02bd2dc642b2 # v4.6.3
         with:
           folder: ${{ env.REPORT_DIR }}
           target-folder: zap-report

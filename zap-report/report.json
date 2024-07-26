@@ -1,7 +1,7 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.15.0",
-	"@generated": "Thu, 25 Jul 2024 09:41:28",
+	"@generated": "Fri, 26 Jul 2024 09:40:53",
 	"site":[ 
 		{
 			"@name": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk",
@@ -9,6 +9,41 @@
 			"@port": "443",
 			"@ssl": "true",
 			"alerts": [ 
+				{
+					"pluginid": "10062",
+					"alertRef": "10062",
+					"alert": "PII Disclosure",
+					"name": "PII Disclosure",
+					"riskcode": "3",
+					"confidence": "3",
+					"riskdesc": "High (High)",
+					"desc": "<p>The response contains Personally Identifiable Information, such as CC number, SSN and similar sensitive data.</p>",
+					"instances":[ 
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "671875873687",
+							"otherinfo": "Credit Card Type detected: Maestro\nBank Identification Number: 671875\nBrand: MAESTRO\nCategory: ATM ONLY\nIssuer: ROYAL BANK OF SCOTlanD"
+						},
+						{
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/activity-log/activity/2507318814?category&requirement&view=default",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "67903735540218",
+							"otherinfo": "Credit Card Type detected: Maestro\nBank Identification Number: 679037\nBrand: MAESTRO\nCategory: \nIssuer: "
+						}
+					],
+					"count": "2",
+					"solution": "<p>Check the response for the potential presence of personally identifiable information (PII), ensure nothing sensitive is leaked by the application.</p>",
+					"otherinfo": "<p>Credit Card Type detected: Maestro</p><p>Bank Identification Number: 671875</p><p>Brand: MAESTRO</p><p>Category: ATM ONLY</p><p>Issuer: ROYAL BANK OF SCOTlanD</p>",
+					"reference": "",
+					"cweid": "359",
+					"wascid": "13",
+					"sourceid": "5126"
+				}
 			]
 		}
 	]

@@ -1,7 +1,7 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.15.0",
-	"@generated": "Fri, 26 Jul 2024 09:40:53",
+	"@generated": "Mon, 29 Jul 2024 09:41:38",
 	"site":[ 
 		{
 			"@name": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk",
@@ -24,25 +24,25 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "671875873687",
-							"otherinfo": "Credit Card Type detected: Maestro\nBank Identification Number: 671875\nBrand: MAESTRO\nCategory: ATM ONLY\nIssuer: ROYAL BANK OF SCOTlanD"
+							"evidence": "4519346025146",
+							"otherinfo": "Credit Card Type detected: Visa\nBank Identification Number: 451934\nBrand: VISA\nCategory: CLASSIC\nIssuer: CARD SERVICES FOR CREDIT UNIONS, INC."
 						},
 						{
-							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510/activity-log/activity/2507318814?category&requirement&view=default",
+							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "67903735540218",
-							"otherinfo": "Credit Card Type detected: Maestro\nBank Identification Number: 679037\nBrand: MAESTRO\nCategory: \nIssuer: "
+							"evidence": "4981740023988",
+							"otherinfo": "Credit Card Type detected: Visa\nBank Identification Number: 498174\nBrand: VISA\nCategory: \nIssuer: "
 						}
 					],
 					"count": "2",
 					"solution": "<p>Check the response for the potential presence of personally identifiable information (PII), ensure nothing sensitive is leaked by the application.</p>",
-					"otherinfo": "<p>Credit Card Type detected: Maestro</p><p>Bank Identification Number: 671875</p><p>Brand: MAESTRO</p><p>Category: ATM ONLY</p><p>Issuer: ROYAL BANK OF SCOTlanD</p>",
+					"otherinfo": "<p>Credit Card Type detected: Visa</p><p>Bank Identification Number: 451934</p><p>Brand: VISA</p><p>Category: CLASSIC</p><p>Issuer: CARD SERVICES FOR CREDIT UNIONS, INC.</p>",
 					"reference": "",
 					"cweid": "359",
 					"wascid": "13",
-					"sourceid": "5126"
+					"sourceid": "7540"
 				}
 			]
 		}

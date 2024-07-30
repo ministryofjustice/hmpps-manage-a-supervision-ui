@@ -1,7 +1,7 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.15.0",
-	"@generated": "Mon, 29 Jul 2024 09:41:38",
+	"@generated": "Tue, 30 Jul 2024 09:40:54",
 	"site":[ 
 		{
 			"@name": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk",
@@ -9,41 +9,6 @@
 			"@port": "443",
 			"@ssl": "true",
 			"alerts": [ 
-				{
-					"pluginid": "10062",
-					"alertRef": "10062",
-					"alert": "PII Disclosure",
-					"name": "PII Disclosure",
-					"riskcode": "3",
-					"confidence": "3",
-					"riskdesc": "High (High)",
-					"desc": "<p>The response contains Personally Identifiable Information, such as CC number, SSN and similar sensitive data.</p>",
-					"instances":[ 
-						{
-							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "4519346025146",
-							"otherinfo": "Credit Card Type detected: Visa\nBank Identification Number: 451934\nBrand: VISA\nCategory: CLASSIC\nIssuer: CARD SERVICES FOR CREDIT UNIONS, INC."
-						},
-						{
-							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "4981740023988",
-							"otherinfo": "Credit Card Type detected: Visa\nBank Identification Number: 498174\nBrand: VISA\nCategory: \nIssuer: "
-						}
-					],
-					"count": "2",
-					"solution": "<p>Check the response for the potential presence of personally identifiable information (PII), ensure nothing sensitive is leaked by the application.</p>",
-					"otherinfo": "<p>Credit Card Type detected: Visa</p><p>Bank Identification Number: 451934</p><p>Brand: VISA</p><p>Category: CLASSIC</p><p>Issuer: CARD SERVICES FOR CREDIT UNIONS, INC.</p>",
-					"reference": "",
-					"cweid": "359",
-					"wascid": "13",
-					"sourceid": "7540"
-				}
 			]
 		}
 	]

@@ -1,6 +1,4 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { expect, test } from '@playwright/test'
-// eslint-disable-next-line import/no-extraneous-dependencies
 import * as dotenv from 'dotenv'
 import { login as manageASupervisionLogin } from '../steps/login'
 

@@ -3,12 +3,20 @@ import { expect, test } from '@playwright/test'
 // eslint-disable-next-line import/no-extraneous-dependencies
 import * as dotenv from 'dotenv'
 import { login as manageASupervisionLogin } from '../steps/login'
-import { data } from '../test-data/test-data'
 
 dotenv.config() // read environment variables into process.env
 
+const person = {
+  crn: 'X791152',
+  firstName: 'Tony',
+  lastName: 'Runolfsson',
+  sex: 'Male',
+  dob: '1961-10-27T17:42:08.079Z',
+  pnc: '1961/1755756H',
+}
+
 test('Verify the persons header details in Manage a Supervision', async ({ page }) => {
-  const { crn, firstName, lastName } = data.person
+  const { crn, firstName, lastName } = person
 
   // Login to Manage a Supervision
   await manageASupervisionLogin(page)

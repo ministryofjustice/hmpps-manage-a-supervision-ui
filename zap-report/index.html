@@ -17,7 +17,7 @@
 		<p>
 			<span>Generated with</span> <a href="https://zaproxy.org"><img
 				src="index/zap32x32.png" alt="The ZAP logo" class="zap-logo">ZAP</a>
-			<span>on Tue 30 Jul 2024, at 09:40:54</span>
+			<span>on Fri 2 Aug 2024, at 09:41:46</span>
 		</p>
 		<p>ZAP Version: 2.15.0</p>
 		<p>
@@ -38,7 +38,38 @@
 							<li><a
 								href="#report-parameters">Report parameters</a></li>
 						</ol></li>
-					
+					<data-th-block>
+					<li><a
+						href="#summaries">Summaries</a>
+						<ol>
+							<li><a
+								href="#risk-confidence-counts">Alert counts by risk and confidence</a></li>
+							<li><a
+								href="#site-risk-counts">Alert counts by site and risk</a></li>
+							<li><a
+								href="#alert-type-counts">Alert counts by alert type</a></li>
+						</ol></li>
+					<li><a
+						href="#alerts">Alerts</a>
+						<ol>
+							
+							
+							
+							<li><a
+								href="#alerts--risk-3-confidence-3"><span>Risk</span>=<span
+									class="risk-level">High</span>, <span>Confidence</span>=<span
+									class="confidence-level">High</span> <span>(1)</span></a></li>
+							  
+							 
+							 
+						</ol></li>
+					<li><a
+						href="#appendix">Appendix</a>
+						<ol>
+							<li><a
+								href="#alert-types">Alert types</a></li>
+						</ol></li>
+					</data-th-block>
 				</ol>
 			</nav>
 		</section>
@@ -106,9 +137,765 @@
 
 		
 		<section>
-			<p>
-				<strong>No alerts were found within the report parameters.</strong>
-			</p>
+			
+		</section>
+		
+		<section id="summaries" class="summaries">
+			<h2>Summaries</h2>
+
+			<section
+				id="risk-confidence-counts">
+				<h3>Alert counts by risk and confidence</h3>
+				<table class="risk-confidence-counts-table">
+					<caption>
+						<p>This table shows the number of alerts for each level of risk and confidence included in the report.</p>
+						<p>(The percentages in brackets represent the count as a percentage of the total number of alerts included in the report, rounded to one decimal place.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col
+							style="width: 35.0%">
+						<col style="width: 35.0%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup"
+								colspan="2">Confidence</th>
+						</tr>
+						<tr>
+							<th scope="col">High</th>
+							<th scope="col">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup"
+								rowspan="4">Risk</th>
+							<th scope="row">High</th>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(100.0%)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(100.0%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Medium</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0.0%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Low</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0.0%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row">Total</th>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(100.0%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(100%)</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section
+				id="site-risk-counts">
+				<h3>Alert counts by site and risk</h3>
+				<table class="site-risk-counts-table">
+					<caption>
+						<p>This table shows, for each site for which one or more alerts were raised, the number of alerts raised at each risk level.</p>
+						<p>Alerts with a confidence level of &quot;False Positive&quot; have been excluded from these counts.</p>
+						<p>(The numbers in brackets are the number of alerts raised for the site at or above that risk level.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col
+							style="width: 21.666666666666668%"><col
+							style="width: 21.666666666666668%"><col
+							style="width: 21.666666666666668%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup" colspan="3">Risk</th>
+						</tr>
+						<tr>
+							<th scope="col">
+								<span>High</span><br>  <span
+									class="additional-info-percentages">(= High)</span>  
+							</th>
+							<th scope="col">
+								<span>Medium</span><br>   <span
+									class="additional-info-percentages">(&gt;= Medium)</span> 
+							</th>
+							<th scope="col">
+								<span>Low</span><br>   <span
+									class="additional-info-percentages">(&gt;= Low)</span> 
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup"
+								rowspan="1">Site</th>
+							<th scope="row">https://manage-a-supervision-dev.hmpps.service.justice.gov.uk</th>
+							
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(1)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(1)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(1)</span></td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section
+				id="alert-type-counts">
+				<h3>Alert counts by alert type</h3>
+				<table class="alert-type-counts-table">
+					<caption>
+						<p>This table shows the number of alerts of each alert type, together with the alert type&#39;s risk level.</p>
+						<p>(The percentages in brackets represent each count as a percentage, rounded to one decimal place, of the total number of alerts included in this report.)</p>
+					</caption>
+					<thead>
+						<tr>
+							<th scope="col">Alert type</th>
+							<th scope="col">Risk</th>
+							<th scope="col">Count</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-0">PII Disclosure</a></th>
+							<td class="risk-level">High</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(100.0%)</span></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th scope="row">Total</th>
+							<td></td>
+							<td>1</td>
+						</tr>
+					</tfoot>
+				</table>
+			</section>
+		</section>
+
+		<section id="alerts" class="alerts">
+			<h2>Alerts</h2>
+			<ol>
+				
+				 
+				<li id="alerts--risk-3-confidence-3">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">High</span>, <span>Confidence</span>=<span
+							class="confidence-level">High</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://manage-a-supervision-dev.hmpps.service.justice.gov.uk</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-0">PII Disclosure</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A04_2021-Insecure_Design/">OWASP_2021_A04</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure.html">OWASP_2017_A03</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/359.html">CWE-359</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The response contains Personally Identifiable Information, such as CC number, SSN and similar sensitive data.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>Credit Card Type detected: Maestro</p>
+
+<p>Bank Identification Number: 502182</p>
+
+<p>Brand: MAESTRO</p>
+
+<p>Category: </p>
+
+<p>Issuer: </p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (409 bytes)</summary>
+				
+				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/ HTTP/1.1
+host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0
+pragma: no-cache
+cache-control: no-cache
+Cookie: hmpps-manage-a-supervision-ui.session=s%3A29Wnxjxi27R6jF9q95WfxQaPmMX0Wy2m.iZFKam7vi44zBkGC%2BSGdaLuNX7xEuqnKBcy%2FvAUwqss
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (1543 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 02 Aug 2024 08:40:23 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 34965
+Connection: keep-alive
+request-context: appId=cid-v1:
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-50218220160284bf69453b5e44688908&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-50218220160284bf69453b5e44688908&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Cross-Origin-Embedder-Policy: require-corp
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Resource-Policy: same-origin
+Origin-Agent-Cluster: ?1
+Referrer-Policy: no-referrer
+Strict-Transport-Security: max-age=15724800; includeSubDomains
+X-Content-Type-Options: nosniff
+X-DNS-Prefetch-Control: off
+X-Download-Options: noopen
+X-Frame-Options: SAMEORIGIN
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 0
+X-Request-Id: 297caa56bc9e3fb416adcef869cf4a43
+Surrogate-Control: no-store
+Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate
+Expires: 0
+ETag: W/&quot;8895-hOaH62NbvlBKpmXeUWXSwRfqsW0&quot;
+Vary: Accept-Encoding
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3A29Wnxjxi27R6jF9q95WfxQaPmMX0Wy2m.iZFKam7vi44zBkGC%2BSGdaLuNX7xEuqnKBcy%2FvAUwqss; Path=/; Expires=Fri, 02 Aug 2024 10:40:23 GMT; HttpOnly; Secure; SameSite=Lax
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (34965 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; class=&quot;govuk-template&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;Your cases&lt;/title&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;&gt;
+    &lt;meta name=&quot;theme-color&quot; content=&quot;#0b0c0c&quot;&gt;
+
+    
+      &lt;link rel=&quot;icon&quot; sizes=&quot;48x48&quot; href=&quot;/assets/images/favicon.ico&quot;&gt;
+      &lt;link rel=&quot;icon&quot; sizes=&quot;any&quot; href=&quot;/assets/images/favicon.svg&quot; type=&quot;image/svg+xml&quot;&gt;
+      &lt;link rel=&quot;mask-icon&quot; href=&quot;/assets/images/govuk-icon-mask.svg&quot; color=&quot;#0b0c0c&quot;&gt;
+      &lt;link rel=&quot;apple-touch-icon&quot; href=&quot;/assets/images/govuk-icon-180.png&quot;&gt;
+      &lt;link rel=&quot;manifest&quot; href=&quot;/assets/manifest.json&quot;&gt;
+    
+
+    
+  &lt;link href=&quot;/assets/stylesheets/application.css?1ffdf75&quot; rel=&quot;stylesheet&quot;/&gt;
+
+    
+  &lt;/head&gt;
+  &lt;body class=&quot;govuk-template__body&quot;&gt;
+    &lt;script nonce=&quot;50218220160284bf69453b5e44688908&quot;&gt;document.body.className += &#39; js-enabled&#39; + (&#39;noModule&#39; in HTMLScriptElement.prototype ? &#39; govuk-frontend-supported&#39; : &#39;&#39;);&lt;/script&gt;
+    
+
+
+    
+      &lt;a href=&quot;#main-content&quot; class=&quot;govuk-skip-link&quot; data-module=&quot;govuk-skip-link&quot;&gt;Skip to main content&lt;/a&gt;
+
+    
+
+    
+  
+&lt;header class=&quot;moj-header&quot; role=&quot;banner&quot;&gt;
+  &lt;div class=&quot;hmpps-header__container&quot;&gt;
+    &lt;div class=&quot;hmpps-header__title&quot;&gt;
+      &lt;a class=&quot;hmpps-header__link hmpps-header__title__organisation-name&quot; href=&quot;/&quot;&gt;
+        &lt;svg role=&quot;presentation&quot; focusable=&quot;false&quot; class=&quot;hmpps-header__logo&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; viewbox=&quot;0 0 40 40&quot; height=&quot;40&quot; width=&quot;40&quot;&gt;
+          &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M38.1 16.9c.1 1.8 2.2 1.3 1.9 2.7 0-.9-3-.8-3-2.6 0-.3.1-.7.3-.9-.1-.1-.2-.1-.5-.1-.6 0-1.2.6-1.2 1.3 0 2.2 3 2.6 3 5.1 0 .6-.2 1-.6 1.2.2 0 .7-.1.8-.3-.2 1-1.2 1-1.6.6h-.3c.2.4.4.8.9.7-.9.7-2-.2-1.8-1.2-.2-.3-.4-.7-.6-.9-.1-.2-.2-.1-.2.1 0 .8-.6 1.6-.6 2.1 0 .6.6 1.1.8 1.1s.3-.2.4-.2c.1.1.1.2.1.7 0 .2 0 1 .1 1.7 0-.2.2-.3.3-.4.2-.1.4-.2.7-.1.1 0 .3.1.3.2.1.1.1.2.1.3 0 .2-.2.4-.3.6-.2.1-.3.2-.6.1-.2 0-.3-.1-.4-.2v-.1.7c0 .6-.1.8-.3.9 0-.1-.2-.2-.3-.2-.1 0-.3.1-.3.2 0 .2.3.2.3.6s-.8.8-1.3.8c.1-.2.2-.8.3-1.1-.1.1-.3.3-.4.7-.1.4-.3.4-.6.3.2-.2.6-1.1 1-1.3.4-.3.6-.4.7-1.1.1-.7 0-1.1 0-1.7 0-.8-.3-.7-.6-.7-.6 0-2.6-1.3-2.6-2.7v-.4c-.9 0-1.5.2-1.5 1.1 0 .3 0 .6.2.8.2.1.3.3 0 .4-.3.1-3.1 1.3-3.1 1.3-.3.1-.4 0-.6-.2-.1-.2-.3-.2-.4-.1-.2.1.1.2.1.4s-.1.7-1.3.6l.3-.6c.1-.2.1-.3.1-.3-.1 0-.1.1-.2.3l-.3.4h-.4l1-1c.2-.2.6-.4 1.1-.4.7-.1 2.9-.4 2.9-1.1 0-.8-.9-.8-.9-1.9 0-1 .4-2 3-1.9-.2-.7-.9-1.1-1.6-1.2-1.3-.3-1.7-1.2-1.8-2.1h-1c-.8 0-1.2-.3-1.5-.1-.1.1-.1.2 0 .3.1.2.3.7.6 1 .1 0 .4 0 .4.2s-.1.2-.1.3 0 .2.1.2.1-.1.1-.2c.1-.1.3-.1.7 0 .2.2.6.6.7 1-.3-.1-.8-.3-.9-.3s-.1.1 0 .1.4.2.6.3v.3c-.1-.1-.7-.4-1.1-.6-.3-.1-.6-.2-.8-.7-.2-.4-.8-1.6-1-1.9-.1-.2-.1-.3 0-.4.1-.1.1-.2.2-.3.1-.2.2-.2.4-.2s.8 0 1-.1c0 0 .1 0 .2-.1-.6-.6-1.2-1.4-1.2-1.6-.1-.1-.2-.2-.3-.2s-.2 0-.3.1l-.1.1c0-.1-.1-.1-.1-.2l-.3-.3c.2-.1.3-.3.4-.3.1-.1.2-.2.3-.2h.3c.2 0 .2 0 .3.1.2.2.6.4.8.7 0 0 .1 0 .1.1l.1-.1c.1-.1.2-.1.3-.1s.2.1.3.2.2.3.2.6v.2l.6.6c.1-.7.4-1.4.9-2h-.1v-.1c.1-.3.2-.9.3-1.1v-.3l.8.3.1-.1c.7-.7 2.3-1.1 2.3-2.1 0-.2-.1-.6-.3-.8.1.1.1.3.1.6 0 .2-.4.8-1.1.8-.3 0-.7-.3-.8-.3s-.2.1-.3.1c0 .4-.2.8-.3.8.1-.2 0-.6 0-.6-.1 0-.1.1-.1.4 0 .3-.2.7-.7.7.1-.1.2-.6.1-.7-.1-.1-.2.1-.3.1s-.2-.1-.2-.2-.2 0-.2-.1.2-.3.4-.3c.2-.1.6-.2.6-.4-.1-.2-.9.1-1.1.3-.4.3-.2-.1-.3-.2-.2-.4 0-.4.2-.7.2-.2.8-.7 1.5-1 0-.2.1-.3.3-.4.2-.1.6-.2.8-.3l-3.8-4c-.1-.1-.1-.1 0-.2 0 0 .1 0 .2.1l4 3.9c.3-.6.4-.9.3-1.3.4.2.9.7 1 1.2 1.2 0 1.6.8 1.9.4 0 .2-.1.3-.6.4 1.5.3 1 1.3 1.8 1.4-.1.1-.3.2-.6.1.9 1.3 0 2.1.7 2.8-.2.1-.7-.1-.9-.6.2 1.1-.1 1.7.1 2.1-.3.1-.6-.2-.7-.6-.1.2-.1.4-.2.7l.3.1-.1.1c-.6.6-.8.9-.9 1l-.1.1-.1-.1c-.3.4-.7.8-.7 1.2 0 .4.6 1.3 1.2 2.1v-.2c0-.1.1-.3.2-.4.1-.1.2-.1.4-.1s.4.1.6.3c.1.2.2.3.2.6 0 .1-.1.3-.2.4-.1.1-.2.1-.4.1-.1 0-.3-.1-.4-.1.4.6.9 1.2 1.1 1.7.4.9.9 1.4 1.3 1.4.6 0 1.1-.4 1.1-1.1 0-2.3-3-2.6-3-5.2 0-1.2 1-1.8 1.7-1.8.4 0 .7.1.9.3h.2c1.5 0 .6 1.9 1.7 2-.3.5-1 .2-1.3-.7zM30.3 10c.3-.2.8-.3 1.2-.3-.3-.1-.6-.3-.8-.3-.4-.1-.3.4-.4.6zm-2.7 5.5c0-.1 0-.3-.1-.3 0 0-.1-.1-.2-.1s-.1 0-.2.1-.1.2-.1.3c0 .2.1.4.3.4.1 0 .1 0 .2-.1 0 0 .1-.1.1-.3zm8.7 12.6v.2c.1.2.4.2.7 0 .1-.1.2-.2.2-.3v-.2c-.1-.1-.1-.1-.2-.1s-.3 0-.4.1c-.2.1-.3.2-.3.3zm-1.9-8.3c0 .1.1.3.2.4.1.1.2.2.4.2.1 0 .1 0 .2-.1s.1-.1.1-.2-.1-.3-.2-.4c-.1-.1-.2-.2-.4-.2-.1 0-.1 0-.2.1s-.1.1-.1.2zm-.8-3.2c.3-.3.9-1 .9-1l-.3-.3v.6c-.1-.1-.2-.2-.2-.3l-.2.3c.1 0 .3 0 .3.1-.2.2-.6.1-.7 0-.2-.2-.3-.3-.3-.4.1-.1.3-.1.4.1.2 0 .2-.2.2-.3-.1-.1-.2-.1-.3-.1.3-.2.6-.4.4-.9-.4.1-.6.3-.7.7 0-.1-.1-.3-.2-.3s-.3.1-.3.3c.2-.1.4.1.3.3-.1.1-.3.1-.6 0-.3-.4-.3-.6-.1-.9.1.1.1.2.1.4l.3-.6c-.1 0-.2.1-.3 0 .1-.1.2-.2.4-.3l-.7-.2c.1.2 0 .4 0 .6-.1-.1-.2-.2-.2-.3l-.3.6c.1-.1.3-.1.4-.1-.1.2-.4.3-.7.2-.2-.1-.3-.3-.3-.4.1-.1.3-.1.4.1.2-.1.2-.3.1-.4-.1-.1-.2-.1-.4 0 .3-.3.4-.6.3-1-.3.1-.6.4-.6.8 0-.1-.1-.2-.2-.2s-.3.1-.2.3c.2-.1.4.1.3.3-.1.1-.2.1-.6 0-.2-.1-.4-.2-.3-.6.1 0 .2.2.3.2l.1-.4h-.3c.1-.1.3-.2.4-.3l-.4-.2s-.2.9-.4 1.3l4.2 2.3zm0 7.9c.1-.2.1-.6 0-.7-.2-.1-.4 0-.7.2-.1.2-.1.6 0 .7.1.1.5 0 .7-.2zm1.1-1.9c.1-.2.1-.6 0-.7-.2-.1-.4 0-.7.2-.1.2-.1.6 0 .7.3.1.6 0 .7-.2zM27.4 18c.2-.1.4 0 .7 0 .2.1.3.3.4.4v.4l-.3.3c-.2.1-.4 0-.7 0-.5-.1-.6-.4-.5-.8.1-.2.2-.3.4-.3zm.2 1c.1.1.3.1.4 0 .1 0 .1-.1.2-.1v-.2c0-.1-.1-.2-.3-.3-.1-.1-.3-.1-.4 0-.1 0-.1.1-.2.1-.1.1.1.3.3.5zm4.8 7.2c.1-.1.2-.2.4-.2s.3.1.4.2c.1.1.2.3.2.6 0 .2-.1.4-.2.6-.1.1-.2.2-.4.2-.1 0-.3-.1-.4-.2-.1-.1-.2-.3-.2-.6 0-.2 0-.5.2-.6zm.3 1.1c.1 0 .2 0 .2-.1.1-.1.1-.2.2-.4 0-.3-.1-.6-.3-.6-.1 0-.2 0-.2.1-.1.1-.1.2-.2.4 0 .2 0 .3.1.4.1.1.1.2.2.2zm-4.8-13.8c.2-.1.3-.2.6-.2.1 0 .2.1.3.2s.1.2.1.4-.1.3-.3.6c-.3.2-.8.2-.9 0-.1-.3 0-.6.2-1zm0 .7v.2c.1.1.3.1.6 0 .1-.1.2-.2.2-.3v-.2c0-.1-.1-.1-.2-.1s-.2 0-.3.1c-.2 0-.3.2-.3.3zm5.7 13.7c.2-.1.4-.2.7-.1.4.1.8.4.7.8 0 .2-.1.3-.3.4-.1.1-.3.1-.6.1s-.3-.1-.6-.2c-.1-.1-.2-.3-.1-.6-.1-.2 0-.3.2-.4zm.4.9c.3 0 .6-.1.6-.3 0-.2-.2-.3-.4-.4-.2 0-.3 0-.4.1 0 0-.1.1-.1.2-.2.1 0 .3.3.4zm3.3-1.9c0-.6.4-1 1-1s1 .4 1 1-.4 1-1 1c-.5 0-1-.4-1-1zm.3 0c0 .4.3.8.8.8s.8-.3.8-.8c0-.4-.3-.8-.8-.8-.4.1-.8.5-.8.8zm-23.3-5.8c-.1.3.1.3.1.7 0 .3-.2.4-.6.6.2-.4 0-.7-.3-.8.1.8-.6.9-.8.8.2 0 .3-.4.2-.8-.1.2-.4.4-.7.4s-.4-.2-.6-.4c.3.2.6 0 .6-.2 0-.1-.3-.2-.3-.4 0-.6.6-.3.6-.8 0-.2-.1-.3-.2-.3s-.3.1-.3.3c-.3-.2 0-.9-.1-1.2 0 .7-.4.6-.6.9-.2-.2 0-.7-.2-1.2-.1.6-.3.4-.3.9-.6-.3-1.7-.2-2 .2 1 .8 2.2 1.2 2.2 2.4 0 .9-1.5 1.3-1.5 1.9 0 .6 1.5 2 2.2 2 .2 0 .3-.3.6-.3h.6c.2 0 .3.2.3.3.3 0 .8.6.3 1-.1-.2-.3-.6-.8-.3.2.4 0 .8-.4 1 .1-.2.2-.6-.1-.6s0 .2-.7.2c-.6 0-.6 0-.8-.3-.2-.3-.4-.4-.6-.4s-.2.3 0 .6c-1.2 0-.7-1.2-1.3-1.6v.9c-.4-.5-.8-.9-.8-1.3-.1-.3 0-.6-.3-.8-.1 0-.2-.1-.2-.3 0-.1.1-.1.3-.2.2-.1.6-.3.6-1 0-.4-.1-1.1-.9-1.7.1 1 0 1.9-.4 2.7-.6 1-1.7 1.7-2.2 1.9-.6.2-1.3.4-1.3 1.2 0 1.4.7 2.2 1.2 2.2.4 0 .3-.4.9-.4.2 0 .6.1.6.3.3-.1.7.1.7.4 0 .3-.1.4-.3.6.2-.4-.3-.4-.4-.4-.1.1 0 .2 0 .4s-.1.4-.4.6c.1-.1.1-.3-.2-.3-.2 0-.3.4-.7.4-.6 0-.7-.2-1.2-.1-.3.1-.3.3-.2.3-.7 0-.6-.8-.4-.9.1-.1.2-.2 0-.4-.2-.1-.6 0-.7.3-.6-1.1.2-1 0-2.2-.1.6-.4.9-.7 1 .1-.2-.1-.8-.1-1.2 0-.9.6-1.2.6-1.4 0-.2-.2-.4 0-.6.1-.1.3.1.6.1.7 0 1.2-.9 1.3-2 .1-1.2.7-2.1 1.1-3 0-.1 0-.3.1-.4-.6.7-1 1.6-1.7 2.1.1.8-1.5 1.7-2.3 1 .3 0 .8-.1 1-.6-.1 0-.2 0-.3-.1-.6.3-1.3-.1-1.3-.7.2.2.4.3.8.2.2-.1.1-.4.1-.8 0-2.3 3.6-3.9 3.6-5.8 0-.6-.3-.9-.8-.9-.2 0-.4.1-.7.2.2.1.3.3.3.6 0 2.1-3.5 1.9-3.7 3.3-.1-1.8 2-1.4 2.1-2.9-.4.7-1.2 1.1-1.7.9 1.1 0 .8-2.2 2-2.2.1 0 .2 0 .4.1.3-.3.8-.4 1.1-.4.6 0 1.3.3 1.3 1.3 0 2.2-3.6 3.7-3.6 5.8 0 .7.4 1 1 1 1.2 0 2.1-2.2 3.5-4.1.9-1.2 1.5-3.7 2-4.9-.7.4-.8 1.8-1.6 1.9.4-.3.1-1.4.4-2.3.1-.3.1-.6.1-.9-.4.6-.3 2.2-1.1 2.4.3-.3 0-.9 0-1.4 0-1 .6-1.1.6-2.1-.4.2-.3 1.4-1.2 1.4.7-.7 0-1.3.8-2.1-.4-.2-.8-.6-.8-.9.3-.2.7-.3 1-.3-.3-.2-.2-.4 0-.7.1.2.2.3.3.3.3-.1.8-.6 1.5-.8.5-.2 1.3-.5 1.6-.5.1 0 .1-.2.1-.3.2 0 .6 0 .7.3.2-.2.6-.3.9-.3.2.4.2.8 0 1.2.4 0 .7.4 1.1.3-.3.4-.8.3-1.2.2 1.2.3 1.5 1.6 2.1 1.7-1.2.7-1.7-.3-2.3-.3 1.7.9 1.7 1.9 2.1 1.9-.6.4-.9-.1-1.6-.3 1.3.9 1.3 1.6 1.2 2.1.3.2.2.6.2 1 .2-.1.6-.2.8-.2-.1.1-.2.2-.2.3-.7.8-1.1 1.4-1.5 2.4-.3-.2-.6-.6-.8-.7-.2-.2-.6-.2-.7-.2.4.4 1.8 2 2.2 2.4.4.4.3.8.4 1.2.4.4.8.7.7.9zM7.5 10.2c.4 0 .6-.6.4-.9-.4.2-1 .3-1.3.4.5.2.5.5.9.5zm2.3 2.5c.4-.2.4-.7.3-.9-.1-.2-.2-.4-.3-.4-.2 0-.4-.1-.4-.3-.1-.2.2-.3.4-.6-.2-.1-.4-.2-.2-.3.2-.1.4.1.4 0 .1-.1-.1-.2-.2-.3s-.2-.1-.3 0l-1.2.4c-.1 0-.3 0-.3.1s-.1.3 0 .3.1-.3.3-.3.2.1 0 .4c.4 0 .6-.1.7.2.1.2 0 .3-.1.6-.1.1 0 .3 0 .6.1.2.5.7.9.5zm.1-3.5c.2-.2 0-.4.3-.9-.3.2-.8.5-1.3.7.3.3.7.5 1 .2zm-.7-3.1c.1.1.1.2.1.3-.1 0-.1-.1-.3-.2v.6c.1-.1.2-.1.2-.2 0 .3-.1.6-.3.6l-.3-.3c0-.1.1-.2.2-.1 0-.3-.2-.3-.3-.2.1-.4.1-.6-.2-.7-.3.3-.1.4.1.6-.2-.1-.5.1-.2.4 0-.2.2-.1.2 0s-.1.3-.4.4c-.3.1-.4-.1-.5-.3.1 0 .2 0 .4.1l.1-.5c-.1.3-.2.3-.3.4 0-.1.1-.4.1-.4l-.7.2s.3.1.4.2c0 0-.1.1-.4 0l.2.4c0-.2.1-.3.2-.3.1.2.1.4-.2.6-.2.2-.4.1-.4 0-.1-.1 0-.3.2-.2 0-.3-.3-.3-.3-.1 0-.3-.1-.6-.4-.6-.1.3 0 .6.3.7-.2 0-.3.1-.1.3 0-.2.1-.2.2-.1s0 .2-.1.3c-.1.1-.3.1-.6-.2h.2L6 7.3v.3c-.1-.1-.1-.1-.1-.3l-.2.2c.2.2.6.5.9.9.3-.2 1-.6 1.5-.7.4-.2 1.1-.4 1.6-.4-.1-.6 0-1 0-1.2h-.5zm-2.7-.7l.2.4.1-.3v.6c0 .1.1.3.3.3.1 0 .3-.1.3-.3 0-.1-.1-.2-.1-.2 0-.1-.2-.3-.3-.4h.4v-.4l-.4.2v-.4l-.4.1.2.3-.3.1zm1.4.4c.1-.2.1-.3 0-.4-.1-.1-.2-.1-.3 0-.1.1-.1.2 0 .3.1.1.2.1.3.1zm.6-.5c.1-.1.1-.2 0-.3s-.2-.1-.3 0-.2.2 0 .3c.1.1.2.1.3 0zm.5.1c.1-.1.1-.2 0-.3s-.2-.1-.3 0c-.1.1-.1.2 0 .3.1.1.3.1.3 0zm.2.5c.1.1.2.1.3 0s.1-.2 0-.3h-.3c-.2 0-.2.3 0 .3zm-2.7.4c.1 0 .2-.1.2-.2s-.1-.2-.2-.2-.2.1-.2.2.1.2.2.2zm-.7.1c.1 0 .2-.1.2-.2S6 6 5.8 6c-.1 0-.2.1-.2.2s.1.2.2.2zm-.1.2c0-.1-.1-.2-.2-.2s-.2.1-.2.2.1.2.2.2.2 0 .2-.2zm.1.7c0-.1-.1-.2-.2-.2s-.2.1-.2.2.1.2.2.2.2-.1.2-.2zm15.7 16.9c-.1 0-.1.1-.1.1 0 .1 1-.1 1 .1 0 .1-.2.2-.6.2h-.1c0 .1.1.1.1.1v.1s0 .1 0 0h-.1s-.1 0 0 .1h-.1v-.1h-.1v-.1h.1l.1.1.1-.1-.1-.1h-.3c.1.1.1.2.1.3v.1h-.1s0 .1-.1.1H21c0-.1.1 0 .1-.1 0 0 0-.1.1-.1s.1.1.2.1h.1-.1v-.1c-.1 0-.1.1-.2.1 0 .1-.1.2-.1.2l-.1.1c-.1 0-.1 0-.1.1v-.1h-.1l-.1.1v-.1s0 .1-.1.1c0 0-.1 0-.1-.1v.2s-.1 0-.1-.1v-.1c-.1.1-.1 0-.1 0s0-.1.1-.1h.1c-.1 0-.1 0-.1-.1h.1v.1h.4v-.1c-.1 0-.1 0-.1-.1-.4-.2-.4-.3-.4-.3-.1 0-.2 0-.1-.1 0 .1.1.1.1 0 0 0-.1 0 0-.1v-.1h.1-.1.1l.1.1h.1v.1c0 .1 0 .1.1.1s.1.2.2.2v-.2s0-.1.1-.1l.1-.1v-.1h.2s.1 0 .1.1h.1s0 .1-.1.1c0 0 0 .1-.1.2.4-.1.8 0 .9 0 .2 0 .4-.1.4-.1 0-.1-1 .1-1-.1-.4-.4-.3-.4-.2-.4 0 0 0-.1 0 0 .2-.2.6 0 .7-.1 0 0-.2.1-.3.1.3.1.4-.1.8 0-.3-.1-.7.3-1.2 0 0 .1 0 0 0 0zm-.7 0c0 .1 0 .1 0 0 .1.1.1.1 0 0 .1.1.1.1 0 0zm0 0s-.1 0 0 0c-.1 0-.1 0 0 0-.1.1 0 0 0 0zm-.1.3s0 .1 0 0c0 .1.1.1 0 0 .1 0 .1 0 0 0 .1 0 .1 0 0 0 .1-.1.1-.1.1 0h-.1c0-.2 0-.2 0 0 0-.2.1-.2 0 0zm1.1-1.6c-.1 0-.3 0-.3.1s.7.1.9.1c.3 0 .3.1.3.1 0 .1-.3.1-.6.1h.3c.1 0 0 0 0 0h.1v.2h-.1c0 .1-.1 0-.1.1v.1h-.1v-.1s0 .1-.1.1 0-.1.1-.1H22s0-.1.1-.1h.1v-.1h-.5v.1s.1.1 0 .1h-.1s0 .1-.1.1h-.3c0-.1.1 0 .1-.1h-.1s0-.1.1-.1.1.1.2.1h.1-.1c-.1 0 0-.1 0-.2h-.1c-.4-.1-.2.1-.4.1 0 0 0 .1-.1.1 0 .1-.1.2-.2.1-.1 0-.2 0-.2.1v-.1h-.1c0 .1-.1.1-.1.1v-.2s0 .1-.1.1c0 0-.1 0-.1-.1v.2s-.1 0-.1-.1v-.1c-.1.1-.1 0-.1 0s0-.1.1-.1h.1c-.1 0-.1-.1-.1-.1h.1v.1c0 .1.2 0 .2 0h.2v-.1h-.1c-.1-.1-.1 0-.1 0-.1 0-.2 0-.1-.1 0 .1.1.1.1 0-.1 0-.1 0 0-.1v-.1s0-.1.1 0h-.1.1l.1.1h.1v.1c0 .1 0 .1.1.1h.1v-.1s0-.1.1-.1l.1-.1V23h.2s.1 0 .1.1h.1s0 .1-.1.1c0 0 0 .1-.1.2.3-.1 1 0 1.2 0 .1 0 .4 0 .4-.1 0 0 0-.1-.2-.1s-1 .2-1-.1c-.2-.3.1-.3.2-.2.1-.1.1-.1 0 0 .2-.2.6 0 .7-.1 0 0-.2.1-.3.1.3.1.4-.1.8 0-.3-.1-.8.1-1.2 0 .1 0 .1 0 0 0zm-.9 0s-.1-.1 0 0c-.1 0-.1 0 0 0zm.1.1s-.1 0 0 0l-.1-.1c-.1.1 0 .1.1.1h-.1v.1l.1-.1c-.1.1-.1.1 0 0-.1.1-.1.1 0 0-.1 0-.1 0 0 0-.1 0-.1 0 0 0-.1 0-.1 0 0 0zm0 0c0-.1 0-.1 0 0 0-.1 0 0 0 0zm2.2-.9s0 .1 0 0c0 .1 0 .1 0 0 0 .1 0 .1 0 0v.1c0 .1-.1 0-.1.1 0 0 .1 0 0 .1H23v-.1s0 .1-.1.1v-.1h-.2s0-.1.1-.1h.1v-.1h-.2c-.1 0-.1.1-.2.1h-.2v.1s.1.1 0 .1h-.1s0 .1-.1.1h-.3c0-.1.1 0 .1-.1h-.1s0-.1.1-.1.1.1.2.1h.1-.2c-.1 0-.1-.1 0-.2 0 0 0 .1-.1.1-.6-.1-.3.2-.8.1 0 0 0 .1-.1.1h-.1l-.1.1c-.1 0-.1 0-.2.1v-.1h-.1c0 .1-.1.1-.1.1v-.2s0 .1-.1.1c0 0-.1 0-.1-.1v.2s-.1 0-.1-.1v-.1c-.1.1-.1 0-.1 0s0-.1.1-.1h.1c-.1 0-.1-.1-.1-.1h.1v.1c0 .1.2 0 .2 0h.2s-.1-.1 0-.1v-.1h-.1l-.2-.2v-.1c-.1 0-.2 0-.1-.1 0 .1.1.1.1 0-.1 0-.1-.1 0-.1v-.1s0-.1.1 0c0 0-.1 0-.1-.1h.1s0 .1.1.1h.1v.1c0 .1 0 .1.1.1s.1.1.2.1v-.1s0-.1.1-.1l.1-.1v-.1h.3s.1 0 .1.1h.1s0 .1-.1.1c0 0 0 .1-.1.2.4-.1 1.5 0 1.7 0 .1 0 .4 0 .4-.1 0 0 0-.1-.3-.1-.2 0-1.3.2-1.3-.1 0-.2.3-.1.7-.1.1-.1.6 0 .7 0 0 0-.2.1-.3.1.3.1.4-.1.8 0-.2-.1-.7.2-1.1.1h-.1c-.2 0-.6 0-.6.1 0 .2.9.1 1.2.1.3 0 .4.1.4.1 0 .1-.3.1-.4.1h.3c-.4-.1-.4-.1-.3 0-.1 0 0-.1 0 0zm-2.2-.5s0 .1 0 0c.1.1.1.1.1 0H21zm-.1 0s0-.2 0 0c0 0-.1 0 0 0zm-.1.2c.1.1.1 0 0 0 .1 0 .1 0 0 0 .1 0 .1-.1 0 0l.1-.1h-.1c.1 0 .1 0 0 .1.1-.1.1-.1 0 0 .1-.1 0 0 0 0zm-1.9-2c0 .1-.3.1-.4.1h.5v.2c0 .1-.1 0-.1.1 0 0 .1 0 0 .1h-.1v-.1.1-.1h-.2s0-.1.1-.1h.1V20h-.2c-.1 0-.1.1-.2.1h-.2v.1s.1.1 0 .1H18s0 .1-.1.1h-.3c0-.1.1 0 .1-.1h-.1s0-.1.1-.1.1.1.2.1h.1-.1c-.1 0-.1-.1 0-.1h-.1c-.6-.1-.3.2-.8.1 0 0 0 .1-.1.1l-.1.1h-.1c-.1 0-.2 0-.2.1v-.2h-.1c0 .1-.1.1-.1.1v-.2s0 .1-.1.1c0 0-.1 0-.1-.1v.2s-.1 0-.1-.1v-.1c-.1.1-.1 0-.1 0s0-.1.1-.1h.1c-.1 0-.1-.1-.1-.1v.1c0 .1.2 0 .2 0h.2v-.1h-.1l-.2-.2v-.1c-.1 0-.2 0-.1-.1 0 .1.1.1.1 0-.1 0-.1-.1 0-.1v-.1s0-.1.1 0c0 0-.1 0-.1-.1h.1s0 .1.1.1h.1v.1c0 .1 0 .1.1.1s.1.1.1.1v-.1s0-.1.1-.1l.1-.1v-.1h.3s.1 0 .1.1h.1s0 .1-.1.1c0 .1 0 .1-.1.2.5-.1 1.5 0 1.8 0-.4.1-.1 0 0 0-.1-.1-.1-.1-.4-.1-.2 0-1.3.2-1.3-.1 0-.2.3-.1.7-.1.1-.1.6 0 .7 0 0 0-.2.1-.3.1.3.1.6-.1.8 0-.3-.1-.7.2-1.1.1h-.1c-.2 0-.6 0-.6.1 0 .2.9.1 1.2.1.3-.3.4-.2.4-.1zm-2.3-.2c.1.1.1.1.1 0h-.1zm-.1-.2s-.1 0 0 0c-.1 0-.1 0 0 0 0 .2 0 0 0 0zm-.1.3c0 .1 0 .1 0 0 0 .1.1.1 0 0 .1.1.1 0 0 0 .1 0 .1 0 0 0l.1-.1h-.1c.1 0 .1 0 0 .1.1 0 .1 0 0 0 .1 0 0 0 0 0zm2.6-1.4c0 .1-.3.2-.6.2h.6v.2h-.1c0 .1-.1 0-.1.1 0 0 .1 0 0 .1h-.1v-.1.2-.1h-.2s0-.1.1-.1h.1v-.1h-.2c-.1 0-.1.1-.2.1h-.2v.1c.1 0 .1.1 0 .1H18s0 .1-.1.1h-.1.1-.2c0-.1.1 0 .1-.1h-.1s0-.1.1-.1.1.2.2.1h.1-.1c-.1 0-.1-.1 0-.2h-.1c-.4-.1-.2.2-.6.2h-.1c0 .1-.2.2-.2.2-.1.1-.1 0-.2.1v-.2h-.1c0 .1-.1.1-.1.1V19s0 .1-.1.1c0 0-.1 0-.1-.1v.2s-.1 0-.1-.1V19c-.2 0-.2-.1-.2-.1s0-.1.1-.1h.1c-.1 0-.1-.1-.1-.1H16v.1c0 .1.2 0 .2 0h.2v-.1h-.1c-.1 0-.1-.1-.1-.1v-.1c-.1 0-.2 0-.1-.1 0 .1.1.1.1 0-.1 0-.1-.1 0-.1v-.1s0-.1.1 0c0 0-.1 0-.1-.1h.1s0 .1.1.1V18s.1 0 .1.1v.1c0 .1 0 .1.1.1s.1.1.1.1h.1v-.1s0-.1.1-.1l.1-.1V18h.3s.1 0 .1.1v.1h.1s0 .1-.1.1c0 0 0 .1-.1.2.4-.1 1.1 0 1.3 0 0-.1.3-.1.4-.2-.1-.1-.1-.1-.4-.1-.2 0-1.1.2-1.1-.1 0-.1.2-.1.4-.1.2-.1.4 0 .6-.1 0 0-.1.1-.2.1.3.1.6-.1.9.1-.2-.1-.8.1-1.1 0H18c-.2 0-.3 0-.3.1 0 .2.7.1 1 .1.2-.1.3-.1.3 0zm-2.5.3c-.1 0-.1 0 0 0zm.5-.5c.1.1.1.1.1 0H17zm-.1-.1s-.2 0 0 0c0 .1 0 .1 0 0zm-.2.3c.2.1.2 0 0 0 .2 0 .2 0 0 0 .2-.1.2-.1 0 0l.1-.1h-.1c.2 0 .2 0 0 .1.2-.1.2-.1 0 0 .2-.1 0-.1 0 0zm1.8-1.2c.1 0 .2.1.3.1h.2v.2c0 .1-.1 0-.1.1 0 0 .1 0 0 .1h-.1v-.2h-.2s0-.1.1-.1h.1v-.1h-.4v.2h-.1v.1h-.4c0-.1.1 0 .1-.1h-.1s0-.1.1-.1.1.1.2.1h.1-.1v-.2h-.1c-.3 0-.1.1-.2.1 0 0-.1.1-.2.1v-.1h-.1l-.1.1c-.1 0-.1 0-.1.1v-.1h-.1l-.1.1v-.1s0 .1-.1.1c0 0-.1 0-.1-.1v.2s-.1 0-.1-.1v-.1c-.1.1-.1 0-.1 0s0-.1.1-.1h.1c-.1 0-.1 0-.1-.1h.1v.1h.3s.1 0 .2-.1l-.1-.1c-.1 0-.2 0-.1-.1 0 .1.1.1.1 0-.1 0-.1 0 0-.1v-.1h.1-.1.1v.1h.1v.2l.1.1V17s0-.1.1-.1l.1-.1v-.1h.4s0 .1-.1.1c0 0-.1.1-.1.2.1-.1.2 0 .4.1.3-.1.5-.1.5-.2 0-.2-.9 0-.9-.3 0 0 0-.1.1-.1v-.1c.1-.1.2-.1.3-.2 0 0 0 .1-.1.2.2 0 .2-.3.7-.2-.3.1-.3.3-.8.4l-.1.1c0 .2.9 0 .9.3-.1 0-.2.1-.6.1zm-.7-.4c0 .1 0 .1 0 0 .1.1.1.1 0 0 .1.1 0 0 0 0zm0 0c-.2 0-.2 0 0 0-.2 0-.2 0 0 0-.2 0-.2 0 0 0zm-.2.2c-.1 0-.1 0 0 0 0 .1 0 0 0 0 .1-.1.1-.1.1 0h-.1c0-.1 0-.1 0 0 0-.1 0-.1 0 0zm1.3 5.1c.1 0 .1 0 .1.1s-.1.1-.2.1l-.1 2.4h.1v.2c0 .1-.1.1-.2.1 0 .3-.2.4-.4.4-.1 0-.3-.1-.3-.3 0-.1.1-.2.2-.2s.1 0 .1.1-.2 0-.2.1 0 .1.1.1.2-.1.2-.2c0-.2-.2-.2-.4-.2-1.3-.4-2.1-1.8-2.1-2.8h-.1l.1-.2-.1.1c-.1 0-.2-.1-.2-.2s.1-.2.2-.2.2.1.2.2l.1-.2c.2.1.6.2.9.2.7 0 1.2-.3 1.5-.3.2.1.4.4.5.7zm-2.6.2c-.1 1.2.8 2.1 1.7 2.4l-1.7-2.4zm1.8 2.3c0-.1 0-.3.1-.4l-1.3-1.8h-.3l1.5 2.2zm.1-.8c0-.1 0-.3.1-.4l-.8-1.1c-.1 0-.2.1-.3.1l1 1.4zm.2-1.7c0-.2 0-.3-.1-.3s-.4.1-.7.2l.7 1c0-.2.1-.4.1-.7v-.1c-.1 0-.1-.1-.1-.1h.1zm4.3-2.6c.1 0 .1-.1.1-.1h-.1s.1 0 0-.1c0-.1-.1-.1-.1 0s-.4 0-.4-.3l.1.1h.1c.1 0 .1-.1.1-.1 0-.1-.1-.2-.3-.3-.1 0-.1-.1-.1-.1 0-.1 0-.2-.1-.4v-.2c-.1.1-.1.3.1.6.1.1.4.3.4.4 0 0 0 .1-.1.1h-.1s-.1 0-.1-.1c-.1-.1-.2-.3-.3-.4-.1-.2-.1-.3-.1-.6.1-.1-.1-.4-.1-.6v-.1h-.1s0-.1-.1-.1-.1 0-.1-.1c0 0 0 .1-.1.1h-.4c-.1 0-.1 0 0 .1v.2-.1h.1v.1h-.1v.1h.3c0 .1-.2.1-.2.3l-.1-.1-.1-.1-.1-.1c-.1 0-.1-.1-.1-.1v-.1l-.1-.1v.2s0-.1-.1-.1c0 0 0-.1-.1 0 0 0 0 .1.1.1h-.1v.2h-.1c-.1.1 0 .2.1.1v.3c0 .1.1.2.3.3l-.2.2s-.1.1-.2.1l-.1-.1h-.2.2-.1s-.1.1 0 .1v-.1s.1.1.1 0v.1s.1.1.1 0l-.1-.1v-.1s0 .1.1 0v-.1h.2s0-.1.1-.1h.1s0-.1.1-.1c0 .3.3.2.4.4-.1 0-.2-.1-.3-.1s-.2.1-.2.2.1.2.1.3h-.2c-.1 0-.1-.1-.2-.1 0 0-.1 0-.1.1h.1s-.1 0-.1.1c0 0 0 .1.1 0 0 0 0 .1.1 0h.1s0-.1.1 0h.2v-.1c0-.1-.1-.1-.1-.1 0-.1.1-.2.2-.2 0 .1.1.3.3.4.1 0 .2-.1.2-.1v.1h-.1s-.1 0-.1.1h.1s.1.1.1 0c0 0-.1.1 0 .1s0-.1.1-.1v.1h.1v-.1s.1 0 .1-.1c1 .6 1 .6 1 .4 0 .2 0 .2 0 0 0 .2 0 0 0 0zm.7.6c.1 0 .2.1.2.2l-.1.1s.1.1.1.2c-.1 0-.1 0-.2-.1 0 .1 0 .1-.1.1s-.2 0-.2-.1c0 .1.2 0 .1 0h-1.5c0 .1 0 .2-.1.3-.1-.1-.1-.2-.1-.3h-1.3c0 .1.1.1.1 0 0 .1-.1.2-.2.2H20s-.1.1-.2.1c0-.1 0-.1.1-.2-.1 0-.1 0-.1-.1s0-.2.2-.2c-.1 0 0 .2 0 .1v-1.9c-.1 0-.2 0-.3-.1.1-.1.2-.1.3-.1v-1.8c-.1 0-.1.1 0 .1-.1 0-.2-.1-.1-.2l.1-.1s-.1-.1-.1-.2c.1 0 .1 0 .2.1 0-.1 0-.1.1-.1s.2 0 .2.2c0-.1-.1-.1-.1 0 .3.1.8.2 1.1.4.3.2.7.6 1 .9l.1.1c0-.1.1-.1.3-.1-.2.3-.3.3-.3.3.4.7.8 1.4.9 2.3V20zm-1.3-2.3c-.2-.3-.6-.6-.9-.8-.2-.2-.6-.3-.9-.4v.2c-.1 0-.1 0-.1-.1v1.2c.1 0 .1 0 .1.1v.1c.1 0 .1 0 .2.1-.1.1-.1.1-.2.1.1 0 .1.1 0 .1l-.1.1V20s.1-.1.2-.1c0 .1 0 .1-.1.2h1c0-.1 0-.1.1-.1h.1c0-.1 0-.1.1-.2.1.1.1.1.1.2 0-.1.1-.1.1 0l.1.1H23s-.1-.1-.1-.2h.1c-.1-.7-.3-1.2-.7-1.8h-.1s-.1-.1 0-.1c0 0-.1.1-.2 0 0-.1 0-.1.1-.2v-.1zm4.2 2.7v.4c0 1-.2 2.1-.6 3-.3.9-.9 1.8-1.5 2.4-.3.3-.7.7-1 .9-.1.1-.4.2-2-.2-.2 0-.3-.1-.6-.1 0-.2 0-.3.1-.4.1-.2.1-.3.2-.4.1 0 .1-.1.2-.1.6-.2 1-.7 1.5-1.2.4-.6.8-1.1 1-1.8.2-.7.3-1.3.3-2h-4.5v5c.3 0 1 .1 1 .1-.1.2-.2.4-.2.8-.6-.1-1-.3-1.6-.6.4-.2.6-.2.8-.2v-4.9h-4.7c0-.2-.1-.6-.2-.7-.2-.3-.3-.4-.3-.9 0-.2-.1-.6-.3-.8-.1-.1-.7-.8-.8-.9.3-.9.9-1.8 1.5-2.4.4-.4.9-.9 1.5-1.2-.2-.2-.6-.4-.6-.9 0-.2.1-.4.2-.6-.3-.9-.8-2-1.2-2.6l.9-.4c-.2.3-.2.8-.2 1 .2-.2.4-.4.6-.7 0 .3.2.8.3 1-.2 0-.4-.1-.8 0 .1.2.6.6 1.1.3.3-.1.7-.2.7-.6 0-.1-.1-.3-.3-.3s-.2.3-.1.4c-.2-.1-.6-.9-.1-1 .3-.1.7.3.8.7 0-.2.2-.7.6-.7.4 0 .3.8.1 1 0-.2-.2-.4-.3-.4s-.2.1-.2.3c0 .2.3.4.8.4.3 0 1.1-.1 1.1-.9-.2 0-.7.2-.8.4V9.4c.2.3.6.6.8.6-.1-.3-.3-.7-.7-.9h1.7c-.3.2-.6.6-.7.9.2 0 .6-.2.8-.4v1.2c-.2-.2-.6-.4-.8-.4.1.8.8.9 1.1.9.4 0 .8-.1.8-.4 0-.2-.1-.3-.2-.3s-.2.1-.3.4c0-.2-.2-1.1.2-1.1.3 0 .4.3.6.8.1-.3.4-.8.8-.7.3.1.1.9-.1 1 .1-.1 0-.4-.1-.4-.2 0-.3.1-.3.3 0 .2.3.4.7.6.6.1 1-.2 1.1-.4-.2-.1-.4-.1-.8.1.1-.2.3-.8.3-1 .1.3.2.6.6.7 0-.2 0-.7-.2-1l.9.4c-.4.4-1 1.6-1.2 2.6.2.1.3.3.3.7 0 .4-.2.7-.6.9.6.3 1 .8 1.5 1.2.3.3.6.8.9 1.2 0 0-.1.1-.1.2-.1.1-.2.2-.2.3-.1.1-.1.2-.1.3 0 .1 0 .2.1.4l1 2c-.6 0-.4.2-.2.3zm-7-5c-.6 0-1.2.1-1.8.4-.6.2-1.1.7-1.5 1.2-.4.6-.8 1.1-1 1.8-.2.7-.3 1.3-.3 2.1h4.6v-5.5zm.1-2.2c1.6 0 2.6.4 3.2.9.3-.2.6-.4.6-.7 0-.9-2.5-1-3.7-1-1.2 0-3.7.1-3.7 1 0 .2.1.4.6.7.5-.4 1.5-.9 3-.9zm4.7 7.7c0-.7-.1-1.4-.3-2.1-.2-.7-.6-1.2-1-1.8-.4-.6-.9-.9-1.5-1.2-.6-.2-1.1-.4-1.7-.4v5.5h4.5zm11 11.1c0-.1-.1-.1-.1-.1-1.5.4-3.2-.8-4.9-1.9-1.5-1-2.8-1.9-4-1.9-.4 0-.8.1-1.1.2-.4.2-.7.6-.9 1.1-.2.4-.4.8-.6 1.1-.2.3-.3.6-.3.8 0 .2.1.4.3.7.1.2.4.3.8.6.1 0 .1.1.2.1.3.1.4.2.4.4-.6.2-1.3.4-2.1.6-.9.1-2 .2-3.1.2s-2.1-.1-3.1-.2c-.9-.1-1.6-.3-2.1-.6 0-.2.2-.3.6-.4.1 0 .1-.1.2-.1.3-.1.6-.3.8-.4.2-.2.3-.3.3-.6s-.1-.6-.3-.8c-.1-.2-.3-.6-.6-1.1-.2-.4-.6-.9-.9-1.1-.3-.2-.7-.2-1.1-.2-1.2 0-2.6.9-4 1.9-1.8 1.1-3.6 2.3-4.9 1.9-.1 0-.1 0-.1.1s0 .1.1.1c.4.2.8.4 1.2.8.6.4 1 .8 1.6.8.6 0 1.1-.1 1.8-.6.6-.3 1.2-.7 1.8-1.1 1.1-.8 2.3-1.6 3.5-1.7l-.3.3c-.3.3-.7.6-.7 1.1 0 .4.1.7.3 1.1.1.1.1.2.2.4s.2.4.2.8c0 .1.1.3.1.4.1.2.2.8 1 1.2 1 .4 2.6.8 4.9.8 2.2 0 3.9-.2 4.9-.8.8-.4 1-.9 1-1.2 0-.2.1-.3.1-.4.1-.3.1-.6.2-.8.1-.2.2-.3.2-.6.2-.3.3-.6.3-.9 0-.6-.3-.8-.7-1.1l-.3-.3c1.1.1 2.3.9 3.5 1.7.6.4 1.2.8 1.8 1.1.7.3 1.2.6 1.8.6.6 0 1-.3 1.6-.8.3-.3.8-.6 1.2-.8-.9-.2-.7-.3-.7-.4zm-14.6-1.4c.4 0 .7.3.7.7 0 .3-.2.6-.3.8-.1-.2-.1-.3-.2-.3-.2 0-.1 1.1-.8 1.1v.2c0 .2-.2.4-.4.4s-.5-.3-.5-.5v-.2c-.7 0-.6-1.1-.8-1.1-.1 0-.2.1-.2.3-.1-.2-.3-.4-.3-.8 0-.3.2-.7.7-.7h.2V29c.7.1 1.2.2 1.8.2v1.2c0 .2 0 .2.1.2zm-1.1 2.6c.1 0 .2-.1.2-.2s-.1-.2-.2-.2-.2.1-.2.2.1.2.2.2zm1.5-1.5c.1-.1.1-.3.1-.4 0-.2-.1-.4-.4-.4-.6 0-.4.8-.7.8-.1 0-.2-.1-.2-.2 0-.2.3-.4.3-.8s-.3-.6-.6-.8c-.3.2-.6.6-.6.8 0 .3.3.6.3.8 0 .1-.1.2-.2.2-.2 0-.1-.8-.7-.8-.3 0-.4.3-.4.4 0 .1 0 .2.1.4l.2-.2c.4 0 .2 1.1.8 1.1.2 0 .3-.1.3-.3 0-.1-.1-.2-.1-.3 0-.1.1-.2.2-.2s.2 0 .2.2c0 .1-.1.2-.1.3s.1.3.3.3c.4 0 .3-1.1.8-1.1.3 0 .3.1.4.2zm.3-4.1c.7.1 1.5.3 1.9.2l-.1.1c-.2.2-.4.3-.7.6-.7.4-1.3.7-1.8.7-.6 0-1.3-.1-2.1-.3-.7-.2-1.3-.4-1.8-.7-.2.2-.6.2-.9.1-.3-.1-.6-.6-.6-.8v-.1l-.7-.7c-.7-.7-1.1-1.6-1.5-2.4-.1-.4-.3-.9-.3-1.3.6.2.8 0 1-.2.1 0 .1.2.1.2.7 0 1-.4 1.1-.8.1.4.1.8.3 1.1.2.7.6 1.2 1 1.8.1.2.3.3.4.4.1 0 .2-.1.3-.1.2 0 .4.1.7.3.2.2.2.4.2.7 1.3.4 2.5.8 3.5 1.2zM17.4 26c.1 0 .1.1.2.1 0-.1-.1-.2-.2-.4-.1-.1-.3-.2-.6-.2-.4 0-.8.4-1 .6-.1 0-.2 0-.3-.1 0 .1.1.2.1.3-.2.3-.3.7-.3.9 0 .1.2.4.4.7.2.1.3.1.6 0-.1-.1-.2-.1-.3-.2-.1 0-.2-.1-.2-.2v-.1c0-.1 0-.2.1-.3v-.3h.1c.1.1.3.1.4.1 0 0 .1 0 .1-.1.1-.1 0-.3-.2-.4l-.1-.4.1-.1c.1-.1.1-.2.2-.2.5.1.6.1.9.3zm.7 1.9c.2 0 .4-.2.4-.4s-.2-.4-.4-.4-.4.2-.4.4c-.1.3.2.4.4.4zm1.9.7c.2 0 .4-.2.4-.4s-.2-.4-.4-.4-.4.2-.4.4c0 .1.2.4.4.4zM20 5c-.2-.2-.4-.4-.4-.8.2 0 .6.2.8.4V3.5c-.3.3-.5.5-.9.5 0-.2.2-.6.4-.8h-1.1c.2.3.4.6.4.8-.2 0-.6-.2-.8-.4v1.1c.2-.2.4-.4.8-.4 0 .3-.2.6-.4.8H20zm-1.6 1.4c.1.4.6.8 1 .8s.9-.3 1-.8h-2zm1.2-.4h.8c-.1-.4-.4-.8-.8-.8V6zm-.4 0v-.8c-.4.1-.8.4-.8.8h.8zm.8 1.5c-.1 0-.2.1-.3.1V9h.3V7.5zm-1.1 1.6h.3V7.7c-.1 0-.2-.1-.3-.1v1.5zm1.2-1.8c0 .2.1.3.3.3s.3-.1.3-.3c0-.2-.1-.3-.3-.3s-.3.1-.3.3zm1-.1c.2 0 .3-.1.3-.3 0-.1-.1-.2-.3-.2s-.3.1-.3.3c0 .1.2.2.3.2zM22 7c.2 0 .3-.1.3-.3 0-.2-.1-.3-.3-.3s-.3.1-.3.3c0 .2.1.3.3.3zm2.2.8c.2 0 .3-.1.3-.3 0-.2-.1-.3-.3-.3s-.3.1-.3.3c0 .2.2.3.3.3zm-.5-.6c.2 0 .3-.1.3-.3 0-.2-.1-.3-.3-.3s-.3.1-.3.3c-.1.2 0 .3.3.3zm-.9-.2c.2 0 .3-.1.3-.3 0-.2-.1-.3-.3-.3s-.3.1-.3.3c-.1.1.2.3.3.3zm1.8 2.4c-.2 0-.3.1-.3.3 0 .2.1.3.3.3s.3-.1.3-.3c0-.2-.1-.3-.3-.3zm.1-.7c-.2 0-.3.1-.3.3 0 .2.1.3.3.3s.3-.1.3-.3c0-.2-.1-.3-.3-.3zm-.4-.5c0 .2.1.3.3.3s.4-.1.4-.3c0-.2-.1-.3-.3-.3s-.4.1-.4.3zm-5.9-.5c.2 0 .3-.1.3-.3 0-.2-.1-.3-.3-.3s-.3.1-.3.3c0 0 .2.3.3.3zm-.8-.5c.2 0 .3-.1.3-.3 0-.2-.1-.3-.3-.3s-.3.1-.3.3c.1.2.2.3.3.3zm-.7-.2c.2 0 .3-.1.3-.3 0-.2-.1-.3-.3-.3s-.3.1-.3.3c-.1.2.1.3.3.3zm-2.3.8c.2 0 .3-.1.3-.3 0-.2-.1-.3-.3-.3s-.3.1-.3.3c0 .2.1.3.3.3zm.6-.6c.2 0 .3-.1.3-.3 0-.2-.1-.3-.3-.3s-.3.1-.3.3c-.1.2.2.3.3.3zm.9-.2c.2 0 .3-.1.3-.3 0-.2-.1-.3-.3-.3s-.3.1-.3.3c-.1.1.1.3.3.3zm-1.5 2.8c0-.2-.1-.3-.3-.3s-.3 0-.3.3c0 .2.1.3.3.3.1 0 .3-.1.3-.3zm-.2-.8c0-.2-.1-.3-.3-.3-.2 0-.3.1-.3.3 0 .2.1.3.3.3.2 0 .3-.2.3-.3zm-.2-.5c.2 0 .3-.1.3-.3 0-.2-.1-.3-.3-.3s-.4.1-.4.3c0 .1.3.3.4.3zm7.7.3c-.1.1-.4.4-.4.8 0 .2.2.6.3.8.1-.3.4-.4.4-.8 0-.3-.2-.5-.3-.8zm-4.9 0c-.2.3-.3.6-.3.9 0 .3.3.4.4.8.1-.3.3-.6.3-.8 0-.5-.3-.8-.4-.9z&quot;&gt;&lt;/path&gt;
+
+          &lt;image src=&quot;/assets/images/crest.svg&quot; xlink:href=&quot;&quot; width=&quot;40&quot; height=&quot;40&quot;&gt;&lt;/image&gt;
+        &lt;/svg&gt;
+        HMPPS
+      &lt;/a&gt;
+
+      &lt;a class=&quot;hmpps-header__link hmpps-header__title__service-name&quot; href=&quot;/&quot;&gt;Manage a Supervision&lt;/a&gt;
+
+      
+        &lt;div class=&quot;govuk-phase-banner&quot;&gt;
+          &lt;strong class=&quot;govuk-tag&quot;
+    
+        
+      
+    
+   data-qa=&quot;header-phase-banner&quot;&gt;
+  DEV
+&lt;/strong&gt;
+
+        &lt;/div&gt;
+      
+    &lt;/div&gt;
+
+    &lt;nav aria-label=&quot;Account navigation&quot;&gt;
+      &lt;ul class=&quot;hmpps-header__navigation&quot;&gt;
+        
+          &lt;li class=&quot;hmpps-header__navigation__item&quot;&gt;
+            &lt;a data-qa=&quot;manageDetails&quot; class=&quot;hmpps-header__link&quot; href=&quot;/account-details&quot; data-test=&quot;manage-account-link&quot; rel=&quot;noopener noreferrer&quot;&gt;
+              &lt;span data-qa=header-user-name&gt;A. Automatedtestuser&lt;/span&gt;
+              &lt;span class=&quot;hmpps-header__link__sub-text&quot;&gt;Manage your details&lt;/span&gt;
+            &lt;/a&gt;
+          &lt;/li&gt;
+        
+
+        &lt;li class=&quot;hmpps-header__navigation__item&quot;&gt;
+          &lt;a data-qa=&quot;signOut&quot; class=&quot;hmpps-header__link&quot; href=&quot;/sign-out&quot;&gt;Sign out&lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+
+&lt;div class=&quot;moj-primary-navigation&quot;&gt;
+&lt;div class=&quot;moj-primary-navigation__container&quot;&gt;
+  &lt;div class=&quot;app-organisation-nav-title&quot;&gt;
+    &lt;span class=&quot;govuk-body-s&quot;&gt;&lt;strong&gt;NPS North West&lt;/strong&gt;&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;moj-primary-navigation__nav&quot;&gt;
+    &lt;nav class=&quot;moj-primary-navigation&quot; aria-label=&quot;Primary navigation&quot;&gt;
+      &lt;ul class=&quot;moj-primary-navigation__list&quot;&gt;
+        &lt;li class=&quot;moj-primary-navigation__item&quot;&gt;
+          &lt;a class=&quot;moj-primary-navigation__link&quot;  href=&quot;/case&quot;&gt;Your cases&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;moj-primary-navigation__item&quot;&gt;
+          &lt;a class=&quot;moj-primary-navigation__link&quot;  href=&quot;/search&quot;&gt;Search&lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+
+  
+
+
+
+    
+      &lt;div class=&quot;govuk-width-container&quot;&gt;
+        
+        &lt;main class=&quot;govuk-main-wrapper app-container govuk-body&quot; id=&quot;main-content&quot;&gt;
+          
+
+
+ &lt;div class=&quot;govuk-grid-row&quot;&gt;
+    &lt;div class=&quot;govuk-grid-column-two-thirds&quot;&gt;
+      &lt;h1 class=&quot;govuk-heading-xl&quot;&gt;
+        Your cases
+      &lt;/h1&gt;
+        &lt;div class=&quot;govuk-grid-row&quot;&gt;
+  &lt;div class=&quot;govuk-grid-column-full&quot;&gt;
+    &lt;nav class=&quot;moj-sub-navigation&quot; aria-label=&quot;Sub navigation&quot; data-qa=&quot;caseloadNavigation&quot;&gt;
+      &lt;ul class=&quot;moj-sub-navigation__list&quot;&gt;
+        &lt;li class=&quot;moj-sub-navigation__item&quot; data-qa=&quot;overviewTab&quot;&gt;
+          &lt;a class=&quot;moj-sub-navigation__link govuk-link--no-visited-state&quot;
+            
+            aria-current=&quot;page&quot;
+            
+            href=&quot;/case&quot;&gt;Your cases&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li class=&quot;moj-sub-navigation__item&quot; data-qa=&quot;scheduleTab&quot;&gt;
+          &lt;a class=&quot;moj-sub-navigation__link govuk-link--no-visited-state&quot;
+            
+            href=&quot;/teams&quot;&gt;Team cases&lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+        
+
+    
+
+    
+        
+            &lt;p data-qa=&quot;pagination&quot;&gt;Showing 1 to 10 of 47 cases.&lt;/p&gt;
+         
+         &lt;table class=&quot;govuk-table&quot;&gt;
+           &lt;thead class=&quot;govuk-table__head&quot;&gt;
+             &lt;tr class=&quot;govuk-table__row&quot;&gt;
+               &lt;th class=&quot;govuk-table__header&quot;&gt;Name&lt;/th&gt;
+                
+             &lt;/tr&gt;
+           &lt;/thead&gt;
+           &lt;tbody class=&quot;govuk-table__body&quot; data-qa=&quot;yourCasesCard&quot;&gt;
+             
+               &lt;tr class=&quot;govuk-table__row&quot;&gt;
+                 &lt;td class=&quot;govuk-table__cell&quot; data-qa=&quot;case1Value&quot;&gt;
+                   &lt;a href=&quot;/case/X619221&quot; class=&quot;govuk-!-font-weight-bold&quot;&gt;Stella Rath&lt;/a&gt;&lt;br /&gt;
+                   &lt;span class=&quot;app-!-font-family-tabular govuk-!-margin-bottom-0&quot;&gt;X619221&lt;/span&gt;
+                 &lt;/td&gt;
+                  
+               &lt;/tr&gt;
+             
+               &lt;tr class=&quot;govuk-table__row&quot;&gt;
+                 &lt;td class=&quot;govuk-table__cell&quot; data-qa=&quot;case2Value&quot;&gt;
+                   &lt;a href=&quot;/case/X774249&quot; class=&quot;govuk-!-font-weight-bold&quot;&gt;Lucia Huel&lt;/a&gt;&lt;br /&gt;
+                   &lt;span class=&quot;app-!-font-family-tabular govuk-!-margin-bottom-0&quot;&gt;X774249&lt;/span&gt;
+                 &lt;/td&gt;
+                  
+               &lt;/tr&gt;
+             
+               &lt;tr class=&quot;govuk-table__row&quot;&gt;
+                 &lt;td class=&quot;govuk-table__cell&quot; data-qa=&quot;case3Value&quot;&gt;
+                   &lt;a href=&quot;/case/X667631&quot; class=&quot;govuk-!-font-weight-bold&quot;&gt;Alfredo Friesen&lt;/a&gt;&lt;br /&gt;
+                   &lt;span class=&quot;app-!-font-family-tabular govuk-!-margin-bottom-0&quot;&gt;X667631&lt;/span&gt;
+                 &lt;/td&gt;
+                  
+               &lt;/tr&gt;
+             
+               &lt;tr class=&quot;govuk-table__row&quot;&gt;
+                 &lt;td class=&quot;govuk-table__cell&quot; data-qa=&quot;case4Value&quot;&gt;
+                   &lt;a href=&quot;/case/X773669&quot; class=&quot;govuk-!-font-weight-bold&quot;&gt;Pearl Herzog&lt;/a&gt;&lt;br /&gt;
+                   &lt;span class=&quot;app-!-font-family-tabular govuk-!-margin-bottom-0&quot;&gt;X773669&lt;/span&gt;
+                 &lt;/td&gt;
+                  
+               &lt;/tr&gt;
+             
+               &lt;tr class=&quot;govuk-table__row&quot;&gt;
+                 &lt;td class=&quot;govuk-table__cell&quot; data-qa=&quot;case5Value&quot;&gt;
+                   &lt;a href=&quot;/case/X734354&quot; class=&quot;govuk-!-font-weight-bold&quot;&gt;Kelley Denesik&lt;/a&gt;&lt;br /&gt;
+                   &lt;span class=&quot;app-!-font-family-tabular govuk-!-margin-bottom-0&quot;&gt;X734354&lt;/span&gt;
+                 &lt;/td&gt;
+                  
+               &lt;/tr&gt;
+             
+               &lt;tr class=&quot;govuk-table__row&quot;&gt;
+                 &lt;td class=&quot;govuk-table__cell&quot; data-qa=&quot;case6Value&quot;&gt;
+                   &lt;a href=&quot;/case/X734853&quot; class=&quot;govuk-!-font-weight-bold&quot;&gt;Alexis Dare&lt;/a&gt;&lt;br /&gt;
+                   &lt;span class=&quot;app-!-font-family-tabular govuk-!-margin-bottom-0&quot;&gt;X734853&lt;/span&gt;
+                 &lt;/td&gt;
+                  
+               &lt;/tr&gt;
+             
+               &lt;tr class=&quot;govuk-table__row&quot;&gt;
+                 &lt;td class=&quot;govuk-table__cell&quot; data-qa=&quot;case7Value&quot;&gt;
+                   &lt;a href=&quot;/case/X746846&quot; class=&quot;govuk-!-font-weight-bold&quot;&gt;Mattie Blanda&lt;/a&gt;&lt;br /&gt;
+                   &lt;span class=&quot;app-!-font-family-tabular govuk-!-margin-bottom-0&quot;&gt;X746846&lt;/span&gt;
+                 &lt;/td&gt;
+                  
+               &lt;/tr&gt;
+             
+               &lt;tr class=&quot;govuk-table__row&quot;&gt;
+                 &lt;td class=&quot;govuk-table__cell&quot; data-qa=&quot;case8Value&quot;&gt;
+                   &lt;a href=&quot;/case/X738923&quot; class=&quot;govuk-!-font-weight-bold&quot;&gt;Maryann Morar&lt;/a&gt;&lt;br /&gt;
+                   &lt;span class=&quot;app-!-font-family-tabular govuk-!-margin-bottom-0&quot;&gt;X738923&lt;/span&gt;
+                 &lt;/td&gt;
+                  
+               &lt;/tr&gt;
+             
+               &lt;tr class=&quot;govuk-table__row&quot;&gt;
+                 &lt;td class=&quot;govuk-table__cell&quot; data-qa=&quot;case9Value&quot;&gt;
+                   &lt;a href=&quot;/case/X641574&quot; class=&quot;govuk-!-font-weight-bold&quot;&gt;Beulah Lakin&lt;/a&gt;&lt;br /&gt;
+                   &lt;span class=&quot;app-!-font-family-tabular govuk-!-margin-bottom-0&quot;&gt;X641574&lt;/span&gt;
+                 &lt;/td&gt;
+                  
+               &lt;/tr&gt;
+             
+               &lt;tr class=&quot;govuk-table__row&quot;&gt;
+                 &lt;td class=&quot;govuk-table__cell&quot; data-qa=&quot;case10Value&quot;&gt;
+                   &lt;a href=&quot;/case/X776850&quot; class=&quot;govuk-!-font-weight-bold&quot;&gt;Gerardo Terry&lt;/a&gt;&lt;br /&gt;
+                   &lt;span class=&quot;app-!-font-family-tabular govuk-!-margin-bottom-0&quot;&gt;X776850&lt;/span&gt;
+                 &lt;/td&gt;
+                  
+               &lt;/tr&gt;
+             
+           &lt;/tbody&gt;
+         &lt;/table&gt;
+         
+          &lt;nav class=&quot;govuk-pagination&quot; aria-label=&quot;Pagination&quot;&gt;
+  
+  
+  &lt;ul class=&quot;govuk-pagination__list&quot;&gt;
+  
+    &lt;li class=&quot;govuk-pagination__item govuk-pagination__item--current&quot;&gt;
+    
+      &lt;a class=&quot;govuk-link govuk-pagination__link&quot; href=&quot;https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/?page=1&quot; aria-label=&quot;Page 1&quot; aria-current=&quot;page&quot;&gt;
+        1
+      &lt;/a&gt;
+    
+    &lt;/li&gt;
+  
+    &lt;li class=&quot;govuk-pagination__item&quot;&gt;
+    
+      &lt;a class=&quot;govuk-link govuk-pagination__link&quot; href=&quot;https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/?page=2&quot; aria-label=&quot;Page 2&quot;&gt;
+        2
+      &lt;/a&gt;
+    
+    &lt;/li&gt;
+  
+    &lt;li class=&quot;govuk-pagination__item&quot;&gt;
+    
+      &lt;a class=&quot;govuk-link govuk-pagination__link&quot; href=&quot;https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/?page=3&quot; aria-label=&quot;Page 3&quot;&gt;
+        3
+      &lt;/a&gt;
+    
+    &lt;/li&gt;
+  
+    &lt;li class=&quot;govuk-pagination__item&quot;&gt;
+    
+      &lt;a class=&quot;govuk-link govuk-pagination__link&quot; href=&quot;https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/?page=4&quot; aria-label=&quot;Page 4&quot;&gt;
+        4
+      &lt;/a&gt;
+    
+    &lt;/li&gt;
+  
+    &lt;li class=&quot;govuk-pagination__item govuk-pagination__item--ellipses&quot;&gt;
+    
+      &amp;ctdot;
+    
+    &lt;/li&gt;
+  
+  &lt;/ul&gt;
+  
+    
+  
+  &lt;div class=&quot;govuk-pagination__next&quot;&gt;
+    &lt;a class=&quot;govuk-link govuk-pagination__link&quot; href=&quot;https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/?page=2&quot; rel=&quot;next&quot;&gt;
+      
+      &lt;span class=&quot;govuk-pagination__link-title&quot;&gt;
+        Next&lt;span class=&quot;govuk-visually-hidden&quot;&gt; page&lt;/span&gt;
+      &lt;/span&gt;
+      
+          
+      &lt;svg class=&quot;govuk-pagination__icon govuk-pagination__icon--next&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; height=&quot;13&quot; width=&quot;15&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot; viewBox=&quot;0 0 15 13&quot;&gt;
+        &lt;path d=&quot;m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z&quot;&gt;&lt;/path&gt;
+      &lt;/svg&gt;
+      
+    &lt;/a&gt;
+  &lt;/div&gt;
+
+  
+&lt;/nav&gt;
+
+         
+     
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+
+        &lt;/main&gt;
+      &lt;/div&gt;
+    
+
+    
+  &lt;footer class=&quot;govuk-footer&quot;&gt;
+  &lt;div class=&quot;govuk-width-container&quot;&gt;
+    
+    &lt;div class=&quot;govuk-footer__meta&quot;&gt;
+      &lt;div class=&quot;govuk-footer__meta-item govuk-footer__meta-item--grow&quot;&gt;
+        
+        &lt;h2 class=&quot;govuk-visually-hidden&quot;&gt;Support links&lt;/h2&gt;
+        
+        &lt;ul class=&quot;govuk-footer__inline-list&quot;&gt;
+        
+          &lt;li class=&quot;govuk-footer__inline-list-item&quot;&gt;
+            &lt;a class=&quot;govuk-footer__link&quot; href=&quot;/accessibility-info&quot;&gt;
+              Accessibility
+            &lt;/a&gt;
+          &lt;/li&gt;
+        
+        &lt;/ul&gt;
+        
+        
+        
+        &lt;svg
+          aria-hidden=&quot;true&quot;
+          focusable=&quot;false&quot;
+          class=&quot;govuk-footer__licence-logo&quot;
+          xmlns=&quot;http://www.w3.org/2000/svg&quot;
+          viewBox=&quot;0 0 483.2 195.7&quot;
+          height=&quot;17&quot;
+          width=&quot;41&quot;
+        &gt;
+          &lt;path
+            fill=&quot;currentColor&quot;
+            d=&quot;M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145&quot;
+          /&gt;
+        &lt;/svg&gt;
+        &lt;span class=&quot;govuk-footer__licence-description&quot;&gt;
+        
+          All content is available under the
+          &lt;a
+            class=&quot;govuk-footer__link&quot;
+            href=&quot;https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/&quot;
+            rel=&quot;license&quot;
+          &gt;Open Government Licence v3.0&lt;/a&gt;, except where otherwise stated
+        
+        &lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;govuk-footer__meta-item&quot;&gt;
+        &lt;a
+          class=&quot;govuk-footer__link govuk-footer__copyright-logo&quot;
+          href=&quot;https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/&quot;
+        &gt;
+        
+          © Crown copyright
+        
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;
+
+
+
+    
+  
+    &lt;script nonce=&quot;50218220160284bf69453b5e44688908&quot;&gt;
+      window.sentryOnLoad = function() {
+        Sentry.init({
+          release: &quot;hmpps-manage-a-supervision-ui@1ffdf75&quot;,
+          environment: &quot;&quot;,
+          tracesSampleRate: 0.05,
+          replaysSessionSampleRate: 0,
+          replaysOnErrorSampleRate: 0.1,
+          initialScope: {
+            user: { username: &quot;AUTOMATEDTESTUSER&quot; },
+          },
+        });
+      };
+    &lt;/script&gt;
+    &lt;script src=&quot;https://js.sentry-cdn.com/36e33e201cbd88c93dba4216ff8df154.min.js&quot; nonce=&quot;50218220160284bf69453b5e44688908&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+  
+  &lt;script type=&quot;module&quot; src=&quot;/assets/govukFrontendInit.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;/assets/moj/all.js&quot;&gt;&lt;/script&gt;
+  &lt;script type=&quot;module&quot; src=&quot;/assets/mojFrontendInit.js&quot;&gt;&lt;/script&gt;
+  &lt;script src=&quot;/assets/js/jquery.min.js&quot;&gt;&lt;/script&gt;
+
+
+
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>50218220160284</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Check the response for the potential presence of personally identifiable information (PII), ensure nothing sensitive is leaked by the application.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				  
+				 
+				 
+			</ol>
+		</section>
+
+		<section id="appendix" class="appendix">
+			<h2>Appendix</h2>
+
+			<section id="alert-types" class="alert-types">
+				<h3>Alert types</h3>
+				<p class="alert-types-intro">This section contains additional information on the types of alerts in the report.</p>
+				<ol>
+					<li
+						id="alert-type-0">
+						<h4>PII Disclosure</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10062/">PII Disclosure</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/359.html">359</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>13</td>
+							</tr>
+							
+						</table>
+					</li>
+				</ol>
+			</section>
 		</section>
 		 
 	</main>

@@ -1,1 +1,5 @@
 * @ministryofjustice/probation-integration
+package.json
+package-lock.json
+.github/workflows
+.github/actions

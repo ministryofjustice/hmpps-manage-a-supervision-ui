@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     groups:
       minor:
         update-types:
@@ -15,7 +15,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     groups:
       minor:
         update-types:
@@ -27,7 +27,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/.github/actions/setup-zap"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     groups:
       minor:
         update-types:

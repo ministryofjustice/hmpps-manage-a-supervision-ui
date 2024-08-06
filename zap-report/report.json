@@ -1,7 +1,7 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.15.0",
-	"@generated": "Mon, 5 Aug 2024 09:41:38",
+	"@generated": "Tue, 6 Aug 2024 09:41:38",
 	"site":[ 
 		{
 			"@name": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk",
@@ -24,25 +24,25 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "674480843236",
-							"otherinfo": "Credit Card Type detected: Maestro\nBank Identification Number: 674480\nBrand: MAESTRO\nCategory: \nIssuer: VINCENTO PAYMENT SOLUTIONS, LTD."
+							"evidence": "575492728556",
+							"otherinfo": "Credit Card Type detected: Maestro\nBank Identification Number: 575492\nBrand: MAESTRO\nCategory: \nIssuer: "
 						},
 						{
 							"uri": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "6792918746849",
-							"otherinfo": "Credit Card Type detected: Maestro\nBank Identification Number: 679291\nBrand: MAESTRO\nCategory: \nIssuer: "
+							"evidence": "672409513039",
+							"otherinfo": "Credit Card Type detected: Maestro\nBank Identification Number: 672409\nBrand: MAESTRO\nCategory: STANDARD\nIssuer: WUESTENROT BANK AG PFANDBRIEBANK"
 						}
 					],
 					"count": "2",
 					"solution": "<p>Check the response for the potential presence of personally identifiable information (PII), ensure nothing sensitive is leaked by the application.</p>",
-					"otherinfo": "<p>Credit Card Type detected: Maestro</p><p>Bank Identification Number: 674480</p><p>Brand: MAESTRO</p><p>Category: </p><p>Issuer: VINCENTO PAYMENT SOLUTIONS, LTD.</p>",
+					"otherinfo": "<p>Credit Card Type detected: Maestro</p><p>Bank Identification Number: 575492</p><p>Brand: MAESTRO</p><p>Category: </p><p>Issuer: </p>",
 					"reference": "",
 					"cweid": "359",
 					"wascid": "13",
-					"sourceid": "16132"
+					"sourceid": "2425"
 				}
 			]
 		}

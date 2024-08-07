@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  hmpps: ministryofjustice/hmpps@8
+  hmpps: ministryofjustice/hmpps@9
   slack: circleci/slack@4.12.5
 
 parameters:
@@ -210,6 +210,7 @@ workflows:
     jobs:
       - hmpps/veracode_policy_scan:
           slack_channel: << pipeline.parameters.alerts-slack-channel >>
+          additional_docker_build_args: --secret id=sentry,env=SENTRY_AUTH_TOKEN
           context:
             - veracode-credentials
             - hmpps-common-vars

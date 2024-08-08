@@ -17,7 +17,7 @@
 		<p>
 			<span>Generated with</span> <a href="https://zaproxy.org"><img
 				src="index/zap32x32.png" alt="The ZAP logo" class="zap-logo">ZAP</a>
-			<span>on Wed 7 Aug 2024, at 09:40:57</span>
+			<span>on Thu 8 Aug 2024, at 09:41:43</span>
 		</p>
 		<p>ZAP Version: 2.15.0</p>
 		<p>
@@ -282,8 +282,8 @@
 							<th scope="row"><a
 								href="#alert-type-0">PII Disclosure</a></th>
 							<td class="risk-level">High</td>
-							<td><span>2</span><br> <span
-								class="additional-info-percentages">(200.0%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(100.0%)</span></td>
 						</tr>
 					</tbody>
 					<tfoot>
@@ -353,11 +353,11 @@
 	<tr>
 		<th scope="row">Other info</th>
 		<td> 
-<p>Credit Card Type detected: Visa</p>
+<p>Credit Card Type detected: Maestro</p>
 
-<p>Bank Identification Number: 489338</p>
+<p>Bank Identification Number: 589739</p>
 
-<p>Brand: VISA</p>
+<p>Brand: MAESTRO</p>
 
 <p>Category: </p>
 
@@ -367,14 +367,14 @@
 	<tr>
 		<th scope="row">Request</th>
 		<td><details open="open">
-				<summary>Request line and header section (407 bytes)</summary>
+				<summary>Request line and header section (411 bytes)</summary>
 				
 				<pre><code>GET https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/ HTTP/1.1
 host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
 user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:125.0) Gecko/20100101 Firefox/125.0
 pragma: no-cache
 cache-control: no-cache
-Cookie: hmpps-manage-a-supervision-ui.session=s%3AAhkVQbJIdogErnDG5gNswPVhjGccOiiZ.OW21otSrq2waFpQHszw%2Bswa4MFYwh2Q6Aj5utuqXqw8
+Cookie: hmpps-manage-a-supervision-ui.session=s%3AbBNt7jN2pcaQMqECvy6XM-Wzmn9pwOWl.HHl7Z%2FpjZZP9Ix1sx%2BCNFKU16ADor%2B9zBjDDi4CHuhE
 
 </code></pre>
 				
@@ -390,15 +390,15 @@ Cookie: hmpps-manage-a-supervision-ui.session=s%3AAhkVQbJIdogErnDG5gNswPVhjGccOi
 	<tr>
 		<th scope="row">Response</th>
 		<td><details open="open">
-				<summary>Status line and header section (1541 bytes)</summary>
+				<summary>Status line and header section (1545 bytes)</summary>
 				
 				<pre><code>HTTP/1.1 200 OK
-Date: Wed, 07 Aug 2024 09:09:02 GMT
+Date: Thu, 08 Aug 2024 09:34:23 GMT
 Content-Type: text/html; charset=utf-8
 Content-Length: 34965
 Connection: keep-alive
 request-context: appId=cid-v1:
-Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-5fd2b4893389362843a49b00cb015aa1&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-5fd2b4893389362843a49b00cb015aa1&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
+Content-Security-Policy: default-src &#39;self&#39;;script-src &#39;self&#39; https://browser.sentry-cdn.com https://js.sentry-cdn.com &#39;nonce-3dda2e802d589739982918a2d74a0c2f&#39;;connect-src &#39;self&#39; https://*.sentry.io;worker-src &#39;self&#39; blob:;style-src &#39;self&#39; &#39;nonce-3dda2e802d589739982918a2d74a0c2f&#39;;font-src &#39;self&#39;;form-action &#39;self&#39; https://sign-in-dev.hmpps.service.justice.gov.uk/auth;base-uri &#39;self&#39;;frame-ancestors &#39;self&#39;;img-src &#39;self&#39; data:;object-src &#39;none&#39;;script-src-attr &#39;none&#39;;upgrade-insecure-requests
 Cross-Origin-Embedder-Policy: require-corp
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-origin
@@ -411,13 +411,13 @@ X-Download-Options: noopen
 X-Frame-Options: SAMEORIGIN
 X-Permitted-Cross-Domain-Policies: none
 X-XSS-Protection: 0
-X-Request-Id: f59935b033ea1839006f50176baea7d9
+X-Request-Id: 0d8784d84784a6ffe40201f77808d1a7
 Surrogate-Control: no-store
 Cache-Control: no-store, no-cache, must-revalidate, proxy-revalidate
 Expires: 0
-ETag: W/&quot;8895-R3T8FD2Y/hqY1nWs/Bxsy/cTHG0&quot;
+ETag: W/&quot;8895-Cx3yZ97QTujfKRczbkuCVA3JOqc&quot;
 Vary: Accept-Encoding
-Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AAhkVQbJIdogErnDG5gNswPVhjGccOiiZ.OW21otSrq2waFpQHszw%2Bswa4MFYwh2Q6Aj5utuqXqw8; Path=/; Expires=Wed, 07 Aug 2024 11:09:02 GMT; HttpOnly; Secure; SameSite=Lax
+Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AbBNt7jN2pcaQMqECvy6XM-Wzmn9pwOWl.HHl7Z%2FpjZZP9Ix1sx%2BCNFKU16ADor%2B9zBjDDi4CHuhE; Path=/; Expires=Thu, 08 Aug 2024 11:34:23 GMT; HttpOnly; Secure; SameSite=Lax
 
 </code></pre>
 				
@@ -442,12 +442,12 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AAhkVQbJIdogErnDG5gNswPVhjG
     
 
     
-  &lt;link href=&quot;/assets/stylesheets/application.css?b06fd88&quot; rel=&quot;stylesheet&quot;/&gt;
+  &lt;link href=&quot;/assets/stylesheets/application.css?9270011&quot; rel=&quot;stylesheet&quot;/&gt;
 
     
   &lt;/head&gt;
   &lt;body class=&quot;govuk-template__body&quot;&gt;
-    &lt;script nonce=&quot;5fd2b4893389362843a49b00cb015aa1&quot;&gt;document.body.className += &#39; js-enabled&#39; + (&#39;noModule&#39; in HTMLScriptElement.prototype ? &#39; govuk-frontend-supported&#39; : &#39;&#39;);&lt;/script&gt;
+    &lt;script nonce=&quot;3dda2e802d589739982918a2d74a0c2f&quot;&gt;document.body.className += &#39; js-enabled&#39; + (&#39;noModule&#39; in HTMLScriptElement.prototype ? &#39; govuk-frontend-supported&#39; : &#39;&#39;);&lt;/script&gt;
     
 
 
@@ -803,10 +803,10 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AAhkVQbJIdogErnDG5gNswPVhjG
 
     
   
-    &lt;script nonce=&quot;5fd2b4893389362843a49b00cb015aa1&quot;&gt;
+    &lt;script nonce=&quot;3dda2e802d589739982918a2d74a0c2f&quot;&gt;
       window.sentryOnLoad = function() {
         Sentry.init({
-          release: &quot;hmpps-manage-a-supervision-ui@b06fd88&quot;,
+          release: &quot;hmpps-manage-a-supervision-ui@9270011&quot;,
           environment: &quot;&quot;,
           tracesSampleRate: 0.05,
           replaysSessionSampleRate: 0,
@@ -817,7 +817,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AAhkVQbJIdogErnDG5gNswPVhjG
         });
       };
     &lt;/script&gt;
-    &lt;script src=&quot;https://js.sentry-cdn.com/36e33e201cbd88c93dba4216ff8df154.min.js&quot; nonce=&quot;5fd2b4893389362843a49b00cb015aa1&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://js.sentry-cdn.com/36e33e201cbd88c93dba4216ff8df154.min.js&quot; nonce=&quot;3dda2e802d589739982918a2d74a0c2f&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
   
   &lt;script type=&quot;module&quot; src=&quot;/assets/govukFrontendInit.js&quot;&gt;&lt;/script&gt;
   &lt;script src=&quot;/assets/moj/all.js&quot;&gt;&lt;/script&gt;
@@ -837,7 +837,7 @@ Set-Cookie: hmpps-manage-a-supervision-ui.session=s%3AAhkVQbJIdogErnDG5gNswPVhjG
 	
 	<tr>
 		<th scope="row">Evidence</th>
-		<td><pre><code>4893389362843</code></pre></td>
+		<td><pre><code>589739982918</code></pre></td>
 	</tr>
 	<tr>
 		<th scope="row">Solution</th>

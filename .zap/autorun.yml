@@ -54,6 +54,12 @@ jobs:
       type: "standalone"
       engine: ""
       name: "traverse.js"
+  - type: alertFilter
+    alertFilters:
+      - ruleId: 10062 # PII Disclosure - https://www.zaproxy.org/docs/alerts/10062/
+        newRisk: False Positive
+        evidence: "^[0-9]{16}$" # Script tag "nonce" attribute can be mistaken for a credit card number
+        evidenceRegex: true
   - type: activeScan
     parameters:
       context: "HMPPSAuth"

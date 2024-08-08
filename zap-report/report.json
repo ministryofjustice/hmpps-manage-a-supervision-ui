@@ -1,7 +1,7 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.15.0",
-	"@generated": "Thu, 8 Aug 2024 09:41:44",
+	"@generated": "Thu, 8 Aug 2024 11:08:13",
 	"site":[ 
 		{
 			"@name": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk",
@@ -24,17 +24,17 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "589739982918",
-							"otherinfo": "Credit Card Type detected: Maestro\nBank Identification Number: 589739\nBrand: MAESTRO\nCategory: \nIssuer: "
+							"evidence": "501195304578",
+							"otherinfo": "Credit Card Type detected: Maestro\nBank Identification Number: 501195\nBrand: MAESTRO\nCategory: \nIssuer: "
 						}
 					],
 					"count": "1",
 					"solution": "<p>Check the response for the potential presence of personally identifiable information (PII), ensure nothing sensitive is leaked by the application.</p>",
-					"otherinfo": "<p>Credit Card Type detected: Maestro</p><p>Bank Identification Number: 589739</p><p>Brand: MAESTRO</p><p>Category: </p><p>Issuer: </p>",
+					"otherinfo": "<p>Credit Card Type detected: Maestro</p><p>Bank Identification Number: 501195</p><p>Brand: MAESTRO</p><p>Category: </p><p>Issuer: </p>",
 					"reference": "",
 					"cweid": "359",
 					"wascid": "13",
-					"sourceid": "11027"
+					"sourceid": "3183"
 				}
 			]
 		}

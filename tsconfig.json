@@ -24,5 +24,5 @@
     "sourceRoot": "/"
   },
   "exclude": ["node_modules", "assets/**/*.js", "integration_tests", "dist", "cypress.config.ts"],
-  "include": ["**/*.js", "**/*.ts"]
+  "include": ["**/*.js", "**/*.ts", "src", "playwright.d.ts"]
 }

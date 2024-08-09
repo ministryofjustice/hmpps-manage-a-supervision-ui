@@ -33,6 +33,12 @@ env:
     progressToStdout: true
 
 jobs:
+  - type: alertFilter
+    alertFilters:
+      # PII Disclosure - https://www.zaproxy.org/docs/alerts/10062/
+      # Script tag "nonce" attribute can be mistaken for a credit card number
+      - ruleId: 10062
+        newRisk: "Info"
   - type: spider
     parameters:
       context: "HMPPSAuth"
@@ -54,10 +60,6 @@ jobs:
       type: "standalone"
       engine: ""
       name: "traverse.js"
-  - type: alertFilter
-    alertFilters:
-      - ruleId: 10062 # PII Disclosure - https://www.zaproxy.org/docs/alerts/10062/
-        newRisk: False Positive # Script tag "nonce" attribute can be mistaken for a credit card number
   - type: activeScan
     parameters:
       context: "HMPPSAuth"

@@ -1,13 +1,13 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - main
   pull_request:
-    branches: [ main, master ]
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: moj-cloud-platform
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -19,9 +19,12 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
-    - uses: actions/upload-artifact@v4
+    - name: Publish HTML report
       if: always()
+      uses: JamesIves/github-pages-deploy-action@94f3c658273cf92fb48ef99e5fbc02bd2dc642b2 # v4
       with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+        folder: playwright-report
+        target-folder: playwright-report/${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }}"
+    - name: Output HTML report URL
+      if: always()
+      run: echo '[🎭 Playwright HTML Report](https://ministryofjustice.github.io/hmpps-probation-integration-e2e-tests/${{ env.report-dir }})' | tee -a "$GITHUB_STEP_SUMMARY"

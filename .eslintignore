@@ -1,6 +1,8 @@
 node_modules
 public
 assets
+test-results
+playwright-report
 cypress.json
 reporter-config.json
 dist/

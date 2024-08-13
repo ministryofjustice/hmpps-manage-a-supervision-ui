@@ -25,8 +25,8 @@ env:
       users:
       - name: "TestUser"
         credentials:
-          username: "$ZAP_USERNAME"
-          password: "$ZAP_PASSWORD"
+          username: "$E2E_DELIUS_USERNAME"
+          password: "$E2E_DELIUS_PASSWORD"
   parameters:
     failOnError: true
     failOnWarning: false

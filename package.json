@@ -29,7 +29,10 @@
     "int-test": "cypress run --config video=false",
     "int-test-ui": "cypress open --e2e --browser chrome",
     "clean": "rm -rf dist build node_modules stylesheets",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org ministryofjustice --project hmpps-manage-a-supervision-ui ./dist && sentry-cli sourcemaps upload --org ministryofjustice --project hmpps-manage-a-supervision-ui ./dist"
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org ministryofjustice --project hmpps-manage-a-supervision-ui ./dist && sentry-cli sourcemaps upload --org ministryofjustice --project hmpps-manage-a-supervision-ui ./dist",
+    "e2e-test": "NODE_OPTIONS='--import tsx' npx playwright test",
+    "e2e-test:headed": "NODE_OPTIONS='--import tsx' npx playwright test --headed",
+    "e2e-test:debug": "NODE_OPTIONS='--import tsx' npx playwright test --debug"
   },
   "engines": {
     "node": "^20",
@@ -131,7 +134,8 @@
     "wiremock": "^3.9.1"
   },
   "devDependencies": {
-    "@ministryofjustice/hmpps-probation-integration-e2e-tests": "^1.0.0",
+    "@faker-js/faker": "^8.4.1",
+    "@ministryofjustice/hmpps-probation-integration-e2e-tests": "^1.1.0",
     "@playwright/test": "^1.45.3",
     "@types/bunyan": "^1.8.11",
     "@types/bunyan-format": "^0.2.9",
@@ -181,6 +185,7 @@
     "sass": "^1.77.8",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.4",
+    "tsx": "^4.17.0",
     "typescript": "^5.5.4"
   }
 }

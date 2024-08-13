@@ -17,7 +17,7 @@ generic-service:
     TIER_API_URL: "https://hmpps-tier-preprod.hmpps.service.justice.gov.uk"
     INTERVENTIONS_API_URL: "https://hmpps-interventions-service-preprod.apps.live-1.cloud-platform.service.justice.gov.uk"
     INTERVENTIONS_LINK: "https://hmpps-interventions-ui-preprod.apps.live-1.cloud-platform.service.justice.gov.uk"
-    DELIUS_LINK: "https://ndelius.stage.probation.service.justice.gov.uk"
+    DELIUS_LINK: "https://ndelius.pre-prod.delius.probation.hmpps.dsd.io"
     OASYS_LINK: "https://pp-int.oasys.service.justice.gov.uk"
     TIER_LINK: "https://tier-preprod.hmpps.service.justice.gov.uk/case"
     SENTENCE_PLAN_LINK: "https://sentence-plan-preprod.hmpps.service.justice.gov.uk/about-pop"

@@ -141,9 +141,6 @@ export const addressToList = (address: Address): string[] => {
   if (address?.town) {
     addressArray.push(address?.town)
   }
-  if (address?.county) {
-    addressArray.push(address?.county)
-  }
   if (address?.district) {
     addressArray.push(address?.district)
   }

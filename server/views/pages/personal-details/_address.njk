@@ -19,38 +19,38 @@
   {{ govukSummaryList({
     rows: [
       {
-        key: { html: '<span data-qa="addressStatusLabel">Status</span>' },
-        value: { html: '<span data-qa="addressStatusValue">' + address.status + ' address</span>' }
+        key: { html: '<span data-qa="' + addressType + 'StatusLabel' + loopIndex +'">Status</span>' },
+        value: { html: '<span data-qa="' + addressType + 'StatusValue' + loopIndex +'">' + address.status + ' address</span>' }
       },
       {
-        key: { html: '<span data-qa="addressLabel">Address</span>' },
-        value: { html: '<span data-qa="addressValue">' + fullAddress + '</span>' }
+        key: { html: '<span data-qa="' + addressType + 'Label' + loopIndex +'">Address</span>' },
+        value: { html: '<span data-qa="' + addressType + 'Value' + loopIndex +'">' + fullAddress + '</span>' }
       },
       {
-        key: { html: '<span data-qa="addressTelephoneLabel">Address telephone</span>' },
-        value: { html: '<span data-qa="addressTelephoneValue">' + address.telephoneNumber + '</span>' }
+        key: { html: '<span data-qa="' + addressType + 'TelephoneLabel">Address telephone</span>' },
+        value: { html: '<span data-qa="' + addressType + 'TelephoneValue' + loopIndex +'">' + address.telephoneNumber + '</span>' }
       } if address.telephoneNumber,
       {
-        key: { html: '<span data-qa="addressTypeLabel">Type of address</span>' },
-        value: { html: '<span data-qa="addressTypeValue">' + address.type + (' (verified)</span>' if address.verified else ' (not verified)') + '</span>' }
+        key: { html: '<span data-qa="' + addressType + 'TypeLabel' + loopIndex +'">Type of address</span>' },
+        value: { html: '<span data-qa="' + addressType + 'TypeValue' + loopIndex +'">' + address.type + (' (verified)</span>' if address.verified else ' (not verified)') + '</span>' }
       } if address.type,
       {
-        key: { html: '<span data-qa="addressStartDateLabel">Start date</span>' },
-        value: { html: '<span data-qa="addressStartDateValue">' + address.from | dateWithYear + '</span>'}
+        key: { html: '<span data-qa="' + addressType + 'StartDateLabel' + loopIndex +'">Start date</span>' },
+        value: { html: '<span data-qa="' + addressType + 'StartDateValue' + loopIndex +'">' + address.from | dateWithYear + '</span>'}
       },
       {
-        key: { html: '<span data-qa="addressEndDateLabel">End date</span>' },
-        value: { html: '<span data-qa="addressEndDateValue">' + address.endDate | dateWithYear + '</span>' }
+        key: { html: '<span data-qa="' + addressType + 'EndDateLabel' + loopIndex +'">End date</span>' },
+        value: { html: '<span data-qa="' + addressType + 'EndDateValue' + loopIndex +'">' + address.endDate | dateWithYear + '</span>' }
       } if address.endDate,
       {
-        key: { html: '<span data-qa="addressNotesLabel">Notes</span>' },
-        value: { html: '<span data-qa="addressNotesValue">' + address.notes + '</span>' | nl2br if address.notes else '<span data-qa="addressNotesValue">No notes</span>'}
+        key: { html: '<span data-qa="' + addressType + 'NotesLabel' + loopIndex +'">Notes</span>' },
+        value: { html: '<span data-qa="' + addressType + 'NotesValue' + loopIndex +'">' + address.notes + '</span>' | nl2br if address.notes else '<span data-qa="' + addressType + 'NotesValue' + loopIndex +'">No notes</span>'}
       }
     ]
   }) }}
 
   <p class="govuk-!-margin-bottom-0 govuk-!-margin-top-4 govuk-body-s govuk-hint-s">
-    <span data-qa="addressLastUpdatedByValue">{{ lastUpdatedBy(address.lastUpdated, address.lastUpdatedBy)}}</span>
+    <span data-qa="{{addressType}}LastUpdatedByValue{{loopIndex}}">{{ lastUpdatedBy(address.lastUpdated, address.lastUpdatedBy)}}</span>
   </p>
 {% endset %}
 

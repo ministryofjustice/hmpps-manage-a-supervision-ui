@@ -35,12 +35,16 @@
 
 {% set address = addressOverview.mainAddress %}
 <span data-qa="mainAddressSection">
+    {% set addressType = 'address' %}
+    {% set loopIndex = '' %}
     {% include './_address.njk' %}
 </span>
 
 {% if addressOverview.otherAddresses.length > 0 %}
     <h2 class="govuk-heading-l govuk-!-margin-top-8">Other addresses</h2>
+    {% set addressType = 'otherAddress' %}
     {% for address in addressOverview.otherAddresses %}
+        {% set loopIndex = loop.index %}
         <span data-qa="otherAddress{{loop.index}}Section">
             {% include './_address.njk' %}
         </span>
@@ -49,7 +53,9 @@
 
 {% if addressOverview.previousAddresses.length > 0 %}
     <h2 class="govuk-heading-l govuk-!-margin-top-8">Previous addresses</h2>
+    {% set addressType = 'previousAddress' %}
     {% for address in addressOverview.previousAddresses %}
+        {% set loopIndex = loop.index %}
         <span data-qa="previousAddress{{loop.index}}Section">
             {% include './_address.njk' %}
         </span>

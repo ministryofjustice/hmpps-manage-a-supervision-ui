@@ -22,26 +22,26 @@ context('Addresses', () => {
       .getRowData('mainAddress', 'addressLastUpdatedBy', 'Value')
       .should('contain.text', 'Last updated by Paul Smith on 20 Mar 2023')
 
-    page.getRowData('otherAddress1', 'addressStatus', 'Value').should('contain.text', 'Postal address')
-    page.getRowData('otherAddress1', 'address', 'Value').should('contain.text', '32 Other Street')
+    page.getRowData('otherAddress1', 'otherAddressStatus', 'Value1').should('contain.text', 'Postal address')
+    page.getRowData('otherAddress1', 'otherAddress', 'Value1').should('contain.text', '32 Other Street')
     page
-      .getRowData('otherAddress1', 'addressType', 'Value')
+      .getRowData('otherAddress1', 'otherAddressType', 'Value1')
       .should('contain.text', 'Householder (Owner - freehold or leasehold) (not verified)')
-    page.getRowData('otherAddress1', 'addressStartDate', 'Value').should('contain.text', '14 March 2023')
-    page.getRowData('otherAddress1', 'addressNotes', 'Value').should('contain.text', 'No notes')
+    page.getRowData('otherAddress1', 'otherAddressStartDate', 'Value1').should('contain.text', '14 March 2023')
+    page.getRowData('otherAddress1', 'otherAddressNotes', 'Value1').should('contain.text', 'No notes')
     page
-      .getRowData('otherAddress1', 'addressLastUpdatedBy', 'Value')
+      .getRowData('otherAddress1', 'otherAddressLastUpdatedBy', 'Value1')
       .should('contain.text', 'Last updated by Joe Bloggs on 20 Mar 2023')
 
-    page.getRowData('previousAddress1', 'addressStatus', 'Value').should('contain.text', 'Previous address')
-    page.getRowData('previousAddress1', 'address', 'Value').should('contain.text', '32 Previous Street')
+    page.getRowData('previousAddress1', 'previousAddressStatus', 'Value1').should('contain.text', 'Previous address')
+    page.getRowData('previousAddress1', 'previousAddress', 'Value1').should('contain.text', '32 Previous Street')
     page
-      .getRowData('previousAddress1', 'addressType', 'Value')
+      .getRowData('previousAddress1', 'previousAddressType', 'Value1')
       .should('contain.text', 'Householder (Owner - freehold or leasehold) (verified)')
-    page.getRowData('previousAddress1', 'addressStartDate', 'Value').should('contain.text', '14 March 2022')
-    page.getRowData('previousAddress1', 'addressNotes', 'Value').should('contain.text', 'Left this property')
+    page.getRowData('previousAddress1', 'previousAddressStartDate', 'Value1').should('contain.text', '14 March 2022')
+    page.getRowData('previousAddress1', 'previousAddressNotes', 'Value1').should('contain.text', 'Left this property')
     page
-      .getRowData('previousAddress1', 'addressLastUpdatedBy', 'Value')
+      .getRowData('previousAddress1', 'previousAddressLastUpdatedBy', 'Value1')
       .should('contain.text', 'Last updated by Jim Smith on 20 Mar 2023')
   })
 })

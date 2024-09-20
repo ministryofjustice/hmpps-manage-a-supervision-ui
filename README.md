@@ -107,7 +107,7 @@ npm run int-test-ui
 ### Running end-to-end tests
 Create a `.env` file in the e2e_tests directory with your Delius credentials. You can use `.env.example` as a template.
 ```shell
-cp -n .env.example .env
+cp -n .env .env
 ```
 
 Run the tests

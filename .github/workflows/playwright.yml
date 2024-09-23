@@ -9,27 +9,27 @@ jobs:
     timeout-minutes: 60
     runs-on: moj-cloud-platform
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install
-    - name: Add config
-      run: cp e2e_tests/.env e2e_tests/.env
-    - name: Run Playwright tests
-      run: npm run e2e-test
-      env:
-        DELIUS_USERNAME: ${{ secrets.E2E_DELIUS_USERNAME }}
-        DELIUS_PASSWORD: ${{ secrets.E2E_DELIUS_PASSWORD }}
-    - name: Publish HTML report
-      if: always()
-      uses: JamesIves/github-pages-deploy-action@920cbb300dcd3f0568dbc42700c61e2fd9e6139c # v4
-      with:
-        folder: playwright-report
-        target-folder: playwright-report/${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }}
-    - name: Output HTML report URL
-      if: always()
-      run: echo '[🎭 Playwright HTML Report](https://ministryofjustice.github.io/hmpps-probation-integration-e2e-tests/playwright-report/${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }})' | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Playwright Browsers
+        run: npx playwright install
+      - name: Add config
+        run: cp e2e_tests/.env.example e2e_tests/.env
+      - name: Run Playwright tests
+        run: npm run e2e-test
+        env:
+          DELIUS_USERNAME: ${{ secrets.E2E_DELIUS_USERNAME }}
+          DELIUS_PASSWORD: ${{ secrets.E2E_DELIUS_PASSWORD }}
+      - name: Publish HTML report
+        if: always()
+        uses: JamesIves/github-pages-deploy-action@920cbb300dcd3f0568dbc42700c61e2fd9e6139c # v4
+        with:
+          folder: playwright-report
+          target-folder: playwright-report/${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }}
+      - name: Output HTML report URL
+        if: always()
+        run: echo '[🎭 Playwright HTML Report](https://ministryofjustice.github.io/hmpps-probation-integration-e2e-tests/playwright-report/${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }})' | tee -a "$GITHUB_STEP_SUMMARY"

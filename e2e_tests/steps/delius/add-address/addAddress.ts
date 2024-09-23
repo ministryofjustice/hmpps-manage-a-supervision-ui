@@ -8,14 +8,14 @@ import {
 const addAddress = async (
   page: Page,
   crn: string,
-  // eslint-disable-next-line default-param-last
-  type: string = 'Main',
+  type: string,
   tableId: string,
 ): Promise<{ type: string; address: Address }> => {
-  const address = buildAddress(type)
+  const addressType = type || 'Main' // Default to 'Main' if type is not provided
+  const address = buildAddress(addressType)
   await createAddress(page, crn, address)
-  const addressType = await getTypeColumnValue(page, tableId)
-  return { type: addressType, address }
+  const fetchedAddressType = await getTypeColumnValue(page, tableId)
+  return { type: fetchedAddressType, address }
 }
 
 const getTypeColumnValue = async (page: Page, tableId: string): Promise<string> => {

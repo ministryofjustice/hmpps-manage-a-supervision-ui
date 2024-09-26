@@ -1,4 +1,5 @@
 import { Name } from './common'
+import { Appointment } from './overview'
 
 export interface UserCaseload {
   totalPages: number
@@ -17,6 +18,15 @@ export interface TeamCaseload {
   caseload: Caseload[]
 }
 export interface Caseload {
+  caseName: Name
+  crn: string
+  dob?: string
+  nextAppointment?: Appointment
+  previousAppointment?: Appointment
+  latestSentence?: string
+}
+
+export interface CaseloadResponse {
   caseName: Name
   crn: string
 }

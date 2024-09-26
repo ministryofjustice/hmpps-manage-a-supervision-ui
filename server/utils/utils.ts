@@ -404,5 +404,25 @@ export const toSlug = (string: string) => {
   return slugify(string, { lower: true })
 }
 
+export const setSortOrder = (columnName: string, sortBy: string) => {
+  const colName = sortBy.split('.')[0]
+  const sortOrder = sortBy.split('.')[1]
+  if (colName === columnName) {
+    if (sortOrder === 'desc') {
+      return 'descending'
+    }
+    return 'ascending'
+  }
+  return 'none'
+}
+
+/* eslint-disable */
+export const getDataValue = (data: any, section: string): string => {
+  if (data !== undefined) {
+    return data[section] as string
+  }
+  return undefined
+}
+
 export const makePageTitle = ({ pageHeading, hasErrors }: { pageHeading: string; hasErrors: boolean }) =>
   `${hasErrors ? 'Error: ' : ''}${pageHeading} - ${config.applicationName}`

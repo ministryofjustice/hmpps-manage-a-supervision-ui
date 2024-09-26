@@ -18,7 +18,10 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
     const pageNum: number = req.query.page ? Number.parseInt(req.query.page as string, 10) : 1
-    const caseload = await masClient.getUserCaseload(res.locals.user.username, (pageNum - 1).toString())
+    req.session.page = pageNum as unknown as string
+    const sortBy: string = req.query.sortBy ? (req.query.sortBy as string) : 'nextContact.asc'
+    req.session.sortBy = sortBy as string
+    const caseload = await masClient.searchUserCaseload(res.locals.user.username, (pageNum - 1).toString(), sortBy, {})
 
     if (caseload == null || caseload?.totalPages === 0) {
       res.redirect('/search')
@@ -27,11 +30,67 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
     }
   })
 
-  get('/case', async (req, res, _next) => {
+  post('/case', async (req, res, _next) => {
+    req.session.caseFilter = {
+      nameOrCrn: req.body.nameOrCrn,
+      sentenceCode: req.body.sentenceCode,
+      nextContactCode: req.body.nextContactCode,
+    }
+    req.session.page = '1'
+
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
-    const pageNum: number = req.query.page ? Number.parseInt(req.query.page as string, config.apis.masApi.pageSize) : 1
-    const caseload = await masClient.getUserCaseload(res.locals.user.username, (pageNum - 1).toString())
+    const pageNum: number = req.session.page
+      ? Number.parseInt(req.session.page as string, config.apis.masApi.pageSize)
+      : 1
+
+    const caseload = await masClient.searchUserCaseload(
+      res.locals.user.username,
+      (pageNum - 1).toString(),
+      req.session.sortBy,
+      req.session.caseFilter,
+    )
+    await showCaseload(req, res, caseload)
+  })
+
+  get('/case', async (req, res, _next) => {
+    if (req.query.clear === 'true') {
+      req.session.caseFilter = {
+        nameOrCrn: null,
+        sentenceCode: null,
+        nextContactCode: null,
+      }
+    }
+
+    if (req.session?.sortBy) {
+      if (req.query.sortBy && req.query.sortBy !== req.session?.sortBy) {
+        req.session.sortBy = req.query.sortBy as string
+      }
+    } else {
+      req.session.sortBy = req.query.sortBy ? (req.query.sortBy as string) : 'nextContact.asc'
+    }
+
+    if (req.session?.page) {
+      if (req.query.page && req.query.page !== req.session.page) {
+        req.session.page = req.query.page as string
+      }
+    } else {
+      req.session.page = req.query.page as string
+    }
+
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+    const masClient = new MasApiClient(token)
+
+    const pageNum: number = req.session.page
+      ? Number.parseInt(req.session.page as string, config.apis.masApi.pageSize)
+      : 1
+
+    const caseload = await masClient.searchUserCaseload(
+      res.locals.user.username,
+      (pageNum - 1).toString(),
+      req.session.sortBy,
+      req.session.caseFilter,
+    )
     await showCaseload(req, res, caseload)
   })
 
@@ -46,7 +105,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
       service: 'hmpps-manage-a-supervision-ui',
     })
     const pagination: Pagination = getPaginationLinks(
-      req.query.page ? Number.parseInt(req.query.page as string, config.apis.masApi.pageSize) : 1,
+      req.session.page ? Number.parseInt(req.session.page as string, config.apis.masApi.pageSize) : 1,
       caseload?.totalPages || 0,
       caseload?.totalElements || 0,
       page => addParameters(req, { page: page.toString() }),

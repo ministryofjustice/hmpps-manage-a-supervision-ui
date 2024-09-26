@@ -14,6 +14,8 @@
 {% from "govuk/components/radios/macro.njk"             import govukRadios %}
 {% from "moj/components/pagination/macro.njk"           import mojPagination %}
 {% from "govuk/components/pagination/macro.njk"         import govukPagination %}
+{% from "govuk/components/input/macro.njk"               import govukInput %}
+{% from "govuk/components/select/macro.njk"              import govukSelect %}
 
 {% block head %}
   <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet"/>
@@ -62,6 +64,7 @@
   <script type="module" src="/assets/govukFrontendInit.js"></script>
   <script src="/assets/moj/all.js"></script>
   <script type="module" src="/assets/mojFrontendInit.js"></script>
+  <script src="/assets/backendSortableTable.js"></script>
   <script src="/assets/js/jquery.min.js"></script>
 
 

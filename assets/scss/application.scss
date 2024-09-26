@@ -11,8 +11,36 @@ $govuk-page-width: $moj-page-width;
 @import './components/summary-card';
 @import './components/card';
 @import 'assets/scss/local';
+@import './components/sortable-table';
 @import "../../node_modules/govuk-frontend/dist/govuk/base";
 @import "../../node_modules/@ministryofjustice/frontend/moj/components/sortable-table/_sortable-table";
-@import './components/sortable-table';
 
+// TM styles
+.secondary-text {color: $govuk-secondary-text-colour; /* Using a GOV.UK Design System color */}
+.strong { font-weight: 900;}
+
+.govuk-filter-background {
+  background-color: #f3f2f1;
+  padding: 32px 32px 5px 32px;
+}
+
+.govuk-select--inline {
+  display: inline-block;
+  margin-right: 30px;
+}
+
+dd.govuk-summary-list__value span.app-notes-author {
+  display: block;
+  color: $govuk-secondary-text-colour;
+  font-size: 16px;
+}
+
+.nowrap {
+  white-space: nowrap; /* Prevents text from wrapping */
+  min-width: 110px;
+}
+
+.govuk-select--width-20 {
+  max-width: 41ex
+}
 

@@ -101,6 +101,20 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/compliance/${crn}`, handle404: false })
   }
 
+  async searchUserCaseload(
+    username: string,
+    page: string,
+    sortBy: string,
+    body: Record<never, never> = {},
+  ): Promise<UserCaseload> {
+    let pageQuery = '?size=10'
+    if (page) {
+      pageQuery = `${pageQuery}&page=${page}`
+    }
+    pageQuery = `${pageQuery}&sortBy=${sortBy}`
+    return this.post({ data: body, path: `/caseload/user/${username}/search${pageQuery}`, handle404: true })
+  }
+
   async getUserCaseload(username: string, page: string): Promise<UserCaseload> {
     let pageQuery = '?size=10'
     if (page) {

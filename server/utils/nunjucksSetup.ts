@@ -19,6 +19,7 @@ import {
   getAppointmentsToAction,
   getComplianceStatus,
   getCurrentRisksToThemselves,
+  getDataValue,
   getDistinctRequirements,
   getPreviousRisksToThemselves,
   getRisksToThemselves,
@@ -36,6 +37,7 @@ import {
   removeEmpty,
   scheduledAppointments,
   sentencePlanLink,
+  setSortOrder,
   tierLink,
   timeFromTo,
   toSlug,
@@ -81,7 +83,6 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
       express: app,
     },
   )
-
   njkEnv.addFilter('initialiseName', initialiseName)
   njkEnv.addFilter('dateWithYear', dateWithYear)
   njkEnv.addFilter('dateWithDayAndWithoutYear', dateWithDayAndWithoutYear)
@@ -99,6 +100,33 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('activityLogDate', activityLogDate)
   njkEnv.addFilter('removeEmpty', removeEmpty)
   njkEnv.addFilter('toSlug', toSlug)
+
+  app.use((req, res, next) => {
+    /* eslint-disable */
+    njkEnv.addFilter('decorateFormAttributes', (obj: any, section: string, filterName: string) => {
+      const storedValue = getDataValue(req.session[filterName] as unknown, section)
+      if (obj.items !== undefined) {
+        obj.items = obj.items.map((item: any) => {
+          let checked = storedValue ? '' : item.checked
+          let selected = storedValue ? '' : item.selected
+          if (typeof item.value === 'undefined') {
+            item.value = item.text
+          }
+          if (storedValue === item.value) {
+            checked = 'checked'
+            selected = 'selected'
+          }
+          item.checked = checked
+          item.selected = selected
+          return item
+        })
+      } else {
+        obj.value = storedValue
+      }
+      return obj
+    })
+    return next()
+  })
   njkEnv.addGlobal('getComplianceStatus', getComplianceStatus)
   njkEnv.addGlobal('timeFromTo', timeFromTo)
   njkEnv.addGlobal('getRisksWithScore', getRisksWithScore)
@@ -120,4 +148,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('tierLink', tierLink)
   njkEnv.addGlobal('sentencePlanLink', sentencePlanLink)
   njkEnv.addGlobal('interventionsLink', interventionsLink)
+  njkEnv.addGlobal('setSortOrder', setSortOrder)
 }

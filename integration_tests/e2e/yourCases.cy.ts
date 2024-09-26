@@ -1,11 +1,12 @@
 import Page from '../pages/page'
 import YourCasesPage from '../pages/yourCases'
 
-context('Your cases', () => {
-  it('Your cases page is rendered ', () => {
+context('My cases', () => {
+  it('My cases page is rendered ', () => {
     cy.visit('/case')
     const page = Page.verifyOnPage(YourCasesPage)
-    page.getRowData('yourCases', 'case1', 'Value').should('contain.text', 'James Morrison')
-    page.getPagination().should('contain.text', 'Showing 1 to 10 of 29,090 cases.')
+    page.getRowData('myCases', 'nameOrCrn', 'Value1').should('contain.text', 'X778160')
+    page.getRowData('myCases', 'dob', 'Value1').should('contain.text', 'X778160')
+    page.getPagination().should('contain.text', 'Showing 1 to 10 of 33 cases.')
   })
 })

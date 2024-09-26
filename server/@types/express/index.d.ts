@@ -5,9 +5,20 @@ export default {}
 declare module 'express-session' {
   // Declare that the session will potentially contain these additional fields
   interface SessionData {
+    [key: string]: string | undefined
     returnTo: string
     nowInMinutes: number
     mas?: Mas.MasData
+    page: string
+    sortBy: string
+    caseFilter: CaseFilter
+  }
+
+  interface CaseFilter {
+    [key: string]: string | undefined
+    nameOrCrn: string
+    sentenceCode: string
+    nextContactCode: string
   }
 }
 

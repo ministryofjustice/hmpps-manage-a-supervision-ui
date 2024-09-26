@@ -1,5 +1,5 @@
 import Page from '../pages/page'
-import YourCasesPage from '../pages/yourCases'
+import YourCasesPage from '../pages/myCases'
 
 context('My cases', () => {
   it('My cases page is rendered ', () => {

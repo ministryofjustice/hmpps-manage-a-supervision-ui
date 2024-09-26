@@ -15,6 +15,10 @@ MOJFrontend.BackendSortableTable = function (params) {
   this.table.on('click', 'th button', $.proxy(this, 'onSortButtonClick'))
 }
 
+MOJFrontend.BackendSortableTable.check = function () {
+  //Empty function
+}
+
 MOJFrontend.BackendSortableTable.prototype.setupOptions = function (params) {
   params = params || {}
   this.statusMessage = params.statusMessage || 'Sort by %heading% (%direction%)'
@@ -23,9 +27,9 @@ MOJFrontend.BackendSortableTable.prototype.setupOptions = function (params) {
 }
 
 MOJFrontend.BackendSortableTable.prototype.createHeadingButtons = function () {
-  var headings = this.table.find('thead th')
-  var heading
-  for (var i = 0; i < headings.length; i++) {
+  const headings = this.table.find('thead th')
+  let heading
+  for (let i = 0; i < headings.length; i++) {
     heading = $(headings[i])
     if (heading.attr('aria-sort')) {
       this.createHeadingButton(heading, i)
@@ -34,11 +38,11 @@ MOJFrontend.BackendSortableTable.prototype.createHeadingButtons = function () {
 }
 
 MOJFrontend.BackendSortableTable.prototype.setNaturalOrder = function () {
-  var headings = this.table.find('thead th')
-  var heading
+  const headings = this.table.find('thead th')
+  let heading
   this.naturalSortColumn = 0
   this.naturalSortDirection = 'ascending'
-  for (var i = 0; i < headings.length; i++) {
+  for (let i = 0; i < headings.length; i++) {
     heading = $(headings[i])
     if (heading.attr('aria-sort-natural')) {
       this.naturalSortColumn = i
@@ -49,8 +53,8 @@ MOJFrontend.BackendSortableTable.prototype.setNaturalOrder = function () {
 }
 
 MOJFrontend.BackendSortableTable.prototype.createHeadingButton = function (heading, i) {
-  var text = heading.text()
-  var button = $('<button type="button" data-index="' + i + '">' + text + '</button>')
+  const text = heading.text()
+  const button = $('<button type="button" data-index="' + i + '">' + text + '</button>')
   heading.text('')
   heading.append(button)
 }
@@ -61,26 +65,24 @@ MOJFrontend.BackendSortableTable.prototype.createStatusBox = function () {
 }
 
 MOJFrontend.BackendSortableTable.prototype.onSortButtonClick = function (e) {
-  var columnNumber = e.currentTarget.getAttribute('data-index')
-  var sortDirection = $(e.currentTarget).parent().attr('aria-sort')
-  var newSortDirection
-  var backendSortDirection
+  const sortDirection = $(e.currentTarget).parent().attr('aria-sort')
+  const action = $(e.currentTarget).parent().attr('action')
+  let backendSortDirection
   if (sortDirection === 'none' || sortDirection === 'descending') {
     backendSortDirection = 'asc'
   } else {
     backendSortDirection = 'desc'
   }
 
-  var columnName = $(e.currentTarget).parent().attr('col-name')
+  const columnName = $(e.currentTarget).parent().attr('col-name')
+  const sortBy = columnName + '.' + backendSortDirection
 
-  var sortBy = columnName + '.' + backendSortDirection
-
-  window.location = `/case?sortBy=${sortBy}`
+  window.location = `/${action}?sortBy=${sortBy}`
 }
 
 MOJFrontend.BackendSortableTable.prototype.updateButtonState = function (button, direction) {
   button.parent().attr('aria-sort', direction)
-  var message = this.statusMessage
+  let message = this.statusMessage
   message = message.replace(/%heading%/, button.text())
   message = message.replace(/%direction%/, this[direction + 'Text'])
   this.status.text(message)
@@ -91,22 +93,22 @@ MOJFrontend.BackendSortableTable.prototype.removeButtonStates = function () {
 }
 
 MOJFrontend.BackendSortableTable.prototype.addRows = function (rows) {
-  for (var i = 0; i < rows.length; i++) {
+  for (let i = 0; i < rows.length; i++) {
     this.body.append(rows[i])
   }
 }
 
 MOJFrontend.BackendSortableTable.prototype.getTableRowsArray = function () {
-  var rows = []
-  var trs = this.body.find('tr')
-  for (var i = 0; i < trs.length; i++) {
+  const rows = []
+  const trs = this.body.find('tr')
+  for (let i = 0; i < trs.length; i++) {
     rows.push(trs[i])
   }
   return rows
 }
 
 MOJFrontend.BackendSortableTable.prototype.sort = function (rows, columnNumber, sortDirection) {
-  var newRows = rows.sort(
+  return rows.sort(
     $.proxy(function (rowA, rowB) {
       var tdA = $(rowA).find('td').eq(columnNumber)
       var tdB = $(rowB).find('td').eq(columnNumber)
@@ -131,14 +133,13 @@ MOJFrontend.BackendSortableTable.prototype.sort = function (rows, columnNumber, 
       }
     }, this),
   )
-  return newRows
 }
 
 MOJFrontend.BackendSortableTable.prototype.sortNatural = function (rowA, rowB) {
-  var tdA = $(rowA).find('td').eq(this.naturalSortColumn)
-  var tdB = $(rowB).find('td').eq(this.naturalSortColumn)
-  var valueA = this.getCellValue(tdA)
-  var valueB = this.getCellValue(tdB)
+  const tdA = $(rowA).find('td').eq(this.naturalSortColumn)
+  const tdB = $(rowB).find('td').eq(this.naturalSortColumn)
+  const valueA = this.getCellValue(tdA)
+  const valueB = this.getCellValue(tdB)
   if (this.naturalSortDirection === 'ascending') {
     if (valueA < valueB) {
       return -1
@@ -159,7 +160,7 @@ MOJFrontend.BackendSortableTable.prototype.sortNatural = function (rowA, rowB) {
 }
 
 MOJFrontend.BackendSortableTable.prototype.getCellValue = function (cell) {
-  var val = cell.attr('data-sort-value')
+  let val = cell.attr('data-sort-value')
   val = val || cell.html()
   if ($.isNumeric(val)) {
     val = parseInt(val, 10)

@@ -107,20 +107,8 @@ export default class MasApiClient extends RestClient {
     sortBy: string,
     body: Record<never, never> = {},
   ): Promise<UserCaseload> {
-    let pageQuery = '?size=10'
-    if (page) {
-      pageQuery = `${pageQuery}&page=${page}`
-    }
-    pageQuery = `${pageQuery}&sortBy=${sortBy}`
+    const pageQuery = `?${new URLSearchParams({ size: '10', page, sortBy }).toString()}`
     return this.post({ data: body, path: `/caseload/user/${username}/search${pageQuery}`, handle404: true })
-  }
-
-  async getUserCaseload(username: string, page: string): Promise<UserCaseload> {
-    let pageQuery = '?size=10'
-    if (page) {
-      pageQuery = `${pageQuery}&page=${page}`
-    }
-    return this.get({ path: `/caseload/user/${username}${pageQuery}`, handle404: true })
   }
 
   async getUserTeams(username: string): Promise<UserTeam> {

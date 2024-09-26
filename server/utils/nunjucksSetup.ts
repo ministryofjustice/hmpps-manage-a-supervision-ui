@@ -103,8 +103,8 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
 
   app.use((req, res, next) => {
     /* eslint-disable */
-    njkEnv.addFilter('decorateFormAttributes', (obj: any, section: string, filterName: string) => {
-      const storedValue = getDataValue(req.session[filterName] as unknown, section)
+    njkEnv.addFilter('decorateFormAttributes', (obj: any, attributeName: string, sessionObjName: string) => {
+      const storedValue = getDataValue(req.session[sessionObjName] as unknown, attributeName)
       if (obj.items !== undefined) {
         obj.items = obj.items.map((item: any) => {
           let checked = storedValue ? '' : item.checked
@@ -120,9 +120,14 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
           item.selected = selected
           return item
         })
+        obj.idPrefix = attributeName
       } else {
         obj.value = storedValue
       }
+      if (typeof obj.id === 'undefined') {
+        obj.id = attributeName
+      }
+      obj.name = `[${attributeName}]`
       return obj
     })
     return next()

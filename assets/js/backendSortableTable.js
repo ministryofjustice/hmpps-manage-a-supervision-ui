@@ -15,7 +15,7 @@ MOJFrontend.BackendSortableTable = function (params) {
   this.table.on('click', 'th button', $.proxy(this, 'onSortButtonClick'))
 }
 
-MOJFrontend.BackendSortableTable.check = function () {
+MOJFrontend.BackendSortableTable.prototype.check = function () {
   //Empty function
 }
 

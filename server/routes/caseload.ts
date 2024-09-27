@@ -20,7 +20,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
     const pageNum: number = req.query.page ? Number.parseInt(req.query.page as string, 10) : 1
     req.session.page = pageNum as unknown as string
     const sortBy: string = req.query.sortBy ? (req.query.sortBy as string) : 'nextContact.asc'
-    req.session.sortBy = sortBy as string
+    req.session.sortBy = sortBy
     const caseload = await masClient.searchUserCaseload(res.locals.user.username, (pageNum - 1).toString(), sortBy, {})
 
     if (caseload == null || caseload?.totalPages === 0) {

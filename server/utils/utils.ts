@@ -6,6 +6,7 @@ import { Name } from '../data/model/common'
 import { Address } from '../data/model/personalDetails'
 import config from '../config'
 import { Activity } from '../data/model/schedule'
+import { CaseSearchFilter, SelectElement } from '../data/model/caseload'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -415,13 +416,34 @@ export const setSortOrder = (columnName: string, sortBy: string) => {
   }
   return 'none'
 }
-
-/* eslint-disable */
-export const getDataValue = (data: any, section: string): string => {
+export const defaultFormInputValues = (
+  object: HTMLInputElement,
+  data: CaseSearchFilter,
+  id: string,
+): HTMLInputElement => {
+  const obj = object
   if (data !== undefined) {
-    return data[section] as string
+    obj.id = id
+    obj.name = id
+    obj.value = data[id]
   }
-  return undefined
+  return obj
+}
+
+export const defaultFormSelectValues = (object: SelectElement, data: CaseSearchFilter, id: string): SelectElement => {
+  const obj = object
+  if (data !== undefined) {
+    obj.id = id
+    obj.name = id
+
+    obj.items.forEach(item => {
+      if (item.value === data[id]) {
+        // eslint-disable-next-line no-param-reassign
+        item.selected = 'selected'
+      }
+    })
+  }
+  return obj
 }
 
 export const makePageTitle = ({ pageHeading, hasErrors }: { pageHeading: string; hasErrors: boolean }) =>

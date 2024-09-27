@@ -41,6 +41,25 @@ export interface UserTeam {
   teams: Team[]
 }
 
+export interface CaseSearchFilter {
+  [key: string]: string | undefined
+  nameOrCrn?: string
+  sentenceCode?: string
+  nextContactCode?: string
+}
+
+export interface SelectElement {
+  id?: string
+  name?: string
+  items?: SelectItem[]
+}
+
+export interface SelectItem {
+  text?: string
+  value?: string
+  selected?: string
+}
+
 export interface ErrorMessages {
   [key: string]: { text: string }
 }

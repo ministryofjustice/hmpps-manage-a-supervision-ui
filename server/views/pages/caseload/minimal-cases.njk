@@ -54,10 +54,10 @@
                     formGroup: {
                       classes: "govuk-select--inline"
                     },
-                    id: 'name-or-crn',
-                    name: 'name-or-crn',
+                    id: 'nameOrCrn',
+                    name: 'nameOrCrn',
                     classes: 'govuk-input govuk-input--width-10'
-                  } | decorateFormAttributes('nameOrCrn', 'caseFilter'))
+                  } | defaultFormInputValues(filter, 'nameOrCrn'))
                   }}
 
                   {{ govukSelect({
@@ -72,7 +72,7 @@
                     id: 'sentenceCode',
                     name: 'sentenceCode',
                     items: sentenceTypeSelectItems
-                    } | decorateFormAttributes('sentenceCode', 'caseFilter'))
+                    } | defaultFormSelectValues(filter, 'sentenceCode'))
                   }}
 
                   {{ govukSelect({
@@ -87,7 +87,7 @@
                     id: 'nextContactCode',
                     name: 'nextContactCode',
                     items: contactTypeSelectItems
-                    } | decorateFormAttributes('nextContactCode', 'caseFilter'))
+                    } | defaultFormSelectValues(filter, 'nextContactCode'))
                   }}
                 </div>
                 <div class="govuk-button-group">

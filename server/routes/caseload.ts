@@ -7,7 +7,7 @@ import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import logger from '../../logger'
-import { ErrorMessages, UserCaseload } from '../data/model/caseload'
+import { CaseSearchFilter, ErrorMessages, UserCaseload } from '../data/model/caseload'
 import config from '../config'
 
 export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Services) {
@@ -26,7 +26,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
     if (caseload == null || caseload?.totalPages === 0) {
       res.redirect('/search')
     } else {
-      showCaseload(req, res, caseload)
+      showCaseload(req, res, caseload, {})
     }
   })
 
@@ -50,7 +50,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
       req.session.sortBy,
       req.session.caseFilter,
     )
-    await showCaseload(req, res, caseload)
+    await showCaseload(req, res, caseload, req.session.caseFilter)
   })
 
   get('/case', async (req, res, _next) => {
@@ -91,10 +91,10 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
       req.session.sortBy,
       req.session.caseFilter,
     )
-    await showCaseload(req, res, caseload)
+    await showCaseload(req, res, caseload, req.session.caseFilter)
   })
 
-  const showCaseload = async (req: Request, res: Response, caseload: UserCaseload) => {
+  const showCaseload = async (req: Request, res: Response, caseload: UserCaseload, filter: CaseSearchFilter) => {
     const currentNavSection = 'yourCases'
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_CASELOAD',
@@ -115,6 +115,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
       pagination,
       caseload,
       currentNavSection,
+      filter,
     })
   }
 

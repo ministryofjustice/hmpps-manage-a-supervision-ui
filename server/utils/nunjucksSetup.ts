@@ -12,6 +12,8 @@ import {
   dateWithYear,
   dateWithYearShortMonth,
   dayOfWeek,
+  defaultFormInputValues,
+  defaultFormSelectValues,
   deliusDateFormat,
   deliusDeepLinkUrl,
   deliusHomepageUrl,
@@ -19,7 +21,6 @@ import {
   getAppointmentsToAction,
   getComplianceStatus,
   getCurrentRisksToThemselves,
-  getDataValue,
   getDistinctRequirements,
   getPreviousRisksToThemselves,
   getRisksToThemselves,
@@ -100,38 +101,8 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('activityLogDate', activityLogDate)
   njkEnv.addFilter('removeEmpty', removeEmpty)
   njkEnv.addFilter('toSlug', toSlug)
-
-  app.use((req, res, next) => {
-    /* eslint-disable */
-    njkEnv.addFilter('decorateFormAttributes', (obj: any, attributeName: string, sessionObjName: string) => {
-      const storedValue = getDataValue(req.session[sessionObjName] as unknown, attributeName)
-      if (obj.items !== undefined) {
-        obj.items = obj.items.map((item: any) => {
-          let checked = storedValue ? '' : item.checked
-          let selected = storedValue ? '' : item.selected
-          if (typeof item.value === 'undefined') {
-            item.value = item.text
-          }
-          if (storedValue === item.value) {
-            checked = 'checked'
-            selected = 'selected'
-          }
-          item.checked = checked
-          item.selected = selected
-          return item
-        })
-        obj.idPrefix = attributeName
-      } else {
-        obj.value = storedValue
-      }
-      if (typeof obj.id === 'undefined') {
-        obj.id = attributeName
-      }
-      obj.name = `[${attributeName}]`
-      return obj
-    })
-    return next()
-  })
+  njkEnv.addFilter('defaultFormInputValues', defaultFormInputValues)
+  njkEnv.addFilter('defaultFormSelectValues', defaultFormSelectValues)
   njkEnv.addGlobal('getComplianceStatus', getComplianceStatus)
   njkEnv.addGlobal('timeFromTo', timeFromTo)
   njkEnv.addGlobal('getRisksWithScore', getRisksWithScore)

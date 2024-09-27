@@ -425,7 +425,7 @@ export const defaultFormInputValues = (
   if (data !== undefined) {
     obj.id = id
     obj.name = id
-    obj.value = data[id] as string
+    obj.value = data[id]
   }
   return obj
 }
@@ -437,7 +437,7 @@ export const defaultFormSelectValues = (object: SelectElement, data: CaseSearchF
     obj.name = id
 
     obj.items.forEach(item => {
-      if (item.value === (data[id] as string)) {
+      if (item.value === data[id]) {
         // eslint-disable-next-line no-param-reassign
         item.selected = 'selected'
       }

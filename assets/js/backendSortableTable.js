@@ -29,10 +29,12 @@ MOJFrontend.BackendSortableTable.prototype.setupOptions = function (params) {
 MOJFrontend.BackendSortableTable.prototype.createHeadingButtons = function () {
   const headings = this.table.find('thead th')
   let heading
-  for (let i = 0; i < headings.length; i++) {
-    heading = $(headings[i])
+  let i = 0
+  for (let head of headings) {
+    heading = $(head)
     if (heading.attr('aria-sort')) {
       this.createHeadingButton(heading, i)
+      i++
     }
   }
 }
@@ -42,8 +44,8 @@ MOJFrontend.BackendSortableTable.prototype.setNaturalOrder = function () {
   let heading
   this.naturalSortColumn = 0
   this.naturalSortDirection = 'ascending'
-  for (let i = 0; i < headings.length; i++) {
-    heading = $(headings[i])
+  for (let head of headings) {
+    heading = $(head)
     if (heading.attr('aria-sort-natural')) {
       this.naturalSortColumn = i
       this.naturalSortDirection = heading.attr('aria-sort-natural')
@@ -80,40 +82,13 @@ MOJFrontend.BackendSortableTable.prototype.onSortButtonClick = function (e) {
   window.location = `/${action}?sortBy=${sortBy}`
 }
 
-MOJFrontend.BackendSortableTable.prototype.updateButtonState = function (button, direction) {
-  button.parent().attr('aria-sort', direction)
-  let message = this.statusMessage
-  message = message.replace(/%heading%/, button.text())
-  message = message.replace(/%direction%/, this[direction + 'Text'])
-  this.status.text(message)
-}
-
-MOJFrontend.BackendSortableTable.prototype.removeButtonStates = function () {
-  this.table.find('thead th').attr('aria-sort', 'none')
-}
-
-MOJFrontend.BackendSortableTable.prototype.addRows = function (rows) {
-  for (let i = 0; i < rows.length; i++) {
-    this.body.append(rows[i])
-  }
-}
-
-MOJFrontend.BackendSortableTable.prototype.getTableRowsArray = function () {
-  const rows = []
-  const trs = this.body.find('tr')
-  for (let i = 0; i < trs.length; i++) {
-    rows.push(trs[i])
-  }
-  return rows
-}
-
 MOJFrontend.BackendSortableTable.prototype.sort = function (rows, columnNumber, sortDirection) {
   return rows.sort(
     $.proxy(function (rowA, rowB) {
-      var tdA = $(rowA).find('td').eq(columnNumber)
-      var tdB = $(rowB).find('td').eq(columnNumber)
-      var valueA = this.getCellValue(tdA)
-      var valueB = this.getCellValue(tdB)
+      const tdA = $(rowA).find('td').eq(columnNumber)
+      const tdB = $(rowB).find('td').eq(columnNumber)
+      const valueA = this.getCellValue(tdA)
+      const valueB = this.getCellValue(tdB)
       if (sortDirection === 'ascending') {
         if (valueA < valueB) {
           return -1

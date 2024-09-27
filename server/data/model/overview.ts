@@ -54,6 +54,11 @@ export interface NextAppointment {
   description: string
 }
 
+export interface Appointment {
+  date: string
+  description: string
+}
+
 export interface PersonalDetails {
   name: Name
   preferredGender: string

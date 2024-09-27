@@ -4,5 +4,5 @@ MOJFrontend.nodeListForEach($backendSortableTables, function ($table) {
   const best = new MOJFrontend.BackendSortableTable({
     table: $table,
   })
-  best.check()
+  best.check
 })

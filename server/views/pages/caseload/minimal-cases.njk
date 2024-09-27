@@ -111,6 +111,14 @@
                {% set crn %}
                  {{ case.crn }}
                {% endset %}
+               {% set sentenceHtml %}
+                {% if case.numberOfAdditionalSentences > 0 %}
+                    {{ case.latestSentence }}<br><a class="govuk-link" href="./case/{{ case.crn }}/sentence">+ {{ case.numberOfAdditionalSentences }} more</a>
+                {% else %}
+                    {{ case.latestSentence }}
+                {% endif %}
+
+               {% endset %}
                {% set rows = (rows.push(
                  [
                    { html: "<a class='govuk-!-font-weight-bold' href='./case/" + case.crn + "'>" + fullName + "</a>
@@ -118,10 +126,10 @@
                    <span class='govuk-!-font-weight-bold secondary-text'>" + crn + "</span>", attributes: { 'data-sort-value': case.caseName.surname, 'data-qa': 'nameOrCrnValue' + loop.index} },
                    { html: case.dob | dateWithYearShortMonth  + "</br><span class='secondary-text'>Age " + case.dob | yearsSince + "</span>",
                     attributes: { 'data-sort-value': case.dob,  'data-qa': 'dobValue' + loop.index } },
-                   { text: case.latestSentence },
-                   { html: case.previousAppointment.description + "</br><span class='secondary-text'>" + case.previousAppointment.date | dateWithYearShortMonth  + "</span>", attributes: { 'data-sort-value': case.previousAppointment.date, 'data-qa': 'mainSentenceValue' + loop.index } }
+                   { html: sentenceHtml },
+                   { html: "<a class='govuk-link' href='./case/" + case.crn + "/schedule/appointment/" + case.previousAppointment.id + "'>" + case.previousAppointment.description + "</a></br><span class='secondary-text'>" + case.previousAppointment.date | dateWithYearShortMonth + "</span>", attributes: { "data-sort-value": case.previousAppointment.date  } }
                    if case.previousAppointment,
-                   { html: case.nextAppointment.description + "</br><span class='secondary-text'>" + case.nextAppointment.date | dateWithYear + "</span>", attributes: { "data-sort-value": case.nextAppointment.date  } }
+                   { html: "<a class='govuk-link' href='./case/" + case.crn + "/schedule/appointment/" + case.nextAppointment.id + "'>" + case.nextAppointment.description + "</a></br><span class='secondary-text'>" + case.nextAppointment.date | dateWithYearShortMonth + "</span>", attributes: { "data-sort-value": case.nextAppointment.date  } }
                    if case.nextAppointment
                  ]
                ), rows) %}
@@ -140,7 +148,7 @@
                  attributes: {'aria-sort': setSortOrder('nameOrCrn', caseload.sortedBy) , 'col-name': 'nameOrCrn', 'action': 'case'}
                },
                {
-                 text: "Date of birth / Age",
+                 text: "Date of birth",
                  attributes: {'aria-sort': setSortOrder('dob', caseload.sortedBy) , 'col-name': 'dob', 'data-qa': 'dob', 'action': 'case' },
                  classes: "nowrap"
                },

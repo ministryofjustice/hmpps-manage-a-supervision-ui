@@ -18,7 +18,7 @@
         "jsonBody": {
           "totalPages": 4,
           "totalElements": 33,
-          "sortedBy": "nextContact.desc",
+          "sortedBy": "nextContact.asc",
           "provider": "London",
           "staff": {
             "forename": "Paul",
@@ -34,14 +34,17 @@
               "crn": "X778160",
               "dob": "1975-09-25",
               "nextAppointment": {
+                "id": 2507984987,
                 "date": "2024-10-22T09:00:00+01:00",
                 "description": "AP PA - Accommodation"
               },
               "previousAppointment": {
+                "id": 2507984986,
                 "date": "2024-09-24T09:00:00+01:00",
                 "description": "AP PA - Accommodation"
               },
-              "latestSentence": "Being in possession of fireworks etc in or when entering a designated sports ground - 12516"
+              "latestSentence": "Adult Custody < 12m",
+              "numberOfAdditionalSentences": 2
             },
             {
               "caseName": {
@@ -51,25 +54,24 @@
               },
               "crn": "X801756",
               "dob": "1986-07-19",
-              "nextAppointment": {
-                "date": "2024-09-25T09:30:00+01:00",
-                "description": "Post Disclosure Session"
-              },
               "previousAppointment": {
-                "date": "2024-09-24T09:30:00+01:00",
+                "id": 2507985424,
+                "date": "2024-09-26T09:30:00+01:00",
                 "description": "Post Disclosure Session"
               },
-              "latestSentence": "All offences under Jobseekers Act 1995 (15115)"
+              "latestSentence": "Adult Custody < 12m",
+              "numberOfAdditionalSentences": 1
             },
             {
               "caseName": {
-                "forename": "Samuel",
+                "forename": "Benny",
                 "middleName": "",
-                "surname": "Corkery"
+                "surname": "Torp"
               },
-              "crn": "X774387",
-              "dob": "1998-08-18",
-              "latestSentence": "All offences under Jobseekers Act 1995 (15115)"
+              "crn": "X773484",
+              "dob": "1961-03-15",
+              "latestSentence": "Adult Custody < 12m",
+              "numberOfAdditionalSentences": 0
             },
             {
               "caseName": {
@@ -79,7 +81,8 @@
               },
               "crn": "X808126",
               "dob": "1984-10-03",
-              "latestSentence": "Being drunk (highway/public place/licensed premises) while in charge of a child under 7 - 14112"
+              "latestSentence": "Adult Custody < 12m",
+              "numberOfAdditionalSentences": 0
             },
             {
               "caseName": {
@@ -89,7 +92,8 @@
               },
               "crn": "X777916",
               "dob": "2001-02-14",
-              "latestSentence": "Offence by licenced person etc (Licensing Acts) - 14200"
+              "latestSentence": "Adult Custody < 12m",
+              "numberOfAdditionalSentences": 0
             },
             {
               "caseName": {
@@ -99,7 +103,8 @@
               },
               "crn": "X765410",
               "dob": "1977-11-21",
-              "latestSentence": "Being drunk (highway/public place/licensed premises) while in charge of a child under 7 - 14112"
+              "latestSentence": "Adult Custody < 12m",
+              "numberOfAdditionalSentences": 0
             },
             {
               "caseName": {
@@ -109,7 +114,8 @@
               },
               "crn": "X765523",
               "dob": "1978-08-09",
-              "latestSentence": "(Detention of female in brothel or other premises - 02403)"
+              "latestSentence": "Adult Custody < 12m",
+              "numberOfAdditionalSentences": 0
             },
             {
               "caseName": {
@@ -119,17 +125,8 @@
               },
               "crn": "X767016",
               "dob": "1979-11-10",
-              "latestSentence": "Motorway offence (other than speeding) - 81700"
-            },
-            {
-              "caseName": {
-                "forename": "Philip",
-                "middleName": "",
-                "surname": "Little"
-              },
-              "crn": "X767146",
-              "dob": "2001-07-27",
-              "latestSentence": "Stealing from automatic machines and meters - 04700"
+              "latestSentence": "Adult Custody < 12m",
+              "numberOfAdditionalSentences": 0
             },
             {
               "caseName": {
@@ -139,141 +136,33 @@
               },
               "crn": "X767644",
               "dob": "1955-11-16",
-              "latestSentence": "Dangerous driving/Aid, abet cause or permit reckless driving - 80200"
+              "latestSentence": "Adult Custody < 12m",
+              "numberOfAdditionalSentences": 0
+            },
+            {
+              "caseName": {
+                "forename": "Nicole",
+                "middleName": "",
+                "surname": "Kutch"
+              },
+              "crn": "X769773",
+              "dob": "1955-03-16",
+              "latestSentence": "Adult Custody < 12m",
+              "numberOfAdditionalSentences": 0
             }
           ],
           "metaData": {
             "sentenceTypes": [
               {
-                "code": "08169",
-                "description": "(Failure to comply with instructions in firearms certificate when transferring firearm to person other than registered dealer: failure to report transaction to police (Group I) - 08169)"
+                "code": "307",
+                "description": "Adult Custody < 12m"
               },
               {
-                "code": "12117",
-                "description": "Attend a hare coursing event (Hunting Act 2004) - 12117"
-              },
-              {
-                "code": "15700",
-                "description": "Offence by pawnbroker - 15700"
-              },
-              {
-                "code": "82200",
-                "description": "Noise offences - 82200"
-              },
-              {
-                "code": "15516",
-                "description": "Acting in a disruptive manner (Air Navigation) - 15516"
-              },
-              {
-                "code": "07905",
-                "description": "Harming or intending to harm a witness - 07905"
-              },
-              {
-                "code": "05327",
-                "description": "(Acquisition, possession, or use of proceeds of criminal conduct - 05327)"
-              },
-              {
-                "code": "13100",
-                "description": "Aggravated vehicle taking - criminal damage of £5,000 or under (Category) - 13100"
-              },
-              {
-                "code": "16407",
-                "description": "False alarms of fire - 16407"
-              },
-              {
-                "code": "10814",
-                "description": "Abandonment of animals  (10814)"
-              },
-              {
-                "code": "09821",
-                "description": "Accept/obtain gift/money as inducement/reward for procuring the grant of a title/honour - 09821"
-              },
-              {
-                "code": "02403",
-                "description": "(Detention of female in brothel or other premises - 02403)"
-              },
-              {
-                "code": "04000",
-                "description": "Stealing in a dwelling other than from automatic machines and meters - 04000"
-              },
-              {
-                "code": "81600",
-                "description": "Speed limit offences - 81600"
-              },
-              {
-                "code": "81700",
-                "description": "Motorway offence (other than speeding) - 81700"
-              },
-              {
-                "code": "00504",
-                "description": "Attempting to choke, suffocate, etc, with intent to commit an indictable offence (garrotting) - 00504"
-              },
-              {
-                "code": "03001",
-                "description": "Burglary (non dwelling) with intent to commit, or the commission of an offence triable only on indictment - 03001"
-              },
-              {
-                "code": "03100",
-                "description": "Aggravated burglary in a building other than a dwelling (including attempts) - 03100"
-              },
-              {
-                "code": "14200",
-                "description": "Offence by licenced person etc (Licensing Acts) - 14200"
-              },
-              {
-                "code": "12600",
-                "description": "Interference with motor vehicle/trailer - 12600"
-              },
-              {
-                "code": "15905",
-                "description": "Disclose information in contravention of S.34 (LASPO Act) - 15905"
-              },
-              {
-                "code": "10424",
-                "description": "*Canals (Offences Act) 1840 (1964) - 10424"
-              },
-              {
-                "code": "80200",
-                "description": "Dangerous driving/Aid, abet cause or permit reckless driving - 80200"
-              },
-              {
-                "code": "12516",
-                "description": "Being in possession of fireworks etc in or when entering a designated sports ground - 12516"
-              },
-              {
-                "code": "04700",
-                "description": "Stealing from automatic machines and meters - 04700"
-              },
-              {
-                "code": "04801",
-                "description": "Stealing motor vehicle - 04801"
-              },
-              {
-                "code": "05600",
-                "description": "Arson - 05600"
-              },
-              {
-                "code": "14112",
-                "description": "Being drunk (highway/public place/licensed premises) while in charge of a child under 7 - 14112"
-              },
-              {
-                "code": "18000",
-                "description": "Trams and Trolley Vehicles - 18000"
-              },
-              {
-                "code": "00000",
-                "description": "No Offence"
-              },
-              {
-                "code": "15115",
-                "description": "All offences under Jobseekers Act 1995 (15115)"
+                "code": "329",
+                "description": "ORA Community Order"
               }
             ],
             "contactTypes": [
-              {
-                "code": "TCP6",
-                "description": "Post Disclosure Session"
-              },
               {
                 "code": "APPA03",
                 "description": "AP PA - Accommodation"
@@ -281,6 +170,10 @@
               {
                 "code": "COAI",
                 "description": "Initial Appointment - In office (NS)"
+              },
+              {
+                "code": "TCP6",
+                "description": "Post Disclosure Session"
               }
             ]
           }

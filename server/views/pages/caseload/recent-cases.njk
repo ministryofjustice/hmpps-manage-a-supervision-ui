@@ -1,0 +1,41 @@
+{% extends "./caseload.njk" %}
+{% set title = 'Recent Cases' %}
+{% block pageTitle %}{{ title }}{% endblock %}
+
+{% block pageContent %}
+
+    <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name / CRN</th>
+            <th scope="col" class="govuk-table__header">DOB/ Age</th>
+            <th scope="col" class="govuk-table__header">Tier</th>
+            <th scope="col" class="govuk-table__header">Sentence</th>
+        </tr>
+        </thead>
+        <tbody id="tabBody" class="govuk-table__body">
+        <script nonce="{{ cspNonce }}">
+            const recentCases = JSON.parse(localStorage.getItem('recentCases'))
+            recentCases.forEach((recentCase) => {
+                    const tableBody = document.getElementById("tabBody")
+
+                    const row = document.createElement("tr")
+                    const rd1 = document.createElement("td")
+                    rd1.innerText = recentCase.name
+                    const rd2 = document.createElement("td")
+                    rd2.innerText = recentCase.dob
+                    const rd3 = document.createElement("td")
+                    rd3.innerText = recentCase.tierScore
+                    const rd4 = document.createElement("td")
+                    rd4.innerText = recentCase.sentence
+
+                    row.appendChild(rd1)
+                    row.appendChild(rd2)
+                    row.appendChild(rd3)
+                    row.appendChild(rd4)
+                    tableBody.appendChild(row)
+                }
+            )
+        </script>
+    </table>
+{% endblock %}

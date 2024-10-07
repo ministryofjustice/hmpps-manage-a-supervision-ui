@@ -1,0 +1,21 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/user/.*/access/X778160",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "crn": "X778160",
+          "userExcluded": false,
+          "userRestricted": false
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

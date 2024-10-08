@@ -65,7 +65,6 @@ context('Overview', () => {
       .invoke('getItem', 'recentCases')
       .then(result => {
         const recentCase = JSON.parse(JSON.stringify(result))
-        cy.log(recentCase)
         expect(expected, recentCase)
       })
   })

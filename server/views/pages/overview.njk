@@ -271,7 +271,7 @@
 
 
     {% set numberOfSentences = overview.sentences.length %}
-    {% for sentence in overview.sentences|sort(attribute='eventNumber', reverse=true) %}
+    {% for sentence in overview.sentences %}
         {% set sentenceHtml %}
             {% set order %}
                 {% if sentence.order  %}

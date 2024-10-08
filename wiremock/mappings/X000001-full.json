@@ -56,6 +56,24 @@
           },
           "sentences": [
             {
+              "additionalOffences": [],
+              "eventNumber": "3",
+              "mainOffence": {
+                "code": "18502",
+                "description": "Breach of Restraining Order (Protection from Harassment Act 1997) - 00831"
+              },
+              "order": {
+                "description": "12 month Community order",
+                "endDate": "2024-12-01",
+                "startDate": "2023-12-01"
+              },
+              "rar": {
+                "completed": 14,
+                "scheduled": 2,
+                "totalDays": 16
+              }
+            },
+            {
               "additionalOffences": [
                 {
                   "code": "9087",
@@ -80,24 +98,6 @@
                 "completed": 9,
                 "scheduled": 1,
                 "totalDays": 10
-              }
-            },
-            {
-              "additionalOffences": [],
-              "eventNumber": "3",
-              "mainOffence": {
-                "code": "18502",
-                "description": "Breach of Restraining Order (Protection from Harassment Act 1997) - 00831"
-              },
-              "order": {
-                "description": "12 month Community order",
-                "endDate": "2024-12-01",
-                "startDate": "2023-12-01"
-              },
-              "rar": {
-                "completed": 14,
-                "scheduled": 2,
-                "totalDays": 16
               }
             }
           ],

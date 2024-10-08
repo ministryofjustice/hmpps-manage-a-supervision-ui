@@ -275,6 +275,9 @@
         {% set sentenceHtml %}
             {% set order %}
                 {% if sentence.order  %}
+                    {% if loop.first %}
+                        <input type="hidden" id="sentence" name="sentence" value="{{ sentence.order.description }}">
+                    {% endif %}
                     {{ sentence.order.description }}<br />
                     From {{ sentence.order.startDate | dateWithNoDay }} to {{ sentence.order.endDate | dateWithNoDay }}<br />
                     {{  sentence.order.startDate | monthsOrDaysElapsed }} elapsed
@@ -451,6 +454,7 @@
         const dob = document.getElementById("dob").value
         const age = document.getElementById("age").value
         const tier = document.getElementById("tier").value
+        const sentence = document.getElementById("sentence").value
 
         let recentCases = []
         let recentCase
@@ -471,7 +475,7 @@
             dob: dob,
             age: age,
             tierScore: tier,
-            sentence: "CJA - Std Determinate Custody"
+            sentence: sentence
         };
 
         recentCases.unshift(recentCase)

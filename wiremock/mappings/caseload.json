@@ -43,7 +43,7 @@
                 "date": "2024-09-24T09:00:00+01:00",
                 "description": "AP PA - Accommodation"
               },
-              "latestSentence": "Adult Custody < 12m",
+              "latestSentence": "CJA - Std Determinate Custody",
               "numberOfAdditionalSentences": 2
             },
             {
@@ -70,7 +70,7 @@
               },
               "crn": "X000001",
               "dob": "2002-01-09",
-              "latestSentence": "Adult Custody < 12m",
+              "latestSentence": "12 month Community order",
               "numberOfAdditionalSentences": 0
             },
             {

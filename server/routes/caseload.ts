@@ -91,6 +91,9 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
       req.session.sortBy,
       req.session.caseFilter,
     )
+
+    delete req.session.sortBy
+
     await showCaseload(req, res, caseload, req.session.caseFilter)
   })
 

@@ -51,9 +51,23 @@
                         rd3.className = "govuk-table__cell"
                         rd3.innerText = recentCase.tierScore
 
-                        const rd4 = document.createElement("td")
+                        let rd4 = document.createElement("td")
                         rd4.className = "govuk-table__cell"
-                        rd4.innerText = recentCase.sentence
+
+                        if (recentCase.numberOfSentences > 1) {
+                            const anchorSentence = document.createElement("a")
+                            anchorSentence.className ="govuk-link"
+                            anchorSentence.href = "./case/" + recentCase.crn + "/sentence"
+                            anchorSentence.text = "+ " + recentCase.numberOfSentences + " more"
+
+                            rd4.innerText = recentCase.sentence
+                            rd4.appendChild(document.createElement("br"))
+                            rd4.appendChild(anchorSentence)
+
+                        } else {
+                            rd4.innerText = recentCase.sentence
+                        }
+
 
                         row.appendChild(rd1)
                         row.appendChild(rd2)

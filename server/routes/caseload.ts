@@ -92,12 +92,13 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
       req.session.caseFilter,
     )
 
-    delete req.session.sortBy
-
     await showCaseload(req, res, caseload, req.session.caseFilter)
   })
 
   const showCaseload = async (req: Request, res: Response, caseload: UserCaseload, filter: CaseSearchFilter) => {
+    delete req.session.sortBy
+    delete req.session.caseFilter
+
     const currentNavSection = 'yourCases'
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_CASELOAD',

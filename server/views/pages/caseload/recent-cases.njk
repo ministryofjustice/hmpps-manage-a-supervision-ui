@@ -54,11 +54,11 @@
                         let rd4 = document.createElement("td")
                         rd4.className = "govuk-table__cell"
 
-                        if (recentCase.numberOfSentences > 1) {
+                        if (recentCase.numberOfAdditionalSentences > 0) {
                             const anchorSentence = document.createElement("a")
                             anchorSentence.className ="govuk-link"
                             anchorSentence.href = "./case/" + recentCase.crn + "/sentence"
-                            anchorSentence.text = "+ " + recentCase.numberOfSentences + " more"
+                            anchorSentence.text = "+ " + recentCase.numberOfAdditionalSentences + " more"
 
                             rd4.innerText = recentCase.sentence
                             rd4.appendChild(document.createElement("br"))

@@ -12,7 +12,7 @@ context('Recent Cases', () => {
           dob: '9 January 2002',
           age: 22,
           tierScore: 'B2',
-          numberOfSentences: '2',
+          numberOfAdditionalSentences: '1',
           sentence: '12 month Community order',
         }
 

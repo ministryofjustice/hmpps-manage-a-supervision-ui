@@ -1,0 +1,68 @@
+{% extends "./caseload.njk" %}
+{% set title = 'Recently viewed cases' %}
+{% block pageTitle %}{{ title }}{% endblock %}
+
+{% block pageContent %}
+
+    <table class="govuk-table">
+        <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name / CRN</th>
+            <th scope="col" class="govuk-table__header">DOB/ Age</th>
+            <th scope="col" class="govuk-table__header">Tier</th>
+            <th scope="col" class="govuk-table__header">Sentence</th>
+        </tr>
+        </thead>
+        <tbody id="tabBody" class="govuk-table__body">
+        <script nonce="{{ cspNonce }}">
+            const recentCases = JSON.parse(localStorage.getItem('recentCases'))
+
+            if (recentCases != null) {
+                recentCases.forEach((recentCase) => {
+                        const tableBody = document.getElementById("tabBody")
+
+                        const row = document.createElement("tr")
+                        row.className = "govuk-table__row"
+
+                        const rd1 = document.createElement("td")
+                        rd1.className = "govuk-table__cell"
+                        const anchor = document.createElement("a")
+                        anchor.className = "govuk-!-font-weight-bold"
+                        anchor.href = "./case/" + recentCase.crn
+                        anchor.text = recentCase.name
+                        const span1 = document.createElement("span")
+                        span1.className = "govuk-!-font-weight-bold secondary-text"
+                        span1.innerText = recentCase.crn
+                        rd1.appendChild(anchor)
+                        rd1.appendChild(document.createElement("br"))
+                        rd1.appendChild(span1)
+
+                        const rd2 = document.createElement("td")
+                        rd2.className = "govuk-table__cell"
+                        rd2.innerText = recentCase.dob
+                        const span2 = document.createElement("span")
+                        span2.className = "secondary-text"
+                        span2.innerText = "Age " + recentCase.age
+                        rd2.appendChild(document.createElement("br"))
+                        rd2.appendChild(span2)
+
+
+                        const rd3 = document.createElement("td")
+                        rd3.className = "govuk-table__cell"
+                        rd3.innerText = recentCase.tierScore
+
+                        const rd4 = document.createElement("td")
+                        rd4.className = "govuk-table__cell"
+                        rd4.innerText = recentCase.sentence
+
+                        row.appendChild(rd1)
+                        row.appendChild(rd2)
+                        row.appendChild(rd3)
+                        row.appendChild(rd4)
+                        tableBody.appendChild(row)
+                    }
+                )
+            }
+        </script>
+    </table>
+{% endblock %}

@@ -56,6 +56,17 @@ context('Overview', () => {
       .should('contain.text', 'Previous concerns about coping in a hostel setting')
     page.getRowData('risk', 'riskFlags', 'Value').should('contain.text', 'Risk to Known Adult')
     page.getRowData('miscellaneous', 'tier', 'Value').should('contain.text', 'B2')
+
+    const expected =
+      '{"name":"Wolff,Caroline","crn":"X000001","dob":"9 January 2002","age":"22","tierScore":"B2","sentence":"12 month Community order"}'
+
+    cy.window()
+      .its('localStorage')
+      .invoke('getItem', 'recentCases')
+      .then(result => {
+        const recentCase = JSON.parse(JSON.stringify(result))
+        expect(expected, recentCase)
+      })
   })
   it('Risk information and tier is not provided due to 500 from ARNS and TIER', () => {
     cy.visit('/case/X000002')

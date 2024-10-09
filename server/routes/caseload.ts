@@ -111,6 +111,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
       page => addParameters(req, { page: page.toString() }),
       caseload?.pageSize || config.apis.masApi.pageSize,
     )
+
     res.render('pages/caseload/minimal-cases', {
       pagination,
       caseload,
@@ -234,5 +235,22 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
       req.session.mas.team = req.body['team-code']
       res.redirect(`/teams`)
     }
+  })
+
+  get('/recent-cases', async (req, res, _next) => {
+    const currentNavSection = 'recentCases'
+
+    await auditService.sendAuditMessage({
+      action: 'VIEW_MAS_RECENT_CASES',
+      who: res.locals.user.username,
+      subjectId: res.locals.user.username,
+      subjectType: 'USER',
+      correlationId: v4(),
+      service: 'hmpps-manage-a-supervision-ui',
+    })
+
+    res.render('pages/caseload/recent-cases', {
+      currentNavSection,
+    })
   })
 }

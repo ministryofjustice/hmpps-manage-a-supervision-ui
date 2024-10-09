@@ -16,6 +16,13 @@
             {% endif %}
             href="/teams">Team cases</a>
         </li>
+        <li class="moj-sub-navigation__item" data-qa="recentCasesTab">
+          <a class="moj-sub-navigation__link govuk-link--no-visited-state"
+            {% if currentNavSection == 'recentCases' %}
+            aria-current="page"
+            {% endif %}
+            href="/recent-cases"> Recently viewed cases</a>
+        </li>
       </ul>
     </nav>
   </div>

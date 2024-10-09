@@ -271,10 +271,13 @@
 
 
     {% set numberOfSentences = overview.sentences.length %}
-    {% for sentence in overview.sentences|sort(attribute='eventNumber', reverse=true) %}
+    {% for sentence in overview.sentences %}
         {% set sentenceHtml %}
             {% set order %}
                 {% if sentence.order  %}
+                    {% if loop.first %}
+                        <input type="hidden" id="sentence" name="sentence" value="{{ sentence.order.description }}">
+                    {% endif %}
                     {{ sentence.order.description }}<br />
                     From {{ sentence.order.startDate | dateWithNoDay }} to {{ sentence.order.endDate | dateWithNoDay }}<br />
                     {{  sentence.order.startDate | monthsOrDaysElapsed }} elapsed
@@ -438,4 +441,44 @@
       classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
       html: miscellaneous
     }) }}
+
+    <input type="hidden" id="caseCrn" name="crn" value="{{ crn }}">
+    <input type="hidden" id="name" name="name" value="{{ overview.personalDetails.name.surname }},{{ overview.personalDetails.name.forename }}">
+    <input type="hidden" id="dob" name="dob" value="{{ headerDob | dateWithYear }}">
+    <input type="hidden" id="age" name="age" value="{{ headerDob | yearsSince }}">
+    <input type="hidden" id="tier" name="age" value="{{ tierCalculation.tierScore }}">
+
+    <script nonce="{{ cspNonce }}">
+        const crn = document.getElementById("caseCrn").value
+        const name = document.getElementById("name").value
+        const dob = document.getElementById("dob").value
+        const age = document.getElementById("age").value
+        const tier = document.getElementById("tier").value
+        const sentence = document.getElementById("sentence").value
+
+        let recentCases = []
+        let recentCase
+
+        if (localStorage.getItem("recentCases") != null) {
+            recentCases = JSON.parse(localStorage.getItem('recentCases'))
+
+            recentCase = recentCases.findIndex(obj => obj.crn === crn)
+
+            if (recentCase !== -1) {
+                recentCases.splice(recentCase, 1);
+            }
+        }
+
+        recentCase = {
+            name: name,
+            crn: crn,
+            dob: dob,
+            age: age,
+            tierScore: tier,
+            sentence: sentence
+        };
+
+        recentCases.unshift(recentCase)
+        localStorage.setItem('recentCases', JSON.stringify(recentCases))
+    </script>
 {% endblock %}

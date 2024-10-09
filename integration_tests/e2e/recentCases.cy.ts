@@ -62,6 +62,13 @@ context('Recent Cases', () => {
     cy.get('tbody').within(() =>
       cy
         .get('tr')
+        .eq(0)
+        .within(() => cy.get('a').eq(1).invoke('attr', 'href').should('equal', './case/X000001/sentence')),
+    )
+
+    cy.get('tbody').within(() =>
+      cy
+        .get('tr')
         .eq(1)
         .within(() => cy.get('td').eq(3).should('contain.text', 'CJA - Std Determinate Custody')),
     )

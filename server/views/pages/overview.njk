@@ -447,6 +447,8 @@
     <input type="hidden" id="dob" name="dob" value="{{ headerDob | dateWithYear }}">
     <input type="hidden" id="age" name="age" value="{{ headerDob | yearsSince }}">
     <input type="hidden" id="tier" name="age" value="{{ tierCalculation.tierScore }}">
+    <input type="hidden" id="numberOfAdditionalSentences" name="numberOfSentences" value="{{ numberOfSentences - 1 }}">
+
 
     <script nonce="{{ cspNonce }}">
         const crn = document.getElementById("caseCrn").value
@@ -455,6 +457,7 @@
         const age = document.getElementById("age").value
         const tier = document.getElementById("tier").value
         const sentence = document.getElementById("sentence").value
+        const numberOfAdditionalSentences = document.getElementById("numberOfAdditionalSentences").value
 
         let recentCases = []
         let recentCase
@@ -475,10 +478,12 @@
             dob: dob,
             age: age,
             tierScore: tier,
-            sentence: sentence
+            sentence: sentence,
+            numberOfAdditionalSentences: numberOfAdditionalSentences
         };
 
         recentCases.unshift(recentCase)
+        recentCases.splice(25)
         localStorage.setItem('recentCases', JSON.stringify(recentCases))
     </script>
 {% endblock %}

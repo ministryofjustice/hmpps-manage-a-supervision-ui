@@ -44,7 +44,7 @@
                 "description": "AP PA - Accommodation"
               },
               "latestSentence": "CJA - Std Determinate Custody",
-              "numberOfAdditionalSentences": 2
+              "numberOfAdditionalSentences": 0
             },
             {
               "caseName": {
@@ -71,7 +71,7 @@
               "crn": "X000001",
               "dob": "2002-01-09",
               "latestSentence": "12 month Community order",
-              "numberOfAdditionalSentences": 0
+              "numberOfAdditionalSentences": 1
             },
             {
               "caseName": {

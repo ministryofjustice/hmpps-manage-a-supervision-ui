@@ -52,33 +52,6 @@
                 "scheduled": 2,
                 "totalDays": 16
               }
-            },
-            {
-              "additionalOffences": [
-                {
-                  "code": "9087",
-                  "description": "Burglary - 9087"
-                },
-                {
-                  "code": "9876",
-                  "description": "Arson - 9876"
-                }
-              ],
-              "eventNumber": "2",
-              "mainOffence": {
-                "code": "18502",
-                "description": "(Having possession a picklock or other implement with intent to break into any premises - 18502)"
-              },
-              "order": {
-                "description": "ORA Community Order",
-                "endDate": "2024-09-01",
-                "startDate": "2020-03-02"
-              },
-              "rar": {
-                "completed": 9,
-                "scheduled": 1,
-                "totalDays": 10
-              }
             }
           ],
           "activity": {

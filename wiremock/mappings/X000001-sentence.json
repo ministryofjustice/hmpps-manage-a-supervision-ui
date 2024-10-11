@@ -10,8 +10,8 @@
         "jsonBody": {
           "personSummary": {
             "name": {
-              "forename": "Eula",
-              "surname": "Schmeler"
+              "forename": "Caroline",
+              "surname": "Wolff"
             },
             "crn": "X000001",
             "dateOfBirth": "1979-08-18"
@@ -120,6 +120,12 @@
               },
               "conviction": {
                 "additionalSentences": []
+              },
+              "order": {
+                "description": "12 month community order",
+                "length": 12,
+                "endDate": "2025-01-31",
+                "startDate": "2024-02-01"
               },
               "requirements": []
             }

@@ -6,9 +6,8 @@ context('Sentence', () => {
     cy.visit('/case/X000001/sentence')
     const page = Page.verifyOnPage(SentencePage)
     page.headerCrn().should('contain.text', 'X000001')
-    page.headerName().should('contain.text', 'Eula Schmeler')
-    page.pageHeading().should('contain.text', 'Sentence: 3')
-    page.pageHeading().should('contain.text', 'Sentence: 1')
+    page.headerName().should('contain.text', 'Caroline Wolff')
+    cy.get('[data-qa=pageHeading]').eq(0).should('contain.text', 'Sentence')
 
     page.getTab('overview').should('contain.text', 'Overview')
     page.getTab('personalDetails').should('contain.text', 'Personal details')

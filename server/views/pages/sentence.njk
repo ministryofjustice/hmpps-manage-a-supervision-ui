@@ -26,27 +26,31 @@
 {% endblock %}
 
 {% block pageContent %}
-
     {%- from "moj/components/side-navigation/macro.njk" import mojSideNavigation -%}
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-quarter">
           {% set items = [] %}
           {% for sentence in sentenceDetails.sentences %}
-              {% if loop.first %}
-                {% set items = items.concat({"text": sentence.order.description, href: "#" + sentence.offenceDetails.eventNumber, active: true}) %}
-              {% else %}
-                {% set items = items.concat({"text": sentence.order.description, href: "#" + sentence.offenceDetails.eventNumber}) %}
-              {% endif %}
+            {% set items = items.concat(
+                    {
+                        "text": sentence.order.description,
+                        href: "#sentence-" + loop.index
+                    }
+                )
+            %}
           {% endfor %}
+
+          {% set items = items.concat({"text": "Probation History", href: "#probation-history"}) %}
 
           {{ mojSideNavigation({
               label: 'Side navigation',
-              items: items
+              items: items,
+              classes: 'govuk-!-padding-top-0'
             }) }}
       </div>
       <div class="govuk-grid-column-three-quarters">
         {% for sentence in sentenceDetails.sentences %}
-                <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-qa="pageHeading">{{ sentence.order.description }}</h2>
+                <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="sentence-{{ loop.index }}" data-qa="pageHeading">{{ sentence.order.description }}</h2>
 
                 {% set hasAdditionalOffences = sentence.offenceDetails.additionalOffences and sentence.offenceDetails.additionalOffences.length > 0 %}
                 {% set additionalOffences %}
@@ -265,6 +269,7 @@
                 }) }}
             {%- endfor %}
 
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="probation-history" data-qa="pageHeading">Probation History</h2>
             {% set history %}
                 {% set previousOrders %}
                     {% if sentenceDetails.probationHistory.numberOfTerminatedEvents == 1 %}

@@ -54,6 +54,67 @@
                 "endDate": "2025-03-19",
                 "startDate": "2024-03-19"
               },
+              "requirements": [],
+              "courtDocuments": [
+                {
+                  "id": "4d74f43c-5b42-4317-852e-56c7d29b610b",
+                  "lastSaved": "2024-04-03",
+                  "documentName": "Pre-sentence report"
+                },
+                {
+                  "id": "6037becb-0d0c-44e1-8727-193f22df0494",
+                  "lastSaved": "2024-04-01",
+                  "documentName": "CPS Pack"
+                },
+                {
+                  "id": "d072ed9a-999f-4333-a116-a871a845aeb3",
+                  "lastSaved": "",
+                  "documentName": "Previous convictions"
+                }
+              ],
+              "licenceConditions": [
+                {
+                  "mainDescription": "Alcohol Monitoring (Electronic Monitoring)",
+                  "subTypeDescription": "You must not drink any alcohol until [END DATE].",
+                  "imposedReleasedDate": "2024-12-25",
+                  "actualStartDate": "2024-12-26",
+                  "notes": "You must not drink any alcohol until [END DATE]. You will need to wear an electronic tag all the time so we can check this.",
+                  "hasNotesBeenTruncated": false
+                },
+                {
+                  "mainDescription": "Residence at a specific place",
+                  "subTypeDescription": "Bespoke Condition (See Notes)",
+                  "imposedReleasedDate": "2024-10-03",
+                  "actualStartDate": "2023-11-15",
+                  "notes": "Comment added by Mark Smith on 04/10/2023 at 12:12\nJames must reside at his parent's house in Scotland for the duration of his release on licence.",
+                  "hasNotesBeenTruncated": false
+                },
+                {
+                  "mainDescription": "Licence - Prohibited Activity",
+                  "imposedReleasedDate": "2023-09-26"
+                }
+              ]
+            },
+            {
+              "offenceDetails": {
+                "eventNumber": 1,
+                "offence": {
+                  "description": "Another Murder",
+                  "count": 1
+                },
+                "dateOfOffence": "2024-01-20",
+                "notes": "",
+                "additionalOffences": []
+              },
+              "conviction": {
+                "additionalSentences": []
+              },
+              "order": {
+                "description": "12 month community order",
+                "length": 12,
+                "endDate": "2025-01-31",
+                "startDate": "2024-02-01"
+              },
               "requirements": [
                 {
                   "code": "F",
@@ -88,46 +149,9 @@
                   "notes": "unpaid work notes"
                 }
               ],
-              "courtDocuments": [
-                {
-                  "id": "4d74f43c-5b42-4317-852e-56c7d29b610b",
-                  "lastSaved": "2024-04-03",
-                  "documentName": "Pre-sentence report"
-                },
-                {
-                  "id": "6037becb-0d0c-44e1-8727-193f22df0494",
-                  "lastSaved": "2024-04-01",
-                  "documentName": "CPS Pack"
-                },
-                {
-                  "id": "d072ed9a-999f-4333-a116-a871a845aeb3",
-                  "lastSaved": "",
-                  "documentName": "Previous convictions"
-                }
-              ],
-              "unpaidWorkProgress": "7 minutes completed (of 100 hours)"
-            },
-            {
-              "offenceDetails": {
-                "eventNumber": 1,
-                "offence": {
-                  "description": "Another Murder",
-                  "count": 1
-                },
-                "dateOfOffence": "2024-01-20",
-                "notes": "",
-                "additionalOffences": []
-              },
-              "conviction": {
-                "additionalSentences": []
-              },
-              "order": {
-                "description": "12 month community order",
-                "length": 12,
-                "endDate": "2025-01-31",
-                "startDate": "2024-02-01"
-              },
-              "requirements": []
+              "courtDocuments": [],
+              "unpaidWorkProgress": "3 minutes completed (of 12 hours)",
+              "licenceConditions": []
             }
           ],
           "probationHistory": {

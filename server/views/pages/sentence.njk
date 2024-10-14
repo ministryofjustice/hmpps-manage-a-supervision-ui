@@ -219,11 +219,11 @@
                             value: { html: '<span data-qa="orderDescriptionValue">' + sentence.order.description | nl2br if sentence.order.description else 'No order details' + '</span>' }
                           },
                           {
-                            key: { text: "Start date" },
+                            key: { text: "Sentence start date" },
                             value: { html: '<span data-qa="orderStartDateValue">' + sentence.order.startDate | dateWithYear | nl2br if sentence.order.startDate else 'No start date details' + '</span>' }
                           },
                           {
-                            key: { text: "End date" },
+                            key: { text: "Sentence expiry date" },
                             value: { html: '<span data-qa="orderEndDateValue">' + sentence.order.endDate | dateWithYear | nl2br if sentence.order.endDate else 'No end date details' + '</span>' }
                           },
                           {

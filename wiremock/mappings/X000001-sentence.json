@@ -78,16 +78,26 @@
                   "subTypeDescription": "You must not drink any alcohol until [END DATE].",
                   "imposedReleasedDate": "2024-12-25",
                   "actualStartDate": "2024-12-26",
-                  "notes": "You must not drink any alcohol until [END DATE]. You will need to wear an electronic tag all the time so we can check this.",
-                  "hasNotesBeenTruncated": false
+                  "notes": [
+                    {
+                      "note": "You must not drink any alcohol until [END DATE]. You will need to wear an electronic tag all the time so we can check this",
+                      "metaData": "Comment added by Jon Jones on 21/08/2024 at 11:58",
+                      "hasNotesBeenTruncated": false
+                    }
+                  ]
                 },
                 {
                   "mainDescription": "Residence at a specific place",
                   "subTypeDescription": "Bespoke Condition (See Notes)",
                   "imposedReleasedDate": "2024-10-03",
                   "actualStartDate": "2023-11-15",
-                  "notes": "Comment added by Mark Smith on 04/10/2023 at 12:12\nJames must reside at his parent's house in Scotland for the duration of his release on licence.",
-                  "hasNotesBeenTruncated": false
+                  "notes": [
+                    {
+                      "note": "James must reside at his parent's house in Scotland for the duration of his release on licence.",
+                      "metaData": "Comment added by Mark Smith on 04/10/2023 at 12:12",
+                      "hasNotesBeenTruncated": false
+                    }
+                  ]
                 },
                 {
                   "mainDescription": "Licence - Prohibited Activity",

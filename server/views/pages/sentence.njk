@@ -116,16 +116,37 @@
                     {% endfor %}
                 {% endset %}
 
+
                 {% set hasLicenceConditions = sentence.licenceConditions and sentence.licenceConditions.length > 0 %}
+
+                {% set notes = '' %}
                 {% set licenceConditions %}
                     {% for licenceCondition in sentence.licenceConditions %}
+                        {% for lcNote in licenceCondition.notes %}
+                            {% set notes %}
+                                <p class="govuk-body">{{ lcNote.note }} </p><p class="govuk-body-s secondary-text">{{ lcNote.metaData }}</p>
+                             {% endset %}
+                        {% endfor %}
+
                         {% set licenceHtml %}
                             {{ govukSummaryList({
                                 rows: [
                                   {
                                     key: { text: 'Subtype' },
                                     value: { text: licenceCondition.subTypeDescription }
-                                  } if licenceCondition.subTypeDescription
+                                  } if licenceCondition.subTypeDescription,
+                                  {
+                                    key: { text: 'Imposed (Release) date' },
+                                    value: { text: licenceCondition.imposedReleasedDate | dateWithYear }
+                                  },
+                                  {
+                                    key: { text: 'Actual Start date' },
+                                    value: { text: licenceCondition.actualStartDate | dateWithYear }
+                                  } if licenceCondition.actualStartDate,
+                                  {
+                                    key: { text: 'Notes' },
+                                    value: { html: notes }
+                                  } if licenceCondition.notes
                                 ]
                             }) }}
                         {% endset %}

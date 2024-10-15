@@ -73,10 +73,14 @@ export interface LicenceCondition {
   subTypeDescription: string
   imposedReleasedDate: string
   actualStartDate: string
-  notes: string
-  hasNotesBeenTruncated: boolean
+  notes: LicenceConditionNote[]
 }
 
+export interface LicenceConditionNote {
+  note: string
+  metaData: string
+  hasNotesBeenTruncated: boolean
+}
 export interface ProbationHistory {
   numberOfTerminatedEvents: number
   dateOfMostRecentTerminatedEvent: string

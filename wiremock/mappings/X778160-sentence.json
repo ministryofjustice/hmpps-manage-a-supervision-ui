@@ -50,40 +50,7 @@
                 "endDate": "2025-03-19",
                 "startDate": "2024-03-19"
               },
-              "requirements": [
-                {
-                  "code": "F",
-                  "actualStartDate": "2024-04-12",
-                  "description": "12 days RAR, 1 completed",
-                  "length": 12,
-                  "notes": "my notes",
-                  "rar": {
-                    "completed": 1,
-                    "scheduled": 11,
-                    "totalDays": 12
-                  }
-                },
-                {
-                  "code": "RM49",
-                  "expectedStartDate": "2024-01-07",
-                  "actualStartDate": "2024-01-12",
-                  "expectedEndDate": "2024-03-10",
-                  "actualEndDate": "2024-01-09",
-                  "terminationReason": "Expired (Normal)",
-                  "description": "Curfew (Electronic Monitored)",
-                  "length": "10",
-                  "lengthUnitValue": "Hours",
-                  "notes": "curfew notes"
-                },
-                {
-                  "code": "W",
-                  "actualStartDate": "2015-05-22",
-                  "description": "Unpaid Work - Regular",
-                  "length": 100,
-                  "lengthUnitValue": "Hours",
-                  "notes": "unpaid work notes"
-                }
-              ],
+              "requirements": [],
               "courtDocuments": [
                 {
                   "id": "4d74f43c-5b42-4317-852e-56c7d29b610b",
@@ -101,7 +68,8 @@
                   "documentName": "Previous convictions"
                 }
               ],
-              "unpaidWorkProgress": "7 minutes completed (of 100 hours)"
+              "unpaidWorkProgress": "7 minutes completed (of 100 hours)",
+              "licenceConditions": []
             }
           ],
           "probationHistory": {

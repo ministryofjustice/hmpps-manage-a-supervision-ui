@@ -42,10 +42,10 @@ context('Recent Cases', () => {
       .within(() => cy.get('th').eq(1).should('contain.html', 'Date of birth<br>Age'))
     cy.get('thead')
       .eq(0)
-      .within(() => cy.get('th').eq(2).should('contain.text', 'Tier'))
+      .within(() => cy.get('th').eq(2).should('contain.html', '<br>Tier'))
     cy.get('thead')
       .eq(0)
-      .within(() => cy.get('th').eq(3).should('contain.text', 'Sentence'))
+      .within(() => cy.get('th').eq(3).should('contain.html', '<br>Sentence'))
 
     page.createAliasAtIndexWithin('tbody', 0, 'td', 0, 'row1col1')
     cy.get('@row1col1').within(() => cy.get('a').invoke('attr', 'href').should('equal', './case/X000001'))

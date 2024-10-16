@@ -78,6 +78,7 @@ export interface LicenceCondition {
 
 export interface LicenceConditionNote {
   createdBy: string
+  createdByDate: string
   note: string
   hasNotesBeenTruncated: boolean
 }

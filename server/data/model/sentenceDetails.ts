@@ -77,8 +77,8 @@ export interface LicenceCondition {
 }
 
 export interface LicenceConditionNote {
+  createdBy: string
   note: string
-  metaData: string
   hasNotesBeenTruncated: boolean
 }
 export interface ProbationHistory {

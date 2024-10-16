@@ -124,7 +124,7 @@
                     {% for licenceCondition in sentence.licenceConditions %}
                         {% for lcNote in licenceCondition.notes %}
                             {% set notes %}
-                                <p class="govuk-body">{{ lcNote.note }} </p><p class="govuk-body-s secondary-text">{{ lcNote.metaData }}</p>
+                                <p class="govuk-body">{{ lcNote.note }} </p><p class="govuk-body-s secondary-text">{{ lcNote.createdBy }}</p>
                              {% endset %}
                         {% endfor %}
 

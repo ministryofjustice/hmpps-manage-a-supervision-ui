@@ -80,7 +80,7 @@
                   "actualStartDate": "2024-12-26",
                   "notes": [
                     {
-                      "createdBy": "Comment added by Jon Jones",
+                      "createdBy": "Jon Jones",
                       "createdByDate": "2024-08-21",
                       "note": "You must not drink any alcohol until [END DATE]. You will need to wear an electronic tag all the time so we can check this",
                       "hasNotesBeenTruncated": true
@@ -94,7 +94,7 @@
                   "actualStartDate": "2023-11-15",
                   "notes": [
                     {
-                      "createdBy": "Comment added by Mark Smith",
+                      "createdBy": "Mark Smith",
                       "createdByDate": "2023-10-04",
                       "note": "James must reside at his parent's house in Scotland for the duration of his release on licence.",
                       "hasNotesBeenTruncated": false

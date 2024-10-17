@@ -124,7 +124,12 @@
                     {% for licenceCondition in sentence.licenceConditions %}
                         {% for lcNote in licenceCondition.notes %}
                             {% set notes %}
-                                <p class="govuk-body">{{ lcNote.note }} </p><p class="govuk-body-s secondary-text">Comment added by {{ lcNote.createdBy }} on {{ lcNote.createdByDate | dateWithYear }}</p>
+                                <p class="govuk-body">{{ lcNote.note }} </p>
+                                {% if lcNote.createdBy %}
+                                    <p class="govuk-body-s secondary-text">Comment added by {{ lcNote.createdBy }} on {{ lcNote.createdByDate | dateWithYear }}</p>
+                                {% else %}
+                                    <p class="govuk-body-s secondary-text">Comment added by not entered</p>
+                                {% endif %}
                              {% endset %}
                         {% else %}
                             {% set notes = 'No notes' %}

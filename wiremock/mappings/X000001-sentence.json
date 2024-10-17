@@ -88,6 +88,16 @@
                   ]
                 },
                 {
+                  "mainDescription": "Freedom of movement",
+                  "imposedReleasedDate": "2022-02-04",
+                  "notes": [
+                    {
+                      "note": "Not to go to a football game.",
+                      "hasNotesBeenTruncated": false
+                    }
+                  ]
+                },
+                {
                   "mainDescription": "Residence at a specific place",
                   "subTypeDescription": "Bespoke Condition (See Notes)",
                   "imposedReleasedDate": "2024-10-03",

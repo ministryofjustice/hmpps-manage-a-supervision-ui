@@ -116,6 +116,50 @@
                     {% endfor %}
                 {% endset %}
 
+
+                {% set hasLicenceConditions = sentence.licenceConditions and sentence.licenceConditions.length > 0 %}
+
+                {% set notes = '' %}
+                {% set licenceConditions %}
+                    {% for licenceCondition in sentence.licenceConditions %}
+                        {% for lcNote in licenceCondition.notes %}
+                            {% set notes %}
+                                <p class="govuk-body">{{ lcNote.note }} </p><p class="govuk-body-s secondary-text">Comment added by {{ lcNote.createdBy }} on {{ lcNote.createdByDate | dateWithYear }}</p>
+                             {% endset %}
+                        {% else %}
+                            {% set notes = 'No notes' %}
+                        {% endfor %}
+                        {% set licenceHtml %}
+                            {{ govukSummaryList({
+                                rows: [
+                                  {
+                                    key: { text: 'Subtype' },
+                                    value: { text: licenceCondition.subTypeDescription }
+                                  } if licenceCondition.subTypeDescription,
+                                  {
+                                    key: { text: 'Imposed (Release) date' },
+                                    value: { text: licenceCondition.imposedReleasedDate | dateWithYear }
+                                  },
+                                  {
+                                    key: { text: 'Actual Start date' },
+                                    value: { text: licenceCondition.actualStartDate | dateWithYear }
+                                  } if licenceCondition.actualStartDate,
+                                  {
+                                    key: { text: 'Notes' },
+                                    value: { html: notes }
+                                  } if licenceCondition.notes
+                                ]
+                            }) }}
+                        {% endset %}
+                        {{ govukDetails({
+                          classes: 'govuk-!-margin-bottom-1',
+                          summaryText: licenceCondition.mainDescription,
+                          html: licenceHtml
+                        }) }}
+                    {% endfor %}
+                {% endset %}
+
+
                 {% set hasRequirements = sentence.requirements and sentence.requirements.length > 0 %}
                 {% set requirements %}
                     {% for requirement in sentence.requirements %}
@@ -231,9 +275,13 @@
                             value: { html: '<span data-qa="orderTimeElapsedValue">' + sentence.order.startDate | monthsOrDaysElapsed + ' (of ' + sentence.order.length + ' months)' | nl2br if sentence.order.startDate else 'No details'  + '</span>' }
                           },
                           {
+                            key: { text: "Licence Conditions" },
+                            value: { html: licenceConditions}
+                          } if hasLicenceConditions,
+                          {
                             key: { text: "Requirements" },
-                            value: { html: '<span data-qa="requirementsValue">' + requirements if hasRequirements else 'No requirements' + '</span>'}
-                          },
+                            value: { html: '<span data-qa="requirementsValue">' + requirements + '</span>'}
+                          } if hasRequirements,
                           {
                             key: { text: "Unpaid Work Progress" },
                             value: { html: '<span data-qa="unpaidWorkProgress">' + sentence.unpaidWorkProgress + '</span>' }

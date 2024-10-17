@@ -15,6 +15,7 @@ export interface Sentence {
   requirements: Requirement[]
   courtDocuments: CourtDocument[]
   unpaidWorkProgress: string
+  licenceConditions: LicenceCondition[]
 }
 export interface OffenceDetails {
   mainOffence: Offence
@@ -67,6 +68,20 @@ export interface CourtDocument {
   documentName: string
 }
 
+export interface LicenceCondition {
+  mainDescription: string
+  subTypeDescription: string
+  imposedReleasedDate: string
+  actualStartDate: string
+  notes: LicenceConditionNote[]
+}
+
+export interface LicenceConditionNote {
+  createdBy: string
+  createdByDate: string
+  note: string
+  hasNotesBeenTruncated: boolean
+}
 export interface ProbationHistory {
   numberOfTerminatedEvents: number
   dateOfMostRecentTerminatedEvent: string

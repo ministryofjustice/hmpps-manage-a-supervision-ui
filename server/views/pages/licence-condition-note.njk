@@ -2,10 +2,10 @@
 {% set pageTitle = applicationName + " - Sentence Details" %}
 {% set currentNavSection = 'sentence' %}
 {% set currentSectionName = 'Sentence' %}
-{% set headerPersonName = sentenceDetails.personSummary.name.forename + ' ' + sentenceDetails.personSummary.name.surname %}
+{% set headerPersonName = licenceNoteDetails.personSummary.name.forename + ' ' + licenceNoteDetails.personSummary.name.surname %}
 {% set headerCRN = crn %}
-{% set headerDob = sentenceDetails.personSummary.dateOfBirth  %}
-{% set headerGender = sentenceDetails.personSummary.gender  %}
+{% set headerDob = licenceNoteDetails.personSummary.dateOfBirth  %}
+{% set headerGender = licenceNoteDetails.personSummary.gender  %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({

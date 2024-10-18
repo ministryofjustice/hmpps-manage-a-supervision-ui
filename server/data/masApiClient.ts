@@ -19,6 +19,7 @@ import { Offences } from './model/offences'
 import { TeamCaseload, UserCaseload, UserTeam } from './model/caseload'
 import { ProfessionalContact } from './model/professionalContact'
 import { CaseAccess } from './model/caseAccess'
+import { LicenceConditionNoteDetails } from './model/licenceConditionNoteDetails'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -45,7 +46,7 @@ export default class MasApiClient extends RestClient {
     crn: string,
     licenceConditionId: string,
     noteId: string,
-  ): Promise<LicenceConditionNote | null> {
+  ): Promise<LicenceConditionNoteDetails | null> {
     return this.get({
       path: `/sentence/${crn}/licence-condition/${licenceConditionId}/note/${noteId}`,
       handle404: false,

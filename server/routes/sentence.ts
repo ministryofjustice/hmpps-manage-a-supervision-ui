@@ -122,13 +122,15 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
     const masClient = new MasApiClient(token)
     const tierClient = new TierApiClient(token)
 
-    const [note, tierCalculation] = await Promise.all([
+    const [licenceNoteDetails, tierCalculation] = await Promise.all([
       masClient.getSentenceLicenceConditionNote(crn, licenceConditionId, noteId),
       tierClient.getCalculationDetails(crn),
     ])
 
+    console.log(licenceNoteDetails)
+    console.log(tierCalculation)
     res.render('pages/licence-condition-note', {
-      note,
+      licenceNoteDetails,
       tierCalculation,
       crn,
     })

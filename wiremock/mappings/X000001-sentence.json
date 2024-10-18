@@ -173,7 +173,8 @@
                 }
               ],
               "courtDocuments": [],
-              "unpaidWorkProgress": "3 minutes completed (of 12 hours)"
+              "unpaidWorkProgress": "3 minutes completed (of 12 hours)",
+              "licenceConditions": []
             }
           ],
           "probationHistory": {

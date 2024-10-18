@@ -10,7 +10,7 @@ import {
   ProvisionOverview,
 } from './model/personalDetails'
 import { AddressOverview, PersonSummary } from './model/common'
-import { SentenceDetails } from './model/sentenceDetails'
+import { LicenceConditionNote, SentenceDetails } from './model/sentenceDetails'
 import { PersonActivity } from './model/activityLog'
 import { PersonRiskFlag, PersonRiskFlags } from './model/risk'
 import { PersonCompliance } from './model/compliance'
@@ -39,6 +39,17 @@ export default class MasApiClient extends RestClient {
 
   async getSentenceOffences(crn: string, eventNumber: string): Promise<Offences | null> {
     return this.get({ path: `/sentence/${crn}/offences/${eventNumber}`, handle404: false })
+  }
+
+  async getSentenceLicenceConditionNote(
+    crn: string,
+    licenceConditionId: string,
+    noteId: string,
+  ): Promise<LicenceConditionNote | null> {
+    return this.get({
+      path: `/sentence/${crn}/licence-condition/${licenceConditionId}/note/${noteId}`,
+      handle404: false,
+    })
   }
 
   async getContacts(crn: string): Promise<ProfessionalContact | null> {

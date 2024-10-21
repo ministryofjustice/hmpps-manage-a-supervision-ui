@@ -127,8 +127,6 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       tierClient.getCalculationDetails(crn),
     ])
 
-    console.log(licenceNoteDetails)
-    console.log(tierCalculation)
     res.render('pages/licence-condition-note', {
       licenceNoteDetails,
       tierCalculation,

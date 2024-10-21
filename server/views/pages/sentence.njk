@@ -125,10 +125,10 @@
                         {% for lcNote in licenceCondition.notes %}
                             {% set notes %}
                                 {% if lcNote.hasNotesBeenTruncated === true  %}
-                                    <p class="govuk-body">{{ lcNote.note }}...<a href="/case/{{ crn }}/sentence/licence-condition/{{ licenceCondition.id }}/note/{{ lcNote.id }}">View full note</a>
+                                    <p class="govuk-body line-break">{{ lcNote.note }}...<a href="/case/{{ crn }}/sentence/licence-condition/{{ licenceCondition.id }}/note/{{ lcNote.id }}">View full note</a>
                                      </p>
                                 {% else %}
-                                    <p class="govuk-body">{{ lcNote.note }} </p>
+                                    <p class="govuk-body line-break">{{ lcNote.note }} </p>
                                 {% endif %}
 
                                 {% if lcNote.createdBy %}

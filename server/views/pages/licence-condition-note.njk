@@ -1,0 +1,63 @@
+{% extends "../partials/case.njk" %}
+{% set pageTitle = applicationName + " - Sentence Details" %}
+{% set currentNavSection = 'sentence' %}
+{% set currentSectionName = 'Sentence' %}
+{% set headerPersonName = licenceNoteDetails.personSummary.name.forename + ' ' + licenceNoteDetails.personSummary.name.surname %}
+{% set headerCRN = crn %}
+{% set headerDob = licenceNoteDetails.personSummary.dateOfBirth  %}
+{% set headerGender = licenceNoteDetails.personSummary.gender  %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+      items: [
+        {
+          text: "My cases",
+          href: "/case"
+        },
+        {
+          text: headerPersonName,
+          href: "/case/" + crn
+        },
+        {
+          text: currentSectionName
+        }
+      ]
+    }) }}
+{% endblock %}
+
+{% block pageContent %}
+    {% set licenceConditionNote %}
+        {{ govukSummaryList({
+        rows: [
+          {
+            key: { text: 'Imposed (Release) date'},
+            value: { text:  licenceNoteDetails.licenceCondition.imposedReleasedDate | dateWithYear  }
+          },
+          {
+            key: { text: 'Actual start date'},
+            value: { text:  licenceNoteDetails.licenceCondition.actualStartDate | dateWithYear  }
+          },
+          {
+            key: { text: 'Note added by'},
+            value: { text: licenceNoteDetails.licenceCondition.licenceNote.createdBy }
+          },
+          {
+            key: { text: 'Date added'},
+            value: { text:  licenceNoteDetails.licenceCondition.licenceNote.createdByDate | dateWithYear  }
+          },
+          {
+            key: { text: 'Note'},
+            value: { text: licenceNoteDetails.licenceCondition.licenceNote.note }
+          }
+        ]
+      }) }}
+    {% endset %}
+
+    {{ appSummaryCard({
+      titleText: licenceNoteDetails.licenceCondition.mainDescription,
+      attributes: {'data-qa': 'licenceConditionNoteCard'},
+      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+      html: licenceConditionNote
+    }) }}
+{% endblock %}
+

@@ -75,9 +75,12 @@ context('Sentence', () => {
       .within(() =>
         cy
           .get('ul > li:first')
-          .get('a')
-          .invoke('attr', 'href')
-          .should('equal', 'personal-details/documents/4d74f43c-5b42-4317-852e-56c7d29b610b/download'),
+          .within(() =>
+            cy
+              .get('a')
+              .invoke('attr', 'href')
+              .should('equal', 'personal-details/documents/4d74f43c-5b42-4317-852e-56c7d29b610b/download'),
+          ),
       )
     page
       .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
@@ -86,16 +89,17 @@ context('Sentence', () => {
       .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
       .within(() => cy.get('ul > li:first').should('contain.text', 'Last updated 3 Apr 2024'))
 
-    page
-      .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
-      .within(() =>
-        cy
-          .get('ul > li')
-          .get('a')
-          .eq(1)
-          .invoke('attr', 'href')
-          .should('equal', 'personal-details/documents/6037becb-0d0c-44e1-8727-193f22df0494/download'),
-      )
+    page.getRowDataIndex('sentence', 'courtDocuments', 'Value', 0).within(() =>
+      cy
+        .get('ul > li')
+        .eq(1)
+        .within(() =>
+          cy
+            .get('a')
+            .invoke('attr', 'href')
+            .should('equal', 'personal-details/documents/6037becb-0d0c-44e1-8727-193f22df0494/download'),
+        ),
+    )
     page
       .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
       .within(() => cy.get('ul > li').eq(1).should('contain.text', 'CPS Pack'))
@@ -103,16 +107,17 @@ context('Sentence', () => {
       .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
       .within(() => cy.get('ul > li').eq(1).should('contain.text', 'Last updated 1 Apr 2024'))
 
-    page
-      .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
-      .within(() =>
-        cy
-          .get('ul > li')
-          .get('a')
-          .eq(2)
-          .invoke('attr', 'href')
-          .should('equal', 'personal-details/documents/d072ed9a-999f-4333-a116-a871a845aeb3/download'),
-      )
+    page.getRowDataIndex('sentence', 'courtDocuments', 'Value', 0).within(() =>
+      cy
+        .get('ul > li')
+        .eq(2)
+        .within(() =>
+          cy
+            .get('a')
+            .invoke('attr', 'href')
+            .should('equal', 'personal-details/documents/d072ed9a-999f-4333-a116-a871a845aeb3/download'),
+        ),
+    )
     page
       .getRowDataIndex('sentence', 'courtDocuments', 'Value', 0)
       .within(() => cy.get('ul > li').eq(2).should('contain.text', 'Previous convictions'))

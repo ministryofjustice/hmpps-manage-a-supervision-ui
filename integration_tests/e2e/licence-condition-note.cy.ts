@@ -10,6 +10,16 @@ context('Sentence', () => {
     page.headerName().should('contain.text', 'Caroline Wolff')
     cy.get('[data-qa=pageHeading]').eq(0).should('contain.text', 'Sentence')
 
-    cy.get('section').within(() => cy.get('h2').should('contain.text', 'Alcohol Monitoring (Electronic Monitoring)'))
+    cy.get(`[class=app-summary-card__header]`).within(() =>
+      cy.get('h2').should('contain.text', 'Alcohol Monitoring (Electronic Monitoring)'),
+    )
+
+    cy.get(`[class=app-summary-card__body]`).within(() =>
+      cy.get('dt').eq(0).should('contain.text', 'Imposed (Release) date'),
+    )
+
+    cy.get(`[class=app-summary-card__body]`).within(() =>
+      cy.get('dt').eq(1).should('contain.text', 'Actual start date'),
+    )
   })
 })

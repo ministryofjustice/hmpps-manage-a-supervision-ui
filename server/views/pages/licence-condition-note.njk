@@ -26,8 +26,38 @@
 {% endblock %}
 
 {% block pageContent %}
+    {% set licenceConditionNote %}
+        {{ govukSummaryList({
+        rows: [
+          {
+            key: { text: 'Imposed (Release) date'},
+            value: { text:  licenceNoteDetails.licenceCondition.imposedReleasedDate | dateWithYear  }
+          },
+          {
+            key: { text: 'Actual start date'},
+            value: { text:  licenceNoteDetails.licenceCondition.actualStartDate | dateWithYear  }
+          },
+          {
+            key: { text: 'Note added by'},
+            value: { text: licenceNoteDetails.licenceCondition.licenceNote.createdBy }
+          },
+          {
+            key: { text: 'Date added'},
+            value: { text:  licenceNoteDetails.licenceCondition.licenceNote.createdByDate | dateWithYear  }
+          },
+          {
+            key: { text: 'Note'},
+            value: { text: licenceNoteDetails.licenceCondition.licenceNote.note }
+          }
+        ]
+      }) }}
+    {% endset %}
 
+    {{ appSummaryCard({
+      titleText: licenceNoteDetails.licenceCondition.mainDescription,
+      attributes: {'data-qa': 'licenceConditionNote'},
+      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+      html: licenceConditionNote
+    }) }}
 {% endblock %}
-
-
 

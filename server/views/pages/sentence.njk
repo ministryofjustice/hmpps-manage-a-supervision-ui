@@ -124,7 +124,13 @@
                     {% for licenceCondition in sentence.licenceConditions %}
                         {% for lcNote in licenceCondition.notes %}
                             {% set notes %}
-                                <p class="govuk-body">{{ lcNote.note }} </p>
+                                {% if lcNote.hasNotesBeenTruncated === true  %}
+                                    <p class="govuk-body">{{ lcNote.note }}...<a href="/case/{{ crn }}/sentence/licence-condition/{{ licenceCondition.id }}/note/{{ lcNote.id }}">View full note</a>
+                                     </p>
+                                {% else %}
+                                    <p class="govuk-body">{{ lcNote.note }} </p>
+                                {% endif %}
+
                                 {% if lcNote.createdBy %}
                                     <p class="govuk-body-s secondary-text">Comment added by {{ lcNote.createdBy }} on {{ lcNote.createdByDate | dateWithYear }}</p>
                                 {% else %}
@@ -146,7 +152,7 @@
                                     value: { text: licenceCondition.imposedReleasedDate | dateWithYear }
                                   },
                                   {
-                                    key: { text: 'Actual Start date' },
+                                    key: { text: 'Actual start date' },
                                     value: { text: licenceCondition.actualStartDate | dateWithYear }
                                   } if licenceCondition.actualStartDate,
                                   {

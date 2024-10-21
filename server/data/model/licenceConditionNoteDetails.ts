@@ -2,7 +2,15 @@ import { PersonSummary } from './common'
 
 export interface LicenceConditionNoteDetails {
   personSummary: PersonSummary
-  licenceConditionNote: LicenceConditionNote
+  licenceCondition: LicenceCondition
+}
+
+export interface LicenceCondition {
+  mainDescription: string
+  subTypeDescription: string
+  imposedReleasedDate: string
+  actualStartDate: string
+  licenceNote: LicenceConditionNote
 }
 
 export interface LicenceConditionNote {

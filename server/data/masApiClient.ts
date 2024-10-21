@@ -10,7 +10,7 @@ import {
   ProvisionOverview,
 } from './model/personalDetails'
 import { AddressOverview, PersonSummary } from './model/common'
-import { LicenceConditionNote, SentenceDetails } from './model/sentenceDetails'
+import { SentenceDetails } from './model/sentenceDetails'
 import { PersonActivity } from './model/activityLog'
 import { PersonRiskFlag, PersonRiskFlags } from './model/risk'
 import { PersonCompliance } from './model/compliance'

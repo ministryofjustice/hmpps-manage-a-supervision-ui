@@ -328,7 +328,7 @@
                 }) }}
             {%- endfor %}
 
-            <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="probation-history" data-qa="pageHeading">Probation History</h2>
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-2" id="probation-history" data-qa="pageHeading">Probation history</h2>
             {% set history %}
                 {% set previousOrders %}
                     {% if sentenceDetails.probationHistory.numberOfTerminatedEvents == 1 %}
@@ -375,7 +375,7 @@
 
             {{ appSummaryCard({
                 attributes: {'data-qa': 'probationHistoryCard'},
-                titleText: 'Probation History',
+                titleText: 'Previous probation details',
                 classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
                 html: probationHistory
              }) }}

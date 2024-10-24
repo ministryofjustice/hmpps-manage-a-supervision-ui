@@ -41,4 +41,33 @@ context('Sentence', () => {
 
     cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dt').eq(5).should('contain.text', 'Note'))
   })
+
+  it('Licence condition no note ', () => {
+    cy.visit('/case/X000001/sentence/licence-condition/7007/note/2')
+
+    const page = Page.verifyOnPage(SentencePage)
+    page.headerCrn().should('contain.text', 'X000001')
+    page.headerName().should('contain.text', 'Caroline Wolff')
+    cy.get('[data-qa=pageHeading]').eq(0).should('contain.text', 'Sentence')
+
+    cy.get(`[class=app-summary-card__header]`).within(() => cy.get('h2').should('contain.text', 'Freedom of movement'))
+
+    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dt').should('have.length', 1))
+
+    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').should('have.length', 1))
+
+    cy.get(`[class=app-summary-card__body]`).within(() =>
+      cy.get('dt').eq(0).should('contain.text', 'Imposed (Release) date'),
+    )
+    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').eq(0).should('contain.text', '4 February 2022'))
+  })
+
+  it('Licence condition no note', () => {
+    cy.visit('/case/X000001/sentence/licence-condition/7007/note/3')
+
+    const page = Page.verifyOnPage(SentencePage)
+    page.headerCrn().should('contain.text', 'X000001')
+    page.headerName().should('contain.text', 'Caroline Wolff')
+    cy.get('[data-qa=pageHeading]').eq(0).should('contain.text', 'Sentence')
+  })
 })

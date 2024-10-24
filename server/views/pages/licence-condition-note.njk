@@ -36,7 +36,7 @@
           {
             key: { text: 'Imposed (Release) date'},
             value: { text:  licenceNoteDetails.licenceCondition.imposedReleasedDate | dateWithYear  }
-          },
+          } if licenceNoteDetails.licenceCondition.imposedReleasedDate,
           {
             key: { text: 'Actual start date'},
             value: { text:  licenceNoteDetails.licenceCondition.actualStartDate | dateWithYear  }
@@ -52,16 +52,18 @@
           {
             key: { text: 'Note'},
             value: { html: '<p class="govuk-body line-break">' + licenceNoteDetails.licenceCondition.licenceConditionNote.note + '<\p>' }
-          }
+          } if licenceNoteDetails.licenceCondition.licenceConditionNote.note
         ]
       }) }}
     {% endset %}
 
-    {{ appSummaryCard({
-      titleText: licenceNoteDetails.licenceCondition.mainDescription,
-      attributes: {'data-qa': 'licenceConditionNoteCard'},
-      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-      html: licenceConditionNote
-    }) }}
+    {% if licenceNoteDetails.licenceCondition %}
+        {{ appSummaryCard({
+          titleText: licenceNoteDetails.licenceCondition.mainDescription,
+          attributes: {'data-qa': 'licenceConditionNoteCard'},
+          classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+          html: licenceConditionNote
+        }) }}
+    {% endif %}
 {% endblock %}
 

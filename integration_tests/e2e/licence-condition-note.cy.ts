@@ -14,26 +14,31 @@ context('Sentence', () => {
       cy.get('h2').should('contain.text', 'Alcohol Monitoring (Electronic Monitoring)'),
     )
 
-    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dt').should('have.length', 5))
+    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dt').should('have.length', 6))
 
-    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').should('have.length', 5))
+    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').should('have.length', 6))
+
+    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dt').eq(0).should('contain.text', 'Subtype'))
+    cy.get(`[class=app-summary-card__body]`).within(() =>
+      cy.get('dd').eq(0).should('contain.text', 'You must not drink any alcohol until [END DATE].'),
+    )
 
     cy.get(`[class=app-summary-card__body]`).within(() =>
-      cy.get('dt').eq(0).should('contain.text', 'Imposed (Release) date'),
+      cy.get('dt').eq(1).should('contain.text', 'Imposed (Release) date'),
     )
-    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').eq(0).should('contain.text', '25 December 2024'))
+    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').eq(1).should('contain.text', '25 December 2024'))
 
     cy.get(`[class=app-summary-card__body]`).within(() =>
-      cy.get('dt').eq(1).should('contain.text', 'Actual start date'),
+      cy.get('dt').eq(2).should('contain.text', 'Actual start date'),
     )
-    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').eq(1).should('contain.text', '26 December 2024'))
+    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').eq(2).should('contain.text', '26 December 2024'))
 
-    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dt').eq(2).should('contain.text', 'Note added by'))
-    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').eq(2).should('contain.text', 'CVL Service'))
+    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dt').eq(3).should('contain.text', 'Note added by'))
+    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').eq(3).should('contain.text', 'CVL Service'))
 
-    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dt').eq(3).should('contain.text', 'Date added'))
-    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').eq(3).should('contain.text', '22 April 2024'))
+    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dt').eq(4).should('contain.text', 'Date added'))
+    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').eq(4).should('contain.text', '22 April 2024'))
 
-    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dt').eq(4).should('contain.text', 'Note'))
+    cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dt').eq(5).should('contain.text', 'Note'))
   })
 })

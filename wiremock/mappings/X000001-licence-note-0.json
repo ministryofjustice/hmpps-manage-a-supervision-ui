@@ -22,7 +22,7 @@
             "subTypeDescription": "You must not drink any alcohol until [END DATE].",
             "imposedReleasedDate": "2024-12-25",
             "actualStartDate": "2024-12-26",
-            "licenceNote": {
+            "licenceConditionNote": {
               "id": 0,
               "createdBy": "CVL Service",
               "createdByDate": "2024-04-22",

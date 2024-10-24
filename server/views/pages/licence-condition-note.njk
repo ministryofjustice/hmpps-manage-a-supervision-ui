@@ -36,18 +36,18 @@
           {
             key: { text: 'Actual start date'},
             value: { text:  licenceNoteDetails.licenceCondition.actualStartDate | dateWithYear  }
-          },
+          } if licenceNoteDetails.licenceCondition.actualStartDate,
           {
             key: { text: 'Note added by'},
-            value: { text: licenceNoteDetails.licenceCondition.licenceNote.createdBy }
-          },
+            value: { text: licenceNoteDetails.licenceCondition.licenceConditionNote.createdBy }
+          } if licenceNoteDetails.licenceCondition.licenceConditionNote.createdBy,
           {
             key: { text: 'Date added'},
-            value: { text:  licenceNoteDetails.licenceCondition.licenceNote.createdByDate | dateWithYear  }
-          },
+            value: { text:  licenceNoteDetails.licenceCondition.licenceConditionNote.createdByDate | dateWithYear  }
+          } if licenceNoteDetails.licenceCondition.licenceConditionNote.createdByDate,
           {
             key: { text: 'Note'},
-            value: { html: '<p class="govuk-body line-break">' + licenceNoteDetails.licenceCondition.licenceNote.note + '<\p>' }
+            value: { html: '<p class="govuk-body line-break">' + licenceNoteDetails.licenceCondition.licenceConditionNote.note + '<\p>' }
           }
         ]
       }) }}

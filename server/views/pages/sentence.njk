@@ -122,9 +122,9 @@
                 {% set notes = '' %}
                 {% set licenceConditions %}
                     {% for licenceCondition in sentence.licenceConditions %}
-                        {% for lcNote in licenceCondition.notes %}
+                        {% for lcNote in licenceCondition.licenceConditionNotes %}
                             {% set notes %}
-                                {% if lcNote.hasNotesBeenTruncated === true  %}
+                                {% if lcNote.hasNoteBeenTruncated === true  %}
                                     <p class="govuk-body line-break">{{ lcNote.note }}...<a href="/case/{{ crn }}/sentence/licence-condition/{{ licenceCondition.id }}/note/{{ lcNote.id }}">View full note</a>
                                      </p>
                                 {% else %}

@@ -30,6 +30,10 @@
         {{ govukSummaryList({
         rows: [
           {
+            key: { text: 'Subtype' },
+            value: { text: licenceNoteDetails.licenceCondition.subTypeDescription }
+          } if licenceNoteDetails.licenceCondition.subTypeDescription,
+          {
             key: { text: 'Imposed (Release) date'},
             value: { text:  licenceNoteDetails.licenceCondition.imposedReleasedDate | dateWithYear  }
           },

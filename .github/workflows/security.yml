@@ -6,6 +6,13 @@ on:
   workflow_dispatch:
 
 jobs:
+  trivy:
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/security_trivy.yml@e45d186d3bf49471463ffb60b47288cebc91a2b6 # v1
+    with:
+      channel_id: probation-integration-notifications
+    secrets:
+      HMPPS_SRE_SLACK_BOT_TOKEN: ${{ secrets.HMPPS_SRE_SLACK_BOT_TOKEN }}
+
   zap:
     runs-on: moj-cloud-platform
     env:

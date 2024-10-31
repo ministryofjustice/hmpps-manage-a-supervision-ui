@@ -85,14 +85,14 @@
                   "licenceConditionNotes": [
                     {
                       "id": 0,
-                      "note": "Not to go to a football game.",
+                      "createdBy": "Peter Parker",
+                      "createdByDate": "2024-10-22",
+                      "note": "Is not allowed to any sporting events",
                       "hasNoteBeenTruncated": false
                     },
                     {
                       "id": 1,
-                      "createdBy": "Amardeep Chimber",
-                      "createdByDate": "2024-10-22",
-                      "note": "Is not allowed to any sporting events",
+                      "note": "Not to go to a football game.",
                       "hasNoteBeenTruncated": false
                     }
                   ]

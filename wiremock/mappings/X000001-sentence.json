@@ -19,8 +19,7 @@
           "sentenceDescriptions": [
             {
               "eventNumber": 3,
-              "description": "Default Sentence Type",
-              "selectedEventNumber": 3
+              "description": "Default Sentence Type"
             },
             {
               "eventNumber": 1,

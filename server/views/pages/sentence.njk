@@ -30,8 +30,9 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-quarter">
           {% set items = [] %}
+          {% set eventNumber = sentenceDetails.sentence.offenceDetails.eventNumber %}
           {% for sentence in sentenceDetails.sentenceDescriptions %}
-            {% set isActive = sentence.eventNumber === sentence.selectedEventNumber %}
+            {% set isActive = sentence.eventNumber === eventNumber %}
             {% set items = items.concat(
                     {
                         "text": sentence.description,

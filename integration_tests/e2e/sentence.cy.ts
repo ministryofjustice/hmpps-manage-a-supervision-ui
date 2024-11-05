@@ -17,12 +17,12 @@ context('Sentence', () => {
     page.getTab('compliance').should('contain.text', 'Compliance')
 
     cy.get('[class="moj-side-navigation__item moj-side-navigation__item--active"]').within(() =>
-      cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?3'),
+      cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?sentence=3'),
     )
 
     cy.get('[class="moj-side-navigation__item"]')
       .eq(0)
-      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?1'))
+      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?sentence=1'))
 
     cy.get('[class="moj-side-navigation__item"]')
       .eq(1)

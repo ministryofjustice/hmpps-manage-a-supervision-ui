@@ -34,7 +34,7 @@
       @include govuk-font(24);
 
       @include govuk-media-query($from: desktop) {
-        display: inline-block;
+        display: none;
       }
     }
   }
@@ -141,6 +141,6 @@
 }
 
 .govuk-phase-banner {
-  @include govuk-width-container;
+  margin: 0 auto;
   border: none;
 }

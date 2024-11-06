@@ -137,4 +137,40 @@ context('Sentence', () => {
       .getCardHeader('conviction')
       .within(() => cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'No conviction date'))
   })
+
+  it('Sentence page is rendered with probation history information', () => {
+    cy.visit('/case/X000001/sentence/probation-history')
+    const page = Page.verifyOnPage(SentencePage)
+
+    cy.get('[class="moj-side-navigation__item moj-side-navigation__item--active"]').within(() =>
+      cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence/probation-history'),
+    )
+
+    cy.get('[class="moj-side-navigation__item"]')
+      .eq(0)
+      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?number=3'))
+
+    cy.get('[class="moj-side-navigation__item"]')
+      .eq(1)
+      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?number=1'))
+
+    page
+      .getCardHeader('probationHistory')
+      .within(() => cy.get('.govuk-summary-list__key').eq(0).should('contain.text', 'Previous orders'))
+    page
+      .getCardHeader('probationHistory')
+      .within(() => cy.get('.govuk-summary-list__key').eq(1).should('contain.text', 'Previous breaches'))
+    page
+      .getCardHeader('probationHistory')
+      .within(() => cy.get('.govuk-summary-list__key').eq(2).should('contain.text', 'Previous professional contacts'))
+    page
+      .getCardHeader('probationHistory')
+      .within(() => cy.get('.govuk-summary-list__value').eq(1).should('contain.text', '2 previous breaches'))
+    page
+      .getCardHeader('probationHistory')
+      .within(() => cy.get('a').eq(0).invoke('attr', 'href').should('equal', '/case/X000001/sentence/previous-orders'))
+    page
+      .getCardHeader('probationHistory')
+      .within(() => cy.get('a').eq(1).invoke('attr', 'href').should('equal', '/case/X000001/address-book-professional'))
+  })
 })

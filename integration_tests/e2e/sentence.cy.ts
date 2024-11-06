@@ -100,4 +100,41 @@ context('Sentence', () => {
       .getRowData('sentence', 'courtDocuments', 'Value')
       .within(() => cy.get('ul > li').eq(2).should('contain.text', 'Unavailable'))
   })
+
+  it('Sentence page is rendered via query parameter', () => {
+    cy.visit('/case/X000001/sentence?number=1')
+    const page = Page.verifyOnPage(SentencePage)
+
+    cy.get('[class="moj-side-navigation__item moj-side-navigation__item--active"]').within(() =>
+      cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?number=1'),
+    )
+
+    cy.get('[class="moj-side-navigation__item"]')
+      .eq(0)
+      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?number=3'))
+
+    cy.get('[class="moj-side-navigation__item"]')
+      .eq(1)
+      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence/probation-history'))
+
+    page
+      .getCardHeader('offence')
+      .within(() => cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'No notes'))
+
+    page
+      .getCardHeader('offence')
+      .within(() => cy.get('.govuk-summary-list__value').eq(3).should('contain.text', 'No additional offences'))
+
+    page
+      .getCardHeader('conviction')
+      .within(() => cy.get('.govuk-summary-list__value').eq(0).should('contain.text', 'No court details'))
+
+    page
+      .getCardHeader('conviction')
+      .within(() => cy.get('.govuk-summary-list__value').eq(1).should('contain.text', 'No court details'))
+
+    page
+      .getCardHeader('conviction')
+      .within(() => cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'No conviction date'))
+  })
 })

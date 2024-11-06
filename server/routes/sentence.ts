@@ -11,6 +11,12 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
 
   get('/case/:crn/sentence', async (req, res, _next) => {
     const { crn } = req.params
+    const eventNumber = req.query.number
+    let queryParam = ''
+    if (req.query.number) {
+      queryParam = `?number=${eventNumber}`
+    }
+
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
 
     await auditService.sendAuditMessage({
@@ -26,11 +32,39 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
     const tierClient = new TierApiClient(token)
 
     const [sentenceDetails, tierCalculation] = await Promise.all([
-      masClient.getSentenceDetails(crn),
+      masClient.getSentenceDetails(crn, queryParam),
       tierClient.getCalculationDetails(crn),
     ])
 
     res.render('pages/sentence', {
+      sentenceDetails,
+      crn,
+      tierCalculation,
+    })
+  })
+
+  get('/case/:crn/sentence/probation-history', async (req, res, _next) => {
+    const { crn } = req.params
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+
+    await auditService.sendAuditMessage({
+      action: 'VIEW_MAS_SENTENCE',
+      who: res.locals.user.username,
+      subjectId: crn,
+      subjectType: 'CRN',
+      correlationId: v4(),
+      service: 'hmpps-manage-a-supervision-ui',
+    })
+
+    const masClient = new MasApiClient(token)
+    const tierClient = new TierApiClient(token)
+
+    const [sentenceDetails, tierCalculation] = await Promise.all([
+      masClient.getProbationHistory(crn),
+      tierClient.getCalculationDetails(crn),
+    ])
+
+    res.render('pages/probation-history', {
       sentenceDetails,
       crn,
       tierCalculation,

@@ -28,6 +28,9 @@ export default abstract class Page {
   getCardHeader = (cardName: string): PageElement =>
     cy.get(`[class=app-summary-card__header]`).get(`[data-qa=${cardName}Card]`)
 
+  getCardElement = (cardName: string, element: string, index: number): PageElement =>
+    this.getCardHeader(cardName).within(() => cy.get(element).eq(index))
+
   getRowData = (cardName: string, rowName: string, type: string): PageElement => {
     return cy.get(`[data-qa=${cardName}Card]`).within(() => cy.get(`[data-qa=${rowName}${type}]`))
   }
@@ -49,6 +52,12 @@ export default abstract class Page {
     cy.get(element)
       .eq(index)
       .within(() => cy.get(withinElement).eq(withinIndex).contains(value))
+  }
+
+  assertAnchorElementAtIndex = (element: string, index: number, value: string) => {
+    cy.get(element)
+      .eq(index)
+      .within(() => cy.get('a').invoke('attr', 'href').should('equal', value))
   }
 
   assertAnchorElementAtIndexWithin = (element: string, index: number, anchorIndex: number, value: string) => {

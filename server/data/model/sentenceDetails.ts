@@ -4,8 +4,14 @@ import { PersonSummary } from './common'
 
 export interface SentenceDetails {
   personSummary: PersonSummary
-  sentences: Sentence[]
-  probationHistory: ProbationHistory
+  sentenceDescriptions: SentenceDescription[]
+  sentence: Sentence
+}
+
+export interface SentenceDescription {
+  id: string
+  description: string
+  eventNumber: string
 }
 
 export interface Sentence {
@@ -18,8 +24,9 @@ export interface Sentence {
   licenceConditions: LicenceCondition[]
 }
 export interface OffenceDetails {
-  mainOffence: Offence
-  offenceDate: string
+  eventNumber: string
+  offence: Offence
+  dateOfOffence: string
   notes: string
   additionalOffences: Offence[]
 }

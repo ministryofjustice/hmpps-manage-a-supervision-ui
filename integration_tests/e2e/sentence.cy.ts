@@ -16,17 +16,19 @@ context('Sentence', () => {
     page.getTab('activityLog').should('contain.text', 'Activity log')
     page.getTab('compliance').should('contain.text', 'Compliance')
 
-    cy.get('[class="moj-side-navigation__item moj-side-navigation__item--active"]').within(() =>
-      cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?number=3'),
+    page.assertAnchorElementAtIndex(
+      '[class="moj-side-navigation__item moj-side-navigation__item--active"]',
+      0,
+      '/case/X000001/sentence?number=3',
     )
 
-    cy.get('[class="moj-side-navigation__item"]')
-      .eq(0)
-      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?number=1'))
+    page.assertAnchorElementAtIndex('[class="moj-side-navigation__item"]', 0, '/case/X000001/sentence?number=1')
 
-    cy.get('[class="moj-side-navigation__item"]')
-      .eq(1)
-      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence/probation-history'))
+    page.assertAnchorElementAtIndex(
+      '[class="moj-side-navigation__item"]',
+      1,
+      '/case/X000001/sentence/probation-history',
+    )
 
     page.getCardHeader('offence').should('contain.text', 'Offence')
     page.getCardHeader('conviction').should('contain.text', 'Conviction')
@@ -105,17 +107,19 @@ context('Sentence', () => {
     cy.visit('/case/X000001/sentence?number=1')
     const page = Page.verifyOnPage(SentencePage)
 
-    cy.get('[class="moj-side-navigation__item moj-side-navigation__item--active"]').within(() =>
-      cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?number=1'),
+    page.assertAnchorElementAtIndex(
+      '[class="moj-side-navigation__item moj-side-navigation__item--active"]',
+      0,
+      '/case/X000001/sentence?number=1',
     )
 
-    cy.get('[class="moj-side-navigation__item"]')
-      .eq(0)
-      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?number=3'))
+    page.assertAnchorElementAtIndex('[class="moj-side-navigation__item"]', 0, '/case/X000001/sentence?number=3')
 
-    cy.get('[class="moj-side-navigation__item"]')
-      .eq(1)
-      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence/probation-history'))
+    page.assertAnchorElementAtIndex(
+      '[class="moj-side-navigation__item"]',
+      1,
+      '/case/X000001/sentence/probation-history',
+    )
 
     page
       .getCardHeader('offence')
@@ -142,17 +146,15 @@ context('Sentence', () => {
     cy.visit('/case/X000001/sentence/probation-history')
     const page = Page.verifyOnPage(SentencePage)
 
-    cy.get('[class="moj-side-navigation__item moj-side-navigation__item--active"]').within(() =>
-      cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence/probation-history'),
+    page.assertAnchorElementAtIndex(
+      '[class="moj-side-navigation__item moj-side-navigation__item--active"]',
+      0,
+      '/case/X000001/sentence/probation-history',
     )
 
-    cy.get('[class="moj-side-navigation__item"]')
-      .eq(0)
-      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?number=3'))
+    page.assertAnchorElementAtIndex('[class="moj-side-navigation__item"]', 0, '/case/X000001/sentence?number=3')
 
-    cy.get('[class="moj-side-navigation__item"]')
-      .eq(1)
-      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence?number=1'))
+    page.assertAnchorElementAtIndex('[class="moj-side-navigation__item"]', 1, '/case/X000001/sentence?number=1')
 
     page.getCardElement('probationHistory', '.govuk-summary-list__key', 0).should('contain.text', 'Previous orders')
 

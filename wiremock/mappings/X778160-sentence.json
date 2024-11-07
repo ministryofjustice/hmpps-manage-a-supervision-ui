@@ -18,13 +18,13 @@
           },
           "sentenceSummaryList": [
             {
-              "eventNumber": 1,
+              "eventNumber": "1",
               "description": "Default Sentence Type"
             }
           ],
           "sentence": {
             "offenceDetails": {
-              "eventNumber": 1,
+              "eventNumber": "1",
               "offence": {
                 "description": "Burglary",
                 "count": 3

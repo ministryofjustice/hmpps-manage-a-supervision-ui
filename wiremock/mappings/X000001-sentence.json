@@ -18,17 +18,17 @@
           },
           "sentenceSummaryList": [
             {
-              "eventNumber": 3,
+              "eventNumber": "3",
               "description": "Default Sentence Type"
             },
             {
-              "eventNumber": 1,
+              "eventNumber": "1",
               "description": "12 month community order"
             }
           ],
           "sentence": {
             "offenceDetails": {
-              "eventNumber": 3,
+              "eventNumber": "3",
               "offence": {
                 "description": "Murder",
                 "count": 3
@@ -163,17 +163,17 @@
           },
           "sentenceSummaryList": [
             {
-              "eventNumber": 3,
+              "eventNumber": "3",
               "description": "Default Sentence Type"
             },
             {
-              "eventNumber": 1,
+              "eventNumber": "1",
               "description": "12 month community order"
             }
           ],
           "sentence": {
             "offenceDetails": {
-              "eventNumber": 1,
+              "eventNumber": "1",
               "offence": {
                 "description": "Another Murder",
                 "count": 1
@@ -258,17 +258,17 @@
           },
           "sentenceSummaryList": [
             {
-              "eventNumber": 3,
+              "eventNumber": "3",
               "description": "Default Sentence Type"
             },
             {
-              "eventNumber": 1,
+              "eventNumber": "1",
               "description": "12 month community order"
             }
           ],
           "sentence": {
             "offenceDetails": {
-              "eventNumber": 3,
+              "eventNumber": "3",
               "offence": {
                 "description": "Murder",
                 "count": 3
@@ -419,11 +419,11 @@
           },
           "sentenceSummaryList": [
             {
-              "eventNumber": 3,
+              "eventNumber": "3",
               "description": "Default Sentence Type"
             },
             {
-              "eventNumber": 1,
+              "eventNumber": "1",
               "description": "12 month community order"
             }
           ],

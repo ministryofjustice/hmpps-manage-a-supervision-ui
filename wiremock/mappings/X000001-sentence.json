@@ -16,7 +16,7 @@
             "crn": "X000001",
             "dateOfBirth": "1979-08-18"
           },
-          "sentenceDescriptions": [
+          "sentenceSummaryList": [
             {
               "eventNumber": 3,
               "description": "Default Sentence Type"
@@ -161,7 +161,7 @@
             "crn": "X000001",
             "dateOfBirth": "1979-08-18"
           },
-          "sentenceDescriptions": [
+          "sentenceSummaryList": [
             {
               "eventNumber": 3,
               "description": "Default Sentence Type"
@@ -256,7 +256,7 @@
             "crn": "X000001",
             "dateOfBirth": "1979-08-18"
           },
-          "sentenceDescriptions": [
+          "sentenceSummaryList": [
             {
               "eventNumber": 3,
               "description": "Default Sentence Type"
@@ -417,7 +417,7 @@
             "crn": "X000001",
             "dateOfBirth": "1979-08-18"
           },
-          "sentenceDescriptions": [
+          "sentenceSummaryList": [
             {
               "eventNumber": 3,
               "description": "Default Sentence Type"

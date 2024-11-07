@@ -31,7 +31,7 @@
       <div class="govuk-grid-column-one-quarter">
           {% set items = [] %}
           {% set eventNumber = sentenceDetails.sentence.offenceDetails.eventNumber %}
-          {% for sentence in sentenceDetails.sentenceDescriptions %}
+          {% for sentence in sentenceDetails.sentenceSummaryList %}
             {% set isActive = sentence.eventNumber === eventNumber %}
             {% set items = items.concat(
                     {

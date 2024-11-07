@@ -16,7 +16,7 @@
             "crn": "X778160",
             "dateOfBirth": "2012-03-13"
           },
-          "sentenceDescriptions": [
+          "sentenceSummaryList": [
             {
               "eventNumber": 1,
               "description": "Default Sentence Type"

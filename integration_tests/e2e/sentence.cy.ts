@@ -44,6 +44,10 @@ context('Sentence', () => {
     page.getRowData('sentence', 'orderEndDate', 'Value').should('contain.text', '19 March 2025')
 
     page
+      .getCardHeader('sentence')
+      .within(() => cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'No release date details'))
+
+    page
       .getRowData('sentence', 'courtDocuments', 'Value')
       .within(() => cy.get('ul > li').its('length').should('equal', 3))
 
@@ -140,6 +144,10 @@ context('Sentence', () => {
     page
       .getCardHeader('conviction')
       .within(() => cy.get('.govuk-summary-list__value').eq(2).should('contain.text', 'No conviction date'))
+
+    page
+      .getCardHeader('sentence')
+      .within(() => cy.get('.govuk-summary-list__value').eq(2).should('contain.text', '1 November 2024'))
   })
 
   it('Sentence page is rendered with probation history information', () => {

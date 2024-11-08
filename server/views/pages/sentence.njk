@@ -288,6 +288,10 @@
                         value: { html: '<span data-qa="orderStartDateValue">' + sentence.order.startDate | dateWithYear | nl2br if sentence.order.startDate else 'No start date details' + '</span>' }
                     },
                     {
+                        key: { text: "Date released on licence" },
+                        value: { html: '<span data-qa="orderStartDateValue">' + sentence.order.releaseDate | dateWithYear | nl2br if sentence.order.releaseDate else 'No release date details' + '</span>' }
+                    },
+                    {
                         key: { text: "Sentence expiry date" },
                         value: { html: '<span data-qa="orderEndDateValue">' + sentence.order.endDate | dateWithYear | nl2br if sentence.order.endDate else 'No end date details' + '</span>' }
                     },

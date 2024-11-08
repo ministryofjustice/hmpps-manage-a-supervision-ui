@@ -53,7 +53,14 @@
       </div>
       <div class="govuk-grid-column-three-quarters">
         {% set sentence = sentenceDetails.sentence %}
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-2"  data-qa="pageHeading">{{ sentence.order.description }}</h2>
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2"  data-qa="pageHeading">
+            {% if sentence.order.description %}
+                {{ sentence.order.description }}
+            {% else %}
+                Pre-Sentence
+            {% endif %}
+        </h2>
+
         {% set hasAdditionalOffences = sentence.offenceDetails.additionalOffences and sentence.offenceDetails.additionalOffences.length > 0 %}
         {% set additionalOffences %}
             {% if hasAdditionalOffences %}

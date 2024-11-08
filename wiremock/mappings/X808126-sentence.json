@@ -18,13 +18,13 @@
           },
           "sentenceSummaryList": [
             {
-              "eventNumber": 1,
-              "description": "Default Sentence Type"
+              "eventNumber": "1",
+              "description": "Pre-Sentence"
             }
           ],
           "sentence": {
             "offenceDetails": {
-              "eventNumber": 1,
+              "eventNumber": "1",
               "offence": {
                 "description": "Burglary",
                 "count": 3
@@ -42,67 +42,11 @@
               "sentencingCourt": "Hull Court",
               "responsibleCourt": "Birmingham Court",
               "convictionDate": "2024-03-20",
-              "additionalSentences": [
-                {
-                  "length": 3,
-                  "description": "Disqualified from Driving"
-                }
-              ]
-            },
-            "order": {
-              "description": "Default Sentence Type",
-              "length": 12,
-              "endDate": "2025-03-19",
-              "startDate": "2024-03-19"
+              "additionalSentences": []
             },
             "requirements": [],
-            "courtDocuments": [
-              {
-                "id": "4d74f43c-5b42-4317-852e-56c7d29b610b",
-                "lastSaved": "2024-04-03",
-                "documentName": "Pre-sentence report"
-              },
-              {
-                "id": "6037becb-0d0c-44e1-8727-193f22df0494",
-                "lastSaved": "2024-04-01",
-                "documentName": "CPS Pack"
-              },
-              {
-                "id": "d072ed9a-999f-4333-a116-a871a845aeb3",
-                "lastSaved": "",
-                "documentName": "Previous convictions"
-              }
-            ],
-            "licenceConditions": [
-              {
-                "id": 2500257207,
-                "mainDescription": "Alcohol",
-                "imposedReleasedDate": "2022-02-04",
-                "actualStartDate": "2022-02-04",
-                "notes": []
-              },
-              {
-                "id": 2500257206,
-                "mainDescription": "Freedom of movement ",
-                "subTypeDescription": "Not to enter or remain in sight of any [NAMED PLACE] without the prior approval of your supervising officer.  ",
-                "imposedReleasedDate": "2024-02-04",
-                "actualStartDate": "2024-02-04",
-                "licenceConditionNotes": [
-                  {
-                    "id": 0,
-                    "createdBy": "Peter Parker",
-                    "createdByDate": "2024-10-22",
-                    "note": "Is not allowed to any sporting events",
-                    "hasNoteBeenTruncated": false
-                  },
-                  {
-                    "id": 1,
-                    "note": "Not to go to a football game.",
-                    "hasNoteBeenTruncated": false
-                  }
-                ]
-              }
-            ]
+            "courtDocuments": [],
+            "licenceConditions": []
           }
         },
         "headers": {

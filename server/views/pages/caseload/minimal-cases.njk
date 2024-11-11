@@ -127,7 +127,7 @@
                    { html: case.dob | dateWithYearShortMonth  + "</br><span class='secondary-text'>Age " + case.dob | yearsSince + "</span>",
                     attributes: { 'data-sort-value': case.dob,  'data-qa': 'dobValue' + loop.index } },
                    { html: sentenceHtml },
-                   { html: "<a class='govuk-link' href='./case/" + case.crn + "/schedule/appointment/" + case.previousAppointment.id + "'>" + case.previousAppointment.description + "</a></br><span class='secondary-text'>" + case.previousAppointment.date | dateWithYearShortMonth + "</span>", attributes: { "data-sort-value": case.previousAppointment.date  } }
+                   { html: "<a class='govuk-link' href='./case/" + case.crn + "/activity-log/activity/" + case.previousAppointment.id + "'>" + case.previousAppointment.description + "</a></br><span class='secondary-text'>" + case.previousAppointment.date | dateWithYearShortMonth + "</span>", attributes: { "data-sort-value": case.previousAppointment.date  } }
                    if case.previousAppointment,
                    { html: "<a class='govuk-link' href='./case/" + case.crn + "/schedule/appointment/" + case.nextAppointment.id + "'>" + case.nextAppointment.description + "</a></br><span class='secondary-text'>" + case.nextAppointment.date | dateWithYearShortMonth + "</span>", attributes: { "data-sort-value": case.nextAppointment.date  } }
                    if case.nextAppointment

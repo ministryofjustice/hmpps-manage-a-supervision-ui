@@ -189,6 +189,7 @@
               "description": "12 month community order",
               "length": 12,
               "endDate": "2025-01-31",
+              "releaseDate": "2024-11-01",
               "startDate": "2024-02-01"
             },
             "requirements": [

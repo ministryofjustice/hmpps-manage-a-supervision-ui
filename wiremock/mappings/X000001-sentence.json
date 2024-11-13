@@ -372,6 +372,22 @@
                 "mainDescription": "Licence - Prohibited Activity",
                 "imposedReleasedDate": "2023-09-26",
                 "licenceConditionNotes": []
+              },
+              {
+                "id": 101,
+                "mainDescription": "Residence at a specific place",
+                "subTypeDescription": "Bespoke Condition (See Notes)",
+                "imposedReleasedDate": "2024-10-03",
+                "actualStartDate": "2023-11-15",
+                "licenceConditionNotes": [
+                  {
+                    "id": 1,
+                    "createdBy": "Gary Jones",
+                    "createdByDate": "2021-10-04",
+                    "note": "Need to be home by 10pm.",
+                    "hasNoteBeenTruncated": false
+                  }
+                ]
               }
             ]
           }

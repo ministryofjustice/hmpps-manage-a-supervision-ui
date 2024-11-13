@@ -147,8 +147,6 @@
                          {% endif %}
                     {% endset %}
                     {% set notes = notes.concat(note) %}
-                {% else %}
-                    {% set notes = 'No notes' %}
                 {% endfor %}
                 {% set licenceHtml %}
                     {{ govukSummaryList({
@@ -168,7 +166,7 @@
                             {
                                  key: { text: 'Notes' },
                                  value: { html: notes }
-                            } if notes != 'No notes'
+                            }
                         ]
                     }) }}
                 {% endset %}

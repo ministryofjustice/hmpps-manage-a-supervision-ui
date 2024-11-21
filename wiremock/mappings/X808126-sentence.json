@@ -30,13 +30,7 @@
                 "count": 3
               },
               "dateOfOffence": "2024-03-20",
-              "notes": "overview",
-              "additionalOffences": [
-                {
-                  "description": "Assault",
-                  "count": 1
-                }
-              ]
+              "additionalOffences": []
             },
             "conviction": {
               "sentencingCourt": "Hull Court",

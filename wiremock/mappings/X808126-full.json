@@ -41,16 +41,6 @@
               "mainOffence": {
                 "code": "18502",
                 "description": "Breach of Restraining Order (Protection from Harassment Act 1997) - 00831"
-              },
-              "order": {
-                "description": "CJA - Std Determinate Custody",
-                "endDate": "2024-12-01",
-                "startDate": "2023-12-01"
-              },
-              "rar": {
-                "completed": 14,
-                "scheduled": 2,
-                "totalDays": 16
               }
             }
           ],

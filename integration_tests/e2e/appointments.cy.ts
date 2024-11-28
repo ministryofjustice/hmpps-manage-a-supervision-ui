@@ -1,10 +1,10 @@
 import Page from '../pages/page'
 import AppointmentPage from '../pages/appointment'
-import SchedulePage from '../pages/schedule'
+import AppointmentsPage from '../pages/appointments'
 
 context('Appointment', () => {
   it('Appointment page with outcome is rendered', () => {
-    cy.visit('/case/X000001/schedule/appointment/4')
+    cy.visit('/case/X000001/appointments/appointment/4')
     const page = Page.verifyOnPage(AppointmentPage)
     page.appointmentType().should('contain.text', 'Initial appointment')
     page.appointmentTitle().should('contain.text', 'Phone call with Steve Bruce')
@@ -24,17 +24,24 @@ context('Appointment', () => {
     page.getRowData('outcomeDetails', 'sensitive', 'Value').should('contain.text', 'No')
     page.getRowData('outcomeDetails', 'notes', 'Value').should('contain.text', 'Some notes')
   })
-  it('Schedule page with appointments is rendered', () => {
-    cy.visit('/case/X000001/schedule')
-    const page = Page.verifyOnPage(SchedulePage)
+  it('Appointments page with upcoming and past appointments is rendered', () => {
+    cy.visit('/case/X000001/appointments')
+    const page = Page.verifyOnPage(AppointmentsPage)
     page.headerCrn().should('contain.text', 'X000001')
     page.headerName().should('contain.text', 'Eula Schmeler')
-    page.pageHeading().should('contain.text', 'Schedule')
-    page.appointmentRow(1).should('contain.text', 'Thursday 22 December 2044')
-    page.appointmentRow(1).should('contain.text', '9:15am')
-    page.appointmentRow(1).should('contain.text', 'Phone call with Terry Jones')
-    page.appointmentRow(2).should('contain.text', 'Wednesday 22 March 2045')
-    page.appointmentRow(2).should('contain.text', '10:15am to 10:30am')
-    page.appointmentRow(2).should('contain.text', 'Video call with William Philips')
+
+    page.upcomingAppointmentDate(1).should('contain.text', '22 March 2045')
+    page.upcomingAppointmentTime(1).should('contain.text', '10:15am to 10:30am')
+    page.upcomingAppointmentType(1).should('contain.text', 'Video call')
+    page.upcomingAppointmentDate(2).should('contain.text', '22 December 2044')
+    page.upcomingAppointmentTime(2).should('contain.text', '9:15am')
+    page.upcomingAppointmentType(2).should('contain.text', 'Phone call')
+
+    page.pastAppointmentDate(1).should('contain.text', '22 March 2024')
+    page.pastAppointmentTime(1).should('contain.text', '8:15am to 8:30am')
+    page.pastAppointmentType(1).should('contain.text', 'Phone call')
+    page.pastAppointmentDate(2).should('contain.text', '21 March 2024')
+    page.pastAppointmentTime(2).should('contain.text', '10:15am to 10:30am')
+    page.pastAppointmentType(2).should('contain.text', 'Phone call')
   })
 })

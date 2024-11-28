@@ -51,6 +51,16 @@ export const dateWithNoDay = (datetimeString: string): string | null => {
   if (!datetimeString || isBlank(datetimeString)) return null
   return DateTime.fromISO(datetimeString).toFormat('MMMM yyyy')
 }
+export const dateForSort = (datetimeString: string): number | null => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  return DateTime.fromISO(datetimeString).toMillis()
+}
+
+export const timeForSort = (datetimeString: string): number | null => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  return Number(DateTime.fromISO(datetimeString).toFormat('HHmm'))
+}
+
 export const fullName = (name: Name): string => {
   if (name === undefined || name === null) return ''
   return `${name.forename} ${name.surname}`
@@ -216,6 +226,12 @@ export const isToday = (datetimeString: string) => {
 export const dayOfWeek = (datetimeString: string) => {
   if (!datetimeString || isBlank(datetimeString)) return null
   return DateTime.fromISO(datetimeString).toFormat('cccc')
+}
+
+export const sortAppointmentsDescending = (appointments: Activity[], limit?: number): Activity[] => {
+  return appointments
+    .sort((a, b) => (a.startDateTime < b.startDateTime ? 1 : -1))
+    .filter((_, index) => (limit && index < limit) || !limit)
 }
 
 export const scheduledAppointments = (appointments: Activity[]): Activity[] => {

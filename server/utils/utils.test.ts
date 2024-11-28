@@ -432,7 +432,7 @@ describe('Sort appointments descending', () => {
 
 describe('convert date to sortable number', () => {
   it.each([
-    ['converts correctly', DateTime.fromSQL('2020-09-10').toString(), 1599692400000],
+    ['converts correctly', DateTime.fromSQL('2020-09-10', { zone: 'utc' }).toString(), 1599696000000],
     ['returns null', undefined, null],
   ])('%s dateForSort(%s)', (_: string, a: string, expected: number) => {
     expect(dateForSort(a)).toEqual(expected)

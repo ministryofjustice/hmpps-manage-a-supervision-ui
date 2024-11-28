@@ -229,8 +229,9 @@ export const dayOfWeek = (datetimeString: string) => {
 }
 
 export const sortAppointmentsDescending = (appointments: Activity[], limit?: number): Activity[] => {
-  const sorted = appointments.sort((a, b) => (a.startDateTime < b.startDateTime ? 1 : -1))
-  return sorted.filter((_, index) => (limit && index < limit) || !limit)
+  return [...appointments]
+    .sort((a, b) => (a.startDateTime < b.startDateTime ? 1 : -1))
+    .filter((_, index) => (limit && index < limit) || !limit)
 }
 
 export const scheduledAppointments = (appointments: Activity[]): Activity[] => {

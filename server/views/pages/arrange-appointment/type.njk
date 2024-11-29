@@ -1,0 +1,32 @@
+{% extends "../../partials/wizard-form.njk" %}
+{% set title = 'What appointment are you arranging?' %}
+{% block form %}
+
+  {{ govukRadios({
+    fieldset: {
+      legend: {
+        text: title,
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--l govuk-!-margin-bottom-6"
+      }
+    },
+    items: [
+      {
+        text: "Home visit",
+        value: "Home visit"
+      },
+      {
+        text: "Initial appointment - home visit",
+        value: "Initial appointment - home visit"
+      },
+      {
+        text: "Initial appointment - in office",
+        value: "Initial appointment - in office"
+      },
+      {
+         text: "Planned office visit",
+         value: "Planned office visit"
+      }
+    ]
+  })}}
+  {% endblock %}

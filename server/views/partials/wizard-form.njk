@@ -1,0 +1,24 @@
+{% extends "../partials/layout.njk" %}
+{% block pageTitle %}{{ title }}{% endblock %}
+{% block beforeContent %}
+  {{ govukBackLink({
+    href: paths.back
+  }) if paths.back }}
+  {% endblock %}
+{% block content %}
+  {% if notStandardForm %}
+    {% block primary %}{% endblock %}
+  {% else %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <form method="post" autocomplete="off" action="{{ action if action else paths.current }}">
+          {% block form %}{% endblock %}
+          {{ govukButton({
+            html: buttonText if buttonText else 'Continue',
+            isStartButton: buttonText === 'Start now'
+          }) }}
+        </form>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

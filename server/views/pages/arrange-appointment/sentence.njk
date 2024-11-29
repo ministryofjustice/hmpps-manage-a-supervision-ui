@@ -1,0 +1,99 @@
+{% extends "../../partials/wizard-form.njk" %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% set title = 'What appointment are you arranging?' %}
+{% set requirementReveal %}
+{{ govukRadios({
+    fieldset: {
+      legend: {
+        text: "Which requirement is this appointment for?",
+        isPageHeading: false,
+        classes: "govuk-fieldset__legend--s"
+      }
+    },
+    hint: {
+      text: "Select requirement"
+    },
+    items: [
+      {
+        value: "Drug Rehabilition - Low Intensity",
+        text: "Drug Rehabilition - Low Intensity",
+        checked: false
+      },
+      {
+        value: "Specified Activity - HBS - Chance to Change",
+        text: "Specified Activity - HBS - Chance to Change"
+      }
+    ]
+}) }}
+{% endset -%}
+
+{% block form %}
+{% if appointment['type-of-session'] === 'Home visit' or appointment['type-of-session'] === 'Planned office visit' %}
+{{ govukRadios({
+    fieldset: {
+      legend: {
+        text: title,
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--l govuk-!-margin-bottom-6"
+      }
+    },
+    hint: {
+        text: "Select sentence"
+      },
+    items: [
+      {
+        text: "CJA - Community Order",
+        hint: {
+            text: "Sentence start date: 1 July 2024"
+          },
+        value: "CJA - Community Order",
+        checked: true,
+        attributes: {
+          'data-bold': 'true'
+        },
+        conditional: {
+            html: requirementReveal
+        }
+      }
+    ]
+}) }}
+
+
+{% else %}
+
+{{ govukRadios({
+    fieldset: {
+      legend: {
+        text: title,
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--l govuk-!-margin-bottom-6"
+      }
+    },
+    hint: {
+        text: "Select sentence."
+      },
+    items: [
+      {
+        text: "CJA - Community Order",
+        hint: {
+            text: "Sentence start date: 1 July 2024"
+          },
+        value: "CJA - Community Order",
+        attributes: {
+          'data-bold': ''
+        }
+      },
+      {
+        text: "Adult Custody < 12m",
+        value: "Adult Custody < 12m",
+        hint: {
+            text: "Sentence start date: 16 September 2024"
+        },
+        attributes: {
+          'data-bold': 'true'
+        }
+      }
+    ]
+  }) }}
+  {% endif %}
+{% endblock %}

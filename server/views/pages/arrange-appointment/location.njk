@@ -1,0 +1,31 @@
+location{% extends "../../partials/wizard-form.njk" %}
+{% set title = 'Pick a location for this appointment' %}
+{% block form %}
+{% set locationItems = [] %}
+{% for location in userLocations.locations %}
+ {% set locationItems = (locationItems.push({
+      text: location.description
+    }), locationItems) %}
+  {% endfor %}
+{% set locationItems = (locationItems.push({
+    divider: 'or'
+  }), locationItems) %}
+  {% set locationItems = (locationItems.push({
+    text: 'The location I’m looking for is not in this list'
+  }), locationItems) %}
+
+  {% set locationItems = (locationItems.push({
+    text: 'I do not need to pick a location'
+  }), locationItems) %}
+
+{{ govukRadios({
+    fieldset: {
+      legend: {
+        text: title | safe,
+        classes: "govuk-fieldset__legend--l govuk-!-margin-bottom-6",
+        isPageHeading: true
+      }
+    },
+    items: locationItems
+  }) }}
+{% endblock %}

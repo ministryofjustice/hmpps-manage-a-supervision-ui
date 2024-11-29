@@ -7,6 +7,7 @@ import {
   activityLogDate,
   addressToList,
   compactActivityLogDate,
+  dateForSort,
   dateWithDayAndWithoutYear,
   dateWithNoDay,
   dateWithYear,
@@ -39,7 +40,9 @@ import {
   scheduledAppointments,
   sentencePlanLink,
   setSortOrder,
+  sortAppointmentsDescending,
   tierLink,
+  timeForSort,
   timeFromTo,
   toSlug,
   toYesNo,
@@ -103,6 +106,8 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('toSlug', toSlug)
   njkEnv.addFilter('defaultFormInputValues', defaultFormInputValues)
   njkEnv.addFilter('defaultFormSelectValues', defaultFormSelectValues)
+  njkEnv.addFilter('dateForSort', dateForSort)
+  njkEnv.addFilter('timeForSort', timeForSort)
   njkEnv.addGlobal('getComplianceStatus', getComplianceStatus)
   njkEnv.addGlobal('timeFromTo', timeFromTo)
   njkEnv.addGlobal('getRisksWithScore', getRisksWithScore)
@@ -125,4 +130,5 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('sentencePlanLink', sentencePlanLink)
   njkEnv.addGlobal('interventionsLink', interventionsLink)
   njkEnv.addGlobal('setSortOrder', setSortOrder)
+  njkEnv.addGlobal('sortAppointmentsDescending', sortAppointmentsDescending)
 }

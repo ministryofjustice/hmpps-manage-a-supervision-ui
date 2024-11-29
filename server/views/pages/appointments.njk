@@ -1,0 +1,226 @@
+{% extends "../partials/case.njk" %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "moj/components/button-menu/macro.njk" import mojButtonMenu %}
+{% set pageTitle = applicationName + " - Appointments" %}
+{% set currentNavSection = 'appointments' %}
+{% set headerPersonName = upcomingAppointments.personSummary.name.forename + ' ' + upcomingAppointments.personSummary.name.surname %}
+{% set headerCRN = upcomingAppointments.personSummary.crn %}
+{% set headerDob = upcomingAppointments.personSummary.dateOfBirth  %}
+{% set headerGender = upcomingAppointments.personSummary.gender  %}
+{% set upcomingAppointments = sortAppointmentsDescending(upcomingAppointments.appointments) %}
+{% set pastAppointments = sortAppointmentsDescending(pastAppointments.appointments, 10) %}
+{% set upcomingAppointmentRows = [] %}
+{% set pastAppointmentRows = [] %}
+
+{% if upcomingAppointments.length > 0 %}
+  {% for appointment in upcomingAppointments %}
+
+    {% set actionsButton =  mojButtonMenu({
+      "button": {
+        "text": "Actions",
+        classes: "govuk-button--secondary"
+      },
+      "items": [
+        {
+          "text": "Log outcome"
+        },
+        {
+          "text": "Manage appointment",
+          "href": "./appointments/appointment/" + appointment.id
+        }
+      ]
+    })
+    %}
+
+    {% set upcomingAppointmentRows = (upcomingAppointmentRows.push([
+      {
+        html: "<a class='govuk-link' href='/case/" + crn + "/appointments/appointment/" +  + appointment.id + "'>" + appointment.type + "</a>",
+        classes: "vertical-align--middle",
+        attributes: { "data-qa":"upcomingAppointmentType"+loop.index }
+
+      },
+      {
+        text: appointment.startDateTime | dateWithYear,
+        format: "numeric",
+        classes: "vertical-align--middle",
+        attributes: { "data-sort-value": appointment.startDateTime | dateForSort, "data-qa":"upcomingAppointmentDate"+loop.index }
+      },
+      {
+        text: timeFromTo(appointment.startDateTime, appointment.endDateTime),
+        format: "numeric",
+        classes: "vertical-align--middle",
+        attributes: { "data-sort-value": appointment.startDateTime | timeForSort, "data-qa":"upcomingAppointmentTime"+loop.index }
+      },
+      {
+        html: actionsButton,
+        format: "numeric",
+        classes: "govuk-visually-hidden vertical-align--middle"
+      }
+    ]), upcomingAppointmentRows) %}
+  {% endfor %}
+{% endif %}
+
+{% if pastAppointments.length > 0 %}
+  {% for appointment in pastAppointments %}
+
+    {% set actionsButton =  mojButtonMenu({
+      "button": {
+        "text": "Actions",
+        classes: "govuk-button--secondary"
+      },
+      "items": [
+        {
+          "text": "Log outcome"
+        },
+        {
+          "text": "Manage appointment",
+          "href": "./appointments/appointment/" + appointment.sessionId
+        }
+      ]
+    })
+    %}
+
+    {% set pastAppointmentRows = (pastAppointmentRows.push([
+      {
+        html: "<a class='govuk-link' href='/case/" + crn + "/appointments/appointment/" +  + appointment.id + "'>" + appointment.type + "</a>",
+        classes: "vertical-align--middle",
+        attributes: { "data-qa":"pastAppointmentType"+loop.index }
+      },
+      {
+        text: appointment.startDateTime | dateWithYear,
+        format: "numeric",
+        classes: "vertical-align--middle",
+        attributes: { "data-sort-value": appointment.startDateTime | dateForSort, "data-qa":"pastAppointmentDate"+loop.index }
+      },
+      {
+        text: timeFromTo(appointment.startDateTime, appointment.endDateTime),
+        format: "numeric",
+        classes: "vertical-align--middle",
+        attributes: { "data-sort-value": appointment.startDateTime | timeForSort, "data-qa":"pastAppointmentTime"+loop.index }
+      },
+      {
+        html: actionsButton,
+        format: "numeric",
+        classes: "govuk-visually-hidden vertical-align--middle"
+      }
+    ]), pastAppointmentRows) %}
+  {% endfor %}
+{% endif %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+      items: [
+        {
+          text: "My cases",
+          href: "/case"
+        },
+        {
+          text: headerPersonName,
+          href: "/case/" + crn
+        },
+        {
+          text: "Appointments"
+        }
+      ]
+    }) }}
+{% endblock %}
+
+{% block headerActions %}
+    <div class="govuk-visually-hidden moj-button-group moj-button-group--inline">
+        <form method="get" action="#">
+            <button type="submit" class="govuk-button govuk-!-static-margin-bottom-0 govuk-!-static-margin-right-0" data-module="govuk-button">
+                Arrange an appointment
+            </button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block pageContent %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <section class="govuk-!-margin-bottom-8 app-summary-card--large-title" data-qa="sentence2Card">
+          <h2 class="govuk-heading-m" id="section1">Upcoming appointments</h2>
+          {% if upcomingAppointments.length == 0 %}
+            <p>There are no upcoming appointments.</p>
+          {% else %}
+            {{ govukTable({
+              firstCellIsHeader: false,
+              attributes: {
+                'data-module': 'moj-sortable-table'
+              },
+              head: [
+                {
+                  text: "Appointment type",
+                  classes: "govuk-!-width-one-half",
+                  attributes: { "aria-sort": "none" }
+                },
+                {
+                  text: "Date",
+                  classes: "govuk-!-width-one-sixth",
+                  format: "numeric",
+                  attributes: { "aria-sort": "none" }
+                },
+                {
+                  text: "Time",
+                  classes: "govuk-!-width-one-sixth",
+                  format: "numeric",
+                  attributes: { "aria-sort": "none" }
+                },
+                {
+                  text: "Action",
+                  classes: "govuk-visually-hidden govuk-!-width-one-sixth non-sortable__sortable-table-header",
+                  format: "numeric"
+                }
+              ],
+              rows: upcomingAppointmentRows
+            }) }}
+          {% endif %}
+        </section>
+
+        <section class="govuk-!-margin-bottom-8">
+          <h2 class="govuk-heading-m" id="section2">Past appointments</h2>
+          {% if pastAppointments.length == 0 %}
+            <p>There are no past appointments.</p>
+          {% else %}
+            {{ govukTable({
+              firstCellIsHeader: false,
+              attributes: {
+                'data-module': 'moj-sortable-table'
+              },
+              head: [
+                {
+                  text: "Appointment type",
+                  classes: "govuk-!-width-one-half",
+                  attributes: { "aria-sort": "none" }
+                },
+                {
+                  text: "Date",
+                  classes: "govuk-!-width-one-sixth",
+                  format: "numeric",
+                  attributes: { "aria-sort": "none" }
+                },
+                {
+                  text: "Time",
+                  classes: "govuk-!-width-one-sixth",
+                  format: "numeric",
+                  attributes: { "aria-sort": "none" }
+                },
+                {
+                  text: "Action",
+                  classes: "govuk-visually-hidden govuk-!-width-one-sixth non-sortable__sortable-table-header",
+                  format: "numeric"
+                }
+              ],
+              rows: pastAppointmentRows
+            }) }}
+          {% endif %}
+        </section>
+        <section>
+          <h2 class="govuk-heading-m" id="section3">Appointment history</h2>
+          <p><a href="./activity-log/national-standard-appointments" class="govuk-link">View all past appointments in the activity log</a>.</p>
+        </section>
+      </div>
+    </div>
+
+
+{% endblock %}

@@ -6,6 +6,7 @@ import {
   activityLogDate,
   compactActivityLogDate,
   convertToTitleCase,
+  dateForSort,
   dateWithDayAndWithoutYear,
   dateWithYear,
   dateWithYearShortMonth,
@@ -27,7 +28,9 @@ import {
   pastAppointments,
   removeEmpty,
   scheduledAppointments,
+  sortAppointmentsDescending,
   tierLink,
+  timeForSort,
   timeFromTo,
   toYesNo,
   yearsSince,
@@ -401,7 +404,7 @@ describe('Gets compliance status', () => {
   })
 })
 
-describe('get distinct requirements', () => {
+describe('get past Appointments', () => {
   it.each([['Filters correctly', appointments]])('%s pastAppointments(%s, %s)', (_: string, a: Activity[]) => {
     expect(pastAppointments(a)[0]).toEqual(appointments[6])
   })
@@ -413,5 +416,35 @@ describe('tier link', () => {
     ['Returns link', 'X000001', 'https://tier-dummy-url/X000001'],
   ])('%s tierLink(%s, %s)', (_: string, a: string, expected: string) => {
     expect(tierLink(a)).toEqual(expected)
+  })
+})
+
+describe('Sort appointments descending', () => {
+  it.each([
+    ['sorts and limits correctly', appointments, 3, 3],
+    ['sorts and does not limit', appointments, undefined, 7],
+  ])('%s sortAppointmentsDescending(%s, %s)', (_: string, a: Activity[], limit: number, expectedSize: number) => {
+    const result = sortAppointmentsDescending(a, limit)
+    expect(result[0]).toEqual(appointments[0])
+    expect(result.length).toEqual(expectedSize)
+  })
+})
+
+describe('convert date to sortable number', () => {
+  it.each([
+    ['converts correctly', DateTime.fromSQL('2020-09-10', { zone: 'utc' }).toString(), 1599696000000],
+    ['returns null', undefined, null],
+  ])('%s dateForSort(%s)', (_: string, a: string, expected: number) => {
+    expect(dateForSort(a)).toEqual(expected)
+  })
+})
+
+describe('convert time to sortable number', () => {
+  it.each([
+    ['converts correctly', DateTime.fromSQL('2017-05-15 09:24:15').toString(), 924],
+    ['converts correctly', DateTime.fromSQL('2017-05-15 19:24:15').toString(), 1924],
+    ['returns null', undefined, null],
+  ])('%s timeForSort(%s)', (_: string, a: string, expected: number) => {
+    expect(timeForSort(a)).toEqual(expected)
   })
 })

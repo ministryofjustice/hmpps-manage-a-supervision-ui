@@ -12,14 +12,14 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
   const post = (path: string, handler: RequestHandler) => router.post(path, asyncMiddleware(handler))
 
-  get('/case/:crn/schedule', async (req, res, _next) => {
+  get('/case/:crn/appointments', async (req, res, _next) => {
     const { crn } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
     const tierClient = new TierApiClient(token)
 
     await auditService.sendAuditMessage({
-      action: 'VIEW_MAS_SCHEDULE',
+      action: 'VIEW_MAS_APPOINTMENTS',
       who: res.locals.user.username,
       subjectId: crn,
       subjectType: 'CRN',
@@ -27,18 +27,20 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
       service: 'hmpps-manage-a-supervision-ui',
     })
 
-    const [schedule, tierCalculation] = await Promise.all([
+    const [upcomingAppointments, pastAppointments, tierCalculation] = await Promise.all([
       masClient.getPersonSchedule(crn, 'upcoming'),
+      masClient.getPersonSchedule(crn, 'previous'),
       tierClient.getCalculationDetails(crn),
     ])
-    res.render('pages/schedule', {
-      schedule,
+    res.render('pages/appointments', {
+      upcomingAppointments,
+      pastAppointments,
       crn,
       tierCalculation,
     })
   })
 
-  get('/case/:crn/schedule/appointment/:contactId', async (req, res, _next) => {
+  get('/case/:crn/appointments/appointment/:contactId', async (req, res, _next) => {
     const { crn } = req.params
     const { contactId } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
@@ -54,7 +56,7 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
     })
 
     const personAppointment = await masClient.getPersonAppointment(crn, contactId)
-    res.render('pages/schedule/appointment', {
+    res.render('pages/appointments/appointment', {
       personAppointment,
       crn,
     })
@@ -75,7 +77,7 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
     })
 
     const schedule = await masClient.getPersonSchedule(crn, 'previous')
-    res.render('pages/schedule/record-an-outcome', {
+    res.render('pages/appointments/record-an-outcome', {
       schedule,
       crn,
       actionType,
@@ -99,7 +101,7 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
         actionType,
       })
     } else {
-      res.redirect(`/case/${crn}/schedule/appointment/${req.body['appointment-id']}`)
+      res.redirect(`/case/${crn}/appointments/appointment/${req.body['appointment-id']}`)
     }
   })
 }

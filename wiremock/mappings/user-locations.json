@@ -1,0 +1,33 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/user/USER1/locations",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "name": {
+            "forename": "Eula",
+            "middleName": "",
+            "surname": "Schmeler"
+          },
+          "locations": [
+            {
+              "id": 1,
+              "description": "HMP Wakefield"
+            },
+            {
+              "id": 2,
+              "description": "102 Petty France"
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

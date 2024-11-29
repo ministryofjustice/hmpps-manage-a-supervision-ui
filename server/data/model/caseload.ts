@@ -36,9 +36,23 @@ export interface Team {
   code: string
 }
 
+export interface Location {
+  id: string
+  name: string
+}
+
 export interface UserTeam {
   provider: string
   teams: Team[]
+}
+
+export interface UserLocations {
+  name: {
+    forename: string
+    middleName: string
+    surname: string
+  }
+  locations: Location[]
 }
 
 export interface CaseSearchFilter {

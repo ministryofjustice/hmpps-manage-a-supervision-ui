@@ -16,7 +16,7 @@ import { PersonRiskFlag, PersonRiskFlags } from './model/risk'
 import { PersonCompliance } from './model/compliance'
 import { PreviousOrderHistory } from './model/previousOrderHistory'
 import { Offences } from './model/offences'
-import { TeamCaseload, UserCaseload, UserTeam } from './model/caseload'
+import { TeamCaseload, UserCaseload, UserTeam, UserLocations } from './model/caseload'
 import { ProfessionalContact } from './model/professionalContact'
 import { CaseAccess, UserAccess } from './model/caseAccess'
 import { LicenceConditionNoteDetails } from './model/licenceConditionNoteDetails'
@@ -129,6 +129,10 @@ export default class MasApiClient extends RestClient {
 
   async getUserTeams(username: string): Promise<UserTeam> {
     return this.get({ path: `/caseload/user/${username}/teams`, handle404: true })
+  }
+
+  async getUserLocations(username: string): Promise<UserLocations> {
+    return this.get({ path: `/user/${username}/locations`, handle404: true })
   }
 
   async getTeamCaseload(teamCode: string, page: string): Promise<TeamCaseload> {

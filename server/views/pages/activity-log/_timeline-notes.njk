@@ -10,7 +10,7 @@
 {% endset %}
 
 {{ govukWarningText({
-  html: 'Absent and waiting for evidence<br /><a href="/case/' + crn +'/schedule/appointment' + entry.id + '">Change outcome</a>',
+  html: 'Absent and waiting for evidence<br /><a href="/case/' + crn +'/appointments/appointment' + entry.id + '">Change outcome</a>',
   iconFallbackText: 'Warning'
 }) if entry.acceptableAbsence === null }}
 

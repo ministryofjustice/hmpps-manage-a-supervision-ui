@@ -116,7 +116,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       service: 'hmpps-manage-a-supervision-ui',
     })
 
-    res.render('pages/schedule/appointment', {
+    res.render('pages/appointments/appointment', {
       category,
       queryParams,
       personAppointment,

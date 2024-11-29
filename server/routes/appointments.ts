@@ -94,7 +94,7 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
       logger.info('Appointment not selected')
       errorMessages.appointment = { text: 'Please select an appointment' }
       const schedule = await masClient.getPersonSchedule(crn, 'previous')
-      res.render('pages/schedule/record-an-outcome', {
+      res.render('pages/appointments/record-an-outcome', {
         errorMessages,
         schedule,
         crn,

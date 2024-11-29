@@ -14,7 +14,6 @@ $govuk-page-width: $moj-page-width;
 @import './components/sortable-table';
 @import "../../node_modules/govuk-frontend/dist/govuk/base";
 @import "../../node_modules/@ministryofjustice/frontend/moj/components/sortable-table/_sortable-table";
-@import "../../node_modules/@ministryofjustice/frontend/moj/all";
 
 // TM styles
 .secondary-text {color: $govuk-secondary-text-colour; /* Using a GOV.UK Design System color */}

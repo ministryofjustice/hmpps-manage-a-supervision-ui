@@ -12,6 +12,18 @@ declare module 'express-session' {
     page: string
     sortBy: string
     caseFilter: CaseFilter
+    data?: Data
+  }
+
+  interface Data {
+    appointments?: {
+      [key: string]: Appointment
+    }
+  }
+
+  interface Appointment {
+    type?: string
+    location?: string
   }
 
   interface CaseFilter {

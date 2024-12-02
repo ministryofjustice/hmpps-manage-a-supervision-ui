@@ -1,6 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DateTime } from 'luxon'
 import slugify from 'slugify'
+import getKeypath from 'lodash/get'
+import setKeypath from 'lodash/set'
 import { RiskScore, RiskToSelf } from '../data/arnsApiClient'
 import { Name } from '../data/model/common'
 import { Address } from '../data/model/personalDetails'
@@ -475,3 +477,13 @@ export const checkRecentlyViewedAccess = (
 
 export const makePageTitle = ({ pageHeading, hasErrors }: { pageHeading: string; hasErrors: boolean }) =>
   `${hasErrors ? 'Error: ' : ''}${pageHeading} - ${config.applicationName}`
+
+export const getDataValue = (data: any, sections: any) => {
+  const path = Array.isArray(sections) ? sections : [sections]
+  return getKeypath(data, path.map((s: any) => `["${s}"]`).join(''))
+}
+
+export const setDataValue = (data: any, sections: any, value: any) => {
+  const path = Array.isArray(sections) ? sections : [sections]
+  return setKeypath(data, path.map((s: any) => `["${s}"]`).join(''), value)
+}

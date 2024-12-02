@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import path from 'path'
 import nunjucks from 'nunjucks'
-import express from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 import {
   activityLog,
   activityLogDate,
@@ -22,6 +22,7 @@ import {
   getAppointmentsToAction,
   getComplianceStatus,
   getCurrentRisksToThemselves,
+  getDataValue,
   getDistinctRequirements,
   getPreviousRisksToThemselves,
   getRisksToThemselves,
@@ -67,7 +68,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
     app.locals.version = applicationInfo.gitShortHash
   } else {
     // Version changes every request
-    app.use((req, res, next) => {
+    app.use((_req, res, next) => {
       res.locals.version = Date.now().toString()
       return next()
     })
@@ -108,6 +109,45 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('defaultFormSelectValues', defaultFormSelectValues)
   njkEnv.addFilter('dateForSort', dateForSort)
   njkEnv.addFilter('timeForSort', timeForSort)
+
+  app.use((req: Request, res: Response, next: NextFunction): void => {
+    njkEnv.addFilter('decorateFormAttributes', (obj: any, sections?: string[]) => {
+      const storedValue = getDataValue(req.session.data, sections)
+
+      if (obj.items !== undefined) {
+        obj.items = obj.items.map((item: any) => {
+          if (typeof item.value === 'undefined') {
+            item.value = item.text
+          }
+          if ((Array.isArray(storedValue) && storedValue.includes(item.value)) || storedValue === item.value) {
+            if (storedValue.indexOf(item.value) !== -1) {
+              item.checked = 'checked'
+              item.selected = 'selected'
+            }
+          }
+          return item
+        })
+        if (sections?.length) {
+          obj.idPrefix = sections.join('-')
+        }
+      } else {
+        obj.value = storedValue
+      }
+      if (sections?.length) {
+        const id = sections.join('-')
+        if (typeof obj.id === 'undefined') {
+          obj.id = id
+        }
+        obj.name = sections.map((s: string) => `[${s}]`).join('')
+        if (res?.locals?.errors) {
+          obj.errorMessage = { text: res.locals.errors.errorMessages[id].text }
+        }
+      }
+      return obj
+    })
+    return next()
+  })
+
   njkEnv.addGlobal('getComplianceStatus', getComplianceStatus)
   njkEnv.addGlobal('timeFromTo', timeFromTo)
   njkEnv.addGlobal('getRisksWithScore', getRisksWithScore)

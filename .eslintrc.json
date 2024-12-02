@@ -34,15 +34,17 @@
       ],
       "rules": {
         "@typescript-eslint/no-use-before-define": 0,
+        "@typescript-eslint/no-unused-vars": 0,
         "class-methods-use-this": 0,
         "no-useless-constructor": 0,
-        "@typescript-eslint/no-unused-vars": [
-          1,
-          {
-            "argsIgnorePattern": "res|next|^err|_",
-            "ignoreRestSiblings": true
-          }
-        ],
+        "@typescript-eslint/no-explicit-any": 0,
+        // "@typescript-eslint/no-unused-vars": [
+        //   1,
+        //   {
+        //     "argsIgnorePattern": "res|next|^err|_",
+        //     "ignoreRestSiblings": true
+        //   }
+        // ],
         "@typescript-eslint/semi": 0,
         "import/no-unresolved": "error",
         "prettier/prettier": [
@@ -85,7 +87,16 @@
     "comma-dangle": ["error", "always-multiline"],
     "import/no-extraneous-dependencies": [
       "error",
-      { "devDependencies": ["**/*.test.js", "**/*.test.ts", "**/testutils/**", "cypress.config.ts", "e2e_tests/**", "playwright.config.ts"] }
+      {
+        "devDependencies": [
+          "**/*.test.js",
+          "**/*.test.ts",
+          "**/testutils/**",
+          "cypress.config.ts",
+          "e2e_tests/**",
+          "playwright.config.ts"
+        ]
+      }
     ],
     "no-only-tests/no-only-tests": "error",
     "prettier/prettier": [

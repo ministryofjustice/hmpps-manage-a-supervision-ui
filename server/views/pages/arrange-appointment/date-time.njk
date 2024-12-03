@@ -1,1 +1,80 @@
-Date/Time
+{% extends "../_form.njk" %}
+{%- from "moj/components/date-picker/macro.njk" import mojDatePicker -%}
+
+{% set title = 'Enter the date and time of the appointment' %}
+{% set backLink = '/case/' + crn + '/arrange-appointment/location' %}
+
+{% set disabilitiesAndAdjustments = [] %}
+  {% for disabilityAndAdjustment in individualCase.personalDetails.disabilitiesAndAdjustments %}
+    {% set disabilitiesAndAdjustments = (disabilitiesAndAdjustments.push(disabilityAndAdjustment.disability), disabilitiesAndAdjustments ) %}
+  {% endfor %}
+  {% for depedent in individualCase.personalDetails.c %}
+    {% set disabilitiesAndAdjustments = (disabilitiesAndAdjustments.push(disabilityAndAdjustment.disability), disabilitiesAndAdjustments ) %}
+  {% endfor %}
+
+  {% set employment = '' %}
+  {% set dependents = [] %}
+  {% for circumstance in individualCase.personalDetails.circumstances %}
+  {% if circumstance.type === 'Employment' %}
+  {% set employment = circumstance.subType %}
+  {% endif %}
+  {% if circumstance.type === 'Dependents' %}
+  {% set dependents = circumstance.subType %}
+  {% endif %}
+ {% endfor %}
+
+   {% set circumstancesHTML %}
+<p class="govuk-body">
+    <strong>Disability</strong><br>
+    {{ disabilitiesAndAdjustments.join(', ') | default('<span class="govuk-hint-s">None known</span>', true) | safe }}
+  </p>
+  <p class="govuk-body">
+    <strong>Reasonable adjustments</strong><br>
+    {{ individualCase.personalDetails.disabilitiesAndAdjustments.adjustments[0] }}
+  </p>
+  <p class="govuk-body">
+    <strong>Dependents</strong><br>
+  {% for dependent in dependents %}
+    {% if loop.index > 1 %}<br>{% endif %}{{dependent}}
+  {% endfor %}
+  </p>
+   {% endset %}
+
+{% block heading %}{% endblock %}
+{% block form %}
+   {% if errors %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+ {{ govukErrorSummary({ titleText: "There is a problem", errorList: errors.errorList }) }}
+{% endif %}
+  {{ govukDetails({
+    summaryText: case.name.forename + "’s circumstances",
+    html: circumstancesHTML
+  }) }}
+  {{ mojDatePicker({
+    id: "session-date",
+    name: "session-date",
+    label: {
+        text: "Date",
+        classes: "govuk-label--s"
+    },
+    hint: {
+      text: "For example, 17/5/2024."
+    }
+  } | decorateFormAttributes(['appointments', CRN, 'date'])) }}
+
+  {{ govukInput({
+    label: {
+      text: "Start time",
+      classes: "govuk-label--s"
+    },
+    classes: "govuk-input--width-5 time-field"
+  } | decorateFormAttributes(['appointments', CRN, 'start-time'])) }}
+
+  {{ govukInput({
+    label: {
+      text: "End time",
+      classes: "govuk-label--s"
+    },
+    classes: "govuk-input--width-5 time-field"
+  } | decorateFormAttributes(['appointments', CRN, 'end-time'])) }}
+{% endblock %}

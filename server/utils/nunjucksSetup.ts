@@ -119,10 +119,12 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
           if (typeof item.value === 'undefined') {
             item.value = item.text
           }
-          if ((Array.isArray(storedValue) && storedValue.includes(item.value)) || storedValue === item.value) {
-            if (storedValue.indexOf(item.value) !== -1) {
-              item.checked = 'checked'
-              item.selected = 'selected'
+          if (storedValue) {
+            if ((Array.isArray(storedValue) && storedValue.includes(item.value)) || storedValue === item.value) {
+              if (storedValue.indexOf(item.value) !== -1) {
+                item.checked = 'checked'
+                item.selected = 'selected'
+              }
             }
           }
           return item

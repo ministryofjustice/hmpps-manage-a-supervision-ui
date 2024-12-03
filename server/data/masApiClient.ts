@@ -4,6 +4,7 @@ import { Overview } from './model/overview'
 import { PersonAppointment, Schedule } from './model/schedule'
 import {
   CircumstanceOverview,
+  CircumstancesDetail,
   DisabilityOverview,
   PersonalContact,
   PersonalDetails,

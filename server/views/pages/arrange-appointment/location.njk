@@ -1,13 +1,12 @@
 {% extends "../_form.njk" %}
 {% set title = "Pick a location for this appointment" %}
-{% set action = '/team/case' %}
-{% set backLink = '/case' %}
+{% set backLink = '/case/' + crn + '/arrange-appointment/type' %}
+{% block heading %}{% endblock %}
 {% block form %}
-    {% set errorList = [{ text: errorMessages.team.text, href: "#team-code" } if errorMessages.team else None ] | reject("undefined") %}
-        {% if errorList | length > 0 %}
-          {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
-          {{ govukErrorSummary({ titleText: "There is a problem", errorList: errorList }) }}
-        {% endif %}
+   {% if errors %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+ {{ govukErrorSummary({ titleText: "There is a problem", errorList: errors.errorList }) }}
+{% endif %}
     {% set locationItems = [] %}
 {% for location in userLocations.locations %}
  {% set locationItems = (locationItems.push({
@@ -34,5 +33,5 @@
       }
     },
     items: locationItems
-  }) }}
+   } | decorateFormAttributes(['appointments', crn, 'location'])) }}
 {% endblock %}

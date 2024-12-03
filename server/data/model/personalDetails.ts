@@ -104,6 +104,13 @@ export interface CircumstanceOverview {
   circumstances: Circumstance[]
 }
 
+export interface CircumstancesDetail {
+  personSummary: PersonSummary
+  circumstances: Circumstances[]
+  disabilities: Disability[]
+  provisions: Provision[]
+}
+
 export interface Circumstance {
   type: string
   subType: string

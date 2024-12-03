@@ -23,6 +23,7 @@ export interface PersonSummary {
   crn: string
   pnc?: string
   dateOfBirth: string
+  preferredLanguage?: string
 }
 
 export interface ErrorSummary {

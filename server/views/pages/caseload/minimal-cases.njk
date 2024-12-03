@@ -106,31 +106,58 @@
             {% set rows = [] %}
             {% for case in caseload.caseload %}
                {% set fullName %}
-                 {{ case.caseName.surname }}, {{ case.caseName.forename }}
+                    {% if case.limitedAccess === true %}
+                        <span class="govuk-link--text-colour govuk-link--no-visited-state">Restricted access</span>
+                    {% else %}
+                        {{ case.caseName.surname }}, {{ case.caseName.forename }}
+                    {% endif %}
                {% endset %}
                {% set crn %}
                  {{ case.crn }}
                {% endset %}
                {% set sentenceHtml %}
-                {% if case.numberOfAdditionalSentences > 0 %}
+                {% if case.limitedAccess === true %}
+                    Restricted
+                {% elseif case.numberOfAdditionalSentences > 0 %}
                     {{ case.latestSentence }}<br><a class="govuk-link" href="./case/{{ case.crn }}/sentence">+ {{ case.numberOfAdditionalSentences }} more</a>
                 {% else %}
                     {{ case.latestSentence }}
                 {% endif %}
-
                {% endset %}
+
+               {% set lastContactHtml %}
+                   {% if case.limitedAccess === true %}
+                       Restricted
+                   {% elseif case.previousAppointment %}
+                       <a class="govuk-link" href="./case/{{ case.crn }}/activity-log/activity/{{ case.previousAppointment.id }}"> {{ case.previousAppointment.description }} </a><br/><span class="secondary-text">{{ case.previousAppointment.date | dateWithYearShortMonth }}</span>
+                   {% endif %}
+               {% endset %}
+
+               {% set nextContactHtml %}
+                    {% if case.limitedAccess === true %}
+                        Restricted
+                    {% elseif case.nextAppointment  %}
+                        <a class="govuk-link" href="./case/{{ case.crn }}/activity-log/activity/{{ case.nextAppointment.id }}"> {{ case.nextAppointment.description }} </a><br/><span class="secondary-text">{{ case.nextAppointment.date | dateWithYearShortMonth }}</span>
+                    {% endif %}
+               {% endset %}
+
+
                {% set rows = (rows.push(
                  [
-                   { html: "<a class='govuk-!-font-weight-bold' href='./case/" + case.crn + "'>" + fullName + "</a>
-                   </br>
-                   <span class='govuk-!-font-weight-bold secondary-text'>" + crn + "</span>", attributes: { 'data-sort-value': case.caseName.surname, 'data-qa': 'nameOrCrnValue' + loop.index} },
-                   { html: case.dob | dateWithYearShortMonth  + "</br><span class='secondary-text'>Age " + case.dob | yearsSince + "</span>",
-                    attributes: { 'data-sort-value': case.dob,  'data-qa': 'dobValue' + loop.index } },
-                   { html: sentenceHtml },
-                   { html: "<a class='govuk-link' href='./case/" + case.crn + "/activity-log/activity/" + case.previousAppointment.id + "'>" + case.previousAppointment.description + "</a></br><span class='secondary-text'>" + case.previousAppointment.date | dateWithYearShortMonth + "</span>", attributes: { "data-sort-value": case.previousAppointment.date  } }
-                   if case.previousAppointment,
-                   { html: "<a class='govuk-link' href='./case/" + case.crn + "/appointments/appointment/" + case.nextAppointment.id + "'>" + case.nextAppointment.description + "</a></br><span class='secondary-text'>" + case.nextAppointment.date | dateWithYearShortMonth + "</span>", attributes: { "data-sort-value": case.nextAppointment.date  } }
-                   if case.nextAppointment
+                   { html: "<a class='govuk-!-font-weight-bold' href='./case/" + case.crn + "'>" + fullName + "</a></br><span class='govuk-!-font-weight-bold secondary-text'>" + crn + "</span>",
+                     attributes: { 'data-qa': 'nameOrCrnValue' + loop.index} },
+                   { html: case.dob | dateWithYearShortMonth  + "</br><span class='secondary-text'>Age " + case.dob | yearsSince + "</span>" if case.dob else "Restricted",
+                     attributes: { 'data-qa': 'dobValue' + loop.index }
+                   },
+                   { html: sentenceHtml,
+                     attributes: { 'data-qa': 'sentenceValue' + loop.index }
+                   },
+                   { html: lastContactHtml,
+                     attributes: { 'data-qa': 'lastContactValue' + loop.index }
+                   },
+                   { html: nextContactHtml,
+                     attributes: { 'data-qa': 'nextContactValue' + loop.index }
+                   }
                  ]
                ), rows) %}
             {% endfor %}

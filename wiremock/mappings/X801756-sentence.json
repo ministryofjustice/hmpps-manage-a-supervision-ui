@@ -1,0 +1,27 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/sentence/X801756",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Kari",
+              "surname": "Bradtke"
+            },
+            "crn": "X801756",
+            "dateOfBirth": "1986-07-19"
+          },
+          "sentenceSummaryList": []
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

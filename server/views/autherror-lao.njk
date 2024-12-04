@@ -1,5 +1,12 @@
 {% extends "./partials/layout.njk" %}
 
+{% block beforeContent %}
+  <script nonce="{{ cspNonce }}"></script>
+  {{ govukBackLink({
+    href: backLink
+  }) }}
+{% endblock %}
+
 {% block content %}
   <h1 class="govuk-heading-l">Authorisation Error</h1>
   <p>{{ message }}</p>

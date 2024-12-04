@@ -9,6 +9,8 @@ import MasApiClient from '../data/masApiClient'
 import logger from '../../logger'
 import { CaseSearchFilter, ErrorMessages, UserCaseload } from '../data/model/caseload'
 import config from '../config'
+import { RecentlyViewedCase } from '../data/model/caseAccess'
+import { checkRecentlyViewedAccess } from '../utils/utils'
 
 export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -54,6 +56,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
   })
 
   get('/case', async (req, res, _next) => {
+    req.session.backLink = '/case'
     if (req.query.clear === 'true') {
       req.session.caseFilter = {
         nameOrCrn: null,
@@ -239,7 +242,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
 
   get('/recent-cases', async (req, res, _next) => {
     const currentNavSection = 'recentCases'
-
+    req.session.backLink = '/recent-cases'
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_RECENT_CASES',
       who: res.locals.user.username,
@@ -252,5 +255,15 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
     res.render('pages/caseload/recent-cases', {
       currentNavSection,
     })
+  })
+
+  post('/check-access', async (req, res, _next) => {
+    const recentlyViewed: RecentlyViewedCase[] = req.body
+    const crns = recentlyViewed.map(c => c.crn)
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+    const masClient = new MasApiClient(token)
+    const userAccess = await masClient.checkUserAccess(res.locals.user.username, crns)
+    const updated = checkRecentlyViewedAccess(recentlyViewed, userAccess)
+    res.send(updated)
   })
 }

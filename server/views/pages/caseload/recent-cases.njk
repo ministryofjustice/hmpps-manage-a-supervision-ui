@@ -14,8 +14,34 @@
         </tr>
         </thead>
         <tbody id="tabBody" class="govuk-table__body">
+        <meta name="csrf-token" content="{{csrfToken}}">
+        <script src="/assets/js/jquery.min.js" nonce="{{ cspNonce }}"></script>
         <script nonce="{{ cspNonce }}">
-            const recentCases = JSON.parse(localStorage.getItem('recentCases'))
+            const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            let recentCases = JSON.parse(localStorage.getItem('recentCases'))
+
+            $.ajax({
+              async: false,
+              type: "POST",
+              url: "/check-access",
+              headers: {
+                'CSRF-Token': token
+              },
+              data: JSON.stringify(recentCases),
+              processData: false,
+              contentType: "application/json",
+              success: function(checkedAndUpdated) {
+                recentCases = checkedAndUpdated
+              }
+            });
+
+            function lao(check, value, replacement = 'Restricted') {
+              if(check === true){
+                return replacement
+              }else{
+                return value
+              }
+            }
 
             if (recentCases != null) {
                 recentCases.forEach((recentCase) => {
@@ -27,9 +53,13 @@
                         const rd1 = document.createElement("td")
                         rd1.className = "govuk-table__cell"
                         const anchor = document.createElement("a")
-                        anchor.className = "govuk-!-font-weight-bold"
+                        if(recentCase.limitedAccess === true){
+                          anchor.className = "govuk-!-font-weight-bold govuk-link--text-colour "
+                        }else{
+                          anchor.className = "govuk-!-font-weight-bold"
+                        }
                         anchor.href = "./case/" + recentCase.crn
-                        anchor.text = recentCase.name
+                        anchor.text = lao(recentCase.limitedAccess, recentCase.name, "Restricted access")
                         const span1 = document.createElement("span")
                         span1.className = "govuk-!-font-weight-bold secondary-text"
                         span1.innerText = recentCase.crn
@@ -39,17 +69,17 @@
 
                         const rd2 = document.createElement("td")
                         rd2.className = "govuk-table__cell"
-                        rd2.innerText = recentCase.dob
+                        rd2.innerText = lao(recentCase.limitedAccess,recentCase.dob)
                         const span2 = document.createElement("span")
                         span2.className = "secondary-text"
-                        span2.innerText = "Age " + recentCase.age
+                        span2.innerText = lao(recentCase.limitedAccess,"Age " + recentCase.age, '')
                         rd2.appendChild(document.createElement("br"))
                         rd2.appendChild(span2)
 
 
                         const rd3 = document.createElement("td")
                         rd3.className = "govuk-table__cell"
-                        rd3.innerText = recentCase.tierScore
+                        rd3.innerText = lao(recentCase.limitedAccess,recentCase.tierScore)
 
                         let rd4 = document.createElement("td")
                         rd4.className = "govuk-table__cell"
@@ -57,15 +87,16 @@
                         if (recentCase.numberOfAdditionalSentences > 0) {
                             const anchorSentence = document.createElement("a")
                             anchorSentence.className ="govuk-link"
-                            anchorSentence.href = "./case/" + recentCase.crn + "/sentence"
-                            anchorSentence.text = "+ " + recentCase.numberOfAdditionalSentences + " more"
-
+                            if (recentCase.limitedAccess !== true){
+                                anchorSentence.href = "./case/" + recentCase.crn + "/sentence"
+                            }
+                            anchorSentence.text = lao(recentCase.limitedAccess,"+ " + recentCase.numberOfAdditionalSentences + " more")
                             rd4.innerText = recentCase.sentence
                             rd4.appendChild(document.createElement("br"))
                             rd4.appendChild(anchorSentence)
 
                         } else {
-                            rd4.innerText = recentCase.sentence
+                            rd4.innerText = lao(recentCase.limitedAccess,recentCase.sentence)
                         }
 
 

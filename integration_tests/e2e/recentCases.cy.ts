@@ -70,7 +70,7 @@ context('Recent Cases', () => {
       cy
         .get('tr')
         .eq(1)
-        .within(() => cy.get('td').eq(3).should('contain.text', 'CJA - Std Determinate Custody')),
+        .within(() => cy.get('td').eq(3).should('contain.text', 'Restricted')),
     )
   })
 })

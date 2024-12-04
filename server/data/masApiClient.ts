@@ -18,7 +18,7 @@ import { PreviousOrderHistory } from './model/previousOrderHistory'
 import { Offences } from './model/offences'
 import { TeamCaseload, UserCaseload, UserTeam } from './model/caseload'
 import { ProfessionalContact } from './model/professionalContact'
-import { CaseAccess } from './model/caseAccess'
+import { CaseAccess, UserAccess } from './model/caseAccess'
 import { LicenceConditionNoteDetails } from './model/licenceConditionNoteDetails'
 
 export default class MasApiClient extends RestClient {
@@ -141,5 +141,9 @@ export default class MasApiClient extends RestClient {
 
   async getUserAccess(username: string, crn: string): Promise<CaseAccess> {
     return this.get({ path: `/user/${username}/access/${crn}`, handle404: false })
+  }
+
+  async checkUserAccess(username: string, crns: Record<never, never>): Promise<UserAccess> {
+    return this.post({ data: crns, path: `/user/${username}/access`, handle404: false })
   }
 }

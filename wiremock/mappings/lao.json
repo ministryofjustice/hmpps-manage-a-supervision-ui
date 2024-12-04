@@ -1,0 +1,37 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPathPattern": "/mas/user/USER1/access",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "access": [
+            {
+              "crn": "X778160",
+              "userExcluded": false,
+              "userRestricted": true,
+              "restrictionMessage": "This is a restricted record. Please contact a system administrator"
+            },
+            {
+              "crn": "X808126",
+              "userExcluded": false,
+              "userRestricted": true,
+              "restrictionMessage": "This is a restricted record. Please contact a system administrator"
+            },
+            {
+              "crn": "X000001",
+              "userExcluded": false,
+              "userRestricted": false
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

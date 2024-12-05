@@ -9,12 +9,16 @@ export default function limitedAccess(services: Services) {
     const access = await new MasApiClient(token).getUserAccess(res.locals.user.username, req.params.crn)
 
     if (access.userExcluded || access.userRestricted) {
+      const { backLink } = req.session
       if (access.exclusionMessage) {
-        res.render('autherror-lao', { message: access.exclusionMessage })
+        res.render('autherror-lao', { message: access.exclusionMessage, backLink })
       } else if (access.restrictionMessage) {
-        res.render('autherror-lao', { message: access.restrictionMessage })
+        res.render('autherror-lao', { message: access.restrictionMessage, backLink })
       } else {
-        res.render('autherror-lao', { message: 'You are not authorised to view this case.' })
+        res.render('autherror-lao', {
+          message: 'You are not authorised to view this case.',
+          backLink,
+        })
       }
       return
     }

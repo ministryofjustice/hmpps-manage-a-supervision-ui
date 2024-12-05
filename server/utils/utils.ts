@@ -7,6 +7,7 @@ import { Address } from '../data/model/personalDetails'
 import config from '../config'
 import { Activity } from '../data/model/schedule'
 import { CaseSearchFilter, SelectElement } from '../data/model/caseload'
+import { RecentlyViewedCase, UserAccess } from '../data/model/caseAccess'
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -460,6 +461,16 @@ export const defaultFormSelectValues = (object: SelectElement, data: CaseSearchF
     })
   }
   return obj
+}
+
+export const checkRecentlyViewedAccess = (
+  recentlyViewed: RecentlyViewedCase[],
+  userAccess: UserAccess,
+): RecentlyViewedCase[] => {
+  return recentlyViewed.map(rv => {
+    const ua = userAccess?.access?.find(u => u.crn === rv.crn)
+    return { ...rv, limitedAccess: ua?.userExcluded === true || ua?.userRestricted === true }
+  })
 }
 
 export const makePageTitle = ({ pageHeading, hasErrors }: { pageHeading: string; hasErrors: boolean }) =>

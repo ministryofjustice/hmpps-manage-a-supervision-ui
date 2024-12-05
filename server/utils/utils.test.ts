@@ -4,6 +4,7 @@ import { DateTime } from 'luxon'
 import {
   activityLog,
   activityLogDate,
+  checkRecentlyViewedAccess,
   compactActivityLogDate,
   convertToTitleCase,
   dateForSort,
@@ -38,6 +39,7 @@ import {
 import { RiskResponse, RiskScore, RiskToSelf } from '../data/arnsApiClient'
 import { Name } from '../data/model/common'
 import { Activity } from '../data/model/schedule'
+import { RecentlyViewedCase, UserAccess } from '../data/model/caseAccess'
 
 const appointments = [
   {
@@ -446,5 +448,43 @@ describe('convert time to sortable number', () => {
     ['returns null', undefined, null],
   ])('%s timeForSort(%s)', (_: string, a: string, expected: number) => {
     expect(timeForSort(a)).toEqual(expected)
+  })
+})
+
+describe('update lao access in local storage', () => {
+  it.each([
+    [
+      'sets limited access to true for exclusion',
+      [{ crn: 'X123456' }],
+      { access: [{ crn: 'X123456', userExcluded: true }] },
+      true,
+    ],
+    [
+      'sets limited access to true for restriction',
+      [{ crn: 'X123456' }],
+      { access: [{ crn: 'X123456', userRestricted: true }] },
+      true,
+    ],
+    [
+      'sets limited access to false for false restriction',
+      [{ crn: 'X123456' }],
+      { access: [{ crn: 'X123456', userRestricted: false }] },
+      false,
+    ],
+    [
+      'sets limited access to false for false exclusion',
+      [{ crn: 'X123456' }],
+      { access: [{ crn: 'X123456', userExcluded: false }] },
+      false,
+    ],
+    [
+      'sets limited access to false for no restriction or exclusion',
+      [{ crn: 'X123456' }],
+      { access: [{ crn: 'X123456' }] },
+      false,
+    ],
+  ])('%s checkRecentlyViewedAccess(%s, %s)', (_: string, a: RecentlyViewedCase[], b: UserAccess, expected: boolean) => {
+    const result = checkRecentlyViewedAccess(a, b)
+    expect(result[0].limitedAccess).toEqual(expected)
   })
 })

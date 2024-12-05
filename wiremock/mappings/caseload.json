@@ -74,15 +74,8 @@
               "numberOfAdditionalSentences": 1
             },
             {
-              "caseName": {
-                "forename": "Cody",
-                "middleName": "",
-                "surname": "Watsica"
-              },
               "crn": "X808126",
-              "dob": "1984-10-03",
-              "latestSentence": "Adult Custody < 12m",
-              "numberOfAdditionalSentences": 0
+              "limitedAccess": true
             },
             {
               "caseName": {

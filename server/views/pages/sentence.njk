@@ -52,293 +52,293 @@
             }) }}
       </div>
       <div class="govuk-grid-column-three-quarters">
-        {% set sentence = sentenceDetails.sentence %}
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-2"  data-qa="pageHeading">
-            {% if sentence.order.description %}
-                {{ sentence.order.description }}
-            {% else %}
-                Pre-Sentence
-            {% endif %}
-        </h2>
+          {% set sentence = sentenceDetails.sentence %}
+          {% if sentence %}
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-2"  data-qa="pageHeading">
+                {% if sentence.order.description %}
+                    {{ sentence.order.description }}
+                {% else %}
+                    Pre-Sentence
+                {% endif %}
+            </h2>
 
-        {% set hasAdditionalOffences = sentence.offenceDetails.additionalOffences and sentence.offenceDetails.additionalOffences.length > 0 %}
-        {% set additionalOffences %}
-            {% if hasAdditionalOffences %}
-                <ol class="govuk-list{% if sentence.offenceDetails.additionalOffences > 1 %} govuk-list--number{% endif %}">
-                    {% for additionalOffence in sentence.offenceDetails.additionalOffences %}
-                        <li>{{ additionalOffence.description }} ({{ additionalOffence.count }} count)</li>
-                    {% endfor %}
-                </ol>
+            {% set hasAdditionalOffences = sentence.offenceDetails.additionalOffences and sentence.offenceDetails.additionalOffences.length > 0 %}
+              {% set additionalOffences %}
+                  {% if hasAdditionalOffences %}
+                      <ol class="govuk-list{% if sentence.offenceDetails.additionalOffences > 1 %} govuk-list--number{% endif %}">
+                          {% for additionalOffence in sentence.offenceDetails.additionalOffences %}
+                              <li>{{ additionalOffence.description }} ({{ additionalOffence.count }} count)</li>
+                          {% endfor %}
+                      </ol>
 
-                 <a href="/case/{{ crn }}/sentence/offences/{{ sentence.offenceDetails.eventNumber }}">View additional offence details</a>
-            {% endif %}
-        {% endset %}
+                      <a href="/case/{{ crn }}/sentence/offences/{{ sentence.offenceDetails.eventNumber }}">View additional offence details</a>
+                  {% endif %}
+            {% endset %}
 
-        {% set hasCourtDocuments = sentence.courtDocuments and sentence.courtDocuments.length > 0 %}
-        {% set courtDocuments %}
-            <ul class="govuk-list govuk-!-margin-top-0">
-            {% for doc in sentence.courtDocuments %}
-                <li>
-                    <a href="personal-details/documents/{{ doc.id }}/download" download="{{ doc.documentName }}">{{ doc.documentName }}</a><br>
-                    <span class="govuk-!-font-size-16">
+            {% set hasCourtDocuments = sentence.courtDocuments and sentence.courtDocuments.length > 0 %}
+              {% set courtDocuments %}
+                  <ul class="govuk-list govuk-!-margin-top-0">
+                      {% for doc in sentence.courtDocuments %}
+                          <li>
+                              <a href="personal-details/documents/{{ doc.id }}/download" download="{{ doc.documentName }}">{{ doc.documentName }}</a><br>
+                              <span class="govuk-!-font-size-16">
                         {% if doc.lastSaved %}
-                          Last updated {{ doc.lastSaved | dateWithYearShortMonth }}
+                            Last updated {{ doc.lastSaved | dateWithYearShortMonth }}
                         {% else %}
-                          Unavailable
+                            Unavailable
                         {% endif %}
                     </span>
-                </li>
-            {% endfor %}
-              </ul>
-        {% endset %}
+                          </li>
+                      {% endfor %}
+                  </ul>
+            {% endset %}
 
-        {% set hasAdditionalSentences = sentence.conviction.additionalSentences and sentence.conviction.additionalSentences.length > 0 %}
-        {% set additionalSentences %}
-            {% for additionalSentence in sentence.conviction.additionalSentences %}
-                {% set detailsHtml %}
-                    {{ govukSummaryList({
-                        rows: [
+            {% set hasAdditionalSentences = sentence.conviction.additionalSentences and sentence.conviction.additionalSentences.length > 0 %}
+              {% set additionalSentences %}
+                  {% for additionalSentence in sentence.conviction.additionalSentences %}
+                      {% set detailsHtml %}
+                          {{ govukSummaryList({
+                              rows: [
+                                  {
+                                      key: { text: 'Sentence' },
+                                      value: { text: additionalSentence.description }
+                                  },
+                                  {
+                                      key: { text: 'Value' },
+                                      value: { text: additionalSentence.value }
+                                  } if additionalSentence.value,
+                                  {
+                                      key: { text: 'Length' },
+                                      value: { text: additionalSentence.length }
+                                  } if additionalSentence.length,
+                                  {
+                                      key: { text: 'Notes' },
+                                      value: { html: additionalSentence.notes | nl2br if additionalSentence.notes else 'No notes' }
+                                  }
+                              ]
+                          }) }}
+                      {% endset %}
+                      {{ govukDetails({
+                          classes: 'govuk-!-margin-bottom-1',
+                          summaryText: additionalSentence.description,
+                          html: detailsHtml
+                      }) }}
+                  {% endfor %}
+            {% endset %}
+
+            {% set hasLicenceConditions = sentence.licenceConditions and sentence.licenceConditions.length > 0 %}
+              {% set notes = '' %}
+              {% set licenceConditions %}
+                  {% for licenceCondition in sentence.licenceConditions %}
+                      {% set notes = '' %}
+                      {% for lcNote in licenceCondition.licenceConditionNotes %}
+                          {% set note %}
+                              {% if lcNote.hasNoteBeenTruncated === true  %}
+                                  <p class="govuk-body line-break">{{ lcNote.note }}...<a href="/case/{{ crn }}/sentence/licence-condition/{{ licenceCondition.id }}/note/{{ lcNote.id }}">View full note</a>
+                                  </p>
+                              {% else %}
+                                  <p class="govuk-body line-break">{{ lcNote.note }} </p>
+                              {% endif %}
+
+                              {% if lcNote.createdBy %}
+                                  <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by {{ lcNote.createdBy }} on {{ lcNote.createdByDate | dateWithYear }}</p>
+                              {% else %}
+                                  <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by not entered</p>
+                              {% endif %}
+                          {% endset %}
+                          {% set notes = notes.concat(note) %}
+                      {% endfor %}
+                      {% set licenceHtml %}
+                          {{ govukSummaryList({
+                              rows: [
+                                  {
+                                      key: { text: 'Subtype' },
+                                      value: { text: licenceCondition.subTypeDescription }
+                                  } if licenceCondition.subTypeDescription,
+                                  {
+                                      key: { text: 'Imposed (Release) date' },
+                                      value: { text: licenceCondition.imposedReleasedDate | dateWithYear }
+                                  },
+                                  {
+                                      key: { text: 'Actual start date' },
+                                      value: { text: licenceCondition.actualStartDate | dateWithYear }
+                                  } if licenceCondition.actualStartDate,
+                                  {
+                                      key: { text: 'Notes' },
+                                      value: { html: notes }
+                                  }
+                              ]
+                          }) }}
+                      {% endset %}
+                      {{ govukDetails({
+                          classes: 'govuk-!-margin-bottom-1',
+                          summaryText: licenceCondition.mainDescription,
+                          html: licenceHtml
+                      }) }}
+                  {% endfor %}
+            {% endset %}
+
+
+            {% set hasRequirements = sentence.requirements and sentence.requirements.length > 0 %}
+              {% set requirements %}
+                  {% for requirement in sentence.requirements %}
+                      {% set requirementHtml %}
+                          {{ govukSummaryList({
+                              rows: [
+                                  {
+                                      key: { text: 'Length' },
+                                      value: { text: requirement.length + ' ' + requirement.lengthUnitValue}
+                                  } if requirement.length,
+                                  {
+                                      key: { text: 'Progress' },
+                                      value: { text: requirement.rar.completed + ' days'}
+                                  } if requirement.code == 'F',
+                                  {
+                                      key: { text: "Expected start date" },
+                                      value: { text: requirement.expectedStartDate | dateWithYear }
+                                  } if requirement.expectedStartDate and not requirement.actualStartDate,
+                                  {
+                                      key: { text: "Start date" },
+                                      value: { text: requirement.actualStartDate | dateWithYear }
+                                  } if requirement.actualStartDate,
+                                  {
+                                      key: { text: "Expected end date" },
+                                      value: { text: requirement.expectedEndDate | dateWithYear }
+                                  } if requirement.expectedEndDate and not requirement.actualEndDate,
+                                  {
+                                      key: { text: "End date" },
+                                      value: { text: requirement.actualEndDate | dateWithYear }
+                                  } if requirement.actualEndDate,
+                                  {
+                                      key: { text: "Termination reason" },
+                                      value: { text: requirement.terminationReason }
+                                  } if requirement.terminationReason,
+                                  {
+                                      key: { text: 'Notes' },
+                                      value: { text: requirement.notes}
+                                  }
+                              ]
+                          }) }}
+                      {% endset %}
+                      {{ govukDetails({
+                          classes: 'govuk-!-margin-bottom-1',
+                          summaryText: requirement.description,
+                          html: requirementHtml
+                      }) }}
+                  {% endfor %}
+            {% endset %}
+
+            {% set offence %}
+                  {{ govukSummaryList({
+                      rows: [
                           {
-                            key: { text: 'Sentence' },
-                            value: { text: additionalSentence.description }
+                              key: { text: "Main offence" },
+                              value: { html: '<span data-qa="mainOffenceValue">' + sentence.offenceDetails.offence.description + ' (' + sentence.offenceDetails.offence.count + ' count)' + '</span>' }
                           },
                           {
-                            key: { text: 'Value' },
-                            value: { text: additionalSentence.value }
-                          } if additionalSentence.value,
+                              key: { text: "Offence date" },
+                              value: { html: '<span data-qa="dateOfOffenceValue">' + sentence.offenceDetails.dateOfOffence | dateWithYear + '</span>' }
+                          },
                           {
-                            key: { text: 'Length' },
-                            value: { text: additionalSentence.length }
-                          } if additionalSentence.length,
+                              key: { text: "Notes" },
+                              value: { html: '<span data-qa="offenceNotesValue">' + sentence.offenceDetails.notes | nl2br if sentence.offenceDetails.notes else 'No notes' + '</span>' }
+                          },
                           {
-                            key: { text: 'Notes' },
-                            value: { html: additionalSentence.notes | nl2br if additionalSentence.notes else 'No notes' }
+                              key: { text: "Additional offences" },
+                              value: { html: '<span data-qa="additionalOffencesValue">' + additionalOffences if hasAdditionalOffences else 'No additional offences' + '</span>' }
                           }
-                        ]
-                      }) }}
-                {% endset %}
-                {{ govukDetails({
-                      classes: 'govuk-!-margin-bottom-1',
-                      summaryText: additionalSentence.description,
-                      html: detailsHtml
-                }) }}
-            {% endfor %}
-        {% endset %}
-
-
-        {% set hasLicenceConditions = sentence.licenceConditions and sentence.licenceConditions.length > 0 %}
-        {% set notes = '' %}
-        {% set licenceConditions %}
-            {% for licenceCondition in sentence.licenceConditions %}
-                {% set notes = '' %}
-                {% for lcNote in licenceCondition.licenceConditionNotes %}
-                    {% set note %}
-                        {% if lcNote.hasNoteBeenTruncated === true  %}
-                            <p class="govuk-body line-break">{{ lcNote.note }}...<a href="/case/{{ crn }}/sentence/licence-condition/{{ licenceCondition.id }}/note/{{ lcNote.id }}">View full note</a>
-                            </p>
-                        {% else %}
-                            <p class="govuk-body line-break">{{ lcNote.note }} </p>
-                        {% endif %}
-
-                         {% if lcNote.createdBy %}
-                            <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by {{ lcNote.createdBy }} on {{ lcNote.createdByDate | dateWithYear }}</p>
-                         {% else %}
-                            <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by not entered</p>
-                         {% endif %}
-                    {% endset %}
-                    {% set notes = notes.concat(note) %}
-                {% endfor %}
-                {% set licenceHtml %}
-                    {{ govukSummaryList({
-                        rows: [
-                            {
-                                key: { text: 'Subtype' },
-                                value: { text: licenceCondition.subTypeDescription }
-                            } if licenceCondition.subTypeDescription,
-                            {
-                                key: { text: 'Imposed (Release) date' },
-                                value: { text: licenceCondition.imposedReleasedDate | dateWithYear }
-                            },
-                            {
-                                key: { text: 'Actual start date' },
-                                value: { text: licenceCondition.actualStartDate | dateWithYear }
-                            } if licenceCondition.actualStartDate,
-                            {
-                                 key: { text: 'Notes' },
-                                 value: { html: notes }
-                            }
-                        ]
-                    }) }}
-                {% endset %}
-                {{ govukDetails({
-                              classes: 'govuk-!-margin-bottom-1',
-                              summaryText: licenceCondition.mainDescription,
-                              html: licenceHtml
-                }) }}
-            {% endfor %}
-        {% endset %}
-
-
-        {% set hasRequirements = sentence.requirements and sentence.requirements.length > 0 %}
-        {% set requirements %}
-            {% for requirement in sentence.requirements %}
-                {% set requirementHtml %}
-                    {{ govukSummaryList({
-                        rows: [
-                          {
-                            key: { text: 'Length' },
-                            value: { text: requirement.length + ' ' + requirement.lengthUnitValue}
-                          } if requirement.length,
-                          {
-                            key: { text: 'Progress' },
-                            value: { text: requirement.rar.completed + ' days'}
-                          } if requirement.code == 'F',
-                          {
-                            key: { text: "Expected start date" },
-                            value: { text: requirement.expectedStartDate | dateWithYear }
-                          } if requirement.expectedStartDate and not requirement.actualStartDate,
-                          {
-                            key: { text: "Start date" },
-                            value: { text: requirement.actualStartDate | dateWithYear }
-                          } if requirement.actualStartDate,
-                          {
-                            key: { text: "Expected end date" },
-                            value: { text: requirement.expectedEndDate | dateWithYear }
-                          } if requirement.expectedEndDate and not requirement.actualEndDate,
-                          {
-                              key: { text: "End date" },
-                              value: { text: requirement.actualEndDate | dateWithYear }
-                          } if requirement.actualEndDate,
-                          {
-                            key: { text: "Termination reason" },
-                            value: { text: requirement.terminationReason }
-                          } if requirement.terminationReason,
-                          {
-                            key: { text: 'Notes' },
-                            value: { text: requirement.notes}
-                          }
-                        ]
-                    }) }}
-                {% endset %}
-                {{ govukDetails({
-                      classes: 'govuk-!-margin-bottom-1',
-                      summaryText: requirement.description,
-                      html: requirementHtml
-                }) }}
-           {% endfor %}
-        {% endset %}
-
-        {% set offence %}
-            {{ govukSummaryList({
-                rows: [
-                  {
-                    key: { text: "Main offence" },
-                    value: { html: '<span data-qa="mainOffenceValue">' + sentence.offenceDetails.offence.description + ' (' + sentence.offenceDetails.offence.count + ' count)' + '</span>' }
-                  },
-                  {
-                    key: { text: "Offence date" },
-                    value: { html: '<span data-qa="dateOfOffenceValue">' + sentence.offenceDetails.dateOfOffence | dateWithYear + '</span>' }
-                  },
-                  {
-                    key: { text: "Notes" },
-                    value: { html: '<span data-qa="offenceNotesValue">' + sentence.offenceDetails.notes | nl2br if sentence.offenceDetails.notes else 'No notes' + '</span>' }
-                  },
-                  {
-                    key: { text: "Additional offences" },
-                    value: { html: '<span data-qa="additionalOffencesValue">' + additionalOffences if hasAdditionalOffences else 'No additional offences' + '</span>' }
-                  }
-                ]
-            }) }}
-        {% endset %}
-
-        {% set conviction %}
-            {{ govukSummaryList({
-                rows: [
-                      {
-                        key: { text: "Sentencing court" },
-                        value: { html: '<span data-qa="sentencingCourtValue">' + sentence.conviction.sentencingCourt | nl2br if sentence.conviction.sentencingCourt else 'No court details' + '</span>' }
-                      },
-                      {
-                        key: { text: "Responsible court" },
-                        value: { html: '<span data-qa="responsibleCourtValue">' + sentence.conviction.responsibleCourt | nl2br if sentence.conviction.responsibleCourt else 'No court details' + '</span>' }
-                      },
-                      {
-                        key: { text: "Conviction date" },
-                        value: { html: '<span data-qa="convictionDateValue">' + sentence.conviction.convictionDate | dateWithYear | nl2br if sentence.conviction.convictionDate  else 'No conviction date' + '</span>'}
-                      },
-                      {
-                        key: { text: "Additional sentences" },
-                        value: { html: '<span data-qa="additionalSentencesValue">' + additionalSentences if hasAdditionalSentences else 'No additional sentences' + '</span>'}
-                      }
-                    ]
+                      ]
                   }) }}
-        {% endset %}
+            {% endset %}
 
-        {% set sentence %}
-            {{ govukSummaryList({
-                rows: [
-                    {
-                        key: { text: "Order" },
-                        value: { html: '<span data-qa="orderDescriptionValue">' + sentence.order.description | nl2br if sentence.order.description else 'No order details' + '</span>' }
-                    },
-                    {
-                        key: { text: "Sentence start date" },
-                        value: { html: '<span data-qa="orderStartDateValue">' + sentence.order.startDate | dateWithYear | nl2br if sentence.order.startDate else 'No start date details' + '</span>' }
-                    },
-                    {
-                        key: { text: "Date released on licence" },
-                        value: { html: '<span data-qa="orderStartDateValue">' + sentence.order.releaseDate | dateWithYear | nl2br if sentence.order.releaseDate else 'No release date details' + '</span>' }
-                    },
-                    {
-                        key: { text: "Sentence expiry date" },
-                        value: { html: '<span data-qa="orderEndDateValue">' + sentence.order.endDate | dateWithYear | nl2br if sentence.order.endDate else 'No end date details' + '</span>' }
-                    },
-                    {
-                        key: { text: "Time elapsed" },
-                        value: { html: '<span data-qa="orderTimeElapsedValue">' + sentence.order.startDate | monthsOrDaysElapsed + ' (of ' + sentence.order.length + ' months)' | nl2br if sentence.order.startDate else 'No details'  + '</span>' }
-                    },
-                    {
-                        key: { text: "Licence Conditions" },
-                        value: { html: '<span data-qa="licenceConditionsValue">' + licenceConditions + '</span>'}
-                    } if hasLicenceConditions,
-                    {
-                        key: { text: "Requirements" },
-                        value: { html: '<span data-qa="requirementsValue">' + requirements + '</span>'}
-                    } if hasRequirements,
-                    {
-                        key: { text: "Unpaid Work Progress" },
-                        value: { html: '<span data-qa="unpaidWorkProgress">' + sentence.unpaidWorkProgress + '</span>' }
-                    } if sentence.unpaidWorkProgress,
-                    {
-                        key: { text: "Court Documents" },
-                        value: { html: '<span data-qa="courtDocumentsValue">' + courtDocuments if hasCourtDocuments else 'No court documents' + '</span>' }
-                    }
-                ]
+            {% set conviction %}
+                  {{ govukSummaryList({
+                      rows: [
+                          {
+                              key: { text: "Sentencing court" },
+                              value: { html: '<span data-qa="sentencingCourtValue">' + sentence.conviction.sentencingCourt | nl2br if sentence.conviction.sentencingCourt else 'No court details' + '</span>' }
+                          },
+                          {
+                              key: { text: "Responsible court" },
+                              value: { html: '<span data-qa="responsibleCourtValue">' + sentence.conviction.responsibleCourt | nl2br if sentence.conviction.responsibleCourt else 'No court details' + '</span>' }
+                          },
+                          {
+                              key: { text: "Conviction date" },
+                              value: { html: '<span data-qa="convictionDateValue">' + sentence.conviction.convictionDate | dateWithYear | nl2br if sentence.conviction.convictionDate  else 'No conviction date' + '</span>'}
+                          },
+                          {
+                              key: { text: "Additional sentences" },
+                              value: { html: '<span data-qa="additionalSentencesValue">' + additionalSentences if hasAdditionalSentences else 'No additional sentences' + '</span>'}
+                          }
+                      ]
+                  }) }}
+            {% endset %}
+
+            {% set sentence %}
+                  {{ govukSummaryList({
+                      rows: [
+                          {
+                              key: { text: "Order" },
+                              value: { html: '<span data-qa="orderDescriptionValue">' + sentence.order.description | nl2br if sentence.order.description else 'No order details' + '</span>' }
+                          },
+                          {
+                              key: { text: "Sentence start date" },
+                              value: { html: '<span data-qa="orderStartDateValue">' + sentence.order.startDate | dateWithYear | nl2br if sentence.order.startDate else 'No start date details' + '</span>' }
+                          },
+                          {
+                              key: { text: "Date released on licence" },
+                              value: { html: '<span data-qa="orderStartDateValue">' + sentence.order.releaseDate | dateWithYear | nl2br if sentence.order.releaseDate else 'No release date details' + '</span>' }
+                          },
+                          {
+                              key: { text: "Sentence expiry date" },
+                              value: { html: '<span data-qa="orderEndDateValue">' + sentence.order.endDate | dateWithYear | nl2br if sentence.order.endDate else 'No end date details' + '</span>' }
+                          },
+                          {
+                              key: { text: "Time elapsed" },
+                              value: { html: '<span data-qa="orderTimeElapsedValue">' + sentence.order.startDate | monthsOrDaysElapsed + ' (of ' + sentence.order.length + ' months)' | nl2br if sentence.order.startDate else 'No details'  + '</span>' }
+                          },
+                          {
+                              key: { text: "Licence Conditions" },
+                              value: { html: '<span data-qa="licenceConditionsValue">' + licenceConditions + '</span>'}
+                          } if hasLicenceConditions,
+                          {
+                              key: { text: "Requirements" },
+                              value: { html: '<span data-qa="requirementsValue">' + requirements + '</span>'}
+                          } if hasRequirements,
+                          {
+                              key: { text: "Unpaid Work Progress" },
+                              value: { html: '<span data-qa="unpaidWorkProgress">' + sentence.unpaidWorkProgress + '</span>' }
+                          } if sentence.unpaidWorkProgress,
+                          {
+                              key: { text: "Court Documents" },
+                              value: { html: '<span data-qa="courtDocumentsValue">' + courtDocuments if hasCourtDocuments else 'No court documents' + '</span>' }
+                          }
+                      ]
+                  }) }}
+            {% endset %}
+
+            {{ appSummaryCard({
+                  attributes: {'data-qa': 'offenceCard'},
+                  titleText: 'Offence',
+                  classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+                  html: offence
             }) }}
-        {% endset %}
 
+            {{ appSummaryCard({
+                  attributes: {'data-qa': 'convictionCard'},
+                  titleText: 'Conviction',
+                  classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+                  html: conviction
+            }) }}
 
-        {{ appSummaryCard({
-            attributes: {'data-qa': 'offenceCard'},
-            titleText: 'Offence',
-            classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-            html: offence
-        }) }}
-
-        {{ appSummaryCard({
-            attributes: {'data-qa': 'convictionCard'},
-            titleText: 'Conviction',
-            classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-            html: conviction
-        }) }}
-
-        {{ appSummaryCard({
-            attributes: {'data-qa': 'sentenceCard'},
-            titleText: 'Sentence',
-            classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-            html: sentence
-        }) }}
-      </div>
+            {{ appSummaryCard({
+                  attributes: {'data-qa': 'sentenceCard'},
+                  titleText: 'Sentence',
+                  classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+                  html: sentence
+            }) }}
+          </div>
+          {% endif %}
     </div>
 {% endblock %}
 

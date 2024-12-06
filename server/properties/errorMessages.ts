@@ -1,5 +1,5 @@
 const ruleKeys = ['isInvalid', 'isEmpty'] as const
-const appointmentsKeys = ['type', 'location'] as const
+const appointmentsKeys = ['type', 'location', 'date', 'start-time', 'end-time'] as const
 type Rule = (typeof ruleKeys)[number]
 type AppointmentInput = (typeof appointmentsKeys)[number]
 
@@ -26,6 +26,24 @@ const errorMessages: ErrorMessages = {
       log: 'Location not selected',
       errors: {
         isEmpty: 'Select an appointment location',
+      },
+    },
+    date: {
+      log: 'Appointment date not selected',
+      errors: {
+        isEmpty: 'Select an appointment date',
+      },
+    },
+    'start-time': {
+      log: 'Appointment start time not selected',
+      errors: {
+        isEmpty: 'Select an appointment start time',
+      },
+    },
+    'end-time': {
+      log: 'Appointment end time not selected',
+      errors: {
+        isEmpty: 'Select an appointment end time',
       },
     },
   },

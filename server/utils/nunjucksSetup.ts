@@ -128,6 +128,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
           obj.idPrefix = sections.join('-')
         }
       } else {
+        // console.log({ storedValue })
         obj.value = storedValue
       }
       if (sections?.length) {
@@ -136,7 +137,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
           obj.id = id
         }
         obj.name = sections.map((s: string) => `[${s}]`).join('')
-        if (res?.locals?.errors) {
+        if (res?.locals?.errors?.errorMessages?.[id]?.text) {
           obj.errorMessage = { text: res.locals.errors.errorMessages[id].text }
         }
       }

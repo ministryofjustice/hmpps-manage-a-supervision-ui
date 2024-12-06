@@ -460,3 +460,7 @@ export const setDataValue = (data: any, sections: any, value: any) => {
   const path = Array.isArray(sections) ? sections : [sections]
   return setKeypath(data, path.map((s: any) => `["${s}"]`).join(''), value)
 }
+
+export const generateRandomString = (length = 3) => {
+  return Math.random().toString(36).substr(2, length).toUpperCase()
+}

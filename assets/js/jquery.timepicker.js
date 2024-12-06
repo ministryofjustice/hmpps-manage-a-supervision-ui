@@ -694,7 +694,6 @@
         {
           key: '_roundAndFormatTime',
           value: function _roundAndFormatTime(seconds) {
-            // console.log('_roundAndFormatTime')
             seconds = this.settings.roundingFunction(seconds, this.settings)
 
             if (seconds !== null) {

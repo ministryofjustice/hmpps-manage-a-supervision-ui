@@ -1,6 +1,6 @@
 {% extends "../_form.njk" %}
 {% set title = "Pick a location for this appointment" %}
-{% set backLink = '/case/' + crn + '/arrange-appointment/type' %}
+{% set backLink = '/case/' + crn + '/arrange-appointment/' + id + '/type' %}
 {% block heading %}{% endblock %}
 {% block form %}
    {% if errors %}
@@ -33,5 +33,5 @@
       }
     },
     items: locationItems
-   } | decorateFormAttributes(['appointments', crn, 'location'])) }}
+   } | decorateFormAttributes(['appointments', crn, id, 'location'])) }}
 {% endblock %}

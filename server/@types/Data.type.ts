@@ -11,7 +11,9 @@ interface Appointment {
 
 export interface Data {
   appointments?: {
-    [key: string]: Appointment
+    [crn: string]: {
+      [id: string]: Appointment
+    }
   }
   errors?: Errors
   locations?: {

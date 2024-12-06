@@ -9,7 +9,6 @@ export const getPersonalDetails = (hmppsAuthClient: HmppsAuthClient) => {
     const masClient = new MasApiClient(token)
     const overview = await masClient.getPersonalDetails(crn)
     res.locals.case = overview
-    console.dir(res.locals.case, { depth: null })
     return next()
   }
 }

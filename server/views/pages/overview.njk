@@ -289,6 +289,9 @@
                 {% endif %}
             {% endset %}
             {% set mainOffence %}
+                {% if loop.first %}
+                    <input type="hidden" id="mainOffence" name="mainOffence" value="{{ sentence.mainOffence.description }}">
+                {% endif %}
                 {{ sentence.mainOffence.description }}
                 {%- if sentence.additionalOffences.length > 0 %}
                     {%- switch sentence.additionalOffences.length -%}
@@ -456,7 +459,7 @@
         const dob = document.getElementById("dob").value
         const age = document.getElementById("age").value
         const tier = document.getElementById("tier").value
-        const sentence = document.getElementById("sentence") && document.getElementById("sentence").value
+        const sentence = document.getElementById("sentence") ? document.getElementById("sentence").value : document.getElementById("mainOffence") ? "Pre-sentence" : "No active sentence"
         const numberOfAdditionalSentences = document.getElementById("numberOfAdditionalSentences").value
 
         let recentCases = []

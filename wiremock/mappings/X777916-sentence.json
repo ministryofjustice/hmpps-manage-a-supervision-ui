@@ -2,7 +2,7 @@
   "mappings": [
     {
       "request": {
-        "urlPattern": "/mas/sentence/X808126",
+        "urlPattern": "/mas/sentence/X777916",
         "method": "GET"
       },
       "response": {
@@ -10,11 +10,11 @@
         "jsonBody": {
           "personSummary": {
             "name": {
-              "forename": "Cody",
-              "surname": "Watsica"
+              "forename": "Wendell",
+              "surname": "Dooley"
             },
-            "crn": "X808126",
-            "dateOfBirth": "1984-10-03"
+            "crn": "X777916",
+            "dateOfBirth": "2001-02-14"
           },
           "sentenceSummaryList": [
             {

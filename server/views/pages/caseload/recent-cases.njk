@@ -91,7 +91,7 @@
                                 anchorSentence.href = "./case/" + recentCase.crn + "/sentence"
                             }
                             anchorSentence.text = lao(recentCase.limitedAccess,"+ " + recentCase.numberOfAdditionalSentences + " more")
-                            rd4.innerText = recentCase.sentence
+                            rd4.innerText = lao(recentCase.limitedAccess, recentCase.sentence)
                             rd4.appendChild(document.createElement("br"))
                             rd4.appendChild(anchorSentence)
 

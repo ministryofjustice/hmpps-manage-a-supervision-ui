@@ -2,13 +2,13 @@
   "mappings": [
     {
       "request": {
-        "urlPattern": "/mas/user/.*/access/X808126",
+        "urlPattern": "/mas/user/.*/access/X777916",
         "method": "GET"
       },
       "response": {
         "status": 200,
         "jsonBody": {
-          "crn": "X808126",
+          "crn": "X777916",
           "userExcluded": false,
           "userRestricted": false
         },

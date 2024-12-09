@@ -130,7 +130,7 @@
     "slugify": "^1.6.6",
     "superagent": "^10.1.1",
     "url-value-parser": "^2.2.0",
-    "uuid": "^10.0.0",
+    "uuid": "^11.0.3",
     "wiremock": "^3.10.0"
   },
   "devDependencies": {

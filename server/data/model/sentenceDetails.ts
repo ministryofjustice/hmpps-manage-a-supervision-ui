@@ -8,6 +8,10 @@ export interface SentenceDetails {
   sentence: Sentence
 }
 
+export interface Sentences {
+  personSummary: PersonSummary
+  sentences: Sentence[]
+}
 export interface SentenceDescription {
   id: string
   description: string

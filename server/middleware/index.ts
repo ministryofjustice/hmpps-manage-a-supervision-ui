@@ -1,3 +1,5 @@
 export * from './getUserLocations'
 export * from './autoStoreSessionData'
 export * from './getPersonalDetails'
+export * from './getSentences'
+export * from './getAppointment'

@@ -4,14 +4,13 @@ import { Overview } from './model/overview'
 import { PersonAppointment, Schedule } from './model/schedule'
 import {
   CircumstanceOverview,
-  CircumstancesDetail,
   DisabilityOverview,
   PersonalContact,
   PersonalDetails,
   ProvisionOverview,
 } from './model/personalDetails'
 import { AddressOverview, PersonSummary } from './model/common'
-import { SentenceDetails } from './model/sentenceDetails'
+import { SentenceDetails, Sentences } from './model/sentenceDetails'
 import { PersonActivity } from './model/activityLog'
 import { PersonRiskFlag, PersonRiskFlags } from './model/risk'
 import { PersonCompliance } from './model/compliance'
@@ -31,8 +30,12 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/overview/${crn}`, handle404: false })
   }
 
-  async getSentenceDetails(crn: string, queryParam: string): Promise<SentenceDetails | null> {
+  async getSentenceDetails(crn: string, queryParam = ''): Promise<SentenceDetails | null> {
     return this.get({ path: `/sentence/${crn}${queryParam}`, handle404: false })
+  }
+
+  async getSentences(crn: string): Promise<Sentences | null> {
+    return this.get({ path: `/sentences/${crn}`, handle404: false })
   }
 
   async getProbationHistory(crn: string): Promise<SentenceDetails | null> {
@@ -116,6 +119,10 @@ export default class MasApiClient extends RestClient {
 
   async getPersonCompliance(crn: string): Promise<PersonCompliance> {
     return this.get({ path: `/compliance/${crn}`, handle404: false })
+  }
+
+  postAppointments = async (body: Record<string, string>) => {
+    return this.post({ data: body, path: `/` })
   }
 
   async searchUserCaseload(

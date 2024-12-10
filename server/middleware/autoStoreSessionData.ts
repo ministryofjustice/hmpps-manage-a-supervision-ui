@@ -26,40 +26,32 @@ type Input = any
 //   return regex.test(val)
 // }
 
-const toISODate = (val: string) => {
+const toISODate = (val: string): string => {
   const [day, month, year]: string[] = val.split('/')
   return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
 }
 
-const storeSessionData = (inputs: Record<string, Input>, req: Request): void => {
+export const autoStoreSessionData = (req: Request, res: Response, next: NextFunction): void => {
   const newSessionData = req?.session?.data || {}
+  const { crn, id } = req.params
+  const inputs: Record<string, Input> = req.body
   Object.entries(inputs).forEach(([key, val]: [string, Input]) => {
     if (key.charAt(0) !== '_') {
-      const body: Record<string, string> = getDataValue(inputs, [key, req.params.crn, req.params.id])
+      const getPath = id ? [key, crn, id] : [key, crn]
+      const body: Record<string, string> = getDataValue(inputs, getPath)
       Object.keys(body).forEach(valueKey => {
+        let newValue = body[valueKey]
         if (config.dateFields.includes(valueKey) && body[valueKey].includes('/')) {
-          setDataValue(newSessionData, [key, req.params.crn, req.params.id, valueKey], toISODate(body[valueKey]))
+          newValue = toISODate(body[valueKey])
         }
+        const setPath = id ? [key, crn, id, valueKey] : [key, crn, valueKey]
+        setDataValue(newSessionData, setPath, newValue)
       })
     }
   })
   req.session.data = newSessionData
-  console.log('------ stored data -------')
-  console.dir(req.session.data, { depth: null })
-  console.log('------ end stored data -------')
-}
-
-export const autoStoreSessionData: Route<void> = (req, res, next) => {
-  storeSessionData(req.body, req)
-
-  // Send session data to all views
-
-  res.locals.data = {}
-
-  //   for (const j in req.session.data) {
-  //     if (req?.session?.data?.[j as keyof Data]) {
-  //       res.locals.data[j] = req.session.data[j as keyof Data]
-  //     }
-  //   }
-  next()
+  // console.log('------ stored data -------')
+  // console.dir(req.session.data, { depth: null })
+  // console.log('------ end stored data -------')
+  return next()
 }

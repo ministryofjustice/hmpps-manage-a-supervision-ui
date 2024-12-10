@@ -16,11 +16,25 @@
           "locations": [
             {
               "id": 1,
-              "description": "HMP Wakefield"
+              "description": "HMP Wakefield",
+              "address": {
+                "buildingNumber": "5",
+                "streetName": "Love Lane",
+                "town": "Wakefield",
+                "county": "West Yorkshire",
+                "postcode": "WF2 9AG"
+              }
             },
             {
               "id": 2,
-              "description": "102 Petty France"
+              "description": "102 Petty France",
+              "address": {
+                "buildingNumber": "102",
+                "streetName": "Petty France",
+                "district": "Westminster",
+                "town": "London",
+                "postcode": "SW1H 9EA"
+              }
             }
           ]
         },

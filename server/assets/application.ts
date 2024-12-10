@@ -32,7 +32,7 @@ const lastAppointment = () => {
       }
     }
     repeatingFrequencyRadios.forEach(input => input.addEventListener('click', lastAppointmentHandler))
-    repeatingCount.addEventListener('change', lastAppointmentHandler)
+    repeatingCount.addEventListener('keydown', lastAppointmentHandler)
   }
 }
 

@@ -2,6 +2,7 @@
 import path from 'path'
 import nunjucks from 'nunjucks'
 import express, { Request, Response, NextFunction } from 'express'
+import { DateTime } from 'luxon'
 import {
   activityLog,
   activityLogDate,
@@ -112,8 +113,11 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
 
   app.use((req: Request, res: Response, next: NextFunction): void => {
     njkEnv.addFilter('decorateFormAttributes', (obj: any, sections?: string[]) => {
-      const storedValue = getDataValue(req.session.data, sections)
-
+      let storedValue = getDataValue(req.session.data, sections)
+      if (storedValue && config.dateFields.includes(sections[sections.length - 1]) && storedValue.includes('-')) {
+        const [year, month, day] = storedValue.split('-')
+        storedValue = [day.padStart(2, '0'), month.padStart(2, '0'), year].join('/')
+      }
       if (obj.items !== undefined) {
         obj.items = obj.items.map((item: any) => {
           if (typeof item.value === 'undefined') {
@@ -133,7 +137,6 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
           obj.idPrefix = sections.join('-')
         }
       } else {
-        // console.log({ storedValue })
         obj.value = storedValue
       }
       if (sections?.length) {

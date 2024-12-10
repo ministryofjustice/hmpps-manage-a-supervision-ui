@@ -1,1 +1,131 @@
-Check your answers
+{% extends "../_form.njk" %}
+  {% set title = 'Check your answers then confirm the appointment' %}
+{% set buttonText = 'Confirm this appointment' %}
+{% block beforeContent %}{% endblock %}
+{% set notStandardForm = true %}
+{% set changePath = "/case/" + crn + "/arrange-appointment/"  + id %}
+{% set sentenceHtml %}
+{{appointment.sentence}}
+{% if appointment['sentence-requirement'] %}
+<br>{{'Requirement: ' + appointment['sentence-requirement'] }}
+{% endif %}
+{% if appointment['sentence-licence-condition'] %}
+<br>{{'Licence condition: ' + appointment['sentence-licence-condition'] }}
+{% endif %}
+{% endset %}
+
+{% set locationAddress %}
+{{location.description}}<br>
+{% if location.address.buildingNumber %}{{location.address.buildingNumber}} {% endif %}{% if location.address.streetName %}{{location.address.streetName}}<br>
+{% endif %}
+{% if location.address.district %}
+{{location.address.district}}<br>
+{% endif %}
+{% if location.address.town %}
+{{location.address.town}}<br>
+{% endif %}
+{% if location.address.county %}
+{{location.address.county}}<br>
+{% endif %}
+{% if location.address.postcode %}
+{{location.address.postcode}}
+{% endif %}
+{% endset %}
+
+{% block primary %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">{{ title }}</h1>
+    </div>
+  </div>
+  <form method="post" autocomplete="off" action="{{ paths.current }}">
+    {% set showAction = true %}
+    {% set appointmentDates = [appointment.date] %}
+{% for appointmentDate in appointment['repeating-dates'] %}
+ {% set appointmentDates = (appointmentDates.push(appointmentDate), appointmentDates) %}
+{% endfor %}
+      {% set appointmentDatesHtml  %}
+        <ul class="govuk-list">
+            {% for appointmentDate in appointmentDates %}
+          <li>{{  appointmentDate | dateWithYear }} from {{appointment['start-time']}} to {{ appointment['end-time'] }}</li>
+            {% endfor %}
+        </ul>
+      {% endset %}
+      {{ govukSummaryList({
+        classes: 'govuk-!-margin-bottom-9',
+        rows: [
+        {
+          key: { text: "Appointment type" },
+          value: { text: appointment.type },
+          actions: {
+            items: [
+              {
+                href: changePath + "/type?change=" + url,
+                text: "Change",
+                visuallyHiddenText: "type of appointment"
+              }
+            ]
+          } if showAction
+        },
+        {
+          key: { text: "Sentence" },
+          value: { html: sentenceHtml | safe },
+          actions: {
+            items: [
+              {
+                href: changePath + "/sentence?change=" + url,
+                text: "Change",
+                visuallyHiddenText: "sentence"
+              }
+            ]
+          } if showAction
+        },
+        {
+          key: { text: "Location" },
+          value: { text: locationAddress | safe if location else appointment.location },
+          actions: {
+            items: [
+              {
+                href: changePath + "/location?change=" + url,
+                text: "Change",
+                visuallyHiddenText: "location"
+              }
+            ]
+          } if showAction
+        },
+          {
+            key: { text: "Date and time" },
+            value: { html: appointmentDatesHtml  },
+            actions: {
+              items: [
+                {
+                  href: changePath + "/date-time?change=" + url,
+                  text: "Change",
+                  visuallyHiddenText: "date and time of the appointment"
+                }
+              ]
+            }
+          },
+          {
+            key: { text: "Repeating appointment" },
+            value: { text: 'Yes' if appointment.repeating === 'Yes' else 'No' },
+            actions: {
+              items: [
+                {
+                  href: changePath + "/repeating?change=" + url,
+                  text: "Change",
+                  visuallyHiddenText: "repeating appointment"
+                }
+              ]
+            }
+          }
+        ]
+      }) }}
+  
+
+    {{ govukButton({
+      html: buttonText
+    }) }}
+     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+  </form>
+{% endblock %}

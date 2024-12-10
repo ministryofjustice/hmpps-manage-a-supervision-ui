@@ -2,8 +2,7 @@
 {%- from "moj/components/date-picker/macro.njk" import mojDatePicker -%}
 
 {% set title = 'Enter the date and time of the appointment' %}
-{% set backLink = '/case/' + crn + '/arrange-appointment/' + id + '/location' %}
-
+{% set backLink = change if change else '/case/' + crn + '/arrange-appointment/' + id + '/location' %}
 {% set disabilities = [] %}
 {% set employment = '' %}
 {% set dependents = [] %}
@@ -60,7 +59,6 @@ None known
 </dd>
 </dl>
    {% endset %}
-{% block heading %}{% endblock %}
 {% block form %}
    {% if errors %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}

@@ -7,6 +7,9 @@
 {% endblock %}
 
 {% block content %}
+ {% if notStandardForm %}
+    {% block primary %}{% endblock %}
+  {% else %}
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
       {% block heading %}
@@ -24,4 +27,5 @@
         </form>
       </div>
     </div>
+      {% endif %}
 {% endblock %}

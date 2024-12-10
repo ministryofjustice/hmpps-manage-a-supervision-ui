@@ -87,6 +87,7 @@ export const dateWithYearShortMonth = (datetimeString: string): string => {
 export const govukTime = (datetimeString: string): string => {
   if (!datetimeString || isBlank(datetimeString)) return null
   const datetime = DateTime.fromISO(datetimeString)
+  console.log({ datetime })
   const hourMinuteFormat = datetime.minute === 0 ? 'ha' : 'h:mma'
   return datetime.toFormat(hourMinuteFormat).toLowerCase()
 }

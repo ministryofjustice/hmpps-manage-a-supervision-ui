@@ -9,17 +9,11 @@
         "status": 200,
         "jsonBody": {
           "personSummary": {
-            "name": {
-              "forename": "Berge",
-              "surname": "Alton"
-            },
-            "crn": "X778160",
-            "dateOfBirth": "2012-03-13"
+            "crn": "X778160"
           },
           "sentences": [
             {
-              "additionalOffences": [],
-              "eventNumber": "3",
+              "eventId": 12345,
               "mainOffence": {
                 "code": "18502",
                 "description": "Breach of Restraining Order (Protection from Harassment Act 1997) - 00831"
@@ -28,11 +22,6 @@
                 "description": "12 month Community order",
                 "endDate": "2024-12-01",
                 "startDate": "2023-12-01"
-              },
-              "rar": {
-                "completed": 14,
-                "scheduled": 2,
-                "totalDays": 16
               },
               "licenceConditions": [
                 {
@@ -88,17 +77,7 @@
               ]
             },
             {
-              "additionalOffences": [
-                {
-                  "code": "9087",
-                  "description": "Burglary - 9087"
-                },
-                {
-                  "code": "9876",
-                  "description": "Arson - 9876"
-                }
-              ],
-              "eventNumber": "2",
+              "eventId": "5678",
               "mainOffence": {
                 "code": "18502",
                 "description": "(Having possession a picklock or other implement with intent to break into any premises - 18502)"
@@ -108,13 +87,9 @@
                 "endDate": "2024-09-01",
                 "startDate": "2020-03-02"
               },
-              "rar": {
-                "completed": 9,
-                "scheduled": 1,
-                "totalDays": 10
-              },
               "requirements": [
                 {
+                  "id": 1234,
                   "code": "F",
                   "actualStartDate": "2024-04-12",
                   "description": "12 days RAR, 1 completed",
@@ -127,6 +102,7 @@
                   }
                 },
                 {
+                  "id": 5678,
                   "code": "RM49",
                   "expectedStartDate": "2024-01-07",
                   "actualStartDate": "2024-01-12",
@@ -139,6 +115,7 @@
                   "notes": "curfew notes"
                 },
                 {
+                  "id": 9101,
                   "code": "W",
                   "actualStartDate": "2015-05-22",
                   "description": "Unpaid Work - Regular",

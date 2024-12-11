@@ -9,3 +9,29 @@ export interface Appointment {
   'repeating-count': string
   id?: string
 }
+
+export type AppointmentType =
+  | 'HomeVisitToCaseNS'
+  | 'InitialAppointmentInOfficeNS'
+  | 'PlannedOfficeVisitNS'
+  | 'InitialAppointmentHomeVisitNS'
+
+export type AppointmentInterval = 'DAY' | 'WEEK' | 'FORTNIGHT' | 'FOUR_WEEKS'
+
+export interface AppointmentRequestBody {
+  user: {
+    username: string
+    locationId: number
+  }
+  type: AppointmentType
+  start: Date
+  end: Date
+  interval: AppointmentInterval
+  numberOfAppointments: number
+  eventId: number
+  uuid: string
+  createOverlappingAppointment: boolean
+  requirementId: number
+  licenceConditionId: number
+  until?: string
+}

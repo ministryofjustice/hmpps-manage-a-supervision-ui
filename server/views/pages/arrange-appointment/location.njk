@@ -8,7 +8,7 @@
  {{ govukErrorSummary({ titleText: "There is a problem", errorList: errors.errorList }) }}
 {% endif %}
     {% set locationItems = [] %}
-{% for location in userLocations.locations %}
+{% for location in userLocations %}
  {% set locationItems = (locationItems.push({
       text: location.description
     }), locationItems) %}

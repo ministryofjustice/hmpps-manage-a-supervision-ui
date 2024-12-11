@@ -1,4 +1,4 @@
-import { UserLocations } from '../data/model/caseload'
+import { Location } from '../data/model/caseload'
 import { PersonalDetails } from '../data/model/personalDetails'
 import { Sentence } from '../data/model/sentenceDetails'
 import { Errors } from './Errors.type'
@@ -25,6 +25,6 @@ export interface Data {
   }
   errors?: Errors
   locations?: {
-    [userId: string]: UserLocations
+    [userId: string]: Location[]
   }
 }

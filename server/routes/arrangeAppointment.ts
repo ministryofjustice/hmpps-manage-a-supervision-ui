@@ -1,5 +1,6 @@
 import { type RequestHandler, Router } from 'express'
 import { DateTime } from 'luxon'
+import { v4 as uuidv4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import {
   autoStoreSessionData,
@@ -12,6 +13,8 @@ import type { Services } from '../services'
 import validate from '../middleware/validation/index'
 import { setDataValue, generateRandomString, getDataValue } from '../utils/utils'
 import { ArrangedSession } from '../models/ArrangedSession'
+import { postAppointments } from '../middleware/postAppointments'
+import properties from '../properties'
 
 const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Services) => {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -21,9 +24,13 @@ const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Ser
     return next()
   })
   get('/case/:crn/arrange-appointment/type', async (req, res, _next) => {
-    const id = generateRandomString()
+    const id = uuidv4()
     const { crn } = req.params
     return res.redirect(`/case/${crn}/arrange-appointment/${id}/type`)
+  })
+  router.all('/case/:crn/arrange-appointment/:id/type', (_req, res, next) => {
+    res.locals.appointmentTypes = properties.appointmentTypes
+    return next()
   })
   get('/case/:crn/arrange-appointment/:id/type', async (req, res, _next) => {
     const errors = req?.session?.data?.errors
@@ -37,7 +44,7 @@ const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Ser
   router.all('/case/:crn/arrange-appointment/:id/*', getAppointment)
   router.post('/case/:crn/arrange-appointment/:id/*', autoStoreSessionData)
 
-  router.post('/case/:crn/arrange-appointment/:id/type', (req, res, _next) => {
+  router.post('/case/:crn/arrange-appointment/:id/type', validate.appointments, (req, res, _next) => {
     const { crn, id } = req.params
     const change = req?.query?.change as string
     const redirect = change || `/case/${crn}/arrange-appointment/${id}/sentence`
@@ -124,8 +131,8 @@ const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Ser
       const appointment = getDataValue(data, ['appointments', crn, id])
       if (appointment?.date && appointment?.['repeating-frequency'] && appointment?.['repeating-count']) {
         const clonedAppointment = { ...appointment }
-        const period = ['Weekly', 'Every 2 weeks'].includes(appointment['repeating-frequency']) ? 'week' : 'month'
-        const increment = appointment['repeating-frequency'] === 'Every 2 weeks' ? 2 : 1
+        const period = ['WEEK', 'FORTNIGHT'].includes(appointment['repeating-frequency']) ? 'week' : 'month'
+        const increment = appointment['repeating-frequency'] === 'FORTNIGHT' ? 2 : 1
         const repeatAppointments = ArrangedSession.generateRepeatedAppointments(clonedAppointment, period, increment)
         setDataValue(
           data,
@@ -173,21 +180,23 @@ const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Ser
           selectedLocation,
         )
       ) {
-        location = res.locals.userLocations.locations.find((loc: any) => loc.description === selectedLocation)
+        location = res.locals.userLocations.find((loc: any) => loc.description === selectedLocation)
       }
       return res.render(`pages/arrange-appointment/check-your-answers`, { crn, id, location, url })
     },
   )
-  router.post('/case/:crn/arrange-appointment/:id/check-your-answers', async (req, res, _next) => {
-    // post the appointments here!
-    const { crn, id } = req.params
-    return res.redirect(`/case/${crn}/arrange-appointment/${id}/confirmation`)
-  })
+  router.post(
+    '/case/:crn/arrange-appointment/:id/check-your-answers',
+    postAppointments(hmppsAuthClient),
+    async (req, res, _next) => {
+      const { crn, id } = req.params
+      return res.redirect(`/case/${crn}/arrange-appointment/${id}/confirmation`)
+    },
+  )
   router.get(
     '/case/:crn/arrange-appointment/:id/confirmation',
     getPersonalDetails(hmppsAuthClient),
     async (_req, res, _next) => {
-      console.dir(res.locals.case, { depth: null })
       return res.render(`pages/arrange-appointment/confirmation`)
     },
   )

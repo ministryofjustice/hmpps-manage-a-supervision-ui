@@ -20,6 +20,7 @@ import { TeamCaseload, UserCaseload, UserTeam, UserLocations } from './model/cas
 import { ProfessionalContact } from './model/professionalContact'
 import { CaseAccess, UserAccess } from './model/caseAccess'
 import { LicenceConditionNoteDetails } from './model/licenceConditionNoteDetails'
+import { AppointmentRequestBody } from '../@types'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -121,8 +122,13 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/compliance/${crn}`, handle404: false })
   }
 
-  postAppointments = async (body: Record<string, string>) => {
-    return this.post({ data: body, path: `/` })
+  postAppointments = async (crn: string, body: AppointmentRequestBody) => {
+    return this.post({
+      data: body,
+      path: `/appointment/${crn}`,
+      handle404: true,
+      handle500: true,
+    })
   }
 
   async searchUserCaseload(

@@ -37,8 +37,20 @@ export interface Team {
 }
 
 export interface Location {
-  id: string
+  id: number
   name: string
+}
+
+export interface UserLocation {
+  id: number
+  description: string
+  address: {
+    buildingNumber?: string
+    streetName: string
+    town?: string
+    county?: string
+    postcode?: string
+  }
 }
 
 export interface UserTeam {

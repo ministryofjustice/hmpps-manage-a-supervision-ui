@@ -1,6 +1,13 @@
 {% extends "../_form.njk" %}
 {% set title = 'What appointment are you arranging?' %}
 {% set backLink = change if change else '/' %}
+{% set types = [] %}
+{% for appointmentType in appointmentTypes %}
+{% set types = (types.push({
+      text: appointmentType.text,
+      value: appointmentType.text
+    }), types) %}
+{% endfor %}
 {% block heading %}{% endblock %}
 {% block form %}
 {% if errors %}
@@ -15,23 +22,6 @@
         classes: "govuk-fieldset__legend--l govuk-!-margin-bottom-6"
       }
     },
-    items: [
-      {
-        text: "Home visit",
-        value: "Home visit"
-      },
-      {
-        text: "Initial appointment - home visit",
-        value: "Initial appointment - home visit"
-      },
-      {
-        text: "Initial appointment - in office",
-        value: "Initial appointment - in office"
-      },
-      {
-         text: "Planned office visit",
-         value: "Planned office visit"
-      }
-    ]
+    items: types
  } | decorateFormAttributes(['appointments', crn, id, 'type'])) }}
   {% endblock %}

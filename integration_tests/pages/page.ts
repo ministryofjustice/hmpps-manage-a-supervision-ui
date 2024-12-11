@@ -77,4 +77,36 @@ export default abstract class Page {
       .eq(index)
       .within(() => cy.get(withinElement).eq(withinIndex).as(aliasName))
   }
+
+  backLink = (): PageElement => cy.get('.govuk-back-link')
+
+  submitBtn = (): PageElement => cy.get('.govuk-button')
+
+  getRadio = (index: number): PageElement => {
+    return cy.get(`.govuk-radios__item:nth-child(${index}) input`)
+  }
+
+  getRadioLabel = (index: number): PageElement => {
+    return cy.get(`.govuk-radios__item:nth-child(${index}) label`)
+  }
+
+  getErrorSummaryBox = (): PageElement => {
+    return cy.get('.govuk-error-summary')
+  }
+
+  getAllErrorSummaryLinks = (): PageElement => {
+    return cy.get('.govuk-error-summary__list a')
+  }
+
+  getErrorSummaryLink = (index: number): PageElement => {
+    return cy.get(`.govuk-error-summary__list a:nth-child(${index})`)
+  }
+
+  getErrorMessage = (uuid: string, name: string) => {
+    return cy.get(`#appointments-X778160-19a88188-6013-43a7-bb4d-6e338516818f-type-error`)
+  }
+
+  getElement = (selector: string) => {
+    return cy.get(selector)
+  }
 }

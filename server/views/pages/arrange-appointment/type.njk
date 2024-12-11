@@ -22,6 +22,11 @@
         classes: "govuk-fieldset__legend--l govuk-!-margin-bottom-6"
       }
     },
+    formGroup: {
+      attributes: {
+        'data-qa': 'type'
+      }
+    },
     items: types
  } | decorateFormAttributes(['appointments', crn, id, 'type'])) }}
   {% endblock %}

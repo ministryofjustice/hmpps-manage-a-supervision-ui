@@ -23,7 +23,6 @@ const appointments: Route<void> = (req, res, next) => {
   ]}`
   let errors = null
   if (req.url.includes('/type')) {
-    console.log('validate type!')
     if (!req.body?.appointments?.[crn]?.[id]?.type) {
       logger.info(properties.errorMessages.appointments.type.log)
       const text = properties.errorMessages.appointments.type.errors.isEmpty

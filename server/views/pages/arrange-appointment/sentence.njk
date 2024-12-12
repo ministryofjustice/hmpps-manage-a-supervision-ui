@@ -1,5 +1,5 @@
 {% extends "../_form.njk" %}
-{% set title = 'What appointment are you arranging?' %}
+{% set title = 'Which sentence is this appointment for?' %}
 {% set backLink = change if change else '/case/' + crn + '/arrange-appointment/' + id + '/type' %}
 
 {% block heading %}{% endblock %}
@@ -26,10 +26,13 @@
         text: "Which requirement is this appointment for?",
         isPageHeading: false,
         classes: "govuk-fieldset__legend--s"
+      },
+      attributes: {
+        'data-qa': 'sentence-requirement'
       }
     },
     hint: {
-      text: "Select requirement"
+      text: "Select requirement."
     },
     items: requirements
 } | decorateFormAttributes(['appointments', crn, id, 'sentence-requirement'])) }}
@@ -49,6 +52,9 @@
         text: "Which licence condition is this appointment for?",
         isPageHeading: false,
         classes: "govuk-fieldset__legend--s"
+      },
+      attributes: {
+        'data-qa': 'sentence-licence-condition'
       }
     },
     hint: {
@@ -88,6 +94,9 @@
         text: title,
         isPageHeading: true,
         classes: "govuk-fieldset__legend--l govuk-!-margin-bottom-6"
+      },
+      attributes: {
+        'data-qa': 'sentences'
       }
     },
     hint: {

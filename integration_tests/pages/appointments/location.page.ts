@@ -2,6 +2,6 @@ import Page from '../page'
 
 export default class AppointmentLocationPage extends Page {
   constructor() {
-    super('Appointment location')
+    super('Pick a location for this appointment')
   }
 }

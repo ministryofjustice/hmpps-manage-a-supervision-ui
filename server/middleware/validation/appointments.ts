@@ -70,7 +70,7 @@ const appointments: Route<void> = (req, res, next) => {
     if (!req.body?.appointments?.[crn]?.[id]?.location) {
       logger.info(properties.errorMessages.appointments.location.log)
       const text = properties.errorMessages.appointments.location.errors.isEmpty
-      const anchor = `appointments-${crn}-location`
+      const anchor = `appointments-${crn}-${id}-location`
       errors = utils.addError(errors, { text, anchor })
     }
   }

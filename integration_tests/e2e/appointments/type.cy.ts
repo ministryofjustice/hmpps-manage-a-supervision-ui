@@ -15,6 +15,168 @@ import 'cypress-plugin-tab'
 const crn = 'X778160'
 const uuid = '19a88188-6013-43a7-bb4d-6e338516818f'
 
+const completeTypePage = () => {
+  const typePage = new AppointmentTypePage()
+  typePage.getRadio('type', 1).click()
+  typePage.getSubmitBtn().click()
+}
+
+const completeSentencePage = () => {
+  const sentencePage = new AppointmentSentencePage()
+  sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence`).click()
+  sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-licence-condition`).click()
+  sentencePage.getSubmitBtn().click()
+}
+
+const completeLocationPage = () => {
+  const locationPage = new AppointmentLocationPage()
+  locationPage.getElement(`#appointments-${crn}-${uuid}-location`).click()
+  locationPage.getSubmitBtn().click()
+}
+
+const completeDateTimePage = () => {
+  const dateTimePage = new AppointmentDateTimePage()
+  dateTimePage.getDatePickerToggle().click()
+  dateTimePage.getActiveDayButton().click()
+  dateTimePage.getElement(`#appointments-${crn}-${uuid}-start-time`).type('9:00am')
+  dateTimePage.getElement(`#appointments-${crn}-${uuid}-end-time`).focus().type('9:30am').tab()
+  dateTimePage.getSubmitBtn().click()
+}
+
+const checkRepeatingPage = () => {
+  context('Will the appointment repeat?', () => {
+    let repeatingPage: AppointmentRepeatingPage
+    before(() => {
+      cy.visit(`/case/${crn}/arrange-appointment/${uuid}/type`)
+      completeTypePage()
+      completeSentencePage()
+      completeLocationPage()
+      completeDateTimePage()
+      repeatingPage = new AppointmentRepeatingPage()
+    })
+    it('Page is rendered', () => {})
+
+    it('should display the error summary box', () => {
+      repeatingPage.getSubmitBtn().click()
+      repeatingPage.checkErrorSummaryBox(['Select if the appointment will repeat'])
+    })
+    it('should display the error message', () => {
+      repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating-error`).should($error => {
+        expect($error.text().trim()).to.include('Select if the appointment will repeat')
+      })
+    })
+
+    // context('Yes is selected', () => {
+    it('should display the repeat frequency and count reveal', () => {
+      repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating`).click()
+      repeatingPage.getElement(`#conditional-appointments-${crn}-${uuid}-repeating`).should('be.visible')
+    })
+    // })
+  })
+
+  /*
+  describe('Will the appointment repeat?', () => {
+    let repeatingPage: AppointmentRepeatingPage
+    beforeEach(() => {
+      cy.visit(`/case/${crn}/arrange-appointment/${uuid}/type`)
+      completeTypePage()
+      completeSentencePage()
+      completeLocationPage()
+      completeDateTimePage()
+      repeatingPage = new AppointmentRepeatingPage()
+    })
+
+    describe('Back link is clicked', () => {})
+
+    describe('Continue is clicked without selecting a repeat option', () => {
+      it('should display the error summary box', () => {
+        repeatingPage.getSubmitBtn().click()
+        repeatingPage.checkErrorSummaryBox(['Select if the appointment will repeat'])
+      })
+      it('should display the error message', () => {
+        repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating-error`).should($error => {
+          expect($error.text().trim()).to.include('Select if the appointment will repeat')
+        })
+      })
+      describe('The error summary link is clicked', () => {
+        it('should focus the first radio button', () => {
+          repeatingPage.getErrorSummaryLink(1).click()
+          repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating`).should('be.focused')
+        })
+      })
+    })
+    describe('Yes is selected', () => {
+      it('should display the repeat frequency and count reveal', () => {
+        repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating`).click()
+        repeatingPage.getElement(`#conditional-appointments-${crn}-${uuid}-repeating`).should('be.visible')
+      })
+    })
+    describe('No is selected', () => {
+      it('should hide the repeat frequency and count reveal', () => {
+        repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating-2`).click()
+        repeatingPage.getElement(`#conditional-appointments-${crn}-${uuid}-repeating`).should('not.be.visible')
+      })
+    })
+    describe('Continue is clicked without selecting a repeat frequency or count', () => {
+      it('should display the error summary box', () => {
+        repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating`).click()
+        repeatingPage.getSubmitBtn().click()
+        repeatingPage.checkErrorSummaryBox([
+          'Select the frequency the appointment will repeat',
+          'Enter the number of times the appointment will repeat',
+        ])
+      })
+      it('should display the error messages', () => {
+        repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating-frequency-error`).should($error => {
+          expect($error.text().trim()).to.include('Select the frequency the appointment will repeat')
+        })
+        repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating-count-error`).should($error => {
+          expect($error.text().trim()).to.include('Enter the number of times the appointment will repeat')
+        })
+      })
+      describe('The first error summary link is clicked', () => {
+        it('should focus the first frequency radio button', () => {
+          repeatingPage.getErrorSummaryLink(1).click()
+          repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating-frequency`).should('be.focused')
+        })
+      })
+      describe('The second error summary link is clicked', () => {
+        beforeEach(() => {
+          repeatingPage.getErrorSummaryLink(2).click()
+        })
+        it('should focus the count field', () => {
+          repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating-count`).should('be.focused')
+        })
+      })
+    })
+
+    describe('Weekly frequency is selected, the continue is clicked', () => {
+      beforeEach(() => {
+        repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating-frequency`).click()
+        repeatingPage.getSubmitBtn().click()
+      })
+      it('should display the error summary box', () => {
+        repeatingPage.checkErrorSummaryBox(['Enter the number of times the appointment will repeat'])
+      })
+    })
+
+    describe('An invalid repeat count in entered', () => {
+      beforeEach(() => {
+        repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating-frequency`).click()
+        repeatingPage.getElement(`#appointments-${crn}-${uuid}-repeating-count`).type('xx')
+        repeatingPage.getSubmitBtn().click()
+        cy.debug()
+      })
+      it('should display the error summary box', () => {
+        repeatingPage.checkErrorSummaryBox(['Enter a number'])
+      })
+    })
+
+    // describe('Valid count is entered and continue')
+  })
+    */
+}
+
 const checkDateTimePage = () => {
   describe('Enter the date and time of the appointment', () => {
     let typePage: AppointmentTypePage
@@ -37,6 +199,9 @@ const checkDateTimePage = () => {
       dateTimePage = new AppointmentDateTimePage()
     })
     describe('Page is rendered', () => {})
+
+    describe('Back link is clicked', () => {})
+
     describe('Continue is clicked without selecting a date or time', () => {
       beforeEach(() => {
         dateTimePage.getSubmitBtn().click()
@@ -60,14 +225,6 @@ const checkDateTimePage = () => {
         })
       })
     })
-    // describe('The first error summary link is clicked', () => {
-    //   beforeEach(() => {
-    //     dateTimePage.getErrorSummaryLink(1).click()
-    //   })
-    //   it('should focus the date field', () => {
-    //     dateTimePage.getElement(`#appointments-${crn}-${uuid}-date`).should('be.focused')
-    //   })
-    // })
 
     describe('Date is selected', () => {
       const now = new Date()
@@ -115,6 +272,9 @@ const checkLocationPage = () => {
       locationPage.getSubmitBtn().click()
     })
     describe('Page is rendered', () => {})
+
+    describe('Back link is clicked', () => {})
+
     describe('Continue is clicked without selecting a location', () => {
       it('should display the error summary box', () => {
         locationPage.checkErrorSummaryBox(['Select an appointment location'])
@@ -137,7 +297,6 @@ const checkLocationPage = () => {
       beforeEach(() => {
         locationPage.getElement(`#appointments-${crn}-${uuid}-location`).click()
         locationPage.getSubmitBtn().click()
-        // cy.debug()
       })
       it('should redirect to the date time page', () => {
         dateTimePage = new AppointmentDateTimePage()
@@ -453,4 +612,5 @@ describe('Arrange an appointment', () => {
   })
   checkLocationPage()
   checkDateTimePage()
+  checkRepeatingPage()
 })

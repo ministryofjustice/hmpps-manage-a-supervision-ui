@@ -107,7 +107,7 @@ export default abstract class Page {
   }
 
   getErrorSummaryLink = (index: number): PageElement => {
-    return cy.get(`.govuk-error-summary__list a:nth-child(${index})`)
+    return cy.get(`.govuk-error-summary__list li:nth-child(${index}) a`)
   }
 
   getElement = (selector: string) => {

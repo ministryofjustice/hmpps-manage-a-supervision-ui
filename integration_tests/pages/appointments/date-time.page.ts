@@ -5,6 +5,22 @@ export default class AppointmentDateTimePage extends Page {
     super('Enter the date and time of the appointment')
   }
 
+  getSummaryLink = () => {
+    return cy.get('.govuk-details__summary span')
+  }
+
+  getDisability = () => {
+    return cy.get('[data-qa="disability"]')
+  }
+
+  getReasonableAdjustments = () => {
+    return cy.get('[data-qa="provisions"]')
+  }
+
+  getDependents = () => {
+    return cy.get('[data-qa="dependents"]')
+  }
+
   getDatePickerToggle = () => {
     return cy.get('.moj-datepicker__toggle')
   }

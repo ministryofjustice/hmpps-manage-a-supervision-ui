@@ -2,7 +2,6 @@
 import path from 'path'
 import nunjucks from 'nunjucks'
 import express, { Request, Response, NextFunction } from 'express'
-import { DateTime } from 'luxon'
 import {
   activityLog,
   activityLogDate,

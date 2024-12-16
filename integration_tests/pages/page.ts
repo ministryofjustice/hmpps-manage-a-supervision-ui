@@ -91,7 +91,7 @@ export default abstract class Page {
   }
 
   getRadios = (id: string) => {
-    return cy.get(`[data-qa="${id}"].govuk-radios__item input`)
+    return cy.get(`[data-qa="${id}"] .govuk-radios__item input`)
   }
 
   getRadioLabels = (id: string) => {
@@ -120,5 +120,9 @@ export default abstract class Page {
     this.getAllErrorSummaryLinks().each(($item, index) => {
       expect($item.text()).to.eq(summaryErrors[index])
     })
+  }
+
+  getSummaryListRow = (index: number) => {
+    return cy.get(`.govuk-summary-list__row:nth-child(${index})`)
   }
 }

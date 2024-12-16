@@ -5,6 +5,5 @@ export const getAppointment: Route<void> = (req, res, next): void => {
   if (req.session?.data?.appointments?.[crn]?.[id]) {
     res.locals.appointment = req.session.data.appointments[crn][id]
   }
-  console.dir(res.locals.appointment, { depth: null })
   return next()
 }

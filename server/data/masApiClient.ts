@@ -35,8 +35,9 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/sentence/${crn}${queryParam}`, handle404: false })
   }
 
-  async getSentences(crn: string): Promise<Sentences | null> {
-    return this.get({ path: `/sentences/${crn}`, handle404: false })
+  async getSentences(crn: string, number = ''): Promise<Sentences | null> {
+    const queryParameters = number ? `?number=${number}` : ''
+    return this.get({ path: `/sentences/${crn}${queryParameters}`, handle404: false })
   }
 
   async getProbationHistory(crn: string): Promise<SentenceDetails | null> {

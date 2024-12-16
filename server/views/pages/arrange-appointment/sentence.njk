@@ -70,7 +70,9 @@
       hint: 'Sentence start date: ' + sentence.order.startDate | dateWithYear,
       checked: true if sentences.length === 1 else false,
       attributes: {
-          'data-bold': 'true'
+          'data-bold': 'true',
+          'data-sentence': 'true',
+          'data-reset-conditional-radios': ''
         },
       conditional: {
             html: sentenceReveal
@@ -82,7 +84,9 @@
       hint: 'Sentence start date: ' + sentence.order.startDate | dateWithYear,
       checked: true if sentences.length === 1 else false,
       attributes: {
-          'data-bold': 'true'
+          'data-bold': 'true',
+          'data-sentence': 'true',
+          'data-reset-conditional-radios': ''
         }
     }), allSentences) %}
 {% endif %}

@@ -4,6 +4,7 @@
 {% block form %}
 {% block heading %}{% endblock %}
   <h1 class="govuk-heading-l">{{ title }}</h1>
+   <section data-qa="this-appointment">
   <h2 class="govuk-heading-m">This appointment</h2>
   <table class="govuk-table">
     <thead class="govuk-table__head">
@@ -19,7 +20,9 @@
       </tr>
     </tbody>
   </table>
+  </section>
   {% if appointment['repeating-dates'].length %}
+  <section data-qa="repeat-appointments">
   <h2 class="govuk-heading-m">{{ appointment['repeating-count'] }} repeat appointment{% if appointment['repeating-count'] !== '1' %}s{% endif %}</h2>
   <table class="govuk-table">
     <thead class="govuk-table__head">
@@ -37,5 +40,6 @@
       {% endfor %}
     </tbody>
   </table>
+  </section>
   {% endif %}
 {% endblock %}

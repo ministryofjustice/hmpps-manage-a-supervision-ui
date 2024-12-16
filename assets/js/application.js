@@ -33,4 +33,18 @@ const lastAppointment = () => {
     repeatingCount.addEventListener('keyup', lastAppointmentHandler)
   }
 }
+const resetConditionals = () => {
+  const handleReset = () => {
+    document.querySelectorAll('.govuk-radios__conditional input').forEach(radioBtn => {
+      radioBtn.checked = false
+    })
+  }
+  const elm = document.querySelector('[data-reset-conditional-radios]')
+  if (elm) {
+    document.querySelectorAll('[data-reset-conditional-radios]').forEach(elm => {
+      elm.addEventListener('click', handleReset)
+    })
+  }
+}
 lastAppointment()
+resetConditionals()

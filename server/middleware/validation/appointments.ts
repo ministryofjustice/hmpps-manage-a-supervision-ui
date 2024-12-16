@@ -99,7 +99,6 @@ const appointments: Route<void> = (req, res, next) => {
   if (req.url.includes('/repeating')) {
     const repeatingValue = req.body?.appointments?.[crn]?.[id]?.repeating
     const { data } = req.session
-    // const repeatingFrequencyValue = getDataValue(data, ['appointments', crn, id, 'repeating-frequency'])
     const repeatingCountValue = getDataValue(data, ['appointments', crn, id, 'repeating-count'])
     const validRepeatingCount = !Number.isNaN(parseInt(repeatingCountValue, 10))
     const appointmentDate = getDataValue(data, ['appointments', crn, id, 'date'])
@@ -144,7 +143,6 @@ const appointments: Route<void> = (req, res, next) => {
   }
 
   if (errors) {
-    // console.dir(errors, { depth: null })
     res.locals.errors = errors
     return res.render(render, { errors, ...localParams })
   }

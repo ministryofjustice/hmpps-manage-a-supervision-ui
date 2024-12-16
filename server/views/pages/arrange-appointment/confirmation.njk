@@ -10,7 +10,7 @@
 {% set title = 'Appointments arranged' if appointmentDates.length > 1 else 'Appointment arranged' %}
 {% set appointmentDatesHtml %}
   {% for appointmentDate in appointmentDates %}
-  {% if loop.index > 1 %}<br>{% endif %}{{ appointmentDate | dayOfWeek }} {{ appointmentDate | dateWithYear }} from {{appointment['start-time']}} to {{ appointment['end-time'] }}
+  {% if loop.index > 1 %}<br>{% endif %}<span data-qa="appointment-date">{{ appointmentDate | dayOfWeek }} {{ appointmentDate | dateWithYear }} from {{appointment['start-time']}} to {{ appointment['end-time'] }}</span>
   {% endfor %}
 {% endset %}
 
@@ -28,7 +28,7 @@
   html: panelHtml
 }) }}
  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-two-thirds" data-qa="what-happens-next">
 <h2 class="govuk-heading-m govuk-!-margin-top-6">What happens next</h2>
   <p class="govuk-body">
     You need to send {{case.name.forename}} the appointment details.
@@ -39,7 +39,10 @@
 </div>
   <form method="post" autocomplete="off" action="{{ paths.current }}">
  {{ govukButton({
-      html: buttonText
+      html: buttonText,
+      attributes: {
+        'data-qa': 'submit-btn'
+      }
     }) }}
      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
      </form>

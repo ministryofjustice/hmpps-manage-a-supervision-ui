@@ -31,7 +31,6 @@
 {{location.address.postcode}}
 {% endif %}
 {% endset %}
-
 {% block primary %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
@@ -124,7 +123,10 @@
   
 
     {{ govukButton({
-      html: buttonText
+      html: buttonText,
+      attributes: {
+        'data-qa': 'submit-btn'
+      }
     }) }}
      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
   </form>

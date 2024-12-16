@@ -17,7 +17,6 @@ const dateTime = (date: string, time: string): Date => {
     .split(':')
     .map(val => parseInt(val, 10))
   const newHour = isPm && hour !== 12 ? hour + 12 : hour
-  console.log({ time, isPm, newHour })
   const [year, month, day] = date.split('-').map(val => parseInt(val, 10))
   return new Date(year, month, day, newHour, minute, 0)
 }
@@ -73,9 +72,7 @@ export const postAppointments = (hmppsAuthClient: HmppsAuthClient) => {
       licenceConditionId,
       uuid,
     }
-    console.log(body)
     const response = await masClient.postAppointments(crn, body)
-    console.log(response)
     return next()
   }
 }

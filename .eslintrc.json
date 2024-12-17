@@ -39,13 +39,6 @@
         "no-useless-constructor": 0,
         "import/prefer-default-export": 0,
         "@typescript-eslint/no-explicit-any": 0,
-        // "@typescript-eslint/no-unused-vars": [
-        //   1,
-        //   {
-        //     "argsIgnorePattern": "res|next|^err|_",
-        //     "ignoreRestSiblings": true
-        //   }
-        // ],
         "@typescript-eslint/semi": 0,
         "import/no-unresolved": "error",
         "prettier/prettier": [

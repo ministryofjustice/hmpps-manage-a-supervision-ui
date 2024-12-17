@@ -7,7 +7,6 @@ export const getSentences = (hmppsAuthClient: HmppsAuthClient) => {
     const number = (req?.query?.number as string) || ''
     const crn = req.params.crn as string
 
-    // if (number || !req?.session?.data?.sentences?.[crn]) {
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
     const allSentences = await masClient.getSentences(crn, number)
@@ -18,7 +17,6 @@ export const getSentences = (hmppsAuthClient: HmppsAuthClient) => {
         [crn]: allSentences.sentences,
       },
     }
-    // }
     res.locals.sentences = req.session.data.sentences[crn]
     return next()
   }

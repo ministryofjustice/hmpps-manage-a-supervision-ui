@@ -461,11 +461,11 @@
               timeString += 'm'
             }
 
-            var pattern = /^(([^0-9]*))?([0-9]?[0-9])(([0-5][0-9]))?(([0-5][0-9]))?(([^0-9]*))$/
+            var pattern = /^(([^0-9]+))?([0-9]?[0-9])(([0-5][0-9]))?(([0-5][0-9]))?(([^0-9]*))$/
             var hasDelimetersMatch = timeString.match(/\W/)
 
             if (hasDelimetersMatch) {
-              pattern = /^(([^0-9]*))?([0-9]?[0-9])(\W+([0-5][0-9]?))?(\W+([0-5][0-9]))?(([^0-9]*))$/
+              pattern = /^(([^0-9]+))?([0-9]?[0-9])(\W+([0-5][0-9]?))?(\W+([0-5][0-9]))?(([^0-9]*))$/
             }
 
             var time = timeString.match(pattern)
@@ -1361,7 +1361,7 @@
           var self = $(this)
           var tp = new Timepicker(this, options)
           var settings = tp.settings
-          settings.lang
+          // settings.lang
           this.timepickerObj = tp
           self.addClass('ui-timepicker-input')
 

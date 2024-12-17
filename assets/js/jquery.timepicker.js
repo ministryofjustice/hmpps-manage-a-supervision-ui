@@ -391,7 +391,7 @@
           key: '_selectValue',
           value: function _selectValue() {
             var tp = this
-            tp.settings
+            //tp.settings
             var list = tp.list
             var cursor = list.find('.ui-timepicker-selected')
 

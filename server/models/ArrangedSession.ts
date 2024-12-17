@@ -1,6 +1,7 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { DateTime } from 'luxon-business-days'
+import { v4 as uuidv4 } from 'uuid'
 import { Appointment } from '../@types'
-import { generateRandomString } from '../utils/utils'
 
 interface Params {
   appointment: Appointment
@@ -47,7 +48,7 @@ export class ArrangedSession {
     const clonedAppointment: Appointment = { ...params.appointment }
     return {
       ...clonedAppointment,
-      id: generateRandomString(),
+      id: uuidv4(),
       date: DateTime.fromISO(clonedAppointment.date).plus({ months: params.monthsInFuture }).toISODate(),
     }
   }
@@ -56,7 +57,7 @@ export class ArrangedSession {
     const clonedAppointment = { ...params.appointment }
     return {
       ...clonedAppointment,
-      id: generateRandomString(),
+      id: uuidv4(),
       date: DateTime.fromISO(clonedAppointment.date).plus({ weeks: params.weeksInFuture }).toISODate(),
     }
   }

@@ -498,10 +498,6 @@ export const setDataValue = (data: any, sections: any, value: any) => {
   return setKeypath(data, path.map((s: any) => `["${s}"]`).join(''), value)
 }
 
-export const generateRandomString = (length = 3) => {
-  return Math.random().toString(36).substr(2, length).toUpperCase()
-}
-
 export const decorateFormAttributes = (req: Request, res: Response) => (obj: any, sections?: string[]) => {
   const newObj = obj
   const { data } = req.session as any

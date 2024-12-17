@@ -13,6 +13,7 @@ import {
   dateWithYear,
   dateWithYearShortMonth,
   dayOfWeek,
+  decorateFormAttributes,
   defaultFormInputValues,
   defaultFormSelectValues,
   deliusDateFormat,
@@ -111,45 +112,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('timeForSort', timeForSort)
 
   app.use((req: Request, res: Response, next: NextFunction): void => {
-    njkEnv.addFilter('decorateFormAttributes', (obj: any, sections?: string[]) => {
-      let storedValue = getDataValue(req.session.data, sections)
-      if (storedValue && config.dateFields.includes(sections[sections.length - 1]) && storedValue.includes('-')) {
-        const [year, month, day] = storedValue.split('-')
-        storedValue = [day.padStart(2, '0'), month.padStart(2, '0'), year].join('/')
-      }
-      if (obj.items !== undefined) {
-        obj.items = obj.items.map((item: any) => {
-          if (typeof item.value === 'undefined') {
-            item.value = item.text
-          }
-          if (storedValue) {
-            if ((Array.isArray(storedValue) && storedValue.includes(item.value)) || storedValue === item.value) {
-              if (storedValue.indexOf(item.value) !== -1) {
-                item.checked = 'checked'
-                item.selected = 'selected'
-              }
-            }
-          }
-          return item
-        })
-        if (sections?.length) {
-          obj.idPrefix = sections.join('-')
-        }
-      } else {
-        obj.value = storedValue
-      }
-      if (sections?.length) {
-        const id = sections.join('-')
-        if (typeof obj.id === 'undefined') {
-          obj.id = id
-        }
-        obj.name = sections.map((s: string) => `[${s}]`).join('')
-        if (res?.locals?.errors?.errorMessages?.[id]?.text) {
-          obj.errorMessage = { text: res.locals.errors.errorMessages[id].text }
-        }
-      }
-      return obj
-    })
+    njkEnv.addFilter('decorateFormAttributes', decorateFormAttributes(req, res))
     return next()
   })
 

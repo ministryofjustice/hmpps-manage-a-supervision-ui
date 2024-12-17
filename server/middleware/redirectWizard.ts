@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { getDataValue } from '../utils/utils'
 import { Route } from '../@types'
 
-export const redirectWizard = (requiredValues: string[]): Route<void> => {
+export const redirectWizard = (requiredValues: string[]): Route<Promise<void>> => {
   return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { crn, id } = req.params
     const { data } = req.session

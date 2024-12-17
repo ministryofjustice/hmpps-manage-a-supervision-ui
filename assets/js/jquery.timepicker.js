@@ -171,7 +171,7 @@
         try {
           if (!normalCompletion && it.return != null) it.return()
         } finally {
-          if (didErr) throw err
+          // if (didErr) throw err
         }
       },
     }

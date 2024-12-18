@@ -11,26 +11,31 @@
 {% set pastAppointments = sortAppointmentsDescending(pastAppointments.appointments, 10) %}
 {% set upcomingAppointmentRows = [] %}
 {% set pastAppointmentRows = [] %}
+{% set setActionButtons = "false" %}
 
 {% if upcomingAppointments.length > 0 %}
   {% for appointment in upcomingAppointments %}
-
-    {% set actionsButton =  mojButtonMenu({
-      "button": {
-        "text": "Actions",
-        classes: "govuk-button--secondary"
-      },
-      "items": [
-        {
-          "text": "Log outcome"
+    {% set actionsButton %}
+      {% if setActionButtons === "true" %}
+        {{ mojButtonMenu({
+        "button": {
+          "text": "Actions",
+          classes: "govuk-button--secondary"
         },
-        {
-          "text": "Manage appointment",
-          "href": "./appointments/appointment/" + appointment.id
-        }
-      ]
-    })
-    %}
+        "items": [
+          {
+            "text": "Log outcome"
+          },
+          {
+            "text": "Manage appointment",
+            "href": "./appointments/appointment/" + appointment.id
+          }
+        ]
+      }) }}
+      {% else %}
+        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="/case/{{ crn }}/handoff/delius">Manage on NDelius</a>
+      {% endif %}
+    {% endset %}
 
     {% set upcomingAppointmentRows = (upcomingAppointmentRows.push([
       {
@@ -54,7 +59,7 @@
       {
         html: actionsButton,
         format: "numeric",
-        classes: "govuk-visually-hidden vertical-align--middle"
+        classes: "vertical-align--middle"
       }
     ]), upcomingAppointmentRows) %}
   {% endfor %}
@@ -63,22 +68,27 @@
 {% if pastAppointments.length > 0 %}
   {% for appointment in pastAppointments %}
 
-    {% set actionsButton =  mojButtonMenu({
-      "button": {
-        "text": "Actions",
-        classes: "govuk-button--secondary"
-      },
-      "items": [
-        {
-          "text": "Log outcome"
-        },
-        {
-          "text": "Manage appointment",
-          "href": "./appointments/appointment/" + appointment.sessionId
-        }
-      ]
-    })
-    %}
+    {% set actionsButton %}
+      {% if setActionButtons === "true" %}
+        {{  mojButtonMenu({
+          "button": {
+            "text": "Actions",
+            classes: "govuk-button--secondary"
+          },
+          "items": [
+            {
+              "text": "Log outcome"
+            },
+            {
+              "text": "Manage appointment",
+              "href": "./appointments/appointment/" + appointment.id
+            }
+          ]
+        }) }}
+      {% else %}
+        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="/case/{{ crn }}/handoff/delius">Manage on NDelius</a>
+      {% endif %}
+    {% endset %}
 
     {% set pastAppointmentRows = (pastAppointmentRows.push([
       {
@@ -101,7 +111,7 @@
       {
         html: actionsButton,
         format: "numeric",
-        classes: "govuk-visually-hidden vertical-align--middle"
+        classes: "non-sortable__sortable-table-header vertical-align--middle"
       }
     ]), pastAppointmentRows) %}
   {% endfor %}
@@ -126,8 +136,8 @@
 {% endblock %}
 
 {% block headerActions %}
-    <div class="govuk-visually-hidden moj-button-group moj-button-group--inline">
-        <form method="get" action="#">
+    <div class="moj-button-group moj-button-group--inline">
+        <form method="get" action="/case/{{ crn }}/handoff/delius" target="_blank">
             <button type="submit" class="govuk-button govuk-!-static-margin-bottom-0 govuk-!-static-margin-right-0" data-module="govuk-button">
                 Arrange an appointment
             </button>
@@ -151,24 +161,24 @@
               head: [
                 {
                   text: "Appointment type",
-                  classes: "govuk-!-width-one-half",
+                  classes: "govuk-!-width-one-half govuk-action--bottom",
                   attributes: { "aria-sort": "none" }
                 },
                 {
                   text: "Date",
-                  classes: "govuk-!-width-one-sixth",
+                  classes: "govuk-!-width-one-sixth govuk-action--bottom ",
                   format: "numeric",
                   attributes: { "aria-sort": "none" }
                 },
                 {
                   text: "Time",
-                  classes: "govuk-!-width-one-sixth",
+                  classes: "govuk-!-width-one-sixth govuk-action--bottom ",
                   format: "numeric",
                   attributes: { "aria-sort": "none" }
                 },
                 {
-                  text: "Action",
-                  classes: "govuk-visually-hidden govuk-!-width-one-sixth non-sortable__sortable-table-header",
+                  html: "Action<br/><span class='non-sortable__sortable-table-header-black'>(Links open in new tab)</span>",
+                  classes: "govuk-!-width-one-sixth non-sortable__sortable-table-header govuk-action--bottom",
                   format: "numeric"
                 }
               ],
@@ -190,24 +200,24 @@
               head: [
                 {
                   text: "Appointment type",
-                  classes: "govuk-!-width-one-half",
+                  classes: "govuk-!-width-one-half govuk-action--bottom",
                   attributes: { "aria-sort": "none" }
                 },
                 {
                   text: "Date",
-                  classes: "govuk-!-width-one-sixth",
+                  classes: "govuk-!-width-one-sixth govuk-action--bottom",
                   format: "numeric",
                   attributes: { "aria-sort": "none" }
                 },
                 {
                   text: "Time",
-                  classes: "govuk-!-width-one-sixth",
+                  classes: "govuk-!-width-one-sixth govuk-action--bottom",
                   format: "numeric",
                   attributes: { "aria-sort": "none" }
                 },
                 {
-                  text: "Action",
-                  classes: "govuk-visually-hidden govuk-!-width-one-sixth non-sortable__sortable-table-header",
+                  html: "Action<br/><span class='non-sortable__sortable-table-header-black'>(Links open in new tab)</span>",
+                  classes: "govuk-!-width-one-sixth non-sortable__sortable-table-header govuk-action--bottom",
                   format: "numeric"
                 }
               ],

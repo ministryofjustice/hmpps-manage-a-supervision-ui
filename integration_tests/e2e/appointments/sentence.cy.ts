@@ -25,46 +25,36 @@ const checkRequirementSentence = (type = 1) => {
           expect($hint.text().trim()).to.eq('Select requirement.')
         })
       })
-      describe('Continue is clicked without selecting a requirement', () => {
-        beforeEach(() => {
-          loadPage(type)
-          sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-2`).click()
-          sentencePage.getSubmitBtn().click()
-        })
-        it('should display the error summary box', () => {
-          sentencePage.checkErrorSummaryBox(['Select a requirement'])
-        })
-        it('should display the error message', () => {
-          sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-requirement-error`).should($error => {
-            expect($error.text().trim()).to.include('Select a requirement')
-          })
-        })
-        it('should persist the sentence selection', () => {
-          sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-2`).should('be.checked')
+      it('should display the error summary and error when continue is clicked without selecting a requirement', () => {
+        loadPage(type)
+        sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-2`).click()
+        sentencePage.getSubmitBtn().click()
+        sentencePage.checkErrorSummaryBox(['Select a requirement'])
+
+        sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-requirement-error`).should($error => {
+          expect($error.text().trim()).to.include('Select a requirement')
         })
       })
-      describe('The error summary link is clicked', () => {
-        beforeEach(() => {
-          loadPage(type)
-          sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-2`).click()
-          sentencePage.getSubmitBtn().click()
-          sentencePage.getErrorSummaryLink(1).click()
-        })
-        it('should focus the first radio button', () => {
-          sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-requirement`).should('be.focused')
-        })
+
+      it('should persist the sentence selection', () => {
+        sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-2`).should('be.checked')
       })
-      describe('licence condition is selected and continue is clicked', () => {
-        beforeEach(() => {
-          loadPage(type)
-          sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-2`).click()
-          sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-requirement`).click()
-          sentencePage.getSubmitBtn().click()
-        })
-        it('should render the location page', () => {
-          const locationPage = new AppointmentLocationPage()
-          locationPage.checkOnPage()
-        })
+
+      it('should focus the first radio button when the error summary link is clicked', () => {
+        loadPage(type)
+        sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-2`).click()
+        sentencePage.getSubmitBtn().click()
+        sentencePage.getErrorSummaryLink(1).click()
+        sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-requirement`).should('be.focused')
+      })
+
+      it('should link to the location page when licence condition is selected and continue is clicked', () => {
+        loadPage(type)
+        sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-2`).click()
+        sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-requirement`).click()
+        sentencePage.getSubmitBtn().click()
+        const locationPage = new AppointmentLocationPage()
+        locationPage.checkOnPage()
       })
     } else {
       it('should not display the requirement reveal', () => {

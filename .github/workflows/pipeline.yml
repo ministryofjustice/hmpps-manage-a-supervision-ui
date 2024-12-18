@@ -31,8 +31,6 @@ permissions:
 #  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
-  env:
-
   # main node build workflow
   node_build:
     name: node build

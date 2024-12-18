@@ -1,7 +1,7 @@
 name: Pipeline [test -> build -> deploy]
 
 env:
-  SENTRY_AUTH_TOKEN: ${{secrets.SENTRY_AUTH_TOKEN}}
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
 on:
   push:
@@ -31,11 +31,14 @@ permissions:
 #  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
+  env:
+
   # main node build workflow
   node_build:
     name: node build
     uses: ministryofjustice/hmpps-github-actions/.github/workflows/node_build.yml@v2 # WORKFLOW_VERSION
     secrets: inherit
+    with:
   # generic node unit tests - feel free to override with local tests if required
   node_unit_tests:
     name: node unit tests

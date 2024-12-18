@@ -42,23 +42,28 @@ const checkRequirementSentence = (type = 1) => {
         it('should persist the sentence selection', () => {
           sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-2`).should('be.checked')
         })
-        describe('The error summary link is clicked', () => {
-          beforeEach(() => {
-            sentencePage.getErrorSummaryLink(1).click()
-          })
-          it('should focus the first radio button', () => {
-            sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-requirement`).should('be.focused')
-          })
+      })
+      describe('The error summary link is clicked', () => {
+        beforeEach(() => {
+          loadPage(type)
+          sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-2`).click()
+          sentencePage.getSubmitBtn().click()
+          sentencePage.getErrorSummaryLink(1).click()
         })
-        describe('licence condition is selected and continue is clicked', () => {
-          beforeEach(() => {
-            sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-requirement`).click()
-            sentencePage.getSubmitBtn().click()
-          })
-          it('should render the location page', () => {
-            const locationPage = new AppointmentLocationPage()
-            locationPage.checkOnPage()
-          })
+        it('should focus the first radio button', () => {
+          sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-requirement`).should('be.focused')
+        })
+      })
+      describe('licence condition is selected and continue is clicked', () => {
+        beforeEach(() => {
+          loadPage(type)
+          sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-2`).click()
+          sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-requirement`).click()
+          sentencePage.getSubmitBtn().click()
+        })
+        it('should render the location page', () => {
+          const locationPage = new AppointmentLocationPage()
+          locationPage.checkOnPage()
         })
       })
     } else {

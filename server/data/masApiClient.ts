@@ -26,8 +26,9 @@ export default class MasApiClient extends RestClient {
     super('Manage a Supervision API', config.apis.masApi, token)
   }
 
-  async getOverview(crn: string): Promise<Overview | null> {
-    return this.get({ path: `/overview/${crn}`, handle404: false })
+  async getOverview(crn: string, sentenceNumber = '1'): Promise<Overview | null> {
+    const queryParam = sentenceNumber !== undefined ? `?sentenceNumber=${sentenceNumber}` : ''
+    return this.get({ path: `/overview/${crn}${queryParam}`, handle404: false })
   }
 
   async getSentenceDetails(crn: string, queryParam: string): Promise<SentenceDetails | null> {

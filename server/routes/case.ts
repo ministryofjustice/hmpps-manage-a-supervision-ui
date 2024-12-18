@@ -16,7 +16,7 @@ export default function caseRoutes(router: Router, { hmppsAuthClient }: Services
     const masClient = new MasApiClient(token)
     const arnsClient = new ArnsApiClient(token)
     const tierClient = new TierApiClient(token)
-
+    const sentenceNumber = (req?.query?.sentenceNumber || '') as string
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_OVERVIEW',
       who: res.locals.user.username,
@@ -27,7 +27,7 @@ export default function caseRoutes(router: Router, { hmppsAuthClient }: Services
     })
 
     const [overview, risks, tierCalculation] = await Promise.all([
-      masClient.getOverview(crn),
+      masClient.getOverview(crn, sentenceNumber),
       arnsClient.getRisks(crn),
       tierClient.getCalculationDetails(crn),
     ])

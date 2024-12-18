@@ -27,6 +27,8 @@ const checkRequirementSentence = (type = 1) => {
       })
       describe('Continue is clicked without selecting a requirement', () => {
         beforeEach(() => {
+          loadPage(type)
+          sentencePage.getElement(`#appointments-${crn}-${uuid}-sentence-2`).click()
           sentencePage.getSubmitBtn().click()
         })
         it('should display the error summary box', () => {

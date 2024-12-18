@@ -108,50 +108,48 @@ const appointments: Route<void> = (req, res, next) => {
   }
 
   const validateRepeating = () => {
-    if (req.url.includes('/repeating')) {
-      const repeatingValue = req.body?.appointments?.[crn]?.[id]?.repeating
-      const { data } = req.session
-      const repeatingCountValue = getDataValue(data, ['appointments', crn, id, 'repeating-count'])
-      const validRepeatingCount = !Number.isNaN(parseInt(repeatingCountValue, 10))
-      const appointmentDate = getDataValue(data, ['appointments', crn, id, 'date'])
-      const appointmentRepeatingDates = getDataValue(data, ['appointments', crn, id, 'repeating-dates'])
-      const oneYearFromDate = new Date(appointmentDate)
-      oneYearFromDate.setFullYear(oneYearFromDate.getFullYear() + 1)
-      let finalAppointmentDate = null
-      let isMoreThanAYear = false
-      if (appointmentRepeatingDates) {
-        finalAppointmentDate = appointmentRepeatingDates[appointmentRepeatingDates.length - 1]
-        isMoreThanAYear = new Date(finalAppointmentDate) > oneYearFromDate
-      }
-      if (!repeatingValue) {
-        logger.info(properties.errorMessages.appointments.repeating.log)
-        const text = properties.errorMessages.appointments.repeating.errors.isEmpty
-        const anchor = `appointments-${crn}-${id}-repeating`
-        errors = utils.addError(errors, { text, anchor })
-      }
-      if (repeatingValue === 'Yes' && !req.body?.appointments?.[crn]?.[id]?.['repeating-frequency']) {
-        logger.info(properties.errorMessages.appointments['repeating-frequency'].log)
-        const text = properties.errorMessages.appointments['repeating-frequency'].errors.isEmpty
-        const anchor = `appointments-${crn}-${id}-repeating-frequency`
-        errors = utils.addError(errors, { text, anchor })
-      }
-      if (repeatingValue === 'Yes' && !req.body?.appointments?.[crn]?.[id]?.['repeating-count']) {
-        logger.info(properties.errorMessages.appointments['repeating-count'].log)
-        const text = properties.errorMessages.appointments['repeating-count'].errors.isEmpty
-        const anchor = `appointments-${crn}-${id}-repeating-count`
-        errors = utils.addError(errors, { text, anchor })
-      }
-      if (repeatingCountValue && !validRepeatingCount) {
-        logger.info(properties.errorMessages.appointments['repeating-count'].log)
-        const text = properties.errorMessages.appointments['repeating-count'].errors.isInvalid
-        const anchor = `appointments-${crn}-${id}-repeating-count`
-        errors = utils.addError(errors, { text, anchor })
-      }
-      if (isMoreThanAYear) {
-        const textFrequency = properties.errorMessages.appointments['repeating-frequency'].errors.isMoreThanAYear
-        const anchor = `appointments-${crn}-${id}-repeating-frequency`
-        errors = utils.addError(errors, { text: textFrequency, anchor })
-      }
+    const repeatingValue = req.body?.appointments?.[crn]?.[id]?.repeating
+    const { data } = req.session
+    const repeatingCountValue = getDataValue(data, ['appointments', crn, id, 'repeating-count'])
+    const validRepeatingCount = !Number.isNaN(parseInt(repeatingCountValue, 10))
+    const appointmentDate = getDataValue(data, ['appointments', crn, id, 'date'])
+    const appointmentRepeatingDates = getDataValue(data, ['appointments', crn, id, 'repeating-dates'])
+    const oneYearFromDate = new Date(appointmentDate)
+    oneYearFromDate.setFullYear(oneYearFromDate.getFullYear() + 1)
+    let finalAppointmentDate = null
+    let isMoreThanAYear = false
+    if (appointmentRepeatingDates) {
+      finalAppointmentDate = appointmentRepeatingDates[appointmentRepeatingDates.length - 1]
+      isMoreThanAYear = new Date(finalAppointmentDate) > oneYearFromDate
+    }
+    if (!repeatingValue) {
+      logger.info(properties.errorMessages.appointments.repeating.log)
+      const text = properties.errorMessages.appointments.repeating.errors.isEmpty
+      const anchor = `appointments-${crn}-${id}-repeating`
+      errors = utils.addError(errors, { text, anchor })
+    }
+    if (repeatingValue === 'Yes' && !req.body?.appointments?.[crn]?.[id]?.['repeating-frequency']) {
+      logger.info(properties.errorMessages.appointments['repeating-frequency'].log)
+      const text = properties.errorMessages.appointments['repeating-frequency'].errors.isEmpty
+      const anchor = `appointments-${crn}-${id}-repeating-frequency`
+      errors = utils.addError(errors, { text, anchor })
+    }
+    if (repeatingValue === 'Yes' && !req.body?.appointments?.[crn]?.[id]?.['repeating-count']) {
+      logger.info(properties.errorMessages.appointments['repeating-count'].log)
+      const text = properties.errorMessages.appointments['repeating-count'].errors.isEmpty
+      const anchor = `appointments-${crn}-${id}-repeating-count`
+      errors = utils.addError(errors, { text, anchor })
+    }
+    if (repeatingCountValue && !validRepeatingCount) {
+      logger.info(properties.errorMessages.appointments['repeating-count'].log)
+      const text = properties.errorMessages.appointments['repeating-count'].errors.isInvalid
+      const anchor = `appointments-${crn}-${id}-repeating-count`
+      errors = utils.addError(errors, { text, anchor })
+    }
+    if (isMoreThanAYear) {
+      const textFrequency = properties.errorMessages.appointments['repeating-frequency'].errors.isMoreThanAYear
+      const anchor = `appointments-${crn}-${id}-repeating-frequency`
+      errors = utils.addError(errors, { text: textFrequency, anchor })
     }
   }
 
@@ -160,7 +158,9 @@ const appointments: Route<void> = (req, res, next) => {
   validateSentence()
   validateLocation()
   validateDateTime()
-  validateRepeating()
+  if (req.url.includes('/repeating')) {
+    validateRepeating()
+  }
   if (errors) {
     res.locals.errors = errors
     return res.render(render, { errors, ...localParams })

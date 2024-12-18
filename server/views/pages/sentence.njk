@@ -198,7 +198,11 @@
                                   {
                                       key: { text: 'Length' },
                                       value: { text: requirement.length + ' ' + requirement.lengthUnitValue}
-                                  } if requirement.length,
+                                  } if requirement.length and requirement.code != 'F',
+                                  {
+                                      key: { text: 'Length of RAR' },
+                                      value: { text: requirement.length + ' ' + requirement.lengthUnitValue}
+                                  } if requirement.length and requirement.code == 'F',
                                   {
                                       key: { text: 'Progress' },
                                       value: { text: requirement.rar.completed + ' days'}
@@ -220,7 +224,7 @@
                                       value: { text: requirement.actualEndDate | dateWithYear }
                                   } if requirement.actualEndDate,
                                   {
-                                      key: { text: "Termination reason" },
+                                      key: { text: "Result" },
                                       value: { text: requirement.terminationReason }
                                   } if requirement.terminationReason,
                                   {

@@ -237,8 +237,9 @@
               {
                 "code": "F",
                 "actualStartDate": "2024-04-12",
-                "description": "12 days RAR, 1 completed",
+                "description": "1 of 12 RAR days",
                 "length": 12,
+                "lengthUnitValue": "Days",
                 "notes": "my notes",
                 "rar": {
                   "completed": 1,

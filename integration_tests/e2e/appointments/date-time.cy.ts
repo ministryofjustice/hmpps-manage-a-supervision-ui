@@ -93,8 +93,8 @@ describe('Enter the date and time of the appointment', () => {
       loadPage()
       dateTimePage.getDatePickerToggle().click()
       dateTimePage.getActiveDayButton().click()
-      dateTimePage.getElement(`#appointments-${crn}-${uuid}-start-time`).type('9:00am')
-      dateTimePage.getElement(`#appointments-${crn}-${uuid}-end-time`).focus().type('9:30am').tab()
+      dateTimePage.getElement(`#appointments-${crn}-${uuid}-start-time`).select('9:00am')
+      dateTimePage.getElement(`#appointments-${crn}-${uuid}-end-time`).focus().select('9:30am').tab()
       dateTimePage.getSubmitBtn().click()
     })
     it('should redirect to the appointment repeating page', () => {

@@ -65,6 +65,9 @@ None known
 </div>
 </dl>
    {% endset %}
+
+
+
 {% block form %}
    {% if errors %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
@@ -85,20 +88,23 @@ None known
     minDate: minDate
   } | decorateFormAttributes(['appointments', crn, id, 'date'])) }}
 
-  {{ govukInput({
-    label: {
+{{ govukSelect({
+   label: {
       text: "Start time",
       classes: "govuk-label--s"
     },
-    classes: "govuk-input--width-5 time-field"
+  items: timeOptions
   } | decorateFormAttributes(['appointments', crn, id, 'start-time'])) }}
 
-  {{ govukInput({
-    label: {
+
+{{ govukSelect({
+   label: {
       text: "End time",
       classes: "govuk-label--s"
     },
-    classes: "govuk-input--width-5 time-field"
+  items: timeOptions
   } | decorateFormAttributes(['appointments', crn, id, 'end-time'])) }}
+
+ 
   <input type="hidden" name="_minDate" value="{{minDate}}">
 {% endblock %}

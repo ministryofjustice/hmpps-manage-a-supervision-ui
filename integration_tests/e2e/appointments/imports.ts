@@ -41,8 +41,8 @@ export const completeDateTimePage = () => {
   const dateTimePage = new AppointmentDateTimePage()
   dateTimePage.getDatePickerToggle().click()
   dateTimePage.getActiveDayButton().click()
-  dateTimePage.getElement(`#appointments-${crn}-${uuid}-start-time`).clear().type(startTime)
-  dateTimePage.getElement(`#appointments-${crn}-${uuid}-end-time`).focus().clear().type(endTime).tab()
+  dateTimePage.getElement(`#appointments-${crn}-${uuid}-start-time`).select(startTime)
+  dateTimePage.getElement(`#appointments-${crn}-${uuid}-end-time`).focus().select(endTime).tab()
   dateTimePage.getSubmitBtn().click()
 }
 

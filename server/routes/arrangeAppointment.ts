@@ -16,6 +16,7 @@ import { setDataValue, getDataValue } from '../utils/utils'
 import { ArrangedSession } from '../models/ArrangedSession'
 import { postAppointments } from '../middleware/postAppointments'
 import properties from '../properties'
+import { getTimeOptions } from '../middleware/getTimeOptions'
 
 const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Services) => {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -120,7 +121,7 @@ const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Ser
     },
   )
 
-  router.all('/case/:crn/arrange-appointment/:id/date-time', getPersonalDetails(hmppsAuthClient))
+  router.all('/case/:crn/arrange-appointment/:id/date-time', getPersonalDetails(hmppsAuthClient), getTimeOptions)
 
   router.get(
     '/case/:crn/arrange-appointment/:id/date-time',

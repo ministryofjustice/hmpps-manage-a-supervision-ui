@@ -20,7 +20,7 @@ import {
   uuid,
 } from './imports'
 
-const regex: RegExp = /^\d{2}\s[A-Za-z]+ \d{4}\sfrom\s\d{1,2}:\d{2}[ap]m\sto\s\d{1,2}:\d{2}[ap]m$/
+const regex: RegExp = /^\d{1,2}\s[A-Za-z]+ \d{4}\sfrom\s\d{1,2}:\d{2}[ap]m\sto\s\d{1,2}:\d{2}[ap]m$/
 
 const loadPage = () => {
   completeTypePage()
@@ -108,8 +108,8 @@ describe('Check your answers then confirm the appointment', () => {
       const changedEnd = '10:30am'
       cyaPage.getSummaryListRow(4).find('.govuk-link').click()
       dateTimePage = new AppointmentDateTimePage()
-      dateTimePage.getElement(`#appointments-${crn}-${uuid}-start-time`).clear().type(changedStart)
-      dateTimePage.getElement(`#appointments-${crn}-${uuid}-end-time`).focus().clear().type(changedEnd).tab()
+      dateTimePage.getElement(`#appointments-${crn}-${uuid}-start-time`).select(changedStart)
+      dateTimePage.getElement(`#appointments-${crn}-${uuid}-end-time`).focus().select(changedEnd).tab()
       dateTimePage.getSubmitBtn().click()
       cyaPage
         .getSummaryListRow(4)

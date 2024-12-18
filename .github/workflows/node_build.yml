@@ -1,8 +1,5 @@
 name: Build and test node
 
-env:
-  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-  
 on:
   workflow_call:
     inputs:
@@ -48,6 +45,8 @@ jobs:
       shell: bash
       run: |
         npm run build
+      env:
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     - name: Linter check # Run linter after build because the integration test code depend on compiled typescript...
       shell: bash
       run: | 

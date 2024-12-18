@@ -1,5 +1,8 @@
 name: Build and test node
 
+env:
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  
 on:
   workflow_call:
     inputs:

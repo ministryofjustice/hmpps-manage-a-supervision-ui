@@ -1,11 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
-import { Data, Route } from '../@types'
 import config from '../config'
 import { getDataValue, setDataValue } from '../utils/utils'
 
 type Key = 'appointments' | 'locations' | 'errors'
-
-type Input = any
 
 const toISODate = (val: string): string => {
   const [day, month, year]: string[] = val.split('/')
@@ -15,9 +12,9 @@ const toISODate = (val: string): string => {
 export const autoStoreSessionData = (req: Request, res: Response, next: NextFunction): void => {
   const newSessionData = req?.session?.data || {}
   const { crn, id } = req.params
-  const inputs: Record<string, Input> = req.body
-  Object.entries(inputs).forEach(([key, val]: [string, Input]) => {
-    if (key.charAt(0) !== '_') {
+  const inputs: Record<string, any> = req.body
+  Object.entries(inputs).forEach(([key, val]: [string, any]) => {
+    if (!key.startsWith('_')) {
       const getPath = id ? [key, crn, id] : [key, crn]
       const body: Record<string, string> = getDataValue(inputs, getPath)
       Object.keys(body).forEach(valueKey => {

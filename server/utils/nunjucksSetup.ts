@@ -23,7 +23,6 @@ import {
   getAppointmentsToAction,
   getComplianceStatus,
   getCurrentRisksToThemselves,
-  getDataValue,
   getDistinctRequirements,
   getPreviousRisksToThemselves,
   getRisksToThemselves,

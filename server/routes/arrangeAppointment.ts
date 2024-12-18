@@ -140,10 +140,12 @@ const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Ser
     return res.redirect(redirect)
   })
 
-  router.all('/case/:crn/arrange-appointment/:id/repeating', async (req, res, next) => {
-    const { crn, id } = req.params
-    const { data } = req.session
-    if (req.method === 'GET') {
+  router.get(
+    '/case/:crn/arrange-appointment/:id/repeating',
+    redirectWizard(['type', 'sentence', 'location', 'date']),
+    async (req, res, _next) => {
+      const { data } = req.session
+      const { crn, id } = req.params
       const { 'repeating-frequency': repeatingFrequency, 'repeating-count': repeatingCount } = req.query
       if (repeatingFrequency || repeatingCount) {
         setDataValue(data, ['appointments', crn, id, 'repeating'], 'Yes')
@@ -169,19 +171,10 @@ const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Ser
           ? repeatAppointments[repeatAppointments.length - 1].date
           : ''
       }
-    }
-    return next()
-  })
-
-  router.get(
-    '/case/:crn/arrange-appointment/:id/repeating',
-    redirectWizard(['type', 'sentence', 'location', 'date']),
-    async (req, res, _next) => {
-      const { crn, id } = req.params
-      const { change } = req.query
       return res.render(`pages/arrange-appointment/repeating`, { crn, id })
     },
   )
+
   router.post('/case/:crn/arrange-appointment/:id/repeating', validate.appointments, (req, res, _next) => {
     const { crn, id } = req.params
     const change = req?.query?.change as string

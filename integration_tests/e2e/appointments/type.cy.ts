@@ -30,40 +30,39 @@ describe('Arrange an appointment', () => {
       }
       typePage.getSubmitBtn().should('contain.text', 'Continue')
     })
-
-    describe('Continue is clicked without first selecting a type', () => {
-      beforeEach(() => {
-        typePage.getSubmitBtn().click()
-      })
-      it('should display the error summary box', () => {
-        typePage.checkErrorSummaryBox(['Select an appointment type'])
-      })
-
-      it('should display the error message', () => {
-        typePage.getElement(`#appointments-${crn}-${uuid}-type-error`).should($error => {
-          expect($error.text().trim()).to.include('Select an appointment type')
-        })
-      })
-      describe('The error summary link is clicked', () => {
-        beforeEach(() => {
-          typePage.getErrorSummaryLink(1).click()
-        })
-        it('should focus the first radio button', () => {
-          typePage.getRadio('type', 1).should('be.focused')
-        })
-      })
+  })
+  describe('Continue is clicked without first selecting a type', () => {
+    beforeEach(() => {
+      loadPage()
+      typePage.getSubmitBtn().click()
+    })
+    it('should display the error summary box', () => {
+      typePage.checkErrorSummaryBox(['Select an appointment type'])
     })
 
-    describe('Type is selected, and continue is clicked', () => {
+    it('should display the error message', () => {
+      typePage.getElement(`#appointments-${crn}-${uuid}-type-error`).should($error => {
+        expect($error.text().trim()).to.include('Select an appointment type')
+      })
+    })
+    describe('The error summary link is clicked', () => {
       beforeEach(() => {
-        loadPage()
-        typePage.getElement(`#appointments-${crn}-${uuid}-type`).click()
-        typePage.getSubmitBtn().click()
+        typePage.getErrorSummaryLink(1).click()
       })
-      it('should redirect to the sentence page', () => {
-        sentencePage = new AppointmentSentencePage()
-        sentencePage.checkOnPage()
+      it('should focus the first radio button', () => {
+        typePage.getRadio('type', 1).should('be.focused')
       })
+    })
+  })
+  describe('Type is selected, and continue is clicked', () => {
+    beforeEach(() => {
+      loadPage()
+      typePage.getElement(`#appointments-${crn}-${uuid}-type`).click()
+      typePage.getSubmitBtn().click()
+    })
+    it('should redirect to the sentence page', () => {
+      sentencePage = new AppointmentSentencePage()
+      sentencePage.checkOnPage()
     })
   })
 })

@@ -1,4 +1,4 @@
-import { dateWithYear, dayOfWeek } from '../../../server/utils/utils'
+import { dateWithYear } from '../../../server/utils/utils'
 import AppointmentCheckYourAnswersPage from '../../pages/appointments/check-your-answers.page'
 import AppointmentConfirmationPage from '../../pages/appointments/confirmation.page'
 import AppointmentDateTimePage from '../../pages/appointments/date-time.page'

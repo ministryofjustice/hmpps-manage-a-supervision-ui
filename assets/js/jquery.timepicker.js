@@ -31,8 +31,7 @@
   }
 
   function _defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i]
+    for (let descriptor of props) {
       descriptor.enumerable = descriptor.enumerable || false
       descriptor.configurable = true
       if ('value' in descriptor) descriptor.writable = true
@@ -62,23 +61,22 @@
   }
 
   function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object)
+    let keys = Object.keys(object)
 
     if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object)
+      let symbols = Object.getOwnPropertySymbols(object)
       if (enumerableOnly)
         symbols = symbols.filter(function (sym) {
           return Object.getOwnPropertyDescriptor(object, sym).enumerable
         })
-      keys.push.apply(keys, symbols)
+      keys = [...keys, symbols]
     }
-
     return keys
   }
 
   function _objectSpread2(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {}
+    for (let i = 1; i < arguments.length; i++) {
+      const source = arguments[i] != null ? arguments[i] : {}
 
       if (i % 2) {
         ownKeys(Object(source), true).forEach(function (key) {
@@ -99,7 +97,7 @@
   function _unsupportedIterableToArray(o, minLen) {
     if (!o) return
     if (typeof o === 'string') return _arrayLikeToArray(o, minLen)
-    var n = Object.prototype.toString.call(o).slice(8, -1)
+    let n = Object.prototype.toString.call(o).slice(8, -1)
     if (n === 'Object' && o.constructor) n = o.constructor.name
     if (n === 'Map' || n === 'Set') return Array.from(o)
     if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen)
@@ -107,14 +105,14 @@
 
   function _arrayLikeToArray(arr, len) {
     if (len == null || len > arr.length) len = arr.length
-
-    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]
+    let arr2 = new Array(len)
+    for (let i = 0; i < len; i++) arr2[i] = arr[i]
 
     return arr2
   }
 
   function _createForOfIteratorHelper(o, allowArrayLike) {
-    var it
+    let it
 
     if (typeof Symbol === 'undefined' || o[Symbol.iterator] == null) {
       if (
@@ -123,12 +121,10 @@
         (allowArrayLike && o && typeof o.length === 'number')
       ) {
         if (it) o = it
-        var i = 0
-
-        var F = function () {}
+        let i = 0
 
         return {
-          s: F,
+          s: () => {},
           n: function () {
             if (i >= o.length)
               return {
@@ -142,7 +138,7 @@
           e: function (e) {
             throw e
           },
-          f: F,
+          f: () => {},
         }
       }
 
@@ -151,53 +147,44 @@
       )
     }
 
-    var normalCompletion = true,
-      didErr = false,
-      err
+    let normalCompletion = true
     return {
       s: function () {
         it = o[Symbol.iterator]()
       },
       n: function () {
-        var step = it.next()
+        const step = it.next()
         normalCompletion = step.done
         return step
       },
-      e: function (e) {
-        didErr = true
-        err = e
-      },
+      e: () => {},
       f: function () {
-        try {
-          if (!normalCompletion && it.return != null) it.return()
-        } finally {
-          // if (didErr) throw err
-        }
+        if (!normalCompletion && it.return != null) it.return()
       },
     }
   }
 
-  var ONE_DAY = 86400
-  var EVENT_DEFAULTS = {
+  const ONE_DAY = 86400
+  const EVENT_DEFAULTS = {
     bubbles: true,
     cancelable: false,
     detail: null,
   }
 
-  var roundingFunction = function roundingFunction(seconds, settings) {
+  const roundingFunction = function roundingFunction(seconds, settings) {
     if (seconds === null) {
       return null
     }
 
-    var i = 0
-    var nextVal = 0
+    let i = 0
+    let nextVal = 0
 
     while (nextVal < seconds) {
       i++
       nextVal += settings.step(i) * 60
     }
 
-    var prevVal = nextVal - settings.step(i - 1) * 60
+    const prevVal = nextVal - settings.step(i - 1) * 60
 
     if (seconds - prevVal < nextVal - seconds) {
       return moduloSeconds(prevVal, settings)
@@ -214,7 +201,7 @@
     return seconds % ONE_DAY
   }
 
-  var DEFAULT_SETTINGS = {
+  const DEFAULT_SETTINGS = {
     appendTo: 'body',
     className: null,
     closeOnWindow: false,
@@ -243,7 +230,7 @@
     useSelect: false,
     wrapHours: true,
   }
-  var DEFAULT_LANG = {
+  const DEFAULT_LANG = {
     am: 'am',
     pm: 'pm',
     AM: 'AM',
@@ -254,16 +241,16 @@
     hrs: 'hrs',
   }
 
-  var Timepicker = /*#__PURE__*/ (function () {
+  const Timepicker = /*#__PURE__*/ (function () {
     function Timepicker(targetEl) {
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {}
+      const options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {}
 
       _classCallCheck(this, Timepicker)
 
       this._handleFormatValue = this._handleFormatValue.bind(this)
       this._handleKeyUp = this._handleKeyUp.bind(this)
       this.targetEl = targetEl
-      var attrOptions = Timepicker.extractAttrOptions(targetEl, Object.keys(DEFAULT_SETTINGS))
+      const attrOptions = Timepicker.extractAttrOptions(targetEl, Object.keys(DEFAULT_SETTINGS))
       this.settings = this.parseSettings(
         _objectSpread2(_objectSpread2(_objectSpread2({}, DEFAULT_SETTINGS), options), attrOptions),
       )
@@ -289,7 +276,7 @@
             }
 
             this.list.hide()
-            var hideTimepickerEvent = new CustomEvent('hideTimepicker', EVENT_DEFAULTS)
+            const hideTimepickerEvent = new CustomEvent('hideTimepicker', EVENT_DEFAULTS)
             this.targetEl.dispatchEvent(hideTimepickerEvent)
           },
         },
@@ -300,15 +287,15 @@
               return false
             }
 
-            var out = false
-            var value = this.settings.roundingFunction(value, this.settings)
+            let out = false
+            value = this.settings.roundingFunction(value, this.settings)
 
             if (!this.list) {
               return false
             }
 
             this.list.find('li').each(function (i, obj) {
-              var parsed = parseInt(obj.dataset.time)
+              const parsed = parseInt(obj.dataset.time)
 
               if (isNaN(parsed)) {
                 return
@@ -338,20 +325,20 @@
                 this.targetEl.value = value
               }
 
-              var tp = this
-              var settings = tp.settings
+              const tp = this
+              const settings = tp.settings
 
               if (settings.useSelect && source != 'select' && tp.list) {
                 tp.list.val(tp._roundAndFormatTime(tp.anytime2int(value)))
               }
             }
 
-            var selectTimeEvent = new CustomEvent('selectTime', EVENT_DEFAULTS)
+            const selectTimeEvent = new CustomEvent('selectTime', EVENT_DEFAULTS)
 
             if (this.selectedValue != value) {
               this.selectedValue = value
-              var changeTimeEvent = new CustomEvent('changeTime', EVENT_DEFAULTS)
-              var changeEvent = new CustomEvent(
+              const changeTimeEvent = new CustomEvent('changeTime', EVENT_DEFAULTS)
+              const changeEvent = new CustomEvent(
                 'change',
                 Object.assign(EVENT_DEFAULTS, {
                   detail: 'timepicker',
@@ -390,10 +377,10 @@
         {
           key: '_selectValue',
           value: function _selectValue() {
-            var tp = this
+            const tp = this
             //tp.settings
-            var list = tp.list
-            var cursor = list.find('.ui-timepicker-selected')
+            const list = tp.list
+            const cursor = list.find('.ui-timepicker-selected')
 
             if (cursor.hasClass('ui-timepicker-disabled')) {
               return false
@@ -403,10 +390,10 @@
               return true
             }
 
-            var timeValue = cursor.get(0).dataset.time // selected value found
+            let timeValue = cursor.get(0).dataset.time // selected value found
 
             if (timeValue) {
-              var parsedTimeValue = parseInt(timeValue)
+              const parsedTimeValue = parseInt(timeValue)
 
               if (!isNaN(parsedTimeValue)) {
                 timeValue = parsedTimeValue
@@ -455,29 +442,29 @@
               return timeString
             }
 
-            timeString = timeString.toLowerCase().replace(/[\s\.]/g, '') // if the last character is an "a" or "p", add the "m"
+            timeString = timeString.toLowerCase().replace(/[\s.]/g, '') // if the last character is an "a" or "p", add the "m"
 
             if (this.settings.lang.am === 'am' && (timeString.slice(-1) == 'a' || timeString.slice(-1) == 'p')) {
               timeString += 'm'
             }
 
-            var pattern = /^(([^0-9]+))?([0-9]?[0-9])(([0-5][0-9]))?(([0-5][0-9]))?(([^0-9]*))$/
-            var hasDelimetersMatch = timeString.match(/\W/)
+            let pattern = /^((\D+))?(\d?\d)(([0-5]\d))?(([0-5]\d))?((\D*))$/
+            const hasDelimetersMatch = timeString.match(/\W/)
 
             if (hasDelimetersMatch) {
-              pattern = /^(([^0-9]+))?([0-9]?[0-9])(\W+([0-5][0-9]?))?(\W+([0-5][0-9]))?(([^0-9]*))$/
+              pattern = /^((\D+))?(\d?\d)(\W+([0-5]\d?))?(\W+([0-5]\d))?((\D*))$/
             }
 
-            var time = timeString.match(pattern)
+            const time = timeString.match(pattern)
 
             if (!time) {
               return null
             }
 
-            var hour = parseInt(time[3] * 1, 10)
-            var ampm = time[2] || time[9]
-            var minutes = this.parseMinuteString(time[5])
-            var seconds = time[7] * 1 || 0
+            let hour = parseInt(time[3] * 1, 10)
+            let ampm = time[2] || time[9]
+            let minutes = this.parseMinuteString(time[5])
+            let seconds = time[7] * 1 || 0
 
             if (!ampm && time[3].length == 2 && time[3][0] == '0') {
               // preceding '0' implies AM
@@ -490,11 +477,11 @@
               minutes = this.parseMinuteString(time[3][1])
             }
 
-            var hours = hour
+            let hours = hour
 
             if (hour <= 12 && ampm) {
               ampm = ampm.trim()
-              var isPm = ampm == this.settings.lang.pm || ampm == this.settings.lang.PM
+              const isPm = ampm == this.settings.lang.pm || ampm == this.settings.lang.PM
 
               if (hour == 12) {
                 hours = isPm ? 12 : 0
@@ -502,7 +489,7 @@
                 hours = hour + (isPm ? 12 : 0)
               }
             } else {
-              var t = hour * 3600 + minutes * 60 + seconds
+              const t = hour * 3600 + minutes * 60 + seconds
 
               if (t >= ONE_DAY + (this.settings.show2400 ? 1 : 0)) {
                 if (this.settings.wrapHours === false) {
@@ -513,10 +500,10 @@
               }
             }
 
-            var timeInt = hours * 3600 + minutes * 60 + seconds // if no am/pm provided, intelligently guess based on the scrollDefault
+            let timeInt = hours * 3600 + minutes * 60 + seconds // if no am/pm provided, intelligently guess based on the scrollDefault
 
             if (hour < 12 && !ampm && this.settings._twelveHourTime && this.settings.scrollDefault()) {
-              var delta = timeInt - this.settings.scrollDefault()
+              const delta = timeInt - this.settings.scrollDefault()
 
               if (delta < 0 && delta >= ONE_DAY / -2) {
                 timeInt = (timeInt + ONE_DAY / 2) % ONE_DAY
@@ -533,7 +520,7 @@
               minutesString = 0
             }
 
-            var multiplier = 1
+            let multiplier = 1
 
             if (minutesString.length == 1) {
               multiplier = 10
@@ -545,7 +532,7 @@
         {
           key: 'intStringDateOrFunc2func',
           value: function intStringDateOrFunc2func(input) {
-            var _this = this
+            const _this = this
 
             if (input === null || input === undefined) {
               return function () {
@@ -566,7 +553,6 @@
           key: 'parseSettings',
           value: function parseSettings(settings) {
             settings.lang = _objectSpread2(_objectSpread2({}, DEFAULT_LANG), settings.lang) // lang is used by other functions the rest of this depends on
-            // todo: unwind circular dependency on lang
 
             this.settings = settings
 
@@ -589,7 +575,7 @@
             }
 
             if (typeof settings.step != 'function') {
-              var curryStep = settings.step
+              const curryStep = settings.step
 
               settings.step = function () {
                 return curryStep
@@ -616,7 +602,7 @@
               return []
             } // convert string times to integers
 
-            for (var i in disableTimeRanges) {
+            for (let i in disableTimeRanges) {
               disableTimeRanges[i] = [
                 this.anytime2int(disableTimeRanges[i][0]),
                 this.anytime2int(disableTimeRanges[i][1]),
@@ -627,7 +613,7 @@
               return a[0] - b[0]
             }) // merge any overlapping ranges
 
-            for (var i = disableTimeRanges.length - 1; i > 0; i--) {
+            for (let i = disableTimeRanges.length - 1; i > 0; i--) {
               if (disableTimeRanges[i][0] <= disableTimeRanges[i - 1][1]) {
                 disableTimeRanges[i - 1] = [
                   Math.min(disableTimeRanges[i][0], disableTimeRanges[i - 1][0]),
@@ -662,7 +648,7 @@
           key: '_int2duration',
           value: function _int2duration(seconds, step) {
             seconds = Math.abs(seconds)
-            var minutes = Math.round(seconds / 60),
+            let minutes = Math.round(seconds / 60),
               duration = [],
               hours,
               mins
@@ -708,10 +694,10 @@
               return null
             }
 
-            var seconds = parseInt(timeInt % 60),
-              minutes = parseInt((timeInt / 60) % 60),
-              hours = parseInt((timeInt / (60 * 60)) % 24)
-            var time = new Date(1970, 0, 2, hours, minutes, seconds, 0)
+            let seconds = parseInt(timeInt % 60)
+            let minutes = parseInt((timeInt / 60) % 60)
+            const hours = parseInt((timeInt / (60 * 60)) % 24)
+            const time = new Date(1970, 0, 2, hours, minutes, seconds, 0)
 
             if (isNaN(time.getTime())) {
               return null
@@ -721,10 +707,10 @@
               return this.settings.timeFormat(time)
             }
 
-            var output = ''
-            var hour, code
+            let output = ''
+            let hour, code
 
-            for (var i = 0; i < this.settings.timeFormat.length; i++) {
+            for (let i = 0; i < this.settings.timeFormat.length; i++) {
               code = this.settings.timeFormat.charAt(i)
 
               switch (code) {
@@ -764,7 +750,7 @@
                   break
 
                 case 'i':
-                  var minutes = time.getMinutes()
+                  minutes = time.getMinutes()
                   output += minutes > 9 ? minutes : '0' + minutes
                   break
 
@@ -775,7 +761,6 @@
 
                 case '\\':
                   // escape character; add the next character and skip ahead
-                  i++
                   output += this.settings.timeFormat.charAt(i)
                   break
 
@@ -790,27 +775,27 @@
         {
           key: '_setSelected',
           value: function _setSelected() {
-            var list = this.list
+            const list = this.list
             list.find('li').removeClass('ui-timepicker-selected')
-            var timeValue = this.anytime2int(this._getTimeValue())
+            const timeValue = this.anytime2int(this._getTimeValue())
 
             if (timeValue === null) {
               return
             }
 
-            var selected = this._findRow(timeValue)
+            const selected = this._findRow(timeValue)
 
             if (selected) {
-              var selectedRect = selected.getBoundingClientRect()
-              var listRect = list.get(0).getBoundingClientRect()
-              var topDelta = selectedRect.top - listRect.top
+              const selectedRect = selected.getBoundingClientRect()
+              const listRect = list.get(0).getBoundingClientRect()
+              const topDelta = selectedRect.top - listRect.top
 
               if (topDelta + selectedRect.height > listRect.height || topDelta < 0) {
-                var newScroll = list.scrollTop() + (selectedRect.top - listRect.top) - selectedRect.height
+                const newScroll = list.scrollTop() + (selectedRect.top - listRect.top) - selectedRect.height
                 list.scrollTop(newScroll)
               }
 
-              var parsed = parseInt(selected.dataset.time)
+              const parsed = parseInt(selected.dataset.time)
 
               if (this.settings.forceRoundTime || parsed === timeValue) {
                 selected.classList.add('ui-timepicker-selected')
@@ -847,19 +832,19 @@
               return
             }
 
-            var settings = this.settings
-            var seconds = this.anytime2int(this.targetEl.value)
+            const settings = this.settings
+            let seconds = this.anytime2int(this.targetEl.value)
 
             if (seconds === null) {
-              var timeFormatErrorEvent = new CustomEvent('timeFormatError', EVENT_DEFAULTS)
+              const timeFormatErrorEvent = new CustomEvent('timeFormatError', EVENT_DEFAULTS)
               this.targetEl.dispatchEvent(timeFormatErrorEvent)
               return
             }
 
-            var rangeError = this._isTimeRangeError(seconds, settings)
+            const rangeError = this._isTimeRangeError(seconds, settings)
 
             if (settings.forceRoundTime) {
-              var roundSeconds = settings.roundingFunction(seconds, settings)
+              const roundSeconds = settings.roundingFunction(seconds, settings)
 
               if (roundSeconds != seconds) {
                 seconds = roundSeconds
@@ -867,12 +852,12 @@
               }
             }
 
-            var prettyTime = this._int2time(seconds)
+            const prettyTime = this._int2time(seconds)
 
             if (rangeError) {
               this._setTimeValue(prettyTime)
 
-              var timeRangeErrorEvent = new CustomEvent('timeRangeError', EVENT_DEFAULTS)
+              const timeRangeErrorEvent = new CustomEvent('timeRangeError', EVENT_DEFAULTS)
               this.targetEl.dispatchEvent(timeRangeErrorEvent)
             } else {
               this._setTimeValue(prettyTime, origin)
@@ -891,12 +876,13 @@
               return true
             } // check that time isn't within disabled time ranges
 
-            var _iterator = _createForOfIteratorHelper(settings.disableTimeRanges),
+            let _iterator = _createForOfIteratorHelper(settings.disableTimeRanges),
               _step
 
             try {
-              for (_iterator.s(); !(_step = _iterator.n()).done; ) {
-                var range = _step.value
+              _step = _iterator.n()
+              for (_iterator.s(); !_step.done; ) {
+                const range = _step.value
 
                 if (seconds >= range[0] && seconds < range[1]) {
                   return true
@@ -914,7 +900,7 @@
         {
           key: '_generateNoneElement',
           value: function _generateNoneElement(optionValue, useSelect) {
-            var label, className, value
+            let label, className, value
 
             if (_typeof(optionValue) == 'object') {
               label = optionValue.label
@@ -927,7 +913,7 @@
               $.error('Invalid noneOption value')
             }
 
-            var el
+            let el
 
             if (useSelect) {
               el = document.createElement('option')
@@ -948,14 +934,14 @@
         {
           key: '_handleKeyUp',
           value: function _handleKeyUp(e) {
-            var _this2 = this
+            const _this2 = this
 
             if (!this.list || !Timepicker.isVisible(this.list) || this.settings.disableTextInput) {
               return true
             }
 
             if (e.type === 'paste' || e.type === 'cut') {
-              var handler = function handler() {
+              const handler = function handler() {
                 if (_this2.settings.typeaheadHighlight) {
                   _this2._setSelected()
                 } else {
@@ -1017,14 +1003,15 @@
         {
           key: 'extractAttrOptions',
           value: function extractAttrOptions(element, keys) {
-            var output = {}
+            let output = {}
 
-            var _iterator2 = _createForOfIteratorHelper(keys),
+            let _iterator2 = _createForOfIteratorHelper(keys),
               _step2
 
             try {
-              for (_iterator2.s(); !(_step2 = _iterator2.n()).done; ) {
-                var key = _step2.value
+              _step2 = _iterator2.n()
+              for (_iterator2.s(); !_step2.done; ) {
+                const key = _step2.value
 
                 if (key in element.dataset) {
                   output[key] = element.dataset[key]
@@ -1042,20 +1029,21 @@
         {
           key: 'isVisible',
           value: function isVisible(elem) {
-            var el = elem[0]
+            const el = elem[0]
             return el.offsetWidth > 0 && el.offsetHeight > 0
           },
         },
         {
           key: 'hideAll',
           value: function hideAll() {
-            var _iterator3 = _createForOfIteratorHelper(document.getElementsByClassName('ui-timepicker-input')),
+            let _iterator3 = _createForOfIteratorHelper(document.getElementsByClassName('ui-timepicker-input')),
               _step3
 
             try {
-              for (_iterator3.s(); !(_step3 = _iterator3.n()).done; ) {
-                var el = _step3.value
-                var tp = el.timepickerObj
+              _step3 = _iterator3.n()
+              for (_iterator3.s(); !_step3.done; ) {
+                const el = _step3.value
+                const tp = el.timepickerObj
 
                 if (tp) {
                   tp.hideMe()
@@ -1083,7 +1071,7 @@
       }
 
       params = Object.assign(EVENT_DEFAULTS, params)
-      var evt = document.createEvent('CustomEvent')
+      const evt = document.createEvent('CustomEvent')
       evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail)
       return evt
     }
@@ -1096,7 +1084,7 @@
       return []
     }
 
-    var noneOptions = _getNoneOptionItemsHelper(settings.noneOption)
+    const noneOptions = _getNoneOptionItemsHelper(settings.noneOption)
 
     if (Array.isArray(settings.noneOption)) {
       return noneOptions
@@ -1128,12 +1116,12 @@
   }
 
   function _getDropdownTimes(tp) {
-    var _settings$minTime, _settings$maxTime
+    let _settings$minTime, _settings$maxTime
 
-    var settings = tp.settings
-    var start =
+    const settings = tp.settings
+    const start =
       (_settings$minTime = settings.minTime()) !== null && _settings$minTime !== void 0 ? _settings$minTime : 0
-    var end =
+    let end =
       (_settings$maxTime = settings.maxTime()) !== null && _settings$maxTime !== void 0
         ? _settings$maxTime
         : start + ONE_DAY - 1
@@ -1148,24 +1136,24 @@
       end = ONE_DAY
     }
 
-    var output = []
+    const output = []
 
-    for (var i = start, j = 0; i <= end; j++, i += settings.step(j) * 60) {
-      var timeInt = i
+    for (let i = start, j = 0; i <= end; j++, i += settings.step(j) * 60) {
+      const timeInt = i
 
-      var timeString = tp._int2time(timeInt)
+      const timeString = tp._int2time(timeInt)
 
-      var className = timeInt % ONE_DAY < ONE_DAY / 2 ? 'ui-timepicker-am' : 'ui-timepicker-pm'
-      var item = {
+      const className = timeInt % ONE_DAY < ONE_DAY / 2 ? 'ui-timepicker-am' : 'ui-timepicker-pm'
+      const item = {
         label: timeString,
         value: moduloSeconds(timeInt, settings),
         className: className,
       }
 
       if ((settings.minTime() !== null || settings.durationTime() !== null) && settings.showDuration) {
-        var _settings$durationTim
+        let _settings$durationTim
 
-        var durStart =
+        let durStart =
           (_settings$durationTim = settings.durationTime()) !== null && _settings$durationTim !== void 0
             ? _settings$durationTim
             : settings.minTime()
@@ -1174,17 +1162,18 @@
           durStart -= ONE_DAY
         }
 
-        var durationString = tp._int2duration(i - durStart, settings.step())
+        const durationString = tp._int2duration(i - durStart, settings.step())
 
         item.duration = durationString
       }
 
-      var _iterator = _createForOfIteratorHelper(settings.disableTimeRanges),
+      let _iterator = _createForOfIteratorHelper(settings.disableTimeRanges),
         _step
 
       try {
-        for (_iterator.s(); !(_step = _iterator.n()).done; ) {
-          var range = _step.value
+        _step = _iterator.n()
+        for (_iterator.s(); !_step.done; ) {
+          const range = _step.value
 
           if (timeInt % ONE_DAY >= range[0] && timeInt % ONE_DAY < range[1]) {
             item.disabled = true
@@ -1204,7 +1193,7 @@
   }
 
   function _renderSelectItem(item) {
-    var el = document.createElement('option')
+    const el = document.createElement('option')
     el.value = item.value || item.label
 
     if (item.duration) {
@@ -1221,7 +1210,7 @@
   }
 
   function _renderStandardItem(item) {
-    var el = document.createElement('li')
+    const el = document.createElement('li')
     el.dataset['time'] = item.value
 
     if (item.className) {
@@ -1232,7 +1221,7 @@
     el.appendChild(document.createTextNode(item.label))
 
     if (item.duration) {
-      var durationEl = document.createElement('span')
+      const durationEl = document.createElement('span')
       durationEl.appendChild(document.createTextNode('(' + item.duration + ')'))
       durationEl.classList.add('ui-timepicker-duration')
       el.appendChild(durationEl)
@@ -1246,17 +1235,18 @@
   }
 
   function _renderStandardList(items) {
-    var list = document.createElement('ul')
+    const list = document.createElement('ul')
     list.classList.add('ui-timepicker-list')
 
-    var _iterator2 = _createForOfIteratorHelper(items),
+    let _iterator2 = _createForOfIteratorHelper(items),
       _step2
 
     try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done; ) {
-        var item = _step2.value
+      _step2 = _iterator2.n()
+      for (_iterator2.s(); !_step2.done; ) {
+        const item = _step2.value
 
-        var itemEl = _renderStandardItem(item)
+        const itemEl = _renderStandardItem(item)
 
         list.appendChild(itemEl)
       }
@@ -1266,7 +1256,7 @@
       _iterator2.f()
     }
 
-    var wrapper = document.createElement('div')
+    const wrapper = document.createElement('div')
     wrapper.classList.add('ui-timepicker-wrapper')
     wrapper.tabIndex = -1
     wrapper.style.display = 'none'
@@ -1276,21 +1266,22 @@
   }
 
   function _renderSelectList(items, targetName) {
-    var el = document.createElement('select')
+    const el = document.createElement('select')
     el.classList.add('ui-timepicker-select')
 
     if (targetName) {
       el.name = 'ui-timepicker-' + targetName
     }
 
-    var _iterator3 = _createForOfIteratorHelper(items),
+    let _iterator3 = _createForOfIteratorHelper(items),
       _step3
 
     try {
-      for (_iterator3.s(); !(_step3 = _iterator3.n()).done; ) {
-        var item = _step3.value
+      _step3 = _iterator3.n()
+      for (_iterator3.s(); !_step3.done; ) {
+        const item = _step3.value
 
-        var itemEl = _renderSelectItem(item)
+        const itemEl = _renderSelectItem(item)
 
         el.appendChild(itemEl)
       }
@@ -1304,8 +1295,8 @@
   }
 
   function renderHtml(tp) {
-    var items = [].concat(_getNoneOptionItems(tp.settings), _getDropdownTimes(tp))
-    var el
+    const items = [].concat(_getNoneOptionItems(tp.settings), _getDropdownTimes(tp))
+    let el
 
     if (tp.settings.useSelect) {
       el = _renderSelectList(items, tp.targetEl.name)
@@ -1314,12 +1305,13 @@
     }
 
     if (tp.settings.className) {
-      var _iterator4 = _createForOfIteratorHelper(tp.settings.className.split(' ')),
+      let _iterator4 = _createForOfIteratorHelper(tp.settings.className.split(' ')),
         _step4
 
       try {
-        for (_iterator4.s(); !(_step4 = _iterator4.n()).done; ) {
-          var token = _step4.value
+        _step4 = _iterator4.n()
+        for (_iterator4.s(); !_step4.done; ) {
+          const token = _step4.value
           el.classList.add(token)
         }
       } catch (err) {
@@ -1355,12 +1347,12 @@
       factory(jQuery)
     }
   })(function ($) {
-    var methods = {
+    const methods = {
       init: function init(options) {
         return this.each(function () {
-          var self = $(this)
-          var tp = new Timepicker(this, options)
-          var settings = tp.settings
+          const self = $(this)
+          const tp = new Timepicker(this, options)
+          const settings = tp.settings
           // settings.lang
           this.timepickerObj = tp
           self.addClass('ui-timepicker-input')
@@ -1371,7 +1363,7 @@
             self.prop('autocomplete', 'off')
 
             if (settings.showOn) {
-              for (var i in settings.showOn) {
+              for (let i in settings.showOn) {
                 self.on(settings.showOn[i] + '.timepicker', methods.show)
               }
             }
@@ -1392,9 +1384,9 @@
         })
       },
       show: function show(e) {
-        var self = $(this)
-        var tp = self[0].timepickerObj
-        var settings = tp.settings
+        const self = $(this)
+        const tp = self[0].timepickerObj
+        const settings = tp.settings
 
         if (e) {
           e.preventDefault()
@@ -1410,7 +1402,7 @@
           self.trigger('blur')
         }
 
-        var list = tp.list // check if input is readonly
+        let list = tp.list // check if input is readonly
 
         if (self.prop('readonly')) {
           return
@@ -1437,7 +1429,7 @@
         } // position the dropdown relative to the input
 
         list.show()
-        var listOffset = {}
+        const listOffset = {}
 
         if (settings.orientation.match(/r/)) {
           // right-align the dropdown
@@ -1457,7 +1449,7 @@
             parseInt(list.css('marginLeft').replace('px', ''), 10)
         }
 
-        var verticalOrientation
+        let verticalOrientation
 
         if (settings.orientation.match(/t/)) {
           verticalOrientation = 't'
@@ -1486,10 +1478,10 @@
 
         list.offset(listOffset) // position scrolling
 
-        var selected = list.find('.ui-timepicker-selected')
+        let selected = list.find('.ui-timepicker-selected')
 
         if (!selected.length) {
-          var timeInt = tp.anytime2int(tp._getTimeValue())
+          const timeInt = tp.anytime2int(tp._getTimeValue())
 
           if (timeInt !== null) {
             selected = $(tp._findRow(timeInt))
@@ -1503,7 +1495,7 @@
         }
 
         if (selected && selected.length) {
-          var topOffset = list.scrollTop() + selected.position().top - selected.outerHeight()
+          const topOffset = list.scrollTop() + selected.position().top - selected.outerHeight()
           list.scrollTop(topOffset)
         } else {
           list.scrollTop(0)
@@ -1512,7 +1504,7 @@
         if (settings.stopScrollPropagation) {
           $(document).on('wheel.ui-timepicker', '.ui-timepicker-wrapper', function (e) {
             e.preventDefault()
-            var currentScroll = $(this).scrollTop()
+            const currentScroll = $(this).scrollTop()
             $(this).scrollTop(currentScroll + e.originalEvent.deltaY)
           })
         } // attach close handlers
@@ -1528,7 +1520,7 @@
         return this
       },
       hide: function hide(e) {
-        var tp = this[0].timepickerObj
+        const tp = this[0].timepickerObj
 
         if (tp) {
           tp.hideMe()
@@ -1539,15 +1531,15 @@
       },
       option: function option(key, value) {
         if (typeof key == 'string' && typeof value == 'undefined') {
-          var tp = this[0].timepickerObj
+          const tp = this[0].timepickerObj
           return tp.settings[key]
         }
 
         return this.each(function () {
-          var self = $(this)
-          var tp = self[0].timepickerObj
-          var settings = tp.settings
-          var list = tp.list
+          const self = $(this)
+          const tp = self[0].timepickerObj
+          let settings = tp.settings
+          const list = tp.list
 
           if (_typeof(key) == 'object') {
             settings = $.extend(settings, key)
@@ -1576,19 +1568,19 @@
         })
       },
       getSecondsFromMidnight: function getSecondsFromMidnight() {
-        var tp = this[0].timepickerObj
+        const tp = this[0].timepickerObj
         return tp.anytime2int(tp._getTimeValue())
       },
       getTime: function getTime(relative_date) {
-        var tp = this[0].timepickerObj
+        const tp = this[0].timepickerObj
 
-        var time_string = tp._getTimeValue()
+        const time_string = tp._getTimeValue()
 
         if (!time_string) {
           return null
         }
 
-        var offset = tp.anytime2int(time_string)
+        const offset = tp.anytime2int(time_string)
 
         if (offset === null) {
           return null
@@ -1598,7 +1590,7 @@
           relative_date = new Date()
         } // construct a Date from relative date, and offset's time
 
-        var time = new Date(relative_date)
+        const time = new Date(relative_date)
         time.setHours(offset / 3600)
         time.setMinutes((offset % 3600) / 60)
         time.setSeconds(offset % 60)
@@ -1606,24 +1598,19 @@
         return time
       },
       isVisible: function isVisible() {
-        var tp = this[0].timepickerObj
+        const tp = this[0].timepickerObj
         return !!(tp && tp.list && Timepicker.isVisible(tp.list))
       },
       setTime: function setTime(value) {
-        var tp = this[0].timepickerObj
-        var settings = tp.settings
-        var seconds = tp.anytime2int(value)
+        const tp = this[0].timepickerObj
+        const settings = tp.settings
+        const seconds = tp.anytime2int(value)
 
         if (tp._isTimeRangeError(seconds, settings)) {
-          var timeRangeErrorEvent = new CustomEvent('timeRangeError', EVENT_DEFAULTS)
+          const timeRangeErrorEvent = new CustomEvent('timeRangeError', EVENT_DEFAULTS)
           tp.targetEl.dispatchEvent(timeRangeErrorEvent)
         }
-
-        if (settings.forceRoundTime) {
-          var prettyTime = tp._roundAndFormatTime(seconds)
-        } else {
-          var prettyTime = tp._int2time(seconds)
-        }
+        let prettyTime = settings.forceRoundTime ? tp._roundAndFormatTime(seconds) : tp._int2time(seconds)
 
         if (value && prettyTime === null && settings.noneOption) {
           prettyTime = value
@@ -1645,14 +1632,14 @@
         return this
       },
       remove: function remove() {
-        var self = this // check if this element is a timepicker
+        const self = this // check if this element is a timepicker
 
         if (!self.hasClass('ui-timepicker-input')) {
           return
         }
 
-        var tp = self[0].timepickerObj
-        var settings = tp.settings
+        const tp = self[0].timepickerObj
+        const settings = tp.settings
         self.removeAttr('autocomplete', 'off')
         self.removeClass('ui-timepicker-input')
         self.removeData('timepicker-obj')
@@ -1672,16 +1659,16 @@
     } // private methods
 
     function _render(self) {
-      var tp = self[0].timepickerObj
-      var list = tp.list
-      var settings = tp.settings
+      const tp = self[0].timepickerObj
+      let list = tp.list
+      const settings = tp.settings
 
       if (list && list.length) {
         list.remove()
         tp.list = null
       }
 
-      var wrapped_list = $(renderHtml(tp))
+      const wrapped_list = $(renderHtml(tp))
 
       if (settings.useSelect) {
         list = wrapped_list
@@ -1711,7 +1698,7 @@
 
         self.hide().after(list)
       } else {
-        var appendTo = settings.appendTo
+        let appendTo = settings.appendTo
 
         if (typeof appendTo === 'string') {
           appendTo = $(appendTo)
@@ -1757,7 +1744,7 @@
         return
       }
 
-      var target = $(e.target)
+      const target = $(e.target)
 
       if (target.closest('.ui-timepicker-input').length || target.closest('.ui-timepicker-wrapper').length) {
         // active timepicker was focused. ignore
@@ -1773,9 +1760,9 @@
      */
 
     function _keydownhandler(e) {
-      var self = $(this)
-      var tp = self[0].timepickerObj
-      var list = tp.list
+      const self = $(this)
+      const tp = self[0].timepickerObj
+      let list = tp.list
 
       if (!list || !Timepicker.isVisible(list)) {
         if (e.keyCode == 40) {
@@ -1790,6 +1777,7 @@
           return true
         }
       }
+      let selected = list.find('.ui-timepicker-selected')
 
       switch (e.keyCode) {
         case 13:
@@ -1807,7 +1795,6 @@
 
         case 38:
           // up
-          var selected = list.find('.ui-timepicker-selected')
 
           if (!selected.length) {
             list.find('li').each(function (i, obj) {

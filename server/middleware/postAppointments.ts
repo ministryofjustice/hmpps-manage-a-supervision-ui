@@ -4,7 +4,7 @@ import MasApiClient from '../data/masApiClient'
 import { getDataValue } from '../utils/utils'
 import properties from '../properties'
 import { Sentence } from '../data/model/sentenceDetails'
-import { Location, UserLocation } from '../data/model/caseload'
+import { UserLocation } from '../data/model/caseload'
 import { AppointmentRequestBody } from '../@types'
 
 const dateTime = (date: string, time: string): Date => {
@@ -72,7 +72,7 @@ export const postAppointments = (hmppsAuthClient: HmppsAuthClient) => {
       licenceConditionId,
       uuid,
     }
-    const response = await masClient.postAppointments(crn, body)
+    await masClient.postAppointments(crn, body)
     return next()
   }
 }

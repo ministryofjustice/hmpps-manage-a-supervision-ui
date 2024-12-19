@@ -67,7 +67,7 @@ jobs:
     with:
       docker_registry: 'ghcr.io'
       registry_org: 'ministryofjustice'
-      additional_docker_tag: --secret id=sentry,env=SENTRY_AUTH_TOKEN
+      additional_docker_tag: ${{ secrets.SENTRY_AUTH_TOKEN }}
       push: ${{ inputs.push || true }}
       docker_multiplatform: true
 #  deploy_dev:

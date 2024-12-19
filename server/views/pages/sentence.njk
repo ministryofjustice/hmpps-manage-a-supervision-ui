@@ -53,7 +53,7 @@
                 )
             %}
 {% endif %}
-          {% set items = items.concat({"text": "Probation History", href: "/case/" + crn + "/sentence/probation-history"}) %}
+          {% set items = items.concat({"text": "Probation history", href: "/case/" + crn + "/sentence/probation-history"}) %}
 
           {{ mojSideNavigation({
               label: 'Side navigation',
@@ -348,6 +348,9 @@
                   html: sentence
             }) }}
           </div>
+          {% else %}
+          <h3 class="govuk-heading-m govuk-!-margin-top-0">No active sentence</h3>
+          <p>This person does not have any active sentences.</p>
           {% endif %}
     </div>
 {% endblock %}

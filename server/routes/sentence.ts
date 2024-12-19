@@ -6,16 +6,23 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import TierApiClient from '../data/tierApiClient'
 
+interface QueryParams {
+  activeSentence: string
+  number?: string
+}
 export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
 
   get('/case/:crn/sentence', async (req, res, _next) => {
     const { crn } = req.params
-    const eventNumber = req.query.number
-    let queryParam = ''
-    if (req.query.number) {
-      queryParam = `?number=${eventNumber}`
+    const { activeSentence, number } = req.query
+    const query: QueryParams = {
+      activeSentence: (activeSentence as string) || 'true',
     }
+    if (number) {
+      query.number = number as string
+    }
+    const queryParam = Object.entries(query).reduce((acc, [k, v], i) => `${acc}${i === 0 ? `?` : '&'}${k}=${v}`, '')
 
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
 

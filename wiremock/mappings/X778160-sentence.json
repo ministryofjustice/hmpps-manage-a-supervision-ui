@@ -2,8 +2,12 @@
   "mappings": [
     {
       "request": {
-        "urlPattern": "/mas/sentence/X778160",
-        "method": "GET"
+        "urlPathPattern": "/mas/sentence/X778160",
+        "queryParameters": {
+          "activeSentence": {
+            "equalTo": "true"
+          }
+        }
       },
       "response": {
         "status": 200,
@@ -76,6 +80,40 @@
             "unpaidWorkProgress": "7 minutes completed (of 100 hours)",
             "licenceConditions": []
           }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPathPattern": "/mas/sentence/X778160",
+        "queryParameters": {
+          "activeSentence": {
+            "equalTo": "false"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Berge",
+              "surname": "Alton"
+            },
+            "crn": "X778160",
+            "dateOfBirth": "2012-03-13"
+          },
+          "sentenceSummaryList": [],
+          "sentence": null,
+          "conviction": null,
+          "order": null,
+          "requirements": [],
+          "courtDocuments": [],
+          "unpaidWorkProgress": "7 minutes completed (of 100 hours)",
+          "licenceConditions": []
         },
         "headers": {
           "Content-Type": "application/json"

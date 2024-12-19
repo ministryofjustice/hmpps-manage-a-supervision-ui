@@ -71,7 +71,7 @@ runs:
         context: .
         push: ${{ inputs.push }}
         secret-envs: |
-          SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
+          "SENTRY_AUTH_TOKEN=${{ inputs.app_version }}"
         provenance: false
         build-args: |
           "BUILD_NUMBER=${{ inputs.app_version }}"

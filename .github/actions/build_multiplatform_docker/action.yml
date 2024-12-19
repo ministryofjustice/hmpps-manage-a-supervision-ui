@@ -65,8 +65,6 @@ runs:
 
     - name: Build Docker images
       uses: docker/build-push-action@v6
-      env:
-        SENTRY_AUTH_TOKEN: ${{ inputs.additional_docker_tag }}
       with:
         cache-from: type=gha
         platforms: linux/amd64,linux/arm64

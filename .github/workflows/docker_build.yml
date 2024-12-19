@@ -74,7 +74,7 @@ jobs:
           # git_head_ref: ${{ github.head_ref }}
           # git_branch_ref: ${{ github.ref_name }}
 
-      - uses: ./.github/actions/build-test-and-deploy/build_multiplatform_docker # WORKFLOW_VERSION
+      - uses: ./.github/actions/build_multiplatform_docker # WORKFLOW_VERSION
         if: ${{ ( inputs.docker_registry  == 'ghcr.io' ) && ( inputs.docker_multiplatform )}}
         with:
           repository_name: ${{ github.event.repository.name }}

@@ -563,7 +563,7 @@ export const decorateFormAttributes = (req: Request, res: Response) => (obj: any
 }
 
 export const toTimeline = (riskScores: RiskScoresDto[]): TimelineItem[] => {
-  const sorted = riskScores.sort((a, b) => +toDate(b.completedDate) - +toDate(a.completedDate))
+  const sorted = [...riskScores].sort((a, b) => +toDate(b.completedDate) - +toDate(a.completedDate))
   return sorted.map(riskScore => {
     const scores = {
       RSR: {
@@ -606,7 +606,7 @@ export const toTimeline = (riskScores: RiskScoresDto[]): TimelineItem[] => {
 
 export const getLatest = (predictors: RiskScoresDto[]): RiskScoresDto => {
   if (predictors.length > 0) {
-    return predictors.sort((a, b) => +toDate(b.completedDate) - +toDate(a.completedDate))[0]
+    return [...predictors].sort((a, b) => +toDate(b.completedDate) - +toDate(a.completedDate))[0]
   }
   return null
 }

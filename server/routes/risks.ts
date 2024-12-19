@@ -4,10 +4,10 @@ import { v4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
-import ArnsApiClient, { RiskSummary } from '../data/arnsApiClient'
+import ArnsApiClient from '../data/arnsApiClient'
 import TierApiClient from '../data/tierApiClient'
-import { RiskScoresDto, RsrPredictorDto, TimelineItem } from '../data/model/risk'
-import { dateWithYearShortMonthAndTime, getLatest, toDate, toRoshWidget, toTimeline } from '../utils/utils'
+import { TimelineItem } from '../data/model/risk'
+import { toRoshWidget, toTimeline } from '../utils/utils'
 
 export default function risksRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))

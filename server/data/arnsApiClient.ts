@@ -2,7 +2,7 @@ import config from '../config'
 // eslint-disable-next-line import/no-cycle
 import RestClient from './restClient'
 import { ErrorSummary, ErrorSummaryItem } from './model/common'
-import { RiskScoresDto, RoshRiskWidgetDto, RsrPredictorDto } from './model/risk'
+import { RiskScoresDto } from './model/risk'
 
 export default class ArnsApiClient extends RestClient {
   constructor(token: string) {

@@ -50,14 +50,31 @@ jobs:
       - id: app_version
         name: Application version creators
         uses: ./.github/actions/create_app_version # WORKFLOW_VERSION
-      - uses: ./.github/actions/build_multiplatform_docker # WORKFLOW_VERSION
-        if: ${{ ( inputs.docker_registry  == 'ghcr.io' ) && ( inputs.docker_multiplatform )}}
+      - uses: docker/build-push-action@v6
         with:
-          repository_name: ${{ github.event.repository.name }}
-          docker_registry: ${{ inputs.docker_registry }}
-          registry_org: ${{ inputs.registry_org }}
-          additional_docker_tag: ${{ inputs.additional_docker_tag }}
+          cache-from: type=gha
+          platforms: linux/amd64,linux/arm64
+          cache-to: type=gha,mode=max
+          context: .
           push: ${{ inputs.push }}
-          app_version: ${{ steps.app_version.outputs.version }}
+          secret-envs: |
+            "sentry=SENTRY_AUTH_TOKEN"
+          provenance: false
+          build-args: |
+            "BUILD_NUMBER=${{ steps.app_version.outputs.version }}
+            "GIT_REF=${{ github.sha }}"
+            "GIT_BRANCH=${{ github.ref_name }}"
+          tags: |
+            ${{ inputs.docker_registry}}/${{ inputs.registry_org }}/${{ github.event.repository.name }}:latest
+            ${{ inputs.docker_registry}}/${{ inputs.registry_org }}/${{ github.event.repository.name }}:${{ steps.app_version.outputs.version }}
+#      - uses: ./.github/actions/build_multiplatform_docker # WORKFLOW_VERSION
+#        if: ${{ ( inputs.docker_registry  == 'ghcr.io' ) && ( inputs.docker_multiplatform )}}
+#        with:
+#          repository_name: ${{ github.event.repository.name }}
+#          docker_registry: ${{ inputs.docker_registry }}
+#          registry_org: ${{ inputs.registry_org }}
+#          additional_docker_tag: ${{ inputs.additional_docker_tag }}
+#          push: ${{ inputs.push }}
+#          app_version: ${{ steps.app_version.outputs.version }}
 
 

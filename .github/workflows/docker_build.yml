@@ -23,7 +23,6 @@ on:
         description: Docker image build multiplatform or not
         required: true
         type: boolean
-        default: true
 
     secrets:
       HMPPS_QUAYIO_USER:
@@ -51,7 +50,7 @@ jobs:
       - id: app_version
         name: Application version creators
         uses: ./.github/actions/create_app_version # WORKFLOW_VERSION
-      - uses: ./.github/actions/build-test-and-deploy/build_multiplatform_docker@v2 # WORKFLOW_VERSION
+      - uses: ./.github/actions/build_multiplatform_docker # WORKFLOW_VERSION
         if: ${{ ( inputs.docker_registry  == 'ghcr.io' ) && ( inputs.docker_multiplatform )}}
         with:
           repository_name: ${{ github.event.repository.name }}

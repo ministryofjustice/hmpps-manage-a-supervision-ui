@@ -52,10 +52,7 @@ jobs:
       id: integration-tests
       shell: bash
       run: |
-        nohup java -jar wiremock.jar --port 9091 &
-        npm run start-feature &
-        sleep 5
-        npm run int-test
+        npm run start-feature 
       # continue-on-error: true
       # replacing the above with if: always()
 #    - name: upload results

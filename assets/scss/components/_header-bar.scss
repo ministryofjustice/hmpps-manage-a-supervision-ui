@@ -1,3 +1,7 @@
+.govuk-flex {
+  display: flex;
+}
+
 .hmpps-header {
   @include govuk-responsive-padding(3, 'top');
   @include govuk-responsive-padding(3, 'bottom');

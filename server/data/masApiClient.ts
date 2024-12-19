@@ -12,7 +12,7 @@ import {
 import { AddressOverview, PersonSummary } from './model/common'
 import { SentenceDetails, Sentences } from './model/sentenceDetails'
 import { PersonActivity } from './model/activityLog'
-import { PersonRiskFlag, PersonRiskFlags } from './model/risk'
+import { Mappa, PersonRiskFlag, PersonRiskFlags } from './model/risk'
 import { PersonCompliance } from './model/compliance'
 import { PreviousOrderHistory } from './model/previousOrderHistory'
 import { Offences } from './model/offences'
@@ -164,5 +164,9 @@ export default class MasApiClient extends RestClient {
 
   async checkUserAccess(username: string, crns: Record<never, never>): Promise<UserAccess> {
     return this.post({ data: crns, path: `/user/${username}/access`, handle404: false })
+  }
+
+  async getMappa(crn: string): Promise<Mappa> {
+    return this.get({ path: `/risk/${crn}/mappa`, handle404: true })
   }
 }

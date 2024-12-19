@@ -2,6 +2,7 @@ import config from '../config'
 // eslint-disable-next-line import/no-cycle
 import RestClient from './restClient'
 import { ErrorSummary, ErrorSummaryItem } from './model/common'
+import { RiskScoresDto } from './model/risk'
 
 export default class ArnsApiClient extends RestClient {
   constructor(token: string) {
@@ -25,6 +26,16 @@ export default class ArnsApiClient extends RestClient {
       handle500: true,
       errorMessageFor500:
         'OASys is experiencing technical difficulties. It has not been possible to provide the Criminogenic needs information held in OASys',
+    })
+  }
+
+  async getPredictorsAll(crn: string): Promise<RiskScoresDto[] | ErrorSummary | null> {
+    return this.get({
+      path: `/risks/crn/${crn}/predictors/all`,
+      handle404: true,
+      handle500: true,
+      errorMessageFor500:
+        'OASys is experiencing technical difficulties. It has not been possible to provide the predictor score information held in OASys',
     })
   }
 }
@@ -68,7 +79,7 @@ export interface RiskSummary {
 }
 
 export interface Needs {
-  identifiedNeeds: Needs[]
+  identifiedNeeds: Need[]
 }
 
 export interface Need {

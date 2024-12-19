@@ -70,7 +70,7 @@ runs:
         cache-to: type=gha,mode=max
         context: .
         push: ${{ inputs.push }}
-        secrets: |
+        secret-envs: |
           SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
         provenance: false
         build-args: |

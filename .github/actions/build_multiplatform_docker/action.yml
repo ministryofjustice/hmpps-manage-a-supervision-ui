@@ -70,6 +70,8 @@ runs:
         cache-to: type=gha,mode=max
         context: .
         push: ${{ inputs.push }}
+        secrets: |
+          SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}
         provenance: false
         build-args: |
           "BUILD_NUMBER=${{ inputs.app_version }}"

@@ -14,7 +14,7 @@ context('Overview', () => {
     page.getTab('sentence').should('contain.text', 'Sentence')
     page.getTab('activityLog').should('contain.text', 'Activity log')
     page.getTab('compliance').should('contain.text', 'Compliance')
-    page.getCardHeader('schedule').should('contain.text', 'Schedule')
+    page.getCardHeader('schedule').should('contain.text', 'Appointments')
     page
       .getRowData('schedule', 'nextAppointment', 'Value')
       .should('contain.text', 'Saturday 9 March at 2:59pm (Initial Appointment - In office (NS))')
@@ -80,7 +80,7 @@ context('Overview', () => {
     page.getTab('sentence').should('contain.text', 'Sentence')
     page.getTab('activityLog').should('contain.text', 'Activity log')
     page.getTab('compliance').should('contain.text', 'Compliance')
-    page.getCardHeader('schedule').should('contain.text', 'Schedule')
+    page.getCardHeader('schedule').should('contain.text', 'Appointments')
     cy.get(`[data-qa=errors]`).should(
       'contain.text',
       'OASys is experiencing technical difficulties. It has not been possible to provide the Risk information held in OASys',

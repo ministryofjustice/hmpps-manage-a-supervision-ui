@@ -27,9 +27,9 @@ on:
 
     secrets:
       HMPPS_QUAYIO_USER:
-        required: false 
+        required: false
       HMPPS_QUAYIO_TOKEN:
-        required: false 
+        required: false
 
     outputs:
       app_version:
@@ -44,13 +44,13 @@ jobs:
   docker_build:
     name: Build docker image
     runs-on: ubuntu-latest
-    outputs: 
+    outputs:
       version: ${{ steps.app_version.outputs.version }}
     steps:
       - id: app_version
         name: Application version creators
         uses: ministryofjustice/hmpps-github-actions/.github/actions/build-test-and-deploy/create_app_version@v2 # WORKFLOW_VERSION
-      - uses: ./.github/actions/build-test-and-deploy/build_docker # WORKFLOW_VERSION
+      - uses: ministryofjustice/hmpps-github-actions/.github/actions/build-test-and-deploy/build_docker@v2 # WORKFLOW_VERSION
         if: ${{ ( inputs.docker_registry  == 'ghcr.io' ) && ( ! inputs.docker_multiplatform )}}
         with:
           repository_name: ${{ github.event.repository.name }}
@@ -60,7 +60,7 @@ jobs:
           push: ${{ inputs.push }}
           app_version: ${{ steps.app_version.outputs.version }}
 
-      - uses: ./.github/actions/build-test-and-deploy/build_docker # WORKFLOW_VERSION
+      - uses: ministryofjustice/hmpps-github-actions/.github/actions/build-test-and-deploy/build_docker@v2 # WORKFLOW_VERSION
         if: ${{ ( inputs.docker_registry  == 'quay.io' ) && ( ! inputs.docker_multiplatform )}}
         with:
           repository_name: ${{ github.event.repository.name }}
@@ -74,7 +74,7 @@ jobs:
           # git_head_ref: ${{ github.head_ref }}
           # git_branch_ref: ${{ github.ref_name }}
 
-      - uses: ./.github/actions/build_multiplatform_docker # WORKFLOW_VERSION
+      - uses: ministryofjustice/hmpps-github-actions/.github/actions/build-test-and-deploy/build_multiplatform_docker@v2 # WORKFLOW_VERSION
         if: ${{ ( inputs.docker_registry  == 'ghcr.io' ) && ( inputs.docker_multiplatform )}}
         with:
           repository_name: ${{ github.event.repository.name }}
@@ -84,7 +84,7 @@ jobs:
           push: ${{ inputs.push }}
           app_version: ${{ steps.app_version.outputs.version }}
 
-      - uses: ./.github/actions/build-test-and-deploy/build_multiplatform_docker # WORKFLOW_VERSION
+      - uses: ministryofjustice/hmpps-github-actions/.github/actions/build-test-and-deploy/build_multiplatform_docker@v2 # WORKFLOW_VERSION
         if: ${{ ( inputs.docker_registry  == 'quay.io' ) && ( inputs.docker_multiplatform )}}
         with:
           repository_name: ${{ github.event.repository.name }}

@@ -1,5 +1,8 @@
 name: Pipeline [test -> build -> deploy]
 
+env:
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
 on:
   push:
     branches:
@@ -9,7 +12,7 @@ on:
       additional_docker_tag:
         description: Additional docker tag that can be used to specify stable or testing tags
         required: false
-        default: '--secret id=sentry,env=SENTRY_AUTH_TOKEN'
+        default: ''
         type: string
       push:
         description: Push docker image to registry flag
@@ -64,7 +67,7 @@ jobs:
     with:
       docker_registry: 'ghcr.io'
       registry_org: 'ministryofjustice'
-      additional_docker_tag: ${{ inputs.additional_docker_tag }}
+      additional_docker_tag: --secret id=sentry,env=${{ SENTRY_AUTH_TOKEN }}
       push: ${{ inputs.push || true }}
       docker_multiplatform: true
 #  deploy_dev:

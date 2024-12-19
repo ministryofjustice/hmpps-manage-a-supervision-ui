@@ -5,13 +5,14 @@ import slugify from 'slugify'
 import getKeypath from 'lodash/get'
 import setKeypath from 'lodash/set'
 import { Request, Response } from 'express'
-import { RiskScore, RiskToSelf } from '../data/arnsApiClient'
+import { Need, RiskScore, RiskSummary, RiskToSelf } from '../data/arnsApiClient'
 import { Name } from '../data/model/common'
 import { Address } from '../data/model/personalDetails'
 import config from '../config'
 import { Activity } from '../data/model/schedule'
 import { CaseSearchFilter, SelectElement } from '../data/model/caseload'
 import { RecentlyViewedCase, UserAccess } from '../data/model/caseAccess'
+import { RiskScoresDto, RoshRiskWidgetDto, TimelineItem } from '../data/model/risk'
 
 interface Item {
   checked?: string
@@ -92,6 +93,17 @@ export const monthsOrDaysElapsed = (datetimeString: string): string => {
 export const dateWithYearShortMonth = (datetimeString: string): string => {
   if (!datetimeString || isBlank(datetimeString)) return null
   return DateTime.fromISO(datetimeString).toFormat('d MMM yyyy')
+}
+
+export const toDate = (datetimeString: string): DateTime => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  return DateTime.fromISO(datetimeString)
+}
+
+export const dateWithYearShortMonthAndTime = (datetimeString: string): string => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  const date = DateTime.fromISO(datetimeString).toFormat('d MMM yyyy')
+  return `${date} at ${govukTime(datetimeString)}`
 }
 
 export const govukTime = (datetimeString: string): string => {
@@ -485,6 +497,16 @@ export const checkRecentlyViewedAccess = (
   })
 }
 
+export const isDefined = (val: unknown) => typeof val !== 'undefined'
+
+export const isNotNull = (val: unknown) => {
+  return val !== null
+}
+
+export const hasValue = (val: unknown) => {
+  return isNotNull(val) && isDefined(val)
+}
+
 export const makePageTitle = ({ pageHeading, hasErrors }: { pageHeading: string; hasErrors: boolean }) =>
   `${hasErrors ? 'Error: ' : ''}${pageHeading} - ${config.applicationName}`
 
@@ -538,4 +560,101 @@ export const decorateFormAttributes = (req: Request, res: Response) => (obj: any
     }
   }
   return newObj
+}
+
+export const toTimeline = (riskScores: RiskScoresDto[]): TimelineItem[] => {
+  const sorted = riskScores.sort((a, b) => +toDate(b.completedDate) - +toDate(a.completedDate))
+  return sorted.map(riskScore => {
+    const scores = {
+      RSR: {
+        type: 'RSR',
+        level: riskScore.riskOfSeriousRecidivismScore?.scoreLevel,
+        score: riskScore.riskOfSeriousRecidivismScore?.percentageScore,
+      },
+      OGP: {
+        type: 'OGP',
+        level: riskScore.generalPredictorScore?.ogpRisk,
+        oneYear: riskScore.generalPredictorScore?.ogp1Year,
+        twoYears: riskScore.generalPredictorScore?.ogp2Year,
+      },
+      OSPC: {
+        type: 'OSP/C',
+        level: riskScore.sexualPredictorScore?.ospContactScoreLevel,
+        score: riskScore.sexualPredictorScore?.ospContactPercentageScore,
+      },
+      OSPI: {
+        type: 'OSP/I',
+        level: riskScore.sexualPredictorScore?.ospIndecentScoreLevel,
+        score: riskScore.sexualPredictorScore?.ospIndecentPercentageScore,
+      },
+      OGRS: {
+        type: 'OGRS',
+        level: riskScore.groupReconvictionScore?.scoreLevel,
+        oneYear: riskScore.groupReconvictionScore?.oneYear,
+        twoYears: riskScore.groupReconvictionScore?.twoYears,
+      },
+      OVP: {
+        type: 'OVP',
+        level: riskScore.violencePredictorScore?.ovpRisk,
+        oneYear: riskScore.violencePredictorScore?.oneYear,
+        twoYears: riskScore.violencePredictorScore?.twoYears,
+      },
+    }
+    return { date: dateWithYearShortMonthAndTime(riskScore.completedDate), scores }
+  })
+}
+
+export const getLatest = (predictors: RiskScoresDto[]): RiskScoresDto => {
+  if (predictors.length > 0) {
+    return predictors.sort((a, b) => +toDate(b.completedDate) - +toDate(a.completedDate))[0]
+  }
+  return null
+}
+
+export const riskLevelLabel = (level: string) => {
+  switch (level) {
+    case 'VERY_HIGH':
+      return 'Very high'
+    case 'HIGH':
+      return 'High'
+    case 'MEDIUM':
+      return 'Medium'
+    case 'LOW':
+      return 'Low'
+    default:
+      return level
+  }
+}
+
+export const groupNeeds = (level: string, needs: Need[]) => {
+  if (!needs) {
+    return []
+  }
+
+  return needs.filter(need => need.severity === level)
+}
+
+function toMap(partial: Partial<Record<RiskScore, string[]>>): { [key: string]: string } {
+  const x: { [key: string]: string } = {}
+  Object.entries(partial).forEach(item => {
+    item[1].forEach(v => {
+      // eslint-disable-next-line prefer-destructuring
+      x[v] = item[0]
+    })
+  })
+  return x
+}
+
+export const toRoshWidget = (roshSummary: RiskSummary): RoshRiskWidgetDto => {
+  if (!roshSummary) {
+    return { overallRisk: 'NOT_FOUND', assessedOn: undefined, riskInCommunity: undefined, riskInCustody: undefined }
+  }
+  const riskInCommunity = toMap(roshSummary.summary.riskInCommunity)
+  const riskInCustody = toMap(roshSummary.summary.riskInCustody)
+  return {
+    overallRisk: roshSummary.summary.overallRiskLevel,
+    assessedOn: roshSummary.assessedOn,
+    riskInCommunity,
+    riskInCustody,
+  }
 }

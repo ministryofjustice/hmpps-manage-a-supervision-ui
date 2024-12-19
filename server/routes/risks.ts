@@ -4,8 +4,10 @@ import { v4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
-import ArnsApiClient from '../data/arnsApiClient'
+import ArnsApiClient, { RiskSummary } from '../data/arnsApiClient'
 import TierApiClient from '../data/tierApiClient'
+import { RiskScoresDto, RsrPredictorDto, TimelineItem } from '../data/model/risk'
+import { dateWithYearShortMonthAndTime, getLatest, toDate, toRoshWidget, toTimeline } from '../utils/utils'
 
 export default function risksRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -27,16 +29,34 @@ export default function risksRoutes(router: Router, { hmppsAuthClient }: Service
     const masClient = new MasApiClient(token)
     const tierClient = new TierApiClient(token)
 
-    const [personRisk, risks, tierCalculation] = await Promise.all([
+    const [personRisk, risks, tierCalculation, predictors, needs] = await Promise.all([
       masClient.getPersonRiskFlags(crn),
       arnsClient.getRisks(crn),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getPredictorsAll(crn),
+      arnsClient.getNeeds(crn),
     ])
+
+    let timeline: TimelineItem[] = []
+    let predictorScores
+    if (Array.isArray(predictors)) {
+      timeline = toTimeline(predictors)
+    }
+    if (timeline.length > 0) {
+      ;[predictorScores] = timeline
+    }
+
+    const risksWidget = toRoshWidget(risks)
+
     res.render('pages/risk', {
       personRisk,
       risks,
       crn,
       tierCalculation,
+      risksWidget,
+      predictorScores,
+      timeline,
+      needs,
     })
   })
 

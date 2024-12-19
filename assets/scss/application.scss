@@ -14,6 +14,15 @@ $govuk-page-width: $moj-page-width;
 @import './components/sortable-table';
 @import '../../node_modules/govuk-frontend/dist/govuk/base';
 @import '../../node_modules/@ministryofjustice/frontend/moj/components/sortable-table/_sortable-table';
+@import "../../node_modules/govuk-frontend/dist/govuk/base";
+@import "../../node_modules/@ministryofjustice/frontend/moj/components/sortable-table/_sortable-table";
+@import './components/mappa-widget';
+@import './components/predictor-scores';
+@import './components/risk-flag-widget';
+@import './components/rosh-widget';
+@import './components/timeline';
+@import './components/flex';
+
 .secondary-text {
   color: $govuk-secondary-text-colour; /* Using a GOV.UK Design System color */
 }

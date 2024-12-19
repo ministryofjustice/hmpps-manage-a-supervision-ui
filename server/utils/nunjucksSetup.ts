@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import path from 'path'
 import nunjucks from 'nunjucks'
-import express from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 import {
   activityLog,
   activityLogDate,
@@ -13,6 +13,7 @@ import {
   dateWithYear,
   dateWithYearShortMonth,
   dayOfWeek,
+  decorateFormAttributes,
   defaultFormInputValues,
   defaultFormSelectValues,
   deliusDateFormat,
@@ -67,7 +68,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
     app.locals.version = applicationInfo.gitShortHash
   } else {
     // Version changes every request
-    app.use((req, res, next) => {
+    app.use((_req, res, next) => {
       res.locals.version = Date.now().toString()
       return next()
     })
@@ -108,6 +109,12 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('defaultFormSelectValues', defaultFormSelectValues)
   njkEnv.addFilter('dateForSort', dateForSort)
   njkEnv.addFilter('timeForSort', timeForSort)
+
+  app.use((req: Request, res: Response, next: NextFunction): void => {
+    njkEnv.addFilter('decorateFormAttributes', decorateFormAttributes(req, res))
+    return next()
+  })
+
   njkEnv.addGlobal('getComplianceStatus', getComplianceStatus)
   njkEnv.addGlobal('timeFromTo', timeFromTo)
   njkEnv.addGlobal('getRisksWithScore', getRisksWithScore)

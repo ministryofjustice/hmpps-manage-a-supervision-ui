@@ -10,16 +10,17 @@ import {
   ProvisionOverview,
 } from './model/personalDetails'
 import { AddressOverview, PersonSummary } from './model/common'
-import { SentenceDetails } from './model/sentenceDetails'
+import { SentenceDetails, Sentences } from './model/sentenceDetails'
 import { PersonActivity } from './model/activityLog'
 import { PersonRiskFlag, PersonRiskFlags } from './model/risk'
 import { PersonCompliance } from './model/compliance'
 import { PreviousOrderHistory } from './model/previousOrderHistory'
 import { Offences } from './model/offences'
-import { TeamCaseload, UserCaseload, UserTeam } from './model/caseload'
+import { TeamCaseload, UserCaseload, UserTeam, UserLocations } from './model/caseload'
 import { ProfessionalContact } from './model/professionalContact'
 import { CaseAccess, UserAccess } from './model/caseAccess'
 import { LicenceConditionNoteDetails } from './model/licenceConditionNoteDetails'
+import { AppointmentRequestBody } from '../@types'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -30,8 +31,13 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/overview/${crn}`, handle404: false })
   }
 
-  async getSentenceDetails(crn: string, queryParam: string): Promise<SentenceDetails | null> {
+  async getSentenceDetails(crn: string, queryParam = ''): Promise<SentenceDetails | null> {
     return this.get({ path: `/sentence/${crn}${queryParam}`, handle404: false })
+  }
+
+  async getSentences(crn: string, number = ''): Promise<Sentences | null> {
+    const queryParameters = number ? `?number=${number}` : ''
+    return this.get({ path: `/sentences/${crn}${queryParameters}`, handle404: false })
   }
 
   async getProbationHistory(crn: string): Promise<SentenceDetails | null> {
@@ -117,6 +123,15 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/compliance/${crn}`, handle404: false })
   }
 
+  postAppointments = async (crn: string, body: AppointmentRequestBody) => {
+    return this.post({
+      data: body,
+      path: `/appointment/${crn}`,
+      handle404: true,
+      handle500: true,
+    })
+  }
+
   async searchUserCaseload(
     username: string,
     page: string,
@@ -129,6 +144,10 @@ export default class MasApiClient extends RestClient {
 
   async getUserTeams(username: string): Promise<UserTeam> {
     return this.get({ path: `/caseload/user/${username}/teams`, handle404: true })
+  }
+
+  async getUserLocations(username: string): Promise<UserLocations> {
+    return this.get({ path: `/user/${username}/locations`, handle404: true })
   }
 
   async getTeamCaseload(teamCode: string, page: string): Promise<TeamCaseload> {

@@ -1,0 +1,88 @@
+{% extends "../_form.njk" %}
+{% set title = 'Will the appointment repeat?' %}
+{% block heading %}{% endblock %}
+{% set backLink = '/case/' + crn + '/arrange-appointment/' + id + '/date-time' %}
+
+{% block form %}
+   {% if errors %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{{ govukErrorSummary({ titleText: "There is a problem", errorList: errors.errorList }) }}
+{% endif %}
+
+{% set repeatingReveal %}
+    {{ govukRadios({
+      fieldset: {
+        legend: {
+          text: "How often will it repeat?",
+          classes: "govuk-label--m govuk-!-font-weight-bold"
+        }
+      },
+      formGroup: {
+        attributes: {
+          'data-repeating-frequency': ''
+        }
+      },
+      items: [
+        {
+          text: "Weekly",
+          value: 'WEEK'
+        },
+        {
+          text: "Every 2 weeks",
+          value: 'FORTNIGHT'
+        },
+        {
+          text: "Monthly",
+          value: 'FOUR_WEEKS',
+          hint: {
+            text: "On the same date every month or on the last day if there is no matching date."
+          }
+        }
+      ]
+    } | decorateFormAttributes(['appointments', crn, id, 'repeating-frequency'])) }}
+
+    {{ govukInput({
+      label: {
+        text: "How often will the appointment repeat?",
+        classes: "govuk-label--s govuk-!-font-weight-bold"
+      },
+      hint: {
+        text: "Enter the number of times the appointment will repeat, up to a maximum of one year."
+      },
+      formGroup: {
+        attributes: {
+          'data-repeating-count': ''
+        }
+      },
+      classes: "govuk-input--width-3"
+    } | decorateFormAttributes(['appointments', crn, id, 'repeating-count'])) }}
+    
+    <div class="form-group" data-last-appointment>
+      {% if lastAppointmentDate  %}
+      <h3 class="govuk-heading-s govuk-!-font-weight-regular govuk-!-static-margin-bottom-0 govuk-hint">Last appointment on</h3>
+       <p><b>{{ lastAppointmentDate | dayOfWeek }} {{ lastAppointmentDate | dateWithYear }}</b></p>
+       {% endif %}
+    </div>
+  {% endset %}
+
+{{ govukRadios({
+    fieldset: {
+      legend: {
+        text: title,
+        classes: "govuk-fieldset__legend--l",
+        isPageHeading: true
+      }
+    },
+    items: [
+      {
+        text: "Yes",
+        conditional: {
+          html: repeatingReveal
+        }
+      },
+      {
+        text: "No, it’s a one-off appointment"
+      }
+    ]
+  } | decorateFormAttributes(['appointments', crn, id, 'repeating'])) }}
+{% endblock %}

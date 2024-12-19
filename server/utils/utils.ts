@@ -1,6 +1,10 @@
+/* eslint-disable no-param-reassign */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { DateTime } from 'luxon'
 import slugify from 'slugify'
+import getKeypath from 'lodash/get'
+import setKeypath from 'lodash/set'
+import { Request, Response } from 'express'
 import { RiskScore, RiskToSelf } from '../data/arnsApiClient'
 import { Name } from '../data/model/common'
 import { Address } from '../data/model/personalDetails'
@@ -8,6 +12,14 @@ import config from '../config'
 import { Activity } from '../data/model/schedule'
 import { CaseSearchFilter, SelectElement } from '../data/model/caseload'
 import { RecentlyViewedCase, UserAccess } from '../data/model/caseAccess'
+
+interface Item {
+  checked?: string
+  selected?: string
+  value: string
+  text?: string
+  idPrefix?: string
+}
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -475,3 +487,55 @@ export const checkRecentlyViewedAccess = (
 
 export const makePageTitle = ({ pageHeading, hasErrors }: { pageHeading: string; hasErrors: boolean }) =>
   `${hasErrors ? 'Error: ' : ''}${pageHeading} - ${config.applicationName}`
+
+export const getDataValue = (data: any, sections: any) => {
+  const path = Array.isArray(sections) ? sections : [sections]
+  return getKeypath(data, path.map((s: any) => `["${s}"]`).join(''))
+}
+
+export const setDataValue = (data: any, sections: any, value: any) => {
+  const path = Array.isArray(sections) ? sections : [sections]
+  return setKeypath(data, path.map((s: any) => `["${s}"]`).join(''), value)
+}
+
+export const decorateFormAttributes = (req: Request, res: Response) => (obj: any, sections?: string[]) => {
+  const newObj = obj
+  const { data } = req.session as any
+  let storedValue = getDataValue(data, sections)
+  if (storedValue && config.dateFields.includes(sections[sections.length - 1]) && storedValue.includes('-')) {
+    const [year, month, day] = storedValue.split('-')
+    storedValue = [day.padStart(2, '0'), month.padStart(2, '0'), year].join('/')
+  }
+  if (newObj.items !== undefined) {
+    newObj.items = newObj.items.map((item: Item) => {
+      if (typeof item.value === 'undefined') {
+        item.value = item.text
+      }
+      if (storedValue) {
+        if ((Array.isArray(storedValue) && storedValue.includes(item.value)) || storedValue === item.value) {
+          if (storedValue.indexOf(item.value) !== -1) {
+            item.checked = 'checked'
+            item.selected = 'selected'
+          }
+        }
+      }
+      return item
+    })
+    if (sections?.length) {
+      newObj.idPrefix = sections.join('-')
+    }
+  } else {
+    newObj.value = storedValue
+  }
+  if (sections?.length) {
+    const id = sections.join('-')
+    if (typeof newObj.id === 'undefined') {
+      newObj.id = id
+    }
+    newObj.name = sections.map((s: string) => `[${s}]`).join('')
+    if (res?.locals?.errors?.errorMessages?.[id]?.text) {
+      newObj.errorMessage = { text: res.locals.errors.errorMessages[id].text }
+    }
+  }
+  return newObj
+}

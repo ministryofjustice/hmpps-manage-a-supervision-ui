@@ -1,0 +1,113 @@
+{% extends "../_form.njk" %}
+{% set title = 'Which sentence is this appointment for?' %}
+{% set backLink = change if change else '/case/' + crn + '/arrange-appointment/' + id + '/type' %}
+
+{% block heading %}{% endblock %}
+{% block form %}
+  {% if errors %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{{ govukErrorSummary({ titleText: "There is a problem", errorList: errors.errorList }) }}
+{% endif %}
+{% set allSentences = [] %}
+{% set sentenceReveal = '' %}
+{% for sentence in sentences %}
+{% set reveal = '' %}
+{% if sentence.requirements.length %}
+{% set requirements = [] %}
+{% for requirement in sentence.requirements %}
+ {% set requirements = (requirements.push({
+      text: requirement.description
+    }), requirements) %}
+  {% endfor %}
+{% set sentenceReveal %}
+{{ govukRadios({
+    fieldset: {
+      legend: {
+        text: "Which requirement is this appointment for?",
+        isPageHeading: false,
+        classes: "govuk-fieldset__legend--s"
+      },
+      attributes: {
+        'data-qa': 'sentence-requirement'
+      }
+    },
+    hint: {
+      text: "Select requirement."
+    },
+    items: requirements
+} | decorateFormAttributes(['appointments', crn, id, 'sentence-requirement'])) }}
+{% endset -%}
+{% endif %}
+{% if sentence.licenceConditions.length %}
+{% set licenceConditions = [] %}
+{% for licenceCondition in sentence.licenceConditions %}
+ {% set licenceConditions = (licenceConditions.push({
+      text: licenceCondition.mainDescription
+    }), licenceConditions) %}
+  {% endfor %}
+  {% set sentenceReveal %}
+{{ govukRadios({
+    fieldset: {
+      legend: {
+        text: "Which licence condition is this appointment for?",
+        isPageHeading: false,
+        classes: "govuk-fieldset__legend--s"
+      },
+      attributes: {
+        'data-qa': 'sentence-licence-condition'
+      }
+    },
+    hint: {
+      text: "Select licence condition."
+    },
+    items: licenceConditions
+} | decorateFormAttributes(['appointments', crn, id, 'sentence-licence-condition'])) }}
+{% endset -%}
+{% endif %}
+{% if appointment['type'] === 'Home visit' or appointment['type'] === 'Planned office visit' %}
+{% set allSentences = (allSentences.push({
+      text: sentence.order.description,
+      hint: 'Sentence start date: ' + sentence.order.startDate | dateWithYear,
+      checked: true if sentences.length === 1 else false,
+      attributes: {
+          'data-bold': 'true',
+          'data-sentence': 'true',
+          'data-reset-conditional-radios': ''
+        },
+      conditional: {
+            html: sentenceReveal
+        }
+    }), allSentences) %}
+{% else %}
+{% set allSentences = (allSentences.push({
+      text: sentence.order.description,
+      hint: 'Sentence start date: ' + sentence.order.startDate | dateWithYear,
+      checked: true if sentences.length === 1 else false,
+      attributes: {
+          'data-bold': 'true',
+          'data-sentence': 'true',
+          'data-reset-conditional-radios': ''
+        }
+    }), allSentences) %}
+{% endif %}
+{% endfor %}
+
+{{ govukRadios({
+    fieldset: {
+      legend: {
+        text: title,
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--l govuk-!-margin-bottom-6"
+      },
+      attributes: {
+        'data-qa': 'sentences'
+      }
+    },
+    hint: {
+        text: "Select sentence."
+      },
+    items: allSentences
+} | decorateFormAttributes(['appointments', crn, id, 'sentence'])) }}
+
+
+{% endblock %}

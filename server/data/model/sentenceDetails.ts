@@ -8,6 +8,10 @@ export interface SentenceDetails {
   sentence: Sentence
 }
 
+export interface Sentences {
+  personSummary: PersonSummary
+  sentences: Sentence[]
+}
 export interface SentenceDescription {
   id: string
   description: string
@@ -15,6 +19,8 @@ export interface SentenceDescription {
 }
 
 export interface Sentence {
+  eventId?: number
+  mainOffence: Offence
   offenceDetails: OffenceDetails
   conviction: Conviction
   order: Order
@@ -50,6 +56,7 @@ export interface Order {
 }
 
 export interface Requirement {
+  id?: number
   code: string
   expectedStartDate: string
   actualStartDate: string
@@ -76,6 +83,7 @@ export interface CourtDocument {
 }
 
 export interface LicenceCondition {
+  id: number
   mainDescription: string
   subTypeDescription: string
   imposedReleasedDate: string

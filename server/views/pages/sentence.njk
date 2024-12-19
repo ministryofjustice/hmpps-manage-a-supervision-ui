@@ -31,6 +31,7 @@
       <div class="govuk-grid-column-one-quarter">
           {% set items = [] %}
           {% set eventNumber = sentenceDetails.sentence.offenceDetails.eventNumber %}
+          {% if sentenceDetails.sentenceSummaryList.length %}
           {% for sentence in sentenceDetails.sentenceSummaryList %}
             {% set isActive = sentence.eventNumber === eventNumber %}
             {% set items = items.concat(
@@ -42,7 +43,16 @@
                 )
             %}
           {% endfor %}
-
+          {% else %}
+           {% set items = items.concat(
+                    {
+                        "text": 'No active sentence',
+                        href: "",
+                        active: true
+                    }
+                )
+            %}
+{% endif %}
           {% set items = items.concat({"text": "Probation History", href: "/case/" + crn + "/sentence/probation-history"}) %}
 
           {{ mojSideNavigation({

@@ -52,7 +52,9 @@ jobs:
       id: integration-tests
       shell: bash
       run: |
-        npm run start-feature 
+        npm run start-feature &
+        sleep 5
+        npm run int-test
       # continue-on-error: true
       # replacing the above with if: always()
 #    - name: upload results

@@ -63,14 +63,14 @@
     {% endset %}
 
     {{ appSummaryCard({
-      titleText: 'Schedule',
+      titleText: 'Appointments',
       classes: ['govuk-!-margin-bottom-6 app-summary-card--large-title'],
       attributes: {'data-qa': 'scheduleCard'},
       html: schedule,
       actions: {
         items: [
           {
-            text: 'View schedule',
+            text: 'View appointments',
             href: crn + '/appointments'
           }
         ]

@@ -70,16 +70,16 @@ jobs:
       registry_org: 'ministryofjustice'
       push: ${{ inputs.push || true }}
       docker_multiplatform: true
-#  deploy_dev:
-#    name: Deploy to the development environment
-#    needs:
-#      - build
-#      - helm_lint
-#    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@v2 # WORKFLOW_VERSION
-#    secrets: inherit
-#    with:
-#      environment: 'dev'
-#      app_version: '${{ needs.build.outputs.app_version }}'
+  deploy_dev:
+    name: Deploy to the development environment
+    needs:
+      - build
+      - helm_lint
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/deploy_env.yml@v2 # WORKFLOW_VERSION
+    secrets: inherit
+    with:
+      environment: 'dev'
+      app_version: '${{ needs.build.outputs.app_version }}'
   # deploy_preprod:
   #   name: Deploy to pre-production environment
   #   needs:

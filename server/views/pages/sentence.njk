@@ -349,8 +349,10 @@
             }) }}
           </div>
           {% else %}
+          <div data-qa="no-active-sentence">
           <h3 class="govuk-heading-m govuk-!-margin-top-0">No active sentence</h3>
           <p>This person does not have any active sentences.</p>
+          </div>
           {% endif %}
     </div>
 {% endblock %}

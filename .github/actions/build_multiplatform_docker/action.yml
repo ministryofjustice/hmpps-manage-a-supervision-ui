@@ -27,7 +27,9 @@ inputs:
   HMPPS_QUAYIO_TOKEN:
     description: Docker registry token
     required: false
-
+  SENTRY_AUTH_TOKEN:
+    description: Docker registry token
+    required: true
 
 runs:
   using: "composite"
@@ -65,7 +67,7 @@ runs:
 
     - name: Build Docker images
       env:
-        SENTRY_AUTH_TOKEN: ${{ inputs.additional_docker_tag }}
+        SENTRY_AUTH_TOKEN: ${{ inputs.SENTRY_AUTH_TOKEN }}
       uses: docker/build-push-action@v6
       with:
         cache-from: type=gha

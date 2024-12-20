@@ -29,8 +29,6 @@ on:
         required: false
       HMPPS_QUAYIO_TOKEN:
         required: false
-      SENTRY_AUTH_TOKEN:
-        required: true
 
     outputs:
       app_version:

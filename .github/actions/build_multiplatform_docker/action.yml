@@ -64,6 +64,8 @@ runs:
       #   uses: aws-actions/amazon-ecr-login@v1
 
     - name: Build Docker images
+      env:
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       uses: docker/build-push-action@v6
       with:
         cache-from: type=gha

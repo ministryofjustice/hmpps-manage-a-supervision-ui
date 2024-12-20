@@ -47,12 +47,12 @@ jobs:
       version: ${{ steps.app_version.outputs.version }}
       sentry_token: ${{ steps.sentry_auth.outputs.token }}
     steps:
-      - uses: actions/checkout@v4
       - id: sentry_auth
         name: output token
         shell: bash
         run: |
           echo "token=hello" >> $GITHUB_OUTPUT
+      - uses: actions/checkout@v4
       - id: app_version
         name: Application version creators
         uses: ./.github/actions/create_app_version # WORKFLOW_VERSION
@@ -84,7 +84,7 @@ jobs:
           repository_name: ${{ github.event.repository.name }}
           docker_registry: ${{ inputs.docker_registry }}
           registry_org: ${{ inputs.registry_org }}
-          additional_docker_tag: ${{ steps.sentry_auth.outputs.sentry_token }}
+          additional_docker_tag: ${{ steps.app_version.outputs.version }}
           push: ${{ inputs.push }}
           app_version: ${{ steps.app_version.outputs.version }}
 

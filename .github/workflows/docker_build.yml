@@ -49,12 +49,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: sentry_auth
-        name: build npm
+        name: output token
         shell: bash
         run: |
-          echo token=$SENTRY_AUTH_TOKEN >> $GITHUB_OUTPUT
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          echo "token=hello" >> $GITHUB_OUTPUT
       - id: app_version
         name: Application version creators
         uses: ./.github/actions/create_app_version # WORKFLOW_VERSION

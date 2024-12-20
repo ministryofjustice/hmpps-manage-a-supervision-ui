@@ -4,14 +4,14 @@ generic-service:
   replicaCount: 4
 
   image:
-    repository: quay.io/hmpps/hmpps-manage-a-supervision-ui
+    repository: ghcr.io/ministryofjustice/hmpps-manage-a-supervision-ui
     tag: app_version # override at deployment time
     port: 3000
 
   ingress:
     enabled: true
     host: app-hostname.local # override per environment
-    tlsSecretName: hmpps-manage-a-supervision-ui-cert
+    tlsSecretName: hmpps-manage-people-on-probation-ui-cert
 
   livenessProbe:
     httpGet:
@@ -43,7 +43,7 @@ generic-service:
   #     [name of environment variable as seen by app]: [key of kubernetes secret to load]
 
   namespace_secrets:
-    hmpps-manage-a-supervision-ui:
+    hmpps-manage-people-on-probation-ui:
       APPINSIGHTS_INSTRUMENTATIONKEY: "APPINSIGHTS_INSTRUMENTATIONKEY"
       API_CLIENT_ID: "API_CLIENT_ID"
       API_CLIENT_SECRET: "API_CLIENT_SECRET"
@@ -64,7 +64,7 @@ generic-service:
       - internal
       - unilink_staff
 
-  serviceAccountName: manage-a-supervision-ui
+  serviceAccountName: manage-people-on-probation-ui
 
 generic-prometheus-alerts:
-  targetApplication: hmpps-manage-a-supervision-ui
+  targetApplication: hmpps-manage-people-on-probation-ui

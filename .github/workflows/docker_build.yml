@@ -45,8 +45,12 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.app_version.outputs.version }}
+      sentry: ${{ steps.sentry_auth.outputs.token }}
     steps:
       - uses: actions/checkout@v4
+      - id: sentry_auth
+        name: get auth token
+        uses: ./.github/actions/sentry_auth
       - id: app_version
         name: Application version creators
         uses: ./.github/actions/create_app_version # WORKFLOW_VERSION
@@ -78,7 +82,7 @@ jobs:
           repository_name: ${{ github.event.repository.name }}
           docker_registry: ${{ inputs.docker_registry }}
           registry_org: ${{ inputs.registry_org }}
-          additional_docker_tag: ${{ inputs.additional_docker_tag }}
+          additional_docker_tag: ${{ steps.sentry_auth.outputs.token }}
           push: ${{ inputs.push }}
           app_version: ${{ steps.app_version.outputs.version }}
 

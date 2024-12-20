@@ -1,0 +1,18 @@
+name: Create app version to use it for docker build and deploy pipelines
+description: Create app version to use it for docker build and deploy pipelines
+
+outputs:
+  version:
+    value: ${{ steps.sentry_auth.outputs.token }}
+    description: token
+
+runs:
+  using: composite
+  steps:
+    - name: sentry auth
+      env:
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      id: sentry_auth
+      shell: bash
+      run: |
+        echo $SENTRY_AUTH_TOKEN >> $TOKEN

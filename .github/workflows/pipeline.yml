@@ -69,6 +69,7 @@ jobs:
       registry_org: 'ministryofjustice'
       push: ${{ inputs.push || true }}
       docker_multiplatform: true
+      secrets: inherit
 #  deploy_dev:
 #    name: Deploy to the development environment
 #    needs:

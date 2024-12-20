@@ -66,22 +66,3 @@ jobs:
           additional_docker_tag: ${{ secrets.SENTRY_AUTH_TOKEN }}
           push: ${{ inputs.push }}
           app_version: ${{ steps.app_version.outputs.version }}
-#      - uses: docker/build-push-action@v6
-#        with:
-#          cache-from: type=gha
-#          platforms: linux/amd64,linux/arm64
-#          cache-to: type=gha,mode=max
-#          context: .
-#          push: ${{ inputs.push }}
-#          secret-envs: |
-#            "sentry=SENTRY_AUTH_TOKEN"
-#          provenance: false
-#          build-args: |
-#            "BUILD_NUMBER=${{ steps.app_version.outputs.version }}
-#            "GIT_REF=${{ github.sha }}"
-#            "GIT_BRANCH=${{ github.ref_name }}"
-#          tags: |
-#            ${{ inputs.docker_registry}}/${{ inputs.registry_org }}/${{ github.event.repository.name }}:latest
-#            ${{ inputs.docker_registry}}/${{ inputs.registry_org }}/${{ github.event.repository.name }}:${{ steps.app_version.outputs.version }}
-
-

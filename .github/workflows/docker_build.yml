@@ -52,6 +52,8 @@ jobs:
         shell: bash
         run: |
           echo "token=hello" >> $GITHUB_OUTPUT
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       - uses: actions/checkout@v4
       - id: app_version
         name: Application version creators

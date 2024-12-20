@@ -2,8 +2,12 @@
   "mappings": [
     {
       "request": {
-        "urlPattern": "/mas/sentence/X778160",
-        "method": "GET"
+        "urlPathPattern": "/mas/sentence/X778160",
+        "queryParameters": {
+          "activeSentence": {
+            "equalTo": "true"
+          }
+        }
       },
       "response": {
         "status": 200,
@@ -84,6 +88,40 @@
     },
     {
       "request": {
+        "urlPathPattern": "/mas/sentence/X778160",
+        "queryParameters": {
+          "activeSentence": {
+            "equalTo": "false"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Berge",
+              "surname": "Alton"
+            },
+            "crn": "X778160",
+            "dateOfBirth": "2012-03-13"
+          },
+          "sentenceSummaryList": [],
+          "sentence": null,
+          "conviction": null,
+          "order": null,
+          "requirements": [],
+          "courtDocuments": [],
+          "unpaidWorkProgress": "7 minutes completed (of 100 hours)",
+          "licenceConditions": []
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
         "urlPattern": "/mas/personal-details/X000001/document/4d74f43c-5b42-4317-852e-56c7d29b610b",
         "method": "GET"
       },
@@ -100,6 +138,44 @@
           "etag": "1699630109776",
           "last-modified": "Fri, 10 Nov 2023 15:28:29 GMT",
           "Custom-Alfresco-Header": "should be ignored"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/sentence/X778160/probation-history",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Berge",
+              "surname": "Alton"
+            },
+            "crn": "X778160",
+            "dateOfBirth": "1979-08-18"
+          },
+          "sentenceSummaryList": [
+            {
+              "eventNumber": "3",
+              "description": "Default Sentence Type"
+            },
+            {
+              "eventNumber": "1",
+              "description": "12 month community order"
+            }
+          ],
+          "probationHistory": {
+            "numberOfTerminatedEvents": 2,
+            "dateOfMostRecentTerminatedEvent": "2011-01-21",
+            "numberOfTerminatedEventBreaches": 2,
+            "numberOfProfessionalContacts": 3
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
         }
       }
     }

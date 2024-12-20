@@ -1,8 +1,5 @@
 name: Build & push docker image and deploy to environment
 
-env:
-  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-
 on:
   workflow_call:
     inputs:

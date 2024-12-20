@@ -62,8 +62,14 @@
     </div>
 {% include "../partials/case-nav.njk" %}
 {% if currentSectionName %}
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-7" data-qa="pageHeading">{{ currentSectionName }}</h1>
+    {% if lastUpdatedDate %}
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-3" data-qa="pageHeading">{{ currentSectionName }}</h1>
+        <div class="govuk-inset-text govuk-!-margin-top-0">{{ lastUpdatedDate }}</div>
+    {% else %}
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-7" data-qa="pageHeading">{{ currentSectionName }}</h1>
+    {% endif %}
 {% endif %}
+
 
 {% set errors = [] %}
 {% if risks.errors.length > 0 %}

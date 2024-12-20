@@ -17,7 +17,9 @@
 {% set highScoring = groupNeeds("SEVERE", needs.identifiedNeeds) %}
 {% set lowScoring = groupNeeds("STANDARD", needs.identifiedNeeds) %}
 {% set withoutScore = needs.notIdentifiedNeeds %}
-
+  {% if risks.assessedOn %}
+      {% set lastUpdatedDate = 'Last updated (OASys):' + risks.assessedOn | dateWithYear %}
+  {% endif %}
 
 {% set highScoringNeeds %}
   {% if highScoring.length > 0 %}
@@ -87,10 +89,6 @@
       <h2 class="govuk-heading-m score-header govuk-!-margin-bottom-0" data-analytics-event-scroll="RSR score">
         Criminogenic needs
       </h2>
-      <div class="text-secondary govuk-body govuk-!-margin-bottom-2 govuk-hint">
-        Last updated (OASys): {{ risks.assessedOn | dateWithYear }}
-      </div>
-
       {{ govukSummaryList({
         rows: [
           {
@@ -115,9 +113,6 @@
         <h2 class="govuk-heading-m score-header govuk-!-margin-bottom-0" data-analytics-event-scroll="RSR score">
           RSR (risk of serious recidivism)
         </h2>
-        <div class="text-secondary govuk-body govuk-!-margin-bottom-2 govuk-hint">
-          Last updated (OASys): {{ predictorScores.date }}
-        </div>
         <div aria-hidden="true">
           {{ predictorScore(predictorScores.scores.RSR) }}
         </div>
@@ -127,30 +122,24 @@
         <h2 class="govuk-heading-m score-header govuk-!-margin-bottom-1" data-analytics-event-scroll="OGRS score">
           OGRS (offender group reconviction scale)
         </h2>
-        <div class="text-secondary govuk-body govuk-!-margin-bottom-6 govuk-hint">
-          Last updated (OASys): {{ predictorScores.date }}
+        <div class="govuk-grid-row  govuk-!-margin-bottom-4">
+          <div class="govuk-grid-column-three-quarters-from-desktop">
+              <div class="flex-mobile">
+                <div class='flex__item-one-third-mobile'>
+                  <h3 class='govuk-heading-s govuk-!-margin-bottom-1'>1 year</h3>
+                  <div class='govuk-body' data-qa='ogrs-1yr'>{{ predictorScores.scores.OGRS.oneYear }}%</div>
+                </div>
+                <div class='flex__item-one-third-mobile'>
+                  <h3 class='govuk-heading-s govuk-!-margin-bottom-1'>2 year</h3>
+                  <div class='govuk-body' data-qa='ogrs-2yr'>{{ predictorScores.scores.OGRS.twoYears }}%</div>
+                </div>
+                <div class='flex__item-one-third-mobile'>
+                  <h3 class='govuk-heading-s govuk-!-margin-bottom-1'>Level</h3>
+                  <div class='govuk-body' data-qa='ogrs-level'>{{ riskLevelLabel(predictorScores.scores.OGRS.level) }}</div>
+                </div>
+              </div>
+          </div>
         </div>
-      {% endif %}
-
-      {% if predictorScores.scores.OGRS %}
-      <div class="govuk-grid-row  govuk-!-margin-bottom-4">
-        <div class="govuk-grid-column-three-quarters-from-desktop">
-            <div class="flex-mobile">
-              <div class='flex__item-one-third-mobile'>
-                <h3 class='govuk-heading-s govuk-!-margin-bottom-1'>1 year</h3>
-                <div class='govuk-body' data-qa='ogrs-1yr'>{{ predictorScores.scores.OGRS.oneYear }}%</div>
-              </div>
-              <div class='flex__item-one-third-mobile'>
-                <h3 class='govuk-heading-s govuk-!-margin-bottom-1'>2 year</h3>
-                <div class='govuk-body' data-qa='ogrs-2yr'>{{ predictorScores.scores.OGRS.twoYears }}%</div>
-              </div>
-              <div class='flex__item-one-third-mobile'>
-                <h3 class='govuk-heading-s govuk-!-margin-bottom-1'>Level</h3>
-                <div class='govuk-body' data-qa='ogrs-level'>{{ riskLevelLabel(predictorScores.scores.OGRS.level) }}</div>
-              </div>
-            </div>
-        </div>
-      </div>
       {% endif %}
 
       {% if predictorScores.scores.OSPI.score or predictorScores.scores.OSPC.score %}
@@ -163,9 +152,6 @@
         <h3 class="govuk-heading-s score-header govuk-!-margin-bottom-0" data-analytics-event-scroll="OSP/I score">
           OSP/I (internet-related offences) or OSP/IIC (internet-involved child offences)
         </h3>
-        <div class="text-secondary govuk-body govuk-!-margin-bottom-2 govuk-hint">
-          Last updated (OASys): {{ predictorScores.date }}
-        </div>
         <div aria-hidden="true">
           {{ predictorScore(predictorScores.scores.OSPI) }}
         </div>
@@ -176,9 +162,6 @@
         <h3 class="govuk-heading-s score-header govuk-!-margin-bottom-0" data-analytics-event-scroll="OSP/C score">
           OSP/C (contact-related sexual reoffending) or OSP/DC (direct contact)
         </h3>
-        <div class="text-secondary govuk-body govuk-!-margin-bottom-2 govuk-hint">
-          Last updated (OASys): {{ predictorScores.date }}
-        </div>
         <div aria-hidden="true">
           {{ predictorScore(predictorScores.scores.OSPC) }}
         </div>
@@ -189,9 +172,6 @@
         <h2 class="govuk-heading-m score-header govuk-!-margin-bottom-1" data-analytics-event-scroll="OVP score">
           OVP (OASys violent predictor score)
         </h2>
-        <div class="text-secondary govuk-body govuk-!-margin-bottom-6 govuk-hint">
-          Last updated (OASys): {{ predictorScores.date }}
-        </div>
         <div class="govuk-grid-row  govuk-!-margin-bottom-4">
           <div class="govuk-grid-column-three-quarters-from-desktop">
               <div class="flex-mobile">
@@ -216,34 +196,29 @@
         <h2 class="govuk-heading-m score-header govuk-!-margin-bottom-0" data-analytics-event-scroll="OGP score">
           OGP (OASys general predictor score)
         </h2>
-        <div class="text-secondary govuk-body govuk-!-margin-bottom-6">
-          Last updated (OASys): {{ predictorScores.date }}
-        </div>
-      <div class="govuk-grid-row  govuk-!-margin-bottom-4">
-        <div class="govuk-grid-column-three-quarters-from-desktop">
-            <div class="flex-mobile">
-              <div class='flex__item-one-third-mobile'>
-                <h3 class='govuk-heading-s govuk-!-margin-bottom-1'>1 year</h3>
-                <div class='govuk-body' data-qa='ogp-1yr'>{{ predictorScores.scores.OGP.oneYear }}%</div>
+        <div class="govuk-grid-row  govuk-!-margin-bottom-4">
+          <div class="govuk-grid-column-three-quarters-from-desktop">
+              <div class="flex-mobile">
+                <div class='flex__item-one-third-mobile'>
+                  <h3 class='govuk-heading-s govuk-!-margin-bottom-1'>1 year</h3>
+                  <div class='govuk-body' data-qa='ogp-1yr'>{{ predictorScores.scores.OGP.oneYear }}%</div>
+                </div>
+                <div class='flex__item-one-third-mobile'>
+                  <h3 class='govuk-heading-s govuk-!-margin-bottom-1'>2 year</h3>
+                  <div class='govuk-body' data-qa='ogp-2yr'>{{ predictorScores.scores.OGP.twoYears }}%</div>
+                </div>
+                <div class='flex__item-one-third-mobile'>
+                  <h3 class='govuk-heading-s govuk-!-margin-bottom-1'>Level</h3>
+                  <div class='govuk-body' data-qa='ogp-level'>{{ riskLevelLabel(predictorScores.scores.OGP.level) }}</div>
+                </div>
               </div>
-              <div class='flex__item-one-third-mobile'>
-                <h3 class='govuk-heading-s govuk-!-margin-bottom-1'>2 year</h3>
-                <div class='govuk-body' data-qa='ogp-2yr'>{{ predictorScores.scores.OGP.twoYears }}%</div>
-              </div>
-              <div class='flex__item-one-third-mobile'>
-                <h3 class='govuk-heading-s govuk-!-margin-bottom-1'>Level</h3>
-                <div class='govuk-body' data-qa='ogp-level'>{{ riskLevelLabel(predictorScores.scores.OGP.level) }}</div>
-              </div>
-            </div>
+          </div>
         </div>
       </div>
-        </div>
       {% endif %}
-
       {% else %}
-        <p>Some data is unavailable because {{ personRisk.personSummary.name.forename }} has a level one risk assessment in OASys.</p>
         {% set html %}
-          <h2 class="govuk-heading-m">There is no OASys risk assessment for {{ personRisk.personSummary.name | fullName }}</h2>
+          <h2 class="govuk-heading-m">There is no OASys Layer 3 risk assessment for {{ personRisk.personSummary.name | fullName }}</h2>
           {% include './risk/_no-oasys-risk-assessment.njk' %}
         {% endset %}
         {{ govukNotificationBanner({ html: html }) }}
@@ -257,7 +232,7 @@
       </h2>
       {% if personRisk.opd.eligible === true %}
       <div class="text-secondary govuk-body govuk-!-margin-bottom-2 govuk-hint">
-        Last updated (OASys): {{ personRisk.opd.date | dateWithYear }}
+        Last updated (NDelius): {{ personRisk.opd.date | dateWithYear }}
       </div>
       <p class='govuk-body' data-qa='ogp-missing'>Eligible</p>
       {% else %}
@@ -266,9 +241,9 @@
   </div>
   <div class="govuk-grid-column-one-third">
       {{ roshWidget(risksWidget) }}
-      {{ mappaWidget({ mappa: personRisk.mappa, lastUpdatedDate: personRisk.mappa.startDate | dateWithYear }) }}
+      {{ mappaWidget({ mappa: personRisk.mappa, lastUpdatedDate: personRisk.mappa.startDate | dateWithYearShortMonth }) }}
     <div class="govuk-body predictor-timeline__heading">
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-2">Scores history</h2>
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2">OASys score history</h2>
         {% if predictorScores.error and caseSummary.roshHistory.error %}
           <p class='govuk-body' data-qa='timeline-missing'>RoSH levels and predictor scores cannot be retrieved from NDelius or OASys. Double-check NDelius and OASys.</p>
         {% elseif predictorScores.error %}

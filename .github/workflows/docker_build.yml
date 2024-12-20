@@ -47,7 +47,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.app_version.outputs.version }}
-      token: ${{ steps.sentry_auth.outputs.token }}
     steps:
       - uses: actions/checkout@v4
       - id: app_version

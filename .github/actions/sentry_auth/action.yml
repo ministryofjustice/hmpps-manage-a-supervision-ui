@@ -15,4 +15,4 @@ runs:
       id: sentry_auth
       shell: bash
       run: |
-        echo $SENTRY_AUTH_TOKEN >> $TOKEN
+        echo $SENTRY_AUTH_TOKEN >> $GITHUB_OUTPUT

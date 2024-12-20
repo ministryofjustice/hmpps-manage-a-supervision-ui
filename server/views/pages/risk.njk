@@ -17,11 +17,9 @@
 {% set highScoring = groupNeeds("SEVERE", needs.identifiedNeeds) %}
 {% set lowScoring = groupNeeds("STANDARD", needs.identifiedNeeds) %}
 {% set withoutScore = needs.notIdentifiedNeeds %}
-{% set lastUpdatedDate %}
   {% if risks.assessedOn %}
-      Last updated (OASys): {{ risks.assessedOn | dateWithYear }}
+      {% set lastUpdatedDate = 'Last updated (OASys):' + risks.assessedOn | dateWithYear %}
   {% endif %}
-{% endset %}
 
 {% set highScoringNeeds %}
   {% if highScoring.length > 0 %}

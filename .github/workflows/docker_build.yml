@@ -29,6 +29,8 @@ on:
         required: false
       HMPPS_QUAYIO_TOKEN:
         required: false
+      SENTRY_AUTH_TOKEN:
+        required: false
 
     outputs:
       app_version:
@@ -69,7 +71,7 @@ jobs:
           repository_name: ${{ github.event.repository.name }}
           docker_registry: ${{ inputs.docker_registry }}
           registry_org: ${{ inputs.registry_org }}
-          additional_docker_tag: ${{ steps.sentry_auth.outputs.token }}
+          additional_docker_tag: ${{ secrets.SENTRY_AUTH_TOKEN }}
           push: ${{ inputs.push }}
           app_version: ${{ steps.app_version.outputs.version }}
 #      - uses: docker/build-push-action@v6

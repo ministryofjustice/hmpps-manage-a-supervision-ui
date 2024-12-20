@@ -43,6 +43,8 @@ jobs:
   docker_build:
     name: Build docker image
     runs-on: ubuntu-latest
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
     outputs:
       version: ${{ steps.app_version.outputs.version }}
     steps:
@@ -73,8 +75,6 @@ jobs:
 #            ${{ inputs.docker_registry}}/${{ inputs.registry_org }}/${{ github.event.repository.name }}:latest
 #            ${{ inputs.docker_registry}}/${{ inputs.registry_org }}/${{ github.event.repository.name }}:${{ steps.app_version.outputs.version }}
       - uses: ./.github/actions/build_multiplatform_docker # WORKFLOW_VERSION
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         if: ${{ ( inputs.docker_registry  == 'ghcr.io' ) && ( inputs.docker_multiplatform )}}
         with:
           repository_name: ${{ github.event.repository.name }}

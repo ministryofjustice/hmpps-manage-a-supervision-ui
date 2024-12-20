@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.app_version.outputs.version }}
-      sentry_token: ${{ steps.sentry_auth.outputs.token }}
+      token: ${{ steps.sentry_auth.outputs.token }}
     steps:
       - id: sentry_auth
         name: output token
@@ -61,6 +61,15 @@ jobs:
           registry: ${{ inputs.docker_registry }}
           username: ${{ github.actor }}
           password: ${{ github.token }}
+      - uses: ./.github/actions/build_multiplatform_docker # WORKFLOW_VERSION
+        if: ${{ ( inputs.docker_registry  == 'ghcr.io' ) && ( inputs.docker_multiplatform )}}
+        with:
+          repository_name: ${{ github.event.repository.name }}
+          docker_registry: ${{ inputs.docker_registry }}
+          registry_org: ${{ inputs.registry_org }}
+          additional_docker_tag: ${{ steps.sentry_auth.outputs.token }}
+          push: ${{ inputs.push }}
+          app_version: ${{ steps.app_version.outputs.version }}
 #      - uses: docker/build-push-action@v6
 #        with:
 #          cache-from: type=gha
@@ -78,14 +87,5 @@ jobs:
 #          tags: |
 #            ${{ inputs.docker_registry}}/${{ inputs.registry_org }}/${{ github.event.repository.name }}:latest
 #            ${{ inputs.docker_registry}}/${{ inputs.registry_org }}/${{ github.event.repository.name }}:${{ steps.app_version.outputs.version }}
-      - uses: ./.github/actions/build_multiplatform_docker # WORKFLOW_VERSION
-        if: ${{ ( inputs.docker_registry  == 'ghcr.io' ) && ( inputs.docker_multiplatform )}}
-        with:
-          repository_name: ${{ github.event.repository.name }}
-          docker_registry: ${{ inputs.docker_registry }}
-          registry_org: ${{ inputs.registry_org }}
-          additional_docker_tag: ${{ steps.app_version.outputs.version }}
-          push: ${{ inputs.push }}
-          app_version: ${{ steps.app_version.outputs.version }}
 
 

@@ -12,6 +12,7 @@ import {
   dateWithNoDay,
   dateWithYear,
   dateWithYearShortMonth,
+  dateWithYearShortMonthAndTime,
   dayOfWeek,
   decorateFormAttributes,
   defaultFormInputValues,
@@ -29,15 +30,20 @@ import {
   getRisksWithScore,
   getTagClass,
   govukTime,
+  groupNeeds,
+  hasValue,
   initialiseName,
   interventionsLink,
+  isDefined,
   isInThePast,
+  isNotNull,
   isToday,
   lastUpdatedBy,
   lastUpdatedDate,
   monthsOrDaysElapsed,
   oaSysUrl,
   removeEmpty,
+  riskLevelLabel,
   scheduledAppointments,
   sentencePlanLink,
   setSortOrder,
@@ -115,6 +121,8 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
     return next()
   })
 
+  njkEnv.addFilter('dateWithYearShortMonthAndTime', dateWithYearShortMonthAndTime)
+  njkEnv.addGlobal('groupNeeds', groupNeeds)
   njkEnv.addGlobal('getComplianceStatus', getComplianceStatus)
   njkEnv.addGlobal('timeFromTo', timeFromTo)
   njkEnv.addGlobal('getRisksWithScore', getRisksWithScore)
@@ -138,4 +146,8 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('interventionsLink', interventionsLink)
   njkEnv.addGlobal('setSortOrder', setSortOrder)
   njkEnv.addGlobal('sortAppointmentsDescending', sortAppointmentsDescending)
+  njkEnv.addGlobal('isNotNull', isNotNull)
+  njkEnv.addGlobal('isDefined', isDefined)
+  njkEnv.addGlobal('hasValue', hasValue)
+  njkEnv.addGlobal('riskLevelLabel', riskLevelLabel)
 }

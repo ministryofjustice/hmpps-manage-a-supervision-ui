@@ -8,35 +8,10 @@ context('Risk', () => {
   it('Risk overview page is rendered', () => {
     cy.visit('/case/X000001/risk')
     const page = Page.verifyOnPage(RiskPage)
-    page.getRowData('riskOfHarmInCommunity', 'overall', 'Value').should('contain.text', 'HIGH')
-    page.getRowData('riskOfHarmInCommunity', 'veryHigh', 'Value').should('contain.text', 'Staff')
-    page.getRowData('riskOfHarmInCommunity', 'high', 'Value').should('contain.text', 'Public')
-    page.getRowData('riskOfHarmInCommunity', 'medium', 'Value').should('contain.text', 'Known Adult')
-    page.getRowData('riskOfHarmInCommunity', 'low', 'Value').should('contain.text', 'Children')
-    page
-      .getRowData('riskOfHarmInCommunity', 'who', 'Value')
-      .should('contain.text', 'NOD-849Meaningful content for AssSumm Testing')
-    page
-      .getRowData('riskOfHarmInCommunity', 'nature', 'Value')
-      .should('contain.text', 'NOD-849 Meaningful content for AssSumm Testing')
-    page
-      .getRowData('riskOfHarmInCommunity', 'imminence', 'Value')
-      .should('contain.text', 'NOD-849 R10.3Meaningful content for AssSumm Testing')
-    page
-      .getRowData('riskOfHarmToThemselves', 'riskOfSuicideOrSelfHarm', 'Value')
-      .should('contain.text', 'Immediate concerns about suicide and self-harm')
-    page
-      .getRowData('riskOfHarmToThemselves', 'copingInCustody', 'Value')
-      .should(
-        'contain.text',
-        'Immediate concerns about coping in custody and previous concerns about coping in a hostel',
-      )
-    page
-      .getRowData('riskOfHarmToThemselves', 'vulnerability', 'Value')
-      .should('contain.text', 'Immediate concerns about a vulnerability')
-    page.getRowData('riskFlags', 'risk1Description', 'Value').should('contain.text', 'Restraining Order')
-    page.getRowData('riskFlags', 'risk2Description', 'Value').should('contain.text', 'Domestic Abuse Perpetrator')
-    page.getRowData('riskFlags', 'risk3Description', 'Value').should('contain.text', 'Risk to Known Adult')
+    page.getElementData('highScoringNeedsValue').should('contain.text', 'Relationships')
+    page.getElementData('lowScoringNeedsValue').should('contain.text', 'Accommodation')
+    page.getElementData('noScoreNeedsValue').should('contain.text', 'Emotional wellbeing')
+    page.getElementData('mappa-heading').should('contain.text', 'Cat 0/Level 2')
   })
   it('Removed risk page is rendered', () => {
     cy.visit('/case/X000001/risk/removed-risk-flags')

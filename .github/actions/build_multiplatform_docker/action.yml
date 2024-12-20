@@ -27,6 +27,9 @@ inputs:
   HMPPS_QUAYIO_TOKEN:
     description: Docker registry token
     required: false
+  SENTRY_AUTH_TOKEN:
+    description: Docker registry token
+    required: true
 
 runs:
   using: "composite"

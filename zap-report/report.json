@@ -1,7 +1,7 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.15.0",
-	"@generated": "Fri, 27 Dec 2024 09:42:48",
+	"@generated": "Mon, 30 Dec 2024 09:43:12",
 	"site":[ 
 		{
 			"@name": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk",

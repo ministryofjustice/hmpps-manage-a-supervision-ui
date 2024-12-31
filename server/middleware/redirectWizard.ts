@@ -6,7 +6,7 @@ export const redirectWizard = (requiredValues: string[]): Route<Promise<void>> =
   return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const { crn, id } = req.params
     const { data } = req.session
-    // eslint-disable-next-line no-restricted-syntax
+
     for (const requiredValue of requiredValues) {
       const value = getDataValue(data, ['appointments', crn, id, requiredValue])
       if (!value) {

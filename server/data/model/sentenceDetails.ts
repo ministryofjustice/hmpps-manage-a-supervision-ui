@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/no-cycle
-
 import { PersonSummary } from './common'
 
 export interface SentenceDetails {

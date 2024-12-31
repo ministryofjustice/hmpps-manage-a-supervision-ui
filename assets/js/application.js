@@ -36,11 +36,13 @@ const lastAppointment = () => {
 const resetConditionals = () => {
   const handleReset = () => {
     document.querySelectorAll('.govuk-radios__conditional input').forEach(radioBtn => {
+      // eslint-disable-next-line no-param-reassign
       radioBtn.checked = false
     })
   }
   const elm = document.querySelector('[data-reset-conditional-radios]')
   if (elm) {
+    // eslint-disable-next-line no-shadow
     document.querySelectorAll('[data-reset-conditional-radios]').forEach(elm => {
       elm.addEventListener('click', handleReset)
     })

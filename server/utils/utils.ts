@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-// eslint-disable-next-line import/no-extraneous-dependencies
+
 import { DateTime } from 'luxon'
 import slugify from 'slugify'
 import getKeypath from 'lodash/get'
@@ -479,7 +479,6 @@ export const defaultFormSelectValues = (object: SelectElement, data: CaseSearchF
 
     obj.items.forEach(item => {
       if (item.value === data[id]) {
-        // eslint-disable-next-line no-param-reassign
         item.selected = 'selected'
       }
     })

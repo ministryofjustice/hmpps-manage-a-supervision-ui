@@ -1,5 +1,5 @@
 import config from '../config'
-// eslint-disable-next-line import/no-cycle
+
 import RestClient from './restClient'
 import { ErrorSummary, ErrorSummaryItem } from './model/common'
 import { RiskScoresDto } from './model/risk'

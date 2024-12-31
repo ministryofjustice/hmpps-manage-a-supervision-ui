@@ -1,4 +1,3 @@
-/* eslint-disable */
 const openText = 'Open'
 const closeText = 'Close'
 

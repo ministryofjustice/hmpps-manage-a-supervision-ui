@@ -60,7 +60,7 @@ const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Ser
     const { crn, id } = req.params
     const { data } = req.session
     const requiredValues = ['type']
-    // eslint-disable-next-line no-restricted-syntax
+
     for (const requiredValue of requiredValues) {
       const value = getDataValue(data, ['appointments', crn, id, requiredValue])
       if (!value) {

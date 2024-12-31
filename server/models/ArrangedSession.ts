@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { DateTime } from 'luxon-business-days'
 import { v4 as uuidv4 } from 'uuid'
 import { Appointment } from '../@types'

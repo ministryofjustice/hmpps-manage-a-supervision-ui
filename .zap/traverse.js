@@ -1,5 +1,5 @@
 function listChildren(node, level) {
-  var j
+  let j
   for (j = 0; j < node.getChildCount(); j++) {
     print(Array(level + 1).join('    ') + node.getChildAt(j).getNodeName())
     listChildren(node.getChildAt(j), level + 1)

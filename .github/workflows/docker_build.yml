@@ -58,7 +58,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
       - uses: ./.github/actions/build_multiplatform_docker # WORKFLOW_VERSION
-        if: ${{ ( inputs.docker_registry  == 'ghcr.io' ) && ( inputs.docker_multiplatform )}}
         with:
           repository_name: ${{ github.event.repository.name }}
           docker_registry: ${{ inputs.docker_registry }}

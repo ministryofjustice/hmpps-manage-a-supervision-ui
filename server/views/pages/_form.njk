@@ -7,19 +7,28 @@
 {% endblock %}
 
 {% block content %}
+ {% if notStandardForm %}
+    {% block primary %}{% endblock %}
+  {% else %}
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds">
+      {% block heading %}
          <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">
             {{ title }}
           </h1>
+          {% endblock %}
         <form method="post" autocomplete="off" action="{{ action if action else paths.current }}">
             <input type="hidden" name="_csrf" value="{{ csrfToken }}">
           {% block form %}{% endblock %}
           {{ govukButton({
             html: buttonText if buttonText else 'Continue',
-            isStartButton: buttonText === 'Start now'
+            isStartButton: buttonText === 'Start now',
+            attributes: {
+              'data-qa': 'submit-btn'
+            }
           }) }}
         </form>
       </div>
     </div>
+      {% endif %}
 {% endblock %}

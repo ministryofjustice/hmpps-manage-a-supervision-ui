@@ -1,13 +1,26 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable no-param-reassign */
+
 import { DateTime } from 'luxon'
 import slugify from 'slugify'
-import { RiskScore, RiskToSelf } from '../data/arnsApiClient'
+import getKeypath from 'lodash/get'
+import setKeypath from 'lodash/set'
+import { Request, Response } from 'express'
+import { Need, RiskScore, RiskSummary, RiskToSelf } from '../data/arnsApiClient'
 import { Name } from '../data/model/common'
 import { Address } from '../data/model/personalDetails'
 import config from '../config'
 import { Activity } from '../data/model/schedule'
 import { CaseSearchFilter, SelectElement } from '../data/model/caseload'
 import { RecentlyViewedCase, UserAccess } from '../data/model/caseAccess'
+import { RiskScoresDto, RoshRiskWidgetDto, TimelineItem } from '../data/model/risk'
+
+interface Item {
+  checked?: string
+  selected?: string
+  value: string
+  text?: string
+  idPrefix?: string
+}
 
 const properCase = (word: string): string =>
   word.length >= 1 ? word[0].toUpperCase() + word.toLowerCase().slice(1) : word
@@ -80,6 +93,17 @@ export const monthsOrDaysElapsed = (datetimeString: string): string => {
 export const dateWithYearShortMonth = (datetimeString: string): string => {
   if (!datetimeString || isBlank(datetimeString)) return null
   return DateTime.fromISO(datetimeString).toFormat('d MMM yyyy')
+}
+
+export const toDate = (datetimeString: string): DateTime => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  return DateTime.fromISO(datetimeString)
+}
+
+export const dateWithYearShortMonthAndTime = (datetimeString: string): string => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  const date = DateTime.fromISO(datetimeString).toFormat('d MMM yyyy')
+  return `${date} at ${govukTime(datetimeString)}`
 }
 
 export const govukTime = (datetimeString: string): string => {
@@ -455,7 +479,6 @@ export const defaultFormSelectValues = (object: SelectElement, data: CaseSearchF
 
     obj.items.forEach(item => {
       if (item.value === data[id]) {
-        // eslint-disable-next-line no-param-reassign
         item.selected = 'selected'
       }
     })
@@ -473,5 +496,164 @@ export const checkRecentlyViewedAccess = (
   })
 }
 
+export const isDefined = (val: unknown) => typeof val !== 'undefined'
+
+export const isNotNull = (val: unknown) => {
+  return val !== null
+}
+
+export const hasValue = (val: unknown) => {
+  return isNotNull(val) && isDefined(val)
+}
+
 export const makePageTitle = ({ pageHeading, hasErrors }: { pageHeading: string; hasErrors: boolean }) =>
   `${hasErrors ? 'Error: ' : ''}${pageHeading} - ${config.applicationName}`
+
+export const getDataValue = (data: any, sections: any) => {
+  const path = Array.isArray(sections) ? sections : [sections]
+  return getKeypath(data, path.map((s: any) => `["${s}"]`).join(''))
+}
+
+export const setDataValue = (data: any, sections: any, value: any) => {
+  const path = Array.isArray(sections) ? sections : [sections]
+  return setKeypath(data, path.map((s: any) => `["${s}"]`).join(''), value)
+}
+
+export const decorateFormAttributes = (req: Request, res: Response) => (obj: any, sections?: string[]) => {
+  const newObj = obj
+  const { data } = req.session as any
+  let storedValue = getDataValue(data, sections)
+  if (storedValue && config.dateFields.includes(sections[sections.length - 1]) && storedValue.includes('-')) {
+    const [year, month, day] = storedValue.split('-')
+    storedValue = [day.padStart(2, '0'), month.padStart(2, '0'), year].join('/')
+  }
+  if (newObj.items !== undefined) {
+    newObj.items = newObj.items.map((item: Item) => {
+      if (typeof item.value === 'undefined') {
+        item.value = item.text
+      }
+      if (storedValue) {
+        if ((Array.isArray(storedValue) && storedValue.includes(item.value)) || storedValue === item.value) {
+          if (storedValue.indexOf(item.value) !== -1) {
+            item.checked = 'checked'
+            item.selected = 'selected'
+          }
+        }
+      }
+      return item
+    })
+    if (sections?.length) {
+      newObj.idPrefix = sections.join('-')
+    }
+  } else {
+    newObj.value = storedValue
+  }
+  if (sections?.length) {
+    const id = sections.join('-')
+    if (typeof newObj.id === 'undefined') {
+      newObj.id = id
+    }
+    newObj.name = sections.map((s: string) => `[${s}]`).join('')
+    if (res?.locals?.errors?.errorMessages?.[id]?.text) {
+      newObj.errorMessage = { text: res.locals.errors.errorMessages[id].text }
+    }
+  }
+  return newObj
+}
+
+export const toTimeline = (riskScores: RiskScoresDto[]): TimelineItem[] => {
+  const sorted = [...riskScores].sort((a, b) => +toDate(b.completedDate) - +toDate(a.completedDate))
+  return sorted.map(riskScore => {
+    const scores = {
+      RSR: {
+        type: 'RSR',
+        level: riskScore.riskOfSeriousRecidivismScore?.scoreLevel,
+        score: riskScore.riskOfSeriousRecidivismScore?.percentageScore,
+      },
+      OGP: {
+        type: 'OGP',
+        level: riskScore.generalPredictorScore?.ogpRisk,
+        oneYear: riskScore.generalPredictorScore?.ogp1Year,
+        twoYears: riskScore.generalPredictorScore?.ogp2Year,
+      },
+      OSPC: {
+        type: 'OSP/C',
+        level: riskScore.sexualPredictorScore?.ospContactScoreLevel,
+        score: riskScore.sexualPredictorScore?.ospContactPercentageScore,
+      },
+      OSPI: {
+        type: 'OSP/I',
+        level: riskScore.sexualPredictorScore?.ospIndecentScoreLevel,
+        score: riskScore.sexualPredictorScore?.ospIndecentPercentageScore,
+      },
+      OGRS: {
+        type: 'OGRS',
+        level: riskScore.groupReconvictionScore?.scoreLevel,
+        oneYear: riskScore.groupReconvictionScore?.oneYear,
+        twoYears: riskScore.groupReconvictionScore?.twoYears,
+      },
+      OVP: {
+        type: 'OVP',
+        level: riskScore.violencePredictorScore?.ovpRisk,
+        oneYear: riskScore.violencePredictorScore?.oneYear,
+        twoYears: riskScore.violencePredictorScore?.twoYears,
+      },
+    }
+    return { date: dateWithYearShortMonthAndTime(riskScore.completedDate), scores }
+  })
+}
+
+export const getLatest = (predictors: RiskScoresDto[]): RiskScoresDto => {
+  if (predictors.length > 0) {
+    return [...predictors].sort((a, b) => +toDate(b.completedDate) - +toDate(a.completedDate))[0]
+  }
+  return null
+}
+
+export const riskLevelLabel = (level: string) => {
+  switch (level) {
+    case 'VERY_HIGH':
+      return 'Very high'
+    case 'HIGH':
+      return 'High'
+    case 'MEDIUM':
+      return 'Medium'
+    case 'LOW':
+      return 'Low'
+    default:
+      return level
+  }
+}
+
+export const groupNeeds = (level: string, needs: Need[]) => {
+  if (!needs) {
+    return []
+  }
+
+  return needs.filter(need => need.severity === level)
+}
+
+function toMap(partial: Partial<Record<RiskScore, string[]>>): { [key: string]: string } {
+  const x: { [key: string]: string } = {}
+  Object.entries(partial).forEach(item => {
+    item[1].forEach(v => {
+      // eslint-disable-next-line prefer-destructuring
+      x[v] = item[0]
+    })
+  })
+  return x
+}
+
+export const toRoshWidget = (roshSummary: RiskSummary): RoshRiskWidgetDto => {
+  if (!roshSummary) {
+    return { overallRisk: 'NOT_FOUND', assessedOn: undefined, riskInCommunity: undefined, riskInCustody: undefined }
+  }
+  const riskInCommunity = toMap(roshSummary.summary.riskInCommunity)
+  const riskInCustody = toMap(roshSummary.summary.riskInCustody)
+  return {
+    overallRisk: roshSummary.summary.overallRiskLevel,
+    assessedOn: roshSummary.assessedOn,
+    riskInCommunity,
+    riskInCustody,
+  }
+}

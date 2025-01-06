@@ -22,7 +22,7 @@ interface Request {
 }
 
 interface RequestWithBody extends Request {
-  data?: Record<string, unknown>
+  data?: Record<string, any>
   retry?: boolean
 }
 
@@ -187,7 +187,7 @@ export default class RestClient {
             reject(error)
           } else if (response) {
             const s = new Readable()
-            // eslint-disable-next-line no-underscore-dangle,@typescript-eslint/no-empty-function
+            // eslint-disable-next-line no-underscore-dangle
             s._read = () => {}
             s.push(response.body)
             s.push(null)

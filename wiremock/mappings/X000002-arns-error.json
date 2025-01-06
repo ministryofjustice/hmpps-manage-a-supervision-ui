@@ -2,7 +2,12 @@
   "mappings": [
     {
       "request": {
-        "urlPattern": "/mas/overview/X000002",
+        "urlPathPattern": "/mas/overview/X000002",
+        "queryParameters": {
+          "sentenceNumber": {
+            "equalTo": ""
+          }
+        },
         "method": "GET"
       },
       "response": {

@@ -1,0 +1,40 @@
+{% extends "../_form.njk" %}
+{% set title = "Pick a location for this appointment" %}
+{% set backLink = change if change else '/case/' + crn + '/arrange-appointment/' + id + '/sentence' %}
+{% block heading %}{% endblock %}
+{% block form %}
+   {% if errors %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+ {{ govukErrorSummary({ titleText: "There is a problem", errorList: errors.errorList }) }}
+{% endif %}
+    {% set locationItems = [] %}
+{% for location in userLocations %}
+ {% set locationItems = (locationItems.push({
+      text: location.description
+    }), locationItems) %}
+  {% endfor %}
+{% set locationItems = (locationItems.push({
+    divider: 'or'
+  }), locationItems) %}
+  {% set locationItems = (locationItems.push({
+    text: 'The location I’m looking for is not in this list'
+  }), locationItems) %}
+
+  {% set locationItems = (locationItems.push({
+    text: 'I do not need to pick a location'
+  }), locationItems) %}
+
+{{ govukRadios({
+    fieldset: {
+      legend: {
+        text: title | safe,
+        classes: "govuk-fieldset__legend--l govuk-!-margin-bottom-6",
+        isPageHeading: true
+      },
+      attributes: {
+        'data-qa': 'location'
+      }
+    },
+    items: locationItems
+   } | decorateFormAttributes(['appointments', crn, id, 'location'])) }}
+{% endblock %}

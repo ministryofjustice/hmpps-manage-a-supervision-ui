@@ -1,0 +1,30 @@
+{% extends "../_form.njk" %}
+{% set title = 'What appointment are you arranging?' %}
+{% set backLink = change if change else '/' %}
+{% set types = [] %}
+{% for appointmentType in appointmentTypes %}
+{% set types = (types.push({
+      text: appointmentType.text,
+      value: appointmentType.text
+    }), types) %}
+{% endfor %}
+{% block heading %}{% endblock %}
+{% block form %}
+{% if errors %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+ {{ govukErrorSummary({ titleText: "There is a problem", errorList: errors.errorList }) }}
+{% endif %}
+  {{ govukRadios({
+    fieldset: {
+      legend: {
+        text: title,
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--l govuk-!-margin-bottom-6"
+      },
+      attributes: {
+        'data-qa': 'type'
+      }
+    },
+    items: types
+ } | decorateFormAttributes(['appointments', crn, id, 'type'])) }}
+  {% endblock %}

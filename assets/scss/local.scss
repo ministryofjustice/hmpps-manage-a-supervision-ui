@@ -17,10 +17,48 @@
   border-bottom: 1px solid #b1b4b6;
 }
 
+.govuk-action--bottom {
+  vertical-align: bottom;
+}
+
 .inline-list-from-tablet {
   > li {
     @include govuk-media-query($from: tablet) {
       display: inline;
     }
   }
+}
+
+.reset-button {
+  appearance: none;
+  font-size: inherit;
+  font-family: inherit;
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: 0 none;
+  cursor: pointer;
+}
+
+.link-button {
+  @extend %govuk-link;
+  color: $govuk-link-colour;
+  text-align: left;
+}
+
+.notes-wrapper{
+  max-width:100%
+}
+.notes {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 75ch;
+}
+
+.truncate-notes {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }

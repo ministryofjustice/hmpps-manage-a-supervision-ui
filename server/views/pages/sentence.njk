@@ -31,6 +31,7 @@
       <div class="govuk-grid-column-one-quarter">
           {% set items = [] %}
           {% set eventNumber = sentenceDetails.sentence.offenceDetails.eventNumber %}
+          {% if sentenceDetails.sentenceSummaryList.length %}
           {% for sentence in sentenceDetails.sentenceSummaryList %}
             {% set isActive = sentence.eventNumber === eventNumber %}
             {% set items = items.concat(
@@ -42,8 +43,17 @@
                 )
             %}
           {% endfor %}
-
-          {% set items = items.concat({"text": "Probation History", href: "/case/" + crn + "/sentence/probation-history"}) %}
+          {% else %}
+           {% set items = items.concat(
+                    {
+                        "text": 'No active sentence',
+                        href: "",
+                        active: true
+                    }
+                )
+            %}
+{% endif %}
+          {% set items = items.concat({"text": "Probation history", href: "/case/" + crn + "/sentence/probation-history"}) %}
 
           {{ mojSideNavigation({
               label: 'Side navigation',
@@ -337,6 +347,11 @@
                   classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
                   html: sentence
             }) }}
+          </div>
+          {% else %}
+          <div data-qa="no-active-sentence">
+          <h3 class="govuk-heading-m govuk-!-margin-top-0">No active sentence</h3>
+          <p>This person does not have any active sentences.</p>
           </div>
           {% endif %}
     </div>

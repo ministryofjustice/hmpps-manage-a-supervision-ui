@@ -63,14 +63,14 @@
     {% endset %}
 
     {{ appSummaryCard({
-      titleText: 'Schedule',
+      titleText: 'Appointments',
       classes: ['govuk-!-margin-bottom-6 app-summary-card--large-title'],
       attributes: {'data-qa': 'scheduleCard'},
       html: schedule,
       actions: {
         items: [
           {
-            text: 'View schedule',
+            text: 'View appointments',
             href: crn + '/appointments'
           }
         ]
@@ -271,6 +271,7 @@
 
 
     {% set numberOfSentences = overview.sentences.length %}
+    {% if numberOfSentences > 0 %}
     {% for sentence in overview.sentences %}
         {% set sentenceHtml %}
             {% set order %}
@@ -335,7 +336,30 @@
             }
         }) }}
     {%- endfor %}
-
+    {{ appSummaryCard({
+            titleText: 'Sentence',
+            classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+            attributes: {'data-qa': 'sentence' + sentence.eventNumber + 'Card'},
+            html: sentenceHtml
+        }) }}
+    {% else %}
+    {% set sentenceHtml %}
+{{ govukSummaryList({
+            rows: [
+              {
+                key: { html: '<span data-qa="orderLabel">Order</span>'},
+                value: { html: '<span data-qa="orderValue">No active sentence</span>'}
+              } 
+            ]
+          }) }}
+    {%- endset %}
+   {{ appSummaryCard({
+            titleText: 'Sentence',
+            classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+            attributes: {'data-qa': 'sentenceCard'},
+            html: sentenceHtml
+        }) }}
+{%- endif %}
     {% set activityAndCompliance %}
         {% set previousOrders %}
             {% if overview.previousOrders %}

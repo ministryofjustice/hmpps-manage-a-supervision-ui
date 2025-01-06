@@ -10,6 +10,8 @@ export default defineConfig({
     configFile: 'reporter-config.json',
   },
   taskTimeout: 60000,
+  numTestsKeptInMemory: 20,
+  experimentalMemoryManagement: true,
   e2e: {
     baseUrl: 'http://localhost:3007',
     excludeSpecPattern: '**/!(*.cy).ts',

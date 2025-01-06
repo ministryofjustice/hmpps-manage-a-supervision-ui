@@ -16,6 +16,7 @@
 {% from "govuk/components/pagination/macro.njk"         import govukPagination %}
 {% from "govuk/components/input/macro.njk"               import govukInput %}
 {% from "govuk/components/select/macro.njk"              import govukSelect %}
+{% from "govuk/components/panel/macro.njk"               import govukPanel %}
 
 {% block head %}
   <link href="/assets/stylesheets/application.css?{{ version }}" rel="stylesheet"/>
@@ -63,9 +64,10 @@
   {% endif %}
   <script type="module" src="/assets/govukFrontendInit.js"></script>
   <script src="/assets/moj/all.js"></script>
+  <script src="/assets/js/jquery.min.js"></script>
   <script type="module" src="/assets/mojFrontendInit.js"></script>
   <script src="/assets/backendSortableTable.js"></script>
-  <script src="/assets/js/jquery.min.js"></script>
+  <script type="module" src="/assets/application.js"></script>
 
 
 {% endblock %}

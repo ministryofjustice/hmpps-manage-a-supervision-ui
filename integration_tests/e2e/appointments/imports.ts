@@ -10,7 +10,7 @@ import AppointmentCheckYourAnswersPage from '../../pages/appointments/check-your
 
 export const crn = 'X778160'
 export const uuid = '19a88188-6013-43a7-bb4d-6e338516818f'
-export const date = DateTime.now()
+export const date = DateTime.now().toISODate()
 export const startTime = '9:00am'
 export const endTime = '9:30am'
 export const dateRegex: RegExp =

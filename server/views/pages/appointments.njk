@@ -138,11 +138,12 @@
 
 {% block headerActions %}
     <div class="moj-button-group moj-button-group--inline">
-      <a href="{{ deliusDeepLinkUrl('ContactList', offenderId) }}" target="_blank">
-        <button type="submit" class="govuk-button govuk-!-static-margin-bottom-0 govuk-!-static-margin-right-0" data-module="govuk-button">
+    <form method="POST" action="">
+        <button type="submit" class="govuk-button govuk-!-static-margin-bottom-0 govuk-!-static-margin-right-0" data-module="govuk-button" data-qa="arrange-appointment-btn">
               Arrange an appointment
         </button>
-      </a>
+<input type="hidden" name="_csrf" value="{{ csrfToken }}">
+      </form>
     </div>
 {% endblock %}
 

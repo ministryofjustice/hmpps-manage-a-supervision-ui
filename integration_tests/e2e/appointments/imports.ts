@@ -1,4 +1,5 @@
 import 'cypress-plugin-tab'
+import { DateTime } from 'luxon'
 import AppointmentDateTimePage from '../../pages/appointments/date-time.page'
 import AppointmentLocationPage from '../../pages/appointments/location.page'
 import AppointmentSentencePage from '../../pages/appointments/sentence.page'
@@ -9,8 +10,7 @@ import AppointmentCheckYourAnswersPage from '../../pages/appointments/check-your
 
 export const crn = 'X778160'
 export const uuid = '19a88188-6013-43a7-bb4d-6e338516818f'
-const today = new Date()
-export const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+export const date = DateTime.now()
 export const startTime = '9:00am'
 export const endTime = '9:30am'
 export const dateRegex: RegExp =

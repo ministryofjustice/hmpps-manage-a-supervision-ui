@@ -23,7 +23,7 @@ export default function interventionsRoutes(router: Router, { hmppsAuthClient }:
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const [personSummary, interventions, tierCalculation] = await Promise.all([

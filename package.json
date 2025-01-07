@@ -1,8 +1,8 @@
 {
-  "name": "hmpps-manage-a-supervision-ui",
+  "name": "hmpps-manage-people-on-probation-ui",
   "version": "0.0.1",
   "description": "Hmpps Manage A Supervision Ui",
-  "repository": "git@github.com:ministryofjustice/hmpps-manage-a-supervision-ui.git",
+  "repository": "git@github.com:ministryofjustice/hmpps-manage-people-on-probation-ui.git",
   "license": "MIT",
   "scripts": {
     "prepare": "husky",
@@ -29,7 +29,7 @@
     "int-test": "cypress run --config video=false",
     "int-test-ui": "cypress open --e2e --browser chrome",
     "clean": "rm -rf dist build node_modules stylesheets",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org ministryofjustice --project hmpps-manage-a-supervision-ui ./dist && sentry-cli sourcemaps upload --org ministryofjustice --project hmpps-manage-a-supervision-ui ./dist",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org ministryofjustice --project hmpps-manage-people-on-probation-ui ./dist && sentry-cli sourcemaps upload --org ministryofjustice --project hmpps-manage-people-on-probation-ui ./dist",
     "e2e-test": "NODE_OPTIONS='--import tsx' npx playwright test",
     "e2e-test:headed": "NODE_OPTIONS='--import tsx' npx playwright test --headed",
     "e2e-test:debug": "NODE_OPTIONS='--import tsx' npx playwright test --debug"

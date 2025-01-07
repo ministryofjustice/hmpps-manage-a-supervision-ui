@@ -23,7 +23,7 @@ export default function caseRoutes(router: Router, { hmppsAuthClient }: Services
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const [overview, risks, tierCalculation] = await Promise.all([

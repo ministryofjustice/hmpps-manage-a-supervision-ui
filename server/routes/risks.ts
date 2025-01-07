@@ -22,7 +22,7 @@ export default function risksRoutes(router: Router, { hmppsAuthClient }: Service
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const arnsClient = new ArnsApiClient(token)
@@ -71,7 +71,7 @@ export default function risksRoutes(router: Router, { hmppsAuthClient }: Service
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const personRiskFlag = await masClient.getPersonRiskFlag(crn, id)
@@ -93,7 +93,7 @@ export default function risksRoutes(router: Router, { hmppsAuthClient }: Service
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const personRisk = await masClient.getPersonRiskFlags(crn)

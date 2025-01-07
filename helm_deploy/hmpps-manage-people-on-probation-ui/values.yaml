@@ -4,7 +4,7 @@ generic-service:
   replicaCount: 4
 
   image:
-    repository: ghcr.io/ministryofjustice/hmpps-manage-a-supervision-ui
+    repository: ghcr.io/ministryofjustice/hmpps-manage-people-on-probation-ui
     tag: app_version # override at deployment time
     port: 3000
 

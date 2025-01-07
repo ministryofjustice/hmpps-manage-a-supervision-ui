@@ -32,7 +32,7 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const masClient = new MasApiClient(token)
@@ -60,7 +60,7 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const masClient = new MasApiClient(token)
@@ -88,7 +88,7 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const masClient = new MasApiClient(token)
@@ -111,7 +111,7 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const masClient = new MasApiClient(token)
@@ -134,7 +134,7 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const masClient = new MasApiClient(token)
@@ -157,7 +157,7 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const masClient = new MasApiClient(token)

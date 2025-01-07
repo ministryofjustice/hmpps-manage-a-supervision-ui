@@ -23,7 +23,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
     const [personalDetails, needs, tierCalculation] = await Promise.all([
       masClient.getPersonalDetails(crn),
@@ -51,7 +51,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const [personalContact, tierCalculation] = await Promise.all([
@@ -77,7 +77,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const addressOverview = await masClient.getPersonalAddresses(crn)
@@ -99,7 +99,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const response = await masClient.downloadDocument(crn, documentId)
@@ -119,7 +119,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const personSummary = await masClient.getPersonSummary(crn)
@@ -140,7 +140,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const disabilities = await masClient.getPersonDisabilities(crn)
@@ -161,7 +161,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const adjustments = await masClient.getPersonAdjustments(crn)
@@ -182,7 +182,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const circumstances = await masClient.getPersonCircumstances(crn)

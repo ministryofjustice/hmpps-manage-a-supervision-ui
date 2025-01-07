@@ -40,6 +40,11 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
     })
   })
 
+  post('/case/:crn/appointments', async (req, res, next) => {
+    const { crn } = req.params
+    res.redirect(`/case/${crn}/arrange-appointment/type`)
+  })
+
   get('/case/:crn/appointments/appointment/:contactId', async (req, res, _next) => {
     const { crn } = req.params
     const { contactId } = req.params

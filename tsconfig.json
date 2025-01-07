@@ -23,6 +23,17 @@
     // This improves issue grouping in Sentry.
     "sourceRoot": "/"
   },
-  "exclude": ["node_modules", "assets/**/*.js", "integration_tests", "e2e_tests", "dist", "cypress.config.ts", "playwright.config.ts", "playwright-report", "test-results"],
+  "exclude": [
+    "node_modules",
+    "assets/**/*.js",
+    "integration_tests",
+    "e2e_tests",
+    "dist",
+    "cypress.config.ts",
+    "playwright.config.ts",
+    "playwright-report",
+    "test-results",
+    "eslint.config.mjs"
+  ],
   "include": ["**/*.js", "**/*.ts"]
 }

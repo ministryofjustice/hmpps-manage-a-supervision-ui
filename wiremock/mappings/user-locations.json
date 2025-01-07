@@ -1,0 +1,47 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/user/USER1/locations",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "name": {
+            "forename": "Eula",
+            "middleName": "",
+            "surname": "Schmeler"
+          },
+          "locations": [
+            {
+              "id": 1234,
+              "description": "HMP Wakefield",
+              "address": {
+                "buildingNumber": "5",
+                "streetName": "Love Lane",
+                "town": "Wakefield",
+                "county": "West Yorkshire",
+                "postcode": "WF2 9AG"
+              }
+            },
+            {
+              "id": 5678,
+              "description": "102 Petty France",
+              "address": {
+                "buildingNumber": "102",
+                "streetName": "Petty France",
+                "district": "Westminster",
+                "town": "London",
+                "postcode": "SW1H 9EA"
+              }
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPathPattern": "/mas/appointment/X778160",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "appointments": [{ "id": 1 }, { "id": 2 }, { "id": 3 }]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

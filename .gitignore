@@ -133,3 +133,4 @@ integration_tests/screenshots/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+.DS_Store

@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/no-cycle
-
 import { Name } from './common'
 
 export interface PreviousOrderHistory {

@@ -1,4 +1,5 @@
 {% extends "../partials/layout.njk" %}
+{% from "../_components/predictor-timeline-item/macro.njk" import predictorTimelineItem %}
 {% set mainClasses = "app-container govuk-body" %}
 
 
@@ -23,20 +24,32 @@
     <div>
         <div class="moj-page-header-actions govuk-!-static-margin-bottom-0">
             <div class="moj-page-header-actions__title">
-                <ul class="govuk-list govuk-caption-m inline-list-from-tablet">
-                    <li>CRN:
-                        <span data-qa='crn'>{{ headerCRN }}</span>
-                        <span class='govuk-!-padding-left-3 govuk-!-padding-right-3 hide-mobile'>|</span>
-                    </li>
-                    <li>Date of birth:
-                        <span data-qa='headerDateOfBirthValue'>{{ headerDob | dateWithYear }}</span>
-                        (age <span data-qa='headerDateOfBirthAge'>{{ headerDob | yearsSince }}</span>)
-                        <span class='govuk-!-padding-left-3 govuk-!-padding-right-3 hide-mobile'>|</span>
-                    </li>
-                    <li>Tier:
-                        <span data-qa='tierValue'>{{ tierCalculation.tierScore }}</span>
-                    </li>
-                </ul>
+
+                <div class="govuk-flex">
+                    <div>
+                        <ul class="govuk-list govuk-caption-m inline-list-from-tablet">
+                            <li>CRN:
+                                <span data-qa='crn'>{{ headerCRN }}</span>
+                                <span class='govuk-!-padding-left-3 govuk-!-padding-right-3 hide-mobile'>|</span>
+                            </li>
+                            <li>Date of birth:
+                                <span data-qa='headerDateOfBirthValue'>{{ headerDob | dateWithYear }}</span>
+                                (age <span data-qa='headerDateOfBirthAge'>{{ headerDob | yearsSince }}</span>)
+                                <span class='govuk-!-padding-left-3 govuk-!-padding-right-3 hide-mobile'>|</span>
+                            </li>
+                            <li>Tier:
+                                <span data-qa='tierValue'>{{ tierCalculation.tierScore }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    {% if risksWidget.overallRisk and risksWidget.overallRisk !== 'NOT_FOUND' %}
+                    <div class="govuk-!-margin-left-4">{{ predictorTimelineItem({ type: "ROSH", level: risksWidget.overallRisk }) }}</div>
+                    {% endif %}
+                    {% if predictorScores.scores.RSR.level %}
+                        <div class="govuk-!-margin-left-4">{{ predictorTimelineItem(predictorScores.scores.RSR) }}</div>
+                    {% endif %}
+                </div>
+
                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
                     <span data-qa='name'>{{ headerPersonName }}</span>
                 </h1>
@@ -49,8 +62,14 @@
     </div>
 {% include "../partials/case-nav.njk" %}
 {% if currentSectionName %}
-    <h1 class="govuk-heading-l govuk-!-margin-bottom-7" data-qa="pageHeading">{{ currentSectionName }}</h1>
+    {% if lastUpdatedDate %}
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-3" data-qa="pageHeading">{{ currentSectionName }}</h1>
+        <div class="govuk-inset-text govuk-!-margin-top-0">{{ lastUpdatedDate }}</div>
+    {% else %}
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-7" data-qa="pageHeading">{{ currentSectionName }}</h1>
+    {% endif %}
 {% endif %}
+
 
 {% set errors = [] %}
 {% if risks.errors.length > 0 %}

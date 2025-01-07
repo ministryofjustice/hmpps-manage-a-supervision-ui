@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import path from 'path'
 import nunjucks from 'nunjucks'
-import express from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 import {
   activityLog,
   activityLogDate,
@@ -12,7 +12,9 @@ import {
   dateWithNoDay,
   dateWithYear,
   dateWithYearShortMonth,
+  dateWithYearShortMonthAndTime,
   dayOfWeek,
+  decorateFormAttributes,
   defaultFormInputValues,
   defaultFormSelectValues,
   deliusDateFormat,
@@ -28,15 +30,20 @@ import {
   getRisksWithScore,
   getTagClass,
   govukTime,
+  groupNeeds,
+  hasValue,
   initialiseName,
   interventionsLink,
+  isDefined,
   isInThePast,
+  isNotNull,
   isToday,
   lastUpdatedBy,
   lastUpdatedDate,
   monthsOrDaysElapsed,
   oaSysUrl,
   removeEmpty,
+  riskLevelLabel,
   scheduledAppointments,
   sentencePlanLink,
   setSortOrder,
@@ -67,7 +74,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
     app.locals.version = applicationInfo.gitShortHash
   } else {
     // Version changes every request
-    app.use((req, res, next) => {
+    app.use((_req, res, next) => {
       res.locals.version = Date.now().toString()
       return next()
     })
@@ -108,6 +115,14 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('defaultFormSelectValues', defaultFormSelectValues)
   njkEnv.addFilter('dateForSort', dateForSort)
   njkEnv.addFilter('timeForSort', timeForSort)
+
+  app.use((req: Request, res: Response, next: NextFunction): void => {
+    njkEnv.addFilter('decorateFormAttributes', decorateFormAttributes(req, res))
+    return next()
+  })
+
+  njkEnv.addFilter('dateWithYearShortMonthAndTime', dateWithYearShortMonthAndTime)
+  njkEnv.addGlobal('groupNeeds', groupNeeds)
   njkEnv.addGlobal('getComplianceStatus', getComplianceStatus)
   njkEnv.addGlobal('timeFromTo', timeFromTo)
   njkEnv.addGlobal('getRisksWithScore', getRisksWithScore)
@@ -131,4 +146,8 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('interventionsLink', interventionsLink)
   njkEnv.addGlobal('setSortOrder', setSortOrder)
   njkEnv.addGlobal('sortAppointmentsDescending', sortAppointmentsDescending)
+  njkEnv.addGlobal('isNotNull', isNotNull)
+  njkEnv.addGlobal('isDefined', isDefined)
+  njkEnv.addGlobal('hasValue', hasValue)
+  njkEnv.addGlobal('riskLevelLabel', riskLevelLabel)
 }

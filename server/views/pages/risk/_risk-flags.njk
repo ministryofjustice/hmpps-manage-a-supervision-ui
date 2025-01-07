@@ -1,10 +1,10 @@
 {% set riskFlags %}
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-full">
       {% if case.riskFlags.length == 0 %}
         <p><strong>There are no current risk flags. Add risk flags in Delius.</strong></p>
       {% endif %}
-      <p>Risk flags (registrations) show circumstances that need prominent and constant visibility. Review flags regularly, and remove them when they are no longer appropriate.</p>
+      <p>Risk flags show circumstances that need prominent and constant visibility. Review flags regularly, and remove them when they are no longer appropriate.</p>
     </div>
   </div>
 
@@ -12,9 +12,10 @@
     <table class="govuk-table govuk-!-margin-bottom-4">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th class="govuk-table__header" style="width: 30%">Flag</th>
-          <th class="govuk-table__header" style="width: 55%">Notes</th>
-          <th class="govuk-table__header" style="width: 15%">Review due</th>
+          <th class="govuk-table__header">Flag</th>
+          <th class="govuk-table__header">Notes</th>
+          <th class="govuk-table__header">Date added</th>
+          <th class="govuk-table__header">Next review</th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
@@ -22,8 +23,15 @@
           {% if not flag.rosh %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell" data-qa="risk{{loop.index}}DescriptionValue"><a href="/case/{{ crn }}/risk/flag/{{ flag.id }}">{{ flag.description }}</a></td>
-              <td class="govuk-table__cell" data-qa="risk{{loop.index}}NotesValue">{{ flag.notes or 'No notes' }}</td>
-              <td class="govuk-table__cell" data-qa="risk{{loop.index}}NextReviewDateValue">{{ flag.nextReviewDate | dateWithYear }}</td>
+              <td class="govuk-table__cell" data-qa="risk{{loop.index}}NotesValue"><p class='truncate-notes'>{{ flag.notes or 'No notes' }}</p></td>
+              <td class="govuk-table__cell" data-qa="risk{{loop.index}}NextReviewDateValue">{{ flag.createdDate | dateWithYear }}</td>
+              <td class="govuk-table__cell" data-qa="risk{{loop.index}}NextReviewDateValue">{{ flag.nextReviewDate | dateWithYear }}
+                {% if(isInThePast(flag.nextReviewDate)) %}
+                <p><strong class="govuk-tag app-compliance-tag govuk-tag--red govuk-!-margin-left-2">
+                  Overdue
+                  </strong></p>
+                {% endif %}
+              </td>
             </tr>
           {% endif %}
         {% endfor %}
@@ -41,14 +49,14 @@
 
 {{ appSummaryCard({
   attributes: {'data-qa': 'riskFlagsCard'},
-  titleText: "Risk flags",
+  titleText: "NDelius risk flags",
   classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
   html: riskFlags,
   actions: {
     items: [
       {
         href: '/case/' + crn + '/handoff/delius',
-        text: "Add a risk flag in Delius"
+        text: "Add a risk flag in NDelius"
       }
     ]
   }

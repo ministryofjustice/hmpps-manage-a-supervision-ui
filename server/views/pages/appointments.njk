@@ -6,6 +6,7 @@
 {% set headerPersonName = upcomingAppointments.personSummary.name.forename + ' ' + upcomingAppointments.personSummary.name.surname %}
 {% set headerCRN = upcomingAppointments.personSummary.crn %}
 {% set headerDob = upcomingAppointments.personSummary.dateOfBirth  %}
+{% set offenderId = upcomingAppointments.personSummary.offenderId  %}
 {% set headerGender = upcomingAppointments.personSummary.gender  %}
 {% set upcomingAppointments = sortAppointmentsDescending(upcomingAppointments.appointments) %}
 {% set pastAppointments = sortAppointmentsDescending(pastAppointments.appointments, 10) %}
@@ -33,7 +34,7 @@
         ]
       }) }}
       {% else %}
-        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="/case/{{ crn }}/handoff/delius">Manage on NDelius</a>
+        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="{{ deliusDeepLinkUrl('ContactList', offenderId) }}">Manage on NDelius</a>
       {% endif %}
     {% endset %}
 
@@ -86,7 +87,7 @@
           ]
         }) }}
       {% else %}
-        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="/case/{{ crn }}/handoff/delius">Manage on NDelius</a>
+        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="{{ deliusDeepLinkUrl('ContactList', offenderId) }}">Manage on NDelius</a>
       {% endif %}
     {% endset %}
 
@@ -137,11 +138,12 @@
 
 {% block headerActions %}
     <div class="moj-button-group moj-button-group--inline">
-        <form method="get" action="/case/{{ crn }}/handoff/delius" target="_blank">
-            <button type="submit" class="govuk-button govuk-!-static-margin-bottom-0 govuk-!-static-margin-right-0" data-module="govuk-button">
-                Arrange an appointment
-            </button>
-        </form>
+    <form method="POST" action="">
+        <button type="submit" class="govuk-button govuk-!-static-margin-bottom-0 govuk-!-static-margin-right-0" data-module="govuk-button" data-qa="arrange-appointment-btn">
+              Arrange an appointment
+        </button>
+<input type="hidden" name="_csrf" value="{{ csrfToken }}">
+      </form>
     </div>
 {% endblock %}
 

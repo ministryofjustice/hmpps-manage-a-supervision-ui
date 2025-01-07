@@ -35,6 +35,10 @@ export default abstract class Page {
     return cy.get(`[data-qa=${cardName}Card]`).within(() => cy.get(`[data-qa=${rowName}${type}]`))
   }
 
+  getElementData = (name: string): PageElement => {
+    return cy.get(`[data-qa=${name}]`)
+  }
+
   getRowDataIndex = (cardName: string, rowName: string, type: string, index: number): PageElement => {
     return cy
       .get(`[data-qa=${cardName}Card]`)
@@ -76,5 +80,53 @@ export default abstract class Page {
     cy.get(element)
       .eq(index)
       .within(() => cy.get(withinElement).eq(withinIndex).as(aliasName))
+  }
+
+  getBackLink = (): PageElement => cy.get('.govuk-back-link')
+
+  getSubmitBtn = (): PageElement => cy.get('[data-qa="submit-btn"]')
+
+  getRadio = (id: string, index: number): PageElement => {
+    return cy.get(`[data-qa="${id}"] .govuk-radios__item:nth-child(${index}) input`)
+  }
+
+  getRadioLabel = (id: string, index: number): PageElement => {
+    return cy.get(`[data-qa="${id}"] .govuk-radios__item:nth-child(${index}) label`)
+  }
+
+  getRadios = (id: string) => {
+    return cy.get(`[data-qa="${id}"] .govuk-radios__item input`)
+  }
+
+  getRadioLabels = (id: string) => {
+    return cy.get(`[data-qa="${id}"].govuk-radios__item label`)
+  }
+
+  getErrorSummaryBox = (): PageElement => {
+    return cy.get('.govuk-error-summary')
+  }
+
+  getAllErrorSummaryLinks = (): PageElement => {
+    return cy.get('.govuk-error-summary__list a')
+  }
+
+  getErrorSummaryLink = (index: number): PageElement => {
+    return cy.get(`.govuk-error-summary__list li:nth-child(${index}) a`)
+  }
+
+  getElement = (selector: string) => {
+    return cy.get(selector)
+  }
+
+  checkErrorSummaryBox = (summaryErrors: string[]): void => {
+    this.getErrorSummaryBox().should('be.visible')
+    this.getAllErrorSummaryLinks().should('have.length', summaryErrors.length)
+    this.getAllErrorSummaryLinks().each(($item, index) => {
+      expect($item.text()).to.eq(summaryErrors[index])
+    })
+  }
+
+  getSummaryListRow = (index: number) => {
+    return cy.get(`.govuk-summary-list__row:nth-child(${index})`)
   }
 }

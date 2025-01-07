@@ -1543,8 +1543,33 @@
                 "forename": "Paul",
                 "surname": "Smith"
               }
+            },
+            {
+              "subType": "Is a Primary Carer",
+              "type": "Transferred to Crown Court"
+            },
+            {
+              "subType": "Maternity",
+              "type": "Training"
+            },
+            {
+              "subType": "Language/Communication Concerns",
+              "type": "Adjourned - Other Report"
             }
-          ]
+          ],
+          "disabilities": {
+            "disabilities": [
+              "Hearing Disabilities",
+              "Learning Disability",
+              "Mental Health related disabilities",
+              "Mobility related Disabilities"
+            ],
+            "lastUpdated": "2023-04-06"
+          },
+          "provisions": {
+            "provisions": ["Handrails", "Behavioural responses/Body language"],
+            "lastUpdated": "2023-05-12"
+          }
         },
         "headers": {
           "Content-Type": "application/json"

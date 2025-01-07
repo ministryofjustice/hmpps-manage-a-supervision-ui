@@ -103,7 +103,7 @@ jobs:
                         "type": "plain_text",
                         "text": "📈 Report"
                       },
-                      "url": "https://ministryofjustice.github.io/hmpps-manage-a-supervision-ui/zap-report"
+                      "url": "https://ministryofjustice.github.io/hmpps-manage-people-on-probation-ui/zap-report"
                     },
                     {
                       "type": "button",

@@ -5,7 +5,7 @@ generic-service:
   replicaCount: 2
 
   ingress:
-    host: manage-a-supervision-preprod.hmpps.service.justice.gov.uk
+    host: manage-people-on-probation-preprod.hmpps.service.justice.gov.uk
 
   env:
     INGRESS_URL: "https://manage-a-supervision-preprod.hmpps.service.justice.gov.uk"

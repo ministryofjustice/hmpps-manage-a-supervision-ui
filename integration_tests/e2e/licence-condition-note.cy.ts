@@ -4,7 +4,6 @@ import SentencePage from '../pages/sentence'
 context('Sentence', () => {
   it('Licence condition note page is rendered', () => {
     cy.visit('/case/X000001/sentence/licence-condition/7007/note/0')
-
     const page = Page.verifyOnPage(SentencePage)
     page.headerCrn().should('contain.text', 'X000001')
     page.headerName().should('contain.text', 'Caroline Wolff')

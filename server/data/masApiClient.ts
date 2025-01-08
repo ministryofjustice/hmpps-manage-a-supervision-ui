@@ -21,6 +21,7 @@ import { ProfessionalContact } from './model/professionalContact'
 import { CaseAccess, UserAccess } from './model/caseAccess'
 import { LicenceConditionNoteDetails } from './model/licenceConditionNoteDetails'
 import { AppointmentRequestBody } from '../@types'
+import { RequirementNoteDetails } from './model/requirementNoteDetails'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -60,6 +61,17 @@ export default class MasApiClient extends RestClient {
   ): Promise<LicenceConditionNoteDetails | null> {
     return this.get({
       path: `/sentence/${crn}/licence-condition/${licenceConditionId}/note/${noteId}`,
+      handle404: false,
+    })
+  }
+
+  async getSentenceRequirementNote(
+    crn: string,
+    requirementId: string,
+    noteId: string,
+  ): Promise<RequirementNoteDetails | null> {
+    return this.get({
+      path: `/sentence/${crn}/requirement/${requirementId}/note/${noteId}`,
       handle404: false,
     })
   }

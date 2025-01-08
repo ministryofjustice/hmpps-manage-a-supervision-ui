@@ -10,7 +10,7 @@ export default abstract class Page {
   }
 
   checkOnPage(): void {
-    cy.get('h1').contains(this.title)
+    cy.get('[data-qa=pageHeading]').contains(this.title)
   }
 
   signOut = (): PageElement => cy.get('[data-qa=signOut]')

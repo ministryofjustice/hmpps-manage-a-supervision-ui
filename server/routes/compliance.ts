@@ -19,7 +19,7 @@ export default function complianceRoutes(router: Router, { hmppsAuthClient }: Se
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const masClient = new MasApiClient(token)

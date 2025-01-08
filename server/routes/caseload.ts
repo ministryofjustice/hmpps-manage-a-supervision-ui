@@ -105,7 +105,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
       subjectId: res.locals.user.username,
       subjectType: 'USER',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
     const pagination: Pagination = getPaginationLinks(
       req.session.page ? Number.parseInt(req.session.page as string, config.apis.masApi.pageSize) : 1,
@@ -148,7 +148,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
             subjectId: res.locals.user.username,
             subjectType: 'USER',
             correlationId: v4(),
-            service: 'hmpps-manage-a-supervision-ui',
+            service: 'hmpps-manage-people-on-probation-ui',
           })
           res.render('pages/caseload/select-team', {
             userTeams,
@@ -171,7 +171,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
       subjectId: res.locals.user.username,
       subjectType: 'USER',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
     const userTeams = await masClient.getUserTeams(res.locals.user.username)
     res.render('pages/caseload/select-team', {
@@ -194,7 +194,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
         subjectId: teamCode,
         subjectType: 'TEAM',
         correlationId: v4(),
-        service: 'hmpps-manage-a-supervision-ui',
+        service: 'hmpps-manage-people-on-probation-ui',
       })
       const pageNum: number = req.query.page
         ? Number.parseInt(req.query.page as string, config.apis.masApi.pageSize)
@@ -249,7 +249,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
       subjectId: res.locals.user.username,
       subjectType: 'USER',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     res.render('pages/caseload/recent-cases', {

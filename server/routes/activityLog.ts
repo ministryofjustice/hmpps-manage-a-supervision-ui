@@ -40,7 +40,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
     res.render('pages/activity-log', {
       personActivity,
@@ -60,7 +60,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const masClient = new MasApiClient(token)
@@ -113,7 +113,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     res.render('pages/appointments/appointment', {

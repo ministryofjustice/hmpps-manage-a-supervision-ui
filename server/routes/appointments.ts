@@ -24,7 +24,7 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const [upcomingAppointments, pastAppointments, tierCalculation] = await Promise.all([
@@ -57,7 +57,7 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const personAppointment = await masClient.getPersonAppointment(crn, contactId)
@@ -78,7 +78,7 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
       subjectId: crn,
       subjectType: 'CRN',
       correlationId: v4(),
-      service: 'hmpps-manage-a-supervision-ui',
+      service: 'hmpps-manage-people-on-probation-ui',
     })
 
     const schedule = await masClient.getPersonSchedule(crn, 'previous')

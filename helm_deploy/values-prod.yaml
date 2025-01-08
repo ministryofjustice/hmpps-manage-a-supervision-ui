@@ -1,5 +1,5 @@
 ---
-# Per environment values which override defaults in hmpps-manage-a-supervision-ui/values.yaml
+# Per environment values which override defaults in hmpps-manage-people-on-probation-ui/values.yaml
 
 generic-service:
   ingress:

@@ -1,17 +1,17 @@
 generic-service:
-  nameOverride: hmpps-manage-a-supervision-ui
+  nameOverride: hmpps-manage-people-on-probation-ui
   productId: "HMPPS543" # productId for the product that this belongs too, i.e. DPS001, see README.md for details
   replicaCount: 4
 
   image:
-    repository: quay.io/hmpps/hmpps-manage-a-supervision-ui
+    repository: ghcr.io/ministryofjustice/hmpps-manage-people-on-probation-ui
     tag: app_version # override at deployment time
     port: 3000
 
   ingress:
     enabled: true
     host: app-hostname.local # override per environment
-    tlsSecretName: hmpps-manage-a-supervision-ui-cert
+    tlsSecretName: hmpps-manage-people-on-probation-ui-cert
 
   livenessProbe:
     httpGet:
@@ -34,7 +34,7 @@ generic-service:
     REDIS_TLS_ENABLED: "true"
     TOKEN_VERIFICATION_ENABLED: "true"
     APPLICATIONINSIGHTS_CONNECTION_STRING: "InstrumentationKey=$(APPINSIGHTS_INSTRUMENTATIONKEY);IngestionEndpoint=https://northeurope-0.in.applicationinsights.azure.com/;LiveEndpoint=https://northeurope.livediagnostics.monitor.azure.com/"
-    AUDIT_SERVICE_NAME: "hmpps-manage-a-supervision-ui"
+    AUDIT_SERVICE_NAME: "hmpps-manage-people-on-probation-ui"
     AUDIT_SQS_REGION: "eu-west-2"
 
   # Pre-existing kubernetes secrets to load as environment variables in the deployment.
@@ -43,7 +43,7 @@ generic-service:
   #     [name of environment variable as seen by app]: [key of kubernetes secret to load]
 
   namespace_secrets:
-    hmpps-manage-a-supervision-ui:
+    hmpps-manage-people-on-probation-ui:
       APPINSIGHTS_INSTRUMENTATIONKEY: "APPINSIGHTS_INSTRUMENTATIONKEY"
       API_CLIENT_ID: "API_CLIENT_ID"
       API_CLIENT_SECRET: "API_CLIENT_SECRET"
@@ -64,7 +64,7 @@ generic-service:
       - internal
       - unilink_staff
 
-  serviceAccountName: manage-a-supervision-ui
+  serviceAccountName: manage-people-on-probation-ui
 
 generic-prometheus-alerts:
-  targetApplication: hmpps-manage-a-supervision-ui
+  targetApplication: hmpps-manage-people-on-probation-ui

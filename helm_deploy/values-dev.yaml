@@ -1,14 +1,14 @@
 ---
-# Per environment values which override defaults in hmpps-manage-a-supervision-ui/values.yaml
+# Per environment values which override defaults in hmpps-manage-people-on-probation-ui/values.yaml
 
 generic-service:
   replicaCount: 2
 
   ingress:
-    host: manage-a-supervision-dev.hmpps.service.justice.gov.uk
+    host: manage-people-on-probation-dev.hmpps.service.justice.gov.uk
 
   env:
-    INGRESS_URL: "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk"
+    INGRESS_URL: "https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth"
     MANAGE_USERS_API_URL: "https://manage-users-api-dev.hmpps.service.justice.gov.uk"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api-dev.prison.service.justice.gov.uk"

@@ -4,7 +4,7 @@
 
 User interface for the Manage a Supervision service.
 
-Try it out in the dev environment: https://manage-a-supervision-dev.hmpps.service.justice.gov.uk
+Try it out in the dev environment: https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk/
 
 ## Get started
 
@@ -62,7 +62,7 @@ INTERVENTIONS_LINK=https://hmpps-interventions-ui-dev.apps.live-1.cloud-platform
 Run the following to grab client credentials from the dev namespace:
 
 ```shell
-kubectl -n hmpps-manage-a-supervision-dev get secret hmpps-manage-a-supervision-ui -o json \
+kubectl -n hmpps-manage-a-supervision-dev get secret hmpps-manage-people-on-probation-ui -o json \
 | jq -r '.data | map_values(@base64d) | to_entries[] | "\(.key)=\(.value)"' \
 | grep CLIENT >> .env
 ```

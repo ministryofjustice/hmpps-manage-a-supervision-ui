@@ -3,19 +3,19 @@ env:
   contexts:
     - name: HMPPSAuth
       urls:
-        - "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk"
+        - "https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk"
       includePaths:
-        - "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk.*"
+        - "https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk.*"
       excludePaths:
         - "https://sign-in-dev.hmpps.service.justice.gov.uk.*"
       authentication:
         method: browser
         parameters:
-          loginPageUrl: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/sign-in?redirect_uri=https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback"
-          loginRequestUrl: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/sign-in?redirect_uri=https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/sign-in/callback"
+          loginPageUrl: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/sign-in?redirect_uri=https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk/sign-in/callback"
+          loginRequestUrl: "https://sign-in-dev.hmpps.service.justice.gov.uk/auth/sign-in?redirect_uri=https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk/sign-in/callback"
         verification:
           method: "poll"
-          pollUrl: "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/"
+          pollUrl: "https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk/"
           pollFrequency: 1
           pollUnits: "requests"
           loggedInRegex: "\\Q 200\\E"
@@ -43,7 +43,7 @@ jobs:
     parameters:
       context: "HMPPSAuth"
       user: "TestUser"
-      url: "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk/case/X756510"
+      url: "https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk/case/X756510"
       maxDuration: 5 # minutes
   - name: "Add script"
     type: script
@@ -77,7 +77,7 @@ jobs:
     confidences:
       - high
     sites:
-      - "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk"
+      - "https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk"
   - name: "JSON Report"
     type: report
     parameters:
@@ -91,4 +91,4 @@ jobs:
     confidences:
       - high
     sites:
-      - "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk"
+      - "https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk"

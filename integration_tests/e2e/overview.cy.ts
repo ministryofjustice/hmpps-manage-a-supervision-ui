@@ -28,6 +28,7 @@ context('Overview', () => {
       .should('contain.text', 'Committed/ Transferred to Crown: Life imprisonment (Adult)')
     page.getRowData('personalDetails', 'disabilities', 'Value').should('contain.text', 'Dyslexia, Arthritis')
     page.getRowData('personalDetails', 'adjustments', 'Value').should('contain.text', 'Hand Rails, Special Furniture')
+    page.getCardHeader('sentence2').should('contain.text', 'ORA Community Order')
     page
       .getRowData('sentence2', 'mainOffence', 'Value')
       .should(
@@ -35,12 +36,13 @@ context('Overview', () => {
         '(Having possession a picklock or other implement with intent to break into any premises - 18502)',
       )
     page.getRowData('sentence2', 'order', 'Value').should('contain.text', 'ORA Community Order')
-    page.getRowData('sentence2', 'requirements', 'Value').should('contain.text', '10 days RAR, 9 completed')
+    page.getRowData('sentence2', 'requirements', 'Value').should('contain.text', '9 of 10 RAR days completed')
+    page.getCardHeader('sentence3').should('contain.text', '12 month Community order')
     page
       .getRowData('sentence3', 'mainOffence', 'Value')
       .should('contain.text', 'Breach of Restraining Order (Protection from Harassment Act 1997) - 00831')
     page.getRowData('sentence3', 'order', 'Value').should('contain.text', '12 month Community order')
-    page.getRowData('sentence3', 'requirements', 'Value').should('contain.text', '16 days RAR, 14 completed')
+    page.getRowData('sentence3', 'requirements', 'Value').should('contain.text', '14 of 16 RAR days completed')
     page
       .getRowData('activityAndCompliance', 'previousOrders', 'Value')
       .should('contain.text', '1 previous orders (No breaches on previous orders)')

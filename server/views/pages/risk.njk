@@ -92,15 +92,15 @@
       {{ govukSummaryList({
         rows: [
           {
-            key: { html: '<span data-qa="nameLabel">High-scoring needs</span>' },
+            key: { html: '<span data-qa="highScoringNeedsLabel">High-scoring areas from the assessment</span>' },
             value: { html: '<span data-qa="highScoringNeedsValue">' + highScoringNeeds + '</span>' }
           },
           {
-            key: { html: '<span data-qa="dateOfBirthLabel">Low-scoring needs</span>' },
+            key: { html: '<span data-qa="lowScoringNeedsLabel">Low-scoring areas from the assessment</span>' },
             value: { html: '<span data-qa="lowScoringNeedsValue">' + lowScoringNeeds + '</span>'}
           },
           {
-            key: { html: '<span data-qa="preferredNameLabel">Areas without a need score</span>' },
+            key: { html: '<span data-qa="noScoreNeedsLabel">Areas without a need score</span>' },
             value: { html: '<span data-qa="noScoreNeedsValue">' + noScoreNeeds + '</span>'}
           }
         ]

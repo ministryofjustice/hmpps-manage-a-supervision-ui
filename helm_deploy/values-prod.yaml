@@ -3,7 +3,7 @@
 
 generic-service:
   ingress:
-    host: manage-a-supervision.hmpps.service.justice.gov.uk
+    host: manage-people-on-probation.hmpps.service.justice.gov.uk
 
   env:
     INGRESS_URL: "https://manage-a-supervision.hmpps.service.justice.gov.uk"

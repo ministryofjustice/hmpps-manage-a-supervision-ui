@@ -1,11 +1,11 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.15.0",
-	"@generated": "Tue, 31 Dec 2024 09:42:40",
+	"@generated": "Thu, 9 Jan 2025 12:56:40",
 	"site":[ 
 		{
-			"@name": "https://manage-a-supervision-dev.hmpps.service.justice.gov.uk",
-			"@host": "manage-a-supervision-dev.hmpps.service.justice.gov.uk",
+			"@name": "https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk",
+			"@host": "manage-people-on-probation-dev.hmpps.service.justice.gov.uk",
 			"@port": "443",
 			"@ssl": "true",
 			"alerts": [ 

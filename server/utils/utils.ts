@@ -578,13 +578,21 @@ export const toTimeline = (riskScores: RiskScoresDto[]): TimelineItem[] => {
       },
       OSPC: {
         type: 'OSP/C',
-        level: riskScore.sexualPredictorScore?.ospContactScoreLevel,
-        score: riskScore.sexualPredictorScore?.ospContactPercentageScore,
+        level:
+          riskScore.sexualPredictorScore?.ospContactScoreLevel ||
+          riskScore.sexualPredictorScore?.ospDirectContactScoreLevel,
+        score:
+          riskScore.sexualPredictorScore?.ospContactPercentageScore ||
+          riskScore.sexualPredictorScore?.ospDirectContactPercentageScore,
       },
       OSPI: {
         type: 'OSP/I',
-        level: riskScore.sexualPredictorScore?.ospIndecentScoreLevel,
-        score: riskScore.sexualPredictorScore?.ospIndecentPercentageScore,
+        level:
+          riskScore.sexualPredictorScore?.ospIndecentScoreLevel ||
+          riskScore.sexualPredictorScore?.ospIndirectImageScoreLevel,
+        score:
+          riskScore.sexualPredictorScore?.ospIndecentPercentageScore ||
+          riskScore.sexualPredictorScore?.ospIndirectImagePercentageScore,
       },
       OGRS: {
         type: 'OGRS',

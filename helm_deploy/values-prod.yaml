@@ -6,7 +6,7 @@ generic-service:
     host: manage-people-on-probation.hmpps.service.justice.gov.uk
 
   env:
-    INGRESS_URL: "https://manage-a-supervision.hmpps.service.justice.gov.uk"
+    INGRESS_URL: "https://manage-people-on-probation.hmpps.service.justice.gov.uk"
     HMPPS_AUTH_URL: "https://sign-in.hmpps.service.justice.gov.uk/auth"
     MANAGE_USERS_API_URL: "https://manage-users-api.hmpps.service.justice.gov.uk"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api.prison.service.justice.gov.uk"

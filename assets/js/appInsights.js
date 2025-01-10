@@ -1,12 +1,18 @@
-import { ApplicationInsights } from '@microsoft/applicationinsights-web'
-import { ClickAnalyticsPlugin } from '@microsoft/applicationinsights-clickanalytics-js'
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-console */
+
+import * as ApplicationInsights from './es5/applicationinsights-web.min.js'
+import * as ClickAnalyticsPlugin from './es5/applicationinsights-clickanalytics-js.min.js'
 
 document.initialiseTelemetry = (
   applicationInsightsConnectionString,
   applicationInsightsRoleName,
   coreTelemetryData,
 ) => {
-  if (!Boolean(applicationInsightsConnectionString)) {
+  if (!applicationInsightsConnectionString) {
     console.log('AppInsights not configured')
     return
   }
@@ -30,19 +36,19 @@ document.initialiseTelemetry = (
       autoTrackPageVisitTime: true,
       extensions: [clickPluginInstance],
       extensionConfig: {
-        [clickPluginInstance.identifier]: clickPluginConfig
+        [clickPluginInstance.identifier]: clickPluginConfig,
       },
-    }
+    },
   })
 
-  const telemetryInitializer = (envelope) => {
-    envelope.tags["ai.cloud.role"] = applicationInsightsRoleName
-    envelope.data['ASSESSMENT_ID'] = coreTelemetryData.assessmentId
-    envelope.data['ASSESSMENT_VERSION'] = coreTelemetryData.assessmentVersion.toString()
-    envelope.data['SECTION_CODE'] = coreTelemetryData.section
-    envelope.data['USER_ID'] = coreTelemetryData.user
-    envelope.data['HANDOVER_SESSION_ID'] = coreTelemetryData.handoverSessionId
-    envelope.data['FORM_VERSION'] = coreTelemetryData.formVersion.split(':')[1] || 'Unknown'
+  const telemetryInitializer = envelope => {
+    envelope.tags['ai.cloud.role'] = applicationInsightsRoleName
+    envelope.data.ASSESSMENT_ID = coreTelemetryData.assessmentId
+    envelope.data.ASSESSMENT_VERSION = coreTelemetryData.assessmentVersion.toString()
+    envelope.data.SECTION_CODE = coreTelemetryData.section
+    envelope.data.USER_ID = coreTelemetryData.user
+    envelope.data.HANDOVER_SESSION_ID = coreTelemetryData.handoverSessionId
+    envelope.data.FORM_VERSION = coreTelemetryData.formVersion.split(':')[1] || 'Unknown'
   }
 
   appInsights.loadAppInsights()
@@ -58,11 +64,11 @@ document.initialiseTelemetry = (
     trackEvent('AUTOSAVED')
   })
 
-  document.addEventListener('copy', (e) => {
-    ['textarea', 'text'].includes(e.target.type) && trackEvent('USER_COPY', { QUESTION_CODE: e.target.name })
+  document.addEventListener('copy', e => {
+    ;['textarea', 'text'].includes(e.target.type) && trackEvent('USER_COPY', { QUESTION_CODE: e.target.name })
   })
 
-  document.addEventListener('paste', (e) => {
-    ['textarea', 'text'].includes(e.target.type) && trackEvent('USER_PASTE', { QUESTION_CODE: e.target.name })
+  document.addEventListener('paste', e => {
+    ;['textarea', 'text'].includes(e.target.type) && trackEvent('USER_PASTE', { QUESTION_CODE: e.target.name })
   })
 }

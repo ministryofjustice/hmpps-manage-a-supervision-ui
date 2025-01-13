@@ -4,8 +4,11 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-console */
 
-import * as ApplicationInsights from './es5/applicationinsights-web.min.js'
-import * as ClickAnalyticsPlugin from './es5/applicationinsights-clickanalytics-js.min.js'
+// import { ApplicationInsights } from '@microsoft/applicationinsights-web'
+// import { ClickAnalyticsPlugin } from '@microsoft/applicationinsights-clickanalytics-js'
+
+import * as ai from './es5/applicationinsights-web.min.js'
+import * as ca from './es5/applicationinsights-clickanalytics-js.js'
 
 document.initialiseTelemetry = (
   applicationInsightsConnectionString,
@@ -19,7 +22,7 @@ document.initialiseTelemetry = (
 
   console.log('Configuring AppInsights')
 
-  const clickPluginInstance = new ClickAnalyticsPlugin()
+  const clickPluginInstance = new ca.ClickAnalyticsPlugin()
   const clickPluginConfig = {
     autoCapture: true,
     dropInvalidEvents: true,
@@ -29,7 +32,7 @@ document.initialiseTelemetry = (
     },
   }
 
-  const appInsights = new ApplicationInsights({
+  const appInsights = new ai.ApplicationInsights({
     config: {
       disableXhr: true,
       connectionString: applicationInsightsConnectionString,

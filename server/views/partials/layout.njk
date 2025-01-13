@@ -69,6 +69,13 @@
   <script src="/assets/backendSortableTable.js"></script>
   <script type="module" src="/assets/appInsights.js"></script>
   <script type="module" src="/assets/application.js"></script>
-
-
+ <script nonce="{{ cspNonce }}">
+    document.addEventListener('DOMContentLoaded', function () {
+      document.initialiseTelemetry(
+        '{{ applicationInsightsConnectionString | default('') }}',
+        '{{ applicationInsightsRoleName }}',
+        {{ coreTelemetryData | dump | safe }}
+      )
+    })
+  </script>
 {% endblock %}

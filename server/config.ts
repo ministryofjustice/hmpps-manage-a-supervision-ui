@@ -81,7 +81,8 @@ export default {
     appInsights: {
       connectionString: get(
         'APPLICATIONINSIGHTS_CONNECTION_STRING',
-        'insights-dummy-connection-string',
+        'InstrumentationKey=dummy-instrumentation-key;IngestionEndpoint=https://northeurope-0.in.applicationinsights.azure.com/;LiveEndpoint=https://northeurope.livediagnostics.monitor.azure.com/',
+        // null,
         requiredInProduction,
       ),
     },

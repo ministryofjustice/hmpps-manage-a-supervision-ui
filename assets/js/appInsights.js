@@ -1,14 +1,9 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/extensions */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-console */
 
-// import { ApplicationInsights } from '@microsoft/applicationinsights-web'
-// import { ClickAnalyticsPlugin } from '@microsoft/applicationinsights-clickanalytics-js'
-
-import * as ai from './es5/applicationinsights-web.min.js'
-import * as ca from './es5/applicationinsights-clickanalytics-js.js'
+import { ApplicationInsights } from '@microsoft/applicationinsights-web'
+import { ClickAnalyticsPlugin } from '@microsoft/applicationinsights-clickanalytics-js'
 
 document.initialiseTelemetry = (
   applicationInsightsConnectionString,
@@ -22,7 +17,7 @@ document.initialiseTelemetry = (
 
   console.log('Configuring AppInsights')
 
-  const clickPluginInstance = new ca.ClickAnalyticsPlugin()
+  const clickPluginInstance = new ClickAnalyticsPlugin()
   const clickPluginConfig = {
     autoCapture: true,
     dropInvalidEvents: true,
@@ -32,7 +27,7 @@ document.initialiseTelemetry = (
     },
   }
 
-  const appInsights = new ai.ApplicationInsights({
+  const appInsights = new ApplicationInsights({
     config: {
       disableXhr: true,
       connectionString: applicationInsightsConnectionString,

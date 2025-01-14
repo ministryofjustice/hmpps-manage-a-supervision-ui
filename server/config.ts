@@ -77,6 +77,10 @@ export default {
   interventions: {
     link: get('INTERVENTIONS_LINK', 'https://interventions-dummy-url', requiredInProduction),
   },
+  flipt: {
+    url: get('FLIPT_URL', 'http://localhost:8100', requiredInProduction),
+    token: get('FLIPT_TOKEN', 'FLIPT_TOKEN', requiredInProduction),
+  },
   apis: {
     hmppsAuth: {
       url: get('HMPPS_AUTH_URL', 'http://localhost:9090/auth', requiredInProduction),

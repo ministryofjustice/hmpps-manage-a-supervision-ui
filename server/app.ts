@@ -23,6 +23,7 @@ import limitedAccess from './middleware/limitedAccessMiddleware'
 import config from './config'
 import './sentry'
 import sentryMiddleware from './middleware/sentryMiddleware'
+import setUpFlags from './middleware/setUpFlags'
 
 export default function createApp(services: Services): express.Application {
   const app = express()
@@ -43,6 +44,7 @@ export default function createApp(services: Services): express.Application {
   app.use(authorisationMiddleware(['ROLE_MANAGE_SUPERVISIONS']))
   app.use(setUpCsrf())
   app.use(setUpCurrentUser(services))
+  app.use(setUpFlags(services))
   app.use(['/case/:crn', '/case/:crn/*'], limitedAccess(services))
 
   app.use(routes(services))

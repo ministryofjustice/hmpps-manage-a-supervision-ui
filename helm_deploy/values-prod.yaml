@@ -2,6 +2,8 @@
 # Per environment values which override defaults in hmpps-manage-people-on-probation-ui/values.yaml
 
 generic-service:
+  replicaCount: 2
+
   ingress:
     host: manage-people-on-probation.hmpps.service.justice.gov.uk
 
@@ -10,6 +12,17 @@ generic-service:
     HMPPS_AUTH_URL: "https://sign-in.hmpps.service.justice.gov.uk/auth"
     MANAGE_USERS_API_URL: "https://manage-users-api.hmpps.service.justice.gov.uk"
     TOKEN_VERIFICATION_API_URL: "https://token-verification-api.prison.service.justice.gov.uk"
+    MAS_API_URL: "https://manage-supervision-and-delius.hmpps.service.justice.gov.uk"
+    ARNS_API_URL: "https://assess-risks-and-needs.hmpps.service.justice.gov.uk"
+    TIER_API_URL: "https://hmpps-tier.hmpps.service.justice.gov.uk"
+    INTERVENTIONS_API_URL: "https://hmpps-interventions-service.apps.live-1.cloud-platform.service.justice.gov.uk"
+    FLIPT_URL: "https://feature-flags.hmpps.service.justice.gov.uk"
+    INTERVENTIONS_LINK: "https://hmpps-interventions-ui.apps.live-1.cloud-platform.service.justice.gov.uk"
+    DELIUS_LINK: "https://ndelius.probation.service.justice.gov.uk/"
+    OASYS_LINK: "https://int.oasys.service.justice.gov.uk"
+    TIER_LINK: "https://tier.hmpps.service.justice.gov.uk/case"
+    SENTENCE_PLAN_LINK: "https://sentence-plan.hmpps.service.justice.gov.uk/about-pop"
+    ENVIRONMENT_NAME: PRODUCTION
     ENVIRONMENT: prod
 
 generic-prometheus-alerts:

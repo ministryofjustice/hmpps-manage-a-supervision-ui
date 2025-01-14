@@ -174,4 +174,31 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       crn,
     })
   })
+
+  get('/case/:crn/sentence/requirement/:requirementId/note/:noteId', async (req, res, _next) => {
+    const { crn, requirementId, noteId } = req.params
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+
+    await auditService.sendAuditMessage({
+      action: 'VIEW_MAS_SENTENCE_REQUIREMENT_NOTE',
+      who: res.locals.user.username,
+      subjectId: crn,
+      subjectType: 'CRN',
+      correlationId: v4(),
+      service: 'hmpps-manage-a-supervision-ui',
+    })
+
+    const masClient = new MasApiClient(token)
+    const tierClient = new TierApiClient(token)
+
+    const [requirementNoteDetails, tierCalculation] = await Promise.all([
+      masClient.getSentenceRequirementNote(crn, requirementId, noteId),
+      tierClient.getCalculationDetails(crn),
+    ])
+    res.render('pages/requirement-note', {
+      requirementNoteDetails,
+      tierCalculation,
+      crn,
+    })
+  })
 }

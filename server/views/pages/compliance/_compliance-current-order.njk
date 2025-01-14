@@ -17,7 +17,7 @@
     {% if sentence.rar and sentence.rarCategory %}
         {% set queryParams = '?requirement=' + sentence.rarCategory | toSlug %}
         {% set requirements %}
-            {{ sentence.rar.totalDays }} days RAR, {{ sentence.rar.completed }} completed
+            {{ sentence.rar.completed }} of {{ sentence.rar.totalDays }} RAR days completed
         {% endset %}
     {% else %}
         {% set requirements = false %}

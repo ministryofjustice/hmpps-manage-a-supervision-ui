@@ -286,7 +286,7 @@
             {% endset %}
             {% set requirements %}
                 {% if sentence.rar %}
-                    {{ sentence.rar.totalDays }} days RAR, {{ sentence.rar.completed }} completed
+                {{ sentence.rar.completed }} of {{ sentence.rar.totalDays }} RAR days completed
                 {% endif %}
             {% endset %}
             {% set mainOffence %}
@@ -322,7 +322,7 @@
         {% endset %}
 
         {{ appSummaryCard({
-            titleText: 'Sentence (' + sentence.eventNumber + ')',
+            titleText: sentence.order.description,
             classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
             attributes: {'data-qa': 'sentence' + sentence.eventNumber + 'Card'},
             html: sentenceHtml,

@@ -7,7 +7,6 @@ context('Sentence', () => {
     const page = Page.verifyOnPage(SentencePage)
     page.headerCrn().should('contain.text', 'X000001')
     page.headerName().should('contain.text', 'Caroline Wolff')
-    cy.get('[data-qa=pageHeading]').eq(0).should('contain.text', 'Sentence')
 
     page.getTab('overview').should('contain.text', 'Overview')
     page.getTab('personalDetails').should('contain.text', 'Personal details')
@@ -192,5 +191,56 @@ context('Sentence', () => {
     cy.get('[data-qa="sentenceCard"]').should('not.exist')
     cy.get('[data-qa="convictionCard"]').should('not.exist')
     cy.get('[data-qa="offenceCard"]').should('not.exist')
+  })
+
+  it('Sentence page is rendered with requirements', () => {
+    cy.visit('/case/X000001/sentence?number=1')
+    const page = Page.verifyOnPage(SentencePage)
+
+    cy.get(`[data-qa="sentenceCard"]`).within(() => cy.get('dt').eq(5).should('contain.text', 'Requirements'))
+    cy.get(`[data-qa="requirementsValue"]`).within(() =>
+      cy.get('details').eq(0).should('contain.text', '1 of 12 RAR days completed'),
+    )
+    cy.get(`[data-qa="requirementsValue"]`).within(() =>
+      cy.get('details').eq(1).should('contain.text', 'Curfew (Electronic Monitored)'),
+    )
+    cy.get(`[data-qa="requirementsValue"]`).within(() =>
+      cy.get('details').eq(2).should('contain.text', 'Unpaid Work - Regular'),
+    )
+    cy.get(`[data-qa="requirementsValue"] `).within(() => cy.get('details').eq(1).click())
+    page.getRequirementLabel(2, 1).should('contain.text', 'Length')
+    page.getRequirementValue(2, 1).should('contain.text', '10 hours')
+    page.getRequirementLabel(2, 2).should('contain.text', 'Start date')
+    page.getRequirementValue(2, 2).should('contain.text', '12 January 2024')
+    page.getRequirementLabel(2, 3).should('contain.text', 'End date')
+    page.getRequirementValue(2, 3).should('contain.text', '9 January 2024')
+    page.getRequirementLabel(2, 4).should('contain.text', 'Result')
+    page.getRequirementValue(2, 4).should('contain.text', 'Expired (Normal)')
+    page.getRequirementLabel(2, 5).should('contain.text', 'Notes')
+    page.getRequirementValue(2, 5).should('contain.text', 'curfew notes')
+    page
+      .getRequirementValue(2, 5)
+      .find('p:nth-of-type(2)')
+      .should('contain.text', 'Comment added by Jon Jones on 21 August 2024')
+    page.getRequirementValue(2, 5).find('a').should('not.exist')
+
+    cy.get(`[data-qa="requirementsValue"] `).within(() => cy.get('details').eq(0).click())
+    page.getRequirementLabel(1, 1).should('contain.text', 'Length of RAR')
+    page.getRequirementValue(1, 1).should('contain.text', '12 days')
+    page.getRequirementLabel(1, 2).should('contain.text', 'Completed RAR')
+    page.getRequirementValue(1, 2).should('contain.text', '1 day')
+    page.getRequirementLabel(1, 3).should('contain.text', 'Start date')
+    page.getRequirementValue(1, 3).should('contain.text', '12 April 2024')
+    page.getRequirementLabel(1, 4).should('contain.text', 'Notes')
+    page.getRequirementValue(1, 4).should('contain.text', 'Requirement created automatically')
+    page.getRequirementValue(1, 4).should('not.contain.text', '123456')
+    page.getRequirementValue(1, 4).find('a').should('contain.text', 'View full note')
+    page
+      .getRequirementValue(1, 4)
+      .find('p:nth-of-type(2)')
+      .should('contain.text', 'Comment added by Jon Jones on 21 August 2024')
+    page.getRequirementValue(1, 4).find('a').click()
+    cy.get(`[data-qa="name"]`).should('contain.text', 'Caroline Wolff')
+    cy.get('.app-summary-card__header').should('contain.text', '1 of 12 RAR days completed')
   })
 })

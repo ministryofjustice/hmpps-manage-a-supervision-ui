@@ -1,0 +1,91 @@
+{% extends "../partials/case.njk" %}
+{% set pageTitle = applicationName + " - Sentence Details" %}
+{% set currentNavSection = 'sentence' %}
+{% set currentSectionName = 'Sentence' %}
+{% set headerPersonName = requirementNoteDetails.personSummary.name.forename + ' ' + requirementNoteDetails.personSummary.name.surname %}
+{% set headerCRN = crn %}
+{% set headerDob = requirementNoteDetails.personSummary.dateOfBirth  %}
+{% set headerGender = requirementNoteDetails.personSummary.gender  %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+      items: [
+        {
+          text: "My cases",
+          href: "/case"
+        },
+        {
+          text: headerPersonName,
+          href: "/case/" + crn
+        },
+        {
+          text: currentSectionName,
+          href: "/case/" + crn + "/sentence"
+        }
+      ]
+    }) }}
+{% endblock %}
+
+{% block pageContent %}
+    {% set requirementNote %}
+        {{ govukSummaryList({
+        rows: [
+          {
+            key: { text: 'Length of RAR' },
+            value: { text:  requirementNoteDetails.requirement.rar.totalDays + " days" }
+          }  if requirementNoteDetails.requirement.rar.totalDays and requirementNoteDetails.requirement.code == 'F',
+          {
+            key: { text: 'Length' },
+            value: { text:  requirementNoteDetails.requirement.length + " " + requirementNoteDetails.requirement.lengthUnitValue | lower }
+          } if requirementNoteDetails.requirement.length and requirementNoteDetails.requirement.code !== 'F',
+          {
+            key: { text: 'Completed RAR'},
+            value: { text:  requirementNoteDetails.requirement.rar.completed + " day" if requirementNoteDetails.requirement.rar.completed == 1 else requirementNoteDetails.requirement.rar.completed + " days" }
+          }  if requirementNoteDetails.requirement.rar.completed and requirementNoteDetails.requirement.code == 'F',
+           {
+            key: { text: 'Expected start date' },
+            value: { text: requirementNoteDetails.requirement.expectedStartDate | dateWithYear }
+          } if requirementNoteDetails.requirement.expectedStartDate and not requirementNoteDetails.requirement.actualStartDate,
+          {
+            key: { text: 'Start date' },
+            value: { text: requirementNoteDetails.requirement.actualStartDate | dateWithYear }
+          } if requirementNoteDetails.requirement.actualStartDate,
+          {
+            key: { text: 'Expected end date' },
+            value: { text: requirementNoteDetails.requirement.expectedEndDate | dateWithYear }
+         } if requirementNoteDetails.requirement.expectedEndDate and not requirementNoteDetails.requirement.actualEndDate,
+          {
+            key: { text: 'End date' },
+            value: { text: requirementNoteDetails.requirement.actualEndDate | dateWithYear }
+          } if requirementNoteDetails.requirement.actualEndDate,
+           {
+            key: { text: 'Result' },
+            value: { text:  requirementNoteDetails.requirement.terminationReason }
+          } if requirementNoteDetails.requirement.terminationReason,
+          {
+            key: { text: 'Note added by'},
+            value: { text: requirementNoteDetails.requirement.requirementNote.createdBy }
+          } if requirementNoteDetails.requirement.requirementNote.createdBy,
+          {
+            key: { text: 'Date added'},
+            value: { text:  requirementNoteDetails.requirement.requirementNote.createdByDate | dateWithYear  }
+          } if requirementNoteDetails.requirement.requirementNote.createdByDate,
+          {
+            key: { text: 'Note'},
+            value: { html: '<p class="govuk-body line-break">' + requirementNoteDetails.requirement.requirementNote.note + '<\p>' }
+          } if requirementNoteDetails.requirement.requirementNote.note
+        ]
+      }) }}
+    {% endset %}
+
+    {% if requirementNoteDetails.requirement %}
+    {% set description = requirementNoteDetails.requirement.rar.completed + " of " + requirementNoteDetails.requirement.rar.totalDays + " RAR days completed" if requirementNoteDetails.requirement.code == 'F' else requirementNoteDetails.requirement.description %}
+        {{ appSummaryCard({
+          titleText: description,
+          attributes: {'data-qa': 'requirementNoteCard'},
+          classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+          html: requirementNote
+        }) }}
+    {% endif %}
+{% endblock %}
+

@@ -53,8 +53,16 @@ export interface Order {
   startDate: string
 }
 
+export interface RequirementNote {
+  id: number
+  createdBy: string
+  createdByDate: string
+  note: string
+  hasNoteBeenTruncated: boolean
+}
+
 export interface Requirement {
-  id?: number
+  id: number
   code: string
   expectedStartDate: string
   actualStartDate: string
@@ -64,6 +72,7 @@ export interface Requirement {
   description: string
   codeDescription: string
   length: string
+  requirementNotes: RequirementNote[]
   notes: string
   rar: Rar
 }

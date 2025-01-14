@@ -3,7 +3,7 @@ import SentencePage from '../pages/sentence'
 
 context('Sentence', () => {
   it('Requirement note page is rendered', () => {
-    cy.visit('/case/X000001/sentence/requirement/F/note/0')
+    cy.visit('/case/X000001/sentence/requirement/1/note/0')
     const page = Page.verifyOnPage(SentencePage)
     page.headerCrn().should('contain.text', 'X000001')
     page.headerName().should('contain.text', 'Caroline Wolff')

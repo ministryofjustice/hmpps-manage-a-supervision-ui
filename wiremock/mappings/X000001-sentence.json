@@ -235,6 +235,7 @@
             },
             "requirements": [
               {
+                "id": 1,
                 "code": "F",
                 "actualStartDate": "2024-04-12",
                 "description": "1 of 12 RAR days",
@@ -256,6 +257,7 @@
                 }
               },
               {
+                "id": 2,
                 "code": "RM49",
                 "expectedStartDate": "2024-01-07",
                 "actualStartDate": "2024-01-12",
@@ -276,6 +278,7 @@
                 ]
               },
               {
+                "id": 3,
                 "code": "W",
                 "actualStartDate": "2015-05-22",
                 "description": "Unpaid Work - Regular",

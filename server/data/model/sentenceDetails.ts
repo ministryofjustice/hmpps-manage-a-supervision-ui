@@ -62,7 +62,7 @@ export interface RequirementNote {
 }
 
 export interface Requirement {
-  id?: number
+  id: number
   code: string
   expectedStartDate: string
   actualStartDate: string

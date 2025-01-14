@@ -197,7 +197,7 @@
                       {% for reqNote in requirement.requirementNotes %}
                           {% set note %}
                               {% if reqNote.hasNoteBeenTruncated === true  %}
-                                  <p class="govuk-body line-break">{{ reqNote.note }}...<a href="/case/{{ crn }}/sentence/requirement/{{ requirement.code }}/note/{{ reqNote.id }}">View full note</a>
+                                  <p class="govuk-body line-break">{{ reqNote.note }}...<a href="/case/{{ crn }}/sentence/requirement/{{ requirement.id }}/note/{{ reqNote.id }}">View full note</a>
                                   </p>
                               {% else %}
                                   <p class="govuk-body line-break">{{ reqNote.note }} </p>

@@ -2,7 +2,7 @@
   "mappings": [
     {
       "request": {
-        "urlPattern": "/mas/sentence/X000001/requirement/F/note/0",
+        "urlPattern": "/mas/sentence/X000001/requirement/1/note/0",
         "method": "GET"
       },
       "response": {

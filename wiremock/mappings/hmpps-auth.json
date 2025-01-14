@@ -76,7 +76,7 @@
       },
       "response": {
         "status": 200,
-        "body": "<html><body><h1>Sign in page</h1><a href='javascript:history.back()'>Sign in</a></body></html>",
+        "body": "<html><body><h1 data-qa='pageHeading'>Sign in page</h1><a href='javascript:history.back()'>Sign in</a></body></html>",
         "headers": {
           "Content-Type": "text/html"
         }

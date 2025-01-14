@@ -17,7 +17,7 @@
   {{ govukRadios({
     fieldset: {
       legend: {
-        text: title,
+        html: '<span data-qa="pageHeading">' + title + '</span>',
         isPageHeading: true,
         classes: "govuk-fieldset__legend--l govuk-!-margin-bottom-6"
       },

@@ -24,7 +24,7 @@
 {% block beforeContent %}{% endblock %}
 {% block primary %}
 {{ govukPanel({
-  titleText: title,
+  titleHtml: '<span data-qa="pageHeading">' + title + '</span>',
   html: panelHtml
 }) }}
  <div class="govuk-grid-row">

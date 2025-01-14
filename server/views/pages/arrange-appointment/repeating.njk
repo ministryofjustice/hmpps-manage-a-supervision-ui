@@ -68,7 +68,7 @@
 {{ govukRadios({
     fieldset: {
       legend: {
-        text: title,
+        html: '<span data-qa="pageHeading">' + title + '</span>',
         classes: "govuk-fieldset__legend--l",
         isPageHeading: true
       }

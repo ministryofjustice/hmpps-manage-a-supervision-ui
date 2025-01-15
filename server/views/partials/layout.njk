@@ -25,7 +25,6 @@
 {% block pageTitle %}{{pageTitle | default(applicationName)}}{% endblock %}
 
 {% block header %}
-{{applicationInsightsConnectionString }}
   {% include "./header.njk" %}
   {% block banner %}{% endblock %}
 

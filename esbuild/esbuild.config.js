@@ -51,13 +51,30 @@ function main() {
     Promise.all([buildApp(buildConfig), buildAssets(buildConfig)]).catch(() => process.exit(1))
   }
 
+  if (args.includes('--feature-dev-server')) {
+    let serverProcess = null
+    chokidar.watch(['dist']).on('all', () => {
+      if (serverProcess) serverProcess.kill()
+      serverProcess = spawn(
+        'node',
+        ['--inspect=0.0.0.0', '--enable-source-maps', 'dist/server.js', ' | bunyan -o short'],
+        {
+          stdio: 'inherit',
+        },
+      )
+    })
+  }
   if (args.includes('--dev-server')) {
     let serverProcess = null
     chokidar.watch(['dist']).on('all', () => {
       if (serverProcess) serverProcess.kill()
-      serverProcess = spawn('node', ['--inspect=0.0.0.0', '--enable-source-maps', 'dist/server.js'], {
-        stdio: 'inherit',
-      })
+      serverProcess = spawn(
+        'node',
+        ['--inspect=0.0.0.0', '--enable-source-maps', '-r', 'dotenv/config', 'dist/server.js', ' | bunyan -o short'],
+        {
+          stdio: 'inherit',
+        },
+      )
     })
   }
 

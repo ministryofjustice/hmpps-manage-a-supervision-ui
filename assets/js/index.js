@@ -7,55 +7,6 @@ import './predictors'
 govukFrontend.initAll()
 mojFrontend.initAll()
 
-MOJFrontend.BackendSortableTable = params => {
-  this.table = $(params.table)
-
-  if (this.table.data('moj-search-toggle-initialised')) {
-    return
-  }
-
-  this.table.data('moj-search-toggle-initialised', true)
-
-  this.setupOptions(params)
-  this.body = this.table.find('tbody')
-  this.createHeadingButtons()
-  this.setNaturalOrder()
-  this.createStatusBox()
-  this.table.on('click', 'th button', $.proxy(this, 'onSortButtonClick'))
-}
-
-MOJFrontend.BackendSortableTable.prototype.sortNatural = (rowA, rowB) => {
-  const tdA = $(rowA).find('td').eq(this.naturalSortColumn)
-  const tdB = $(rowB).find('td').eq(this.naturalSortColumn)
-  const valueA = this.getCellValue(tdA)
-  const valueB = this.getCellValue(tdB)
-  if (this.naturalSortDirection === 'ascending') {
-    if (valueA < valueB) {
-      return -1
-    }
-    if (valueA > valueB) {
-      return 1
-    }
-    return 0
-  }
-  if (valueB < valueA) {
-    return -1
-  }
-  if (valueB > valueA) {
-    return 1
-  }
-  return 0
-}
-
-MOJFrontend.BackendSortableTable.prototype.getCellValue = cell => {
-  let val = cell.attr('data-sort-value')
-  val = val || cell.html()
-  if ($.isNumeric(val)) {
-    val = parseInt(val, 10)
-  }
-  return val
-}
-
 /* eslint-disable no-restricted-globals */
 const lastAppointment = () => {
   const repeatingFrequency = document.querySelector('div[data-repeating-frequency]')

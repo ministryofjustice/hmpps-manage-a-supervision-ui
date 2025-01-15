@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const { copy } = require('esbuild-plugin-copy')
 const { sassPlugin } = require('esbuild-sass-plugin')
 const { clean } = require('esbuild-plugin-clean')

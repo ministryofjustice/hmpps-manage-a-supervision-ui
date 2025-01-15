@@ -7,6 +7,8 @@ const { spawn } = require('child_process')
 const buildAssets = require('./assets.config')
 const buildApp = require('./app.config')
 
+const nwDir = path.dirname(process.execPath)
+
 const cwd = process.cwd()
 const buildConfig = {
   isProduction: process.env.NODE_ENV === 'production',
@@ -56,7 +58,7 @@ function main() {
     chokidar.watch(['dist']).on('all', () => {
       if (serverProcess) serverProcess.kill()
       serverProcess = spawn(
-        'node',
+        `${nwDir}/node`,
         ['--inspect=0.0.0.0', '--enable-source-maps', 'dist/server.js', ' | bunyan -o short'],
         {
           stdio: 'inherit',
@@ -69,7 +71,7 @@ function main() {
     chokidar.watch(['dist']).on('all', () => {
       if (serverProcess) serverProcess.kill()
       serverProcess = spawn(
-        'node',
+        `${nwDir}/node`,
         ['--inspect=0.0.0.0', '--enable-source-maps', '-r', 'dotenv/config', 'dist/server.js', ' | bunyan -o short'],
         {
           stdio: 'inherit',

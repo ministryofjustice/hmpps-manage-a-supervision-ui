@@ -1,6 +1,121 @@
+{%- from "moj/components/filter/macro.njk" import mojFilter -%}
+{%- from "govuk/components/checkboxes/macro.njk" import govukCheckboxes -%}
+
 {% set queryString = '?' + queryParams.join('&') if queryParams.length > 0  else ''  %}
 
+{%- set filterOptionsHtml %}
+
+  {{ govukInput({
+    id: 'keywords',
+    name: 'keywords',
+    label: {
+      text: 'Keywords',
+      classes: "govuk-label--s govuk-!-font-weight-bold"
+    },
+    formGroup: {
+      classes: "govuk-!-margin-bottom-3"
+    }
+  }) }}
+{{ mojDatePicker({
+  id: "date-from",
+  name: "date-from",
+  label: {
+      text: "Date from",
+      classes: "govuk-label--s govuk-!-font-weight-bold"
+  },
+  formGroup: {
+      classes: "govuk-!-margin-bottom-3"
+    }
+}) }}
+{{ mojDatePicker({
+  id: "date-to",
+  name: "date-to",
+  label: {
+      text: "Date to",
+      classes: "govuk-label--s govuk-!-font-weight-bold"
+  },
+  formGroup: {
+      classes: "govuk-!-margin-bottom-3"
+    }
+}) }}
+  {{ govukCheckboxes({
+    idPrefix: 'compliance',
+    name: 'compliance',
+    classes: "govuk-checkboxes--small",
+    fieldset: {
+      legend: {
+        text: 'Compliance filters',
+        classes: 'govuk-fieldset__legend--s'
+      }
+    },
+    items: [
+      {
+        text: 'Absences waiting for evidence'
+      },
+      {
+        text: 'Acceptable absences'
+      },
+      {
+        text: 'Appointments'
+      }
+    ]
+  }) }}
+
+  
+{% endset -%}
+
 <div class="govuk-grid-column-one-third">
+
+{{ mojFilter({
+  heading: {
+    html: 'Filter activity log',
+    classes: 'govuk-heading-s'
+  },
+
+  submit: {
+    attributes: {
+        "data-test-id": "submit-button"
+    }
+  },
+
+  selectedFilters: {
+
+    heading: {
+      html: '<span class="govuk-heading-s">Selected filters</span>',
+      classes: 'govuk-heading-s'
+    },
+
+    clearLink: {
+      text: 'Clear filters'
+    },
+
+    categories: [
+      {
+        heading: {
+          text: 'Type'
+        },
+        items: [{
+          href: '/path/to/remove/this',
+          text: 'Blue'
+        }, {
+          href: '/path/to/remove/this',
+          text: 'Yellow'
+        }]
+      },
+      {
+        heading: {
+          text: 'Status'
+        },
+        items: [{
+          href: '/path/to/remove/this',
+          text: 'Completed'
+        }]
+      }
+    ]
+  },
+  optionsHtml: filterOptionsHtml
+}) }}
+
   <div class="app-card">
     {{ govukButton({
       text: 'Add to log',

@@ -71,7 +71,7 @@
       document.initialiseTelemetry(
         '{{ applicationInsightsConnectionString | default('') }}',
         '{{ applicationInsightsRoleName }}',
-        {{ coreTelemetryData | dump | safe }}
+        '{{ user.username }}'
       )
     })
   </script>

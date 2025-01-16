@@ -1,15 +1,10 @@
 /* eslint-disable no-param-reassign */
-/* eslint-disable no-unused-expressions */
 /* eslint-disable no-console */
 
 import { ApplicationInsights } from '@microsoft/applicationinsights-web'
 import { ClickAnalyticsPlugin } from '@microsoft/applicationinsights-clickanalytics-js'
 
-document.initialiseTelemetry = (
-  applicationInsightsConnectionString,
-  applicationInsightsRoleName,
-  coreTelemetryData,
-) => {
+document.initialiseTelemetry = (applicationInsightsConnectionString, applicationInsightsRoleName, userName) => {
   if (!applicationInsightsConnectionString) {
     console.log('AppInsights not configured')
     return
@@ -18,12 +13,26 @@ document.initialiseTelemetry = (
   console.log('Configuring AppInsights')
 
   const clickPluginInstance = new ClickAnalyticsPlugin()
+  const contentName = element => {
+    const id = element.getAttribute('data-ai-id')
+    if (id && id.includes('PersonName')) {
+      return '<Persons Name>'
+    }
+    const uri = element.getAttribute('title')
+    if (uri && uri.includes('Select case record')) {
+      return 'searchPersonNameLink'
+    }
+    return ''
+  }
   const clickPluginConfig = {
     autoCapture: true,
     dropInvalidEvents: true,
     dataTags: {
       customDataPrefix: 'data-ai-',
       useDefaultContentNameOrId: true,
+    },
+    callback: {
+      contentName,
     },
   }
 
@@ -41,32 +50,10 @@ document.initialiseTelemetry = (
 
   const telemetryInitializer = envelope => {
     envelope.tags['ai.cloud.role'] = applicationInsightsRoleName
-    envelope.data.ASSESSMENT_ID = coreTelemetryData.assessmentId
-    envelope.data.ASSESSMENT_VERSION = coreTelemetryData.assessmentVersion.toString()
-    envelope.data.SECTION_CODE = coreTelemetryData.section
-    envelope.data.USER_ID = coreTelemetryData.user
-    envelope.data.HANDOVER_SESSION_ID = coreTelemetryData.handoverSessionId
-    envelope.data.FORM_VERSION = coreTelemetryData.formVersion.split(':')[1] || 'Unknown'
+    envelope.tags['ai.user.id'] = userName
   }
 
   appInsights.loadAppInsights()
   appInsights.addTelemetryInitializer(telemetryInitializer)
   appInsights.trackPageView()
-
-  const trackEvent = (name, properties) => {
-    console.log(`Sending telemetry event: ${name}`)
-    appInsights.trackEvent({ name }, properties)
-  }
-
-  document.addEventListener('autosave', () => {
-    trackEvent('AUTOSAVED')
-  })
-
-  document.addEventListener('copy', e => {
-    ;['textarea', 'text'].includes(e.target.type) && trackEvent('USER_COPY', { QUESTION_CODE: e.target.name })
-  })
-
-  document.addEventListener('paste', e => {
-    ;['textarea', 'text'].includes(e.target.type) && trackEvent('USER_PASTE', { QUESTION_CODE: e.target.name })
-  })
 }

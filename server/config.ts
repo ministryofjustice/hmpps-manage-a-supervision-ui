@@ -41,7 +41,7 @@ export default {
   branchName: get('GIT_BRANCH', 'xxxxxxxxxxxxxxxxxxx', requiredInProduction),
   production,
   https: production,
-  applicationName: 'Manage a Supervision',
+  applicationName: 'Manage people on probation',
   env: get('ENVIRONMENT', 'local', requiredInProduction) as 'local' | 'dev' | 'preprod' | 'prod',
   staticResourceCacheDuration: '1h',
   redis: {

@@ -14,29 +14,32 @@
     },
     formGroup: {
       classes: "govuk-!-margin-bottom-3"
-    }
+    },
+    value: filters.keywords
   }) }}
 {{ mojDatePicker({
-  id: "date-from",
-  name: "date-from",
+  id: "dateFrom",
+  name: "dateFrom",
   label: {
       text: "Date from",
       classes: "govuk-label--s govuk-!-font-weight-bold"
   },
   formGroup: {
       classes: "govuk-!-margin-bottom-3"
-    }
+    },
+    value: filters.dateFrom
 }) }}
 {{ mojDatePicker({
-  id: "date-to",
-  name: "date-to",
+  id: "dateTo",
+  name: "dateTo",
   label: {
       text: "Date to",
       classes: "govuk-label--s govuk-!-font-weight-bold"
   },
   formGroup: {
       classes: "govuk-!-margin-bottom-3"
-    }
+    },
+    value: filters.dateTo
 }) }}
   {{ govukCheckboxes({
     idPrefix: 'compliance',
@@ -48,74 +51,42 @@
         classes: 'govuk-fieldset__legend--s'
       }
     },
-    items: [
-      {
-        text: 'Absences waiting for evidence'
-      },
-      {
-        text: 'Acceptable absences'
-      },
-      {
-        text: 'Appointments'
-      }
-    ]
+    items: filters.complianceOptions
   }) }}
 
   
 {% endset -%}
 
 <div class="govuk-grid-column-one-third">
-
+<form method="get">
 {{ mojFilter({
   heading: {
     html: 'Filter activity log',
     classes: 'govuk-heading-s'
   },
-
   submit: {
     attributes: {
         "data-test-id": "submit-button"
     }
   },
-
   selectedFilters: {
-
     heading: {
       html: '<span class="govuk-heading-s">Selected filters</span>',
       classes: 'govuk-heading-s'
     },
-
     clearLink: {
-      text: 'Clear filters'
+      text: 'Clear filters',
+      href: '/case/' + crn + '/activity-log'
     },
-
     categories: [
       {
-        heading: {
-          text: 'Type'
-        },
-        items: [{
-          href: '/path/to/remove/this',
-          text: 'Blue'
-        }, {
-          href: '/path/to/remove/this',
-          text: 'Yellow'
-        }]
-      },
-      {
-        heading: {
-          text: 'Status'
-        },
-        items: [{
-          href: '/path/to/remove/this',
-          text: 'Completed'
-        }]
+        items: filters.selectedFilterItems
       }
     ]
-  },
+  } if filters.selectedFilterItems.length,
   optionsHtml: filterOptionsHtml
 }) }}
-
+</form>
   <div class="app-card">
     {{ govukButton({
       text: 'Add to log',

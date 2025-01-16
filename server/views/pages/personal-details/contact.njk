@@ -1,6 +1,6 @@
 {% extends "../../partials/layout.njk" %}
-{% set title = personalContact.name | fullName  %}
-{% block pageTitle %}{{ title }}{% endblock %}
+{% set title = "Personal Contact"  %}
+{% block pageTitle %}{{ personalContact.name | fullName }}{% endblock %}
 
 {% block beforeContent %}
 {{ govukBreadcrumbs({
@@ -11,14 +11,15 @@
     },
     {
       text: personalContact.personSummary.name | fullName,
-      href: "/case/" + crn
+      href: "/case/" + crn,
+      attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
     },
     {
       text: "Personal details",
       href: "/case/" + crn + "/personal-details"
     },
     {
-      text: "Contact: " + title
+      text: "Contact: " + personalContact.name | fullName
     }
   ]
 }) }}
@@ -29,7 +30,7 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl" data-qa="pageHeading">
       <span data-qa="contactRelationshipTypeHeaderValue" class="govuk-caption-xl">{{ personalContact.relationshipType }}</span>
-      <span data-qa="contactNameHeaderValue">{{ title }}</span>
+      <span data-qa="contactNameHeaderValue">{{ personalContact.name | fullName }}</span>
     </h1>
 
     {{ govukSummaryList({

@@ -1,6 +1,6 @@
 {% extends "../partials/case.njk" %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-{% set pageTitle = applicationName + " - Schedule" %}
+{% set pageTitle = applicationName + " - Activity log" %}
 {% set currentNavSection = 'timeline' %}
 {% set currentSectionName = 'Activity log' %}
 {% set headerPersonName = personActivity.personSummary.name.forename + ' ' + personActivity.personSummary.name.surname %}
@@ -20,7 +20,8 @@
         },
         {
           text: headerPersonName,
-          href: "/case/" + crn
+          href: "/case/" + crn,
+          attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
         },
         {
           text: currentSectionName

@@ -1,5 +1,5 @@
 {% extends "../partials/case.njk" %}
-{% set pageTitle = applicationName + " - Sentence Details" %}
+{% set pageTitle = applicationName + " - Sentence" %}
 {% set currentNavSection = 'sentence' %}
 {% set currentSectionName = 'Sentence' %}
 {% set headerPersonName = sentenceDetails.personSummary.name.forename + ' ' + sentenceDetails.personSummary.name.surname %}
@@ -16,7 +16,8 @@
         },
         {
           text: headerPersonName,
-          href: "/case/" + crn
+          href: "/case/" + crn,
+          attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
         },
         {
           text: currentSectionName

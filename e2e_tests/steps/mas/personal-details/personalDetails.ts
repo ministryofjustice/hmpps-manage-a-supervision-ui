@@ -13,7 +13,7 @@ export const searchForCrn = async (page: Page, crn: string) => {
   await page.getByLabel('Find a person on probation').fill(crn)
   await page.getByRole('button', { name: 'Search' }).click()
   await page.locator(`[href$="${crn}"]`).click()
-  await expect(page).toHaveTitle('Manage a Supervision - Overview')
+  await expect(page).toHaveTitle('Manage people on probation - Overview')
 }
 
 export const assertAddressDetails = async (

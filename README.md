@@ -126,7 +126,6 @@ Also add the FLIPT_URL for dev to your .env file
 FLIPT_URL="https://feature-flags-dev.hmpps.service.justice.gov.uk"
 ```
 
-
 ## Formatting
 
 ### Check formatting

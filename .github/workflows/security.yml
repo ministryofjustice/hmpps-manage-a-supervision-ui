@@ -82,7 +82,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "🛡️ *Manage a Supervision* ZAP report"
+                    "text": "🛡️ *Manage people on probation probation* ZAP report"
                   }
                 },
                 {
@@ -131,7 +131,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "❌ Failed to generate *Manage a Supervision* ZAP report"
+                    "text": "❌ Failed to generate *Manage people on probation* ZAP report"
                   }
                 },
                 {

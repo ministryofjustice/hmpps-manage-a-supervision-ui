@@ -6,12 +6,14 @@
 import { type RequestHandler, Router } from 'express'
 import { auditService } from '@ministryofjustice/hmpps-audit-client'
 import { v4 } from 'uuid'
+import { DateTime } from 'luxon'
 
 import { Query } from 'express-serve-static-core'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import TierApiClient from '../data/tierApiClient'
+import validate from '../middleware/validation/index'
 
 interface Filters {
   keywords: string
@@ -23,16 +25,15 @@ interface Filters {
 export default function activityLogRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
 
-  get('/case/:crn/activity-log', async (req, res, _next) => {
+  router.get('/case/:crn/activity-log', validate.activityLog, async (req, res, _next) => {
     const { crn } = req.params
-    const { url } = req
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
     const tierClient = new TierApiClient(token)
     const { keywords = '', dateFrom = '', dateTo = '', clearFilterKey, clearFilterValue } = req.query
+
     let { compliance } = req.query
     const baseUrl = `/case/${crn}/activity-log`
-
     compliance = compliance ? (Array.isArray(compliance) ? compliance : [compliance]) : []
     if (compliance?.length && clearFilterKey === 'compliance') {
       compliance = compliance.filter(value => value !== clearFilterValue)
@@ -130,16 +131,21 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       correlationId: v4(),
       service: 'hmpps-manage-people-on-probation-ui',
     })
+    const today = new Date()
+    const maxDate = DateTime.fromJSDate(today).toFormat('dd/MM/yyyy')
+
     res.render('pages/activity-log', {
       personActivity,
       crn,
       queryParams,
       tierCalculation,
       filters: {
+        errors: req?.session?.errors,
         selectedFilterItems,
         complianceOptions,
         baseUrl,
         ...filters,
+        maxDate,
       },
     })
   })
@@ -176,13 +182,16 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     }
 
     const queryParams = getQueryString(req.query)
-
+    if (req?.session?.errors) {
+      console.dir(req.session.errors, { depth: null })
+    }
     res.render('pages/activity-log', {
       category,
       personActivity,
       queryParams,
       crn,
       tierCalculation,
+      errors: req?.session?.errors,
     })
   })
 

@@ -27,6 +27,10 @@
         }
       ]
     }) }}
+     {% if filters.errors %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+ {{ govukErrorSummary({ titleText: "There is a problem", errorList: filters.errors.errorList }) }}
+{% endif %}
 {% endblock %}
 
 {% switch category %}

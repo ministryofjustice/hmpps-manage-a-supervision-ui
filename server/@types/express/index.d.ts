@@ -16,6 +16,7 @@ declare module 'express-session' {
     sortBy: string
     caseFilter: CaseFilter
     data?: Data
+    errors?: Errors
   }
 
   interface CaseFilter {

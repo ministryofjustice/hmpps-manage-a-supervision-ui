@@ -134,6 +134,10 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     const today = new Date()
     const maxDate = DateTime.fromJSDate(today).toFormat('dd/MM/yyyy')
 
+    if (req?.query?.submit) {
+      return res.redirect(req.url.replace('&submit=true', ''))
+    }
+
     res.render('pages/activity-log', {
       personActivity,
       crn,

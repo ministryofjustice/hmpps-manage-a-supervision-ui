@@ -122,9 +122,9 @@ const errorMessages: ErrorMessages = {
       log: 'Activity log date from no entered',
       errors: {
         isEmpty: 'Enter or select a from date',
-        isInvalid: 'Enter a date in the correct format, for example 17/5/24',
+        isInvalid: 'Enter a date in the correct format, for example 17/5/2024',
         isNotReal: 'Enter a real date',
-        isIncomplete: 'Enter a full date, for example 17/5/24',
+        isIncomplete: 'Enter a full date, for example 17/5/2024',
         isInFuture: 'The from date must be today or in the past',
         isAfterFrom: 'The from date must be on or before the to date',
       },
@@ -133,9 +133,9 @@ const errorMessages: ErrorMessages = {
       log: 'Activity log date from no entered',
       errors: {
         isEmpty: 'Enter or select a to date',
-        isInvalid: 'Enter a date in the correct format, for example 17/5/24',
+        isInvalid: 'Enter a date in the correct format, for example 17/5/2024',
         isNotReal: 'Enter a real date',
-        isIncomplete: 'Enter a full date, for example 17/5/24',
+        isIncomplete: 'Enter a full date, for example 17/5/2024',
         isInFuture: 'The to date must be today or in the past',
       },
     },

@@ -7,6 +7,9 @@ import MasApiClient from '../data/masApiClient'
 import logger from '../../logger'
 import { ErrorMessages } from '../data/model/caseload'
 import TierApiClient from '../data/tierApiClient'
+import { toRoshWidget, toTimeline } from '../utils/utils'
+import { TimelineItem } from '../data/model/risk'
+import ArnsApiClient from '../data/arnsApiClient'
 
 export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -15,6 +18,7 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
   get('/case/:crn/appointments', async (req, res, _next) => {
     const { crn } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+    const arnsClient = new ArnsApiClient(token)
     const masClient = new MasApiClient(token)
     const tierClient = new TierApiClient(token)
 
@@ -27,16 +31,31 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
       service: 'hmpps-manage-people-on-probation-ui',
     })
 
-    const [upcomingAppointments, pastAppointments, tierCalculation] = await Promise.all([
+    const [upcomingAppointments, pastAppointments, risks, tierCalculation, predictors] = await Promise.all([
       masClient.getPersonSchedule(crn, 'upcoming'),
       masClient.getPersonSchedule(crn, 'previous'),
+      arnsClient.getRisks(crn),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
+
+    const risksWidget = toRoshWidget(risks)
+
+    let timeline: TimelineItem[] = []
+    let predictorScores
+    if (Array.isArray(predictors)) {
+      timeline = toTimeline(predictors)
+    }
+    if (timeline.length > 0) {
+      ;[predictorScores] = timeline
+    }
     res.render('pages/appointments', {
       upcomingAppointments,
       pastAppointments,
       crn,
       tierCalculation,
+      risksWidget,
+      predictorScores,
     })
   })
 

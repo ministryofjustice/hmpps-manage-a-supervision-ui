@@ -5,6 +5,10 @@ import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import TierApiClient from '../data/tierApiClient'
+import ArnsApiClient from '../data/arnsApiClient'
+import { toRoshWidget, toTimeline } from '../utils/utils'
+import logger from '../../logger'
+import { TimelineItem } from '../data/model/risk'
 
 interface QueryParams {
   activeSentence: string
@@ -36,17 +40,31 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
     })
 
     const masClient = new MasApiClient(token)
+    const arnsClient = new ArnsApiClient(token)
     const tierClient = new TierApiClient(token)
-
-    const [sentenceDetails, tierCalculation] = await Promise.all([
+    const [sentenceDetails, risks, tierCalculation, predictors] = await Promise.all([
       masClient.getSentenceDetails(crn, queryParam),
+      arnsClient.getRisks(crn),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
 
+    const risksWidget = toRoshWidget(risks)
+
+    let timeline: TimelineItem[] = []
+    let predictorScores
+    if (Array.isArray(predictors)) {
+      timeline = toTimeline(predictors)
+    }
+    if (timeline.length > 0) {
+      ;[predictorScores] = timeline
+    }
     res.render('pages/sentence', {
       sentenceDetails,
       crn,
       tierCalculation,
+      risksWidget,
+      predictorScores,
     })
   })
 

@@ -1,11 +1,12 @@
 import { jwtDecode } from 'jwt-decode'
-import type { RequestHandler } from 'express'
+import type { RequestHandler, Request, NextFunction } from 'express'
 
 import logger from '../../logger'
 import asyncMiddleware from './asyncMiddleware'
+import { AppResponse } from '../@types'
 
 export default function authorisationMiddleware(allowedRoles: string[] = []): RequestHandler {
-  return asyncMiddleware((req, res, next) => {
+  return asyncMiddleware((req: Request, res: AppResponse, next: NextFunction) => {
     const allowedAuthorities = allowedRoles.map(role => (role.startsWith('ROLE_') ? role : `ROLE_${role}`))
     if (res.locals?.user?.token) {
       const { authorities = [], auth_source: authSource } = jwtDecode(res.locals.user.token) as {

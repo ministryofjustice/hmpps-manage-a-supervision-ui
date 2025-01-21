@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import csurf from 'csurf'
+import { AppResponse } from '../@types'
 
 const testMode = process.env.NODE_ENV === 'test'
 
@@ -11,7 +12,7 @@ export default function setUpCsrf(): Router {
     router.use(csurf())
   }
 
-  router.use((req, res, next) => {
+  router.use((req, res: AppResponse, next) => {
     if (typeof req.csrfToken === 'function') {
       res.locals.csrfToken = req.csrfToken()
     }

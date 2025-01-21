@@ -6,9 +6,10 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import ArnsApiClient from '../data/arnsApiClient'
 import TierApiClient from '../data/tierApiClient'
+import type { AppResponse, Route } from '../@types'
 
 export default function caseRoutes(router: Router, { hmppsAuthClient }: Services) {
-  const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
+  const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
 
   get('/case/:crn', async (req, res, _next) => {
     const { crn } = req.params

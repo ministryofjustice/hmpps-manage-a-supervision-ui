@@ -1,12 +1,11 @@
-import { Request, Response, NextFunction } from 'express'
 import { HmppsAuthClient } from '../data'
 import MasApiClient from '../data/masApiClient'
+import { Route } from '../@types'
 
-export const getSentences = (hmppsAuthClient: HmppsAuthClient) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+export const getSentences = (hmppsAuthClient: HmppsAuthClient): Route<void> => {
+  return async (req, res, next) => {
     const number = (req?.query?.number as string) || ''
     const crn = req.params.crn as string
-
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
     const allSentences = await masClient.getSentences(crn, number)

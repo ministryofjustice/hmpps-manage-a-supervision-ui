@@ -57,6 +57,7 @@ import {
 } from './utils'
 import { ApplicationInfo } from '../applicationInfo'
 import config from '../config'
+import { AppResponse } from '../@types'
 
 const production = process.env.NODE_ENV === 'production'
 
@@ -74,7 +75,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
     app.locals.version = applicationInfo.gitShortHash
   } else {
     // Version changes every request
-    app.use((_req, res, next) => {
+    app.use((_req, res: AppResponse, next) => {
       res.locals.version = Date.now().toString()
       return next()
     })
@@ -116,7 +117,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('dateForSort', dateForSort)
   njkEnv.addFilter('timeForSort', timeForSort)
 
-  app.use((req: Request, res: Response, next: NextFunction): void => {
+  app.use((req: Request, res: AppResponse, next: NextFunction) => {
     njkEnv.addFilter('decorateFormAttributes', decorateFormAttributes(req, res))
     return next()
   })

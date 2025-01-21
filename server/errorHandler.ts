@@ -1,9 +1,10 @@
 import type { Request, Response, NextFunction } from 'express'
 import type { HTTPError } from 'superagent'
 import logger from '../logger'
+import type { AppResponse } from './@types'
 
 export default function createErrorHandler(production: boolean) {
-  return (error: HTTPError, req: Request, res: Response, next: NextFunction): void => {
+  return (error: HTTPError, req: Request, res: AppResponse, next: NextFunction): void => {
     logger.error(`Error handling request for '${req.originalUrl}', user '${res.locals.user?.username}'`, error)
 
     if (error.status === 401 || error.status === 403) {

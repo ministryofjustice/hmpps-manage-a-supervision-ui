@@ -1,4 +1,4 @@
-import { type RequestHandler, Router, Request, Response } from 'express'
+import { type Router, Request } from 'express'
 import { auditService } from '@ministryofjustice/hmpps-audit-client'
 import { v4 } from 'uuid'
 import getPaginationLinks, { Pagination } from '@ministryofjustice/probation-search-frontend/utils/pagination'
@@ -11,10 +11,11 @@ import { CaseSearchFilter, ErrorMessages, UserCaseload } from '../data/model/cas
 import config from '../config'
 import { RecentlyViewedCase } from '../data/model/caseAccess'
 import { checkRecentlyViewedAccess } from '../utils/utils'
+import type { AppResponse, Route } from '../@types'
 
 export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Services) {
-  const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
-  const post = (path: string, handler: RequestHandler) => router.post(path, asyncMiddleware(handler))
+  const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
+  const post = (path: string, handler: Route<void>) => router.post(path, asyncMiddleware(handler))
 
   get('/', async (req, res, _next) => {
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
@@ -97,7 +98,7 @@ export default function caseloadRoutes(router: Router, { hmppsAuthClient }: Serv
     await showCaseload(req, res, caseload, req.session.caseFilter)
   })
 
-  const showCaseload = async (req: Request, res: Response, caseload: UserCaseload, filter: CaseSearchFilter) => {
+  const showCaseload = async (req: Request, res: AppResponse, caseload: UserCaseload, filter: CaseSearchFilter) => {
     const currentNavSection = 'yourCases'
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_CASELOAD',

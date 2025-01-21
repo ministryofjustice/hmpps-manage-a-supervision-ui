@@ -1,9 +1,9 @@
-import { Request, Response, NextFunction } from 'express'
 import { HmppsAuthClient } from '../data'
 import MasApiClient from '../data/masApiClient'
+import { Route } from '../@types'
 
-export const getUserLocations = (hmppsAuthClient: HmppsAuthClient) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+export const getUserLocations = (hmppsAuthClient: HmppsAuthClient): Route<void> => {
+  return async (req, res, next) => {
     const { username } = res.locals.user
     const token = await hmppsAuthClient.getSystemClientToken(username)
     if (!req?.session?.data?.locations?.[username]) {

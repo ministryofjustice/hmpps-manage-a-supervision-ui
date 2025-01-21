@@ -1,30 +1,21 @@
-{% set html %}
-  <p>Change how the activity log looks:</p>
-  <p>
+<div class="flex flex--space-between">
+  <ul class="toggle-menu govuk-!-margin-bottom-6">
+  <li class="toggle-menu__list-item">
     {% if compactView %}
-      <a href="?requirement={{ requirement }}" class="govuk-!-font-weight-bold">Default view</a>
+      <a href="{{url}}&requirement={{ requirement }}">Default view</a>
     {% else %}
-      <span class="govuk-!-font-weight-bold">Default view</span>
+      <span>Default view</span>
     {% endif %}
-    <br />
-    Displays notes and details for each activity
-  </p>
-
-  <p>
-    {% if defaultView %}
-      <a href="?view=compact&requirement={{ requirement }}" class="govuk-!-font-weight-bold">Compact view</a>
+    </li>
+ <li class="toggle-menu__list-item">
+ {% if defaultView %}
+      <a href="{{url}}&view=compact&requirement={{ requirement }}">Compact view</a>
     {% else %}
-      <span class="govuk-!-font-weight-bold">Compact view</span>
+      <span>Compact view</span>
     {% endif %}
-    <br />
-    Displays a condensed list of activity
-  </p>
-{% endset %}
+ </li>
+ </ul>
+ <p class="govuk-!-margin-bottom-0">Showing 2 results of 2</p>
+ </div>
 
-{{ govukDetails({
-  summaryText: "Switch view",
-  html: html,
-  classes: "govuk-!-margin-bottom-0"
-}) }}
-
-<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+  

@@ -1,158 +1,78 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-nested-ternary */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable consistent-return */
-/* eslint-disable no-console */
-import { type RequestHandler, Router } from 'express'
+
+import { type Router } from 'express'
 import { auditService } from '@ministryofjustice/hmpps-audit-client'
 import { v4 } from 'uuid'
-import { DateTime } from 'luxon'
 
 import { Query } from 'express-serve-static-core'
 import asyncMiddleware from '../middleware/asyncMiddleware'
-import type { Services } from '../services'
+import { type Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import TierApiClient from '../data/tierApiClient'
 import validate from '../middleware/validation/index'
-
-interface Filters {
-  keywords: string
-  dateFrom: string
-  dateTo: string
-  compliance: string[] | string
-}
+import { toCamelCase, toISODate } from '../utils/utils'
+import { filterActivityLog } from '../middleware'
+import type { ActivityLogRequestBody, AppResponse, Route } from '../@types'
 
 export default function activityLogRoutes(router: Router, { hmppsAuthClient }: Services) {
-  const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
+  const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
 
-  router.get('/case/:crn/activity-log', validate.activityLog, async (req, res, _next) => {
-    const { crn } = req.params
-    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
-    const masClient = new MasApiClient(token)
-    const tierClient = new TierApiClient(token)
-    const { keywords = '', dateFrom = '', dateTo = '', clearFilterKey, clearFilterValue } = req.query
+  router.get(
+    '/case/:crn/activity-log',
+    validate.activityLog,
+    filterActivityLog,
+    async (req, res: AppResponse, _next) => {
+      const { crn } = req.params
+      const { filters } = res.locals
+      const { page = '1' } = req.query
+      const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+      const masClient = new MasApiClient(token)
+      const tierClient = new TierApiClient(token)
 
-    let { compliance } = req.query
-    const baseUrl = `/case/${crn}/activity-log`
-    compliance = compliance ? (Array.isArray(compliance) ? compliance : [compliance]) : []
-    if (compliance?.length && clearFilterKey === 'compliance') {
-      compliance = compliance.filter(value => value !== clearFilterValue)
-    }
-
-    const filters: Filters = {
-      keywords: keywords && clearFilterKey !== 'keywords' ? (keywords as string) : '',
-      dateFrom: dateFrom && clearFilterKey !== 'dateRange' ? (dateFrom as string) : '',
-      dateTo: dateTo && clearFilterKey !== 'dateRange' ? (dateTo as string) : '',
-      compliance: compliance as string[],
-    }
-
-    const queryStr = Object.entries(filters).reduce((acc, [key, value], i) => {
-      if (value) {
-        if (Array.isArray(value)) {
-          for (let j = 0; j < value.length; j += 1) {
-            acc = `${acc}${acc ? '&' : ''}${key}=${encodeURI(value[j])}`
-          }
-        } else {
-          acc = `${acc}${i > 0 ? '&' : ''}${key}=${encodeURI(value)}`
-        }
+      if (req.query.view === 'compact') {
+        res.locals.compactView = true
+      } else {
+        res.locals.defaultView = true
       }
-      return acc
-    }, '')
+      if (req.query.requirement) {
+        res.locals.requirement = req.query.requirement as string
+      }
+      const body: ActivityLogRequestBody = {
+        keywords: filters.keywords,
+        dateFrom: filters?.dateFrom ? toISODate(filters.dateFrom) : '',
+        dateTo: filters?.dateTo ? toISODate(filters.dateTo) : '',
+        compliance: filters?.compliance ? filters.compliance.map(option => toCamelCase(option as string)) : [],
+      }
+      const [personActivity, tierCalculation] = await Promise.all([
+        masClient.postPersonActivityLog(crn, body, page as string),
+        tierClient.getCalculationDetails(crn),
+      ])
 
-    if (clearFilterKey) {
-      return res.redirect(`${baseUrl}${queryStr ? `?${queryStr}` : ''}`)
-    }
+      const queryParams = getQueryString(req.query)
 
-    const filterHref = (key: string, value: string): string =>
-      `${baseUrl}${queryStr ? `?${queryStr}&` : '?'}&clearFilterKey=${key}&clearFilterValue=${encodeURI(value)}`
+      await auditService.sendAuditMessage({
+        action: 'VIEW_MAS_ACTIVITY_LOG',
+        who: res.locals.user.username,
+        subjectId: crn,
+        subjectType: 'CRN',
+        correlationId: v4(),
+        service: 'hmpps-manage-people-on-probation-ui',
+      })
 
-    const selectedFilterItems = Object.entries(filters)
-      .filter(([_key, value]) => value)
-      .reduce((acc, [key, value]) => {
-        if (Array.isArray(value)) {
-          for (const text of value) {
-            acc = [
-              ...acc,
-              {
-                text,
-                href: filterHref(key, text),
-              },
-            ]
-          }
-        } else if (key !== 'dateTo') {
-          let text = value
-          let cfKey = key
-          if (key === 'dateFrom') {
-            text = `${value} - ${filters.dateTo}`
-            cfKey = 'dateRange'
-          }
-          acc = [
-            ...acc,
-            {
-              text,
-              href: filterHref(cfKey, value),
-            },
-          ]
-        }
-        return acc
-      }, [])
+      if (req?.query?.submit) {
+        return res.redirect(req.url.replace('&submit=true', ''))
+      }
 
-    if (selectedFilterItems.length) {
-      console.log('request activity log results...')
-    }
-
-    const complianceOptions = ['Absences waiting for evidence', 'Acceptable absences', 'Appointments'].map(option => ({
-      text: option,
-      value: option,
-      checked: filters.compliance.includes(option),
-    }))
-
-    if (req.query.view === 'compact') {
-      res.locals.compactView = true
-    } else {
-      res.locals.defaultView = true
-    }
-    if (req.query.requirement) {
-      res.locals.requirement = req.query.requirement
-    }
-
-    const [personActivity, tierCalculation] = await Promise.all([
-      masClient.getPersonActivityLog(crn),
-      tierClient.getCalculationDetails(crn),
-    ])
-
-    const queryParams = getQueryString(req.query)
-
-    await auditService.sendAuditMessage({
-      action: 'VIEW_MAS_ACTIVITY_LOG',
-      who: res.locals.user.username,
-      subjectId: crn,
-      subjectType: 'CRN',
-      correlationId: v4(),
-      service: 'hmpps-manage-people-on-probation-ui',
-    })
-    const today = new Date()
-    const maxDate = DateTime.fromJSDate(today).toFormat('dd/MM/yyyy')
-
-    if (req?.query?.submit) {
-      return res.redirect(req.url.replace('&submit=true', ''))
-    }
-
-    res.render('pages/activity-log', {
-      personActivity,
-      crn,
-      queryParams,
-      tierCalculation,
-      filters: {
-        errors: req?.session?.errors,
-        selectedFilterItems,
-        complianceOptions,
-        baseUrl,
-        ...filters,
-        maxDate,
-      },
-    })
-  })
+      res.render('pages/activity-log', {
+        personActivity,
+        crn,
+        queryParams,
+        tierCalculation,
+        url: req.url,
+      })
+    },
+  )
 
   get('/case/:crn/activity-log/:category', async (req, res, _next) => {
     const { crn, category } = req.params
@@ -182,13 +102,11 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     }
 
     if (req.query.requirement) {
-      res.locals.requirement = req.query.requirement
+      res.locals.requirement = req.query.requirement as string
     }
 
     const queryParams = getQueryString(req.query)
-    if (req?.session?.errors) {
-      console.dir(req.session.errors, { depth: null })
-    }
+
     res.render('pages/activity-log', {
       category,
       personActivity,

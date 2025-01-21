@@ -20,7 +20,7 @@ import { TeamCaseload, UserCaseload, UserTeam, UserLocations } from './model/cas
 import { ProfessionalContact } from './model/professionalContact'
 import { CaseAccess, UserAccess } from './model/caseAccess'
 import { LicenceConditionNoteDetails } from './model/licenceConditionNoteDetails'
-import { AppointmentRequestBody } from '../@types'
+import { AppointmentRequestBody, ActivityLogRequestBody } from '../@types'
 import { RequirementNoteDetails } from './model/requirementNoteDetails'
 
 export default class MasApiClient extends RestClient {
@@ -122,6 +122,16 @@ export default class MasApiClient extends RestClient {
 
   async getPersonActivityLog(crn: string): Promise<PersonActivity> {
     return this.get({ path: `/activity/${crn}`, handle404: false })
+  }
+
+  postPersonActivityLog = async (crn: string, body: ActivityLogRequestBody, page: string) => {
+    const pageQuery = `?${new URLSearchParams({ size: '10', page }).toString()}`
+    return this.post({
+      data: body,
+      path: `/activity/${crn}${pageQuery}`,
+      handle404: true,
+      handle500: true,
+    })
   }
 
   async getPersonRiskFlags(crn: string): Promise<PersonRiskFlags> {

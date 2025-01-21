@@ -1,5 +1,6 @@
 {% extends "../partials/case.njk" %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 {% set pageTitle = applicationName + " - Schedule" %}
 {% set currentNavSection = 'timeline' %}
 {% set currentSectionName = 'Activity log' %}
@@ -85,6 +86,31 @@
     {% else %}
       <p class="govuk-!-margin-top-4">{{ emptyText }}</p>
     {% endif %}
+
+    {{ govukPagination({
+  classes: "govuk-!-margin-top-6",
+  previous: {
+    href: url
+  },
+  next: {
+    href:  url + "&page=1"
+  },
+  items: [
+    {
+      number: 1,
+      href: url + "&page=1"
+    },
+    {
+      number: 2,
+      current: true,
+      href: url + "&page=2"
+    },
+    {
+      number: 3,
+      href: url + "&page=3"
+    }
+  ]
+}) }}
   </div>
 </div>
 {% endblock %}

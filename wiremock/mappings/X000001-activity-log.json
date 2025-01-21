@@ -2,8 +2,16 @@
   "mappings": [
     {
       "request": {
-        "urlPattern": "/mas/activity/X000001",
-        "method": "GET"
+        "urlPathPattern": "/mas/activity/X000001",
+        "method": "POST",
+        "queryParameters": {
+          "page": {
+            "equalTo": "1"
+          },
+          "size": {
+            "equalTo": "10"
+          }
+        }
       },
       "response": {
         "status": 200,

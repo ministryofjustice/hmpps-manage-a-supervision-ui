@@ -12,8 +12,8 @@ $govuk-page-width: $moj-page-width;
 @import './components/card';
 @import 'assets/scss/local';
 @import './components/sortable-table';
-@import "../../node_modules/govuk-frontend/dist/govuk/base";
-@import "../../node_modules/@ministryofjustice/frontend/moj/components/sortable-table/_sortable-table";
+@import '../../node_modules/govuk-frontend/dist/govuk/base';
+@import '../../node_modules/@ministryofjustice/frontend/moj/components/sortable-table/_sortable-table';
 @import './components/mappa-widget';
 @import './components/predictor-scores';
 @import './components/risk-flag-widget';
@@ -131,4 +131,17 @@ li.ui-timepicker-selected .ui-timepicker-duration,
 .ui-timepicker-list li.ui-timepicker-disabled:hover,
 .ui-timepicker-list li.ui-timepicker-selected.ui-timepicker-disabled {
   background: #f2f2f2;
+}
+
+.toggle-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.toggle-menu__list-item {
+  display: inline-block;
+  &:not(:first-child):before {
+    content: '|';
+    padding: 0 2px;
+  }
 }

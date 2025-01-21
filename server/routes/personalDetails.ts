@@ -6,6 +6,8 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import ArnsApiClient from '../data/arnsApiClient'
 import TierApiClient from '../data/tierApiClient'
+import { toRoshWidget, toTimeline } from '../utils/utils'
+import { TimelineItem } from '../data/model/risk'
 
 export default function personalDetailRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -25,16 +27,31 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       correlationId: v4(),
       service: 'hmpps-manage-people-on-probation-ui',
     })
-    const [personalDetails, needs, tierCalculation] = await Promise.all([
+    const [personalDetails, risks, needs, tierCalculation, predictors] = await Promise.all([
       masClient.getPersonalDetails(crn),
+      arnsClient.getRisks(crn),
       arnsClient.getNeeds(crn),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
+
+    const risksWidget = toRoshWidget(risks)
+
+    let timeline: TimelineItem[] = []
+    let predictorScores
+    if (Array.isArray(predictors)) {
+      timeline = toTimeline(predictors)
+    }
+    if (timeline.length > 0) {
+      ;[predictorScores] = timeline
+    }
     res.render('pages/personal-details', {
       personalDetails,
       needs,
       tierCalculation,
       crn,
+      risksWidget,
+      predictorScores,
     })
   })
 

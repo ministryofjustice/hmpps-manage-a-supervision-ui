@@ -6,6 +6,9 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import TierApiClient from '../data/tierApiClient'
 import InterventionsApiClient from '../data/interventionsApiClient'
+import { toRoshWidget, toTimeline } from '../utils/utils'
+import { TimelineItem } from '../data/model/risk'
+import ArnsApiClient from '../data/arnsApiClient'
 
 export default function interventionsRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -13,6 +16,7 @@ export default function interventionsRoutes(router: Router, { hmppsAuthClient }:
   get('/case/:crn/interventions', async (req, res, _next) => {
     const { crn } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+    const arnsClient = new ArnsApiClient(token)
     const masClient = new MasApiClient(token)
     const interventionsApiClient = new InterventionsApiClient(token)
     const tierClient = new TierApiClient(token)
@@ -26,16 +30,31 @@ export default function interventionsRoutes(router: Router, { hmppsAuthClient }:
       service: 'hmpps-manage-people-on-probation-ui',
     })
 
-    const [personSummary, interventions, tierCalculation] = await Promise.all([
+    const [personSummary, interventions, tierCalculation, risks, predictors] = await Promise.all([
       masClient.getPersonSummary(crn),
       interventionsApiClient.getInterventions(crn),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getRisks(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
+
+    const risksWidget = toRoshWidget(risks)
+
+    let timeline: TimelineItem[] = []
+    let predictorScores
+    if (Array.isArray(predictors)) {
+      timeline = toTimeline(predictors)
+    }
+    if (timeline.length > 0) {
+      ;[predictorScores] = timeline
+    }
     res.render('pages/interventions', {
       personSummary,
       interventions,
       tierCalculation,
       crn,
+      risksWidget,
+      predictorScores,
     })
   })
 }

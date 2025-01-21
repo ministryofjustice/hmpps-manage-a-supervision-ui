@@ -199,7 +199,7 @@ context('Sentence', () => {
 
     cy.get(`[data-qa="sentenceCard"]`).within(() => cy.get('dt').eq(5).should('contain.text', 'Requirements'))
     cy.get(`[data-qa="requirementsValue"]`).within(() =>
-      cy.get('details').eq(0).should('contain.text', '1 of 12 RAR days completed'),
+      cy.get('details').eq(0).should('contain.text', '3 of 12 RAR days completed'),
     )
     cy.get(`[data-qa="requirementsValue"]`).within(() =>
       cy.get('details').eq(1).should('contain.text', 'Curfew (Electronic Monitored)'),
@@ -228,7 +228,7 @@ context('Sentence', () => {
     page.getRequirementLabel(1, 1).should('contain.text', 'Length of RAR')
     page.getRequirementValue(1, 1).should('contain.text', '12 days')
     page.getRequirementLabel(1, 2).should('contain.text', 'Completed RAR')
-    page.getRequirementValue(1, 2).should('contain.text', '1 day')
+    page.getRequirementValue(1, 2).should('contain.text', '3 days')
     page.getRequirementLabel(1, 3).should('contain.text', 'Start date')
     page.getRequirementValue(1, 3).should('contain.text', '12 April 2024')
     page.getRequirementLabel(1, 4).should('contain.text', 'Notes')
@@ -241,6 +241,6 @@ context('Sentence', () => {
       .should('contain.text', 'Comment added by Jon Jones on 21 August 2024')
     page.getRequirementValue(1, 4).find('a').click()
     cy.get(`[data-qa="name"]`).should('contain.text', 'Caroline Wolff')
-    cy.get('.app-summary-card__header').should('contain.text', '1 of 12 RAR days completed')
+    cy.get('.app-summary-card__header').should('contain.text', '3 of 12 RAR days completed')
   })
 })

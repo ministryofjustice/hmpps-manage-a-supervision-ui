@@ -7,15 +7,7 @@ context('Sentence', () => {
     const page = Page.verifyOnPage(SentencePage)
     page.headerCrn().should('contain.text', 'X000001')
     page.headerName().should('contain.text', 'Caroline Wolff')
-
-    cy.get(`[class=predictor-timeline-item__level]`)
-      .eq(0)
-      .within(() => cy.get('strong').should('contain.text', 'ROSH'))
-
-    cy.get(`[class=predictor-timeline-item__level]`)
-      .eq(1)
-      .within(() => cy.get('strong').should('contain.text', 'RSR'))
-
+    page.assertRiskTags()
     cy.get('[data-qa=pageHeading]').eq(0).should('contain.text', 'Sentence')
 
     cy.get(`[class=app-summary-card__header]`).within(() =>

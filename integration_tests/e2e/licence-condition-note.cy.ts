@@ -10,6 +10,14 @@ context('Sentence', () => {
     page.headerName().should('contain.text', 'Caroline Wolff')
     cy.get('[data-qa=pageHeading]').eq(0).should('contain.text', 'Sentence')
 
+    cy.get(`[class=predictor-timeline-item__level]`)
+      .eq(0)
+      .within(() => cy.get('strong').should('contain.text', 'ROSH'))
+
+    cy.get(`[class=predictor-timeline-item__level]`)
+      .eq(1)
+      .within(() => cy.get('strong').should('contain.text', 'RSR'))
+
     cy.get(`[class=app-summary-card__header]`).within(() =>
       cy.get('h2').should('contain.text', 'Alcohol Monitoring (Electronic Monitoring)'),
     )
@@ -40,14 +48,6 @@ context('Sentence', () => {
     cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').eq(4).should('contain.text', '22 April 2024'))
 
     cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dt').eq(5).should('contain.text', 'Note'))
-
-    // cy.get(`[class=predictor-timeline-item predictor-timeline-item--high]`).within(() =>
-    //   cy.get(`[class=predictor-timeline-item__level]`).should('contain.text', 'HIGH)'),
-    // )
-
-    cy.get(`[class=predictor-timeline-item__level]`)
-      .eq(0)
-      .within(() => cy.get('strong').should('contain.text', 'ROSH'))
   })
 
   it('Licence condition no note ', () => {

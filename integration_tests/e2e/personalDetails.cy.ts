@@ -8,6 +8,15 @@ context('Personal Details', () => {
     page.headerCrn().should('contain.text', 'X000001')
     page.headerName().should('contain.text', 'Eula Schmeler')
     page.pageHeading().should('contain.text', 'Personal Details')
+
+    cy.get(`[class=predictor-timeline-item__level]`)
+      .eq(0)
+      .within(() => cy.get('strong').should('contain.text', 'ROSH'))
+
+    cy.get(`[class=predictor-timeline-item__level]`)
+      .eq(1)
+      .within(() => cy.get('strong').should('contain.text', 'RSR'))
+
     page.getTab('overview').should('contain.text', 'Overview')
     page.getTab('personalDetails').should('contain.text', 'Personal details')
     page.getTab('risk').should('contain.text', 'Risk')

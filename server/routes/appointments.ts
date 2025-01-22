@@ -7,8 +7,7 @@ import MasApiClient from '../data/masApiClient'
 import logger from '../../logger'
 import { ErrorMessages } from '../data/model/caseload'
 import TierApiClient from '../data/tierApiClient'
-import { toRoshWidget, toTimeline } from '../utils/utils'
-import { TimelineItem } from '../data/model/risk'
+import { toPredictors, toRoshWidget } from '../utils/utils'
 import ArnsApiClient from '../data/arnsApiClient'
 
 export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Services) {
@@ -41,14 +40,7 @@ export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Serv
 
     const risksWidget = toRoshWidget(risks)
 
-    let timeline: TimelineItem[] = []
-    let predictorScores
-    if (Array.isArray(predictors)) {
-      timeline = toTimeline(predictors)
-    }
-    if (timeline.length > 0) {
-      ;[predictorScores] = timeline
-    }
+    const predictorScores = toPredictors(predictors)
     res.render('pages/appointments', {
       upcomingAppointments,
       pastAppointments,

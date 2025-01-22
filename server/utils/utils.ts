@@ -6,7 +6,7 @@ import getKeypath from 'lodash/get'
 import setKeypath from 'lodash/set'
 import { Request, Response } from 'express'
 import { Need, RiskScore, RiskSummary, RiskToSelf } from '../data/arnsApiClient'
-import { Name } from '../data/model/common'
+import { ErrorSummary, Name } from '../data/model/common'
 import { Address } from '../data/model/personalDetails'
 import config from '../config'
 import { Activity } from '../data/model/schedule'
@@ -669,4 +669,17 @@ export const toRoshWidget = (roshSummary: RiskSummary): RoshRiskWidgetDto => {
     riskInCommunity,
     riskInCustody,
   }
+}
+
+export const toPredictors = (predictors: RiskScoresDto[] | ErrorSummary | null): TimelineItem => {
+  let timeline: TimelineItem[] = []
+  let predictorScores
+  if (Array.isArray(predictors)) {
+    timeline = toTimeline(predictors)
+  }
+  if (timeline.length > 0) {
+    ;[predictorScores] = timeline
+  }
+
+  return predictorScores
 }

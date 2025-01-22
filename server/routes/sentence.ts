@@ -6,8 +6,7 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import TierApiClient from '../data/tierApiClient'
 import ArnsApiClient from '../data/arnsApiClient'
-import { toRoshWidget, toTimeline } from '../utils/utils'
-import { TimelineItem } from '../data/model/risk'
+import { toPredictors, toRoshWidget } from '../utils/utils'
 
 interface QueryParams {
   activeSentence: string
@@ -50,14 +49,7 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
 
     const risksWidget = toRoshWidget(risks)
 
-    let timeline: TimelineItem[] = []
-    let predictorScores
-    if (Array.isArray(predictors)) {
-      timeline = toTimeline(predictors)
-    }
-    if (timeline.length > 0) {
-      ;[predictorScores] = timeline
-    }
+    const predictorScores = toPredictors(predictors)
     res.render('pages/sentence', {
       sentenceDetails,
       crn,
@@ -93,14 +85,7 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
 
     const risksWidget = toRoshWidget(risks)
 
-    let timeline: TimelineItem[] = []
-    let predictorScores
-    if (Array.isArray(predictors)) {
-      timeline = toTimeline(predictors)
-    }
-    if (timeline.length > 0) {
-      ;[predictorScores] = timeline
-    }
+    const predictorScores = toPredictors(predictors)
     res.render('pages/probation-history', {
       sentenceDetails,
       crn,
@@ -203,14 +188,7 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       arnsClient.getPredictorsAll(crn),
     ])
 
-    let timeline: TimelineItem[] = []
-    let predictorScores
-    if (Array.isArray(predictors)) {
-      timeline = toTimeline(predictors)
-    }
-    if (timeline.length > 0) {
-      ;[predictorScores] = timeline
-    }
+    const predictorScores = toPredictors(predictors)
 
     const risksWidget = toRoshWidget(risks)
     res.render('pages/licence-condition-note', {
@@ -246,14 +224,7 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       arnsClient.getPredictorsAll(crn),
     ])
 
-    let timeline: TimelineItem[] = []
-    let predictorScores
-    if (Array.isArray(predictors)) {
-      timeline = toTimeline(predictors)
-    }
-    if (timeline.length > 0) {
-      ;[predictorScores] = timeline
-    }
+    const predictorScores = toPredictors(predictors)
 
     const risksWidget = toRoshWidget(risks)
     res.render('pages/requirement-note', {

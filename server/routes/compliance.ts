@@ -6,8 +6,7 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import TierApiClient from '../data/tierApiClient'
 import ArnsApiClient from '../data/arnsApiClient'
-import { toRoshWidget, toTimeline } from '../utils/utils'
-import { TimelineItem } from '../data/model/risk'
+import { toPredictors, toRoshWidget } from '../utils/utils'
 
 export default function complianceRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -38,14 +37,7 @@ export default function complianceRoutes(router: Router, { hmppsAuthClient }: Se
 
     const risksWidget = toRoshWidget(risks)
 
-    let timeline: TimelineItem[] = []
-    let predictorScores
-    if (Array.isArray(predictors)) {
-      timeline = toTimeline(predictors)
-    }
-    if (timeline.length > 0) {
-      ;[predictorScores] = timeline
-    }
+    const predictorScores = toPredictors(predictors)
     res.render('pages/compliance', {
       personCompliance,
       tierCalculation,

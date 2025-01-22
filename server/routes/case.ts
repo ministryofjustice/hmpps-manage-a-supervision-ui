@@ -6,7 +6,7 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import ArnsApiClient from '../data/arnsApiClient'
 import TierApiClient from '../data/tierApiClient'
-import { toRoshWidget, toTimeline } from '../utils/utils'
+import { toPredictors, toRoshWidget, toTimeline } from '../utils/utils'
 import { TimelineItem } from '../data/model/risk'
 
 export default function caseRoutes(router: Router, { hmppsAuthClient }: Services) {
@@ -37,14 +37,7 @@ export default function caseRoutes(router: Router, { hmppsAuthClient }: Services
 
     const risksWidget = toRoshWidget(risks)
 
-    let timeline: TimelineItem[] = []
-    let predictorScores
-    if (Array.isArray(predictors)) {
-      timeline = toTimeline(predictors)
-    }
-    if (timeline.length > 0) {
-      ;[predictorScores] = timeline
-    }
+    const predictorScores = toPredictors(predictors)
     res.render('pages/overview', {
       overview,
       risks,

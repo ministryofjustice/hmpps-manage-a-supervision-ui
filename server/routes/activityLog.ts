@@ -8,7 +8,7 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import TierApiClient from '../data/tierApiClient'
 import { TimelineItem } from '../data/model/risk'
-import { toRoshWidget, toTimeline } from '../utils/utils'
+import { toPredictors, toRoshWidget, toTimeline } from '../utils/utils'
 import ArnsApiClient from '../data/arnsApiClient'
 
 export default function activityLogRoutes(router: Router, { hmppsAuthClient }: Services) {
@@ -51,14 +51,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
 
     const risksWidget = toRoshWidget(risks)
 
-    let timeline: TimelineItem[] = []
-    let predictorScores
-    if (Array.isArray(predictors)) {
-      timeline = toTimeline(predictors)
-    }
-    if (timeline.length > 0) {
-      ;[predictorScores] = timeline
-    }
+    const predictorScores = toPredictors(predictors)
     res.render('pages/activity-log', {
       personActivity,
       crn,
@@ -107,14 +100,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
 
     const risksWidget = toRoshWidget(risks)
 
-    let timeline: TimelineItem[] = []
-    let predictorScores
-    if (Array.isArray(predictors)) {
-      timeline = toTimeline(predictors)
-    }
-    if (timeline.length > 0) {
-      ;[predictorScores] = timeline
-    }
+    const predictorScores = toPredictors(predictors)
     res.render('pages/activity-log', {
       category,
       personActivity,
@@ -155,14 +141,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
 
     const risksWidget = toRoshWidget(risks)
 
-    let timeline: TimelineItem[] = []
-    let predictorScores
-    if (Array.isArray(predictors)) {
-      timeline = toTimeline(predictors)
-    }
-    if (timeline.length > 0) {
-      ;[predictorScores] = timeline
-    }
+    const predictorScores = toPredictors(predictors)
     res.render('pages/appointments/appointment', {
       category,
       queryParams,

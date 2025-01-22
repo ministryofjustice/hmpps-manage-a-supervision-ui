@@ -9,14 +9,7 @@ context('Interventions', () => {
     page.headerName().should('contain.text', 'Eula Schmeler')
     page.pageHeading().should('contain.text', 'Interventions')
 
-    cy.get(`[class=predictor-timeline-item__level]`)
-      .eq(0)
-      .within(() => cy.get('strong').should('contain.text', 'ROSH'))
-
-    cy.get(`[class=predictor-timeline-item__level]`)
-      .eq(1)
-      .within(() => cy.get('strong').should('contain.text', 'RSR'))
-
+    page.assertRiskTags()
     page
       .getRowData('interventions', 'referralInterventionTitle3', 'Value')
       .should('contain.text', 'Other Services - North West')

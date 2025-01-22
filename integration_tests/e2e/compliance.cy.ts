@@ -5,13 +5,7 @@ context('Compliance', () => {
   it('Compliance page is rendered', () => {
     cy.visit('/case/X000001/compliance')
     const page = Page.verifyOnPage(CompliancePage)
-    cy.get(`[class=predictor-timeline-item__level]`)
-      .eq(0)
-      .within(() => cy.get('strong').should('contain.text', 'ROSH'))
-
-    cy.get(`[class=predictor-timeline-item__level]`)
-      .eq(1)
-      .within(() => cy.get('strong').should('contain.text', 'RSR'))
+    page.assertRiskTags()
     page.getCardHeader('sentence1').should('contain.text', 'Sentence (3)')
     page
       .getRowData('sentence1', 'mainOffenceDescription', 'Value')

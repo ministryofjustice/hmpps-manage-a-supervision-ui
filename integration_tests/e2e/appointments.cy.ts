@@ -29,15 +29,7 @@ context('Appointment', () => {
     const page = Page.verifyOnPage(AppointmentsPage)
     page.headerCrn().should('contain.text', 'X000001')
     page.headerName().should('contain.text', 'Eula Schmeler')
-
-    cy.get(`[class=predictor-timeline-item__level]`)
-      .eq(0)
-      .within(() => cy.get('strong').should('contain.text', 'ROSH'))
-
-    cy.get(`[class=predictor-timeline-item__level]`)
-      .eq(1)
-      .within(() => cy.get('strong').should('contain.text', 'RSR'))
-
+    page.assertRiskTags()
     page.upcomingAppointmentDate(1).should('contain.text', '22 March 2045')
     page.upcomingAppointmentTime(1).should('contain.text', '10:15am to 10:30am')
     page.upcomingAppointmentType(1).should('contain.text', 'Video call')

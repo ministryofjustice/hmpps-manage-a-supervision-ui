@@ -6,6 +6,8 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import ArnsApiClient from '../data/arnsApiClient'
 import TierApiClient from '../data/tierApiClient'
+import { toPredictors, toRoshWidget, toTimeline } from '../utils/utils'
+import { TimelineItem } from '../data/model/risk'
 
 export default function personalDetailRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -25,16 +27,24 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       correlationId: v4(),
       service: 'hmpps-manage-people-on-probation-ui',
     })
-    const [personalDetails, needs, tierCalculation] = await Promise.all([
+    const [personalDetails, risks, needs, tierCalculation, predictors] = await Promise.all([
       masClient.getPersonalDetails(crn),
+      arnsClient.getRisks(crn),
       arnsClient.getNeeds(crn),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
+
+    const risksWidget = toRoshWidget(risks)
+
+    const predictorScores = toPredictors(predictors)
     res.render('pages/personal-details', {
       personalDetails,
       needs,
       tierCalculation,
       crn,
+      risksWidget,
+      predictorScores,
     })
   })
 
@@ -42,6 +52,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
     const { crn } = req.params
     const { id } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+    const arnsClient = new ArnsApiClient(token)
     const masClient = new MasApiClient(token)
     const tierClient = new TierApiClient(token)
 
@@ -54,15 +65,22 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       service: 'hmpps-manage-people-on-probation-ui',
     })
 
-    const [personalContact, tierCalculation] = await Promise.all([
+    const [personalContact, tierCalculation, risks, predictors] = await Promise.all([
       masClient.getPersonalContact(crn, id),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getRisks(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
 
+    const risksWidget = toRoshWidget(risks)
+
+    const predictorScores = toPredictors(predictors)
     res.render('pages/personal-details/contact', {
       personalContact,
       tierCalculation,
       crn,
+      risksWidget,
+      predictorScores,
     })
   })
 

@@ -5,6 +5,7 @@ context('Personal Details', () => {
   it('Overview page is rendered', () => {
     cy.visit('/case/X000001/personal-details')
     const page = Page.verifyOnPage(PersonalDetailsPage)
+    page.assertRiskTags()
     page.headerCrn().should('contain.text', 'X000001')
     page.headerName().should('contain.text', 'Eula Schmeler')
     page.pageHeading().should('contain.text', 'Personal Details')

@@ -5,6 +5,8 @@ import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import TierApiClient from '../data/tierApiClient'
+import ArnsApiClient from '../data/arnsApiClient'
+import { toPredictors, toRoshWidget } from '../utils/utils'
 
 export default function complianceRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
@@ -22,17 +24,26 @@ export default function complianceRoutes(router: Router, { hmppsAuthClient }: Se
       service: 'hmpps-manage-people-on-probation-ui',
     })
 
+    const arnsClient = new ArnsApiClient(token)
     const masClient = new MasApiClient(token)
     const tierClient = new TierApiClient(token)
 
-    const [personCompliance, tierCalculation] = await Promise.all([
+    const [personCompliance, tierCalculation, risks, predictors] = await Promise.all([
       masClient.getPersonCompliance(crn),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getRisks(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
+
+    const risksWidget = toRoshWidget(risks)
+
+    const predictorScores = toPredictors(predictors)
     res.render('pages/compliance', {
       personCompliance,
       tierCalculation,
       crn,
+      risksWidget,
+      predictorScores,
     })
   })
 }

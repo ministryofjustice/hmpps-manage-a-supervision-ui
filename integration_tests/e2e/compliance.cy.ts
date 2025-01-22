@@ -5,6 +5,7 @@ context('Compliance', () => {
   it('Compliance page is rendered', () => {
     cy.visit('/case/X000001/compliance')
     const page = Page.verifyOnPage(CompliancePage)
+    page.assertRiskTags()
     page.getCardHeader('sentence1').should('contain.text', 'Sentence (3)')
     page
       .getRowData('sentence1', 'mainOffenceDescription', 'Value')

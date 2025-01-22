@@ -59,6 +59,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
     const { crn } = req.params
     const { id } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+    const arnsClient = new ArnsApiClient(token)
     const masClient = new MasApiClient(token)
     const tierClient = new TierApiClient(token)
 
@@ -71,15 +72,29 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       service: 'hmpps-manage-people-on-probation-ui',
     })
 
-    const [personalContact, tierCalculation] = await Promise.all([
+    const [personalContact, tierCalculation, risks, predictors] = await Promise.all([
       masClient.getPersonalContact(crn, id),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getRisks(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
 
+    const risksWidget = toRoshWidget(risks)
+
+    let timeline: TimelineItem[] = []
+    let predictorScores
+    if (Array.isArray(predictors)) {
+      timeline = toTimeline(predictors)
+    }
+    if (timeline.length > 0) {
+      ;[predictorScores] = timeline
+    }
     res.render('pages/personal-details/contact', {
       personalContact,
       tierCalculation,
       crn,
+      risksWidget,
+      predictorScores,
     })
   })
 

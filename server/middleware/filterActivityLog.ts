@@ -1,12 +1,14 @@
-import { DateTime } from 'luxon'
-import { Route, ActivityLogFilters, ActivityLogFiltersResponse, SelectedFilterItem, Option } from '../@types'
-
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-nested-ternary */
 
+import { DateTime } from 'luxon'
+import { Route, ActivityLogFilters, ActivityLogFiltersResponse, SelectedFilterItem, Option } from '../@types'
+
 export const filterActivityLog: Route<void> = (req, res, next) => {
   if (req?.query?.submit) {
-    return res.redirect(req.url.replace('&submit=true', ''))
+    let url = req.url.split('&page=')[0]
+    url = url.replace('&submit=true', '')
+    return res.redirect(url)
   }
   const { crn } = req.params
   const { keywords = '', dateFrom = '', dateTo = '', clearFilterKey, clearFilterValue, page = '1' } = req.query
@@ -21,26 +23,40 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
   const filters: ActivityLogFilters = {
     keywords: keywords && clearFilterKey !== 'keywords' ? (keywords as string) : '',
     dateFrom:
-      dateFrom && !errors?.errorMessages?.dateFrom && clearFilterKey !== 'dateRange' ? (dateFrom as string) : '',
-    dateTo: dateTo && !errors?.errorMessages?.dateTo && clearFilterKey !== 'dateRange' ? (dateTo as string) : '',
+      dateFrom && dateTo && !errors?.errorMessages?.dateFrom && clearFilterKey !== 'dateRange'
+        ? (dateFrom as string)
+        : '',
+    dateTo:
+      dateTo && dateFrom && !errors?.errorMessages?.dateTo && clearFilterKey !== 'dateRange' ? (dateTo as string) : '',
     compliance: compliance as string[],
   }
 
-  const queryStr = Object.entries(filters).reduce((acc, [key, value], i) => {
-    if (value) {
-      if (Array.isArray(value)) {
-        for (let j = 0; j < value.length; j += 1) {
-          acc = `${acc}${acc ? '&' : ''}${key}=${encodeURI(value[j])}`
+  const getQueryString = (values: ActivityLogFilters | Record<string, string>): string => {
+    const keys = [...Object.keys(filters)]
+    const queryStr = Object.entries(values)
+      .filter(([key, _value]) => keys.includes(key))
+      .reduce((acc, [key, value], i) => {
+        if (value) {
+          if (Array.isArray(value)) {
+            for (let j = 0; j < value.length; j += 1) {
+              acc = `${acc}${acc ? '&' : ''}${key}=${encodeURI(value[j] as string)}`
+            }
+          } else {
+            acc = `${acc}${i > 0 ? '&' : ''}${key}=${encodeURI(value as string)}`
+          }
         }
-      } else {
-        acc = `${acc}${i > 0 ? '&' : ''}${key}=${encodeURI(value)}`
-      }
-    }
-    return acc
-  }, '')
+        return acc
+      }, '')
+    return queryStr
+  }
+
+  const queryStr = getQueryString(req.query as Record<string, string>)
+  const queryStrPrefix = queryStr ? '?' : ''
+  const queryStrSuffix = queryStr ? '&' : '?'
 
   if (clearFilterKey) {
-    return res.redirect(`${baseUrl}${queryStr ? `?${queryStr}` : ''}`)
+    const redirectQueryStr = getQueryString(filters)
+    return res.redirect(`${baseUrl}${redirectQueryStr ? `?${redirectQueryStr}` : ''}`)
   }
 
   const filterHref = (key: string, value: string): string =>
@@ -95,10 +111,13 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
     selectedFilterItems,
     complianceOptions,
     baseUrl,
-    keywords: req.query.keywords as string,
-    compliance: req.query.compliance as string[],
-    dateFrom: req.query.dateFrom as string,
-    dateTo: req.query.dateTo as string,
+    queryStr,
+    queryStrPrefix,
+    queryStrSuffix,
+    keywords: filters.keywords as string,
+    compliance: filters.compliance as string[],
+    dateFrom: filters.dateFrom as string,
+    dateTo: filters.dateTo as string,
     maxDate,
   }
   res.locals.filters = filtersResponse

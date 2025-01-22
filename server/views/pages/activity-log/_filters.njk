@@ -15,7 +15,7 @@
     formGroup: {
       classes: "govuk-!-margin-bottom-3"
     },
-    value: filters.keywords
+    value: query.keywords
   }) }}
 {{ mojDatePicker({
   id: "dateFrom",
@@ -27,7 +27,7 @@
   formGroup: {
       classes: "govuk-!-margin-bottom-3"
     },
-    value: filters.dateFrom,
+    value: query.dateFrom,
     maxDate: filters.maxDate,
      errorMessage: {
       text: filters.errors.errorMessages.dateFrom.text
@@ -43,7 +43,7 @@
   formGroup: {
     classes: "govuk-!-margin-bottom-3"
   },
-  value: filters.dateTo,
+  value: query.dateTo,
   maxDate: filters.maxDate,
   errorMessage: {
     text: filters.errors.errorMessages.dateTo.text
@@ -96,6 +96,8 @@
   optionsHtml: filterOptionsHtml
 }) }}
 <input type="hidden" name="submit" value="true">
+<input type="hidden" name="view" value="{{view}}">
+<input type="hidden" name="page" value="{{page}}">
 </form>
 
 </div>

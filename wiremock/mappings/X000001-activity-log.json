@@ -6,7 +6,7 @@
         "method": "POST",
         "queryParameters": {
           "page": {
-            "equalTo": "1"
+            "matches": ".*"
           },
           "size": {
             "equalTo": "10"
@@ -16,6 +16,10 @@
       "response": {
         "status": 200,
         "jsonBody": {
+          "size": 10,
+          "page": 0,
+          "totalResults": 54,
+          "totalPages": 6,
           "personSummary": {
             "name": {
               "forename": "Eula",

@@ -24,5 +24,8 @@ export interface ActivityLogFiltersResponse extends ActivityLogFilters {
   selectedFilterItems: SelectedFilterItem[]
   complianceOptions: Option[]
   baseUrl: string
+  queryStr: string
+  queryStrPrefix: string
+  queryStrSuffix: string
   maxDate: string
 }

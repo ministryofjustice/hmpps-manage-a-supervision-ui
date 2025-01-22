@@ -1,5 +1,4 @@
 /* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable consistent-return */
 
 import { type Router } from 'express'
 import { auditService } from '@ministryofjustice/hmpps-audit-client'
@@ -23,9 +22,10 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     validate.activityLog,
     filterActivityLog,
     async (req, res: AppResponse, _next) => {
-      const { crn } = req.params
+      const { query, params } = req
+      const { crn } = params
       const { filters } = res.locals
-      const { page = '1' } = req.query
+      const { page = '1', view = '' } = query
       const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
       const masClient = new MasApiClient(token)
       const tierClient = new TierApiClient(token)
@@ -48,7 +48,6 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
         masClient.postPersonActivityLog(crn, body, page as string),
         tierClient.getCalculationDetails(crn),
       ])
-
       const queryParams = getQueryString(req.query)
 
       await auditService.sendAuditMessage({
@@ -60,16 +59,15 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
         service: 'hmpps-manage-people-on-probation-ui',
       })
 
-      if (req?.query?.submit) {
-        return res.redirect(req.url.replace('&submit=true', ''))
-      }
-
       res.render('pages/activity-log', {
         personActivity,
         crn,
         queryParams,
+        page,
+        view,
         tierCalculation,
         url: req.url,
+        query,
       })
     },
   )

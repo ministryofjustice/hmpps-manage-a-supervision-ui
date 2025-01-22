@@ -22,33 +22,32 @@ const activityLog: Route<void> = (req, res, next) => {
   const validateDateFrom = () => {
     let isValid = true
     const anchor = 'dateFrom'
-    if (!dateFrom) {
+    if (!dateFrom && dateTo) {
       logger.info(properties.errorMessages['activity-log']['date-from'].log)
       const text = properties.errorMessages['activity-log']['date-from'].errors.isEmpty
       errors = utils.addError(errors, { text, anchor })
       isValid = false
-    } else {
-      if (isValid && !isValidFormat(dateFrom as string)) {
-        const text = properties.errorMessages['activity-log']['date-from'].errors.isInvalid
+    }
+    if (isValid && dateFrom && !isValidFormat(dateFrom as string)) {
+      const text = properties.errorMessages['activity-log']['date-from'].errors.isInvalid
+      errors = utils.addError(errors, { text, anchor })
+      isValid = false
+    }
+    if (isValid && dateFrom) {
+      const dateFromIso = getIsoDate(dateFrom as string)
+      if (!dateFromIso.isValid) {
+        const text = properties.errorMessages['activity-log']['date-from'].errors.isNotReal
         errors = utils.addError(errors, { text, anchor })
         isValid = false
       }
-      if (isValid) {
-        const dateFromIso = getIsoDate(dateFrom as string)
-        if (!dateFromIso.isValid) {
-          const text = properties.errorMessages['activity-log']['date-from'].errors.isNotReal
-          errors = utils.addError(errors, { text, anchor })
-          isValid = false
-        }
-      }
-      if (isValid) {
-        const dateFromIso = getIsoDate(dateFrom as string)
-        const today = DateTime.now()
-        if (dateFromIso > today) {
-          const text = properties.errorMessages['activity-log']['date-from'].errors.isInFuture
-          errors = utils.addError(errors, { text, anchor })
-          isValid = false
-        }
+    }
+    if (isValid && dateFrom) {
+      const dateFromIso = getIsoDate(dateFrom as string)
+      const today = DateTime.now()
+      if (dateFromIso > today) {
+        const text = properties.errorMessages['activity-log']['date-from'].errors.isInFuture
+        errors = utils.addError(errors, { text, anchor })
+        isValid = false
       }
     }
   }
@@ -56,33 +55,34 @@ const activityLog: Route<void> = (req, res, next) => {
   const validateDateTo = () => {
     let isValid = true
     const anchor = 'dateTo'
-    if (!dateTo) {
+    if (!dateTo && dateFrom) {
       logger.info(properties.errorMessages['activity-log']['date-to'].log)
       const text = properties.errorMessages['activity-log']['date-to'].errors.isEmpty
       errors = utils.addError(errors, { text, anchor })
       isValid = false
-    } else {
+    }
+    if (isValid && dateTo && !isValidFormat(dateTo as string)) {
       if (isValid && !isValidFormat(dateTo as string)) {
         const text = properties.errorMessages['activity-log']['date-to'].errors.isInvalid
         errors = utils.addError(errors, { text, anchor })
         isValid = false
       }
-      if (isValid) {
-        const dateToIso = getIsoDate(dateTo as string)
-        if (!dateToIso.isValid) {
-          const text = properties.errorMessages['activity-log']['date-to'].errors.isNotReal
-          errors = utils.addError(errors, { text, anchor })
-          isValid = false
-        }
+    }
+    if (isValid && dateTo) {
+      const dateToIso = getIsoDate(dateTo as string)
+      if (!dateToIso.isValid) {
+        const text = properties.errorMessages['activity-log']['date-to'].errors.isNotReal
+        errors = utils.addError(errors, { text, anchor })
+        isValid = false
       }
-      if (isValid) {
-        const dateToIso = getIsoDate(dateTo as string)
-        const today = DateTime.now()
-        if (dateToIso > today) {
-          const text = properties.errorMessages['activity-log']['date-to'].errors.isInFuture
-          errors = utils.addError(errors, { text, anchor })
-          isValid = false
-        }
+    }
+    if (isValid && dateTo) {
+      const dateToIso = getIsoDate(dateTo as string)
+      const today = DateTime.now()
+      if (dateToIso > today) {
+        const text = properties.errorMessages['activity-log']['date-to'].errors.isInFuture
+        errors = utils.addError(errors, { text, anchor })
+        isValid = false
       }
     }
   }

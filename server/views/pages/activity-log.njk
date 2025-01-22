@@ -75,7 +75,10 @@
         {{ title }}
       </h2>
     {% endif %}
-    {% include "./activity-log/_switch-views.njk" %}
+    <div class="flex flex--space-between">
+ {% include "./activity-log/_switch-views.njk" %}
+ <p class="govuk-!-margin-bottom-0">Showing {{ personActivity.activities.length }} result{% if personActivity.activities.length !== 1 %}s{% endif %} of {{ personActivity.totalResults }}</p>
+ </div>
     {% set entries = activityLog(entries, category or 'all-previous-activity') %}
     {% if entries.length > 0 %}
       {% if compactView %}
@@ -87,30 +90,12 @@
       <p class="govuk-!-margin-top-4">{{ emptyText }}</p>
     {% endif %}
 
-    {{ govukPagination({
-  classes: "govuk-!-margin-top-6",
-  previous: {
-    href: url
-  },
-  next: {
-    href:  url + "&page=1"
-  },
-  items: [
-    {
-      number: 1,
-      href: url + "&page=1"
-    },
-    {
-      number: 2,
-      current: true,
-      href: url + "&page=2"
-    },
-    {
-      number: 3,
-      href: url + "&page=3"
-    }
-  ]
-}) }}
+
+ {{ appPagination({
+  currentPage: query.page | int,
+  totalPages: personActivity.totalPages,
+  url: filters.baseUrl + filters.queryStrPrefix + filters.queryStr + filters.queryStrSuffix + 'view=' + view + '&'
+  }) }}
   </div>
 </div>
 {% endblock %}

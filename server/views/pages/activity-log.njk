@@ -75,6 +75,7 @@
         {{ title }}
       </h2>
     {% endif %}
+    {% if personActivity.activities.length %}
     <div class="flex flex--space-between">
  {% include "./activity-log/_switch-views.njk" %}
  <p class="govuk-!-margin-bottom-0">Showing {{ personActivity.activities.length }} result{% if personActivity.activities.length !== 1 %}s{% endif %} of {{ personActivity.totalResults }}</p>
@@ -90,12 +91,22 @@
       <p class="govuk-!-margin-top-4">{{ emptyText }}</p>
     {% endif %}
 
-
+<div class="govuk-!-margin-top-8">
  {{ appPagination({
   currentPage: query.page | int,
   totalPages: personActivity.totalPages,
   url: filters.baseUrl + filters.queryStrPrefix + filters.queryStr + filters.queryStrSuffix + 'view=' + view + '&'
   }) }}
+</div>
+{% else %}
+<h3 class="govuk-heading-s">0 search results found</h3>
+<p>Improve your search by:</p>
+<ul class="govuk-list govuk-list--bullet">
+<li>removing filters</li>
+<li>double-checking the spelling</li>
+<li>removing special characters like characters and accent letters</li>
+</ul>
+{% endif %}
   </div>
 </div>
 {% endblock %}

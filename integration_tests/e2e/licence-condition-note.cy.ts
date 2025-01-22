@@ -40,6 +40,14 @@ context('Sentence', () => {
     cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dd').eq(4).should('contain.text', '22 April 2024'))
 
     cy.get(`[class=app-summary-card__body]`).within(() => cy.get('dt').eq(5).should('contain.text', 'Note'))
+
+    // cy.get(`[class=predictor-timeline-item predictor-timeline-item--high]`).within(() =>
+    //   cy.get(`[class=predictor-timeline-item__level]`).should('contain.text', 'HIGH)'),
+    // )
+
+    cy.get(`[class=predictor-timeline-item__level]`)
+      .eq(0)
+      .within(() => cy.get('strong').should('contain.text', 'ROSH'))
   })
 
   it('Licence condition no note ', () => {

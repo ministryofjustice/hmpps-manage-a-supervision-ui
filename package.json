@@ -137,7 +137,7 @@
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",
     "@jgoz/esbuild-plugin-typecheck": "^4.0.2",
-    "@ministryofjustice/eslint-config-hmpps": "^0.0.1-beta.1",
+    "@ministryofjustice/eslint-config-hmpps": "^0.0.1-beta.2",
     "@ministryofjustice/hmpps-probation-integration-e2e-tests": "^1.51.0",
     "@playwright/test": "^1.49.1",
     "@types/bunyan": "^1.8.11",

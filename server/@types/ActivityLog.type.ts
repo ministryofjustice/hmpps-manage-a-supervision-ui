@@ -1,3 +1,4 @@
+import { PersonActivity } from '../data/model/activityLog'
 import type { Errors, Option } from './index'
 
 export interface ActivityLogFilters {
@@ -12,13 +13,6 @@ export interface SelectedFilterItem {
   href: string
 }
 
-export interface ActivityLogRequestBody {
-  keywords: string
-  dateFrom: string
-  dateTo: string
-  compliance: string[]
-}
-
 export interface ActivityLogFiltersResponse extends ActivityLogFilters {
   errors: Errors
   selectedFilterItems: SelectedFilterItem[]
@@ -28,4 +22,8 @@ export interface ActivityLogFiltersResponse extends ActivityLogFilters {
   queryStrPrefix: string
   queryStrSuffix: string
   maxDate: string
+}
+
+export interface ActivityLogCache extends ActivityLogFilters {
+  response: PersonActivity
 }

@@ -12,7 +12,8 @@ import TierApiClient from '../data/tierApiClient'
 import validate from '../middleware/validation/index'
 import { toCamelCase, toISODate } from '../utils/utils'
 import { filterActivityLog } from '../middleware'
-import type { ActivityLogRequestBody, AppResponse, Route } from '../@types'
+import type { ActivityLogCache, ActivityLogFilters, AppResponse, Route } from '../@types'
+import { PersonActivity } from '../data/model/activityLog'
 
 export default function activityLogRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
@@ -25,7 +26,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       const { query, params } = req
       const { crn } = params
       const { filters } = res.locals
-      const { page = '1', view = '' } = query
+      const { page = '0', view = '' } = query
       const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
       const masClient = new MasApiClient(token)
       const tierClient = new TierApiClient(token)
@@ -38,16 +39,49 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       if (req.query.requirement) {
         res.locals.requirement = req.query.requirement as string
       }
-      const body: ActivityLogRequestBody = {
-        keywords: filters.keywords,
-        dateFrom: filters?.dateFrom ? toISODate(filters.dateFrom) : '',
-        dateTo: filters?.dateTo ? toISODate(filters.dateTo) : '',
-        compliance: filters?.compliance ? filters.compliance.map(option => toCamelCase(option as string)) : [],
+      const { keywords, dateFrom, dateTo, compliance } = filters
+      const body: ActivityLogFilters = {
+        keywords,
+        dateFrom: dateFrom ? toISODate(dateFrom) : '',
+        dateTo: dateTo ? toISODate(dateTo) : '',
+        compliance: compliance ? compliance.map(option => toCamelCase(option as string)) : [],
       }
-      const [personActivity, tierCalculation] = await Promise.all([
-        masClient.postPersonActivityLog(crn, body, page as string),
-        tierClient.getCalculationDetails(crn),
-      ])
+      let personActivity: PersonActivity | null = null
+      let tierCalculation = null
+      if (req?.session?.cache?.activityLog) {
+        const cache: ActivityLogCache | undefined = req.session.cache.activityLog.find(
+          cacheItem =>
+            keywords === cacheItem.keywords &&
+            dateFrom === cacheItem.dateFrom &&
+            dateTo === cacheItem.dateTo &&
+            compliance.every(option => cache.compliance.includes(option)) &&
+            parseInt(page as string, 10) === cacheItem.response.page,
+        )
+        if (cache) {
+          personActivity = cache.response
+        }
+      }
+      if (!personActivity) {
+        ;[personActivity, tierCalculation] = await Promise.all([
+          masClient.postPersonActivityLog(crn, body, page as string),
+          tierClient.getCalculationDetails(crn),
+        ])
+        const newCache: ActivityLogCache[] = [
+          ...(req?.session?.cache?.activityLog || []),
+          {
+            keywords,
+            dateFrom,
+            dateTo,
+            compliance,
+            response: personActivity,
+          },
+        ]
+        req.session.cache = {
+          ...(req?.session?.cache || {}),
+          activityLog: newCache,
+        }
+      }
+
       const queryParams = getQueryString(req.query)
 
       await auditService.sendAuditMessage({

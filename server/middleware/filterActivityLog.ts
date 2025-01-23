@@ -95,13 +95,15 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
       return acc
     }, [])
 
-  const complianceOptions: Option[] = ['Absences waiting for evidence', 'Acceptable absences', 'Appointments'].map(
-    option => ({
-      text: option,
-      value: option,
-      checked: filters.compliance.includes(option),
-    }),
-  )
+  const complianceOptions: Option[] = [
+    { text: 'Without an outcome', value: 'no outcome' },
+    { text: 'Complied', value: 'complied' },
+    { text: 'Not complied', value: 'not complied' },
+  ].map(({ text, value }) => ({
+    text,
+    value,
+    checked: filters.compliance.includes(value),
+  }))
 
   const today = new Date()
   const maxDate = DateTime.fromJSDate(today).toFormat('dd/MM/yyyy')

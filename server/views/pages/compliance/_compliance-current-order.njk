@@ -25,15 +25,15 @@
 
 
     {% if not sentence.activeBreach and not sentence.rarCategory %}
-        {% set lastSentence = "--last"  %}
+        {% set lastSentence = "govuk-!-margin-bottom-6 app-summary-card--large-title"  %}
     {% else %}
-        {% set lastSentence = ""  %}
+        {% set lastSentence = "app-summary-card--compliance app-summary-card--large-title"  %}
     {% endif %}
 
     {% if sentence.activeBreach and not sentence.rarCategory %}
-        {% set lastBreach = "--last"  %}
+        {% set lastBreach = "govuk-!-margin-bottom-6 app-summary-card--large-title"  %}
     {% else %}
-        {% set lastBreach = ""  %}
+        {% set lastBreach = "app-summary-card--compliance app-summary-card--large-title"  %}
     {% endif %}
 
     <div class="app-compliance-panel {{ complianceStatus.panelClass }}">
@@ -94,7 +94,7 @@
 
     {{ appSummaryCard({
       attributes: {'data-qa': 'sentence' + loop.index + 'Card'},
-      classes: 'app-summary-card--compliance' + lastSentence + ' app-summary-card--large-title',
+      classes: lastSentence,
       titleText: 'Sentence (' + sentence.eventNumber + ')',
       html: orderDetailsList,
       actions: {

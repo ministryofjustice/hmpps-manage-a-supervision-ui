@@ -12,7 +12,7 @@ import TierApiClient from '../data/tierApiClient'
 import validate from '../middleware/validation/index'
 import { toCamelCase, toISODate } from '../utils/utils'
 import { filterActivityLog } from '../middleware'
-import type { ActivityLogCache, ActivityLogFilters, AppResponse, Route } from '../@types'
+import type { ActivityLogCache, ActivityLogRequestBody, AppResponse, Route } from '../@types'
 import { PersonActivity } from '../data/model/activityLog'
 
 export default function activityLogRoutes(router: Router, { hmppsAuthClient }: Services) {
@@ -57,11 +57,11 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
         }
       }
       if (!personActivity) {
-        const body: ActivityLogFilters = {
+        const body: ActivityLogRequestBody = {
           keywords,
           dateFrom: dateFrom ? toISODate(dateFrom) : '',
           dateTo: dateTo ? toISODate(dateTo) : '',
-          compliance: compliance ? compliance.map(option => toCamelCase(option as string)) : [],
+          filters: compliance ? compliance.map(option => toCamelCase(option as string)) : [],
         }
         ;[personActivity, tierCalculation] = await Promise.all([
           masClient.postPersonActivityLog(crn, body, page as string),

@@ -20,7 +20,7 @@ import { TeamCaseload, UserCaseload, UserTeam, UserLocations } from './model/cas
 import { ProfessionalContact } from './model/professionalContact'
 import { CaseAccess, UserAccess } from './model/caseAccess'
 import { LicenceConditionNoteDetails } from './model/licenceConditionNoteDetails'
-import { AppointmentRequestBody, ActivityLogFilters } from '../@types'
+import { AppointmentRequestBody, ActivityLogFilters, ActivityLogRequestBody } from '../@types'
 import { RequirementNoteDetails } from './model/requirementNoteDetails'
 
 export default class MasApiClient extends RestClient {
@@ -126,7 +126,7 @@ export default class MasApiClient extends RestClient {
 
   postPersonActivityLog = async (
     crn: string,
-    body: ActivityLogFilters,
+    body: ActivityLogRequestBody,
     page: string,
   ): Promise<PersonActivity | null> => {
     const pageQuery = `?${new URLSearchParams({ size: '10', page }).toString()}`

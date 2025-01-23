@@ -11,7 +11,7 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
     return res.redirect(url)
   }
   const { crn } = req.params
-  const { keywords = '', dateFrom = '', dateTo = '', clearFilterKey, clearFilterValue, page = '1' } = req.query
+  const { keywords = '', dateFrom = '', dateTo = '', clearFilterKey, clearFilterValue } = req.query
   const errors = req?.session?.errors
   let { compliance } = req.query
   const baseUrl = `/case/${crn}/activity-log`

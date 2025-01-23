@@ -8,6 +8,13 @@ export interface ActivityLogFilters {
   compliance: string[]
 }
 
+export interface ActivityLogRequestBody {
+  keywords: string
+  dateFrom: string
+  dateTo: string
+  filters: string[]
+}
+
 export interface SelectedFilterItem {
   text: string
   href: string

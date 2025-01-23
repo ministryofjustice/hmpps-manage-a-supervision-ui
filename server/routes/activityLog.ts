@@ -40,12 +40,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
         res.locals.requirement = req.query.requirement as string
       }
       const { keywords, dateFrom, dateTo, compliance } = filters
-      const body: ActivityLogFilters = {
-        keywords,
-        dateFrom: dateFrom ? toISODate(dateFrom) : '',
-        dateTo: dateTo ? toISODate(dateTo) : '',
-        compliance: compliance ? compliance.map(option => toCamelCase(option as string)) : [],
-      }
+
       let personActivity: PersonActivity | null = null
       let tierCalculation = null
       if (req?.session?.cache?.activityLog) {
@@ -54,7 +49,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
             keywords === cacheItem.keywords &&
             dateFrom === cacheItem.dateFrom &&
             dateTo === cacheItem.dateTo &&
-            compliance.every(option => cache.compliance.includes(option)) &&
+            compliance.every(option => cacheItem.compliance.includes(option)) &&
             parseInt(page as string, 10) === cacheItem.response.page,
         )
         if (cache) {
@@ -62,6 +57,12 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
         }
       }
       if (!personActivity) {
+        const body: ActivityLogFilters = {
+          keywords,
+          dateFrom: dateFrom ? toISODate(dateFrom) : '',
+          dateTo: dateTo ? toISODate(dateTo) : '',
+          compliance: compliance ? compliance.map(option => toCamelCase(option as string)) : [],
+        }
         ;[personActivity, tierCalculation] = await Promise.all([
           masClient.postPersonActivityLog(crn, body, page as string),
           tierClient.getCalculationDetails(crn),

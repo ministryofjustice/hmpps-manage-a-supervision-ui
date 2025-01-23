@@ -4,7 +4,7 @@
   /* Card header */
   .app-summary-card__header {
     align-items: center;
-    background-color: govuk-colour("light-grey");
+    background-color: govuk-colour('light-grey');
     padding: govuk-spacing(3);
 
     @include govuk-media-query($from: desktop) {
@@ -88,31 +88,35 @@
   float: right;
 }
 
-
 .app-compliance-panel {
   padding: govuk-spacing(3);
-  color: govuk-colour("white");
-  background: govuk-colour("dark-grey");
+  color: govuk-colour('white');
+  background: govuk-colour('dark-grey');
 
-  p, ul, li, h2, h3, a {
+  p,
+  ul,
+  li,
+  h2,
+  h3,
+  a {
     color: inherit;
   }
 }
 
 .app-compliance-panel--red {
-  background: govuk-colour("red");
+  background: govuk-colour('red');
 }
 
 .app-compliance-panel--green {
-  background: govuk-colour("green");
+  background: govuk-colour('green');
 }
 
 .app-compliance-panel--blue {
-  background: govuk-colour("blue");
+  background: govuk-colour('blue');
 }
 
 .app-compliance-panel--orange {
-  background: govuk-colour("orange");
+  background: govuk-colour('orange');
 }
 
 .app-summary-card--compliance {
@@ -120,26 +124,22 @@
 }
 
 .app-tag--dark-red {
-  background: govuk-colour("red");
+  background: govuk-colour('red');
 }
-
 
 .govuk-tag {
   display: inline-block;
   outline: 2px solid transparent;
   outline-offset: -2px;
-  letter-spacing: 1px;
   max-width: none;
   text-decoration: none;
-  text-transform: uppercase;
-  font-family: "GDS Transport", arial, sans-serif;
+  font-family: 'GDS Transport', arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-weight: 700;
+  font-weight: 400;
   font-size: 1rem;
   padding-top: 5px;
   padding-right: 8px;
   padding-bottom: 4px;
   padding-left: 8px;
 }
-

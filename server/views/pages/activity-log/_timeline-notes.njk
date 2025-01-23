@@ -68,10 +68,11 @@
 <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-margin-top-1">
 {% endif %}
 
-{% set showNotesDetails = entry.notes and (entry.notes.length > 250 or entry.sensitive) %}
+{% set showNotesDetails = entry.notes %}
 {% set notes %}
   {% if entry.notes %}
     <p class="govuk-!-margin-bottom-0">{{ entry.notes | nl2br | safe }}</p>
+    <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by {{ entry.lastUpdatedBy.forename }} {{ entry.lastUpdatedBy.surname }} on {{ entry.lastUpdated | dateWithYear }}</p>
   {% endif %}
 {% endset %}
 
@@ -84,9 +85,9 @@
   }) }}
 {% elseif not entry.notes %}
   {% if entry.isSensitive %}
-    <p class="govuk-!-margin-bottom-0">Sensitive (No notes)</p>
+    <p class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold govuk-colour--red">Sensitive (No notes)</p>
   {% else %}
-    <p class="govuk-!-margin-bottom-0">No notes</p>
+    <p class="govuk-!-margin-bottom-0 govuk-!-font-weight-bold govuk-colour--red">No notes</p>
   {% endif %}
 {% else %}
   {{ notes | safe }}

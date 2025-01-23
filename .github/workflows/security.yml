@@ -26,7 +26,7 @@ jobs:
 
       - name: Setup Firefox
         id: firefox
-        uses: browser-actions/setup-firefox@955a5d42b5f068a8917c6a4ff1656a2235c66dfb # v1
+        uses: browser-actions/setup-firefox@e089c22a945673ab24aff2bd95b24014987f2d85 # v1
         with:
           firefox-version: latest-esr
 

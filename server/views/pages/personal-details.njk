@@ -321,14 +321,6 @@
                 value: { html: '<span data-qa="criminogenicNeedsValue">' + criminogenicNeeds + '</span>' }
               },
               {
-                key: { html: '<span data-qa="pncLabel">PNC</span>' },
-                value: { html: '<span data-qa="pncValue" class="app-!-font-family-tabular">' + personalDetails.pnc  + '</span>' }
-              } if personalDetails.pnc,
-              {
-                key: { html: '<span data-qa="crnLabel">CRN</span>' },
-                value: { html: '<span data-qa="crnValue" class="app-!-font-family-tabular">' + personalDetails.crn + '</span>' }
-              },
-              {
                 key: { html: '<span data-qa="documentsLabel">Personal documents</span>' },
                 value: { html: '<span data-qa="documentsValue">' + documents + '</span>' }
               }
@@ -341,6 +333,33 @@
         titleText: "Personal details",
         classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
         html: personalDetailsHtml,
+        actions: {}
+    }) }}
+
+    {% set identityNumbers %}
+        {{ govukSummaryList({
+            rows: [
+                {
+                    key: { html: '<span data-qa="crnLabel">CRN</span>' },
+                    value: { html: '<span data-qa="crnValue" class="app-!-font-family-tabular">' + personalDetails.crn + '</span>' }
+                },
+                {
+                    key: { html: '<span data-qa="pncLabel">PNC number</span>' },
+                    value: { html: '<span data-qa="pncValue" class="app-!-font-family-tabular">' + personalDetails.pnc  + '</span>' }
+                } if personalDetails.pnc,
+                {
+                    key: { html: '<span data-qa="nomsLabel">Prison number</span>' },
+                    value: { html: '<span data-qa="nomsValue" class="app-!-font-family-tabular">' + personalDetails.noms  + '</span>' }
+                } if personalDetails.noms
+            ]
+        }) }}
+    {% endset %}
+
+    {{ appSummaryCard({
+        attributes: {'data-qa': 'identityNumberCard'},
+        titleText: "Identity numbers",
+        classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+        html: identityNumbers,
         actions: {}
     }) }}
 

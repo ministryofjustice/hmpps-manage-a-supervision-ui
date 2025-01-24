@@ -213,6 +213,8 @@
         "status": 200,
         "jsonBody": {
           "crn": "X000001",
+          "pnc": "1954/0018147W",
+          "noms": "G9566GQ",
           "name": {
             "forename": "Eula",
             "middleName": "",

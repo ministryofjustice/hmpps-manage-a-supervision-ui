@@ -166,7 +166,7 @@
     "audit-ci": "^7.1.0",
     "concurrently": "^9.1.2",
     "cookie-session": "^2.1.0",
-    "cypress": "^13.16.1",
+    "cypress": "^14.0.0",
     "cypress-multi-reporters": "^2.0.4",
     "cypress-plugin-tab": "^1.0.5",
     "dotenv": "^16.4.7",

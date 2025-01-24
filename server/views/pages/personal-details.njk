@@ -64,7 +64,7 @@
 
             {% else %}
                 No main address<br />
-                <a href="/case/{{ crn }}/handoff/delius">Add a main address in Delius</a>
+                <a href="/case/{{ crn }}/handoff/delius">Add a main address in NDelius</a>
             {% endif %}
         {% endset %}
 
@@ -116,7 +116,7 @@
 
         {% set mainAddressWarningHtml %}
             No main address<br />
-            <a href="#">Add a main address in Delius</a>
+            <a href="#">Add a main address in NDelius</a>
         {% endset %}
 
         {{ govukSummaryList({
@@ -167,7 +167,7 @@
         items: [
           {
             href: "#",
-            text: "Change in Delius"
+            text: "Change in NDelius"
           }
         ]
       } if false
@@ -369,7 +369,7 @@
           } if personalDetails.sexualOrientation
         ]
       }) }}
-      <p class="govuk-!-margin-top-2 govuk-!-margin-bottom-0"><a href="/case/{{ crn }}/handoff/delius">View more on Delius</a></p>
+      <p class="govuk-!-margin-top-2 govuk-!-margin-bottom-0"><a href="/case/{{ crn }}/handoff/delius">View more in NDelius</a></p>
     {% endset %}
 
     {{ appSummaryCard({

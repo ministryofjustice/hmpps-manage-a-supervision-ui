@@ -13,7 +13,10 @@
       classes: "govuk-label--s govuk-!-font-weight-bold"
     },
     formGroup: {
-      classes: "govuk-!-margin-bottom-3"
+      classes: "govuk-!-margin-bottom-3",
+      attributes: {
+        'data-qa': 'keywords'
+      }
     },
     value: query.keywords
   }) }}
@@ -25,7 +28,10 @@
       classes: "govuk-label--s govuk-!-font-weight-bold"
   },
   formGroup: {
-      classes: "govuk-!-margin-bottom-3"
+      classes: "govuk-!-margin-bottom-3",
+      attributes: {
+        'data-qa': 'date-from'
+      }
     },
     value: query.dateFrom,
     maxDate: filters.maxDate,
@@ -41,7 +47,10 @@
       classes: "govuk-label--s govuk-!-font-weight-bold"
   },
   formGroup: {
-    classes: "govuk-!-margin-bottom-3"
+    classes: "govuk-!-margin-bottom-3",
+    attributes: {
+        'data-qa': 'date-to'
+      }
   },
   value: query.dateTo,
   maxDate: filters.maxDate,
@@ -59,6 +68,11 @@
         classes: 'govuk-fieldset__legend--s'
       }
     },
+    formGroup: {
+      attributes: {
+        'data-qa': 'compliance'
+      }
+    },
     items: filters.complianceOptions
   }) }}
 
@@ -66,7 +80,7 @@
 {% endset -%}
 
 <div class="govuk-grid-column-one-third">
-<form method="get">
+<form method="get" data-qa="filter-form">
 {{ mojFilter({
   heading: {
     html: 'Filter activity log',
@@ -75,7 +89,7 @@
   submit: {
     value: "submit",
     attributes: {
-        "data-test-id": "submit-button"
+        "data-qa": "submit-button"
     }
   },
   selectedFilters: {

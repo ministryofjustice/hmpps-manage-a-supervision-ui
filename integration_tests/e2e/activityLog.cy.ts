@@ -1,7 +1,81 @@
 import Page from '../pages/page'
 import ActivityLogPage from '../pages/activityLog'
+import errorMessages from '../../server/properties/errorMessages'
 
 context('Activity log', () => {
+  const today = new Date()
+  const day = today.getDate()
+  const month = today.getMonth() + 1
+  const year = today.getFullYear()
+  const date = `${day}/${month}/${year}`
+
+  it('should render the filter menu', () => {
+    cy.visit('/case/X000001/activity-log')
+    const page = Page.verifyOnPage(ActivityLogPage)
+    cy.get('[data-qa="filter-form"]').within(() => cy.get('h2').should('contain.text', 'Filter activity log'))
+    page.getApplyFiltersButton().should('contain.text', 'Apply filters')
+    cy.get('[data-qa="keywords"]').within(() => cy.get('label').should('contain.text', 'Keywords'))
+    page.getKeywordsInput().should('exist').should('have.value', '')
+    cy.get('[data-qa="date-from"]').within(() => cy.get('label').should('contain.text', 'Date from'))
+    cy.get('[data-qa="date-from"]').within(() => cy.get('input').should('exist').should('have.value', ''))
+    cy.get('[data-qa="date-to"]').within(() => cy.get('label').should('contain.text', 'Date to'))
+    cy.get('[data-qa="date-to"]').within(() => cy.get('input').should('exist').should('have.value', ''))
+    cy.get('[data-qa="compliance"]').within(() =>
+      cy.get('legend').should('exist').should('contain.text', 'Compliance filters'),
+    )
+    const filters = ['Without an outcome', 'Complied', 'Not complied']
+    cy.get('[data-qa="compliance"] .govuk-checkboxes__item').each(($el, i) => {
+      cy.wrap($el).find('input').should('not.be.checked')
+      cy.wrap($el).find('label').should('contain.text', filters[i])
+    })
+  })
+  it('should show the correct validation if date to is selected, but no date from is selected', () => {
+    cy.visit('/case/X000001/activity-log')
+    const page = Page.verifyOnPage(ActivityLogPage)
+    page.getDateToToggle().click()
+    page.getDateToDialog().should('be.visible').find(`button[data-testid="${date}"]`).click()
+    page.getDateToInput().should('have.value', date)
+    page.getDateToDialog().should('not.be.visible')
+    page.getApplyFiltersButton().click()
+    page.getErrorSummaryBox().should('be.visible')
+    page.getAllErrorSummaryLinks().should('have.length', 1)
+    page.getErrorSummaryLink(1).should('contain.text', errorMessages['activity-log']['date-from'].errors.isEmpty)
+    page.getErrorSummaryLink(1).click()
+    page.getDateFromInput().should('be.focused')
+  })
+  it('should show the correct validation if date from is selected, but no date to is selected', () => {
+    cy.visit('/case/X000001/activity-log')
+    const page = Page.verifyOnPage(ActivityLogPage)
+    page.getDateFromToggle().click()
+    page.getDateFromDialog().should('be.visible').find(`button[data-testid="${date}"]`).click()
+    page.getDateFromInput().should('have.value', date)
+    page.getDateFromDialog().should('not.be.visible')
+    page.getApplyFiltersButton().click()
+    page.getErrorSummaryBox().should('be.visible')
+    page.getAllErrorSummaryLinks().should('have.length', 1)
+    page.getErrorSummaryLink(1).should('contain.text', errorMessages['activity-log']['date-to'].errors.isEmpty)
+    page.getErrorSummaryLink(1).click()
+    page.getDateToInput().should('be.focused')
+  })
+  it('should show the correct validation if an invalid date from is entered', () => {
+    cy.visit('/case/X000001/activity-log')
+    const page = Page.verifyOnPage(ActivityLogPage)
+    page.getDateFromInput().type('01/04/2025')
+    page.getApplyFiltersButton().click()
+    page.getErrorSummaryBox().should('be.visible')
+    page.getAllErrorSummaryLinks().should('have.length', 1)
+    page.getErrorSummaryLink(1).should('contain.text', errorMessages['activity-log']['date-from'].errors.isInvalid)
+  })
+  // it('should show the correct validation if an invalid date to is entered', () => {
+  //   cy.visit('/case/X000001/activity-log')
+  //   const page = Page.verifyOnPage(ActivityLogPage)
+  //   page.getDateToInput().type('01/04/')
+  //   page.getApplyFiltersButton().click()
+  //   page.getErrorSummaryBox().should('be.visible')
+  //   page.getAllErrorSummaryLinks().should('have.length', 1)
+  //   cy.pause()
+  //   page.getErrorSummaryLink(1).should('contain.text', errorMessages['activity-log']['date-to'].errors.isInvalid)
+  // })
   it('Activity log page is rendered in default view', () => {
     cy.visit('/case/X000001/activity-log')
     const page = Page.verifyOnPage(ActivityLogPage)

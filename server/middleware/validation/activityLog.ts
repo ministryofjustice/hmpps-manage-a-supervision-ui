@@ -19,82 +19,92 @@ const activityLog: Route<void> = (req, res, next) => {
     return DateTime.fromISO(DateTime.local(parseInt(year, 10), parseInt(month, 10), parseInt(day, 10)).toISODate())
   }
 
-  const validateDateFrom = () => {
-    let isValid = true
-    const anchor = 'dateFrom'
-    if (!dateFrom && dateTo) {
-      logger.info(properties.errorMessages['activity-log']['date-from'].log)
-      const text = properties.errorMessages['activity-log']['date-from'].errors.isEmpty
-      errors = utils.addError(errors, { text, anchor })
-      isValid = false
-    }
-    if (isValid && dateFrom && !isValidFormat(dateFrom as string)) {
+  const validateDateRanges = () => {
+    let dateFromIsValid = true
+    let dateToIsValid = true
+    if (dateFrom && !isValidFormat(dateFrom as string)) {
       const text = properties.errorMessages['activity-log']['date-from'].errors.isInvalid
-      errors = utils.addError(errors, { text, anchor })
-      isValid = false
+      errors = utils.addError(errors, { text, anchor: 'dateFrom' })
+      dateFromIsValid = false
     }
-    if (isValid && dateFrom) {
+    if (dateFromIsValid && dateFrom) {
       const dateFromIso = getIsoDate(dateFrom as string)
       if (!dateFromIso.isValid) {
         const text = properties.errorMessages['activity-log']['date-from'].errors.isNotReal
-        errors = utils.addError(errors, { text, anchor })
-        isValid = false
+        errors = utils.addError(errors, { text, anchor: 'dateFrom' })
+        dateFromIsValid = false
       }
     }
-    if (isValid && dateFrom) {
+    if (dateFromIsValid && dateFrom) {
       const dateFromIso = getIsoDate(dateFrom as string)
       const today = DateTime.now()
       if (dateFromIso > today) {
         const text = properties.errorMessages['activity-log']['date-from'].errors.isInFuture
-        errors = utils.addError(errors, { text, anchor })
-        isValid = false
+        errors = utils.addError(errors, { text, anchor: 'dateFrom' })
+        dateFromIsValid = false
       }
     }
-  }
-
-  const validateDateTo = () => {
-    let isValid = true
-    const anchor = 'dateTo'
-    if (!dateTo && dateFrom) {
-      logger.info(properties.errorMessages['activity-log']['date-to'].log)
-      const text = properties.errorMessages['activity-log']['date-to'].errors.isEmpty
-      errors = utils.addError(errors, { text, anchor })
-      isValid = false
+    if (dateTo && !isValidFormat(dateTo as string)) {
+      const text = properties.errorMessages['activity-log']['date-to'].errors.isInvalid
+      errors = utils.addError(errors, { text, anchor: 'dateTo' })
+      dateToIsValid = false
     }
-    if (isValid && dateTo && !isValidFormat(dateTo as string)) {
-      if (isValid && !isValidFormat(dateTo as string)) {
-        const text = properties.errorMessages['activity-log']['date-to'].errors.isInvalid
-        errors = utils.addError(errors, { text, anchor })
-        isValid = false
-      }
-    }
-    if (isValid && dateTo) {
+    if (dateToIsValid && dateTo) {
       const dateToIso = getIsoDate(dateTo as string)
       if (!dateToIso.isValid) {
         const text = properties.errorMessages['activity-log']['date-to'].errors.isNotReal
-        errors = utils.addError(errors, { text, anchor })
-        isValid = false
+        errors = utils.addError(errors, { text, anchor: 'dateTo' })
+        dateToIsValid = false
       }
     }
-    if (isValid && dateTo) {
+    if (dateToIsValid && dateTo) {
       const dateToIso = getIsoDate(dateTo as string)
       const today = DateTime.now()
       if (dateToIso > today) {
         const text = properties.errorMessages['activity-log']['date-to'].errors.isInFuture
-        errors = utils.addError(errors, { text, anchor })
-        isValid = false
+        errors = utils.addError(errors, { text, anchor: 'dateTo' })
+        dateToIsValid = false
+      }
+    }
+    if (!dateFrom && dateTo && dateToIsValid) {
+      logger.info(properties.errorMessages['activity-log']['date-from'].log)
+      const text = properties.errorMessages['activity-log']['date-from'].errors.isEmpty
+      errors = utils.addError(errors, { text, anchor: 'dateFrom' })
+      dateFromIsValid = false
+    }
+    if (!dateTo && dateFrom && dateFromIsValid) {
+      logger.info(properties.errorMessages['activity-log']['date-to'].log)
+      const text = properties.errorMessages['activity-log']['date-to'].errors.isEmpty
+      errors = utils.addError(errors, { text, anchor: 'dateTo' })
+      dateToIsValid = false
+    }
+    if (dateFrom && dateFromIsValid && dateTo && dateToIsValid) {
+      const dateFromIso = getIsoDate(dateFrom as string)
+      const dateToIso = getIsoDate(dateTo as string)
+      if (dateFromIso > dateToIso) {
+        const text = properties.errorMessages['activity-log']['date-from'].errors.isAfterTo
+        errors = utils.addError(errors, { text, anchor: 'dateFrom' })
+        dateFromIsValid = false
+      }
+    }
+    if (dateTo && dateToIsValid && dateFrom && dateFromIsValid) {
+      const dateFromIso = getIsoDate(dateFrom as string)
+      const dateToIso = getIsoDate(dateTo as string)
+      if (dateToIso < dateFromIso) {
+        const text = properties.errorMessages['activity-log']['date-to'].errors.isBeforeFrom
+        errors = utils.addError(errors, { text, anchor: 'dateTo' })
+        dateToIsValid = false
       }
     }
   }
+
   let errors: Errors = null
   if (submit) {
     if (req?.session?.errors) {
       delete req.session.errors
     }
 
-    validateDateFrom()
-    validateDateTo()
-
+    validateDateRanges()
     if (errors) {
       req.session.errors = errors
       return res.redirect(url.replace('&submit=true', ''))

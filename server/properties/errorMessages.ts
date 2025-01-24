@@ -5,7 +5,8 @@ const ruleKeys = [
   'isNotReal',
   'isIncomplete',
   'isInFuture',
-  'isAfterFrom',
+  'isAfterTo',
+  'isBeforeFrom',
 ] as const
 const appointmentsKeys = [
   'type',
@@ -126,7 +127,7 @@ const errorMessages: ErrorMessages = {
         isNotReal: 'Enter a real date',
         isIncomplete: 'Enter a full date, for example 17/5/2024',
         isInFuture: 'The from date must be today or in the past',
-        isAfterFrom: 'The from date must be on or before the to date',
+        isAfterTo: 'The from date must be on or before the to date',
       },
     },
     'date-to': {
@@ -137,6 +138,7 @@ const errorMessages: ErrorMessages = {
         isNotReal: 'Enter a real date',
         isIncomplete: 'Enter a full date, for example 17/5/2024',
         isInFuture: 'The to date must be today or in the past',
+        isBeforeFrom: 'The to date must be on or after the from date',
       },
     },
   },

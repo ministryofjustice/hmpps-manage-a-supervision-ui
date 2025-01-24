@@ -324,12 +324,12 @@
                               value: { html: '<span data-qa="orderStartDateValue">' + sentence.order.releaseDate | dateWithYear | nl2br if sentence.order.releaseDate else 'No release date details' + '</span>' }
                           },
                           {
-                              key: { text: "Sentence expiry date" },
+                              key: { text: "Expected sentence end date" },
                               value: { html: '<span data-qa="orderEndDateValue">' + sentence.order.endDate | dateWithYear | nl2br if sentence.order.endDate else 'No end date details' + '</span>' }
                           },
                           {
                               key: { text: "Time elapsed" },
-                              value: { html: '<span data-qa="orderTimeElapsedValue">' + sentence.order.startDate | monthsOrDaysElapsed + ' (of ' + sentence.order.length + ' months)' | nl2br if sentence.order.startDate else 'No details'  + '</span>' }
+                              value: { html: '<span data-qa="orderTimeElapsedValue">' + sentence.order.startDate | monthsOrDaysElapsed + ' elasped (of ' + sentence.order.length + ' months)' | nl2br if sentence.order.startDate else 'No details'  + '</span>' }
                           },
                           {
                               key: { text: "Licence Conditions" },

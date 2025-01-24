@@ -231,7 +231,7 @@
      {% else %}
         {% if currentNavSection == 'teamCases' and teamCount == 0 %}
             {% if hasStaffRecord === false %}
-                <p>You do not have a Delius staff record. Please contact the Delius team</p>
+                <p>You do not have an NDelius staff record. Please contact the NDelius team</p>
              {% else %}
                 <p>You are not currently assigned to any team</p>
             {% endif %}
@@ -239,7 +239,7 @@
             <p>{{ caseload.team.description }} has not been allocated to any cases</p>
         {% elseif currentNavSection == 'yourCases' %}
             {% if hasStaff === false %}
-                <p>You do not have a Delius staff record. Please contact the Delius team</p>
+                <p>You do not have an NDelius staff record. Please contact the NDelius team</p>
             {% else %}
                 <p>You have not been allocated to any cases</p>
             {% endif %}

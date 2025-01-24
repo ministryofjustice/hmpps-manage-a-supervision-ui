@@ -101,7 +101,8 @@
         items: [
           {
             text: 'View sentence details',
-            href: '/case/'+ crn + '/sentence'
+            href: '/case/'+ crn + '/sentence?number=' + sentence.eventNumber,
+            attributes: {'aria-label': 'View sentence details for ' + sentence.order.description }
           }
         ]
       }

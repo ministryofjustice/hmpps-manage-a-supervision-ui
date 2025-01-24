@@ -104,17 +104,27 @@
         {% endset %}
 
         {% set disabilities %}
-            {% set commaJoiner = joiner(', ') %}
             {% if overview.personalDetails.disabilities.length > 0 %}
-                {% for adjustment in overview.personalDetails.disabilities %}{{ commaJoiner() }}{{ adjustment.description }}{% endfor %}
+                <ul class="govuk-list">
+                {% for adjustment in overview.personalDetails.disabilities %}
+                    <li>
+                        {{ adjustment.description }}
+                    </li>
+                {% endfor %}
+                </ul>
             {% else %}
                 No disabilities
             {% endif %}
         {% endset %}
         {% set adjustments %}
-            {% set commaJoiner = joiner(', ') %}
             {% if overview.personalDetails.provisions.length > 0 %}
-                {% for provisions in overview.personalDetails.provisions %}{{ commaJoiner() }}{{ provisions.description }}{% endfor %}
+                <ul class="govuk-list">
+                    {% for provisions in overview.personalDetails.provisions %}
+                    <li>
+                        {{ provisions.description }}
+                    </li>
+                    {% endfor %}
+                </ul>
             {% else %}
                 No adjustments
             {% endif %}

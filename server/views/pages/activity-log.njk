@@ -78,7 +78,7 @@
     {% if personActivity.activities.length %}
     <div class="flex flex--space-between">
  {% include "./activity-log/_switch-views.njk" %}
- <p class="govuk-!-margin-bottom-0">Showing {{ personActivity.activities.length }} result{% if personActivity.activities.length !== 1 %}s{% endif %} of {{ personActivity.totalResults }}</p>
+ <p class="govuk-!-margin-bottom-0" data-qa="results-count">Showing results {{ resultsStart }} to {{ resultsEnd }} of {{ personActivity.totalResults }}</p>
  </div>
     {% set entries = activityLog(entries, category or 'all-previous-activity') %}
     {% if entries.length > 0 %}
@@ -101,6 +101,7 @@
 </div>
 {% endif %}
 {% else %}
+<div data-qa="no-results">
 <h3 class="govuk-heading-s">0 search results found</h3>
 <p>Improve your search by:</p>
 <ul class="govuk-list govuk-list--bullet">
@@ -108,6 +109,7 @@
 <li>double-checking the spelling</li>
 <li>removing special characters like characters and accent letters</li>
 </ul>
+</div>
 {% endif %}
   </div>
 </div>

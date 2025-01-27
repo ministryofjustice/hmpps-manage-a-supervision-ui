@@ -138,7 +138,6 @@ const errorMessages: ErrorMessages = {
         isNotReal: 'Enter a real date',
         isIncomplete: 'Enter a full date, for example 17/5/2024',
         isInFuture: 'The to date must be today or in the past',
-        isBeforeFrom: 'The to date must be on or after the from date',
       },
     },
   },

@@ -72,7 +72,7 @@
 {% set notes %}
   {% if entry.notes %}
     <p class="govuk-!-margin-bottom-0">{{ entry.notes | nl2br | safe }}</p>
-    <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by {{ entry.lastUpdatedBy.forename }} {{ entry.lastUpdatedBy.surname }} on {{ entry.lastUpdated | dateWithYear }}</p>
+    <p class="govuk-body-s secondary-text govuk-!-padding-top-2">Comment added by {{ entry.lastUpdatedBy.forename }} {{ entry.lastUpdatedBy.surname }} on {{ entry.lastUpdated | dateWithYear }}</p>
   {% endif %}
 {% endset %}
 

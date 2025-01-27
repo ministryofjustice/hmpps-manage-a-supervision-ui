@@ -19,7 +19,11 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
   if (compliance?.length && clearFilterKey === 'compliance') {
     compliance = compliance.filter(value => value !== clearFilterValue)
   }
-
+  const complianceFilterOptions: Option[] = [
+    { text: 'Without an outcome', value: 'no outcome' },
+    { text: 'Complied', value: 'complied' },
+    { text: 'Not complied', value: 'not complied' },
+  ]
   const filters: ActivityLogFilters = {
     keywords: keywords && clearFilterKey !== 'keywords' ? (keywords as string) : '',
     dateFrom:
@@ -70,7 +74,7 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
           acc = [
             ...acc,
             {
-              text,
+              text: complianceFilterOptions.find(option => option.value === text).text,
               href: filterHref(key, text),
             },
           ]
@@ -95,11 +99,7 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
       return acc
     }, [])
 
-  const complianceOptions: Option[] = [
-    { text: 'Without an outcome', value: 'no outcome' },
-    { text: 'Complied', value: 'complied' },
-    { text: 'Not complied', value: 'not complied' },
-  ].map(({ text, value }) => ({
+  const complianceOptions: Option[] = complianceFilterOptions.map(({ text, value }) => ({
     text,
     value,
     checked: filters.compliance.includes(value),

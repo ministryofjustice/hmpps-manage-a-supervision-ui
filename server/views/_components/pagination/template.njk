@@ -48,7 +48,7 @@
 
 {{ govukPagination({
   previous: {
-    href: url + (currentPage - 1)
+    href: url + 'page=' + (currentPage - 1)
   } if currentPage > 0 and totalPages > 1,
   next: {
     href: url + 'page=' + (currentPage + 1)

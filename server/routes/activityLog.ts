@@ -50,6 +50,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
             dateFrom === cacheItem.dateFrom &&
             dateTo === cacheItem.dateTo &&
             compliance.every(option => cacheItem.compliance.includes(option)) &&
+            cacheItem.compliance.length === compliance.length &&
             parseInt(page as string, 10) === cacheItem.response.page,
         )
         if (cache) {
@@ -84,7 +85,12 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       }
 
       const queryParams = getQueryString(req.query)
-
+      const currentPage = parseInt(page as string, 10)
+      const resultsStart = currentPage > 0 ? 10 * currentPage + 1 : 1
+      let resultsEnd = currentPage > 0 ? (currentPage + 1) * 10 : 10
+      if (personActivity.totalResults >= resultsStart && personActivity.totalResults <= resultsEnd) {
+        resultsEnd = personActivity.totalResults
+      }
       await auditService.sendAuditMessage({
         action: 'VIEW_MAS_ACTIVITY_LOG',
         who: res.locals.user.username,
@@ -103,6 +109,8 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
         tierCalculation,
         url: req.url,
         query,
+        resultsStart,
+        resultsEnd,
       })
     },
   )

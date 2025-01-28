@@ -1,7 +1,7 @@
 import { Request } from 'express'
 import { HmppsAuthClient } from '../data'
 import MasApiClient from '../data/masApiClient'
-import { ActivityLogCache, ActivityLogRequestBody, AppResponse, Route } from '../@types'
+import { ActivityLogCache, ActivityLogRequestBody, AppResponse } from '../@types'
 import { PersonActivity } from '../data/model/activityLog'
 import { toISODate, toCamelCase } from '../utils/utils'
 import TierApiClient, { TierCalculation } from '../data/tierApiClient'

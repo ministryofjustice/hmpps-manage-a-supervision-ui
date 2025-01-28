@@ -2,7 +2,7 @@ import { HmppsAuthClient } from '../data'
 import MasApiClient from '../data/masApiClient'
 import { Route } from '../@types'
 
-export const getPersonalDetails = (hmppsAuthClient: HmppsAuthClient): Route<void> => {
+export const getPersonalDetails = (hmppsAuthClient: HmppsAuthClient): Route<Promise<void>> => {
   return async (req, res, next) => {
     const { crn } = req.params
     if (!req?.session?.data?.personalDetails?.[crn]) {

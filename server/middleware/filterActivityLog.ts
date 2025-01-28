@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-/* eslint-disable no-nested-ternary */
 
 import { DateTime } from 'luxon'
 import { Route, ActivityLogFilters, ActivityLogFiltersResponse, SelectedFilterItem, Option } from '../@types'
@@ -13,10 +12,12 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
   const { crn } = req.params
   const { keywords = '', dateFrom = '', dateTo = '', clearFilterKey, clearFilterValue } = req.query
   const errors = req?.session?.errors
-  const { compliance: complianceQuery } = req.query
+  const { compliance: complianceQuery = [] } = req.query
   let compliance = complianceQuery as string[] | string
   const baseUrl = `/case/${crn}/activity-log`
-  compliance = compliance ? (Array.isArray(compliance) ? compliance : [compliance]) : []
+  if (!Array.isArray(compliance)) {
+    compliance = [compliance]
+  }
   if (compliance?.length && clearFilterKey === 'compliance') {
     compliance = compliance.filter(value => value !== clearFilterValue)
   }
@@ -33,7 +34,7 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
         : '',
     dateTo:
       dateTo && dateFrom && !errors?.errorMessages?.dateTo && clearFilterKey !== 'dateRange' ? (dateTo as string) : '',
-    compliance: compliance as string[],
+    compliance,
   }
 
   const getQueryString = (values: ActivityLogFilters | Record<string, string>): string => {
@@ -47,7 +48,7 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
               acc = `${acc}${acc ? '&' : ''}${key}=${encodeURI(val)}`
             }
           } else {
-            acc = `${acc}${i > 0 ? '&' : ''}${key}=${encodeURI(value as string)}`
+            acc = `${acc}${i > 0 ? '&' : ''}${key}=${encodeURI(value)}`
           }
         }
         return acc
@@ -61,7 +62,9 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
   const redirectQueryStr = getQueryString(filters)
 
   if (clearFilterKey) {
-    return res.redirect(`${baseUrl}${redirectQueryStr ? `?${redirectQueryStr}` : ''}`)
+    let redirectUrl = baseUrl
+    if (redirectQueryStr) redirectUrl = `${redirectUrl}?${redirectQueryStr}`
+    return res.redirect(redirectUrl)
   }
 
   const filterHref = (key: string, value: string): string =>

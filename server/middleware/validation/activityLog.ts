@@ -10,7 +10,7 @@ const activityLog: Route<void> = (req, res, next) => {
   const { submit } = query
 
   const isValidFormat = (date: string): boolean => {
-    const regex = /^(?:[1-9]?)?\d\/(?:[1-9]?)?\d\/\d{4}$/
+    const regex = /^(?:[1-9])?\d\/(?:[1-9])?\d\/\d{4}$/
     return regex.test(date)
   }
 

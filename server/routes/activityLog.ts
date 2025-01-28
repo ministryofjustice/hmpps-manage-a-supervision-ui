@@ -12,6 +12,8 @@ import validate from '../middleware/validation/index'
 import { filterActivityLog } from '../middleware'
 import type { AppResponse, Route } from '../@types'
 import { getPersonActivity } from '../middleware/getPersonActivity'
+import { toPredictors, toRoshWidget, toTimeline } from '../utils/utils'
+import ArnsApiClient from '../data/arnsApiClient'
 
 export default function activityLogRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
@@ -37,12 +39,17 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       const [tierCalculation, personActivity] = await getPersonActivity(req, res, hmppsAuthClient)
 
       const queryParams = getQueryString(req.query)
+      const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+      const arnsClient = new ArnsApiClient(token)
       const currentPage = parseInt(page as string, 10)
       const resultsStart = currentPage > 0 ? 10 * currentPage + 1 : 1
       let resultsEnd = currentPage > 0 ? (currentPage + 1) * 10 : 10
       if (personActivity.totalResults >= resultsStart && personActivity.totalResults <= resultsEnd) {
         resultsEnd = personActivity.totalResults
       }
+
+      const [risks, predictors] = await Promise.all([arnsClient.getRisks(crn), arnsClient.getPredictorsAll(crn)])
+
       await auditService.sendAuditMessage({
         action: 'VIEW_MAS_ACTIVITY_LOG',
         who: res.locals.user.username,
@@ -52,6 +59,10 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
         service: 'hmpps-manage-people-on-probation-ui',
       })
 
+      const risksWidget = toRoshWidget(risks)
+
+      const predictorScores = toPredictors(predictors)
+
       res.render('pages/activity-log', {
         personActivity,
         crn,
@@ -59,6 +70,8 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
         page,
         view,
         tierCalculation,
+        risksWidget,
+        predictorScores,
         url: req.url,
         query,
         resultsStart,
@@ -80,12 +93,15 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       service: 'hmpps-manage-people-on-probation-ui',
     })
 
+    const arnsClient = new ArnsApiClient(token)
     const masClient = new MasApiClient(token)
     const tierClient = new TierApiClient(token)
 
-    const [personActivity, tierCalculation] = await Promise.all([
+    const [personActivity, tierCalculation, risks, predictors] = await Promise.all([
       masClient.getPersonActivityLog(crn),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getRisks(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
 
     if (req.query.view === 'compact') {
@@ -100,6 +116,9 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
 
     const queryParams = getQueryString(req.query)
 
+    const risksWidget = toRoshWidget(risks)
+
+    const predictorScores = toPredictors(predictors)
     res.render('pages/activity-log', {
       category,
       personActivity,
@@ -107,6 +126,8 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       crn,
       tierCalculation,
       errors: req?.session?.errors,
+      risksWidget,
+      predictorScores,
     })
   })
 
@@ -114,11 +135,14 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     const { crn, id } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
 
+    const arnsClient = new ArnsApiClient(token)
     const masClient = new MasApiClient(token)
     const tierClient = new TierApiClient(token)
-    const [personAppointment, tierCalculation] = await Promise.all([
+    const [personAppointment, tierCalculation, risks, predictors] = await Promise.all([
       masClient.getPersonAppointment(crn, id),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getRisks(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
     const isActivityLog = true
     const queryParams = getQueryString(req.query)
@@ -134,6 +158,9 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       service: 'hmpps-manage-people-on-probation-ui',
     })
 
+    const risksWidget = toRoshWidget(risks)
+
+    const predictorScores = toPredictors(predictors)
     res.render('pages/appointments/appointment', {
       category,
       queryParams,
@@ -141,6 +168,8 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       crn,
       isActivityLog,
       tierCalculation,
+      risksWidget,
+      predictorScores,
     })
   })
 

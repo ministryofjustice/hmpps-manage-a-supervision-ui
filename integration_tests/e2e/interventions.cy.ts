@@ -9,6 +9,7 @@ context('Interventions', () => {
     page.headerName().should('contain.text', 'Eula Schmeler')
     page.pageHeading().should('contain.text', 'Interventions')
 
+    page.assertRiskTags()
     page
       .getRowData('interventions', 'referralInterventionTitle3', 'Value')
       .should('contain.text', 'Other Services - North West')

@@ -238,7 +238,7 @@
                 "id": 1,
                 "code": "F",
                 "actualStartDate": "2024-04-12",
-                "description": "1 of 12 RAR days",
+                "description": "3 of 12 RAR days completed",
                 "length": 12,
                 "lengthUnitValue": "Days",
                 "requirementNotes": [
@@ -252,7 +252,8 @@
                 ],
                 "rar": {
                   "completed": 1,
-                  "scheduled": 11,
+                  "nsiCompleted": 2,
+                  "scheduled": 9,
                   "totalDays": 12
                 }
               },

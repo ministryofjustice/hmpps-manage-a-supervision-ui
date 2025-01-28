@@ -15,7 +15,8 @@
         },
         {
           text: headerPersonName,
-          href: "/case/" + crn
+          href: "/case/" + crn,
+          attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
         },
         {
           text: currentSectionName
@@ -25,7 +26,7 @@
 {% endblock %}
 
 {% block pageContent %}
-    <h2 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-top-8 govuk-!-margin-bottom-5">CRS Referrals</h2>
+    <h2 class="govuk-heading-m govuk-!-font-size-27 govuk-!-margin-top-8 govuk-!-margin-bottom-5">CRS referrals</h2>
 
     {% set rows = [] %}
     {% for intervention in interventions %}

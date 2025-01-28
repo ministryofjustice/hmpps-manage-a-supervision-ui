@@ -6,6 +6,8 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import TierApiClient from '../data/tierApiClient'
 import type { Route } from '../@types'
+import ArnsApiClient from '../data/arnsApiClient'
+import { toPredictors, toRoshWidget } from '../utils/utils'
 
 interface QueryParams {
   activeSentence: string
@@ -37,17 +39,24 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
     })
 
     const masClient = new MasApiClient(token)
+    const arnsClient = new ArnsApiClient(token)
     const tierClient = new TierApiClient(token)
-
-    const [sentenceDetails, tierCalculation] = await Promise.all([
+    const [sentenceDetails, risks, tierCalculation, predictors] = await Promise.all([
       masClient.getSentenceDetails(crn, queryParam),
+      arnsClient.getRisks(crn),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
 
+    const risksWidget = toRoshWidget(risks)
+
+    const predictorScores = toPredictors(predictors)
     res.render('pages/sentence', {
       sentenceDetails,
       crn,
       tierCalculation,
+      risksWidget,
+      predictorScores,
     })
   })
 
@@ -64,18 +73,26 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       service: 'hmpps-manage-people-on-probation-ui',
     })
 
+    const arnsClient = new ArnsApiClient(token)
     const masClient = new MasApiClient(token)
     const tierClient = new TierApiClient(token)
 
-    const [sentenceDetails, tierCalculation] = await Promise.all([
+    const [sentenceDetails, tierCalculation, risks, predictors] = await Promise.all([
       masClient.getProbationHistory(crn),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getRisks(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
 
+    const risksWidget = toRoshWidget(risks)
+
+    const predictorScores = toPredictors(predictors)
     res.render('pages/probation-history', {
       sentenceDetails,
       crn,
       tierCalculation,
+      risksWidget,
+      predictorScores,
     })
   })
 
@@ -161,18 +178,26 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       service: 'hmpps-manage-people-on-probation-ui',
     })
 
+    const arnsClient = new ArnsApiClient(token)
     const masClient = new MasApiClient(token)
     const tierClient = new TierApiClient(token)
 
-    const [licenceNoteDetails, tierCalculation] = await Promise.all([
+    const [licenceNoteDetails, tierCalculation, risks, predictors] = await Promise.all([
       masClient.getSentenceLicenceConditionNote(crn, licenceConditionId, noteId),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getRisks(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
 
+    const predictorScores = toPredictors(predictors)
+
+    const risksWidget = toRoshWidget(risks)
     res.render('pages/licence-condition-note', {
       licenceNoteDetails,
       tierCalculation,
       crn,
+      risksWidget,
+      predictorScores,
     })
   })
 
@@ -189,17 +214,26 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
       service: 'hmpps-manage-a-supervision-ui',
     })
 
+    const arnsClient = new ArnsApiClient(token)
     const masClient = new MasApiClient(token)
     const tierClient = new TierApiClient(token)
 
-    const [requirementNoteDetails, tierCalculation] = await Promise.all([
+    const [requirementNoteDetails, tierCalculation, risks, predictors] = await Promise.all([
       masClient.getSentenceRequirementNote(crn, requirementId, noteId),
       tierClient.getCalculationDetails(crn),
+      arnsClient.getRisks(crn),
+      arnsClient.getPredictorsAll(crn),
     ])
+
+    const predictorScores = toPredictors(predictors)
+
+    const risksWidget = toRoshWidget(risks)
     res.render('pages/requirement-note', {
       requirementNoteDetails,
       tierCalculation,
       crn,
+      risksWidget,
+      predictorScores,
     })
   })
 }

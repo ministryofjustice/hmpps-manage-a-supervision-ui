@@ -129,4 +129,14 @@ export default abstract class Page {
   getSummaryListRow = (index: number) => {
     return cy.get(`.govuk-summary-list__row:nth-child(${index})`)
   }
+
+  assertRiskTags() {
+    cy.get(`[class=predictor-timeline-item__level]`)
+      .eq(0)
+      .within(() => cy.get('strong').should('contain.text', 'ROSH'))
+
+    cy.get(`[class=predictor-timeline-item__level]`)
+      .eq(1)
+      .within(() => cy.get('strong').should('contain.text', 'RSR'))
+  }
 }

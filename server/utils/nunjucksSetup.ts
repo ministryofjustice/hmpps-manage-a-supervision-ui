@@ -65,7 +65,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   app.set('view engine', 'njk')
 
   app.locals.asset_path = '/assets/'
-  app.locals.applicationName = 'Manage a Supervision'
+  app.locals.applicationName = 'Manage people on probation'
   app.locals.environmentName = config.environmentName
   app.locals.environmentNameColour = config.environmentName === 'PRE-PRODUCTION' ? 'govuk-tag--green' : ''
 
@@ -83,6 +83,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
 
   const njkEnv = nunjucks.configure(
     [
+      path.join(__dirname, 'server/views'),
       path.join(__dirname, '../../server/views'),
       'node_modules/govuk-frontend/dist',
       'node_modules/govuk-frontend/dist/components/',

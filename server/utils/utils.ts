@@ -6,7 +6,7 @@ import getKeypath from 'lodash/get'
 import setKeypath from 'lodash/set'
 import { Request } from 'express'
 import { Need, RiskScore, RiskSummary, RiskToSelf } from '../data/arnsApiClient'
-import { Name } from '../data/model/common'
+import { ErrorSummary, Name } from '../data/model/common'
 import { Address } from '../data/model/personalDetails'
 import config from '../config'
 import { Activity } from '../data/model/schedule'
@@ -661,6 +661,11 @@ export const toRoshWidget = (roshSummary: RiskSummary): RoshRiskWidgetDto => {
   if (!roshSummary) {
     return { overallRisk: 'NOT_FOUND', assessedOn: undefined, riskInCommunity: undefined, riskInCustody: undefined }
   }
+
+  if (!roshSummary.summary) {
+    return { overallRisk: 'UNAVAILABLE', assessedOn: undefined, riskInCommunity: undefined, riskInCustody: undefined }
+  }
+
   const riskInCommunity = toMap(roshSummary.summary.riskInCommunity)
   const riskInCustody = toMap(roshSummary.summary.riskInCustody)
   return {
@@ -678,4 +683,17 @@ export const toCamelCase = (str: string): string => {
       return i > 0 ? `${word.slice(0, 1).toUpperCase()}${word.slice(1).toLowerCase()}` : word.toLowerCase()
     })
     .join('')
+}
+
+export const toPredictors = (predictors: RiskScoresDto[] | ErrorSummary | null): TimelineItem => {
+  let timeline: TimelineItem[] = []
+  let predictorScores
+  if (Array.isArray(predictors)) {
+    timeline = toTimeline(predictors)
+  }
+  if (timeline.length > 0) {
+    ;[predictorScores] = timeline
+  }
+
+  return predictorScores
 }

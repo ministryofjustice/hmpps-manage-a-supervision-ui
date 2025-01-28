@@ -7,7 +7,7 @@ on:
 
 jobs:
   trivy:
-    uses: ministryofjustice/hmpps-github-actions/.github/workflows/security_trivy.yml@8cb19358c0575f37e48937fb8ff462beca6c4f6a # v1
+    uses: ministryofjustice/hmpps-github-actions/.github/workflows/security_trivy.yml@cf837be42754f7b1640973b977142fd6bfc3b034 # v1
     with:
       channel_id: probation-integration-notifications
     secrets:
@@ -26,7 +26,7 @@ jobs:
 
       - name: Setup Firefox
         id: firefox
-        uses: browser-actions/setup-firefox@955a5d42b5f068a8917c6a4ff1656a2235c66dfb # v1
+        uses: browser-actions/setup-firefox@634a60ccd6599686158cf5a570481b4cd30455a2 # v1
         with:
           firefox-version: latest-esr
 
@@ -82,7 +82,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "🛡️ *Manage a Supervision* ZAP report"
+                    "text": "🛡️ *Manage people on probation probation* ZAP report"
                   }
                 },
                 {
@@ -131,7 +131,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "❌ Failed to generate *Manage a Supervision* ZAP report"
+                    "text": "❌ Failed to generate *Manage people on probation* ZAP report"
                   }
                 },
                 {

@@ -1,5 +1,5 @@
 {% extends "../partials/case.njk" %}
-{% set pageTitle = applicationName + " - Sentence Details" %}
+{% set pageTitle = applicationName + " - Sentence" %}
 {% set currentNavSection = 'sentence' %}
 {% set currentSectionName = 'Sentence' %}
 {% set headerPersonName = sentenceDetails.personSummary.name.forename + ' ' + sentenceDetails.personSummary.name.surname %}
@@ -16,7 +16,8 @@
         },
         {
           text: headerPersonName,
-          href: "/case/" + crn
+          href: "/case/" + crn,
+          attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
         },
         {
           text: currentSectionName
@@ -192,7 +193,7 @@
             {% set hasRequirements = sentence.requirements and sentence.requirements.length > 0 %}
               {% set requirements %}
                   {% for requirement in sentence.requirements %}
-                  {% set reqSummary = requirement.rar.completed + " of " + requirement.rar.totalDays + " RAR days completed" if requirement.code == 'F' else requirement.description %}
+                  {% set reqSummary = requirement.description %}
                    {% set reqNotes = '' %}
                       {% for reqNote in requirement.requirementNotes %}
                           {% set note %}
@@ -210,6 +211,7 @@
                           {% endset %}
                           {% set reqNotes = reqNotes.concat(note) %}
                       {% endfor %}
+                      {% set completedRar = requirement.rar.completed + requirement.rar.nsiCompleted  %}
                       {% set requirementHtml %}
                           {{ govukSummaryList({
                               rows: [
@@ -223,7 +225,7 @@
                                   } if requirement.length and requirement.code == 'F',
                                   {
                                       key: { text: 'Completed RAR' },
-                                      value: { text: requirement.rar.completed + ' day' if requirement.rar.completed == 1 else requirement.rar.completed + ' days' }
+                                      value: { text: requirement.rar.completed + ' day' if completedRar == 1 else completedRar + ' days' }
                                   } if requirement.code == 'F',
                                   {
                                       key: { text: "Expected start date" },
@@ -322,12 +324,12 @@
                               value: { html: '<span data-qa="orderStartDateValue">' + sentence.order.releaseDate | dateWithYear | nl2br if sentence.order.releaseDate else 'No release date details' + '</span>' }
                           },
                           {
-                              key: { text: "Sentence expiry date" },
+                              key: { text: "Expected sentence end date" },
                               value: { html: '<span data-qa="orderEndDateValue">' + sentence.order.endDate | dateWithYear | nl2br if sentence.order.endDate else 'No end date details' + '</span>' }
                           },
                           {
                               key: { text: "Time elapsed" },
-                              value: { html: '<span data-qa="orderTimeElapsedValue">' + sentence.order.startDate | monthsOrDaysElapsed + ' (of ' + sentence.order.length + ' months)' | nl2br if sentence.order.startDate else 'No details'  + '</span>' }
+                              value: { html: '<span data-qa="orderTimeElapsedValue">' + sentence.order.startDate | monthsOrDaysElapsed + ' elasped (of ' + sentence.order.length + ' months)' | nl2br if sentence.order.startDate else 'No details'  + '</span>' }
                           },
                           {
                               key: { text: "Licence Conditions" },

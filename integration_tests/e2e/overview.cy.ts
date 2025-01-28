@@ -8,6 +8,7 @@ context('Overview', () => {
     page.headerCrn().should('contain.text', 'X000001')
     page.headerName().should('contain.text', 'Caroline Wolff')
     page.pageHeading().should('contain.text', 'Overview')
+    page.assertRiskTags()
     page.getTab('overview').should('contain.text', 'Overview')
     page.getTab('personalDetails').should('contain.text', 'Personal details')
     page.getTab('risk').should('contain.text', 'Risk')
@@ -26,8 +27,8 @@ context('Overview', () => {
     page
       .getRowData('personalDetails', 'currentCircumstances', 'Value')
       .should('contain.text', 'Committed/ Transferred to Crown: Life imprisonment (Adult)')
-    page.getRowData('personalDetails', 'disabilities', 'Value').should('contain.text', 'Dyslexia, Arthritis')
-    page.getRowData('personalDetails', 'adjustments', 'Value').should('contain.text', 'Hand Rails, Special Furniture')
+    page.getRowData('personalDetails', 'disabilities', 'Value').should('contain.text', 'Dyslexia')
+    page.getRowData('personalDetails', 'adjustments', 'Value').should('contain.text', 'Special Furniture')
     page.getCardHeader('sentence2').should('contain.text', 'ORA Community Order')
     page
       .getRowData('sentence2', 'mainOffence', 'Value')

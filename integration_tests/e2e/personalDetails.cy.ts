@@ -5,6 +5,7 @@ context('Personal Details', () => {
   it('Overview page is rendered', () => {
     cy.visit('/case/X000001/personal-details')
     const page = Page.verifyOnPage(PersonalDetailsPage)
+    page.assertRiskTags()
     page.headerCrn().should('contain.text', 'X000001')
     page.headerName().should('contain.text', 'Eula Schmeler')
     page.pageHeading().should('contain.text', 'Personal Details')
@@ -38,8 +39,11 @@ context('Personal Details', () => {
     page
       .getRowData('personalDetails', 'criminogenicNeeds', 'Value')
       .should('contain.text', 'Education, Training and Employability')
-    page.getRowData('personalDetails', 'crn', 'Value').should('contain.text', 'X000001')
     page.getRowData('personalDetails', 'documents', 'Value').should('contain.text', 'Eula-Schmeler-X000001-UPW.pdf')
+
+    page.getRowData('identityNumber', 'crn', 'Value').should('contain.text', 'X000001')
+    page.getRowData('identityNumber', 'pnc', 'Value').should('contain.text', '1954/0018147W')
+    page.getRowData('identityNumber', 'noms', 'Value').should('contain.text', 'G9566GQ')
 
     page.getRowData('equalityMonitoring', 'religionOrBelief', 'Value').should('contain.text', 'Scientology')
     page.getRowData('equalityMonitoring', 'sex', 'Value').should('contain.text', 'Female')

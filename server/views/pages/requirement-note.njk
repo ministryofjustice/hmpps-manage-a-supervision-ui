@@ -16,7 +16,8 @@
         },
         {
           text: headerPersonName,
-          href: "/case/" + crn
+          href: "/case/" + crn,
+          attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
         },
         {
           text: currentSectionName,
@@ -27,6 +28,7 @@
 {% endblock %}
 
 {% block pageContent %}
+    {% set completedRar = requirementNoteDetails.requirement.rar.completed + requirementNoteDetails.requirement.rar.nsiCompleted  %}
     {% set requirementNote %}
         {{ govukSummaryList({
         rows: [
@@ -40,7 +42,7 @@
           } if requirementNoteDetails.requirement.length and requirementNoteDetails.requirement.code !== 'F',
           {
             key: { text: 'Completed RAR'},
-            value: { text:  requirementNoteDetails.requirement.rar.completed + " day" if requirementNoteDetails.requirement.rar.completed == 1 else requirementNoteDetails.requirement.rar.completed + " days" }
+            value: { text:  completedRar + " day" if completedRar == 1 else completedRar + " days" }
           }  if requirementNoteDetails.requirement.rar.completed and requirementNoteDetails.requirement.code == 'F',
            {
             key: { text: 'Expected start date' },
@@ -79,7 +81,7 @@
     {% endset %}
 
     {% if requirementNoteDetails.requirement %}
-    {% set description = requirementNoteDetails.requirement.rar.completed + " of " + requirementNoteDetails.requirement.rar.totalDays + " RAR days completed" if requirementNoteDetails.requirement.code == 'F' else requirementNoteDetails.requirement.description %}
+    {% set description = requirementNoteDetails.requirement.description %}
         {{ appSummaryCard({
           titleText: description,
           attributes: {'data-qa': 'requirementNoteCard'},

@@ -11,6 +11,14 @@ context('Sentence', () => {
 
     cy.get('[data-qa=pageHeading]').eq(0).should('contain.text', 'Sentence')
 
+    cy.get(`[class=predictor-timeline-item__level]`)
+      .eq(0)
+      .within(() => cy.get('strong').should('contain.text', 'ROSH'))
+
+    cy.get(`[class=predictor-timeline-item__level]`)
+      .eq(1)
+      .within(() => cy.get('strong').should('contain.text', 'RSR'))
+
     cy.get(`[class=app-summary-card__header]`).within(() =>
       cy.get('h2').should('contain.text', 'Alcohol Monitoring (Electronic Monitoring)'),
     )

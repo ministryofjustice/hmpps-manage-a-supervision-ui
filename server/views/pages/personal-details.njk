@@ -16,7 +16,8 @@
         },
         {
           text: headerPersonName,
-          href: "/case/" + crn
+          href: "/case/" + crn,
+          attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
         },
         {
           text: currentSectionName
@@ -63,7 +64,7 @@
 
             {% else %}
                 No main address<br />
-                <a href="/case/{{ crn }}/handoff/delius">Add a main address in Delius</a>
+                <a href="/case/{{ crn }}/handoff/delius">Add a main address in NDelius</a>
             {% endif %}
         {% endset %}
 
@@ -74,7 +75,7 @@
                   <li>
                     <p>
                       {{ contact.relationshipType }}:<br />
-                      <a href="personal-details/personal-contact/{{ contact.contactId }}">{{ contact.name | fullName }} – {{ contact.relationship }}</a>
+                      <a data-ai-id="personalContactLink" href="personal-details/personal-contact/{{ contact.contactId }}">{{ contact.name | fullName }} – {{ contact.relationship }}</a>
                     </p>
                   </li>
                 {% endfor %}
@@ -115,7 +116,7 @@
 
         {% set mainAddressWarningHtml %}
             No main address<br />
-            <a href="#">Add a main address in Delius</a>
+            <a href="#">Add a main address in NDelius</a>
         {% endset %}
 
         {{ govukSummaryList({
@@ -166,7 +167,7 @@
         items: [
           {
             href: "#",
-            text: "Change in Delius"
+            text: "Change in NDelius"
           }
         ]
       } if false
@@ -261,7 +262,7 @@
                 {% if documents.length > 0 %}
                     {% for doc in documents %}
                     <li>
-                        <a href="personal-details/documents/{{ doc.id }}/download" download="{{ doc.name }}">{{ doc.name }}</a><br>
+                        <a data-ai-id="documentDownload" href="personal-details/documents/{{ doc.id }}/download" download="{{ doc.name }}">{{ doc.name }}</a><br>
                             <span class="govuk-!-font-size-16">
                             {% if doc.lastUpdated %}
                             {{ doc.lastUpdated | lastUpdatedDate }}
@@ -320,14 +321,6 @@
                 value: { html: '<span data-qa="criminogenicNeedsValue">' + criminogenicNeeds + '</span>' }
               },
               {
-                key: { html: '<span data-qa="pncLabel">PNC</span>' },
-                value: { html: '<span data-qa="pncValue" class="app-!-font-family-tabular">' + personalDetails.pnc  + '</span>' }
-              } if personalDetails.pnc,
-              {
-                key: { html: '<span data-qa="crnLabel">CRN</span>' },
-                value: { html: '<span data-qa="crnValue" class="app-!-font-family-tabular">' + personalDetails.crn + '</span>' }
-              },
-              {
                 key: { html: '<span data-qa="documentsLabel">Personal documents</span>' },
                 value: { html: '<span data-qa="documentsValue">' + documents + '</span>' }
               }
@@ -340,6 +333,33 @@
         titleText: "Personal details",
         classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
         html: personalDetailsHtml,
+        actions: {}
+    }) }}
+
+    {% set identityNumbers %}
+        {{ govukSummaryList({
+            rows: [
+                {
+                    key: { html: '<span data-qa="crnLabel">CRN</span>' },
+                    value: { html: '<span data-qa="crnValue" class="app-!-font-family-tabular">' + personalDetails.crn + '</span>' }
+                },
+                {
+                    key: { html: '<span data-qa="pncLabel">PNC number</span>' },
+                    value: { html: '<span data-qa="pncValue" class="app-!-font-family-tabular">' + personalDetails.pnc  + '</span>' }
+                } if personalDetails.pnc,
+                {
+                    key: { html: '<span data-qa="nomsLabel">Prison number</span>' },
+                    value: { html: '<span data-qa="nomsValue" class="app-!-font-family-tabular">' + personalDetails.noms  + '</span>' }
+                } if personalDetails.noms
+            ]
+        }) }}
+    {% endset %}
+
+    {{ appSummaryCard({
+        attributes: {'data-qa': 'identityNumberCard'},
+        titleText: "Identity numbers",
+        classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+        html: identityNumbers,
         actions: {}
     }) }}
 
@@ -368,7 +388,7 @@
           } if personalDetails.sexualOrientation
         ]
       }) }}
-      <p class="govuk-!-margin-top-2 govuk-!-margin-bottom-0"><a href="/case/{{ crn }}/handoff/delius">View more on Delius</a></p>
+      <p class="govuk-!-margin-top-2 govuk-!-margin-bottom-0"><a href="/case/{{ crn }}/handoff/delius">View more in NDelius</a></p>
     {% endset %}
 
     {{ appSummaryCard({

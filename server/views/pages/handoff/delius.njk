@@ -11,7 +11,8 @@
     },
     {
       text: personSummary.name | fullName,
-      href: "/case/" + crn
+      href: "/case/" + crn,
+      attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
     },
     {
       text: title
@@ -32,16 +33,16 @@
       <li>view certain information, such as previous orders or NSIs</li>
     </ul>
 
-    <h2 class="govuk-heading-m">Go directly to {{ case.personalDetails.name }} on Delius</h2>
+    <h2 class="govuk-heading-m">Go directly to {{ case.personalDetails.name }} in NDelius</h2>
 
     <p>
-      <a href="{{ deliusDeepLinkUrl('ContactList', personSummary.offenderId) }}" target="_blank">Open {{ personSummary.name | fullName }}’s contact log on Delius</a><br />
+      <a href="{{ deliusDeepLinkUrl('ContactList', personSummary.offenderId) }}" target="_blank">Open {{ personSummary.name | fullName }}’s contact log in NDelius</a><br />
       <span class="govuk-!-font-size-16">Link opens in a new window</span>
     </p>
 
-    <h2 class="govuk-heading-m">Go to the Delius homepage</h2>
+    <h2 class="govuk-heading-m">Go to the NDelius homepage</h2>
 
-    <p>Or you can use the following information to find {{ personSummary.name | fullName }} on Delius:</p>
+    <p>Or you can use the following information to find {{ personSummary.name | fullName }} in NDelius:</p>
 
     {{ govukSummaryList({
       rows: [
@@ -81,7 +82,7 @@
     }) }}
 
     <p>
-      <a href="{{ deliusHomepageUrl() }}" target="_blank">Open the Delius homepage</a><br />
+      <a href="{{ deliusHomepageUrl() }}" target="_blank">Open the NDelius homepage</a><br />
       <span class="govuk-!-font-size-16">Link opens in a new window</span>
     </p>
   </div>

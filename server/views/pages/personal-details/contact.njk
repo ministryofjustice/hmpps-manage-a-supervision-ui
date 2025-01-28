@@ -33,6 +33,10 @@
       <span data-qa="contactNameHeaderValue">{{ personalContact.name | fullName }}</span>
     </h1>
 
+    <p>
+      <a href="{{ deliusDeepLinkUrl('PersonalContacts', crn) }}" target="_blank">Change contact details on NDelius (opens in new tab)</a>
+    </p>
+
     {{ govukSummaryList({
       rows: [
         {
@@ -70,9 +74,6 @@
       ]
     }) }}
 
-    <p>
-      <a href="/case/{{ crn }}/handoff/delius">Change contact details</a>
-    </p>
 
     <p class="govuk-!-margin-bottom-0 govuk-!-margin-top-4 govuk-body-s govuk-hint-s">
       <span data-qa="lastUpdatedByValue">{{ lastUpdatedBy(personalContact.lastUpdated, personalContact.lastUpdatedBy)}}</span>

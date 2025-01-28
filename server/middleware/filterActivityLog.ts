@@ -15,9 +15,9 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
   const errors = req?.session?.errors
   let { compliance } = req.query
   const baseUrl = `/case/${crn}/activity-log`
-  compliance = compliance ? (Array.isArray(compliance) ? compliance : [compliance]) : []
+  compliance = compliance ? (Array.isArray(compliance) ? (compliance as string[]) : [compliance as string]) : []
   if (compliance?.length && clearFilterKey === 'compliance') {
-    compliance = compliance.filter(value => value !== clearFilterValue)
+    compliance = (compliance as string[]).filter(value => value !== clearFilterValue) as string[]
   }
   const complianceFilterOptions: Option[] = [
     { text: 'Without an outcome', value: 'no outcome' },

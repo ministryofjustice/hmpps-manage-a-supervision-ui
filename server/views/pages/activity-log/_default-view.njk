@@ -8,7 +8,7 @@
   {% endif %}
 
 
-  {% if entry.isAppointment or entry.isCommunication %}
+  {% if entry.isAppointment %}
     {% include "./_appointment-timeline-entry.njk" %}
   {% elseif entry.isCommunication %}
     {% include "./_communication-timeline-entry.njk" %}

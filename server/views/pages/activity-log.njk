@@ -79,7 +79,7 @@
     {% if personActivity.activities.length %}
     <div class="flex flex--space-between">
  {% include "./activity-log/_switch-views.njk" %}
- <p class="govuk-!-margin-bottom-0" data-qa="results-count">Showing results {{ resultsStart }} to {{ resultsEnd }} of {{ personActivity.totalResults }}</p>
+ <p class="govuk-!-margin-bottom-0" data-qa="results-count">Showing <span class="govuk-!-font-weight-bold" data-qa="results-count-start">{{ resultsStart }}</span> to <span class="govuk-!-font-weight-bold"  data-qa="results-count-end">{{ resultsEnd }}</span> of <span class="govuk-!-font-weight-bold" data-qa="results-count-total">{{ personActivity.totalResults }}</span> results</p>
  </div>
     {% set entries = activityLog(entries, category or 'all-previous-activity') %}
     {% if entries.length > 0 %}

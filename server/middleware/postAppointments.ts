@@ -20,7 +20,7 @@ const dateTime = (date: string, time: string): Date => {
   return new Date(year, month, day, newHour, minute, 0)
 }
 
-export const postAppointments = (hmppsAuthClient: HmppsAuthClient): Route<void> => {
+export const postAppointments = (hmppsAuthClient: HmppsAuthClient): Route<Promise<void>> => {
   return async (req, res, next) => {
     const { crn, id: uuid } = req.params
     const { username } = res.locals.user

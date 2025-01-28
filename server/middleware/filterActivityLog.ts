@@ -13,11 +13,12 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
   const { crn } = req.params
   const { keywords = '', dateFrom = '', dateTo = '', clearFilterKey, clearFilterValue } = req.query
   const errors = req?.session?.errors
-  let { compliance } = req.query
+  const { compliance: complianceQuery } = req.query
+  let compliance = complianceQuery as string[] | string
   const baseUrl = `/case/${crn}/activity-log`
-  compliance = compliance ? (Array.isArray(compliance) ? (compliance as string[]) : [compliance as string]) : []
+  compliance = compliance ? (Array.isArray(compliance) ? compliance : [compliance]) : []
   if (compliance?.length && clearFilterKey === 'compliance') {
-    compliance = (compliance as string[]).filter(value => value !== clearFilterValue) as string[]
+    compliance = compliance.filter(value => value !== clearFilterValue)
   }
   const complianceFilterOptions: Option[] = [
     { text: 'Without an outcome', value: 'no outcome' },
@@ -37,13 +38,13 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
 
   const getQueryString = (values: ActivityLogFilters | Record<string, string>): string => {
     const keys = [...Object.keys(filters)]
-    const queryStr = Object.entries(values)
+    const queryStr: string = Object.entries(values)
       .filter(([key, _value]) => keys.includes(key))
-      .reduce((acc, [key, value], i) => {
+      .reduce((acc, [key, value]: [string, string | string[]], i) => {
         if (value) {
           if (Array.isArray(value)) {
-            for (let j = 0; j < value.length; j += 1) {
-              acc = `${acc}${acc ? '&' : ''}${key}=${encodeURI(value[j] as string)}`
+            for (const val of value) {
+              acc = `${acc}${acc ? '&' : ''}${key}=${encodeURI(val)}`
             }
           } else {
             acc = `${acc}${i > 0 ? '&' : ''}${key}=${encodeURI(value as string)}`
@@ -57,14 +58,16 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
   const queryStr = getQueryString(req.query as Record<string, string>)
   const queryStrPrefix = queryStr ? '?' : ''
   const queryStrSuffix = queryStr ? '&' : '?'
+  const redirectQueryStr = getQueryString(filters)
 
   if (clearFilterKey) {
-    const redirectQueryStr = getQueryString(filters)
     return res.redirect(`${baseUrl}${redirectQueryStr ? `?${redirectQueryStr}` : ''}`)
   }
 
   const filterHref = (key: string, value: string): string =>
-    `${baseUrl}${queryStr ? `?${queryStr}&` : '?'}&clearFilterKey=${key}&clearFilterValue=${encodeURI(value)}`
+    queryStr
+      ? `${baseUrl}?${queryStr}&clearFilterKey=${key}&clearFilterValue=${encodeURI(value)}`
+      : `${baseUrl}?clearFilterKey=${key}&clearFilterValue=${encodeURI(value)}`
 
   const selectedFilterItems: SelectedFilterItem[] = Object.entries(filters)
     .filter(([_key, value]) => value)
@@ -116,10 +119,10 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
     queryStr,
     queryStrPrefix,
     queryStrSuffix,
-    keywords: filters.keywords as string,
-    compliance: filters.compliance as string[],
-    dateFrom: filters.dateFrom as string,
-    dateTo: filters.dateTo as string,
+    keywords: filters.keywords,
+    compliance: filters.compliance,
+    dateFrom: filters.dateFrom,
+    dateTo: filters.dateTo,
     maxDate,
   }
   res.locals.filters = filtersResponse

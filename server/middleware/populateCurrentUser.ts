@@ -2,7 +2,7 @@ import logger from '../../logger'
 import UserService from '../services/userService'
 import { Route } from '../@types'
 
-export default function populateCurrentUser(userService: UserService): Route<void> {
+export default function populateCurrentUser(userService: UserService): Route<Promise<void>> {
   return async (_req, res, next) => {
     try {
       if (res.locals.user) {

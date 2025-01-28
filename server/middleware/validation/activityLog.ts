@@ -10,7 +10,7 @@ const activityLog: Route<void> = (req, res, next) => {
   const { submit } = query
 
   const isValidFormat = (date: string): boolean => {
-    const regex = /^(?:[1-9]?)?[0-9]\/(?:[1-9]?)?[0-9]\/\d{4}$/
+    const regex = /^(?:[1-9]?)?\d\/(?:[1-9]?)?\d\/\d{4}$/
     return regex.test(date)
   }
 
@@ -93,7 +93,6 @@ const activityLog: Route<void> = (req, res, next) => {
       if (dateToIso < dateFromIso) {
         const text = properties.errorMessages['activity-log']['date-to'].errors.isBeforeFrom
         errors = utils.addError(errors, { text, anchor: 'dateTo' })
-        dateToIsValid = false
       }
     }
   }

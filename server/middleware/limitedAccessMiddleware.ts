@@ -1,4 +1,4 @@
-import type { NextFunction, Request, Response } from 'express'
+import type { NextFunction, Request } from 'express'
 import MasApiClient from '../data/masApiClient'
 import { Services } from '../services'
 import asyncMiddleware from './asyncMiddleware'

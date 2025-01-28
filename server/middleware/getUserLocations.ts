@@ -2,7 +2,7 @@ import { HmppsAuthClient } from '../data'
 import MasApiClient from '../data/masApiClient'
 import { Route } from '../@types'
 
-export const getUserLocations = (hmppsAuthClient: HmppsAuthClient): Route<void> => {
+export const getUserLocations = (hmppsAuthClient: HmppsAuthClient): Route<Promise<void>> => {
   return async (req, res, next) => {
     const { username } = res.locals.user
     const token = await hmppsAuthClient.getSystemClientToken(username)

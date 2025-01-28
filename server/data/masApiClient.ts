@@ -20,7 +20,7 @@ import { TeamCaseload, UserCaseload, UserTeam, UserLocations } from './model/cas
 import { ProfessionalContact } from './model/professionalContact'
 import { CaseAccess, UserAccess } from './model/caseAccess'
 import { LicenceConditionNoteDetails } from './model/licenceConditionNoteDetails'
-import { AppointmentRequestBody, ActivityLogFilters, ActivityLogRequestBody } from '../@types'
+import { AppointmentRequestBody, ActivityLogRequestBody } from '../@types'
 import { RequirementNoteDetails } from './model/requirementNoteDetails'
 
 export default class MasApiClient extends RestClient {

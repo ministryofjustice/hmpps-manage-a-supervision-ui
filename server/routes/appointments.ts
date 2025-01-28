@@ -7,7 +7,7 @@ import MasApiClient from '../data/masApiClient'
 import logger from '../../logger'
 import { ErrorMessages } from '../data/model/caseload'
 import TierApiClient from '../data/tierApiClient'
-import type { AppResponse, Route } from '../@types'
+import type { Route } from '../@types'
 
 export default function scheduleRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))

@@ -3,17 +3,15 @@
 import { type Router } from 'express'
 import { auditService } from '@ministryofjustice/hmpps-audit-client'
 import { v4 } from 'uuid'
-
 import { Query } from 'express-serve-static-core'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import { type Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import TierApiClient from '../data/tierApiClient'
 import validate from '../middleware/validation/index'
-import { toCamelCase, toISODate } from '../utils/utils'
 import { filterActivityLog } from '../middleware'
-import type { ActivityLogCache, ActivityLogRequestBody, AppResponse, Route } from '../@types'
-import { PersonActivity } from '../data/model/activityLog'
+import type { AppResponse, Route } from '../@types'
+import { getPersonActivity } from '../middleware/getPersonActivity'
 
 export default function activityLogRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
@@ -25,11 +23,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     async (req, res: AppResponse, _next) => {
       const { query, params } = req
       const { crn } = params
-      const { filters } = res.locals
       const { page = '0', view = '' } = query
-      const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
-      const masClient = new MasApiClient(token)
-      const tierClient = new TierApiClient(token)
 
       if (req.query.view === 'compact') {
         res.locals.compactView = true
@@ -39,50 +33,8 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       if (req.query.requirement) {
         res.locals.requirement = req.query.requirement as string
       }
-      const { keywords, dateFrom, dateTo, compliance } = filters
 
-      let personActivity: PersonActivity | null = null
-      let tierCalculation = null
-      if (req?.session?.cache?.activityLog) {
-        const cache: ActivityLogCache | undefined = req.session.cache.activityLog.find(
-          cacheItem =>
-            keywords === cacheItem.keywords &&
-            dateFrom === cacheItem.dateFrom &&
-            dateTo === cacheItem.dateTo &&
-            compliance.every(option => cacheItem.compliance.includes(option)) &&
-            cacheItem.compliance.length === compliance.length &&
-            parseInt(page as string, 10) === cacheItem.response.page,
-        )
-        if (cache) {
-          personActivity = cache.response
-        }
-      }
-      if (!personActivity) {
-        const body: ActivityLogRequestBody = {
-          keywords,
-          dateFrom: dateFrom ? toISODate(dateFrom) : '',
-          dateTo: dateTo ? toISODate(dateTo) : '',
-          filters: compliance ? compliance.map(option => toCamelCase(option as string)) : [],
-        }
-        ;[personActivity, tierCalculation] = await Promise.all([
-          masClient.postPersonActivityLog(crn, body, page as string),
-          tierClient.getCalculationDetails(crn),
-        ])
-        const newCache: ActivityLogCache[] = [
-          ...(req?.session?.cache?.activityLog || []),
-          {
-            keywords,
-            dateFrom,
-            dateTo,
-            compliance,
-            response: personActivity,
-          },
-        ]
-        req.session.cache = {
-          ...(req?.session?.cache || {}),
-          activityLog: newCache,
-        }
-      }
+      const [tierCalculation, personActivity] = await getPersonActivity(req, res, hmppsAuthClient)
 
       const queryParams = getQueryString(req.query)
       const currentPage = parseInt(page as string, 10)

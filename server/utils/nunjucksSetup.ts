@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import path from 'path'
 import nunjucks from 'nunjucks'
-import express, { Request, Response, NextFunction } from 'express'
+import express, { Request, NextFunction } from 'express'
 import {
   activityLog,
   activityLogDate,

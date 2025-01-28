@@ -2,7 +2,7 @@ import { HmppsAuthClient } from '../data'
 import MasApiClient from '../data/masApiClient'
 import { Route } from '../@types'
 
-export const getSentences = (hmppsAuthClient: HmppsAuthClient): Route<void> => {
+export const getSentences = (hmppsAuthClient: HmppsAuthClient): Route<Promise<void>> => {
   return async (req, res, next) => {
     const number = (req?.query?.number as string) || ''
     const crn = req.params.crn as string

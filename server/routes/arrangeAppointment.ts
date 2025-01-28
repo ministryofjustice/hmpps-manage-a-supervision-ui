@@ -1,4 +1,4 @@
-import { type RequestHandler, Router } from 'express'
+import { type Router } from 'express'
 import { DateTime } from 'luxon'
 import { v4 as uuidv4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'

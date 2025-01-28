@@ -1,4 +1,5 @@
 import { PersonActivity } from '../data/model/activityLog'
+import { TierCalculation } from '../data/tierApiClient'
 import type { Errors, Option } from './index'
 
 export interface ActivityLogFilters {
@@ -32,5 +33,6 @@ export interface ActivityLogFiltersResponse extends ActivityLogFilters {
 }
 
 export interface ActivityLogCache extends ActivityLogFilters {
-  response: PersonActivity
+  personActivity: PersonActivity
+  tierCalculation: TierCalculation
 }

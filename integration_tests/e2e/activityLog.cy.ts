@@ -139,7 +139,7 @@ context('Activity log', () => {
     page.getApplyFiltersButton().click()
     page.getSelectedFilterTags().should('have.length', 1)
     page.getSelectedFilterTag(1).should('contain.text', value)
-    page.getCardHeader('timeline1').should('contain.text', 'Phone call at 9:15am')
+    page.getCardHeader('timeline1').should('contain.text', 'Phone call from Eula Schmeler')
     page.getKeywordsInput().should('have.value', value)
   })
   it('should remove the tag, clear the keyword field and reset the list if the keyword tag is clicked', () => {
@@ -165,7 +165,7 @@ context('Activity log', () => {
     page.getDateToInput().should('have.value', toDate)
     page.getSelectedFilterTags().should('have.length', 1)
     page.getSelectedFilterTag(1).should('contain.text', `${fromDate} - ${toDate}`)
-    page.getCardHeader('timeline1').should('contain.text', 'Office appointment at 9:15am')
+    page.getCardHeader('timeline1').should('contain.text', 'Phone call from Eula Schmeler')
     cy.get('[data-qa="results-count"]').should('contain.text', 'Showing results 1 to 1 of 1')
   })
   it('should remove the tag, clear both date fields and reset the list if the date range tag is clicked', () => {
@@ -249,7 +249,7 @@ context('Activity log', () => {
     page.getComplianceFilter(3).click()
     page.getApplyFiltersButton().click()
     page.getSelectedFilterTags().should('have.length', 5)
-    page.getCardHeader('timeline1').should('contain.text', 'Phone call at 9:15am')
+    page.getCardHeader('timeline1').should('contain.text', 'Phone call from Eula Schmeler')
     cy.get('[data-qa="results-count"]').should('contain.text', 'Showing results 1 to 1 of 1')
     cy.get('.govuk-pagination').should('not.exist')
     cy.get('.moj-filter__heading-action a').click()

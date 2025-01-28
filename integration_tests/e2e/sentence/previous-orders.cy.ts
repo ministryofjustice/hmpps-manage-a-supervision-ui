@@ -14,7 +14,7 @@ context('Sentence', () => {
       .within(() => cy.get('td').eq(0).should('contain.text', 'Merchant Shipping Acts - 15000'))
     cy.get('table')
       .eq(0)
-      .within(() => cy.get('td').eq(1).should('contain.text', 'Ended on 9 Apr 2024'))
+      .within(() => cy.get('td').eq(1).should('contain.text', 'Ended on 9 April 2024'))
 
     cy.get('p')
       .eq(1)
@@ -27,6 +27,6 @@ context('Sentence', () => {
       .within(() => cy.get('td').eq(0).should('contain.text', 'Army - offences associated with - 15300'))
     cy.get('table')
       .eq(1)
-      .within(() => cy.get('td').eq(1).should('contain.text', 'Ended on 8 Apr 2024'))
+      .within(() => cy.get('td').eq(1).should('contain.text', 'Ended on 8 April 2024'))
   })
 })

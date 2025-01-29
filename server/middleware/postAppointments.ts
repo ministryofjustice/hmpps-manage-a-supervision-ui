@@ -1,11 +1,10 @@
-import { NextFunction, Request, Response } from 'express'
 import { HmppsAuthClient } from '../data'
 import MasApiClient from '../data/masApiClient'
 import { getDataValue } from '../utils/utils'
 import properties from '../properties'
 import { Sentence } from '../data/model/sentenceDetails'
 import { UserLocation } from '../data/model/caseload'
-import { AppointmentRequestBody } from '../@types'
+import { AppointmentRequestBody, Route } from '../@types'
 
 const dateTime = (date: string, time: string): Date => {
   const isPm = time.includes('pm')
@@ -21,8 +20,8 @@ const dateTime = (date: string, time: string): Date => {
   return new Date(year, month, day, newHour, minute, 0)
 }
 
-export const postAppointments = (hmppsAuthClient: HmppsAuthClient) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+export const postAppointments = (hmppsAuthClient: HmppsAuthClient): Route<Promise<void>> => {
+  return async (req, res, next) => {
     const { crn, id: uuid } = req.params
     const { username } = res.locals.user
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)

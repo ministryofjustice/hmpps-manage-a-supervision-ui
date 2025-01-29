@@ -1,10 +1,11 @@
-import type { NextFunction, Request, Response } from 'express'
+import type { NextFunction, Request } from 'express'
 import MasApiClient from '../data/masApiClient'
 import { Services } from '../services'
 import asyncMiddleware from './asyncMiddleware'
+import { AppResponse } from '../@types'
 
 export default function limitedAccess(services: Services) {
-  return asyncMiddleware(async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  return asyncMiddleware(async (req: Request, res: AppResponse, next: NextFunction): Promise<void> => {
     const token = await services.hmppsAuthClient.getSystemClientToken()
     const access = await new MasApiClient(token).getUserAccess(res.locals.user.username, req.params.crn)
 

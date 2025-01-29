@@ -1,4 +1,13 @@
-const ruleKeys = ['isInvalid', 'isEmpty', 'isMoreThanAYear'] as const
+const ruleKeys = [
+  'isInvalid',
+  'isEmpty',
+  'isMoreThanAYear',
+  'isNotReal',
+  'isIncomplete',
+  'isInFuture',
+  'isAfterTo',
+  'isBeforeFrom',
+] as const
 const appointmentsKeys = [
   'type',
   'sentence',
@@ -15,12 +24,23 @@ const appointmentsKeys = [
 type Rule = (typeof ruleKeys)[number]
 type AppointmentInput = (typeof appointmentsKeys)[number]
 
+const activityLogKeys = ['date-from', 'date-to']
+type ActivityLogInput = (typeof activityLogKeys)[number]
+
 interface ErrorMessages {
   appointments: {
     [key in AppointmentInput]: {
       log: string
       errors: {
         [ruleKey in Rule]?: string
+      }
+    }
+  }
+  'activity-log': {
+    [key in ActivityLogInput]: {
+      log: string
+      errors: {
+        [rule in Rule]?: string
       }
     }
   }
@@ -95,6 +115,29 @@ const errorMessages: ErrorMessages = {
         isEmpty: 'Enter the number of times the appointment will repeat',
         isInvalid: 'Enter a number',
         isMoreThanAYear: 'The appointment can only repeat up to a year',
+      },
+    },
+  },
+  'activity-log': {
+    'date-from': {
+      log: 'Activity log date from no entered',
+      errors: {
+        isEmpty: 'Enter or select a from date',
+        isInvalid: 'Enter a date in the correct format, for example 17/5/2024',
+        isNotReal: 'Enter a real date',
+        isIncomplete: 'Enter a full date, for example 17/5/2024',
+        isInFuture: 'The from date must be today or in the past',
+        isAfterTo: 'The from date must be on or before the to date',
+      },
+    },
+    'date-to': {
+      log: 'Activity log date from no entered',
+      errors: {
+        isEmpty: 'Enter or select a to date',
+        isInvalid: 'Enter a date in the correct format, for example 17/5/2024',
+        isNotReal: 'Enter a real date',
+        isIncomplete: 'Enter a full date, for example 17/5/2024',
+        isInFuture: 'The to date must be today or in the past',
       },
     },
   },

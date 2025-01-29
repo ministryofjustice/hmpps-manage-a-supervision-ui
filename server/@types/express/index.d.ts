@@ -1,7 +1,7 @@
 import type { UserDetails } from '../../services/userService'
 import { Errors } from '../Errors.type'
 import { UserLocations } from '../../data/model/caseload'
-import { Data } from '../index'
+import { ActivityLogCache, Data } from '../index'
 
 export default {}
 
@@ -16,6 +16,10 @@ declare module 'express-session' {
     sortBy: string
     caseFilter: CaseFilter
     data?: Data
+    errors?: Errors
+    cache?: {
+      activityLog: ActivityLogCache[]
+    }
   }
 
   interface CaseFilter {

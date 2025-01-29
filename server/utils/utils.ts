@@ -4,7 +4,7 @@ import { DateTime } from 'luxon'
 import slugify from 'slugify'
 import getKeypath from 'lodash/get'
 import setKeypath from 'lodash/set'
-import { Request, Response } from 'express'
+import { Request } from 'express'
 import { Need, RiskScore, RiskSummary, RiskToSelf } from '../data/arnsApiClient'
 import { ErrorSummary, Name } from '../data/model/common'
 import { Address } from '../data/model/personalDetails'
@@ -13,6 +13,7 @@ import { Activity } from '../data/model/schedule'
 import { CaseSearchFilter, SelectElement } from '../data/model/caseload'
 import { RecentlyViewedCase, UserAccess } from '../data/model/caseAccess'
 import { RiskScoresDto, RoshRiskWidgetDto, TimelineItem } from '../data/model/risk'
+import type { AppResponse } from '../@types'
 
 interface Item {
   checked?: string
@@ -98,6 +99,10 @@ export const dateWithYearShortMonth = (datetimeString: string): string => {
 export const toDate = (datetimeString: string): DateTime => {
   if (!datetimeString || isBlank(datetimeString)) return null
   return DateTime.fromISO(datetimeString)
+}
+
+export const toISODate = (datetimeString: any) => {
+  return DateTime.fromFormat(datetimeString, 'd/M/yyyy').toFormat('yyyy-MM-dd')
 }
 
 export const dateWithYearShortMonthAndTime = (datetimeString: string): string => {
@@ -519,7 +524,7 @@ export const setDataValue = (data: any, sections: any, value: any) => {
   return setKeypath(data, path.map((s: any) => `["${s}"]`).join(''), value)
 }
 
-export const decorateFormAttributes = (req: Request, res: Response) => (obj: any, sections?: string[]) => {
+export const decorateFormAttributes = (req: Request, res: AppResponse) => (obj: any, sections?: string[]) => {
   const newObj = obj
   const { data } = req.session as any
   let storedValue = getDataValue(data, sections)
@@ -669,6 +674,16 @@ export const toRoshWidget = (roshSummary: RiskSummary): RoshRiskWidgetDto => {
     riskInCommunity,
     riskInCustody,
   }
+}
+
+export const toCamelCase = (str: string): string => {
+  return str
+    .replace('-', ' ')
+    .split(' ')
+    .map((word, i) => {
+      return i > 0 ? `${word.slice(0, 1).toUpperCase()}${word.slice(1).toLowerCase()}` : word.toLowerCase()
+    })
+    .join('')
 }
 
 export const toPredictors = (predictors: RiskScoresDto[] | ErrorSummary | null): TimelineItem => {

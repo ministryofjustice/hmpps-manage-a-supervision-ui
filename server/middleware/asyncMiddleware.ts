@@ -1,7 +1,8 @@
-import type { Request, Response, NextFunction, RequestHandler } from 'express'
+import type { Request, NextFunction, RequestHandler } from 'express'
+import { AppResponse } from '../@types'
 
 export default function asyncMiddleware(fn: RequestHandler) {
-  return (req: Request, res: Response, next: NextFunction): void => {
+  return (req: Request, res: AppResponse, next: NextFunction): void => {
     Promise.resolve(fn(req, res, next)).catch(next)
   }
 }

@@ -8,6 +8,7 @@ context('Sentence', () => {
     const page = Page.verifyOnPage(SentencePage)
     page.headerCrn().should('contain.text', 'X000001')
     page.headerName().should('contain.text', 'Caroline Wolff')
+
     cy.get('[data-qa=pageHeading]').eq(0).should('contain.text', 'Sentence')
 
     cy.get(`[class=predictor-timeline-item__level]`)

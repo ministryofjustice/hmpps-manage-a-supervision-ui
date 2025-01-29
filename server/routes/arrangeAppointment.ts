@@ -1,4 +1,4 @@
-import { type RequestHandler, Router } from 'express'
+import { type Router } from 'express'
 import { DateTime } from 'luxon'
 import { v4 as uuidv4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'
@@ -17,12 +17,13 @@ import { ArrangedSession } from '../models/ArrangedSession'
 import { postAppointments } from '../middleware/postAppointments'
 import properties from '../properties'
 import { getTimeOptions } from '../middleware/getTimeOptions'
+import type { AppResponse, Route } from '../@types'
 
 const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Services) => {
-  const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
+  const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
 
-  router.all('/case/:crn/arrange-appointment/:id/*', (req, res, next) => {
-    res.locals.change = req.query.change
+  router.all('/case/:crn/arrange-appointment/:id/*', (req, res: AppResponse, next) => {
+    res.locals.change = req.query.change as string
     return next()
   })
   get('/case/:crn/arrange-appointment/type', async (req, res, _next) => {
@@ -30,7 +31,7 @@ const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Ser
     const { crn } = req.params
     return res.redirect(`/case/${crn}/arrange-appointment/${id}/type`)
   })
-  router.all('/case/:crn/arrange-appointment/:id/type', (_req, res, next) => {
+  router.all('/case/:crn/arrange-appointment/:id/type', (_req, res: AppResponse, next) => {
     res.locals.appointmentTypes = properties.appointmentTypes
     return next()
   })
@@ -144,7 +145,7 @@ const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Ser
   router.get(
     '/case/:crn/arrange-appointment/:id/repeating',
     redirectWizard(['type', 'sentence', 'location', 'date']),
-    async (req, res, _next) => {
+    async (req, res: AppResponse, _next) => {
       const { data } = req.session
       const { crn, id } = req.params
       const { 'repeating-frequency': repeatingFrequency, 'repeating-count': repeatingCount } = req.query
@@ -205,7 +206,7 @@ const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Ser
     '/case/:crn/arrange-appointment/:id/check-your-answers',
     redirectWizard(['type', 'sentence', 'location', 'date', 'repeating']),
     getUserLocations(hmppsAuthClient),
-    async (req, res, _next) => {
+    async (req, res: AppResponse, _next) => {
       const { params, url } = req
       const { crn, id } = params
       const { data } = req.session
@@ -236,7 +237,7 @@ const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient }: Ser
       return res.render(`pages/arrange-appointment/confirmation`)
     },
   )
-  router.post('/case/:crn/arrange-appointment/:id/confirmation', async (req, res, _next) => {
+  router.post('/case/:crn/arrange-appointment/:id/confirmation', async (_req, res, _next) => {
     return res.redirect('/')
   })
 }

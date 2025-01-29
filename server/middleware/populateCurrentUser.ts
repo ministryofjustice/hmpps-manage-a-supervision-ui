@@ -1,9 +1,9 @@
-import { RequestHandler } from 'express'
 import logger from '../../logger'
 import UserService from '../services/userService'
+import { Route } from '../@types'
 
-export default function populateCurrentUser(userService: UserService): RequestHandler {
-  return async (req, res, next) => {
+export default function populateCurrentUser(userService: UserService): Route<Promise<void>> {
+  return async (_req, res, next) => {
     try {
       if (res.locals.user) {
         const user = res.locals.user && (await userService.getUser(res.locals.user.token))

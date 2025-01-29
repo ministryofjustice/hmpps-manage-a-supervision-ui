@@ -5,6 +5,7 @@ import flash from 'connect-flash'
 import * as Sentry from '@sentry/node'
 import config from '../config'
 import auth from '../authentication/auth'
+import { AppResponse } from '../@types'
 
 const router = express.Router()
 
@@ -46,7 +47,7 @@ export default function setUpAuth(): Router {
     res.redirect(`${authUrl}/account-details?${authParameters}`)
   })
 
-  router.use((req, res, next) => {
+  router.use((req, res: AppResponse, next) => {
     if (req.isAuthenticated()) Sentry.setUser({ username: req.user.username })
     res.locals.user = req.user
     next()

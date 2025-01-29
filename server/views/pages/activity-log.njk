@@ -1,5 +1,6 @@
 {% extends "../partials/case.njk" %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 {% set pageTitle = applicationName + " - Activity log" %}
 {% set currentNavSection = 'timeline' %}
 {% set currentSectionName = 'Activity log' %}
@@ -28,6 +29,10 @@
         }
       ]
     }) }}
+     {% if filters.errors %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+ {{ govukErrorSummary({ titleText: "There is a problem", errorList: filters.errors.errorList }) }}
+{% endif %}
 {% endblock %}
 
 {% switch category %}
@@ -71,7 +76,11 @@
         {{ title }}
       </h2>
     {% endif %}
-    {% include "./activity-log/_switch-views.njk" %}
+    {% if personActivity.activities.length %}
+    <div class="flex flex--space-between">
+ {% include "./activity-log/_switch-views.njk" %}
+ <p class="govuk-!-margin-bottom-0" data-qa="results-count">Showing <span class="govuk-!-font-weight-bold" data-qa="results-count-start">{{ resultsStart }}</span> to <span class="govuk-!-font-weight-bold"  data-qa="results-count-end">{{ resultsEnd }}</span> of <span class="govuk-!-font-weight-bold" data-qa="results-count-total">{{ personActivity.totalResults }}</span> results</p>
+ </div>
     {% set entries = activityLog(entries, category or 'all-previous-activity') %}
     {% if entries.length > 0 %}
       {% if compactView %}
@@ -82,6 +91,27 @@
     {% else %}
       <p class="govuk-!-margin-top-4">{{ emptyText }}</p>
     {% endif %}
+
+{% if personActivity.totalPages > 1 %}
+<div class="govuk-!-margin-top-8">
+ {{ appPagination({
+  currentPage: query.page | int,
+  totalPages: personActivity.totalPages,
+  url: filters.baseUrl + filters.queryStrPrefix + filters.queryStr + filters.queryStrSuffix + 'view=' + view + '&'
+  }) }}
+</div>
+{% endif %}
+{% else %}
+<div data-qa="no-results">
+<h3 class="govuk-heading-s">0 search results found</h3>
+<p>Improve your search by:</p>
+<ul class="govuk-list govuk-list--bullet">
+<li>removing filters</li>
+<li>double-checking the spelling</li>
+<li>removing special characters like characters and accent letters</li>
+</ul>
+</div>
+{% endif %}
   </div>
 </div>
 {% endblock %}

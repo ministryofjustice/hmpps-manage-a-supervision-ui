@@ -1,14 +1,9 @@
-import { Route } from '../@types'
-
-interface Item {
-  text: string
-  value?: string
-}
+import { Route, Option } from '../@types'
 
 export const getTimeOptions: Route<void> = (_req, res, next) => {
   const startHour = 9
   const endHour = 16
-  const timeOptions: Item[] = [{ text: 'Choose time', value: '' }]
+  const timeOptions: Option[] = [{ text: 'Choose time', value: '' }]
   for (let i = startHour; i <= endHour; i += 1) {
     const hour = i > 12 ? i - 12 : i
     const suffix = i >= 12 ? 'pm' : 'am'

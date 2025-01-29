@@ -34,11 +34,13 @@ import {
   timeFromTo,
   toYesNo,
   yearsSince,
+  makePageTitle,
 } from './utils'
 import { RiskResponse, RiskScore, RiskToSelf } from '../data/arnsApiClient'
 import { Name } from '../data/model/common'
 import { Activity } from '../data/model/schedule'
 import { RecentlyViewedCase, UserAccess } from '../data/model/caseAccess'
+import config from '../config'
 
 const appointments = [
   {
@@ -485,5 +487,21 @@ describe('update lao access in local storage', () => {
   ])('%s checkRecentlyViewedAccess(%s, %s)', (_: string, a: RecentlyViewedCase[], b: UserAccess, expected: boolean) => {
     const result = checkRecentlyViewedAccess(a, b)
     expect(result[0].limitedAccess).toEqual(expected)
+  })
+})
+
+describe('makePageTitle()', () => {
+  it('should format the title correctly if heading is a single string value', () => {
+    expect(makePageTitle({ pageHeading: 'Home' })).toEqual(`Home - ${config.applicationName}`)
+  })
+  it('should format the title correctly if heading is an array containing two values', () => {
+    expect(makePageTitle({ pageHeading: ['Contact', 'Personal details'] })).toEqual(
+      `Contact - Personal details - ${config.applicationName}`,
+    )
+  })
+  it('should format the title correctly if heading is an array containing three values', () => {
+    expect(makePageTitle({ pageHeading: ['Contact', 'Sentence', 'Licence condition'] })).toEqual(
+      `Contact - Sentence - Licence condition - ${config.applicationName}`,
+    )
   })
 })

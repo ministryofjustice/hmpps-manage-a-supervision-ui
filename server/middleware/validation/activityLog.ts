@@ -42,6 +42,13 @@ const activityLog: Route<void> = (req, res, next) => {
     }
   }
 
+  const isEmpty = (nameProp: string, dateVal: string): void => {
+    const text = properties.errorMessages['activity-log'][nameProp].errors.isEmpty
+    const name = toCamelCase(nameProp)
+    errors = utils.addError(errors, { text, anchor: name })
+    isValid[name] = false
+  }
+
   const isDateInFuture = (nameProp: string, dateVal: string): void => {
     const dateFromIso = getIsoDate(dateVal)
     const today = DateTime.now()
@@ -85,7 +92,7 @@ const activityLog: Route<void> = (req, res, next) => {
       errors = utils.addError(errors, { text, anchor: 'dateTo' })
       isValid.dateTo = false
     }
-    if (dateFrom && isValid.dateFrom && dateIsValid('dateTo')) {
+    if (dateIsValid('dateFrom') && dateIsValid('dateTo')) {
       const dateFromIso = getIsoDate(dateFrom)
       const dateToIso = getIsoDate(dateTo)
       if (dateFromIso > dateToIso) {

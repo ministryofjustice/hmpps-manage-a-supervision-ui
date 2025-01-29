@@ -33,30 +33,27 @@ const activityLog: Route<void> = (req, res, next) => {
   }
 
   const isRealDate = (nameProp: string, dateVal: string): void => {
-    const dateToIso = getIsoDate(dateVal)
-    if (!dateToIso.isValid) {
-      const text = properties.errorMessages['activity-log'][nameProp].errors.isNotReal
-      const name = toCamelCase(nameProp)
-      errors = utils.addError(errors, { text, anchor: name })
-      isValid[name] = false
+    const name = toCamelCase(nameProp)
+    if (isValid[name] && req?.query?.[name]) {
+      const dateToIso = getIsoDate(dateVal)
+      if (!dateToIso.isValid) {
+        const text = properties.errorMessages['activity-log'][nameProp].errors.isNotReal
+        errors = utils.addError(errors, { text, anchor: name })
+        isValid[name] = false
+      }
     }
   }
 
-  const isEmpty = (nameProp: string, dateVal: string): void => {
-    const text = properties.errorMessages['activity-log'][nameProp].errors.isEmpty
-    const name = toCamelCase(nameProp)
-    errors = utils.addError(errors, { text, anchor: name })
-    isValid[name] = false
-  }
-
   const isDateInFuture = (nameProp: string, dateVal: string): void => {
-    const dateFromIso = getIsoDate(dateVal)
-    const today = DateTime.now()
-    if (dateFromIso > today) {
-      const text = properties.errorMessages['activity-log'][nameProp].errors.isInFuture
-      const name = toCamelCase(nameProp)
-      errors = utils.addError(errors, { text, anchor: name })
-      isValid[name] = false
+    const name = toCamelCase(nameProp)
+    if (isValid[name] && req?.query?.[name]) {
+      const dateFromIso = getIsoDate(dateVal)
+      const today = DateTime.now()
+      if (dateFromIso > today) {
+        const text = properties.errorMessages['activity-log'][nameProp].errors.isInFuture
+        errors = utils.addError(errors, { text, anchor: name })
+        isValid[name] = false
+      }
     }
   }
 
@@ -64,20 +61,11 @@ const activityLog: Route<void> = (req, res, next) => {
 
   const validateDateRanges = (): void => {
     isValidDateFormat('date-from', dateFrom)
-
-    if (isValid.dateFrom && dateFrom) {
-      isRealDate('date-from', dateFrom)
-    }
-    if (isValid.dateFrom && dateFrom) {
-      isDateInFuture('date-from', dateFrom)
-    }
-
+    isRealDate('date-from', dateFrom)
+    isDateInFuture('date-from', dateFrom)
     isValidDateFormat('date-to', dateTo)
-
-    if (isValid.dateTo && dateTo) {
-      isRealDate('date-to', dateTo)
-    }
-    if (isValid.dateTo && dateTo) {
+    isRealDate('date-to', dateTo)
+    if (dateIsValid('dateTo')) {
       isDateInFuture('date-to', dateTo)
     }
     if (!dateFrom && dateIsValid('dateTo')) {

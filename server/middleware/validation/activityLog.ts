@@ -33,7 +33,7 @@ const activityLog: Route<void> = (req, res, next) => {
   }
 
   const isRealDate = (nameProp: string, dateVal: string): void => {
-    const dateToIso = getIsoDate(dateVal as string)
+    const dateToIso = getIsoDate(dateVal)
     if (!dateToIso.isValid) {
       const text = properties.errorMessages['activity-log'][nameProp].errors.isNotReal
       const name = toCamelCase(nameProp)
@@ -43,7 +43,7 @@ const activityLog: Route<void> = (req, res, next) => {
   }
 
   const isDateInFuture = (nameProp: string, dateVal: string): void => {
-    const dateFromIso = getIsoDate(dateVal as string)
+    const dateFromIso = getIsoDate(dateVal)
     const today = DateTime.now()
     if (dateFromIso > today) {
       const text = properties.errorMessages['activity-log'][nameProp].errors.isInFuture
@@ -52,6 +52,8 @@ const activityLog: Route<void> = (req, res, next) => {
       isValid[name] = false
     }
   }
+
+  const dateIsValid = (dateName: string) => req?.query?.[dateName] && isValid[dateName]
 
   const validateDateRanges = (): void => {
     isValidDateFormat('date-from', dateFrom)
@@ -71,21 +73,21 @@ const activityLog: Route<void> = (req, res, next) => {
     if (isValid.dateTo && dateTo) {
       isDateInFuture('date-to', dateTo)
     }
-    if (!dateFrom && dateTo && isValid.dateTo) {
+    if (!dateFrom && dateIsValid('dateTo')) {
       logger.info(properties.errorMessages['activity-log']['date-from'].log)
       const text = properties.errorMessages['activity-log']['date-from'].errors.isEmpty
       errors = utils.addError(errors, { text, anchor: 'dateFrom' })
       isValid.dateFrom = false
     }
-    if (!dateTo && dateFrom && isValid.dateFrom) {
+    if (!dateTo && dateIsValid('dateFrom')) {
       logger.info(properties.errorMessages['activity-log']['date-to'].log)
       const text = properties.errorMessages['activity-log']['date-to'].errors.isEmpty
       errors = utils.addError(errors, { text, anchor: 'dateTo' })
       isValid.dateTo = false
     }
-    if (dateFrom && isValid.dateFrom && dateTo && isValid.dateTo) {
-      const dateFromIso = getIsoDate(dateFrom as string)
-      const dateToIso = getIsoDate(dateTo as string)
+    if (dateFrom && isValid.dateFrom && dateIsValid('dateTo')) {
+      const dateFromIso = getIsoDate(dateFrom)
+      const dateToIso = getIsoDate(dateTo)
       if (dateFromIso > dateToIso) {
         const text = properties.errorMessages['activity-log']['date-from'].errors.isAfterTo
         errors = utils.addError(errors, { text, anchor: 'dateFrom' })

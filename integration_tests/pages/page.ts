@@ -64,6 +64,10 @@ export default abstract class Page {
       .within(() => cy.get('a').invoke('attr', 'href').should('equal', value))
   }
 
+  assertTextElementAtIndex = (element: string, index: number, value: string) => {
+    cy.get(element).eq(index).should('contain.text', value)
+  }
+
   assertTextAtAnchorElementAtIndex = (element: string, index: number, value: string) => {
     cy.get(element)
       .eq(index)

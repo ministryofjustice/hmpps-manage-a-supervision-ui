@@ -30,13 +30,13 @@
 
     {% set offence = offences.mainOffence %}
     {% set mainOffence = true %}
-    {% include './_sentence-offence.njk' %}
+    {% include './_offence.njk' %}
 
     {% set mainOffence = false %}
     {% if offences.additionalOffences and offences.additionalOffences.length > 0 %}
       <h2 class="govuk-heading-l govuk-!-margin-top-8">Additional offences</h2>
       {% for offence in offences.additionalOffences %}
-        {% include './_sentence-offence.njk' %}
+        {% include './_offence.njk' %}
       {% endfor %}
     {% endif %}
 {% endblock %}

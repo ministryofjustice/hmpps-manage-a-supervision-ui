@@ -5,7 +5,9 @@ context('Sentence', () => {
 
     cy.get('p')
       .eq(0)
-      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/handoff/delius'))
+      .within(() =>
+        cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence/previous-orders/sentence/3'),
+      )
     cy.get('p')
       .eq(0)
       .within(() => cy.get('a').should('contain.text', 'CJA - Std Determinate Custody (16 Months)'))
@@ -18,7 +20,9 @@ context('Sentence', () => {
 
     cy.get('p')
       .eq(1)
-      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/handoff/delius'))
+      .within(() =>
+        cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence/previous-orders/sentence/2'),
+      )
     cy.get('p')
       .eq(1)
       .within(() => cy.get('a').should('contain.text', 'CJA - Std Determinate Custody (12 Months)'))

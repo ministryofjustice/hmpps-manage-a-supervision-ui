@@ -52,10 +52,13 @@
     <nav class="moj-primary-navigation" aria-label="Primary navigation">
       <ul class="moj-primary-navigation__list">
         <li class="moj-primary-navigation__item">
-          <a class="moj-primary-navigation__link" {% if myCases %}aria-current="cases"{% endif %} href="/case">My cases</a>
+          <a class="moj-primary-navigation__link" {% if home %}aria-current="home"{% endif %} href="/">Home</a>
         </li>
         <li class="moj-primary-navigation__item">
-          <a class="moj-primary-navigation__link" {% if search %}aria-current="page"{% endif %} href="/search">Search</a>
+          <a class="moj-primary-navigation__link" {% if cases %}aria-current="cases"{% endif %} href="/case">Cases</a>
+        </li>
+        <li class="moj-primary-navigation__item">
+          <a class="moj-primary-navigation__link" {% if search %}aria-current="search"{% endif %} href="/search">Search</a>
         </li>
       </ul>
     </nav>

@@ -18,7 +18,7 @@
                 href: "/case/" + crn + "/sentence"
             },
             {
-                text: "Previous Orders",
+                text: "Previous orders",
                 href: "/case/" + crn + "/sentence/previous-orders"
             }
         ]
@@ -26,12 +26,12 @@
 {% endblock %}
 {% block content %}
     <div class="govuk-!-margin-bottom-0">
-        <h2 class="govuk-caption-l">Previous orders</h2>
+        <h2 class="govuk-caption-l" data-qa="pageHeading">Previous orders</h2>
     </div>
 
     {% set sentence = previousOrderDetail.sentence %}
     {% if sentence %}
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-4"  data-qa="pageHeading">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-4">
             {{ previousOrderDetail.title }}
         </h2>
         {% include '../_sentence-offence.njk' %}

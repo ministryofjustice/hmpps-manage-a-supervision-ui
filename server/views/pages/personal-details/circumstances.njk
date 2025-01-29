@@ -1,6 +1,6 @@
 {% extends "../../partials/layout.njk" %}
 {% set title = 'Personal circumstances' %}
-{% block pageTitle %}{{ title }}{% endblock %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Contact", "Personal details", "Personal circumstances"] }) %}
 
 {% block beforeContent %}
 {{ govukBreadcrumbs({

@@ -511,8 +511,10 @@ export const hasValue = (val: unknown) => {
   return isNotNull(val) && isDefined(val)
 }
 
-export const makePageTitle = ({ pageHeading, hasErrors }: { pageHeading: string; hasErrors: boolean }) =>
-  `${hasErrors ? 'Error: ' : ''}${pageHeading} - ${config.applicationName}`
+export const makePageTitle = ({ pageHeading }: { pageHeading: string | string[] }): string => {
+  const titles = !Array.isArray(pageHeading) ? [pageHeading] : pageHeading
+  return `${titles.join(' - ')} - ${config.applicationName}`
+}
 
 export const getDataValue = (data: any, sections: any) => {
   const path = Array.isArray(sections) ? sections : [sections]

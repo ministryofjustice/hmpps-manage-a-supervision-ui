@@ -1,6 +1,6 @@
 {% extends "../partials/layout.njk" %}
 
-{% set pageTitle = applicationName + " - Home" %}
+{% set pageTitle = makePageTitle({ pageHeading: "Home" }) %}
 {% set mainClasses = "app-container govuk-body" %}
 
 {% block content %}

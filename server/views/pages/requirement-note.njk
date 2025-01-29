@@ -1,5 +1,5 @@
 {% extends "../partials/case.njk" %}
-{% set pageTitle = applicationName + " - Sentence Details" %}
+{% set pageTitle = makePageTitle({ pageHeading: "Sentence details" }) %}
 {% set currentNavSection = 'sentence' %}
 {% set currentSectionName = 'Sentence' %}
 {% set headerPersonName = requirementNoteDetails.personSummary.name.forename + ' ' + requirementNoteDetails.personSummary.name.surname %}

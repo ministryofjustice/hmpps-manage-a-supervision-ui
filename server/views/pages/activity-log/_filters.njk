@@ -18,7 +18,7 @@
         'data-qa': 'keywords'
       }
     },
-    value: query.keywords
+    value: filters.query.keywords
   }) }}
 {{ mojDatePicker({
   id: "dateFrom",
@@ -33,7 +33,7 @@
         'data-qa': 'date-from'
       }
     },
-    value: query.dateFrom,
+    value: filters.query.dateFrom,
     maxDate: filters.maxDate,
      errorMessage: {
       text: filters.errors.errorMessages.dateFrom.text
@@ -52,7 +52,7 @@
         'data-qa': 'date-to'
       }
   },
-  value: query.dateTo,
+  value: filters.query.dateTo,
   maxDate: filters.maxDate,
   errorMessage: {
     text: filters.errors.errorMessages.dateTo.text

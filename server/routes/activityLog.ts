@@ -73,7 +73,6 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
         risksWidget,
         predictorScores,
         url: req.url,
-        query,
         resultsStart,
         resultsEnd,
       })

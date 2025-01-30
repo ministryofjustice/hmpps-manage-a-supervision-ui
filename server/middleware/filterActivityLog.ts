@@ -1,7 +1,14 @@
 /* eslint-disable no-param-reassign */
 
 import { DateTime } from 'luxon'
-import { Route, ActivityLogFilters, ActivityLogFiltersResponse, SelectedFilterItem, Option } from '../@types'
+import {
+  Route,
+  ActivityLogCacheItem,
+  ActivityLogFilters,
+  ActivityLogFiltersResponse,
+  SelectedFilterItem,
+  Option,
+} from '../@types'
 
 export const filterActivityLog: Route<void> = (req, res, next) => {
   if (req?.query?.submit) {
@@ -10,13 +17,51 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
     return res.redirect(url)
   }
   const { crn } = req.params
-  const { keywords = '', dateFrom = '', dateTo = '', clearFilterKey, clearFilterValue } = req.query
-  const errors = req?.session?.errors
-  const { compliance: complianceQuery = [] } = req.query
+  const {
+    keywords = '',
+    dateFrom = '',
+    dateTo = '',
+    clearFilterKey,
+    clearFilterValue,
+  } = req.query as { [key: string]: string }
+
+  const { compliance: complianceQuery = [] } = req.query as { [key: string]: string | string[] }
+
   let compliance = complianceQuery as string[] | string
-  const baseUrl = `/case/${crn}/activity-log`
+
   if (!Array.isArray(compliance)) {
     compliance = [compliance]
+  }
+
+  let query: ActivityLogFilters = { keywords, dateFrom, dateTo, compliance }
+  const hasQuery = keywords || (dateFrom && dateTo) || compliance?.length
+  // if not submitted and no query values exist, then attempt to hydrate from cache
+
+  if (req?.session?.cache?.activityLog?.filters && !req?.query?.submit && !hasQuery) {
+    query = req?.session?.cache?.activityLog?.filters
+  } else if (hasQuery) {
+    query = {
+      keywords,
+      dateFrom,
+      dateTo,
+      compliance,
+    }
+    req.session.cache = {
+      ...(req?.session?.cache || {}),
+      activityLog: {
+        ...(req?.session?.cache?.activityLog || {}),
+        filters: query,
+      },
+    }
+  }
+  query = { ...query, clearFilterKey, clearFilterValue }
+
+  console.log(query)
+  const errors = req?.session?.errors
+
+  const baseUrl = `/case/${crn}/activity-log`
+  if (!Array.isArray(query.compliance)) {
+    query.compliance = [query.compliance]
   }
   if (compliance?.length && clearFilterKey === 'compliance') {
     compliance = compliance.filter(value => value !== clearFilterValue)
@@ -27,14 +72,16 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
     { text: 'Not complied', value: 'not complied' },
   ]
   const filters: ActivityLogFilters = {
-    keywords: keywords && clearFilterKey !== 'keywords' ? (keywords as string) : '',
+    keywords: query.keywords && query.clearFilterKey !== 'keywords' ? query.keywords : '',
     dateFrom:
-      dateFrom && dateTo && !errors?.errorMessages?.dateFrom && clearFilterKey !== 'dateRange'
-        ? (dateFrom as string)
+      query.dateFrom && query.dateTo && !errors?.errorMessages?.dateFrom && query.clearFilterKey !== 'dateRange'
+        ? query.dateFrom
         : '',
     dateTo:
-      dateTo && dateFrom && !errors?.errorMessages?.dateTo && clearFilterKey !== 'dateRange' ? (dateTo as string) : '',
-    compliance,
+      query.dateTo && query.dateFrom && !errors?.errorMessages?.dateTo && query.clearFilterKey !== 'dateRange'
+        ? query.dateTo
+        : '',
+    compliance: query.compliance,
   }
 
   const getQueryString = (values: ActivityLogFilters | Record<string, string>): string => {
@@ -56,7 +103,7 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
     return queryStr
   }
 
-  const queryStr = getQueryString(req.query as Record<string, string>)
+  const queryStr = getQueryString(query)
   const queryStrPrefix = queryStr ? '?' : ''
   const queryStrSuffix = queryStr ? '&' : '?'
   const redirectQueryStr = getQueryString(filters)
@@ -119,6 +166,7 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
     selectedFilterItems,
     complianceOptions,
     baseUrl,
+    query,
     queryStr,
     queryStrPrefix,
     queryStrSuffix,

@@ -1,7 +1,7 @@
 {% extends "../partials/case.njk" %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "govuk/components/pagination/macro.njk" import govukPagination %}
-{% set pageTitle = applicationName + " - Activity log" %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Contact", "Activity log"] }) %}
 {% set currentNavSection = 'timeline' %}
 {% set currentSectionName = 'Activity log' %}
 {% set headerPersonName = personActivity.personSummary.name.forename + ' ' + personActivity.personSummary.name.surname %}

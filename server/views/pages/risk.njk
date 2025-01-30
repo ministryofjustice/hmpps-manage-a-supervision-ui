@@ -6,7 +6,7 @@
 {% from "../_components/predictor-score/macro.njk" import predictorScore %}
 {% from "../_components/predictor-timeline-item/macro.njk" import predictorTimelineItem %}
 
-{% set pageTitle = applicationName + " - Risk" %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Contact" ,"Risk"] }) %}
 {% set currentNavSection = 'risk' %}
 {% set currentSectionName = 'Risk' %}
 {% set headerPersonName = personRisk.personSummary.name | fullName %}

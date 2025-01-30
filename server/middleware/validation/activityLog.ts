@@ -5,7 +5,7 @@ import properties from '../../properties'
 import utils from '../../utils'
 import { toCamelCase } from '../../utils/utils'
 
-const activityLog: Route<void> = (req, res, next) => {
+const activityLog: Route<void> = (req, res, next): void => {
   const { dateFrom: dateFromQuery, dateTo: dateToQuery } = req.query
   const dateFrom = dateFromQuery as string
   const dateTo = dateToQuery as string
@@ -57,7 +57,7 @@ const activityLog: Route<void> = (req, res, next) => {
     }
   }
 
-  const dateIsValid = (dateName: string) => req?.query?.[dateName] && isValid[dateName]
+  const dateIsValid = (dateName: string): boolean => req?.query?.[dateName] && isValid[dateName]
 
   const validateDateRanges = (): void => {
     isValidDateFormat('date-from', dateFrom)

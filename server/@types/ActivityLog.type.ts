@@ -33,6 +33,7 @@ export interface ActivityLogFiltersResponse extends ActivityLogFilters {
 }
 
 export interface ActivityLogCache extends ActivityLogFilters {
+  crn: string
   personActivity: PersonActivity
   tierCalculation: TierCalculation
 }

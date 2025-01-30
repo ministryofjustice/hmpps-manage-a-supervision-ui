@@ -4,14 +4,18 @@
 {% set currentPage = params.currentPage or 0 %}
 {% set totalPages = params.totalPages %}
 {% set url = params.url or '' %}
+{% set totalLinks = 3 %}
+{% if totalLinks > totalPages %}
+{% set totalLinks = totalPages %}
+{% endif %}
 {% set start = 0 %}
-{% set end = start + 3 %}
+{% set end = start + totalLinks %}
 {% if currentPage > 0 %}
 {% set start = currentPage -1 %}
-{% set end = start + 3 %}
+{% set end = start + totalLinks %}
 {% endif %}
 {% if currentPage + 1 == totalPages %}
-{% set start = currentPage - 2 %}
+{% set start = currentPage - (totalLinks -1) %}
 {% set end = totalPages %}
 {% endif %}
 

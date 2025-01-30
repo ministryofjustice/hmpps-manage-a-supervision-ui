@@ -25,6 +25,7 @@ export const getPersonActivity = async (
   if (req?.session?.cache?.activityLog) {
     const cache: ActivityLogCache | undefined = req.session.cache.activityLog.find(
       cacheItem =>
+        crn === cacheItem.crn &&
         keywords === cacheItem.keywords &&
         dateFrom === cacheItem.dateFrom &&
         dateTo === cacheItem.dateTo &&
@@ -51,6 +52,7 @@ export const getPersonActivity = async (
     const newCache: ActivityLogCache[] = [
       ...(req?.session?.cache?.activityLog || []),
       {
+        crn,
         keywords,
         dateFrom,
         dateTo,

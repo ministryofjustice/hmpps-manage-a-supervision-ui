@@ -3,7 +3,7 @@ import PreviousOrderPage from '../../../pages/sentence/previous-orders/previous-
 
 context('Sentence', () => {
   it('Previous order page is rendered', () => {
-    cy.visit('/case/X000001/sentence/previous-orders/sentence/3')
+    cy.visit('/case/X000001/sentence/previous-orders/3')
 
     const page = Page.verifyOnPage(PreviousOrderPage)
     const breadCrumbElement = '.govuk-breadcrumbs__list-item'

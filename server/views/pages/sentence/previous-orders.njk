@@ -32,7 +32,7 @@
 
     {% for order in previousOrderHistory.previousOrders %}
         <p class="govuk-heading-s govuk-!-margin-bottom-0">
-          <a class="govuk-link govuk-link--no-visited-state" href="/case/{{ crn }}/handoff/delius">
+          <a class="govuk-link govuk-link--no-visited-state" href="/case/{{ crn }}/sentence/previous-orders/{{ order.eventNumber }}">
             {{ order.title }}
           </a>
         </p>

@@ -6,6 +6,7 @@ export interface PreviousOrderHistory {
 }
 
 export interface PreviousOrder {
+  eventNumber: string
   title: string
   description: string
   terminationDate: string

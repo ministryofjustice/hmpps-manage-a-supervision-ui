@@ -1,0 +1,42 @@
+{% set hasAdditionalOffences = sentence.offenceDetails.additionalOffences and sentence.offenceDetails.additionalOffences.length > 0 %}
+        {% set additionalOffences %}
+            {% if hasAdditionalOffences %}
+                <ol class="govuk-list{% if sentence.offenceDetails.additionalOffences > 1 %} govuk-list--number{% endif %}">
+                    {% for additionalOffence in sentence.offenceDetails.additionalOffences %}
+                        <li>{{ additionalOffence.description }} ({{ additionalOffence.count }} count)</li>
+                    {% endfor %}
+                </ol>
+
+                <a href="/case/{{ crn }}/sentence/offences/{{ sentence.offenceDetails.eventNumber }}">View additional offence details</a>
+            {% endif %}
+{% endset %}
+
+{% set offence %}
+    {{ govukSummaryList({
+        rows: [
+            {
+                key: { text: "Main offence" },
+                value: { html: sentence.offenceDetails.offence.description + ' (' + sentence.offenceDetails.offence.count + ' count)'  }
+            },
+            {
+                key: { text: "Offence date" },
+                value: { html:  sentence.offenceDetails.dateOfOffence | dateWithYear  }
+            },
+            {
+                key: { text: "Notes" },
+                value: { html:  sentence.offenceDetails.notes | nl2br if sentence.offenceDetails.notes else 'No notes' }
+            },
+            {
+                key: { text: "Additional offences" },
+                value: { html:  additionalOffences if hasAdditionalOffences else 'No additional offences'  }
+            }
+        ]
+    }) }}
+{% endset %}
+
+{{ appSummaryCard({
+            attributes: {'data-qa': 'offenceCard'},
+            titleText: 'Offence',
+            classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+            html: offence
+}) }}

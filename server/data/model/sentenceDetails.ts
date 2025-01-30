@@ -27,6 +27,7 @@ export interface Sentence {
   unpaidWorkProgress: string
   licenceConditions: LicenceCondition[]
 }
+
 export interface OffenceDetails {
   eventNumber: string
   offence: Offence

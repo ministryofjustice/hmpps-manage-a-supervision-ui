@@ -22,6 +22,7 @@ import { CaseAccess, UserAccess } from './model/caseAccess'
 import { LicenceConditionNoteDetails } from './model/licenceConditionNoteDetails'
 import { AppointmentRequestBody, ActivityLogRequestBody } from '../@types'
 import { RequirementNoteDetails } from './model/requirementNoteDetails'
+import { PreviousOrderDetail } from './model/previousOrderDetail'
 
 export default class MasApiClient extends RestClient {
   constructor(token: string) {
@@ -48,6 +49,10 @@ export default class MasApiClient extends RestClient {
 
   async getSentencePreviousOrders(crn: string): Promise<PreviousOrderHistory | null> {
     return this.get({ path: `/sentence/${crn}/previous-orders`, handle404: false })
+  }
+
+  async getSentencePreviousOrder(crn: string, eventNumber: string): Promise<PreviousOrderDetail | null> {
+    return this.get({ path: `/sentence/${crn}/previous-orders/${eventNumber}`, handle404: false })
   }
 
   async getSentenceOffences(crn: string, eventNumber: string): Promise<Offences | null> {

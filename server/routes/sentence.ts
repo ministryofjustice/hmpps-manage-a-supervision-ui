@@ -119,6 +119,29 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
     })
   })
 
+  get('/case/:crn/sentence/previous-orders/:eventNumber', async (req, res, _next) => {
+    const { crn, eventNumber } = req.params
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+
+    await auditService.sendAuditMessage({
+      action: 'VIEW_MAS_SENTENCE_PREVIOUS_ORDER',
+      who: res.locals.user.username,
+      subjectId: crn,
+      subjectType: 'CRN',
+      correlationId: v4(),
+      service: 'hmpps-manage-people-on-probation-ui',
+    })
+
+    const masClient = new MasApiClient(token)
+
+    const previousOrderDetail = await masClient.getSentencePreviousOrder(crn, eventNumber)
+
+    res.render('pages/sentence/previous-orders/previous-order', {
+      previousOrderDetail,
+      crn,
+    })
+  })
+
   get('/case/:crn/sentence/offences/:eventNumber', async (req, res, _next) => {
     const { crn, eventNumber } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)

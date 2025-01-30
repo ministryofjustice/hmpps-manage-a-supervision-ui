@@ -1,0 +1,55 @@
+{% set hasCourtDocuments = sentence.courtDocuments and sentence.courtDocuments.length > 0 %}
+        {% set courtDocuments %}
+            <ul class="govuk-list govuk-!-margin-top-0">
+                {% for doc in sentence.courtDocuments %}
+                    <li>
+                        <a href="personal-details/documents/{{ doc.id }}/download" download="{{ doc.documentName }}">{{ doc.documentName }}</a><br>
+                        <span class="govuk-!-font-size-16">
+                        {% if doc.lastSaved %}
+                            Last updated {{ doc.lastSaved | dateWithYearShortMonth }}
+                        {% else %}
+                            Unavailable
+                        {% endif %}
+                    </span>
+                    </li>
+                {% endfor %}
+            </ul>
+{% endset %}
+
+{% set sentence %}
+    {{ govukSummaryList({
+        rows: [
+            {
+                key: { text: "Order" },
+                value: { html: sentence.order.description | nl2br if sentence.order.description else 'No order details' }
+            },
+            {
+                key: { text: "Sentence start date" },
+                value: { html:  sentence.order.startDate | dateWithYear | nl2br if sentence.order.startDate else 'No start date details' }
+            },
+            {
+                key: { text: "Sentence end date" },
+                value: { html:  sentence.order.releaseDate | dateWithYear | nl2br if sentence.order.releaseDate else 'No release date details' }
+            },
+            {
+                key: { text: "Terminated date" },
+                value: { html:  sentence.order.endDate | dateWithYear | nl2br if sentence.order.endDate else 'No end date details' }
+            },
+            {
+                key: { text: "Termination reason" },
+                value: { html:  sentence.order.startDate | monthsOrDaysElapsed + ' elapsed (of ' + sentence.order.length + ' months)' | nl2br if sentence.order.startDate else 'No details'  }
+            },
+            {
+                key: { text: "Court documents" },
+                value: { html: '<span data-qa="courtDocumentsValue">' + courtDocuments if hasCourtDocuments else 'No court documents' + '</span>' }
+            }
+        ]
+    }) }}
+{% endset %}
+
+{{ appSummaryCard({
+            attributes: {'data-qa': 'sentenceCard'},
+            titleText: 'Sentence',
+            classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+            html: sentence
+}) }}

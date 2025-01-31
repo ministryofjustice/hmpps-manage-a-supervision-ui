@@ -28,6 +28,10 @@
 {% block content %}
 <h1 class="govuk-heading-xl" data-qa="pageHeading">{{title}}</h1>
 
+<p>
+  <a href="{{ deliusDeepLinkUrl('EqualityMonitoring', crn) }}" target="_blank">Change disability information on NDelius (opens in new tab)</a>
+</p>
+
 {% for adjustment in adjustments.provisions %}
   {% set adjustmentsHtml %}
     {{ govukSummaryList({

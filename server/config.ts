@@ -34,6 +34,14 @@ export interface ApiConfig {
   agent: AgentConfig
 }
 
+export interface SentryConfig {
+  dsn: string
+  loaderScriptId: string
+  tracesSampleRate: number
+  replaySampleRate: number
+  replayOnErrorSampleRate: number
+}
+
 export default {
   buildNumber: get('BUILD_NUMBER', '1_0_0', requiredInProduction),
   productId: get('PRODUCT_ID', 'UNASSIGNED', requiredInProduction),

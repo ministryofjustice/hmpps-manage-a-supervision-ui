@@ -1,41 +1,117 @@
+{%- from "moj/components/filter/macro.njk" import mojFilter -%}
+{%- from "govuk/components/checkboxes/macro.njk" import govukCheckboxes -%}
+
 {% set queryString = '?' + queryParams.join('&') if queryParams.length > 0  else ''  %}
 
+{%- set filterOptionsHtml %}
+
+  {{ govukInput({
+    id: 'keywords',
+    name: 'keywords',
+    label: {
+      text: 'Keywords',
+      classes: "govuk-label--s govuk-!-font-weight-bold"
+    },
+    formGroup: {
+      classes: "govuk-!-margin-bottom-3",
+      attributes: {
+        'data-qa': 'keywords'
+      }
+    },
+    value: query.keywords
+  }) }}
+{{ mojDatePicker({
+  id: "dateFrom",
+  name: "dateFrom",
+  label: {
+      text: "Date from",
+      classes: "govuk-label--s govuk-!-font-weight-bold"
+  },
+  formGroup: {
+      classes: "govuk-!-margin-bottom-3",
+      attributes: {
+        'data-qa': 'date-from'
+      }
+    },
+    value: query.dateFrom,
+    maxDate: filters.maxDate,
+     errorMessage: {
+      text: filters.errors.errorMessages.dateFrom.text
+     } if filters.errors.errorMessages.dateFrom.text
+}) }}
+{{ mojDatePicker({
+  id: "dateTo",
+  name: "dateTo",
+  label: {
+      text: "Date to",
+      classes: "govuk-label--s govuk-!-font-weight-bold"
+  },
+  formGroup: {
+    classes: "govuk-!-margin-bottom-3",
+    attributes: {
+        'data-qa': 'date-to'
+      }
+  },
+  value: query.dateTo,
+  maxDate: filters.maxDate,
+  errorMessage: {
+    text: filters.errors.errorMessages.dateTo.text
+  } if filters.errors.errorMessages.dateTo.text
+}) }}
+  {{ govukCheckboxes({
+    idPrefix: 'compliance',
+    name: 'compliance',
+    classes: "govuk-checkboxes--small",
+    fieldset: {
+      legend: {
+        text: 'Compliance filters',
+        classes: 'govuk-fieldset__legend--s'
+      }
+    },
+    formGroup: {
+      attributes: {
+        'data-qa': 'compliance'
+      }
+    },
+    items: filters.complianceOptions
+  }) }}
+
+  
+{% endset -%}
+
 <div class="govuk-grid-column-one-third">
-  <div class="app-card">
-    {{ govukButton({
-      text: 'Add to log',
-      href: '/case/' + crn + '/handoff/delius'
-    }) }}
-    {% if category or requirement %}
-      <p>
-        <a href="/case/{{ crn }}/activity-log{{ '?view=compact' if compactView }}">Remove all filters</a>
-      </p>
-    {% endif %}
+<form method="get" data-qa="filter-form">
+{{ mojFilter({
+  heading: {
+    html: 'Filter activity log',
+    classes: 'govuk-heading-s'
+  },
+  submit: {
+    value: "submit",
+    attributes: {
+        "data-qa": "submit-button"
+    }
+  },
+  selectedFilters: {
+    heading: {
+      html: '<span class="govuk-heading-s">Selected filters</span>',
+      classes: 'govuk-heading-s'
+    },
+    clearLink: {
+      text: 'Clear filters',
+      href: '/case/' + crn + '/activity-log'
+    },
+    categories: [
+      {
+        items: filters.selectedFilterItems
+      }
+    ]
+  } if filters.selectedFilterItems.length,
+  optionsHtml: filterOptionsHtml
+}) }}
+<input type="hidden" name="submit" value="true">
+<input type="hidden" name="view" value="{{view}}">
+<input type="hidden" name="page" value="{{page}}">
+</form>
 
-    <h4 class="govuk-heading-m">
-      Compliance filters
-    </h4>
-    <p>Filter the activity log by National Standard (NS) activities:</p>
-
-    <ul class="govuk-list govuk-!-margin-bottom-0">
-      <li><a {% if category == 'national-standard-appointments' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/national-standard-appointments{{ queryString }}">Appointments</a></li>
-      <li><a {% if category == 'national-standard-appointments-without-outcome' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/national-standard-appointments-without-outcome{{ queryString }}">Without an outcome</a></li>
-      <li><a {% if category == 'waiting-for-evidence' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/waiting-for-evidence{{ queryString }}">Absences waiting for evidence</a></li>
-      <li><a {% if category == 'complied-appointments' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/complied-appointments{{ queryString }}">Complied appointments</a></li>
-      <li><a {% if category == 'all-failure-to-comply-appointments' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/all-failure-to-comply-appointments{{ queryString }}">Failures to comply</a></li>
-      <li><a {% if category == 'acceptable-absence-appointments' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/acceptable-absence-appointments{{ queryString }}">Acceptable absences</a></li>
-      <li><a {% if category == 'all-rescheduled' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/all-rescheduled{{ queryString }}">Rescheduled</a></li>
-      <li><a {% if category == 'warning-letters' %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="/case/{{ crn }}/activity-log/warning-letters{{ queryString  }}">Warning letters</a></li>
-    </ul>
-
-    <h4 class="govuk-heading-m">
-      Requirement filters
-    </h4>
-    <p>Filter the activity log by Requirement</p>
-    <ul class="govuk-list govuk-!-margin-bottom-0">
-    {% for req in requirements %}
-    <li><a {% if requirement and (requirement == (req | toSlug)) %}class="govuk-!-font-weight-bold" aria-current="page"{% endif %} href="{{ request.url }}{{ '?requirement='}}{{ req | toSlug }}">{{ req }}</a></li>
-    {% endfor %}
-    </ul>
-  </div>
 </div>

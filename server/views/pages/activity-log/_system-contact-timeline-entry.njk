@@ -1,0 +1,17 @@
+{% set titleHtml %}
+ <span class="govuk-heading-s govuk-!-margin-bottom-0">
+ <a href="/case/{{ crn }}/activity-log/activity/{{ entry.id }}?category={{ category }}&view=default&requirement={{ requirement }}"" class="app-!-inherit-colour">{{ entry.type }}<span class="govuk-visually-hidden"> on {{ thisDate }}</span></a>
+ </span>
+{% endset %}
+
+{% set html %}
+  {% include './_timeline-notes.njk' %}
+{% endset %}
+
+{{ appSummaryCard({
+  attributes: {'data-qa': 'timeline' + loop.index + 'Card'},
+  titleHtml: titleHtml,
+  classes: 'govuk-!-margin-bottom-2 app-summary-card--white-header',
+  html: html,
+  actionsHtml: actionsHtml
+}) }}

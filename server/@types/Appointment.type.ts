@@ -4,9 +4,9 @@ export interface Appointment {
   date: string
   'start-time': string
   'end-time': string
-  repeating: 'Yes' | 'No'
-  'repeating-frequency': string
-  'repeating-count': string
+  repeating?: 'Yes' | 'No'
+  'repeating-frequency'?: string
+  'repeating-count'?: string
   id?: string
 }
 
@@ -15,6 +15,11 @@ export type AppointmentType =
   | 'InitialAppointmentInOfficeNS'
   | 'PlannedOfficeVisitNS'
   | 'InitialAppointmentHomeVisitNS'
+
+export interface AppointmentTypeOption {
+  text: string
+  value: AppointmentType
+}
 
 export type AppointmentInterval = 'DAY' | 'WEEK' | 'FORTNIGHT' | 'FOUR_WEEKS'
 

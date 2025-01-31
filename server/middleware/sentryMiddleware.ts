@@ -1,7 +1,7 @@
-import type { RequestHandler } from 'express'
 import config from '../config'
+import type { Route } from '../@types'
 
-export default function sentryMiddleware(): RequestHandler {
+export default function sentryMiddleware(): Route<void> {
   // Pass-through Sentry config into locals, for use in the Sentry loader script (see layout.njk)
   return (req, res, next) => {
     res.locals.sentry = config.sentry

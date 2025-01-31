@@ -1,0 +1,41 @@
+{% extends "../../../partials/layout.njk" %}
+{% set headerPersonName = previousOrderDetail.name.forename + ' ' + previousOrderDetail.name.surname %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "My cases",
+                href: "/case"
+            },
+            {
+                text: headerPersonName,
+                href: "/case/" + crn,
+                attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
+            },
+            {
+                text: "Sentence",
+                href: "/case/" + crn + "/sentence"
+            },
+            {
+                text: "Previous orders",
+                href: "/case/" + crn + "/sentence/previous-orders"
+            }
+        ]
+    }) }}
+{% endblock %}
+{% block content %}
+    <div class="govuk-!-margin-bottom-0">
+        <h2 class="govuk-caption-l" data-qa="pageHeading">Previous orders</h2>
+    </div>
+
+    {% set sentence = previousOrderDetail.sentence %}
+    {% if sentence %}
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-4">
+            {{ previousOrderDetail.title }}
+        </h2>
+        {% include '../_sentence-offence.njk' %}
+        {% include '../_conviction.njk' %}
+        {% include '../_sentence.njk' %}
+    {% endif %}
+{% endblock %}

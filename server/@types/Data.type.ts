@@ -1,15 +1,8 @@
+/* eslint-disable import/no-cycle */
 import { Location } from '../data/model/caseload'
 import { PersonalDetails } from '../data/model/personalDetails'
 import { Sentence } from '../data/model/sentenceDetails'
-import { Errors } from './Errors.type'
-
-interface Appointment {
-  type?: string
-  location?: string
-  date?: string
-  'start-time'?: string
-  'end-time'?: string
-}
+import { Errors, Appointment } from './index'
 
 export interface Data {
   appointments?: {

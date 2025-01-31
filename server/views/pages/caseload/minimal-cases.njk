@@ -2,7 +2,7 @@
 {% set hasCases = caseload.caseload | length > 0 %}
 {% set hasStaff = caseload !== null %}
 {% set title = 'My cases' %}
-{% block pageTitle %}{{ title }}{% endblock %}
+{% set pageTitle = makePageTitle({ pageHeading: "My cases" }) %}
 
 {% block pageContent %}
     {% if currentNavSection == 'teamCases' and caseload.team %}

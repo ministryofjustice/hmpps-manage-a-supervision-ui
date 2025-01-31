@@ -1,6 +1,6 @@
 {% extends "../../partials/layout.njk" %}
 {% set title = 'Continue on National Delius' %}
-{% block pageTitle %}{{ title }}{% endblock %}
+{% set pageTitle = makePageTitle({ pageHeading: "Continue on National Delius" }) %}
 
 {% block beforeContent %}
 {{ govukBreadcrumbs({

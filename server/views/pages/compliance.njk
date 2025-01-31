@@ -1,14 +1,12 @@
 {% extends "../partials/case.njk" %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
-{% set pageTitle = applicationName + " - Compliance" %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Contact", "Compliance"] }) %}
 {% set currentSectionName = 'Compliance' %}
-{% set title = 'Compliance' %}
 {% set currentNavSection = 'compliance' %}
 {% set headerPersonName = personCompliance.personSummary.name | fullName %}
 {% set headerCRN = personCompliance.personSummary.crn %}
 {% set headerDob = personCompliance.personSummary.dateOfBirth  %}
 {% set headerGender = personCompliance.personSummary.gender  %}
-{% block pageTitle %}{{ title }}{% endblock %}
 
 {% block beforeContent %}
 {{ govukBreadcrumbs({

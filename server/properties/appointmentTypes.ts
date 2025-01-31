@@ -1,11 +1,6 @@
-import { AppointmentType } from '../@types'
+import { AppointmentTypeOption } from '../@types'
 
-interface Type {
-  text: string
-  value: AppointmentType
-}
-
-const appointmentTypes: Type[] = [
+const appointmentTypes: AppointmentTypeOption[] = [
   {
     text: 'Home visit',
     value: 'HomeVisitToCaseNS',

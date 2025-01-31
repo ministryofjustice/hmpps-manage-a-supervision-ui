@@ -23,6 +23,8 @@ export default abstract class Page {
 
   pageHeading = (): PageElement => cy.get('[data-qa=pageHeading]')
 
+  getNavigationLink = (index: number): PageElement => cy.get(`.moj-primary-navigation__list li:nth-of-type(${index}) a`)
+
   getTab = (tabName: string): PageElement => cy.get(`[data-qa=${tabName}Tab]`)
 
   getCardHeader = (cardName: string): PageElement =>
@@ -62,6 +64,16 @@ export default abstract class Page {
     cy.get(element)
       .eq(index)
       .within(() => cy.get('a').invoke('attr', 'href').should('equal', value))
+  }
+
+  assertTextElementAtIndex = (element: string, index: number, value: string) => {
+    cy.get(element).eq(index).should('contain.text', value)
+  }
+
+  assertTextAtAnchorElementAtIndex = (element: string, index: number, value: string) => {
+    cy.get(element)
+      .eq(index)
+      .within(() => cy.contains(value))
   }
 
   assertAnchorElementAtIndexWithin = (element: string, index: number, anchorIndex: number, value: string) => {

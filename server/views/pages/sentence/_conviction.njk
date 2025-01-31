@@ -1,0 +1,62 @@
+{% set hasAdditionalSentences = sentence.conviction.additionalSentences and sentence.conviction.additionalSentences.length > 0 %}
+    {% set additionalSentences %}
+        {% for additionalSentence in sentence.conviction.additionalSentences %}
+                {% set detailsHtml %}
+                    {{ govukSummaryList({
+                        rows: [
+                            {
+                                key: { text: 'Sentence' },
+                                value: { text: additionalSentence.description }
+                            },
+                            {
+                                key: { text: 'Value' },
+                                value: { text: additionalSentence.value }
+                            } if additionalSentence.value,
+                            {
+                                key: { text: 'Length' },
+                                value: { text: additionalSentence.length }
+                            } if additionalSentence.length,
+                            {
+                                key: { text: 'Notes' },
+                                value: { html: additionalSentence.notes | nl2br if additionalSentence.notes else 'No notes' }
+                            }
+                        ]
+                    }) }}
+                {% endset %}
+                {{ govukDetails({
+                    classes: 'govuk-!-margin-bottom-1',
+                    summaryText: additionalSentence.description,
+                    html: detailsHtml
+                }) }}
+            {% endfor %}
+{% endset %}
+
+{% set conviction %}
+    {{ govukSummaryList({
+        rows: [
+            {
+                key: { text: "Sentencing court" },
+                value: { html:  sentence.conviction.sentencingCourt | nl2br if sentence.conviction.sentencingCourt else 'No court details'  }
+            },
+            {
+                key: { text: "Responsible court" },
+                value: { html:  sentence.conviction.responsibleCourt | nl2br if sentence.conviction.responsibleCourt else 'No court details'  }
+            },
+            {
+                key: { text: "Conviction date" },
+                value: { html: sentence.conviction.convictionDate | dateWithYear | nl2br if sentence.conviction.convictionDate  else 'No conviction date' }
+            },
+            {
+                key: { text: "Additional sentences" },
+                value: { html:  additionalSentences if hasAdditionalSentences else 'No additional sentences' }
+            }
+        ]
+    }) }}
+{% endset %}
+
+{{ appSummaryCard({
+    attributes: {'data-qa': 'convictionCard'},
+    titleText: 'Conviction',
+    classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+    html: conviction
+}) }}

@@ -1,10 +1,11 @@
-import { type RequestHandler, Router } from 'express'
+import { type Router } from 'express'
 import { auditService } from '@ministryofjustice/hmpps-audit-client'
 import { v4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import TierApiClient from '../data/tierApiClient'
+import type { Route } from '../@types'
 import ArnsApiClient from '../data/arnsApiClient'
 import { toPredictors, toRoshWidget } from '../utils/utils'
 
@@ -13,7 +14,7 @@ interface QueryParams {
   number?: string
 }
 export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Services) {
-  const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
+  const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
 
   get('/case/:crn/sentence', async (req, res, _next) => {
     const { crn } = req.params
@@ -114,6 +115,29 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
 
     res.render('pages/sentence/previous-orders', {
       previousOrderHistory,
+      crn,
+    })
+  })
+
+  get('/case/:crn/sentence/previous-orders/:eventNumber', async (req, res, _next) => {
+    const { crn, eventNumber } = req.params
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+
+    await auditService.sendAuditMessage({
+      action: 'VIEW_MAS_SENTENCE_PREVIOUS_ORDER',
+      who: res.locals.user.username,
+      subjectId: crn,
+      subjectType: 'CRN',
+      correlationId: v4(),
+      service: 'hmpps-manage-people-on-probation-ui',
+    })
+
+    const masClient = new MasApiClient(token)
+
+    const previousOrderDetail = await masClient.getSentencePreviousOrder(crn, eventNumber)
+
+    res.render('pages/sentence/previous-orders/previous-order', {
+      previousOrderDetail,
       crn,
     })
   })

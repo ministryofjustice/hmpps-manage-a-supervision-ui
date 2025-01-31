@@ -1,4 +1,4 @@
-import { type RequestHandler, Router } from 'express'
+import { type Router } from 'express'
 import { auditService } from '@ministryofjustice/hmpps-audit-client'
 import { v4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'
@@ -6,11 +6,12 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import TierApiClient from '../data/tierApiClient'
 import InterventionsApiClient from '../data/interventionsApiClient'
+import type { Route } from '../@types'
 import { toPredictors, toRoshWidget } from '../utils/utils'
 import ArnsApiClient from '../data/arnsApiClient'
 
 export default function interventionsRoutes(router: Router, { hmppsAuthClient }: Services) {
-  const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
+  const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
 
   get('/case/:crn/interventions', async (req, res, _next) => {
     const { crn } = req.params

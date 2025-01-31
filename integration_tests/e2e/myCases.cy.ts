@@ -12,5 +12,12 @@ context('My cases', () => {
     page.getRowData('myCases', 'nameOrCrn', 'Value4').should('contain.text', 'X808126')
     page.getRowData('myCases', 'dob', 'Value4').should('contain.text', 'Restricted')
     page.getPagination().should('contain.text', 'Showing 1 to 10 of 33 cases.')
+
+    page.getNavigationLink(1).should('contain.text', 'Home')
+    page.getNavigationLink(1).should('not.have.attr', 'aria-current', 'home')
+    page.getNavigationLink(2).should('contain.text', 'Cases')
+    page.getNavigationLink(2).should('have.attr', 'aria-current', 'cases')
+    page.getNavigationLink(3).should('contain.text', 'Search')
+    page.getNavigationLink(3).should('not.have.attr', 'aria-current', 'search')
   })
 })

@@ -1,4 +1,4 @@
-import { type RequestHandler, Router } from 'express'
+import { type Router } from 'express'
 import { auditService } from '@ministryofjustice/hmpps-audit-client'
 import { v4 } from 'uuid'
 import asyncMiddleware from '../middleware/asyncMiddleware'
@@ -6,11 +6,11 @@ import type { Services } from '../services'
 import MasApiClient from '../data/masApiClient'
 import ArnsApiClient from '../data/arnsApiClient'
 import TierApiClient from '../data/tierApiClient'
+import type { Route } from '../@types'
 import { toPredictors, toRoshWidget, toTimeline } from '../utils/utils'
-import { TimelineItem } from '../data/model/risk'
 
 export default function caseRoutes(router: Router, { hmppsAuthClient }: Services) {
-  const get = (path: string | string[], handler: RequestHandler) => router.get(path, asyncMiddleware(handler))
+  const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
 
   get('/case/:crn', async (req, res, _next) => {
     const { crn } = req.params

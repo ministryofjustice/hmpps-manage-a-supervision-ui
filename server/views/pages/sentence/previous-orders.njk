@@ -1,5 +1,6 @@
 {% extends "../../partials/layout.njk" %}
 {% set headerPersonName = previousOrderHistory.name.forename + ' ' + previousOrderHistory.name.surname %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Contact", "Sentence", "Previous orders"] }) %}
 
 {% block beforeContent %}
 {{ govukBreadcrumbs({
@@ -31,7 +32,7 @@
 
     {% for order in previousOrderHistory.previousOrders %}
         <p class="govuk-heading-s govuk-!-margin-bottom-0">
-          <a class="govuk-link govuk-link--no-visited-state" href="/case/{{ crn }}/handoff/delius">
+          <a class="govuk-link govuk-link--no-visited-state" href="/case/{{ crn }}/sentence/previous-orders/{{ order.eventNumber }}">
             {{ order.title }}
           </a>
         </p>
@@ -40,7 +41,7 @@
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">{{ order.description }}</td>
-              <td class="govuk-table__cell govuk-table__cell--numeric">Ended on {{ order.terminationDate | dateWithYearShortMonth }}</td>
+              <td class="govuk-table__cell govuk-table__cell--numeric">Ended on {{ order.terminationDate | dateWithYear }}</td>
             </tr>
           </tbody>
         </table>

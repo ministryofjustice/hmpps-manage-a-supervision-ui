@@ -10,48 +10,13 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
     return res.redirect(url)
   }
   const { crn } = req.params
-  const {
-    keywords = '',
-    dateFrom = '',
-    dateTo = '',
-    clearFilterKey,
-    clearFilterValue,
-  } = req.query as { [key: string]: string }
-
-  const { compliance: complianceQuery = [] } = req.query as { [key: string]: string | string[] }
-
+  const { keywords = '', dateFrom = '', dateTo = '', clearFilterKey, clearFilterValue } = req.query
+  const errors = req?.session?.errors
+  const { compliance: complianceQuery = [] } = req.query
   let compliance = complianceQuery as string[] | string
-
+  const baseUrl = `/case/${crn}/activity-log`
   if (!Array.isArray(compliance)) {
     compliance = [compliance]
-  }
-
-  let query: ActivityLogFilters = { keywords, dateFrom, dateTo, compliance }
-  const hasQuery = keywords || (dateFrom && dateTo) || compliance?.length
-
-  if (req?.session?.cache?.activityLog?.filters && !req?.query?.submit && !hasQuery) {
-    query = req?.session?.cache?.activityLog?.filters
-  } else if (hasQuery) {
-    query = {
-      keywords,
-      dateFrom,
-      dateTo,
-      compliance,
-    }
-    req.session.cache = {
-      ...(req?.session?.cache || {}),
-      activityLog: {
-        ...(req?.session?.cache?.activityLog || {}),
-        filters: query,
-      },
-    }
-  }
-  query = { ...query, clearFilterKey, clearFilterValue }
-
-  const errors = req?.session?.errors
-  const baseUrl = `/case/${crn}/activity-log`
-  if (!Array.isArray(query.compliance)) {
-    query.compliance = [query.compliance]
   }
   if (compliance?.length && clearFilterKey === 'compliance') {
     compliance = compliance.filter(value => value !== clearFilterValue)
@@ -62,21 +27,19 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
     { text: 'Not complied', value: 'not complied' },
   ]
   const filters: ActivityLogFilters = {
-    keywords: query.keywords && query.clearFilterKey !== 'keywords' ? query.keywords : '',
+    keywords: keywords && clearFilterKey !== 'keywords' ? (keywords as string) : '',
     dateFrom:
-      query.dateFrom && query.dateTo && !errors?.errorMessages?.dateFrom && query.clearFilterKey !== 'dateRange'
-        ? query.dateFrom
+      dateFrom && dateTo && !errors?.errorMessages?.dateFrom && clearFilterKey !== 'dateRange'
+        ? (dateFrom as string)
         : '',
     dateTo:
-      query.dateTo && query.dateFrom && !errors?.errorMessages?.dateTo && query.clearFilterKey !== 'dateRange'
-        ? query.dateTo
-        : '',
-    compliance: query.compliance,
+      dateTo && dateFrom && !errors?.errorMessages?.dateTo && clearFilterKey !== 'dateRange' ? (dateTo as string) : '',
+    compliance,
   }
 
   const getQueryString = (values: ActivityLogFilters | Record<string, string>): string => {
     const keys = [...Object.keys(filters)]
-    const queryStr: string = Object.entries(values)
+    let queryStr: string = Object.entries(values)
       .filter(([key, _value]) => keys.includes(key))
       .reduce((acc, [key, value]: [string, string | string[]], i) => {
         if (value) {
@@ -90,10 +53,13 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
         }
         return acc
       }, '')
+    if (req?.query?.page) {
+      queryStr = `${queryStr}&page=${req.query.page}`
+    }
     return queryStr
   }
 
-  const queryStr = getQueryString(query)
+  const queryStr = getQueryString(req.query as Record<string, string>)
   const queryStrPrefix = queryStr ? '?' : ''
   const queryStrSuffix = queryStr ? '&' : '?'
   const redirectQueryStr = getQueryString(filters)
@@ -156,7 +122,6 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
     selectedFilterItems,
     complianceOptions,
     baseUrl,
-    query,
     queryStr,
     queryStrPrefix,
     queryStrSuffix,

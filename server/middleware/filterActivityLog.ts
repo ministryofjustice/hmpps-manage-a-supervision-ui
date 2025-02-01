@@ -1,14 +1,7 @@
 /* eslint-disable no-param-reassign */
 
 import { DateTime } from 'luxon'
-import {
-  Route,
-  ActivityLogCacheItem,
-  ActivityLogFilters,
-  ActivityLogFiltersResponse,
-  SelectedFilterItem,
-  Option,
-} from '../@types'
+import { Route, ActivityLogFilters, ActivityLogFiltersResponse, SelectedFilterItem, Option } from '../@types'
 
 export const filterActivityLog: Route<void> = (req, res, next) => {
   if (req?.query?.submit) {
@@ -35,7 +28,6 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
 
   let query: ActivityLogFilters = { keywords, dateFrom, dateTo, compliance }
   const hasQuery = keywords || (dateFrom && dateTo) || compliance?.length
-  // if not submitted and no query values exist, then attempt to hydrate from cache
 
   if (req?.session?.cache?.activityLog?.filters && !req?.query?.submit && !hasQuery) {
     query = req?.session?.cache?.activityLog?.filters
@@ -56,9 +48,7 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
   }
   query = { ...query, clearFilterKey, clearFilterValue }
 
-  console.log(query)
   const errors = req?.session?.errors
-
   const baseUrl = `/case/${crn}/activity-log`
   if (!Array.isArray(query.compliance)) {
     query.compliance = [query.compliance]

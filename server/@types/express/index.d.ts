@@ -18,7 +18,7 @@ declare module 'express-session' {
     data?: Data
     errors?: Errors
     cache?: {
-      activityLog: ActivityLogCache[]
+      activityLog: ActivityLogCache
     }
   }
 

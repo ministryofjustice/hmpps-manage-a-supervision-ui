@@ -30,10 +30,16 @@ export interface ActivityLogFiltersResponse extends ActivityLogFilters {
   queryStrPrefix: string
   queryStrSuffix: string
   maxDate: string
+  query?: ActivityLogFilters
 }
 
-export interface ActivityLogCache extends ActivityLogFilters {
+export interface ActivityLogCacheItem extends ActivityLogFilters {
   crn: string
   personActivity: PersonActivity
   tierCalculation: TierCalculation
+}
+
+export interface ActivityLogCache {
+  results: ActivityLogCacheItem[]
+  filters?: ActivityLogFilters
 }

@@ -13,7 +13,7 @@ export interface SentenceCompliance {
   mainOffence: Offence
   order: Order
   activeBreach?: Breach
-  rar?: Rar
+  rarDescription?: string
 }
 
 export interface Breach {

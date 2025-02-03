@@ -37,13 +37,13 @@ context('Overview', () => {
         '(Having possession a picklock or other implement with intent to break into any premises - 18502)',
       )
     page.getRowData('sentence2', 'order', 'Value').should('contain.text', 'ORA Community Order')
-    page.getRowData('sentence2', 'requirements', 'Value').should('contain.text', '9 of 10 RAR days completed')
+    page.getRowData('sentence2', 'requirements', 'Value').should('contain.text', '10 of 10 RAR days completed')
     page.getCardHeader('sentence3').should('contain.text', '12 month Community order')
     page
       .getRowData('sentence3', 'mainOffence', 'Value')
       .should('contain.text', 'Breach of Restraining Order (Protection from Harassment Act 1997) - 00831')
     page.getRowData('sentence3', 'order', 'Value').should('contain.text', '12 month Community order')
-    page.getRowData('sentence3', 'requirements', 'Value').should('contain.text', '14 of 16 RAR days completed')
+    page.getRowData('sentence3', 'requirements', 'Value').should('contain.text', '16 of 20 RAR days completed')
     page
       .getRowData('activityAndCompliance', 'previousOrders', 'Value')
       .should('contain.text', '1 previous orders (No breaches on previous orders)')

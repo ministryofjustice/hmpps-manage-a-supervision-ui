@@ -71,11 +71,7 @@
                 "endDate": "2024-12-01",
                 "startDate": "2023-12-01"
               },
-              "rar": {
-                "completed": 14,
-                "scheduled": 2,
-                "totalDays": 16
-              }
+              "rarDescription": "16 of 20 RAR days completed"
             },
             {
               "additionalOffences": [
@@ -98,11 +94,7 @@
                 "endDate": "2024-09-01",
                 "startDate": "2020-03-02"
               },
-              "rar": {
-                "completed": 9,
-                "scheduled": 1,
-                "totalDays": 10
-              }
+              "rarDescription": "10 of 10 RAR days completed"
             }
           ],
           "activity": {

@@ -18,7 +18,7 @@ context('Compliance', () => {
     page.getRowData('breach1', 'startDate', 'Value').should('contain.text', '2 March 2020')
     page.getRowData('breach1', 'status', 'Value').should('contain.text', 'An active breach status')
 
-    page.getCardHeader('activity1').should('contain.text', '9 of 10 RAR days completed')
+    page.getCardHeader('activity1').should('contain.text', '12 of 15 RAR days completed')
     page.getRowData('activity1', 'appointments', 'Value').should('contain.text', '1 national standard appointments')
     page.getRowData('activity1', 'withoutOutcome', 'Value').should('contain.text', '3 without a recorded outcome')
 

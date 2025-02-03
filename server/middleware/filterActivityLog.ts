@@ -39,7 +39,7 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
 
   const getQueryString = (values: ActivityLogFilters | Record<string, string>): string => {
     const keys = [...Object.keys(filters)]
-    let queryStr: string = Object.entries(values)
+    const queryStr: string = Object.entries(values)
       .filter(([key, _value]) => keys.includes(key))
       .reduce((acc, [key, value]: [string, string | string[]], i) => {
         if (value) {
@@ -53,9 +53,7 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
         }
         return acc
       }, '')
-    if (req?.query?.page) {
-      queryStr = `${queryStr}&page=${req.query.page}`
-    }
+
     return queryStr
   }
 

@@ -47,6 +47,9 @@
 
 {% if addressOverview.otherAddresses.length > 0 %}
     <h2 class="govuk-heading-l govuk-!-margin-top-8">Other addresses</h2>
+    <p>
+        <a href="{{ deliusDeepLinkUrl('AddressandAccommodation', crn) }}" target="_blank">Edit all other addresses on NDelius (opens in new tab)</a>
+    </p>
     {% set addressType = 'otherAddress' %}
     {% for address in addressOverview.otherAddresses %}
         {% set loopIndex = loop.index %}

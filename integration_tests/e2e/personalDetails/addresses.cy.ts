@@ -5,17 +5,15 @@ context('Addresses', () => {
   it('Addresses page is rendered', () => {
     cy.visit('/case/X000001/personal-details/addresses')
     const page = Page.verifyOnPage(AddressPage)
-    cy.get('p')
-      .eq(0)
-      .within(() =>
-        cy
-          .get('a')
-          .invoke('attr', 'href')
-          .should(
-            'equal',
-            'https://ndelius-dummy-url/NDelius-war/delius/JSP/deeplink.xhtml?component=AddressandAccommodation&CRN=X000001',
-          ),
-      )
+
+    const url =
+      'https://ndelius-dummy-url/NDelius-war/delius/JSP/deeplink.xhtml?component=AddressandAccommodation&CRN=X000001'
+    page.assertAnchorElementAtIndex('p', 0, url)
+    page.assertTextElementAtIndex('p', 0, 'Update addresses on NDelius (opens in new tab)')
+
+    page.assertAnchorElementAtIndex('p', 2, url)
+    page.assertTextElementAtIndex('p', 2, 'Edit all other addresses on NDelius (opens in new tab)')
+
     page.getTableHeader('mainAddress').should('contain.text', 'Main address – Since 14 Mar 2023')
     page.getTableHeader('otherAddress1').should('contain.text', 'Postal address – Since 14 Mar 2023')
     page.getTableHeader('previousAddress1').should('contain.text', 'Previous address – 14 Mar 2022 to 17 Jan 2023')

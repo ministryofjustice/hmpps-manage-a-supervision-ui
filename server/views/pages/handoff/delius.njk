@@ -36,7 +36,7 @@
     <h2 class="govuk-heading-m">Go directly to {{ case.personalDetails.name }} in NDelius</h2>
 
     <p>
-      <a href="{{ deliusDeepLinkUrl('ContactList', personSummary.offenderId) }}" target="_blank">Open {{ personSummary.name | fullName }}’s contact log in NDelius</a><br />
+      <a href="{{ deliusDeepLinkUrl('ContactList', crn) }}" target="_blank">Open {{ personSummary.name | fullName }}’s contact log in NDelius</a><br />
       <span class="govuk-!-font-size-16">Link opens in a new window</span>
     </p>
 

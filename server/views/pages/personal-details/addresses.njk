@@ -34,6 +34,10 @@
   iconFallbackText: 'Warning'
 }) }} -->
 
+<p>
+    <a href="{{ deliusDeepLinkUrl('AddressandAccommodation', crn) }}" target="_blank">Update addresses on NDelius (opens in new tab)</a>
+</p>
+
 {% set address = addressOverview.mainAddress %}
 <span data-qa="mainAddressSection">
     {% set addressType = 'address' %}

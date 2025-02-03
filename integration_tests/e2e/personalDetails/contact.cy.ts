@@ -5,6 +5,17 @@ context('Contact', () => {
   it('Contact page is rendered', () => {
     cy.visit('/case/X000001/personal-details/personal-contact/2500232995')
     const page = Page.verifyOnPage(ContactPage)
+    cy.get('p')
+      .eq(0)
+      .within(() =>
+        cy
+          .get('a')
+          .invoke('attr', 'href')
+          .should(
+            'equal',
+            'https://ndelius-dummy-url/NDelius-war/delius/JSP/deeplink.xhtml?component=PersonalContacts&CRN=X000001',
+          ),
+      )
     page.getRowData('contactRelationshipTypeHeader', 'Value').should('contain.text', 'Emergency Contact')
     page.getRowData('contactNameHeader', 'Value').should('contain.text', 'Brian Smith')
     page.getRowData('contactName', 'Value').should('contain.text', 'Brian Smith')

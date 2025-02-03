@@ -210,11 +210,11 @@ export const deliusDateFormat = (datetime: string) => {
   return DateTime.fromISO(datetime).toFormat('dd/MM/yyyy')
 }
 
-export const deliusDeepLinkUrl = (component: string, offenderId: string) => {
-  if (!component || !offenderId) {
+export const deliusDeepLinkUrl = (component: string, crn: string) => {
+  if (!component || !crn) {
     return ''
   }
-  return `${config.delius.link}/NDelius-war/delius/JSP/deeplink.xhtml?component=${component}&offenderId=${offenderId}`
+  return `${config.delius.link}/NDelius-war/delius/JSP/deeplink.xhtml?component=${component}&CRN=${crn}`
 }
 
 export const tierLink = (crn: string) => {

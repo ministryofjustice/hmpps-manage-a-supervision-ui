@@ -5,7 +5,17 @@ context('Addresses', () => {
   it('Addresses page is rendered', () => {
     cy.visit('/case/X000001/personal-details/addresses')
     const page = Page.verifyOnPage(AddressPage)
-
+    cy.get('p')
+      .eq(0)
+      .within(() =>
+        cy
+          .get('a')
+          .invoke('attr', 'href')
+          .should(
+            'equal',
+            'https://ndelius-dummy-url/NDelius-war/delius/JSP/deeplink.xhtml?component=AddressandAccommodation&CRN=X000001',
+          ),
+      )
     page.getTableHeader('mainAddress').should('contain.text', 'Main address – Since 14 Mar 2023')
     page.getTableHeader('otherAddress1').should('contain.text', 'Postal address – Since 14 Mar 2023')
     page.getTableHeader('previousAddress1').should('contain.text', 'Previous address – 14 Mar 2022 to 17 Jan 2023')

@@ -27,6 +27,10 @@
 
 {% block content %}
 
+<p>
+  <a href="{{ deliusDeepLinkUrl('EqualityMonitoring', crn) }}" target="_blank">Change disability information on NDelius (opens in new tab)</a>
+</p>
+
 {% for disability in disabilities.disabilities %}
   {% set disabilitiesHtml %}
     {{ govukSummaryList({

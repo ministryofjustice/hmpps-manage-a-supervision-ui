@@ -1,7 +1,7 @@
 import { Request } from 'express'
 import { HmppsAuthClient } from '../data'
 import MasApiClient from '../data/masApiClient'
-import { ActivityLogCache, ActivityLogRequestBody, AppResponse } from '../@types'
+import { ActivityLogCacheItem, ActivityLogRequestBody, AppResponse } from '../@types'
 import { PersonActivity } from '../data/model/activityLog'
 import { toISODate, toCamelCase } from '../utils/utils'
 import TierApiClient, { TierCalculation } from '../data/tierApiClient'
@@ -23,7 +23,7 @@ export const getPersonActivity = async (
   let personActivity: PersonActivity | null = null
   let tierCalculation: TierCalculation | null = null
   if (req?.session?.cache?.activityLog) {
-    const cache: ActivityLogCache | undefined = req.session.cache.activityLog.find(
+    const cache: ActivityLogCacheItem | undefined = req.session.cache.activityLog.results.find(
       cacheItem =>
         crn === cacheItem.crn &&
         keywords === cacheItem.keywords &&
@@ -49,8 +49,8 @@ export const getPersonActivity = async (
       masClient.postPersonActivityLog(crn, body, page as string),
       tierClient.getCalculationDetails(crn),
     ])
-    const newCache: ActivityLogCache[] = [
-      ...(req?.session?.cache?.activityLog || []),
+    const newCache: ActivityLogCacheItem[] = [
+      ...(req?.session?.cache?.activityLog?.results || []),
       {
         crn,
         keywords,
@@ -63,7 +63,10 @@ export const getPersonActivity = async (
     ]
     req.session.cache = {
       ...(req?.session?.cache || {}),
-      activityLog: newCache,
+      activityLog: {
+        ...(req?.session?.cache?.activityLog || {}),
+        results: newCache,
+      },
     }
   }
   return [tierCalculation, personActivity]

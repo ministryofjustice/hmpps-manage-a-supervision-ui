@@ -1,5 +1,5 @@
 import { PersonSummary } from './common'
-import { ActivityCount, Compliance, Offence, Order, PreviousOrders, Rar } from './overview'
+import { ActivityCount, Compliance, Offence, Order, PreviousOrders } from './overview'
 
 export interface PersonCompliance {
   personSummary: PersonSummary

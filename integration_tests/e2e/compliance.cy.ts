@@ -48,5 +48,12 @@ context('Compliance', () => {
     page.getRowData('previousOrder1', 'startDate', 'Value').should('contain.text', '12 December 1990')
     page.getRowData('previousOrder1', 'endDate', 'Value').should('contain.text', '12 December 1991')
     page.getRowData('previousOrder1', 'breaches', 'Value').should('contain.text', '2')
+
+    page
+      .getCardHeader('previousOrder1')
+      .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence/previous-orders/3'))
+    page
+      .getCardHeader('previousOrder1')
+      .within(() => cy.get('[aria-label="12 month Community Order (Ended 12 December 1991)"]').should('be.visible'))
   })
 })

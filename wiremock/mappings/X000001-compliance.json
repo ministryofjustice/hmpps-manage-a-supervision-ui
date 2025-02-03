@@ -22,6 +22,7 @@
             "lastEndedDate": "2020-12-12",
             "orders": [
               {
+                "eventNumber": 3,
                 "description": "12 month Community Order",
                 "mainOffence": "Common Assault and Battery",
                 "status": "Completed - Sentence/ PSS Expiry Reached",

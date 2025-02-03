@@ -1,5 +1,6 @@
 import Page from '../../../pages'
 import PreviousOrderPage from '../../../pages/sentence/previous-orders/previous-order'
+import { monthsOrDaysElapsed } from '../../../../server/utils/utils'
 
 context('Sentence', () => {
   it('Previous order page is rendered', () => {
@@ -9,7 +10,6 @@ context('Sentence', () => {
     const breadCrumbElement = '.govuk-breadcrumbs__list-item'
 
     page.assertTextElementAtIndex('h2', 0, 'Previous orders')
-
     page.assertAnchorElementAtIndex(breadCrumbElement, 0, '/case')
     page.assertTextAtAnchorElementAtIndex(breadCrumbElement, 0, 'My cases')
 
@@ -55,7 +55,9 @@ context('Sentence', () => {
     page.assertPageElementAtIndexWithin('section', 2, 'dd', 1, '1 February 2024')
     page.assertPageElementAtIndexWithin('section', 2, 'dd', 2, '1 November 2024')
     page.assertPageElementAtIndexWithin('section', 2, 'dd', 3, '31 January 2025')
-    page.assertPageElementAtIndexWithin('section', 2, 'dd', 4, '11 months elapsed (of 12 months)')
+
+    const monthsElapsed = monthsOrDaysElapsed('2024-02-01')
+    page.assertPageElementAtIndexWithin('section', 2, 'dd', 4, `${monthsElapsed} elapsed (of 12 months)`)
     page.assertPageElementAtIndexWithin('section', 2, 'dd', 5, 'Pre-sentence report')
   })
 })

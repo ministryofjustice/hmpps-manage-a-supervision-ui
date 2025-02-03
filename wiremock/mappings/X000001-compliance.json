@@ -67,11 +67,7 @@
                 "startDate": "2020-03-02",
                 "status": "An active breach status"
               },
-              "rar": {
-                "completed": 9,
-                "scheduled": 1,
-                "totalDays": 10
-              },
+              "rarDescription": "12 of 15 RAR days completed",
               "rarCategory": "RAR Category"
             },
             {

@@ -14,10 +14,10 @@
 
     {% set complianceStatus = getComplianceStatus(failureToComplyCount, sentence.compliance.breachStarted) %}
 
-    {% if sentence.rar and sentence.rarCategory %}
+    {% if sentence.rarDescription and sentence.rarCategory %}
         {% set queryParams = '?requirement=' + sentence.rarCategory | toSlug %}
         {% set requirements %}
-            {{ sentence.rar.completed }} of {{ sentence.rar.totalDays }} RAR days completed
+            {{ sentence.rarDescription }}
         {% endset %}
     {% else %}
         {% set requirements = false %}

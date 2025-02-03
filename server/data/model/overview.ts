@@ -21,7 +21,7 @@ export interface Sentence {
   additionalOffences: Offence[]
   mainOffence: Offence
   order?: Order
-  rar?: Rar
+  rarDescription?: string
 }
 
 export interface Rar {

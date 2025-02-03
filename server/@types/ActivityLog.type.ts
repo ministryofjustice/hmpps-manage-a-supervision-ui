@@ -7,6 +7,8 @@ export interface ActivityLogFilters {
   dateFrom: string
   dateTo: string
   compliance: string[]
+  clearFilterKey?: string
+  clearFilterValue?: string
 }
 
 export interface ActivityLogRequestBody {
@@ -40,6 +42,6 @@ export interface ActivityLogCacheItem extends ActivityLogFilters {
 }
 
 export interface ActivityLogCache {
-  results: ActivityLogCacheItem[]
+  results?: ActivityLogCacheItem[]
   filters?: ActivityLogFilters
 }

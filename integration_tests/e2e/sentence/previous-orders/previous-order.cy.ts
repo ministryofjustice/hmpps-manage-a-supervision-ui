@@ -55,7 +55,6 @@ context('Sentence', () => {
     page.assertPageElementAtIndexWithin('section', 2, 'dd', 1, '1 February 2024')
     page.assertPageElementAtIndexWithin('section', 2, 'dd', 2, '1 November 2024')
     page.assertPageElementAtIndexWithin('section', 2, 'dd', 3, '31 January 2025')
-
     const monthsElapsed = monthsOrDaysElapsed('2024-02-01')
     page.assertPageElementAtIndexWithin('section', 2, 'dd', 4, `${monthsElapsed} elapsed (of 12 months)`)
     page.assertPageElementAtIndexWithin('section', 2, 'dd', 5, 'Pre-sentence report')

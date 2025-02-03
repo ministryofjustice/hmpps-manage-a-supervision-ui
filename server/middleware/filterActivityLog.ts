@@ -53,6 +53,7 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
         }
         return acc
       }, '')
+
     return queryStr
   }
 

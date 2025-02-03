@@ -66,6 +66,7 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
       res.render('pages/activity-log', {
         personActivity,
         crn,
+        query,
         queryParams,
         page,
         view,
@@ -73,7 +74,6 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
         risksWidget,
         predictorScores,
         url: req.url,
-        query,
         resultsStart,
         resultsEnd,
       })
@@ -146,7 +146,6 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
     ])
     const isActivityLog = true
     const queryParams = getQueryString(req.query)
-
     const { category } = req.query
 
     await auditService.sendAuditMessage({
@@ -175,13 +174,17 @@ export default function activityLogRoutes(router: Router, { hmppsAuthClient }: S
 
   function getQueryString(params: Query): string[] {
     const queryParams: string[] = []
-    if (params.view) {
-      queryParams.push(`view=${params.view}`)
+    const usedParams = ['view', 'requirement', 'keywords', 'dateFrom', 'dateTo', 'compliance', 'page']
+    for (const usedParam of usedParams) {
+      if (params[usedParam]) {
+        if (!Array.isArray(params[usedParam])) {
+          queryParams.push(`${usedParam}=${params[usedParam]}`)
+        } else {
+          params[usedParam].forEach(param => queryParams.push(`${usedParam}=${param}`))
+        }
+      }
     }
 
-    if (params.requirement) {
-      queryParams.push(`requirement=${params.requirement}`)
-    }
     return queryParams
   }
 }

@@ -2,6 +2,28 @@ import Page from '../pages/page'
 import ActivityLogPage from '../pages/activityLog'
 import errorMessages from '../../server/properties/errorMessages'
 
+const keywords = 'Phone call'
+const dateFrom = '11/1/2025'
+const dateTo = '12/1/2025'
+
+const fillFilters = (page: ActivityLogPage) => {
+  page.getKeywordsInput().type(keywords)
+  page.getDateFromInput().type(dateFrom)
+  page.getDateToInput().type(dateTo)
+  page.getComplianceFilter(1).click()
+  page.getComplianceFilter(2).click()
+  page.getComplianceFilter(3).click()
+}
+
+const filtersAreFilled = (page: ActivityLogPage) => {
+  page.getKeywordsInput().should('have.value', keywords)
+  page.getDateFromInput().should('have.value', dateFrom)
+  page.getDateToInput().should('have.value', dateTo)
+  page.getComplianceFilter(1).should('be.checked')
+  page.getComplianceFilter(2).should('be.checked')
+  page.getComplianceFilter(3).should('be.checked')
+}
+
 context('Activity log', () => {
   const today = new Date()
   const day = today.getDate()
@@ -356,6 +378,7 @@ context('Activity log', () => {
     cy.visit('/case/X000001/activity-log')
     const page = Page.verifyOnPage(ActivityLogPage)
     page.getPaginationLink(3).click()
+    // cy.pause()
     cy.get('.govuk-pagination__link[rel="next"]').click()
     page.getPaginationLink(3).should('not.have.attr', 'aria-current')
     page.getPaginationLink(4).should('have.attr', 'aria-current')
@@ -436,5 +459,30 @@ context('Activity log', () => {
       .getNoResults()
       .find('li:nth-of-type(3)')
       .should('contain.text', 'removing special characters like characters and accent letters')
+  })
+  it('should persist the selected filters when a pagination link is clicked', () => {
+    cy.visit('/case/X000001/activity-log')
+    const page = Page.verifyOnPage(ActivityLogPage)
+    fillFilters(page)
+    page.getApplyFiltersButton().click()
+    page.getPaginationItem(2).click()
+    filtersAreFilled(page)
+  })
+  it('should persist the selected filters when a view link is clicked', () => {
+    cy.visit('/case/X000001/activity-log')
+    const page = Page.verifyOnPage(ActivityLogPage)
+    fillFilters(page)
+    page.getApplyFiltersButton().click()
+    cy.get('.toggle-menu__list-item:nth-of-type(2) a').click()
+    filtersAreFilled(page)
+  })
+  it('should persist the selected filters when user clicks on record detail link, then returns to the page via the breadcrumb', () => {
+    cy.visit('/case/X000001/activity-log')
+    const page = Page.verifyOnPage(ActivityLogPage)
+    fillFilters(page)
+    page.getApplyFiltersButton().click()
+    page.getActivity('1').find('h2 a').click()
+    cy.get('.govuk-breadcrumbs__list .govuk-breadcrumbs__list-item:nth-of-type(3) a').click()
+    filtersAreFilled(page)
   })
 })

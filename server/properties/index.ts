@@ -131,7 +131,7 @@ export const personDetailsValidation: ValidationSpec = {
       },
     ],
   },
-  addressType: {
+  addressTypeCode: {
     optional: false,
     checks: [
       {

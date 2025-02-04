@@ -109,7 +109,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       mainAddress.town = request.town
       mainAddress.county = request.county
       mainAddress.postcode = request.postcode
-      mainAddress.typeCode = request.addressType
+      mainAddress.typeCode = request.addressTypeCode
       mainAddress.verified = request.verified
       mainAddress.from = request.startDate
       mainAddress.to = request.endDate

@@ -38,7 +38,7 @@ export interface PersonalDetailsUpdateRequest extends Validateable {
   town?: string
   county?: string
   postcode?: string
-  addressType?: string
+  addressTypeCode?: string
   startDate?: string
   endDate?: string
   notes?: string

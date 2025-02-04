@@ -312,7 +312,7 @@
                     classes: "govuk-label--s govuk-!-font-weight-bold"
                 },
                 classes: "govuk-select--width-30",
-                name: 'addressType',
+                name: 'addressTypeCode',
                 formGroup: {
                     attributes: {
                         'data-qa': 'addressType'
@@ -320,11 +320,11 @@
                 },
                 items: addressTypeSelectItems,
                 errorMessage: {
-                    text: errorMessages.addressType,
+                    text: errorMessages.addressTypeCode,
                     attributes: {
                         'data-qa': 'addressTypeError'
                     }
-                } if errorMessages.addressType
+                } if errorMessages.addressTypeCode
             }) }}
 
             {{ govukRadios({

@@ -124,7 +124,7 @@ const testRequest: PersonalDetailsUpdateRequest = {
 }
 
 const expectedResult: Record<string, string> = {
-  addressType: 'Select an address type.',
+  addressTypeCode: 'Select an address type.',
   buildingName: 'Building name must be 35 characters or less.',
   emailAddress: 'Enter an email address in the correct format.',
   endDate: 'End date can not be later than today.',

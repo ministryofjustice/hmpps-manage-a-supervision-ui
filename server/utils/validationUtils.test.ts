@@ -42,6 +42,8 @@ describe('is numeric', () => {
     ['empty string', [''], false],
     ['null', [null], false],
     ['undefined', [undefined], false],
+    ['number with spaces', ['0191 284 65 68'], true],
+    ['decimal', ['1.0'], false],
     ['populated char', ['asdsad'], false],
     ['populated numeric', ['123'], true],
   ])('%s isNumeric(%s, %s)', (_: string, a: [], expected: boolean) => {

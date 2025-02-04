@@ -52,6 +52,7 @@ import {
   tierLink,
   timeForSort,
   timeFromTo,
+  toErrorList,
   toIsoDateFromPicker,
   toSlug,
   toYesNo,
@@ -119,6 +120,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('defaultFormSelectValues', defaultFormSelectValues)
   njkEnv.addFilter('dateForSort', dateForSort)
   njkEnv.addFilter('timeForSort', timeForSort)
+  njkEnv.addFilter('toErrorList', toErrorList)
 
   app.use((req: Request, res: AppResponse, next: NextFunction) => {
     njkEnv.addFilter('decorateFormAttributes', decorateFormAttributes(req, res))

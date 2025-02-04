@@ -185,7 +185,7 @@ export const getTagClass = (score: RiskScore) => {
   }
 }
 
-export const addressToList = (address: Address): string[] => {
+export const addressToList = (address: Address, hidePostcode: boolean = false): string[] => {
   const addressArray: string[] = []
   let buildingNumber = ''
   if (address?.officeName) {
@@ -200,11 +200,11 @@ export const addressToList = (address: Address): string[] => {
   if (address?.streetName) {
     addressArray.push(`${buildingNumber}${address?.streetName}`)
   }
-  if (address?.town) {
-    addressArray.push(address?.town)
-  }
   if (address?.district) {
     addressArray.push(address?.district)
+  }
+  if (address?.town) {
+    addressArray.push(address?.town)
   }
   if (address?.ldu) {
     addressArray.push(address?.ldu)
@@ -212,7 +212,7 @@ export const addressToList = (address: Address): string[] => {
   if (address?.county) {
     addressArray.push(address?.county)
   }
-  if (address?.postcode) {
+  if (address?.postcode && hidePostcode === false) {
     addressArray.push(address?.postcode)
   }
 
@@ -667,6 +667,15 @@ export const groupNeeds = (level: string, needs: Need[]) => {
   }
 
   return needs.filter(need => need.severity === level)
+}
+
+export const toErrorList = (errors: Record<string, string>) => {
+  return Object.entries(errors).map(error => {
+    return {
+      text: error[1],
+      href: `#${error[0]}`,
+    }
+  })
 }
 
 function toMap(partial: Partial<Record<RiskScore, string[]>>): { [key: string]: string } {

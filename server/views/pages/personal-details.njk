@@ -6,6 +6,7 @@
 {% set headerCRN = crn %}
 {% set headerDob = personalDetails.dateOfBirth  %}
 {% set headerGender = personalDetails.preferredGender  %}
+{% set noFixedAddress =  personalDetails.mainAddress.noFixedAddress === true %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -40,8 +41,11 @@
 
             {% set address %}
                 {% if personalDetails.mainAddress %}
-                    {{ addressToList(mainAddress).join('<br>') | safe }}
-                    <br/>
+                    {% set addressAsList = addressToList(mainAddress, noFixedAddress) %}
+                    {% if addressAsList.length > 0 %}
+                        {{ addressAsList.join('<br>') | safe }}
+                        <br/>
+                    {% endif %}
                     <p class="govuk-!-margin-top-2 govuk-!-margin-bottom-0">
                         <span class="govuk-summary-list__key govuk-!-padding-bottom-0" data-qa="addressTypeLabel">Type of address</span>
                         <span data-qa="addressTypeValue">{{ mainAddress.type + ' (verified)' if mainAddress.verified else mainAddress.type + ' (not verified)' }} </span>
@@ -55,8 +59,7 @@
                         <span data-qa="mainAddressNotesValue">{{  mainAddress.notes | nl2br if mainAddress.notes else 'No notes'  }} </span>
                     </p>
             {% else %}
-                No main address<br />
-                <a href="/case/{{ crn }}/handoff/delius">Add a main address in NDelius</a>
+                No main address
             {% endif %}
         {% endset %}
 

@@ -198,8 +198,7 @@
     },
     {
       "request": {
-        "urlPattern": "/mas/personal-details/X000001",
-        "method": "GET"
+        "urlPattern": "/mas/personal-details/X000001"
       },
       "response": {
         "status": 200,
@@ -311,6 +310,20 @@
               "relationshipType": "Emergency Contact"
             }
           ],
+          "addressTypes": [
+            {
+              "code": "BASS",
+              "description": "BASS accommodation 13 weeks or more"
+            },
+            {
+              "code": "HL",
+              "description": "Homeless - Shelter/Emergency Hostel/Campsite"
+            },
+            {
+              "code": "HO",
+              "description": "Householder (Owner - freehold or leasehold)"
+            }
+          ],
           "mainAddress": {
             "buildingNumber": "32",
             "streetName": "SCOTLAND STREET",
@@ -321,7 +334,9 @@
             "verified": true,
             "lastUpdated": "2023-03-20",
             "type": "Householder (Owner - freehold or leasehold)",
+            "typeCode": "HO",
             "status": "Main",
+            "noFixedAddress": true,
             "lastUpdatedBy": {
               "forename": "NDelius03",
               "surname": "NDelius03"

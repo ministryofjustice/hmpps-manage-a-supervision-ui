@@ -20,6 +20,7 @@ import {
   deliusDateFormat,
   deliusDeepLinkUrl,
   deliusHomepageUrl,
+  fromIsoDateToPicker,
   fullName,
   getAppointmentsToAction,
   getComplianceStatus,
@@ -51,6 +52,7 @@ import {
   tierLink,
   timeForSort,
   timeFromTo,
+  toIsoDateFromPicker,
   toSlug,
   toYesNo,
   yearsSince,
@@ -152,4 +154,6 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addGlobal('isDefined', isDefined)
   njkEnv.addGlobal('hasValue', hasValue)
   njkEnv.addGlobal('riskLevelLabel', riskLevelLabel)
+  njkEnv.addGlobal('toIsoDateFromPicker', toIsoDateFromPicker)
+  njkEnv.addGlobal('fromIsoDateToPicker', fromIsoDateToPicker)
 }

@@ -125,6 +125,7 @@
     "nunjucks": "^3.2.4",
     "passport": "^0.7.0",
     "passport-oauth2": "^1.8.0",
+    "postcode-validator": "^3.10.2",
     "prom-client": "^15.1.3",
     "redis": "^4.7.0",
     "slugify": "^1.6.6",

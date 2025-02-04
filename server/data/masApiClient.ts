@@ -7,6 +7,7 @@ import {
   DisabilityOverview,
   PersonalContact,
   PersonalDetails,
+  PersonalDetailsUpdateRequest,
   ProvisionOverview,
 } from './model/personalDetails'
 import { AddressOverview, PersonSummary } from './model/common'
@@ -87,6 +88,15 @@ export default class MasApiClient extends RestClient {
 
   async getPersonalDetails(crn: string): Promise<PersonalDetails | null> {
     return this.get({ path: `/personal-details/${crn}`, handle404: false })
+  }
+
+  async updatePersonalDetails(crn: string, body: PersonalDetailsUpdateRequest): Promise<PersonalDetails | null> {
+    return this.post({
+      data: body,
+      path: `/personal-details/${crn}`,
+      handle404: true,
+      handle500: true,
+    })
   }
 
   async getPersonalContact(crn: string, id: string): Promise<PersonalContact | null> {

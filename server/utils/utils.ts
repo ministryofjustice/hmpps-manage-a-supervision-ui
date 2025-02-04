@@ -91,6 +91,27 @@ export const monthsOrDaysElapsed = (datetimeString: string): string => {
   return `${months} months`
 }
 
+export const toIsoDateFromPicker = (datetimeString: string): string => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  const converted = DateTime.fromFormat(datetimeString, 'd/M/yyyy').toFormat('yyyy-MM-dd')
+  if (converted === 'Invalid DateTime') {
+    return datetimeString
+  }
+  return converted
+}
+
+export const fromIsoDateToPicker = (datetimeString: string): string => {
+  if (!datetimeString || isBlank(datetimeString)) return null
+  if (!DateTime.fromFormat(datetimeString, 'yyyy-MM-dd').isValid) {
+    return datetimeString
+  }
+  const converted = DateTime.fromISO(datetimeString).toFormat('d/M/yyyy')
+  if (converted === 'Invalid DateTime') {
+    return datetimeString
+  }
+  return converted
+}
+
 export const dateWithYearShortMonth = (datetimeString: string): string => {
   if (!datetimeString || isBlank(datetimeString)) return null
   return DateTime.fromISO(datetimeString).toFormat('d MMM yyyy')

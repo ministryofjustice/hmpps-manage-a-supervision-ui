@@ -8,7 +8,7 @@ context('Personal Details', () => {
     page.assertRiskTags()
     page.headerCrn().should('contain.text', 'X000001')
     page.headerName().should('contain.text', 'Eula Schmeler')
-    page.pageHeading().should('contain.text', 'Personal Details')
+    page.pageHeading().should('contain.text', 'Personal details')
     page.getTab('overview').should('contain.text', 'Overview')
     page.getTab('personalDetails').should('contain.text', 'Personal details')
     page.getTab('risk').should('contain.text', 'Risk')

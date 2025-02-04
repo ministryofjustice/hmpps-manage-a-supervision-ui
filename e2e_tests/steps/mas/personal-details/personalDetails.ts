@@ -5,7 +5,7 @@ export const loginMasAndGoToPersonalDetails = async (page: Page, crn: string) =>
   await loginToManageMySupervision(page)
   await searchForCrn(page, crn)
   await page.getByRole('link', { name: 'Personal details' }).first().click()
-  await expect(page.locator('h1.govuk-heading-l')).toContainText('Personal Details')
+  await expect(page.locator('h1.govuk-heading-l')).toContainText('Personal details')
 }
 
 export const searchForCrn = async (page: Page, crn: string) => {

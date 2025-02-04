@@ -7,20 +7,27 @@ import MasApiClient from '../data/masApiClient'
 import ArnsApiClient from '../data/arnsApiClient'
 import TierApiClient from '../data/tierApiClient'
 import type { Route } from '../@types'
-import { toPredictors, toRoshWidget } from '../utils/utils'
+import { toIsoDateFromPicker, toPredictors, toRoshWidget } from '../utils/utils'
+import { PersonalDetailsUpdateRequest } from '../data/model/personalDetails'
+import { validateWithSpec } from '../utils/validationUtils'
+import { personDetailsValidation } from '../properties'
 
 export default function personalDetailRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
+  const post = (path: string, handler: Route<void>) => router.post(path, asyncMiddleware(handler))
 
-  get('/case/:crn/personal-details', async (req, res, _next) => {
+  get(['/case/:crn/personal-details', '/case/:crn/personal-details/edit-contact-details'], async (req, res, _next) => {
     const { crn } = req.params
+    const success = req.query.update
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
     const arnsClient = new ArnsApiClient(token)
     const tierClient = new TierApiClient(token)
 
+    const edit = req.path.includes('edit-contact-details') === true
+
     await auditService.sendAuditMessage({
-      action: 'VIEW_MAS_PERSONAL_DETAILS',
+      action: edit ? 'VIEW_EDIT_PERSONAL_DETAILS' : 'VIEW_MAS_PERSONAL_DETAILS',
       who: res.locals.user.username,
       subjectId: crn,
       subjectType: 'CRN',
@@ -38,14 +45,90 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
     const risksWidget = toRoshWidget(risks)
 
     const predictorScores = toPredictors(predictors)
-    res.render('pages/personal-details', {
+    res.render(edit ? 'pages/edit-contact-details/edit-contact-details' : 'pages/personal-details', {
       personalDetails,
       needs,
       tierCalculation,
       crn,
       risksWidget,
       predictorScores,
+      success,
+      backLink: edit ? `/case/${crn}/personal-details` : undefined,
     })
+  })
+
+  post('/case/:crn/personal-details/edit-contact-details', async (req, res, _next) => {
+    const errorMessages = validateWithSpec(req.body, personDetailsValidation)
+    res.locals.errorMessages = errorMessages
+
+    const request: PersonalDetailsUpdateRequest = {
+      ...req.body,
+      endDate: toIsoDateFromPicker(req.body.endDate),
+      startDate: toIsoDateFromPicker(req.body.startDate),
+      noFixedAddress: req.body.noFixedAddress === 'true',
+      verified: req.body.verified ? req.body.verified === 'true' : null,
+    }
+
+    const warningDisplayed: boolean =
+      !request.endDate || Object.prototype.hasOwnProperty.call(req.body, 'endDateWarningDisplayed')
+    const isValid = Object.keys(errorMessages).length === 0 && warningDisplayed
+    const { crn } = req.params
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+    const masClient = new MasApiClient(token)
+    const arnsClient = new ArnsApiClient(token)
+    const tierClient = new TierApiClient(token)
+    await auditService.sendAuditMessage({
+      action: 'SAVE_EDIT_PERSONAL_DETAILS',
+      who: res.locals.user.username,
+      subjectId: crn,
+      subjectType: 'CRN',
+      correlationId: v4(),
+      service: 'hmpps-manage-people-on-probation-ui',
+    })
+
+    if (!isValid) {
+      const [personalDetails, risks, needs, tierCalculation, predictors] = await Promise.all([
+        masClient.getPersonalDetails(crn),
+        arnsClient.getRisks(crn),
+        arnsClient.getNeeds(crn),
+        tierClient.getCalculationDetails(crn),
+        arnsClient.getPredictorsAll(crn),
+      ])
+
+      const risksWidget = toRoshWidget(risks)
+      const predictorScores = toPredictors(predictors)
+      const mainAddress = { ...personalDetails.mainAddress }
+      personalDetails.telephoneNumber = request.phoneNumber
+      personalDetails.mobileNumber = request.mobileNumber
+      personalDetails.email = request.emailAddress
+      mainAddress.noFixedAddress = request.noFixedAddress
+      mainAddress.buildingName = request.buildingName
+      mainAddress.buildingNumber = request.buildingNumber
+      mainAddress.streetName = request.streetName
+      mainAddress.district = request.district
+      mainAddress.town = request.town
+      mainAddress.county = request.county
+      mainAddress.postcode = request.postcode
+      mainAddress.typeCode = request.addressTypeCode
+      mainAddress.verified = request.verified
+      mainAddress.from = request.startDate
+      mainAddress.to = request.endDate
+      mainAddress.notes = request.notes
+      personalDetails.mainAddress = mainAddress
+
+      res.render('pages/edit-contact-details/edit-contact-details', {
+        personalDetails,
+        needs,
+        tierCalculation,
+        crn,
+        risksWidget,
+        predictorScores,
+        backLink: `/case/${crn}/personal-details`,
+      })
+    } else {
+      await masClient.updatePersonalDetails(crn, request)
+      res.redirect(`/case/${crn}/personal-details?update=success`)
+    }
   })
 
   get('/case/:crn/personal-details/personal-contact/:id', async (req, res, _next) => {

@@ -8,6 +8,7 @@ import { Location } from '../data/model/caseload'
 import { SentryConfig } from '../config'
 
 interface Locals {
+  errorMessages: Record<string, string>
   filters?: ActivityLogFiltersResponse
   user: { token: string; authSource: string; username?: string }
   compactView?: boolean

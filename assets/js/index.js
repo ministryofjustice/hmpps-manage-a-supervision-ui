@@ -57,5 +57,22 @@ const resetConditionals = () => {
     })
   }
 }
+
+const setNoFixedAddressConditional = () => {
+  const fixedAddressSection = document.querySelector('div[fixed-address-section]')
+  const fixedAddressCheckbox = document.querySelector('input[name="noFixedAddress"]')
+  const showOrHide = () => {
+    if (fixedAddressCheckbox.checked) {
+      fixedAddressSection.classList.add('govuk-visually-hidden')
+    } else {
+      fixedAddressSection.classList.remove('govuk-visually-hidden')
+    }
+  }
+  if (fixedAddressSection && fixedAddressCheckbox) {
+    showOrHide()
+    fixedAddressCheckbox.addEventListener('click', showOrHide)
+  }
+}
+setNoFixedAddressConditional()
 lastAppointment()
 resetConditionals()

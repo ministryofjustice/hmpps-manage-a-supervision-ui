@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-cycle
 import { Name, PersonalCircumstance, PersonSummary } from './common'
+import { Validateable } from '../../utils/validationUtils'
 
 export interface PersonalDetails {
   crn: string
@@ -23,6 +24,26 @@ export interface PersonalDetails {
   religionOrBelief?: string
   sexualOrientation?: string
   documents: Document[]
+  addressTypes: AddressType[]
+}
+
+export interface PersonalDetailsUpdateRequest extends Validateable {
+  phoneNumber?: string
+  mobileNumber?: string
+  emailAddress?: string
+  buildingName?: string
+  buildingNumber?: string
+  streetName?: string
+  district?: string
+  town?: string
+  county?: string
+  postcode?: string
+  addressTypeCode?: string
+  startDate?: string
+  endDate?: string
+  notes?: string
+  verified?: boolean
+  noFixedAddress?: boolean
 }
 
 export interface PersonalContact {
@@ -49,6 +70,11 @@ export interface Address {
   lastUpdatedBy?: Name
 }
 
+export interface AddressType {
+  code?: string
+  description?: string
+}
+
 export interface PersonAddress {
   buildingName?: string
   buildingNumber?: string
@@ -63,7 +89,11 @@ export interface PersonAddress {
   from: string
   to: string
   type?: string
+  typeCode?: string
   status?: string
+  verified?: boolean
+  noFixedAddress?: boolean
+  notes?: string
 }
 
 export interface Circumstances {

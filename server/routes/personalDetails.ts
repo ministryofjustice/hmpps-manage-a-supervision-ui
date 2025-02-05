@@ -11,6 +11,7 @@ import { toIsoDateFromPicker, toPredictors, toRoshWidget } from '../utils/utils'
 import { PersonalDetailsUpdateRequest } from '../data/model/personalDetails'
 import { validateWithSpec } from '../utils/validationUtils'
 import { personDetailsValidation } from '../properties'
+import renders from '../controllers/renders'
 
 export default function personalDetailRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
@@ -129,6 +130,7 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       res.redirect(`/case/${crn}/personal-details?update=success`)
     }
   })
+  get('/case/:crn/personal-details/staff-contacts', renders.staffContacts(hmppsAuthClient))
 
   get('/case/:crn/personal-details/personal-contact/:id', async (req, res, _next) => {
     const { crn } = req.params

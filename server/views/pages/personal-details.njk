@@ -348,8 +348,7 @@
         attributes: {'data-qa': 'identityNumberCard'},
         titleText: "Identity numbers",
         classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-        html: identityNumbers,
-        actions: {}
+        html: identityNumbers
     }) }}
 
 {% if personalDetails.staffContacts %}
@@ -357,7 +356,7 @@
     {% for staffContact in personalDetails.staffContacts %}
       {% set staffContactRows = (staffContactRows.push({
             key: { html: '<span data-qa="staffContactRoleLabel">' + staffContact.role + '</span><br><span class="govuk-body-s secondary-text" data-qa="staffContactLastUpdatedLabel">Last updated ' + staffContact.lastUpdated | dateWithYear + '</span>' },
-            value: { html: '<a href="/case/' + crn + '/personal-details/staff-contacts/' + staffContact.contactId + '" data-qa="staffContactNameValue">' + staffContact.name + '</a>' }
+            value: { html: '<span data-qa="staffContactNameValue">' + staffContact.name + '</span>' }
           }), staffContactRows) %}
     {% endfor %}
 
@@ -372,7 +371,14 @@
         titleText: "Staff contacts",
         classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
         html: staffContactList,
-        actions: {}
+        actions: {
+        items: [
+          {
+            text: 'View staff contacts',
+            href:  '/case/' + crn + '/personal-details/staff-contacts'
+          }
+        ]
+      }
     }) }}
 {% endif %}
 

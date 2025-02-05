@@ -321,28 +321,37 @@
           ],
           "staffContacts": [
             {
-              "contactId": "123",
               "name": "Arhsimna Xolfo",
-              "email": "",
-              "telephoneNumber": "",
               "role": "Prison Offender Manager (POM)",
-              "lastUpdated": "2024-11-15"
+              "email": "arhsimna.xolfo@moj.gov.uk",
+              "telephoneNumber": "07321165373",
+              "provider": "London",
+              "probationDeliveryUnit": "All London",
+              "team": "Unallocated Team (N07)",
+              "allocatedUntil": "2025-04-22",
+              "lastUpdated": "2024-04-30"
             },
             {
-              "contactId": "456",
               "name": "Yrhreender Hanandra",
-              "email": "",
-              "telephoneNumber": "",
               "role": "Community Offender Manager (COM)",
-              "lastUpdated": "2024-11-15"
+              "email": "yrhreender.hanandra@moj.gov.uk",
+              "telephoneNumber": "07321165373",
+              "provider": "London",
+              "probationDeliveryUnit": "All London",
+              "team": "Unallocated Team (N07)",
+              "allocatedUntil": "2025-04-22",
+              "lastUpdated": "2024-04-30"
             },
             {
-              "contactId": "789",
               "name": "Iwendeps Yvygsee",
-              "email": "",
-              "telephoneNumber": "",
               "role": "Probation practitioner",
-              "lastUpdated": "2024-11-15"
+              "email": "iwendeps.yvygsee@moj.gov.uk",
+              "telephoneNumber": "07321165373",
+              "provider": "London",
+              "probationDeliveryUnit": "All London",
+              "team": "Unallocated Team (N07)",
+              "allocatedUntil": "2025-04-22",
+              "lastUpdated": "2024-04-30"
             }
           ],
           "mainAddress": {

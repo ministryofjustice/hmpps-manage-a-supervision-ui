@@ -8,6 +8,7 @@ import ArnsApiClient from '../data/arnsApiClient'
 import TierApiClient from '../data/tierApiClient'
 import type { Route } from '../@types'
 import { toPredictors, toRoshWidget } from '../utils/utils'
+import renders from '../controllers/renders'
 
 export default function personalDetailRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
@@ -46,6 +47,8 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       predictorScores,
     })
   })
+
+  get('/case/:crn/personal-details/staff-contacts', renders.staffContacts(hmppsAuthClient))
 
   get('/case/:crn/personal-details/personal-contact/:id', async (req, res, _next) => {
     const { crn } = req.params

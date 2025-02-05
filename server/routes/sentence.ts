@@ -8,6 +8,7 @@ import TierApiClient from '../data/tierApiClient'
 import type { Route } from '../@types'
 import ArnsApiClient from '../data/arnsApiClient'
 import { toPredictors, toRoshWidget } from '../utils/utils'
+import renders from '../controllers/renders'
 
 interface QueryParams {
   activeSentence: string
@@ -165,28 +166,7 @@ export default function sentenceRoutes(router: Router, { hmppsAuthClient }: Serv
     })
   })
 
-  get('/case/:crn/address-book-professional', async (req, res, _next) => {
-    const { crn } = req.params
-    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
-
-    await auditService.sendAuditMessage({
-      action: 'VIEW_MAS_SENTENCE_PROFESSIONAL_CONTACTS',
-      who: res.locals.user.username,
-      subjectId: crn,
-      subjectType: 'CRN',
-      correlationId: v4(),
-      service: 'hmpps-manage-people-on-probation-ui',
-    })
-
-    const masClient = new MasApiClient(token)
-
-    const professionalContact = await masClient.getContacts(crn)
-
-    res.render('pages/address-book-professional', {
-      professionalContact,
-      crn,
-    })
-  })
+  get('/case/:crn/sentence/probation-history/staff-contacts', renders.staffContacts(hmppsAuthClient))
 
   get('/case/:crn/sentence/licence-condition/:licenceConditionId/note/:noteId', async (req, res, _next) => {
     const { crn, licenceConditionId, noteId } = req.params

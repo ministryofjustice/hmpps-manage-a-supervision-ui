@@ -20,7 +20,11 @@
           attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
         },
         {
-          text: currentSectionName
+          text: currentSectionName,
+          href: "/case/" + crn + "/sentence"
+        },
+        {
+          text: "Probation history"
         }
       ]
     }) }}
@@ -74,10 +78,8 @@
             {% endset %}
 
             {% set previousProfessionalContacts %}
-                {% if sentenceDetails.probationHistory.numberOfProfessionalContacts == 1 %}
-                 <a href="/case/{{ crn }}/address-book-professional">1 contact</a>
-                {% elseif sentenceDetails.probationHistory.numberOfProfessionalContacts > 1 %}
-                  <a href="/case/{{ crn }}/address-book-professional">{{ sentenceDetails.probationHistory.numberOfProfessionalContacts }} contacts</a>
+                {% if sentenceDetails.probationHistory.numberOfProfessionalContacts > 0 %}
+                 <a href="/case/{{ crn }}/sentence/probation-history/staff-contacts">{{ sentenceDetails.probationHistory.numberOfProfessionalContacts }} previous contact{% if sentenceDetails.probationHistory.numberOfProfessionalContacts != 1 %}s{% endif %}</a>
                 {% else %}
                   No previous professional contacts
                 {% endif %}
@@ -95,7 +97,7 @@
                         value: { text: '1 previous breach' if sentenceDetails.probationHistory.numberOfTerminatedEventBreaches == 1 else sentenceDetails.probationHistory.numberOfTerminatedEventBreaches + ' previous breaches' }
                       },
                       {
-                        key: { text: "Previous professional contacts" },
+                        key: { text: "Previous staff contacts" },
                         value: { html: previousProfessionalContacts }
                       }
                     ]

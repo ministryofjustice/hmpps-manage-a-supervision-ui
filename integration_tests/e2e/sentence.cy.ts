@@ -169,7 +169,7 @@ context('Sentence', () => {
 
     page
       .getCardElement('probationHistory', '.govuk-summary-list__key', 2)
-      .should('contain.text', 'Previous professional contacts')
+      .should('contain.text', 'Previous staff contacts')
 
     page
       .getCardElement('probationHistory', '.govuk-summary-list__value', 1)
@@ -178,9 +178,16 @@ context('Sentence', () => {
     page
       .getCardHeader('probationHistory')
       .within(() => cy.get('a').invoke('attr', 'href').should('equal', '/case/X000001/sentence/previous-orders'))
+    page.getCardHeader('probationHistory').within(() => cy.get('a').eq(1).should('contain.text', '3 previous contacts'))
     page
       .getCardHeader('probationHistory')
-      .within(() => cy.get('a').eq(1).invoke('attr', 'href').should('equal', '/case/X000001/address-book-professional'))
+      .within(() =>
+        cy
+          .get('a')
+          .eq(1)
+          .invoke('attr', 'href')
+          .should('equal', '/case/X000001/sentence/probation-history/staff-contacts'),
+      )
   })
   it('Sentence page is loaded with no active sentence', () => {
     cy.visit('/case/X000001/sentence?activeSentence=false')

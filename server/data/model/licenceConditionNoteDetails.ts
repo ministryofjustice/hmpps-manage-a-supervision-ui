@@ -1,4 +1,5 @@
 import { PersonSummary } from './common'
+import { Note } from './note'
 
 export interface LicenceConditionNoteDetails {
   personSummary: PersonSummary
@@ -10,13 +11,5 @@ export interface LicenceCondition {
   subTypeDescription: string
   imposedReleasedDate: string
   actualStartDate: string
-  licenceNote: LicenceConditionNote
-}
-
-export interface LicenceConditionNote {
-  id: string
-  createdBy: string
-  createdByDate: string
-  note: string
-  hasNotesBeenTruncated: boolean
+  licenceNote: Note
 }

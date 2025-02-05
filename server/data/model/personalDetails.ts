@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-cycle
 import { Name, PersonalCircumstance, PersonSummary } from './common'
 import { Validateable } from '../../utils/validationUtils'
+import { Note } from './note'
 
 export interface PersonalDetails {
   crn: string
@@ -51,7 +52,8 @@ export interface PersonalContact {
   relationship?: string
   relationshipType: string
   address?: Address
-  notes?: string
+  notes?: Note[]
+  note?: Note
   lastUpdated?: string
   lastUpdatedBy?: Name
 }

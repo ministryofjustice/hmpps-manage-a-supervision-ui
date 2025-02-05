@@ -54,6 +54,10 @@
         classes: 'govuk-!-margin-bottom-2'
     }) if personalDetails.mainAddress.to }}
 
+    {% if errorMessages %}
+        {{ govukErrorSummary({ titleText: "There is a problem", errorList: errorMessages | toErrorList }) }}
+    {% endif %}
+
 {% endblock %}
 
 {% block pageContent %}
@@ -74,6 +78,7 @@
                 hint: {
                     text: "For example, 01632 960 000"
                 },
+                id: 'phoneNumber',
                 name: 'phoneNumber',
                 formGroup: {
                     attributes: {
@@ -98,6 +103,7 @@
                 hint: {
                     text: "For example, 07771 900 900"
                 },
+                id: 'mobileNumber',
                 name: 'mobileNumber',
                 formGroup: {
                     attributes: {
@@ -123,6 +129,7 @@
                 hint: {
                     text: "For example, name@example.com"
                 },
+                id: 'emailAddress',
                 name: 'emailAddress',
                 formGroup: {
                     attributes: {
@@ -144,8 +151,9 @@
             <p class="govuk-label--s">Select if they have no fixed main address</p>
 
             {{ govukCheckboxes ({
-                "name": 'noFixedAddress',
-                "items": [
+                id: 'noFixedAddress',
+                name: 'noFixedAddress',
+                items: [
                     {
                         'value': true,
                         'text': 'No fixed address',
@@ -157,13 +165,13 @@
 
             <div fixed-address-section>
 
-
                 {{ govukInput({
                     value: personalDetails.mainAddress.buildingName if personalDetails.mainAddress.buildingName,
                     label: {
                         text: "Building name (optional)",
                         classes: "govuk-label--s govuk-!-font-weight-regular"
                     },
+                    id: 'buildingName',
                     name: 'buildingName',
                     formGroup: {
                         attributes: {
@@ -185,6 +193,7 @@
                         text: "Building number (optional)",
                         classes: "govuk-label--s govuk-!-font-weight-regular"
                     },
+                    id: 'buildingNumber',
                     name: 'buildingNumber',
                     formGroup: {
                         attributes: {
@@ -206,6 +215,7 @@
                         text: "Street name (optional)",
                         classes: "govuk-label--s govuk-!-font-weight-regular"
                     },
+                    id: 'streetName',
                     name: 'streetName',
                     formGroup: {
                         attributes: {
@@ -227,6 +237,7 @@
                         text: "District (optional)",
                         classes: "govuk-label--s govuk-!-font-weight-regular"
                     },
+                    id: 'district',
                     name: 'district',
                     formGroup: {
                         attributes: {
@@ -248,6 +259,7 @@
                         text: "Town or city (optional)",
                         classes: "govuk-label--s govuk-!-font-weight-regular"
                     },
+                    id: 'town',
                     name: 'town',
                     formGroup: {
                         attributes: {
@@ -269,6 +281,7 @@
                         text: "County (optional)",
                         classes: "govuk-label--s govuk-!-font-weight-regular"
                     },
+                    id: 'county',
                     name: 'county',
                     formGroup: {
                         attributes: {
@@ -291,6 +304,7 @@
                         text: "Postcode (optional)",
                         classes: "govuk-label--s govuk-!-font-weight-regular"
                     },
+                    id: 'postcode',
                     name: 'postcode',
                     formGroup: {
                         attributes: {
@@ -312,6 +326,7 @@
                     classes: "govuk-label--s govuk-!-font-weight-bold"
                 },
                 classes: "govuk-select--width-30",
+                id: 'addressTypeCode',
                 name: 'addressTypeCode',
                 formGroup: {
                     attributes: {
@@ -359,6 +374,7 @@
 
             {{ mojDatePicker({
                 value: fromIsoDateToPicker(personalDetails.mainAddress.from),
+                id: "startDate",
                 name: "startDate",
                 label: {
                     text: "Start date",
@@ -382,6 +398,7 @@
 
             {{ mojDatePicker({
                 value:  fromIsoDateToPicker(personalDetails.mainAddress.to),
+                id: "endDate",
                 name: "endDate",
                 label: {
                     text: "End date (optional)",
@@ -404,6 +421,7 @@
             }) }}
 
             {{ govukTextarea({
+                id: "notes",
                 name: "notes",
                 attributes: { "data-qa": "notes"},
                 value: personalDetails.mainAddress.notes,

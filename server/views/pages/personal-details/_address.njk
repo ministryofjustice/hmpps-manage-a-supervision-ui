@@ -8,12 +8,11 @@
 
 {% set addressHtml %}
   {% set fullAddress %}
-    {% if address.noFixedAbode %}
-      No fixed abode<br />
-      {{ address.type }}
+    {% if address.noFixedAddress %}
+      No fixed address
+    {% else %}
+      {{ addressToList(address).join('<br>') | safe }}
     {% endif %}
-
-    {{ addressToList(address).join('<br>') | safe }}
   {% endset %}
 
   {{ govukSummaryList({

@@ -52,19 +52,24 @@ context('Personal Details', () => {
       .should('contain.text', 'Prison Offender Manager (POM)')
     page
       .getRowData('staffContacts', 'staffContactLastUpdated', 'Label')
-      .should('contain.text', 'Last updated 15 November 2024')
+      .should('contain.text', 'Last updated 30 April 2024')
     page.getRowData('staffContacts', 'staffContactName', 'Value').should('contain.text', 'Arhsimna Xolfo')
     page
       .getRowData('staffContacts', 'staffContactRole', 'Label', 1)
       .should('contain.text', 'Community Offender Manager (COM)')
     page
       .getRowData('staffContacts', 'staffContactLastUpdated', 'Label', 1)
-      .should('contain.text', 'Last updated 15 November 2024')
+      .should('contain.text', 'Last updated 30 April 2024')
     page.getRowData('staffContacts', 'staffContactName', 'Value', 1).should('contain.text', 'Yrhreender Hanandra')
     page.getRowData('staffContacts', 'staffContactRole', 'Label', 2).should('contain.text', 'Probation practitioner')
     page
       .getRowData('staffContacts', 'staffContactLastUpdated', 'Label', 2)
-      .should('contain.text', 'Last updated 15 November 2024')
+      .should('contain.text', 'Last updated 30 April 2024')
+    page.getCardHeader('staffContacts').find('a').should('contain.text', 'View staff contacts')
+    page
+      .getCardHeader('staffContacts')
+      .find('a')
+      .should('have.attr', 'href', '/case/X000001/personal-details/staff-contacts')
     page.getRowData('staffContacts', 'staffContactName', 'Value', 2).should('contain.text', 'Iwendeps Yvygsee')
     page.getRowData('equalityMonitoring', 'religionOrBelief', 'Value').should('contain.text', 'Scientology')
     page.getRowData('equalityMonitoring', 'sex', 'Value').should('contain.text', 'Female')

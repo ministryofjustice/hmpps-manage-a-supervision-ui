@@ -17,6 +17,8 @@ context('Personal Details', () => {
     page.getTab('compliance').should('contain.text', 'Compliance')
     page.getCardHeader('contactDetails').should('contain.text', 'Contact details')
     page.getCardHeader('personalDetails').should('contain.text', 'Personal details')
+    page.getCardHeader('identityNumber').should('contain.text', 'Identity numbers')
+    page.getCardHeader('staffContacts').should('contain.text', 'Staff contacts')
     page.getCardHeader('equalityMonitoring').should('contain.text', 'Equality monitoring')
     page.getRowData('contactDetails', 'telephoneNumber', 'Value').should('contain.text', '0123456999')
     page.getRowData('contactDetails', 'mobileNumber', 'Value').should('contain.text', '071838893')
@@ -45,6 +47,25 @@ context('Personal Details', () => {
     page.getRowData('identityNumber', 'pnc', 'Value').should('contain.text', '1954/0018147W')
     page.getRowData('identityNumber', 'noms', 'Value').should('contain.text', 'G9566GQ')
 
+    page
+      .getRowData('staffContacts', 'staffContactRole', 'Label')
+      .should('contain.text', 'Prison Offender Manager (POM)')
+    page
+      .getRowData('staffContacts', 'staffContactLastUpdated', 'Label')
+      .should('contain.text', 'Last updated 15 November 2024')
+    page.getRowData('staffContacts', 'staffContactName', 'Value').should('contain.text', 'Arhsimna Xolfo')
+    page
+      .getRowData('staffContacts', 'staffContactRole', 'Label', 1)
+      .should('contain.text', 'Community Offender Manager (COM)')
+    page
+      .getRowData('staffContacts', 'staffContactLastUpdated', 'Label', 1)
+      .should('contain.text', 'Last updated 15 November 2024')
+    page.getRowData('staffContacts', 'staffContactName', 'Value', 1).should('contain.text', 'Yrhreender Hanandra')
+    page.getRowData('staffContacts', 'staffContactRole', 'Label', 2).should('contain.text', 'Probation practitioner')
+    page
+      .getRowData('staffContacts', 'staffContactLastUpdated', 'Label', 2)
+      .should('contain.text', 'Last updated 15 November 2024')
+    page.getRowData('staffContacts', 'staffContactName', 'Value', 2).should('contain.text', 'Iwendeps Yvygsee')
     page.getRowData('equalityMonitoring', 'religionOrBelief', 'Value').should('contain.text', 'Scientology')
     page.getRowData('equalityMonitoring', 'sex', 'Value').should('contain.text', 'Female')
     page.getRowData('equalityMonitoring', 'genderIdentity', 'Value').should('contain.text', 'Non-Binary')

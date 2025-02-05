@@ -319,6 +319,32 @@
               "relationshipType": "Emergency Contact"
             }
           ],
+          "staffContacts": [
+            {
+              "contactId": "123",
+              "name": "Arhsimna Xolfo",
+              "email": "",
+              "telephoneNumber": "",
+              "role": "Prison Offender Manager (POM)",
+              "lastUpdated": "2024-11-15"
+            },
+            {
+              "contactId": "456",
+              "name": "Yrhreender Hanandra",
+              "email": "",
+              "telephoneNumber": "",
+              "role": "Community Offender Manager (COM)",
+              "lastUpdated": "2024-11-15"
+            },
+            {
+              "contactId": "789",
+              "name": "Iwendeps Yvygsee",
+              "email": "",
+              "telephoneNumber": "",
+              "role": "Probation practitioner",
+              "lastUpdated": "2024-11-15"
+            }
+          ],
           "mainAddress": {
             "buildingNumber": "32",
             "streetName": "SCOTLAND STREET",

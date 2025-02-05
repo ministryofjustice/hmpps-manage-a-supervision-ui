@@ -36,7 +36,6 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
     ])
 
     const risksWidget = toRoshWidget(risks)
-
     const predictorScores = toPredictors(predictors)
     res.render('pages/personal-details', {
       personalDetails,

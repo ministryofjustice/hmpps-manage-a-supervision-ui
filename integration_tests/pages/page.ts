@@ -33,8 +33,8 @@ export default abstract class Page {
   getCardElement = (cardName: string, element: string, index: number): PageElement =>
     this.getCardHeader(cardName).within(() => cy.get(element).eq(index))
 
-  getRowData = (cardName: string, rowName: string, type: string): PageElement => {
-    return cy.get(`[data-qa=${cardName}Card]`).within(() => cy.get(`[data-qa=${rowName}${type}]`))
+  getRowData = (cardName: string, rowName: string, type: string, index = 0): PageElement => {
+    return cy.get(`[data-qa=${cardName}Card]`).within(() => cy.get(`[data-qa=${rowName}${type}]`).eq(index))
   }
 
   getElementData = (name: string): PageElement => {

@@ -53,7 +53,6 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
         }
         return acc
       }, '')
-
     return queryStr
   }
 
@@ -73,38 +72,30 @@ export const filterActivityLog: Route<void> = (req, res, next) => {
       ? `${baseUrl}?${queryStr}&clearFilterKey=${key}&clearFilterValue=${encodeURI(value)}`
       : `${baseUrl}?clearFilterKey=${key}&clearFilterValue=${encodeURI(value)}`
 
-  const selectedFilterItems: SelectedFilterItem[] = Object.entries(filters)
+  const selectedFilterItems: Record<string, SelectedFilterItem[]> = Object.entries(filters)
     .filter(([_key, value]) => value)
-    .reduce((acc, [key, value]) => {
-      if (Array.isArray(value)) {
-        for (const text of value) {
-          acc = [
-            ...acc,
-            {
-              text: complianceFilterOptions.find(option => option.value === text).text,
-              href: filterHref(key, text),
-            },
-          ]
+    .reduce((acc, [filterKey, filterValue]) => {
+      let value: string | SelectedFilterItem[] = null
+      if (Array.isArray(filterValue)) {
+        value = []
+        for (const text of filterValue) {
+          value.push({
+            text: complianceFilterOptions.find(option => option.value === text).text,
+            href: filterHref(filterKey, text),
+          })
         }
-      } else if (key !== 'dateTo') {
-        let text = value
-        let cfKey = key
-        if (key === 'dateFrom') {
-          text = value && filters.dateTo ? `${value} - ${filters.dateTo}` : ''
-          cfKey = 'dateRange'
+      } else if (filterKey !== 'dateTo') {
+        let text = filterValue
+        if (filterKey === 'dateFrom') {
+          text = filterValue && filters.dateTo ? `${filterValue} - ${filters.dateTo}` : ''
+          filterKey = 'dateRange'
         }
         if (text) {
-          acc = [
-            ...acc,
-            {
-              text,
-              href: filterHref(cfKey, value),
-            },
-          ]
+          value = [{ text, href: filterHref(filterKey, filterValue) }]
         }
       }
-      return acc
-    }, [])
+      return filterKey !== 'dateTo' ? { ...acc, [filterKey]: value } : acc
+    }, {})
 
   const complianceOptions: Option[] = complianceFilterOptions.map(({ text, value }) => ({
     text,

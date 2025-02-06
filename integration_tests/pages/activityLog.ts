@@ -5,6 +5,8 @@ export default class ActivityLogPage extends Page {
     super('Activity log')
   }
 
+  getSelectedFiltersBox = (): PageElement => cy.get('.moj-filter__selected')
+
   getApplyFiltersButton = (): PageElement => cy.get('[data-qa="submit-button"]')
 
   getKeywordsInput = (): PageElement => cy.get('[data-qa="keywords"] input')

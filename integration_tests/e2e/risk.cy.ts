@@ -8,11 +8,9 @@ context('Risk', () => {
   it('Risk overview page is rendered', () => {
     cy.visit('/case/X000001/risk')
     const page = Page.verifyOnPage(RiskPage)
-    page.getElementData('severeScoringNeedsLabel').should('contain.text', 'Severe-scoring areas from the assessment')
+    page.getElementData('severeScoringNeedsLabel').should('contain.text', 'Severe')
     page.getElementData('severeScoringNeedsValue').should('contain.text', 'Relationships')
-    page
-      .getElementData('standardScoringNeedsLabel')
-      .should('contain.text', 'Standard-scoring areas from the assessment')
+    page.getElementData('standardScoringNeedsLabel').should('contain.text', 'Standard')
     page.getElementData('standardScoringNeedsValue').should('contain.text', 'Accommodation')
     page.getElementData('noScoreNeedsLabel').should('contain.text', 'Areas without a need score')
     page.getElementData('noScoreNeedsValue').should('contain.text', 'Emotional wellbeing')

@@ -74,6 +74,10 @@
       }
     } if appointment.enforcementAction,
     {
+      key: { html: '<span data-qa="outcomeLabel">Outcome</span>' },
+      value: { html: '<span data-qa="outcomeValue">' + (appointment.outcome | nl2br | safe) + '</span>' }
+    } if appointment.outcome,
+    {
       key: { html: '<span data-qa="rarCategoryLabel">RAR activity</span>' },
       value: { html: '<span data-qa="rarCategoryValue">' + appointment.rarCategory + '</span>' if appointment.rarCategory else '<span data-qa="rarCategoryValue">No</span>'  }
     } if appointment.didTheyComply === true,

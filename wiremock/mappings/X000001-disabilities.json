@@ -10,8 +10,8 @@
         "jsonBody": {
           "personSummary": {
             "name": {
-              "forename": "Eula",
-              "surname": "Schmeler"
+              "forename": "Caroline",
+              "surname": "Wolff"
             },
             "crn": "X000001",
             "dateOfBirth": "1979-08-18"
@@ -68,8 +68,8 @@
         "jsonBody": {
           "personSummary": {
             "name": {
-              "forename": "Eula",
-              "surname": "Schmeler"
+              "forename": "Caroline",
+              "surname": "Wolff"
             },
             "crn": "X000001",
             "dateOfBirth": "1979-08-18"

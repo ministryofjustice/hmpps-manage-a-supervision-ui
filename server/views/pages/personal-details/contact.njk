@@ -88,7 +88,7 @@
         } if personalContact.startDate,
         {
           key: { html: '<span data-qa="contactNotesLabel">Notes</span>' },
-          value: { html:  '<span data-qa="contactNotesValue">' + notes + '</span>' if notes else 'No notes' }
+          value: { html:  '<span data-qa="contactNotesValue">' + notes + '</span>' if notes else '<span data-qa="contactNotesValue"> No notes </span>' }
         }
       ]
     }) }}

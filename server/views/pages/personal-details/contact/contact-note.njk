@@ -78,7 +78,7 @@
                     } if personalContact.contactNote.createdByDate,
                     {
                         key: { html: '<span data-qa="contactNotesLabel">Notes</span>' },
-                        value: { html:  '<p class="govuk-body line-break">' + personalContact.contactNote.note + '<\p>'  }
+                        value: { html:  '<p class="govuk-body line-break">' +  '<span data-qa="contactNotesValue">' + personalContact.contactNote.note + '</span>' + '<\p>'  }
                     } if personalContact.contactNote.note
                 ]
             }) }}

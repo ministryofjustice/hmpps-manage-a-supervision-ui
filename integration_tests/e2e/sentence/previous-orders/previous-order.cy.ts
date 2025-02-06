@@ -11,16 +11,16 @@ context('Sentence', () => {
 
     page.assertTextElementAtIndex('h2', 0, 'Previous orders')
     page.assertAnchorElementAtIndex(breadCrumbElement, 0, '/case')
-    page.assertTextAtAnchorElementAtIndex(breadCrumbElement, 0, 'My cases')
+    page.assertTextAtElementAtIndex(breadCrumbElement, 0, 'My cases')
 
     page.assertAnchorElementAtIndex(breadCrumbElement, 1, '/case/X000001')
-    page.assertTextAtAnchorElementAtIndex(breadCrumbElement, 1, 'Caroline Wolff')
+    page.assertTextAtElementAtIndex(breadCrumbElement, 1, 'Caroline Wolff')
 
     page.assertAnchorElementAtIndex(breadCrumbElement, 2, '/case/X000001/sentence')
-    page.assertTextAtAnchorElementAtIndex(breadCrumbElement, 2, 'Sentence')
+    page.assertTextAtElementAtIndex(breadCrumbElement, 2, 'Sentence')
 
     page.assertAnchorElementAtIndex(breadCrumbElement, 3, '/case/X000001/sentence/previous-orders')
-    page.assertTextAtAnchorElementAtIndex(breadCrumbElement, 3, 'Previous orders')
+    page.assertTextAtElementAtIndex(breadCrumbElement, 3, 'Previous orders')
 
     page.assertTextElementAtIndex('h2', 1, 'CJA - Std Determinate Custody (16 Months)')
 

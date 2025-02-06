@@ -465,50 +465,6 @@
     },
     {
       "request": {
-        "urlPattern": "/mas/personal-details/X000001/disabilities",
-        "method": "GET"
-      },
-      "response": {
-        "status": 200,
-        "jsonBody": {
-          "personSummary": {
-            "name": {
-              "forename": "Eula",
-              "surname": "Schmeler"
-            },
-            "crn": "X000001",
-            "dateOfBirth": "1979-08-18"
-          },
-          "disabilities": [
-            {
-              "description": "Dyslexia",
-              "notes": "Some notes",
-              "startDate": "2021-04-03",
-              "lastUpdated": "2023-03-20",
-              "lastUpdatedBy": {
-                "forename": "Paul",
-                "surname": "Smith"
-              }
-            },
-            {
-              "description": "Arthritis",
-              "notes": "Some notes",
-              "startDate": "2021-04-03",
-              "lastUpdated": "2023-03-20",
-              "lastUpdatedBy": {
-                "forename": "Paul",
-                "surname": "Smith"
-              }
-            }
-          ]
-        },
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      }
-    },
-    {
-      "request": {
         "urlPattern": "/mas/personal-details/X000001/provisions",
         "method": "GET"
       },

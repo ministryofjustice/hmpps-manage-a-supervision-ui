@@ -38,10 +38,10 @@
     </p>
 
     {% set notes = '' %}
-    {% for contactNote in personalContact.notes %}
+    {% for contactNote in personalContact.contactNotes %}
       {% set note %}
         {% if contactNote.hasNoteBeenTruncated === true  %}
-          <p class="govuk-body line-break">{{ contactNote.note }}...<a href="/case/{{ crn }}/sentence/licence-condition/note/{{ contactNote.id }}">View full note</a>
+          <p class="govuk-body line-break">{{ contactNote.note }}...<a href="/case/{{ crn }}/personal-details/personal-contact/{{ personalContact.contactId }}/note/{{ contactNote.id }}">View full note</a>
           </p>
         {% else %}
           <p class="govuk-body line-break">{{ contactNote.note }} </p>
@@ -88,7 +88,7 @@
         } if personalContact.startDate,
         {
           key: { html: '<span data-qa="contactNotesLabel">Notes</span>' },
-          value: { html:  '<span data-qa="contactNotesValue">' + notes + '</span>'  }
+          value: { html:  '<span data-qa="contactNotesValue">' + notes + '</span>' if notes else 'No notes' }
         }
       ]
     }) }}

@@ -52,8 +52,8 @@ export interface PersonalContact {
   relationship?: string
   relationshipType: string
   address?: Address
-  notes?: Note[]
-  note?: Note
+  contactNotes?: Note[]
+  contactNote?: Note
   lastUpdated?: string
   lastUpdatedBy?: Name
 }
@@ -155,12 +155,15 @@ export interface Circumstance {
 
 export interface DisabilityOverview {
   personSummary: PersonSummary
-  disabilities: Disability[]
+  disabilities?: Disability[]
+  disability?: Disability
 }
 
 export interface Disability {
+  disabilityId: number
   description: string
-  notes?: string
+  disabilityNotes?: Note[]
+  disabilityNote?: Note
   lastUpdated: string
   lastUpdatedBy: Name
 }

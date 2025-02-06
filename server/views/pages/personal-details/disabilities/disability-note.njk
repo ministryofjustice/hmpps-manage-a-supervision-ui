@@ -1,0 +1,75 @@
+{% extends "../../../partials/layout.njk" %}
+{% set title = 'Disabilities' %}
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "My cases",
+                href: "/case"
+            },
+            {
+                text: disabilityOverview.personSummary.name | fullName,
+                href: "/case/" + crn,
+                attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
+            },
+            {
+                text: "Personal details",
+                href: "/case/" + disabilityOverview.personSummary.crn + "/personal-details"
+            },
+            {
+                text: title
+            }
+        ]
+    }) }}
+{% endblock %}
+
+{% block pageTitle %}{{ title }}{% endblock %}
+
+{% block content %}
+    <p>
+        <a href="{{ deliusDeepLinkUrl('EqualityMonitoring', crn) }}" target="_blank">Change disability information on NDelius (opens in new tab)</a>
+    </p>
+
+    {% set disabilitiesHtml %}
+        {{ govukSummaryList({
+            rows: [
+                {
+                    key: { text: "Disability" },
+                    value: { text: disabilityOverview.disability.description }
+                },
+                {
+                    key: { text: "Start date" },
+                    value: { text: disabilityOverview.disability.startDate | dateWithYear }
+                },
+                {
+                    key: { text: "End date" },
+                    value: { text: disabilityOverview.disability.endDate | dateWithYear }
+                } if disability.endDate,
+                {
+                    key: { text: 'Note added by'},
+                    value: { text: disabilityOverview.disability.disabilityNote.createdBy }
+                } if disabilityOverview.disability.disabilityNote.createdBy,
+                {
+                    key: { text: 'Date added'},
+                    value: { text:  disabilityOverview.disability.disabilityNote.createdByDate | dateWithYear  }
+                } if disabilityOverview.disability.disabilityNote.createdByDate,
+                {
+                    key: { text: "Notes" },
+                    value: { html: '<p class="govuk-body line-break">' + disabilityOverview.disability.disabilityNote.note + '<\p>' if disabilityOverview.disability.disabilityNote.note  }
+                }
+            ]
+        }) }}
+
+        <p class="govuk-!-margin-bottom-0 govuk-!-margin-top-4 govuk-body-s govuk-hint-s">
+            {{ lastUpdatedBy(disabilityOverview.disability.lastUpdated, disabilityOverview.disability.lastUpdatedBy)}}
+        </p>
+    {% endset %}
+
+    {{ appSummaryCard({
+        titleText: disabilityOverview.disability.description,
+        classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+        html: disabilitiesHtml,
+        actions: {}
+    }) }}
+
+{% endblock %}

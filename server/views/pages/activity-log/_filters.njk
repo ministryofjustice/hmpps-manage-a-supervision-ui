@@ -79,6 +79,35 @@
   
 {% endset -%}
 
+{% set filterCategories = [] %}
+{% if filters.selectedFilterItems.keywords.length %}
+   {% set filterCategories = (filterCategories.push(
+    {
+        heading: {
+          text: 'Search term'
+        },
+        items: filters.selectedFilterItems.keywords
+   }), filterCategories) %}
+{% endif %}
+{% if filters.selectedFilterItems.dateRange.length %}
+   {% set filterCategories = (filterCategories.push(
+    {
+        heading: {
+          text: 'Date range'
+        },
+        items: filters.selectedFilterItems.dateRange
+   }), filterCategories) %}
+{% endif %}
+{% if filters.selectedFilterItems.compliance.length %}
+  {% set filterCategories = (filterCategories.push(
+    {
+        heading: {
+          text: 'Compliance filters'
+        },
+        items: filters.selectedFilterItems.compliance
+   }), filterCategories) %}
+{% endif %}
+
 <div class="govuk-grid-column-one-third">
 <form method="get" data-qa="filter-form">
 {{ mojFilter({
@@ -94,19 +123,14 @@
   },
   selectedFilters: {
     heading: {
-      html: '<span class="govuk-heading-s">Selected filters</span>',
-      classes: 'govuk-heading-s'
+      html: '<span class="govuk-heading-m">Selected filters</span>'
     },
     clearLink: {
       text: 'Clear filters',
       href: '/case/' + crn + '/activity-log'
     },
-    categories: [
-      {
-        items: filters.selectedFilterItems
-      }
-    ]
-  } if filters.selectedFilterItems.length,
+    categories: filterCategories
+  } if filters.selectedFilterItems.keywords.length or filters.selectedFilterItems.dateRange.length or filters.selectedFilterItems.compliance.length,
   optionsHtml: filterOptionsHtml
 }) }}
 <input type="hidden" name="submit" value="true">

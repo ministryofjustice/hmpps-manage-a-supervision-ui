@@ -1,7 +1,7 @@
 {% extends "../partials/case.njk" %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "govuk/components/pagination/macro.njk" import govukPagination %}
-{% set pageTitle = makePageTitle({ pageHeading: ["Contact", "Activity log"] }) %}
+{% set pageTitle = makePageTitle({ pageHeading: "Activity log" }) %}
 {% set currentNavSection = 'timeline' %}
 {% set currentSectionName = 'Activity log' %}
 {% set headerPersonName = personActivity.personSummary.name.forename + ' ' + personActivity.personSummary.name.surname %}
@@ -109,6 +109,7 @@
 <li>removing filters</li>
 <li>double-checking the spelling</li>
 <li>removing special characters like characters and accent letters</li>
+<li>using an asterisk (*) to search with a partial keyword, for example app*</li>
 </ul>
 </div>
 {% endif %}

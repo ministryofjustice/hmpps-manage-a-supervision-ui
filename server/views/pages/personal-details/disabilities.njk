@@ -26,7 +26,7 @@
 {% block pageTitle %}{{ title }}{% endblock %}
 
 {% block content %}
-
+<h1 class="govuk-heading-l" data-qa="pageHeading">{{title}}</h1>
 <p>
   <a href="{{ deliusDeepLinkUrl('EqualityMonitoring', crn) }}" target="_blank">Change disability information on NDelius (opens in new tab)</a>
 </p>
@@ -69,7 +69,7 @@
         } if disability.endDate,
         {
           key: { text: "Notes" },
-          value: { html:  notes if notes else 'No notes' }
+          value: { html: notes if notes else 'No notes' }
         }
       ]
     }) }}

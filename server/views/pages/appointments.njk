@@ -1,7 +1,7 @@
 {% extends "../partials/case.njk" %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "moj/components/button-menu/macro.njk" import mojButtonMenu %}
-{% set pageTitle = makePageTitle({ pageHeading: ["Contact", "Appointments"] }) %}
+{% set pageTitle = makePageTitle({ pageHeading: "Appointments" }) %}
 {% set currentNavSection = 'appointments' %}
 {% set headerPersonName = upcomingAppointments.personSummary.name.forename + ' ' + upcomingAppointments.personSummary.name.surname %}
 {% set headerCRN = upcomingAppointments.personSummary.crn %}

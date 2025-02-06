@@ -142,7 +142,7 @@ describe('/middleware/getPersonActivity', () => {
       ...filterVals,
       complianceOptions: [],
       errors: null,
-      selectedFilterItems: [],
+      selectedFilterItems: {},
       baseUrl: '',
       query: { ...filterVals },
       queryStr: '',

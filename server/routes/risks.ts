@@ -37,7 +37,6 @@ export default function risksRoutes(router: Router, { hmppsAuthClient }: Service
       arnsClient.getPredictorsAll(crn),
       arnsClient.getNeeds(crn),
     ])
-    console.log(personRisk)
     let timeline: TimelineItem[] = []
     let predictorScores
     if (Array.isArray(predictors)) {

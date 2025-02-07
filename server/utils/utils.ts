@@ -685,8 +685,10 @@ export const toErrorList = (errors: Record<string, string>) => {
   })
 }
 
-export const toSentenceCase = (value: string): string => {
-  return `${value.charAt(0).toUpperCase()}${value.substring(1).toLowerCase()}`
+export const toSentenceCase = (value: string | null | undefined): string => {
+  if (!value) return ''
+  const val = value.split('_').join(' ').split('-').join(' ')
+  return `${val.charAt(0).toUpperCase()}${val.substring(1).toLowerCase()}`
 }
 
 function toMap(partial: Partial<Record<RiskScore, string[]>>): { [key: string]: string } {

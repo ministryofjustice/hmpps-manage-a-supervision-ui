@@ -9,27 +9,29 @@
   </div>
 
   {% if personRisk.riskFlags.length > 0 %}
+  <div class="moj-scrollable-pane">
     <table class="govuk-table govuk-!-margin-bottom-4">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
-          <th class="govuk-table__header">Risk level</th>
-          <th class="govuk-table__header">Flag</th>
-          <th class="govuk-table__header">Notes</th>
-          <th class="govuk-table__header">Date added</th>
-          <th class="govuk-table__header">Next review</th>
+          <th class="govuk-table__header govuk-!-width-one-fifth">Risk level</th>
+          <th class="govuk-table__header govuk-!-width-one-fifth">Flag</th>
+          <th class="govuk-table__header govuk-!-width-one-fifth">Notes</th>
+          <th class="govuk-table__header govuk-!-width-one-fifth">Date added</th>
+          <th class="govuk-table__header govuk-!-width-one-fifth">Next review</th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
         {% for flag in personRisk.riskFlags %}
-          {% if not flag.rosh %}
+        {% if not flag.rosh %}
+          {% set level = flag.level | toSentenceCase %}
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell" data-qa="risk{{loop.index}}LevelValue">High</td>
+              <td class="govuk-table__cell" data-qa="risk{{loop.index}}LevelValue"><span class="govuk-!-font-weight-bold{% if flag.level != 'information only' %} rosh--{{flag.level}}{% endif %}">{{ level }}</span></td>
               <td class="govuk-table__cell" data-qa="risk{{loop.index}}DescriptionValue"><a href="/case/{{ crn }}/risk/flag/{{ flag.id }}">{{ flag.description }}</a></td>
               <td class="govuk-table__cell" data-qa="risk{{loop.index}}NotesValue"><p class='truncate-notes'>{{ flag.notes or 'No notes' }}</p></td>
-              <td class="govuk-table__cell" data-qa="risk{{loop.index}}NextReviewDateValue">{{ flag.createdDate | dateWithYear }}</td>
+              <td class="govuk-table__cell" data-qa="risk{{loop.index}}DateAddedValue">{{ flag.createdDate | dateWithYear }}</td>
               <td class="govuk-table__cell" data-qa="risk{{loop.index}}NextReviewDateValue">{{ flag.nextReviewDate | dateWithYear }}
                 {% if(isInThePast(flag.nextReviewDate)) %}
-                <p><strong class="govuk-tag app-compliance-tag govuk-tag--red govuk-!-margin-left-2">
+                <p><strong class="govuk-tag app-compliance-tag govuk-tag--red">
                   Overdue
                   </strong></p>
                 {% endif %}
@@ -39,12 +41,13 @@
         {% endfor %}
       </tbody>
     </table>
+    </div>
   {% endif %}
 
   {% set removedRiskFlagsCount = personRisk.removedRiskFlags.length %}
   {% if removedRiskFlagsCount > 0 %}
     <p class="govuk-!-margin-bottom-0">
-      <a href="/case/{{ crn }}/risk/removed-risk-flags">View removed risk flags ({{ removedRiskFlagsCount }})</a>
+      <a href="/case/{{ crn }}/risk/removed-risk-flags" data-qa="viewRemovedRiskFlagsLink">View removed risk flags ({{ removedRiskFlagsCount }})</a>
     </p>
   {% endif %}
 {% endset %}
@@ -58,7 +61,7 @@
     items: [
       {
         href: '/case/' + crn + '/handoff/delius',
-        text: "Add a risk flag in NDelius"
+        html: '<span data-qa="addRiskFlagLink">Add a risk flag in NDelius (opens in new tab)</span>'
       }
     ]
   }

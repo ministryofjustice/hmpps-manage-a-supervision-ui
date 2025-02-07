@@ -1,4 +1,3 @@
-import Page from '../pages/page'
 import ActivityLogDetailsPage from '../pages/activityLogDetails'
 
 context('Activity log details', () => {

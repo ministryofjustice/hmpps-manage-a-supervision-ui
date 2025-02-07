@@ -8,11 +8,9 @@ context('Addresses', () => {
 
     const url =
       'https://ndelius-dummy-url/NDelius-war/delius/JSP/deeplink.xhtml?component=AddressandAccommodation&CRN=X000001'
-    page.assertAnchorElementAtIndex('p', 0, url)
-    page.assertTextElementAtIndex('p', 0, 'Update addresses on NDelius (opens in new tab)')
 
-    page.assertAnchorElementAtIndex('p', 2, url)
-    page.assertTextElementAtIndex('p', 2, 'Edit all other addresses on NDelius (opens in new tab)')
+    page.assertAnchorElementAtIndex('p', 1, url)
+    page.assertTextElementAtIndex('p', 1, 'Edit all other addresses on NDelius (opens in new tab)')
 
     page.getTableHeader('mainAddress').should('contain.text', 'Main address – Since 14 Mar 2023')
     page.getTableHeader('otherAddress1').should('contain.text', 'Postal address – Since 14 Mar 2023')

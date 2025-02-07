@@ -3,6 +3,15 @@ import RiskPage from '../pages/risk'
 import RemovedRiskPage from '../pages/removedRisk'
 import RemovedRiskDetailPage from '../pages/removedRiskDetail'
 import RiskDetailPage from '../pages/riskDetail'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import mockRiskData from '../../wiremock/mappings/X000001-risk.json'
+import { RiskFlag } from '../../server/data/model/risk'
+import { dateWithYear, toSentenceCase } from '../../server/utils/utils'
+
+const mockRiskFlags: RiskFlag[] = mockRiskData.mappings.find(
+  (mapping: any) => mapping.request.urlPattern === '/mas/risk-flags/X000001',
+).response.jsonBody.riskFlags
 
 context('Risk', () => {
   it('Risk overview page is rendered', () => {
@@ -21,48 +30,30 @@ context('Risk', () => {
       .should('contain.text', 'Add a risk flag in NDelius (opens in new tab)')
       .parent()
       .should('have.attr', 'href', '/case/X000001/handoff/delius')
-    page.getRowData('riskFlags', 'risk1Level', 'Value').should('contain.text', 'High')
-    page
-      .getElementData('risk1LevelValue')
-      .find('span')
-      .should('have.attr', 'class', 'govuk-!-font-weight-bold rosh--high')
-    page.getRowData('riskFlags', 'risk1Description', 'Value').should('contain.text', 'Restraining Order')
-    page.getElementData('risk1DescriptionValue').find('a').should('have.attr', 'href', '/case/X000001/risk/flag/1')
-    page.getRowData('riskFlags', 'risk1Notes', 'Value').should('contain.text', 'Some notes')
-    page.getRowData('riskFlags', 'risk1DateAdded', 'Value').should('contain.text', '18 December 2022')
-    page
-      .getRowData('riskFlags', 'risk1NextReviewDate', 'Value')
-      .should('contain.text', '15 December 2024')
-      .should('contain.text', 'Overdue')
 
-    page.getRowData('riskFlags', 'risk2Level', 'Value').should('contain.text', 'Medium')
-    page
-      .getElementData('risk2LevelValue')
-      .find('span')
-      .should('have.attr', 'class', 'govuk-!-font-weight-bold rosh--medium')
-    page.getRowData('riskFlags', 'risk2Description', 'Value').should('contain.text', 'Domestic Abuse Perpetrator')
-    page.getElementData('risk2DescriptionValue').find('a').should('have.attr', 'href', '/case/X000001/risk/flag/2')
-    page.getRowData('riskFlags', 'risk2Notes', 'Value').should('contain.text', 'Some notes')
-    page.getRowData('riskFlags', 'risk2DateAdded', 'Value').should('contain.text', '18 December 2022')
-    page.getRowData('riskFlags', 'risk2NextReviewDate', 'Value').should('contain.text', '18 August 2025')
-    page.getRowData('riskFlags', 'risk3Level', 'Value').should('contain.text', 'Low')
-    page
-      .getElementData('risk3LevelValue')
-      .find('span')
-      .should('have.attr', 'class', 'govuk-!-font-weight-bold rosh--low')
-
-    page.getRowData('riskFlags', 'risk3Description', 'Value').should('contain.text', 'Risk to Known Adult')
-    page.getElementData('risk3DescriptionValue').find('a').should('have.attr', 'href', '/case/X000001/risk/flag/3')
-    page.getRowData('riskFlags', 'risk3Notes', 'Value').should('contain.text', 'Some notes')
-    page.getRowData('riskFlags', 'risk3DateAdded', 'Value').should('contain.text', '18 December 2022')
-    page.getRowData('riskFlags', 'risk3NextReviewDate', 'Value').should('contain.text', '18 August 2025')
-    page.getRowData('riskFlags', 'risk4Level', 'Value').should('contain.text', 'Low')
-    cy.get('[data-qa="risk4LevelValue"] span').should('have.attr', 'class', 'govuk-!-font-weight-bold')
-    page.getRowData('riskFlags', 'risk4Description', 'Value').should('contain.text', 'Domestic Abuse Perpetrator')
-    page.getElementData('risk4DescriptionValue').find('a').should('have.attr', 'href', '/case/X000001/risk/flag/4')
-    page.getRowData('riskFlags', 'risk4Notes', 'Value').should('contain.text', 'Some notes')
-    page.getRowData('riskFlags', 'risk4DateAdded', 'Value').should('contain.text', '18 December 2022')
-    page.getRowData('riskFlags', 'risk4NextReviewDate', 'Value').should('contain.text', '18 August 2025')
+    for (let i = 0; i < mockRiskFlags.length; i += 1) {
+      const index = i + 1
+      const { level, description, notes, createdDate, nextReviewDate } = mockRiskFlags[i]
+      page.getRowData('riskFlags', `risk${index}Level`, 'Value').should('contain.text', toSentenceCase(level))
+      const classes = level !== 'INFORMATION_ONLY' ? ` rosh--${level.toLowerCase()}` : ''
+      page
+        .getElementData(`risk${index}LevelValue`)
+        .find('span')
+        .should('have.attr', 'class', `govuk-!-font-weight-bold${classes}`)
+      page.getRowData('riskFlags', `risk${index}Description`, 'Value').should('contain.text', description)
+      page
+        .getElementData(`risk${index}DescriptionValue`)
+        .find('a')
+        .should('have.attr', 'href', `/case/X000001/risk/flag/${index}`)
+      page.getRowData('riskFlags', `risk${index}Notes`, 'Value').should('contain.text', notes)
+      page.getRowData('riskFlags', `risk${index}DateAdded`, 'Value').should('contain.text', dateWithYear(createdDate))
+      page
+        .getRowData('riskFlags', `risk${index}NextReviewDate`, 'Value')
+        .should('contain.text', dateWithYear(nextReviewDate))
+      if (level === 'HIGH') {
+        page.getRowData('riskFlags', `risk${index}NextReviewDate`, 'Value').should('contain.text', 'Overdue')
+      }
+    }
     page
       .getElementData('viewRemovedRiskFlagsLink')
       .should('contain.text', 'View removed risk flags (3)')

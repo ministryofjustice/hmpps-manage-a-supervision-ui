@@ -69,12 +69,14 @@ context('Edit contact details', () => {
     page.getElement('emailAddress').should('contain.text', 'Enter an email address in the correct format.')
 
     page.getElement('buildingName').should('contain.text', 'Building name must be 35 characters or less.')
-    page.getElement('buildingNumber').should('contain.text', 'Building number must be 35 characters or less.')
+    page.getElement('buildingNumber').should('contain.text', 'House number must be 35 characters or less.')
     page.getElement('streetName').should('contain.text', 'Street name must be 35 characters or less.')
     page.getElement('district').should('contain.text', 'District must be 35 characters or less.')
     page.getElement('town').should('contain.text', 'Town or city must be 35 characters or less.')
     page.getElement('county').should('contain.text', 'County must be 35 characters or less.')
     page.getElement('postcode').should('contain.text', 'Enter a full UK postcode.')
+
+    page.getElement('errorList').should('contain.text', 'Enter a full UK postcode.')
   })
 
   it('Submitting with a dates later than today should show error messages', () => {

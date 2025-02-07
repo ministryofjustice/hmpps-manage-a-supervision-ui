@@ -56,8 +56,12 @@
 
     {% if errorMessages %}
     {% set errorList = errorMessages | toErrorList %}
-        {% if errorList > 0 %}
-            {{ govukErrorSummary({ titleText: "There is a problem", errorList: errorList }) }}
+        {% if errorList.length > 0 %}
+            {{ govukErrorSummary({
+                titleText: "There is a problem",
+                errorList: errorList,
+                attributes: { "data-qa": "errorList"}
+            }) }}
         {% endif %}
     {% endif %}
 
@@ -193,7 +197,7 @@
                 {{ govukInput({
                     value: personalDetails.mainAddress.buildingNumber if personalDetails.mainAddress.buildingNumber,
                     label: {
-                        text: "Building number (optional)",
+                        text: "House number (optional)",
                         classes: "govuk-label--s govuk-!-font-weight-regular"
                     },
                     id: 'buildingNumber',
@@ -203,7 +207,7 @@
                             'data-qa': 'buildingNumber'
                         }
                     },
-                    classes: "govuk-input",
+                    classes: "govuk-input--width-3",
                     errorMessage: {
                         text: errorMessages.buildingNumber,
                         attributes: {

@@ -12,6 +12,7 @@
     <table class="govuk-table govuk-!-margin-bottom-4">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
+          <th class="govuk-table__header">Risk level</th>
           <th class="govuk-table__header">Flag</th>
           <th class="govuk-table__header">Notes</th>
           <th class="govuk-table__header">Date added</th>
@@ -22,6 +23,7 @@
         {% for flag in personRisk.riskFlags %}
           {% if not flag.rosh %}
             <tr class="govuk-table__row">
+              <td class="govuk-table__cell" data-qa="risk{{loop.index}}LevelValue">High</td>
               <td class="govuk-table__cell" data-qa="risk{{loop.index}}DescriptionValue"><a href="/case/{{ crn }}/risk/flag/{{ flag.id }}">{{ flag.description }}</a></td>
               <td class="govuk-table__cell" data-qa="risk{{loop.index}}NotesValue"><p class='truncate-notes'>{{ flag.notes or 'No notes' }}</p></td>
               <td class="govuk-table__cell" data-qa="risk{{loop.index}}NextReviewDateValue">{{ flag.createdDate | dateWithYear }}</td>

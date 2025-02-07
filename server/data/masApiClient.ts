@@ -103,6 +103,10 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/personal-details/${crn}/personal-contact/${id}`, handle404: false })
   }
 
+  async getPersonalContactNote(crn: string, id: string, noteId: string): Promise<PersonalContact | null> {
+    return this.get({ path: `/personal-details/${crn}/personal-contact/${id}/note/${noteId}`, handle404: false })
+  }
+
   async getPersonalAddresses(crn: string): Promise<AddressOverview | null> {
     return this.get({ path: `/personal-details/${crn}/addresses`, handle404: false })
   }
@@ -113,6 +117,10 @@ export default class MasApiClient extends RestClient {
 
   async getPersonDisabilities(crn: string): Promise<DisabilityOverview | null> {
     return this.get({ path: `/personal-details/${crn}/disabilities`, handle404: false })
+  }
+
+  async getPersonDisabilityNote(crn: string, disabilityId: string, noteId: string): Promise<DisabilityOverview | null> {
+    return this.get({ path: `/personal-details/${crn}/disability/${disabilityId}/note/${noteId}`, handle404: false })
   }
 
   async getPersonAdjustments(crn: string): Promise<ProvisionOverview | null> {

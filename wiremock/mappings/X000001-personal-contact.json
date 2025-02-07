@@ -1,0 +1,246 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "urlPattern": "/mas/personal-details/X000001/personal-contact/2500233993",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Caroline",
+              "surname": "Wolff"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "contactId": 2500233993,
+          "name": {
+            "forename": "Steve",
+            "surname": "Wilson"
+          },
+          "relationship": "GP (secondary)",
+          "relationshipType": "GP",
+          "lastUpdatedBy": {
+            "forename": "George",
+            "surname": "NDelius03"
+          },
+          "address": {
+            "buildingName": "The Building",
+            "buildingNumber": "77",
+            "streetName": "Some Street",
+            "district": "Some City Centre",
+            "town": "London",
+            "county": "Essex",
+            "postcode": "NW10 1EP",
+            "lastUpdated": "2023-03-14",
+            "lastUpdatedBy": {
+              "forename": "Jiminy",
+              "surname": "Cricket"
+            }
+          },
+          "contactNotes": [
+            {
+              "id": 0,
+              "createdBy": "Tom Brady",
+              "createdByDate": "2024-10-30",
+              "note": "Personal Contact created automatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Personal Contact(s) unless otherwise authorised by your supervising officer. Personal Contact created automatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Personal Contact(s) unless otherwise authorised by your supervising officer.Personal Contact created automatically from the Create and Vary a licence system of\nAllow person(s) as desi",
+              "hasNoteBeenTruncated": true
+            },
+            {
+              "id": 1,
+              "note": "Contact note 1",
+              "hasNoteBeenTruncated": false
+            }
+          ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/personal-details/X000001/personal-contact/2500233993/note/0",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Caroline",
+              "surname": "Wolff"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "contactId": 2500233993,
+          "name": {
+            "forename": "Steve",
+            "surname": "Wilson"
+          },
+          "relationship": "GP (secondary)",
+          "relationshipType": "GP",
+          "lastUpdatedBy": {
+            "forename": "George",
+            "surname": "NDelius03"
+          },
+          "address": {
+            "buildingName": "The Building",
+            "buildingNumber": "77",
+            "streetName": "Some Street",
+            "district": "Some City Centre",
+            "town": "London",
+            "county": "Essex",
+            "postcode": "NW10 1EP",
+            "lastUpdated": "2023-03-14",
+            "lastUpdatedBy": {
+              "forename": "Jiminy",
+              "surname": "Cricket"
+            }
+          },
+          "contactNote": {
+            "id": 0,
+            "createdBy": "Tom Brady",
+            "createdByDate": "2024-10-30",
+            "note": "Personal Contact created automatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Personal Contact(s) unless otherwise authorised by your supervising officer. Personal Contact created automatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Personal Contact(s) unless otherwise authorised by your supervising officer.Personal Contact created automatically from the Create and Vary a licence system of\nAllow person(s) as desi123456\n"
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/personal-details/X000001/personal-contact/2500232995",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Caroline",
+              "surname": "Wolff"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "contactId": 2500232995,
+          "name": {
+            "forename": "Brian",
+            "surname": "Smith"
+          },
+          "relationship": "Father",
+          "relationshipType": "Emergency Contact",
+          "lastUpdated": "2023-03-14",
+          "lastUpdatedBy": {
+            "forename": "George",
+            "surname": "NDelius03"
+          },
+          "address": {
+            "buildingNumber": "36",
+            "streetName": "Fifth Street",
+            "district": "South City Centre",
+            "town": "London",
+            "county": "South London",
+            "postcode": "W10 4DN",
+            "lastUpdated": "2023-03-14",
+            "lastUpdatedBy": {
+              "forename": "George",
+              "surname": "NDelius03"
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/personal-details/X000001/personal-contact/2500232996",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Caroline",
+              "surname": "Wolff"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "contactId": 2500232996,
+          "name": {
+            "forename": "Nick",
+            "surname": "Riviera"
+          },
+          "relationship": "GP",
+          "relationshipType": "GP",
+          "lastUpdatedBy": {
+            "forename": "George",
+            "surname": "NDelius03"
+          },
+          "address": {
+            "buildingName": "The practice",
+            "buildingNumber": "38",
+            "streetName": "East Street",
+            "district": "East City Centre",
+            "town": "Bristol",
+            "county": "East London",
+            "postcode": "E5 7BS",
+            "lastUpdated": "2023-03-14",
+            "lastUpdatedBy": {
+              "forename": "Jim",
+              "surname": "Smith"
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/personal-details/X000001/personal-contact/2500244492",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Caroline",
+              "surname": "Wolff"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "contactId": 2500244492,
+          "name": {
+            "forename": "Ms",
+            "surname": "Schmeler"
+          },
+          "relationship": "Mother",
+          "relationshipType": "Emergency Contact",
+          "lastUpdated": "2023-03-20",
+          "lastUpdatedBy": {
+            "forename": "Joe",
+            "surname": "Bloggs"
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    }
+  ]
+}

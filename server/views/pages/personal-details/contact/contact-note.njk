@@ -1,0 +1,92 @@
+{% extends "../../../partials/layout.njk" %}
+{% set title = "Personal Contact"  %}
+{% block pageTitle %}{{ personalContact.name | fullName }}{% endblock %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "My cases",
+                href: "/case"
+            },
+            {
+                text: personalContact.personSummary.name | fullName,
+                href: "/case/" + crn,
+                attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
+            },
+            {
+                text: "Personal details",
+                href: "/case/" + crn + "/personal-details"
+            },
+            {
+                text: "Contact: " + personalContact.name | fullName
+            }
+        ]
+    }) }}
+{% endblock %}
+
+{% block content %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l" data-qa="pageHeading">
+                <span data-qa="contactRelationshipTypeHeaderValue" class="govuk-caption-xl">{{ personalContact.relationshipType }}</span>
+                <span data-qa="contactNameHeaderValue">{{ personalContact.name | fullName }}</span>
+            </h1>
+
+            <p>
+                <a href="{{ deliusDeepLinkUrl('PersonalContacts', crn) }}" target="_blank">Change contact details on NDelius (opens in new tab)</a>
+            </p>
+
+
+            {{ govukSummaryList({
+                rows: [
+                    {
+                        key: { html: '<span data-qa="contactNameLabel">Name</span>' },
+                        value: { html: '<span data-qa="contactNameValue">' + personalContact.name | fullName + '</span>' }
+                    },
+                    {
+                        key: { html:  '<span data-qa="contactRelationshipTypeLabel">Relationship type</span>' },
+                        value: { html: '<span data-qa="contactRelationshipTypeValue">' + personalContact.relationshipType + '</span>' }
+                    },
+                    {
+                        key: { html: '<span data-qa="contactRelationshipLabel">Relationship</span>' },
+                        value: { html: '<span data-qa="contactRelationshipValue">' + personalContact.relationship + '</span>' }
+                    },
+                    {
+                        key: { html: '<span data-qa="contactAddressLabel">Address</span>' },
+                        value: { html: '<span data-qa="contactAddressValue">' + addressToList(personalContact.address).join('<br>') + '</span>' }
+                    } if personalContact.address,
+                    {
+                        key: { html: '<span data-qa="contactPhoneLabel">Phone number</span>' },
+                        value: { html: '<span data-qa="contactPhoneValue">' + personalContact.phone + '</span>' }
+                    } if personalContact.phone,
+                    {
+                        key: { html: '<span data-qa="contactEmailLabel">Email</span>' },
+                        value: { html: '<span data-qa="contactEmailValue">' + personalContact.email +'</span>'}
+                    } if personalContact.email,
+                    {
+                        key: { html: '<span data-qa="contactStartDateLabel">Start date</span>' },
+                        value: { html: '<span data-qa="contactStartDateValue">' + personalContact.startDate | dateWithYear +  '</span>'}
+                    } if personalContact.startDate,
+                    {
+                        key: { text: 'Note added by'},
+                        value: { text: personalContact.contactNote.createdBy }
+                    } if personalContact.contactNote.createdBy,
+                    {
+                        key: { text: 'Date added'},
+                        value: { text:  personalContact.contactNote.createdByDate | dateWithYear  }
+                    } if personalContact.contactNote.createdByDate,
+                    {
+                        key: { html: '<span data-qa="contactNotesLabel">Notes</span>' },
+                        value: { html:  '<p class="govuk-body line-break">' +  '<span data-qa="contactNotesValue">' + personalContact.contactNote.note + '</span>' + '<\p>'  }
+                    } if personalContact.contactNote.note
+                ]
+            }) }}
+
+
+            <p class="govuk-!-margin-bottom-0 govuk-!-margin-top-4 govuk-body-s govuk-hint-s">
+                <span data-qa="lastUpdatedByValue">{{ lastUpdatedBy(personalContact.lastUpdated, personalContact.lastUpdatedBy)}}</span>
+            </p>
+        </div>
+    </div>
+{% endblock %}

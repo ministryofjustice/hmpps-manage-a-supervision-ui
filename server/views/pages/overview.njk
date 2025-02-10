@@ -17,7 +17,7 @@
 {% set lowRiskLevel = groupByLevel("LOW", personRisks.riskFlags) %}
 {% set infoOnlyRiskLevel = groupByLevel("INFORMATION_ONLY", personRisks.riskFlags) %}
 {% set criminogenicNeedsHtml %}
-<dl>
+<dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-0">
 {% if severeScoring.length > 0 %}
   <dt class="govuk-!-font-weight-bold">Severe</dt>
   <dd class="govuk-!-margin-left-0">
@@ -41,7 +41,7 @@
 {% if withoutScore.length %}
   <dt class="govuk-!-font-weight-bold">Areas without a need score</dt>
   <dd class="govuk-!-margin-left-0">
-  <ul class="govuk-list">
+  <ul class="govuk-list govuk-!-margin-bottom-0">
   {% for need in withoutScore %}
 <li>{{ need.name }}</li>
   {% endfor %}
@@ -52,9 +52,9 @@
 {% endset %}
 
 {% set riskFlagsHtml %}
-  <dl>
+  <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-0">
   {% if highRiskLevel.length %}
-<dt class="govuk-!-font-weight-bold">High</dt>
+<dt class="govuk-!-font-weight-bold rosh--high">High</dt>
   <dd class="govuk-!-margin-left-0">
   <ul class="govuk-list">
   {% for risk in highRiskLevel %}
@@ -64,7 +64,7 @@
   </dd>
   {% endif %}
     {% if mediumRiskLevel.length %}
-<dt class="govuk-!-font-weight-bold">Medium</dt>
+<dt class="govuk-!-font-weight-bold rosh--medium">Medium</dt>
   <dd class="govuk-!-margin-left-0">
   <ul class="govuk-list">
   {% for risk in mediumRiskLevel %}
@@ -74,7 +74,7 @@
   </dd>
   {% endif %}
       {% if lowRiskLevel.length %}
-<dt class="govuk-!-font-weight-bold">Medium</dt>
+<dt class="govuk-!-font-weight-bold rosh--low">Low</dt>
   <dd class="govuk-!-margin-left-0">
   <ul class="govuk-list">
   {% for risk in lowRiskLevel %}
@@ -86,7 +86,7 @@
       {% if infoOnlyRiskLevel.length %}
 <dt class="govuk-!-font-weight-bold">Information only</dt>
   <dd class="govuk-!-margin-left-0">
-  <ul class="govuk-list">
+  <ul class="govuk-list govuk-!-margin-bottom-0">
   {% for risk in infoOnlyRiskLevel %}
 <li>{{ risk.description }}</li>
   {% endfor %}
@@ -317,16 +317,26 @@
         {% if hasRiskAssessment %}
           <br />
           <span class="govuk-body-s secondary-text govuk-!-font-weight-regular">
-            Last updated {{ risks.assessedOn | dateWithYearShortMonth }}
+            Last updated {{ risks.assessedOn | dateWithYear }}
           </span>
         {% endif %}
       {% endset %}
       {% set mappaLastUpdated %}
           <br />
           <span class="govuk-body-s secondary-text govuk-!-font-weight-regular">
-            Last updated (NDelius): {{ risks.assessedOn | dateWithYearShortMonth }}
+            Last updated (NDelius): {{ mappa.lastUpdated | dateWithYear }}
           </span>
       {% endset %}
+      {% set mappaValue = 'Unknown' %}
+      {% set mappaCat = '' %}
+      {% set mappaLevel = '' %}
+      {% if mappa.category %}
+      {% set mappaCat = 'Cat ' + mappa.category %}
+      {% endif %}
+      {% if mappa.level %}
+      {% set mappaLevel = ('/' if mappaCat) + 'Level ' + mappa.level %}
+      {% endif %}
+      {% set mappaValue =  mappaCat + mappaLevel %}
       {% set overallRosh %}
       {% if hasRiskAssessment %}
       <table><tr>
@@ -345,8 +355,8 @@
           },
           {
             key: { html: '<span data-qa="mappaLabel">MAPPA' + mappaLastUpdated + '</span>' },
-            value: { html: '<span data-qa="mappaValue"></span>'}
-          },
+            value: { html: '<span class="govuk-!-font-weight-bold" data-qa="mappaValue">' + mappaValue + '</span>'}
+          } if mappa,
           {
             key: { html: '<span data-qa="criminogenicNeedsLabel">Criminogenic needs</span>' },
             value: { html: '<span data-qa="criminogenicNeedsValue">' + criminogenicNeedsHtml + '</span>'}
@@ -354,10 +364,6 @@
           {
             key: { html: '<span data-qa="riskFlagsLabel">NDelius risk flags</span>' },
             value: { html: '<span data-qa="riskFlagsValue">' + riskFlagsHtml + '</span>'}
-          },
-          {
-            key: { html: '<span data-qa="harmToSelfLabel">Risk of serious harm to themselves' + riskLastUpdated + '</span>'},
-            value: { html: '<span data-qa="harmToSelfValue">' + riskToThemselves if hasRiskAssessment else 'There is no OASys risk assessment' + '</span>' }
           }
         ]
       }) }}

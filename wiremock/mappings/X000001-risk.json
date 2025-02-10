@@ -2,18 +2,19 @@
   "mappings": [
     {
       "request": {
-        "urlPattern": "/mas/risk/crn/X000001/mappa",
+        "urlPattern": "/mas/risk/X000001/mappa",
         "method": "GET"
       },
       "response": {
         "status": 200,
         "jsonBody": {
-          "level": 2,
-          "levelDescription": "M2 Desc",
-          "category": 0,
-          "categoryDescription": "X9 Desc",
+          "level": 3,
+          "levelDescription": "M3 Desc",
+          "category": 2,
+          "categoryDescription": "X2 Desc",
           "startDate": "2024-12-12",
-          "reviewDate": "2024-12-13"
+          "reviewDate": "2024-12-13",
+          "lastUpdated": "2024-10-08"
         },
         "headers": {
           "Content-Type": "application/json"

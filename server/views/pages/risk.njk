@@ -14,8 +14,8 @@
 {% set headerDob = personRisk.personSummary.dateOfBirth  %}
 {% set headerGender = personRisk.personSummary.gender  %}
 {% set hasRiskAssessment = risks.assessedOn %}
-{% set severeScoring = groupNeeds("SEVERE", needs.identifiedNeeds) %}
-{% set standardScoring = groupNeeds("STANDARD", needs.identifiedNeeds) %}
+{% set severeScoring = groupByLevel("SEVERE", needs.identifiedNeeds) %}
+{% set standardScoring = groupByLevel("STANDARD", needs.identifiedNeeds) %}
 {% set withoutScore = needs.notIdentifiedNeeds %}
   {% if risks.assessedOn %}
       {% set lastUpdatedDate = 'Last updated (OASys):' + risks.assessedOn | dateWithYear %}

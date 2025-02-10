@@ -9,10 +9,13 @@
 {% set headerCRN = crn %}
 {% set headerDob = overview.personalDetails.dateOfBirth  %}
 {% set headerGender = overview.personalDetails.preferredGender  %}
-{% set severeScoring = groupNeeds("SEVERE", needs.identifiedNeeds) %}
-{% set standardScoring = groupNeeds("STANDARD", needs.identifiedNeeds) %}
+{% set severeScoring = groupByLevel("SEVERE", needs.identifiedNeeds) %}
+{% set standardScoring = groupByLevel("STANDARD", needs.identifiedNeeds) %}
 {% set withoutScore = needs.notIdentifiedNeeds %}
-
+{% set highRiskLevel = groupByLevel("HIGH", personRisks.riskFlags) %}
+{% set mediumRiskLevel = groupByLevel("MEDIUM", personRisks.riskFlags) %}
+{% set lowRiskLevel = groupByLevel("LOW", personRisks.riskFlags) %}
+{% set infoOnlyRiskLevel = groupByLevel("INFORMATION_ONLY", personRisks.riskFlags) %}
 {% set criminogenicNeedsHtml %}
 <dl>
 {% if severeScoring.length > 0 %}
@@ -46,6 +49,50 @@
   </dd>
 {% endif %}
   </dl>
+{% endset %}
+
+{% set riskFlagsHtml %}
+  <dl>
+  {% if highRiskLevel.length %}
+<dt class="govuk-!-font-weight-bold">High</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list">
+  {% for risk in highRiskLevel %}
+<li>{{ risk.description }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+  {% endif %}
+    {% if mediumRiskLevel.length %}
+<dt class="govuk-!-font-weight-bold">Medium</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list">
+  {% for risk in mediumRiskLevel %}
+<li>{{ risk.description }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+  {% endif %}
+      {% if lowRiskLevel.length %}
+<dt class="govuk-!-font-weight-bold">Medium</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list">
+  {% for risk in lowRiskLevel %}
+<li>{{ risk.description }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+  {% endif %}
+      {% if infoOnlyRiskLevel.length %}
+<dt class="govuk-!-font-weight-bold">Information only</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list">
+  {% for risk in infoOnlyRiskLevel %}
+<li>{{ risk.description }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+  {% endif %}
 {% endset %}
 
 {% block beforeContent %}
@@ -306,7 +353,7 @@
           },
           {
             key: { html: '<span data-qa="riskFlagsLabel">NDelius risk flags</span>' },
-            value: { html: '<span data-qa="riskFlagsValue">' + riskFlags + '</span>'}
+            value: { html: '<span data-qa="riskFlagsValue">' + riskFlagsHtml + '</span>'}
           },
           {
             key: { html: '<span data-qa="harmToSelfLabel">Risk of serious harm to themselves' + riskLastUpdated + '</span>'},

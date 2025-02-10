@@ -178,6 +178,7 @@
           "riskFlags": [
             {
               "id": 1,
+              "level": "HIGH",
               "description": "Restraining Order",
               "notes": "Some notes",
               "createdDate": "2022-12-18",
@@ -191,6 +192,7 @@
             {
               "id": 2,
               "description": "Domestic Abuse Perpetrator",
+              "level": "MEDIUM",
               "notes": "Some notes",
               "nextReviewDate": "2025-08-18",
               "mostRecentReviewDate": "2023-12-18",
@@ -204,6 +206,21 @@
             {
               "id": 3,
               "description": "Risk to Known Adult",
+              "level": "LOW",
+              "notes": "Some notes",
+              "nextReviewDate": "2025-08-18",
+              "mostRecentReviewDate": "2023-12-18",
+              "createdDate": "2022-12-18",
+              "createdBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              },
+              "removed": false
+            },
+            {
+              "id": 4,
+              "description": "Domestic Abuse Perpetrator",
+              "level": "INFORMATION_ONLY",
               "notes": "Some notes",
               "nextReviewDate": "2025-08-18",
               "mostRecentReviewDate": "2023-12-18",

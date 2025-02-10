@@ -12,7 +12,7 @@ import config from '../config'
 import { Activity } from '../data/model/schedule'
 import { CaseSearchFilter, SelectElement } from '../data/model/caseload'
 import { RecentlyViewedCase, UserAccess } from '../data/model/caseAccess'
-import { RiskScoresDto, RoshRiskWidgetDto, TimelineItem } from '../data/model/risk'
+import { RiskFlag, RiskScoresDto, RoshRiskWidgetDto, TimelineItem } from '../data/model/risk'
 import type { AppResponse } from '../@types'
 
 interface Item {
@@ -661,11 +661,24 @@ export const riskLevelLabel = (level: string) => {
   }
 }
 
+const isRisk = (data: Need[] | RiskFlag[]): data is Need[] => {
+  return (data as Need[])[0].severity !== undefined
+}
+
+export const groupByLevel = (level: string, data: Need[] | RiskFlag[]) => {
+  if (!data) {
+    return []
+  }
+  if (isRisk(data)) {
+    return data.filter(item => item.severity === level)
+  }
+  return data.filter(item => item.level === level)
+}
+
 export const groupNeeds = (level: string, needs: Need[]) => {
   if (!needs) {
     return []
   }
-
   return needs.filter(need => need.severity === level)
 }
 

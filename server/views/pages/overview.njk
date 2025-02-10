@@ -9,6 +9,44 @@
 {% set headerCRN = crn %}
 {% set headerDob = overview.personalDetails.dateOfBirth  %}
 {% set headerGender = overview.personalDetails.preferredGender  %}
+{% set severeScoring = groupNeeds("SEVERE", needs.identifiedNeeds) %}
+{% set standardScoring = groupNeeds("STANDARD", needs.identifiedNeeds) %}
+{% set withoutScore = needs.notIdentifiedNeeds %}
+
+{% set criminogenicNeedsHtml %}
+<dl>
+{% if severeScoring.length > 0 %}
+  <dt class="govuk-!-font-weight-bold">Severe</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list">
+  {% for need in severeScoring %}
+<li>{{ need.name }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+{% endif %}
+{% if standardScoring.length > 0 %}
+  <dt class="govuk-!-font-weight-bold">Standard</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list">
+  {% for need in standardScoring %}
+<li>{{ need.name }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+{% endif %}
+{% if withoutScore.length %}
+  <dt class="govuk-!-font-weight-bold">Areas without a need score</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list">
+  {% for need in withoutScore %}
+<li>{{ need.name }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+{% endif %}
+  </dl>
+{% endset %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -231,10 +269,16 @@
       {% set riskLastUpdated %}
         {% if hasRiskAssessment %}
           <br />
-          <span class="govuk-!-font-size-16 govuk-!-font-weight-regular">
+          <span class="govuk-body-s secondary-text govuk-!-font-weight-regular">
             Last updated {{ risks.assessedOn | dateWithYearShortMonth }}
           </span>
         {% endif %}
+      {% endset %}
+      {% set mappaLastUpdated %}
+          <br />
+          <span class="govuk-body-s secondary-text govuk-!-font-weight-regular">
+            Last updated (NDelius): {{ risks.assessedOn | dateWithYearShortMonth }}
+          </span>
       {% endset %}
       {% set overallRosh %}
       {% if hasRiskAssessment %}
@@ -253,12 +297,20 @@
             value: { html: '<span data-qa="roshValue">' + overallRosh  + '</span>'}
           },
           {
-            key: { html: '<span data-qa="harmToSelfLabel">Risk of serious harm to themselves' + riskLastUpdated + '</span>'},
-            value: { html: '<span data-qa="harmToSelfValue">' + riskToThemselves if hasRiskAssessment else 'There is no OASys risk assessment' + '</span>' }
+            key: { html: '<span data-qa="mappaLabel">MAPPA' + mappaLastUpdated + '</span>' },
+            value: { html: '<span data-qa="mappaValue"></span>'}
           },
           {
-            key: { html: '<span data-qa="riskFlagsLabel">Risk flags</span>' },
+            key: { html: '<span data-qa="criminogenicNeedsLabel">Criminogenic needs</span>' },
+            value: { html: '<span data-qa="criminogenicNeedsValue">' + criminogenicNeedsHtml + '</span>'}
+          },
+          {
+            key: { html: '<span data-qa="riskFlagsLabel">NDelius risk flags</span>' },
             value: { html: '<span data-qa="riskFlagsValue">' + riskFlags + '</span>'}
+          },
+          {
+            key: { html: '<span data-qa="harmToSelfLabel">Risk of serious harm to themselves' + riskLastUpdated + '</span>'},
+            value: { html: '<span data-qa="harmToSelfValue">' + riskToThemselves if hasRiskAssessment else 'There is no OASys risk assessment' + '</span>' }
           }
         ]
       }) }}

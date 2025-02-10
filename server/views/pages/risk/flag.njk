@@ -97,56 +97,31 @@
     rows: [
       {
         key: {
-          text: "Notes"
+          html: '<span data-qa="riskFlagNotesLabel">Notes</span>'
         },
         value: {
           html: '<span data-qa="riskFlagNotesValue">' + personRiskFlag.riskFlag.notes + '</span>' if personRiskFlag.riskFlag.notes else '<span data-qa="riskFlagNotesValue">No notes</span>'
-        },
-        actions: {
-          items: [
-            {
-              href: "/case/" + crn + "/handoff/delius",
-              text: "Change",
-              visuallyHiddenText: "notes"
-            }
-          ]
         }
       },
       {
         key: {
-          text: "Next review"
+           html: '<span data-qa="nextReviewDateLabel">Next review</span>'
         },
         value: {
           html: nextReviewDate
-        },
-        actions: {
-          items: [
-            {
-              href: "/case/" + crn + "/handoff/delius",
-              text: "Review risk flag"
-            }
-          ]
         }
       } if not removed,
       {
         key: {
-          text: "Most recent review"
+          html: '<span data-qa="mostRecentReviewDateLabel">Most recent review</span>'
         },
         value: {
           html: '<span data-qa="mostRecentReviewDateValue">' + personRiskFlag.riskFlag.mostRecentReviewDate | dateWithYear + ' by ' + personRiskFlag.riskFlag.createdBy | fullName + '</span>' if personRiskFlag.riskFlag.mostRecentReviewDate else '<span data-qa="mostRecentReviewDateValue">Not reviewed yet</span>'
-        },
-        actions: {
-          items: [
-            {
-              href: "/case/" + crn + "/handoff/delius",
-              text: "View review"
-            }
-          ]
-        } if flag.mostRecentReviewDate
+        }
       },
       {
         key: {
-          text: "Date added"
+          html: '<span data-qa="createdDateLabel">Date added</span>'
         },
         value: {
           html: '<span data-qa="createdDateValue">' + personRiskFlag.riskFlag.createdDate | dateWithYear + " by " + personRiskFlag.riskFlag.createdBy | fullName + '</span>'
@@ -162,16 +137,9 @@
   titleText: "Before it was removed" if removed else "About this flag",
   classes: 'govuk-!-margin-bottom-8 app-summary-card--large-title',
   html: aboutThisFlagSummaryList,
-  actions: {
-    items: [
-      {
-        href: "/case/" + crn + "/handoff/delius",
-        text: "Remove this flag in NDelius"
-      }
-    ]
-  } if not removed
+  actionsHtml: '<a href="https://ndelius.probation.service.justice.gov.uk/NDelius-war/delius/JSP/registration/registrationlist.xhtml?cid=' + crn + '" rel="external noopener noreferrer" target="_blank">Edit risk details on NDelius (opens in a new tab)</a>' if not removed
 }) }}
 
-  <p><a class="govuk-link--no-visited-state" target="_blank" href="https://justiceuk.sharepoint.com/sites/HMPPS-HQ-NDST-ATW/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=iEFxub&CID=82b28f43%2Dc021%2D465a%2Dbce3%2D11c8eb64c791&FolderCTID=0x012000789EB5A24184864D90305EEA82661286&id=%2Fsites%2FHMPPS%2DHQ%2DNDST%2DATW%2FShared%20Documents%2FNational%20Delius%20Guidance%2FNational%20Delius%20Case%20Recording%20Instructions%2FCRI019%20Registrations&sortField=Modified&isAscending=false&viewid=330f3b0b%2D9b57%2D4427%2Dad3f%2D8d5cffdc3885">
+  <p data-qa="riskFlagGuidanceLink"><a class="govuk-link--no-visited-state" target="_blank" rel="external noopener noreferrer" href="https://justiceuk.sharepoint.com/sites/HMPPS-HQ-NDST-ATW/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=iEFxub&CID=82b28f43%2Dc021%2D465a%2Dbce3%2D11c8eb64c791&FolderCTID=0x012000789EB5A24184864D90305EEA82661286&id=%2Fsites%2FHMPPS%2DHQ%2DNDST%2DATW%2FShared%20Documents%2FNational%20Delius%20Guidance%2FNational%20Delius%20Case%20Recording%20Instructions%2FCRI019%20Registrations&sortField=Modified&isAscending=false&viewid=330f3b0b%2D9b57%2D4427%2Dad3f%2D8d5cffdc3885">
       View guidance on risk flags in the NDelius SharePoint</a> (opens in new tab)</p>
 {% endblock %}

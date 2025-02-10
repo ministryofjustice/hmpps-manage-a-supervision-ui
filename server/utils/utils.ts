@@ -675,13 +675,6 @@ export const groupByLevel = (level: string, data: Need[] | RiskFlag[]) => {
   return data.filter(item => item.level === level)
 }
 
-export const groupNeeds = (level: string, needs: Need[]) => {
-  if (!needs) {
-    return []
-  }
-  return needs.filter(need => need.severity === level)
-}
-
 export const toErrorList = (errors: Record<string, string>) => {
   return Object.entries(errors).map(error => {
     return {

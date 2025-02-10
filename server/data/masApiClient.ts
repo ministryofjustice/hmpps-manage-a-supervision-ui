@@ -162,7 +162,13 @@ export default class MasApiClient extends RestClient {
   }
 
   async getPersonRiskFlags(crn: string): Promise<PersonRiskFlags> {
-    return this.get({ path: `/risk-flags/${crn}`, handle404: false })
+    return this.get({
+      path: `/risk-flags/${crn}`,
+      handle404: true,
+      handle500: true,
+      errorMessageFor500:
+        'OASys is experiencing technical difficulties. It has not been possible to provide the Criminogenic needs information held in OASys',
+    })
   }
 
   async getPersonRiskFlag(crn: string, id: string): Promise<PersonRiskFlag> {
@@ -217,6 +223,12 @@ export default class MasApiClient extends RestClient {
   }
 
   async getMappa(crn: string): Promise<Mappa> {
-    return this.get({ path: `/risk/${crn}/mappa`, handle404: true })
+    return this.get({
+      path: `/risk/${crn}/mappa`,
+      handle404: true,
+      handle500: true,
+      errorMessageFor500:
+        'OASys is experiencing technical difficulties. It has not been possible to provide the Criminogenic needs information held in OASys',
+    })
   }
 }

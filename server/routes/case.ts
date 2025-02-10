@@ -39,7 +39,6 @@ export default function caseRoutes(router: Router, { hmppsAuthClient }: Services
     ])
 
     const risksWidget = toRoshWidget(risks)
-
     const predictorScores = toPredictors(predictors)
     res.render('pages/overview', {
       overview,

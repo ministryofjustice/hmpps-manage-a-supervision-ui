@@ -53,11 +53,65 @@ context('Overview', () => {
     page
       .getRowData('activityAndCompliance', 'activityLog', 'Value')
       .should('contain.text', '2 national standard appointments')
-    page.getRowData('risk', 'rosh', 'Value').should('contain.text', 'HIGH')
+
+    page.getCardHeader('risk').should('contain.text', 'Risk')
     page
-      .getRowData('risk', 'harmToSelf', 'Value')
-      .should('contain.text', 'Previous concerns about coping in a hostel setting')
+      .getCardHeader('risk')
+      .find('a')
+      .should('contain.text', 'View all risk details')
+      .should('have.attr', 'href', 'X000001/risk')
+    page
+      .getRowData('risk', 'rosh', 'Label')
+      .should('contain.text', 'Risk of serious harm (ROSH) in the community')
+      .should('contain.text', 'Last updated 24 January 2024')
+    page.getRowData('risk', 'rosh', 'Value').find('.govuk-tag--red').should('contain.text', 'HIGH risk of serious harm')
+    page
+      .getRowData('risk', 'mappa', 'Label')
+      .should('contain.text', 'MAPPA')
+      .should('contain.text', 'Last updated (NDelius): 8 October 2024')
+    page.getRowData('risk', 'mappa', 'Value').should('contain.text', 'Cat 2/Level 3')
+    page.getRowData('risk', 'criminogenicNeeds', 'Label').should('contain.text', 'Criminogenic needs')
+    cy.get('[data-qa="criminogenicNeedsValue"] dt').eq(0).should('contain.text', 'Severe')
+    cy.get('[data-qa="criminogenicNeedsValue"]')
+      .find('ul')
+      .eq(0)
+      .should('contain.text', 'Relationships')
+      .should('contain.text', 'Lifestyle and Associates')
+      .should('contain.text', 'Thinking and Behaviour')
+    cy.get('[data-qa="criminogenicNeedsValue"] dt').eq(1).should('contain.text', 'Standard')
+    cy.get('[data-qa="criminogenicNeedsValue"]')
+      .find('ul')
+      .eq(1)
+      .should('contain.text', 'Accommodation')
+      .should('contain.text', 'Education, Training and Employability')
+      .should('contain.text', 'Drug Misuse')
+      .should('contain.text', 'Alcohol Misuse')
+      .should('contain.text', 'Attitudes')
+    cy.get('[data-qa="criminogenicNeedsValue"] dt').eq(2).should('contain.text', 'Areas without a need score')
+    cy.get('[data-qa="criminogenicNeedsValue"]').find('ul').eq(2).should('contain.text', 'Emotional wellbeing')
+
+    page.getRowData('risk', 'riskFlags', 'Label').should('contain.text', 'NDelius risk flags')
+    cy.get('[data-qa="riskFlagsValue"] dt')
+      .eq(0)
+      .should('contain.text', 'High')
+      .should('have.attr', 'class', 'govuk-!-font-weight-bold rosh--high')
+    cy.get('[data-qa="riskFlagsValue"]').find('ul').eq(0).should('contain.text', 'Restraining Order')
+    cy.get('[data-qa="riskFlagsValue"] dt')
+      .eq(1)
+      .should('contain.text', 'Medium')
+      .should('have.attr', 'class', 'govuk-!-font-weight-bold rosh--medium')
+    cy.get('[data-qa="riskFlagsValue"]').find('ul').eq(1).should('contain.text', 'Domestic Abuse Perpetrator')
+
+    cy.get('[data-qa="riskFlagsValue"] dt')
+      .eq(2)
+      .should('contain.text', 'Low')
+      .should('have.attr', 'class', 'govuk-!-font-weight-bold rosh--low')
+    cy.get('[data-qa="riskFlagsValue"]').find('ul').eq(2).should('contain.text', 'Risk to Known Adult')
+
     page.getRowData('risk', 'riskFlags', 'Value').should('contain.text', 'Risk to Known Adult')
+    cy.get('[data-qa="riskFlagsValue"]').find('ul').eq(3).should('contain.text', 'Domestic Abuse Perpetrator')
+    cy.get('[data-qa="riskFlagsValue"] dt').eq(3).should('contain.text', 'Information only')
+
     page.getRowData('miscellaneous', 'tier', 'Value').should('contain.text', 'B2')
 
     const expected =
@@ -72,6 +126,7 @@ context('Overview', () => {
       })
   })
   it('Risk information and tier is not provided due to 500 from ARNS and TIER', () => {
+    const errorMsg = 'There is no OASys risk assessment'
     cy.visit('/case/X000002')
     const page = Page.verifyOnPage(OverviewPage)
     page.headerCrn().should('contain.text', 'X000002')
@@ -84,6 +139,7 @@ context('Overview', () => {
     page.getTab('activityLog').should('contain.text', 'Activity log')
     page.getTab('compliance').should('contain.text', 'Compliance')
     page.getCardHeader('schedule').should('contain.text', 'Appointments')
+
     cy.get(`[data-qa=errors]`).should(
       'contain.text',
       'OASys is experiencing technical difficulties. It has not been possible to provide the Risk information held in OASys',
@@ -92,5 +148,9 @@ context('Overview', () => {
       'contain.text',
       'The tier service is experiencing technical difficulties. It has not been possible to provide tier information',
     )
+    page.getRowData('risk', 'rosh', 'Value').should('contain.text', errorMsg)
+    page.getRowData('risk', 'mappa', 'Value').should('contain.text', errorMsg)
+    page.getRowData('risk', 'criminogenicNeeds', 'Value').should('contain.text', errorMsg)
+    page.getRowData('risk', 'riskFlags', 'Value').should('contain.text', errorMsg)
   })
 })

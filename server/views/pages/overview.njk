@@ -1,6 +1,7 @@
 {% extends "../partials/case.njk" %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% set pageTitle = makePageTitle({ pageHeading: "Overview" }) %}
+{% set noOasysRiskAssessmentFlag = "There is no OASys risk assessment" %}
 {% set currentNavSection = 'overview' %}
 {% set currentSectionName = 'Overview' %}
 {% set appointmentsWithoutAnOutcomeCount = overview.appointmentsWithoutOutcome %}
@@ -17,6 +18,7 @@
 {% set lowRiskLevel = groupByLevel("LOW", personRisks.riskFlags) %}
 {% set infoOnlyRiskLevel = groupByLevel("INFORMATION_ONLY", personRisks.riskFlags) %}
 {% set criminogenicNeedsHtml %}
+{% if needs.identifiedNeeds.length %}
 <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-0">
 {% if severeScoring.length > 0 %}
   <dt class="govuk-!-font-weight-bold">Severe</dt>
@@ -49,9 +51,13 @@
   </dd>
 {% endif %}
   </dl>
+  {% else %}
+  {{ noOasysRiskAssessmentFlag }}
+  {% endif %}
 {% endset %}
 
 {% set riskFlagsHtml %}
+{% if personRisks.riskFlags.length %}
   <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-0">
   {% if highRiskLevel.length %}
 <dt class="govuk-!-font-weight-bold rosh--high">High</dt>
@@ -92,6 +98,10 @@
   {% endfor %}
   </ul>
   </dd>
+  {% endif %}
+  </dl>
+  {% else %}
+{{ noOasysRiskAssessmentFlag }}
   {% endif %}
 {% endset %}
 
@@ -322,12 +332,16 @@
         {% endif %}
       {% endset %}
       {% set mappaLastUpdated %}
+      {% if mappa %}
           <br />
           <span class="govuk-body-s secondary-text govuk-!-font-weight-regular">
             Last updated (NDelius): {{ mappa.lastUpdated | dateWithYear }}
           </span>
+          {% endif %}
       {% endset %}
-      {% set mappaValue = 'Unknown' %}
+      {% if not mappa %}
+{% set mappaValue = noOasysRiskAssessmentFlag %}
+      {% else %}
       {% set mappaCat = '' %}
       {% set mappaLevel = '' %}
       {% if mappa.category %}
@@ -336,14 +350,15 @@
       {% if mappa.level %}
       {% set mappaLevel = ('/' if mappaCat) + 'Level ' + mappa.level %}
       {% endif %}
-      {% set mappaValue =  mappaCat + mappaLevel %}
+      {% set mappaValue =  '<span class="govuk-!-font-weight-bold">' + mappaCat + mappaLevel + '</span>' %}
+      {% endif %}
       {% set overallRosh %}
       {% if hasRiskAssessment %}
       <table><tr>
       <td class="govuk-tag {{ getTagClass(risks.summary.overallRiskLevel) }}" align="center">{{ risks.summary.overallRiskLevel + ' risk of serious harm' | replace('_',' ') }}</td>
       </table>
       {% else %}
-        There is no OASys risk assessment
+        {{ noOasysRiskAssessmentFlag }}
       {% endif %}
       {% endset %}
 
@@ -355,8 +370,8 @@
           },
           {
             key: { html: '<span data-qa="mappaLabel">MAPPA' + mappaLastUpdated + '</span>' },
-            value: { html: '<span class="govuk-!-font-weight-bold" data-qa="mappaValue">' + mappaValue + '</span>'}
-          } if mappa,
+            value: { html: '<span data-qa="mappaValue">' + mappaValue + '</span>'}
+          },
           {
             key: { html: '<span data-qa="criminogenicNeedsLabel">Criminogenic needs</span>' },
             value: { html: '<span data-qa="criminogenicNeedsValue">' + criminogenicNeedsHtml + '</span>'}

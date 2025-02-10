@@ -37,10 +37,10 @@
   {% for disabilityNote in disability.disabilityNotes %}
     {% set note %}
       {% if disabilityNote.hasNoteBeenTruncated === true  %}
-        <p class="govuk-body line-break">{{ disabilityNote.note }}...<a href="/case/{{ crn }}/personal-details/disability/{{ disability.disabilityId }}/note/{{ disabilityNote.id }}">View full note</a>
+        <p class="govuk-body line-break govuk-!-margin-bottom-1">{{ disabilityNote.note }}...<a href="/case/{{ crn }}/personal-details/disability/{{ disability.disabilityId }}/note/{{ disabilityNote.id }}">View full note</a>
         </p>
       {% else %}
-        <p class="govuk-body line-break">{{ disabilityNote.note }} </p>
+        <p class="govuk-body line-break govuk-!-margin-bottom-1">{{ disabilityNote.note }} </p>
       {% endif %}
 
       {% if disabilityNote.createdBy %}

@@ -41,10 +41,10 @@
     {% for contactNote in personalContact.contactNotes %}
       {% set note %}
         {% if contactNote.hasNoteBeenTruncated === true  %}
-          <p class="govuk-body line-break">{{ contactNote.note }}...<a href="/case/{{ crn }}/personal-details/personal-contact/{{ personalContact.contactId }}/note/{{ contactNote.id }}">View full note</a>
+          <p class="govuk-body line-break govuk-!-margin-bottom-1">{{ contactNote.note }}...<a href="/case/{{ crn }}/personal-details/personal-contact/{{ personalContact.contactId }}/note/{{ contactNote.id }}">View full note</a>
           </p>
         {% else %}
-          <p class="govuk-body line-break">{{ contactNote.note }} </p>
+          <p class="govuk-body line-break govuk-!-margin-bottom-1" >{{ contactNote.note }} </p>
         {% endif %}
 
         {% if contactNote.createdBy %}

@@ -133,7 +133,8 @@
     "timepicker": "^1.14.1",
     "url-value-parser": "^2.2.0",
     "uuid": "^11.0.5",
-    "wiremock": "^3.11.0"
+    "wiremock": "^3.11.0",
+    "dotenv": "^16.4.7"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0",
@@ -170,7 +171,6 @@
     "cypress": "^14.0.1",
     "cypress-multi-reporters": "^2.0.5",
     "cypress-plugin-tab": "^1.0.5",
-    "dotenv": "^16.4.7",
     "esbuild": "^0.24.2",
     "esbuild-plugin-clean": "^1.0.1",
     "esbuild-plugin-copy": "^2.1.1",

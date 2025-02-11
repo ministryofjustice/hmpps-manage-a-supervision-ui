@@ -186,7 +186,7 @@ context('Sentence', () => {
           .get('a')
           .eq(1)
           .invoke('attr', 'href')
-          .should('equal', '/case/X000001/sentence/probation-history/staff-contacts'),
+          .should('equal', '/case/X000001/sentence/probation-history/staff-contacts/#previous'),
       )
   })
   it('Sentence page is loaded with no active sentence', () => {

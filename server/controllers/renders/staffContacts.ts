@@ -22,12 +22,9 @@ export const staffContacts = (hmppsAuthClient: HmppsAuthClient) => {
 
     const professionalContact = await masClient.getContacts(crn)
 
-    const previousContacts = professionalContact.contacts.filter(
-      contact => new Date(contact.allocatedUntil) < new Date(),
-    )
-    const currentContacts = professionalContact.contacts.filter(
-      contact => new Date(contact.allocatedUntil) > new Date(),
-    )
+    const { previousContacts } = professionalContact
+
+    const { currentContacts } = professionalContact
 
     const isSentenceJourney = req.url.split('/').includes('sentence')
 

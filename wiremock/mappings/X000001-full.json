@@ -327,26 +327,25 @@
           "staffContacts": [
             {
               "name": "Arhsimna Xolfo",
-              "role": "Prison Offender Manager (POM)",
-              "responsibleOfficer": true,
               "email": "arhsimna.xolfo@moj.gov.uk",
               "telephoneNumber": "07321165373",
               "provider": "London",
               "probationDeliveryUnit": "All London",
               "team": "Unallocated Team (N07)",
-              "allocatedUntil": "2025-04-22",
-              "lastUpdated": "2024-04-30"
+              "allocatedDate": "2025-04-22",
+              "lastUpdated": "2024-04-30",
+              "responsibleOfficer": true,
+              "prisonOffenderManager": false
             },
             {
-              "name": "Yrhreender Hanandra",
-              "role": "Community Offender Manager (COM)",
-              "email": "yrhreender.hanandra@moj.gov.uk",
-              "telephoneNumber": "07321165373",
-              "provider": "London",
-              "probationDeliveryUnit": "All London",
-              "team": "Unallocated Team (N07)",
-              "allocatedUntil": "2025-04-22",
-              "lastUpdated": "2024-04-30"
+              "name": "Bruce Wayne",
+              "provider": "Leicester",
+              "probationDeliveryUnit": "Leicestershire All",
+              "team": "OMU B",
+              "allocatedDate": "2025-01-12",
+              "lastUpdated": "2023-03-03",
+              "responsibleOfficer": false,
+              "prisonOffenderManager": true
             }
           ],
           "mainAddress": {

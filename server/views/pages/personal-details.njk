@@ -354,11 +354,10 @@
 {% if personalDetails.staffContacts %}
     {% set staffContactRows = [] %}
     {% for staffContact in personalDetails.staffContacts %}
-    {% set role = staffContact.role + '<br>(responsible officer)' if staffContact.responsibleOfficer else staffContact.role %}
-      {% set staffContactRows = (staffContactRows.push({
-            key: { html: '<span data-qa="staffContactRoleLabel">' + role + '</span><br><span class="govuk-body-s secondary-text" data-qa="staffContactLastUpdatedLabel">Last updated ' + staffContact.lastUpdated | dateWithYear + '</span>' },
-            value: { html: '<span data-qa="staffContactNameValue">' + staffContact.name + '</span>' }
-          }), staffContactRows) %}
+        {% set staffContactRows = (staffContactRows.push({
+                key: { html: '<span data-qa="staffContactRoleLabel">' + staffContact | roleDescription(true) + '</span><br><span class="govuk-body-s secondary-text" data-qa="staffContactLastUpdatedLabel">Last updated ' + staffContact.lastUpdated | dateWithYear + '</span>' },
+                value: { html: '<span data-qa="staffContactNameValue">' + staffContact.name + '</span>' }
+        }), staffContactRows) %}
     {% endfor %}
 
 {% set staffContactList %}

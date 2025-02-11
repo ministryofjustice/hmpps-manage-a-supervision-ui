@@ -61,7 +61,7 @@ context('Personal Details', () => {
     page
       .getRowData('staffContacts', 'staffContactLastUpdated', 'Label', 1)
       .should('contain.text', 'Last updated 30 April 2024')
-    page.getRowData('staffContacts', 'staffContactName', 'Value', 1).should('contain.text', 'Yrhreender Hanandra')
+    page.getRowData('staffContacts', 'staffContactName', 'Value', 1).should('contain.text', 'Bruce Wayne')
     page.getCardHeader('staffContacts').find('a').should('contain.text', 'View staff contacts')
     page
       .getCardHeader('staffContacts')

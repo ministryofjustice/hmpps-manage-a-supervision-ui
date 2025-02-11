@@ -60,8 +60,8 @@
               rows: [
                 {
                   key: { text: "Role" },
-                  value: { text: contact.role }
-                } if contact.role,
+                  value: { html: contact | roleDescription }
+                },
                 {
                   key: { text: "Phone number" },
                   value: { text: contact.telephoneNumber }
@@ -83,9 +83,9 @@
                   value: { text: contact.team }
                 },
                 {
-                  key: { text: "Allocated until" },
-                  value: { text: contact.allocatedUntil | dateWithYear }
-                } if contact.allocatedUntil
+                  key: { text: "Allocated from" },
+                  value: { text: contact.allocationDate | dateWithYear }
+                } if contact.allocationDate
               ]
             }) }}
           </div>
@@ -94,7 +94,7 @@
         {% endfor %}
         {% endif %}
         {% if previousContacts.length %}
-      <h2 class="govuk-heading-m">Previous contacts</h2>
+        <h2 class="govuk-heading-m" id="previous">Previous contacts</h2>
         {% set hr = joiner('<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">') %}
 
         {% for contact in previousContacts %}
@@ -105,8 +105,8 @@
               rows: [
                 {
                   key: { text: "Role" },
-                  value: { text: contact.role }
-                } if contact.role,
+                  value: { html: contact | roleDescription }
+                },
                 {
                   key: { text: "Phone number" },
                   value: { text: contact.telephoneNumber }

@@ -154,14 +154,14 @@
         None
       {% elseif attendedButDidNotComplyCount == 0 %}
         <a href="/case/{{ crn }}/activity-log/all-failure-to-comply-appointments{{ queryParams }}">
-          {% if unacceptableAbsenceCount == 1 %}1 unacceptable absence{% else %}{{ unacceptableAbsenceCount }} unacceptable absences{% endif %}
+          {% if unacceptableAbsenceCount == 1 %}1 unacceptable absence{% else %}{{ unacceptableAbsenceCount }} unacceptable absence{% if unacceptableAbsenceCount !== 1 %}s{% endif %}{% endif %}
         </a>
       {% elseif unacceptableAbsenceCount == 0 %}
         <a href="/case/{{ crn }}/activity-log/all-failure-to-comply-appointments{{ queryParams }}">
           {% if attendedButDidNotComplyCount == 1 %}1 failure{% else %}{{ attendedButDidNotComplyCount }} failures{% endif %} to comply because of behaviour
         </a>
       {% else %}
-        <p><a href="/case/{{ crn }}/activity-log/all-failure-to-comply-appointments{{ queryParams }}">{{ failureToComplyCount }} failures to comply</a>:</p>
+        <p><a href="/case/{{ crn }}/activity-log?compliance=not+complied">{{ failureToComplyCount }} failures to comply</a>:</p>
         <ul class="govuk-list govuk-!-margin-top-2">
           <li>{{ unacceptableAbsenceCount }} unacceptable absence</li>
           <li>{{ attendedButDidNotComplyCount }} failure to comply because of behaviour</li>
@@ -228,7 +228,7 @@
                   text: 'Appointments'
                 },
                 value: {
-                  html: '<span data-qa="appointmentsValue"><a href="/case/' + crn + '/activity-log/national-standard-appointments' + queryParams + '">' + nationalStandardAppointmentsCount + ' national standard appointments</a></span>'
+                  html: '<span data-qa="appointmentsValue"><a href="/case/' + crn + '/activity-log?keywords=%22national+standard%22">' + nationalStandardAppointmentsCount + ' national standard appointment' + ('s' if nationalStandardAppointmentsCount !== 1) + '</a></span>'
                 }
               },
               {
@@ -236,7 +236,7 @@
                   text: 'Without an outcome'
                 },
                 value: {
-                  html: '<span data-qa="withoutOutcomeValue"><a href="/case/' + crn + '/activity-log/national-standard-appointments-without-outcome' + queryParams + '">' + outcomeNotRecordedCount + ' without a recorded outcome</a></span>'
+                  html: '<span data-qa="withoutOutcomeValue"><a href="/case/' + crn + '/activity-log?compliance=no+outcome">' + outcomeNotRecordedCount + ' without a recorded outcome</a></span>'
                 }
               } if outcomeNotRecordedCount > 0,
               {
@@ -252,7 +252,7 @@
                   text: 'Complied'
                 },
                 value: {
-                  html: '<span data-qa="compliedValue"><a href="/case/' + crn + '/activity-log/complied-appointments' + queryParams +'">' + compliedAppointmentsCount + ' complied</a></span>'
+                  html: '<span data-qa="compliedValue"><a href="/case/' + crn + '/activity-log?compliance=complied">' + compliedAppointmentsCount + ' complied</a></span>'
                 }
               },
               {

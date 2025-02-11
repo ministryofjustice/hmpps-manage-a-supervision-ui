@@ -1,4 +1,5 @@
 import { PersonSummary } from './common'
+import { Note } from './note'
 
 export interface RequirementNoteDetails {
   personSummary: PersonSummary
@@ -15,18 +16,10 @@ export interface Requirement {
   description: string
   length: number
   lengthUnitValue: string
-  requirementNote: RequirementNote
+  requirementNote: Note
   rar?: {
     completed: number
     scheduled: number
     totalDays: number
   }
-}
-
-export interface RequirementNote {
-  id: string
-  createdBy: string
-  createdByDate: string
-  note: string
-  hasNotesBeenTruncated: boolean
 }

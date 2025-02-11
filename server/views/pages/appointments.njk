@@ -34,7 +34,7 @@
         ]
       }) }}
       {% else %}
-        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="{{ deliusDeepLinkUrl('ContactList', offenderId) }}">Manage on NDelius</a>
+        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="{{ deliusDeepLinkUrl('ContactList', crn) }}">Manage on NDelius</a>
       {% endif %}
     {% endset %}
 
@@ -87,7 +87,7 @@
           ]
         }) }}
       {% else %}
-        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="{{ deliusDeepLinkUrl('ContactList', offenderId) }}">Manage on NDelius</a>
+        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="{{ deliusDeepLinkUrl('ContactList', crn) }}">Manage on NDelius</a>
       {% endif %}
     {% endset %}
 
@@ -147,7 +147,7 @@
           <input type="hidden" name="_csrf" value="{{ csrfToken }}">
       </form>
       {% else %}
-        <a href="{{ deliusDeepLinkUrl('ContactList', offenderId) }}" target="_blank" class="govuk-button">Arrange an appointment</a>
+        <a href="{{ deliusDeepLinkUrl('ContactList', crn) }}" target="_blank" class="govuk-button">Arrange an appointment</a>
       {% endif %}
     </div>
 {% endblock %}

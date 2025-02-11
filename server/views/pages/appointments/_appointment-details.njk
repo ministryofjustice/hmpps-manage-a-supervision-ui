@@ -2,14 +2,6 @@
   classes: 'govuk-!-margin-bottom-0' if noMargin else 'govuk-!-margin-bottom-9',
   rows: [
     {
-      key: {
-        html: '<span data-qa="appointmentDescriptionLabel">Description</span>'
-      },
-      value: {
-        text: '<span data-qa="appointmentDescriptionValue">' + appointment.type + '</span>'
-      }
-    } if appointment.description,
-    {
       key: { html: '<span data-qa="appointmentRescheduleLabel">Reschedule</span>' },
       value: { html: '<span data-qa="appointmentRescheduleValue">Requested by ' + appointment.rescheduledBy | fullName + '</span>'}
     } if appointment.rescheduledBy,
@@ -29,6 +21,10 @@
       key: { html: '<span data-qa="typeLabel">Type of appointment</span>' },
       value: { html: '<span data-qa="typeValue">' + appointmentType + '</span>' }
     },
+    {
+      key: { html: '<span data-qa="descriptionLabel">Description</span>' },
+      value: { html: '<span data-qa="descriptionValue">' + (appointment.description | nl2br | safe) + '</span>' }
+    } if appointment.description,
     {
       key: { html: '<span data-qa="locationLabel">Location</span>' },
       value: { html: '<span data-qa="locationValue">' + addressToList(appointment.location).join('<br>') | safe + '</span>' }

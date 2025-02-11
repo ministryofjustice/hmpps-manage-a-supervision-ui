@@ -1,5 +1,7 @@
 {% extends "../../partials/layout.njk" %}
-{% set title = 'Disabilities' %}
+{% set title = "Disabilities" %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Personal details", title] }) %}
+
 {% block beforeContent %}
 {{ govukBreadcrumbs({
   items: [
@@ -23,7 +25,6 @@
 }) }}
 {% endblock %}
 
-{% block pageTitle %}{{ title }}{% endblock %}
 
 {% block content %}
 <h1 class="govuk-heading-l" data-qa="pageHeading">{{title}}</h1>
@@ -31,7 +32,27 @@
   <a href="{{ deliusDeepLinkUrl('EqualityMonitoring', crn) }}" target="_blank">Change disability information on NDelius (opens in new tab)</a>
 </p>
 
+
 {% for disability in disabilities.disabilities %}
+  {% set notes = '' %}
+  {% for disabilityNote in disability.disabilityNotes %}
+    {% set note %}
+      {% if disabilityNote.hasNoteBeenTruncated === true  %}
+        <p class="govuk-body line-break govuk-!-margin-bottom-1">{{ disabilityNote.note }}...<a href="/case/{{ crn }}/personal-details/disability/{{ disability.disabilityId }}/note/{{ disabilityNote.id }}">View full note</a>
+        </p>
+      {% else %}
+        <p class="govuk-body line-break govuk-!-margin-bottom-1">{{ disabilityNote.note }} </p>
+      {% endif %}
+
+      {% if disabilityNote.createdBy %}
+        <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by {{ disabilityNote.createdBy }} on {{ disabilityNote.createdByDate | dateWithYear }}</p>
+      {% else %}
+        <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by not entered</p>
+      {% endif %}
+    {% endset %}
+    {% set notes = notes.concat(note) %}
+  {% endfor  %}
+
   {% set disabilitiesHtml %}
     {{ govukSummaryList({
       rows: [
@@ -49,7 +70,7 @@
         } if disability.endDate,
         {
           key: { text: "Notes" },
-          value: { text: disability.notes if disability.notes else 'No notes' }
+          value: { html: notes if notes else 'No notes' }
         }
       ]
     }) }}

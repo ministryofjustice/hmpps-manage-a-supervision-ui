@@ -27,6 +27,8 @@ context('Appointment', () => {
   it('Appointments page with upcoming and past appointments is rendered', () => {
     cy.visit('/case/X000001/appointments')
     const page = Page.verifyOnPage(AppointmentsPage)
+    const url = 'https://ndelius-dummy-url/NDelius-war/delius/JSP/deeplink.xhtml?component=ContactList&CRN=X000001'
+
     page.headerCrn().should('contain.text', 'X000001')
     page.headerName().should('contain.text', 'Eula Schmeler')
     page.assertRiskTags()
@@ -43,5 +45,12 @@ context('Appointment', () => {
     page.pastAppointmentDate(2).should('contain.text', '21 March 2024')
     page.pastAppointmentTime(2).should('contain.text', '10:15am to 10:30am')
     page.pastAppointmentType(2).should('contain.text', 'Phone call')
+
+    page.assertAnchorElementAtIndexWithin('[class="govuk-table__row"]', 1, 1, url)
+    page.assertAnchorElementAtIndexWithin('[class="govuk-table__row"]', 2, 1, url)
+    page.assertAnchorElementAtIndexWithin('[class="govuk-table__row"]', 4, 1, url)
+    page.assertAnchorElementAtIndexWithin('[class="govuk-table__row"]', 5, 1, url)
+    page.assertAnchorElementAtIndexWithin('[class="govuk-table__row"]', 6, 1, url)
+    page.assertAnchorElementAtIndexWithin('[class="govuk-table__row"]', 7, 1, url)
   })
 })

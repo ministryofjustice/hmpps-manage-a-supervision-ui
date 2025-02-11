@@ -37,13 +37,45 @@ context('Risk', () => {
   })
   it('Risk Detail page is rendered', () => {
     cy.visit('/case/X000001/risk/flag/2')
-    const page = Page.verifyOnPage(RiskDetailPage)
+    const page = new RiskDetailPage()
+    page.setPageTitle('Domestic Abuse Perpetrator')
+    cy.get('.govuk-caption-l').should('contain.text', 'Risk flag')
     page.getCardHeader('riskFlag').should('contain.text', 'About this flag')
+    page
+      .getCardHeader('riskFlag')
+      .find('a')
+      .should('contain.text', 'Edit risk details on NDelius (opens in a new tab)')
+      .should(
+        'have.attr',
+        'href',
+        'https://ndelius.probation.service.justice.gov.uk/NDelius-war/delius/JSP/registration/registrationlist.xhtml?cid=X000001',
+      )
+      .should('have.attr', 'target', '_blank')
+    page.getRowData('riskFlag', 'riskFlagNotes', 'Label').should('contain.text', 'Notes')
     page.getRowData('riskFlag', 'riskFlagNotes', 'Value').should('contain.text', 'Some notes')
+    page.getRowData('riskFlag', 'nextReviewDate', 'Label').should('contain.text', 'Next review')
     page.getRowData('riskFlag', 'nextReviewDate', 'Value').should('contain.text', '18 August 2025')
+    page.getRowData('riskFlag', 'mostRecentReviewDate', 'Label').should('contain.text', 'Most recent review')
     page
       .getRowData('riskFlag', 'mostRecentReviewDate', 'Value')
       .should('contain.text', '18 December 2023 by Paul Smith')
+    page.getRowData('riskFlag', 'createdDate', 'Label').should('contain.text', 'Date added')
     page.getRowData('riskFlag', 'createdDate', 'Value').should('contain.text', '18 December 2022 by Paul Smith')
+    cy.get('[data-qa="riskFlagGuidanceLink"]')
+      .should('contain.text', '(opens in new tab)')
+      .find('a')
+      .should('contain.text', 'View guidance on risk flags in the NDelius SharePoint')
+      .should('have.attr', 'target', '_blank')
+      .should(
+        'have.attr',
+        'href',
+        'https://justiceuk.sharepoint.com/sites/HMPPS-HQ-NDST-ATW/Shared%20Documents/Forms/AllItems.aspx?csf=1&web=1&e=iEFxub&CID=82b28f43%2Dc021%2D465a%2Dbce3%2D11c8eb64c791&FolderCTID=0x012000789EB5A24184864D90305EEA82661286&id=%2Fsites%2FHMPPS%2DHQ%2DNDST%2DATW%2FShared%20Documents%2FNational%20Delius%20Guidance%2FNational%20Delius%20Case%20Recording%20Instructions%2FCRI019%20Registrations&sortField=Modified&isAscending=false&viewid=330f3b0b%2D9b57%2D4427%2Dad3f%2D8d5cffdc3885',
+      )
+  })
+  it('Risk Detail page is rendered with expired review date', () => {
+    cy.visit('/case/X000001/risk/flag/1')
+    const page = new RiskDetailPage()
+    page.setPageTitle('Restraining Order')
+    page.getRowData('riskFlag', 'nextReviewDate', 'Value').find('.govuk-tag--red').should('contain.text', 'Overdue')
   })
 })

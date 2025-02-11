@@ -78,7 +78,7 @@ export const personDetailsValidation: ValidationSpec = {
       {
         validator: charsOrLess,
         length: 35,
-        msg: `Building number must be 35 characters or less.`,
+        msg: `House number must be 35 characters or less.`,
       },
     ],
   },

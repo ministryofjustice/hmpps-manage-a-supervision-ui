@@ -5,12 +5,19 @@ export default abstract class Page {
     return new constructor()
   }
 
-  constructor(private readonly title: string) {
-    this.checkOnPage()
+  constructor(private title?: string) {
+    if (this.title) {
+      this.checkOnPage()
+    }
   }
 
   checkOnPage(): void {
     cy.get('[data-qa=pageHeading]').contains(this.title)
+  }
+
+  setPageTitle = (title: string) => {
+    this.title = title
+    this.checkOnPage()
   }
 
   signOut = (): PageElement => cy.get('[data-qa=signOut]')
@@ -70,7 +77,7 @@ export default abstract class Page {
     cy.get(element).eq(index).should('contain.text', value)
   }
 
-  assertTextAtAnchorElementAtIndex = (element: string, index: number, value: string) => {
+  assertTextAtElementAtIndex = (element: string, index: number, value: string) => {
     cy.get(element)
       .eq(index)
       .within(() => cy.contains(value))

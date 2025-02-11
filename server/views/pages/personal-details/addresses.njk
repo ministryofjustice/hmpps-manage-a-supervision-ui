@@ -27,18 +27,9 @@
 
 {% block content %}
 <h1 class="govuk-heading-l" data-qa="pageHeading">{{ title }}</h1>
-
-
-<!-- {{ govukWarningText({
-  html: 'There is no main address<br><a href="#">Add a main address in NDelius</a>',
-  iconFallbackText: 'Warning'
-}) }} -->
-
 {% set address = addressOverview.mainAddress %}
 {% if addressOverview.mainAddress %}
-    <p>
-        <a href="{{ deliusDeepLinkUrl('AddressandAccommodation', crn) }}" target="_blank">Update addresses on NDelius (opens in new tab)</a>
-    </p>
+    <h2 class="govuk-heading-m govuk-!-margin-top-8">Main address</h2>
     <span data-qa="mainAddressSection">
         {% set addressType = 'address' %}
         {% set loopIndex = '' %}
@@ -47,7 +38,7 @@
 {% endif %}
 
     {% if addressOverview.otherAddresses.length > 0 %}
-    <h2 class="govuk-heading-l govuk-!-margin-top-8">Other addresses</h2>
+    <h2 class="govuk-heading-m govuk-!-margin-top-8">Other addresses</h2>
     <p>
         <a href="{{ deliusDeepLinkUrl('AddressandAccommodation', crn) }}" target="_blank">Edit all other addresses on NDelius (opens in new tab)</a>
     </p>
@@ -61,7 +52,7 @@
 {% endif %}
 
 {% if addressOverview.previousAddresses.length > 0 %}
-    <h2 class="govuk-heading-l govuk-!-margin-top-8">Previous addresses</h2>
+    <h2 class="govuk-heading-m govuk-!-margin-top-8">Previous addresses</h2>
     {% set addressType = 'previousAddress' %}
     {% for address in addressOverview.previousAddresses %}
         {% set loopIndex = loop.index %}

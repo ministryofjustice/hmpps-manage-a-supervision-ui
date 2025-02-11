@@ -1,4 +1,5 @@
 import { PersonSummary } from './common'
+import { Note } from './note'
 
 export interface SentenceDetails {
   personSummary: PersonSummary
@@ -54,14 +55,6 @@ export interface Order {
   startDate: string
 }
 
-export interface RequirementNote {
-  id: number
-  createdBy: string
-  createdByDate: string
-  note: string
-  hasNoteBeenTruncated: boolean
-}
-
 export interface Requirement {
   id: number
   code: string
@@ -73,8 +66,8 @@ export interface Requirement {
   description: string
   codeDescription: string
   length: string
-  requirementNotes: RequirementNote[]
-  notes: string
+  requirementNotes?: Note[]
+  requirementNote?: Note
   rar: Rar
 }
 
@@ -96,15 +89,9 @@ export interface LicenceCondition {
   subTypeDescription: string
   imposedReleasedDate: string
   actualStartDate: string
-  notes: LicenceConditionNote[]
+  notes: Note[]
 }
 
-export interface LicenceConditionNote {
-  createdBy: string
-  createdByDate: string
-  note: string
-  hasNotesBeenTruncated: boolean
-}
 export interface ProbationHistory {
   numberOfTerminatedEvents: number
   dateOfMostRecentTerminatedEvent: string

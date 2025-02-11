@@ -1,9 +1,8 @@
 {% extends "./caseload.njk" %}
-{% set title = 'Recently viewed cases' %}
-{% block pageTitle %}{{ title }}{% endblock %}
+{% set title = "Recently viewed cases" %}
+{% set pageTitle = makePageTitle({ pageHeading: title }) %}
 
 {% block pageContent %}
-
     <table class="govuk-table">
         <thead class="govuk-table__head">
         <tr class="govuk-table__row">

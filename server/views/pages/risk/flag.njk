@@ -2,8 +2,7 @@
 {% set title = personRiskFlag.riskFlag.description %}
 {% set removed = personRiskFlag.riskFlag.removed %}
 {% set flag = personRiskFlag.riskFlag %}
-
-{% block pageTitle %}{{ title }}{% endblock %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Risk", "Removed risk flags", title] }) %}
 
 {% block beforeContent %}
 {{ govukBreadcrumbs({

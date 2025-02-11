@@ -1,6 +1,6 @@
 {% extends "../../partials/layout.njk" %}
 {% set title = "Removed risk flags" %}
-{% block pageTitle %}{{ title }}{% endblock %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Risk", title] }) %}
 
 {% block beforeContent %}
 {{ govukBreadcrumbs({

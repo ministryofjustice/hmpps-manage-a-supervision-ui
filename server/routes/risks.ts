@@ -70,8 +70,6 @@ export default function risksRoutes(router: Router, { hmppsAuthClient }: Service
     const masClient = new MasApiClient(token)
     const deliusLink = process.env.DELIUS_LINK
 
-    console.log({ deliusLink })
-
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_RISK_DETAIL',
       who: res.locals.user.username,

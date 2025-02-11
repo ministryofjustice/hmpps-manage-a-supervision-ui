@@ -48,7 +48,7 @@ context('Risk', () => {
       .should(
         'have.attr',
         'href',
-        'https://ndelius.test.probation.service.justice.gov.uk/NDelius-war/delius/JSP/registration/registrationdetails.xhtml?cid=X000001',
+        'https://ndelius-dummy-url/NDelius-war/delius/JSP/deeplink.xhtml?component=RegisterSummary&CRN=X000001',
       )
       .should('have.attr', 'target', '_blank')
     page.getRowData('riskFlag', 'riskFlagNotes', 'Label').should('contain.text', 'Notes')

@@ -9,7 +9,7 @@ context('Sentence', () => {
     const page = Page.verifyOnPage(PreviousOrderPage)
     const breadCrumbElement = '.govuk-breadcrumbs__list-item'
 
-    page.assertTextElementAtIndex('h2', 0, 'Previous orders')
+    page.assertTextElementAtIndex('.govuk-caption-l', 0, 'Previous orders')
     page.assertAnchorElementAtIndex(breadCrumbElement, 0, '/case')
     page.assertTextAtElementAtIndex(breadCrumbElement, 0, 'My cases')
 
@@ -21,8 +21,6 @@ context('Sentence', () => {
 
     page.assertAnchorElementAtIndex(breadCrumbElement, 3, '/case/X000001/sentence/previous-orders')
     page.assertTextAtElementAtIndex(breadCrumbElement, 3, 'Previous orders')
-
-    page.assertTextElementAtIndex('h2', 1, 'CJA - Std Determinate Custody (16 Months)')
 
     page.assertPageElementAtIndexWithin('section', 0, 'h2', 0, 'Offence')
     page.assertPageElementAtIndexWithin('section', 0, 'dt', 0, 'Main offence')

@@ -15,6 +15,8 @@ export default class AppointmentsPage extends Page {
 
   upcomingAppointmentTime = (rowNum: number): PageElement => cy.get(`[data-qa=upcomingAppointmentTime${rowNum}]`)
 
+  upcomingAppointmentAction = (rowNum: number): PageElement => cy.get(`[data-qa=upcomingAppointmentAction${rowNum}]`)
+
   pastAppointmentType = (rowNum: number): PageElement => cy.get(`[data-qa=pastAppointmentType${rowNum}]`)
 
   pastAppointmentDate = (rowNum: number): PageElement => cy.get(`[data-qa=pastAppointmentDate${rowNum}]`)

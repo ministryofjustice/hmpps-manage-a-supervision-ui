@@ -34,7 +34,7 @@
         ]
       }) }}
       {% else %}
-        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="{{ deliusDeepLinkUrl('ContactList', crn) }}">Manage on NDelius</a>
+        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="{{ deliusDeepLinkUrl('ContactList', crn) }}" aria-label="Manage {{ appointment.type | lower }} appointment on NDelius">Manage on NDelius</a>
       {% endif %}
     {% endset %}
 
@@ -60,7 +60,8 @@
       {
         html: actionsButton,
         format: "numeric",
-        classes: "vertical-align--middle"
+        classes: "vertical-align--middle",
+        attributes: {"data-qa": "upcomingAppointmentAction" + loop.index }
       }
     ]), upcomingAppointmentRows) %}
   {% endfor %}
@@ -87,7 +88,7 @@
           ]
         }) }}
       {% else %}
-        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="{{ deliusDeepLinkUrl('ContactList', crn) }}">Manage on NDelius</a>
+        <a class="govuk-link govuk-link--no-visited-state" target="_blank" href="{{ deliusDeepLinkUrl('ContactList', crn) }}" aria-label="Manage {{ appointment.type | lower }} appointment on NDelius">Manage on NDelius</a>
       {% endif %}
     {% endset %}
 

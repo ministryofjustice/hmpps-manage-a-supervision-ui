@@ -1,3 +1,4 @@
+import dotenv from 'dotenv'
 import { type Router } from 'express'
 import { auditService } from '@ministryofjustice/hmpps-audit-client'
 import { v4 } from 'uuid'
@@ -9,6 +10,8 @@ import TierApiClient from '../data/tierApiClient'
 import { TimelineItem } from '../data/model/risk'
 import { toRoshWidget, toTimeline } from '../utils/utils'
 import type { Route } from '../@types'
+
+dotenv.config()
 
 export default function risksRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
@@ -65,6 +68,9 @@ export default function risksRoutes(router: Router, { hmppsAuthClient }: Service
     const { crn, id } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
     const masClient = new MasApiClient(token)
+    const deliusLink = process.env.DELIUS_LINK
+
+    console.log({ deliusLink })
 
     await auditService.sendAuditMessage({
       action: 'VIEW_MAS_RISK_DETAIL',
@@ -79,6 +85,7 @@ export default function risksRoutes(router: Router, { hmppsAuthClient }: Service
 
     res.render('pages/risk/flag', {
       personRiskFlag,
+      deliusLink,
       crn,
     })
   })

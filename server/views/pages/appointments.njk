@@ -60,7 +60,8 @@
       {
         html: actionsButton,
         format: "numeric",
-        classes: "vertical-align--middle"
+        classes: "vertical-align--middle",
+        attributes: {"data-qa": "upcomingAppointmentAction" + loop.index }
       }
     ]), upcomingAppointmentRows) %}
   {% endfor %}

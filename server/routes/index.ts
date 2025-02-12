@@ -11,7 +11,7 @@ import activityLogRoutes from './activityLog'
 import risksRoutes from './risks'
 import complianceRoutes from './compliance'
 import caseloadRoutes from './caseload'
-import accessibilityInfoRoutes from './accessibilityInfoRoutes'
+import accessibilityRoutes from './accessibilityRoutes'
 import interventionsRoutes from './interventions'
 import arrangeAppointmentRoutes from './arrangeAppointment'
 
@@ -26,7 +26,7 @@ export default function routes(services: Services): Router {
   activityLogRoutes(router, services)
   complianceRoutes(router, services)
   caseloadRoutes(router, services)
-  accessibilityInfoRoutes(router)
+  accessibilityRoutes(router)
   interventionsRoutes(router, services)
   arrangeAppointmentRoutes(router, services)
   return router

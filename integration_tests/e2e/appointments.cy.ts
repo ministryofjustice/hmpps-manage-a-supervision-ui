@@ -35,6 +35,17 @@ context('Appointment', () => {
     page.upcomingAppointmentDate(1).should('contain.text', '22 March 2045')
     page.upcomingAppointmentTime(1).should('contain.text', '10:15am to 10:30am')
     page.upcomingAppointmentType(1).should('contain.text', 'Video call')
+    page
+      .upcomingAppointmentAction(1)
+      .find('a')
+      .should('contain.text', 'Manage on NDelius')
+      .should('have.attr', 'aria-label', 'Manage video call appointment on NDelius')
+      .should('have.attr', 'target', '_blank')
+      .should(
+        'have.attr',
+        'href',
+        'https://ndelius-dummy-url/NDelius-war/delius/JSP/deeplink.xhtml?component=ContactList&CRN=X000001',
+      )
     page.upcomingAppointmentDate(2).should('contain.text', '22 December 2044')
     page.upcomingAppointmentTime(2).should('contain.text', '9:15am')
     page.upcomingAppointmentType(2).should('contain.text', 'Phone call')

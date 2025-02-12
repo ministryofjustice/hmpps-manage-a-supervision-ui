@@ -1,0 +1,125 @@
+{% extends "../partials/layout.njk" %}
+{% set title = 'Professional contacts' %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Sentence", "Probation history", title] }) %}
+{% set headerPersonName = professionalContact.name.forename + ' ' + professionalContact.name.surname %}
+{% set handOffDelius = "/case/" + crn + "/handoff/delius" %}
+
+{% block beforeContent %}
+{{ govukBreadcrumbs({
+  items: [
+    {
+      text: "My cases",
+      href: "/case"
+    },
+    {
+      text: headerPersonName,
+      href: "/case/" + crn,
+      attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
+    },
+    {
+      text: "Sentence",
+      href: "/case/" + crn + "/sentence"
+    },
+    {
+      text: title
+    }
+  ]
+}) }}
+{% endblock %}
+
+{% block content %}
+    <h1 class="govuk-heading-l" data-qa="pageHeading">{{ title }}</h1>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        {% set hr = joiner('<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">') %}
+
+        {% for contact in professionalContact.contacts %}
+          {% if loop.index != 1 %}
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+          {% endif %}
+
+          <div class="govuk-!-margin-bottom-7">
+            <h2 class="govuk-heading-m">{{ contact.name }}</h2>
+
+            {{ govukSummaryList({
+              classes: 'govuk-summary-list--no-border',
+              rows: [
+                {
+                  key: { text: "Phone number" },
+                  value: { text: contact.telephoneNumber },
+                  actions: {
+                    items: [
+                      {
+                        href: handOffDelius,
+                        text: "Change",
+                        visuallyHiddenText: "phone number on National Delius"
+                      }
+                    ]
+                  }
+                } if contact.telephoneNumber,
+                {
+                  key: { text: "Email" },
+                  value: { text: contact.email },
+                  actions: {
+                    items: [
+                      {
+                        href: handOffDelius,
+                        text: "Change",
+                        visuallyHiddenText: "email address on National Delius"
+                      }
+                    ]
+                  }
+                } if contact.email,
+                {
+                  key: { text: "Provider" },
+                  value: { text: contact.provider },
+                  actions: {
+                    items: [
+                      {
+                        href: handOffDelius,
+                        text: "Change",
+                        visuallyHiddenText: "provider on National Delius"
+                      }
+                    ]
+                  }
+                },
+                {
+                  key: { text: "Probation Delivery Unit (PDU)" },
+                  value: { text: contact.probationDeliveryUnit },
+                  actions: {
+                    items: [
+                      {
+                        href: handOffDelius,
+                        text: "Change",
+                        visuallyHiddenText: "Local Delivery Unit on National Delius"
+                      }
+                    ]
+                  }
+                },
+                {
+                  key: { text: "Team" },
+                  value: { text: contact.team },
+                  actions: {
+                    items: [
+                      {
+                        href: handOffDelius,
+                        text: "Change",
+                        visuallyHiddenText: "team on National Delius"
+                      }
+                    ]
+                  }
+                },
+                {
+                  key: { text: "Allocated until" },
+                  value: { text: contact.allocatedUntil | dateWithYear }
+                } if contact.allocatedUntil
+              ]
+            }) }}
+          </div>
+        {% endfor %}
+
+      </div>
+    </div>
+{% endblock %}
+

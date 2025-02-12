@@ -37,7 +37,7 @@ ARG BUILD_NUMBER
 ARG GIT_REF
 ARG GIT_BRANCH
 
-## hadolint ignore=DL3008
+# hadolint ignore=DL3008
 RUN apt-get update && \
         apt-get install -y --no-install-recommends make python g++ ca-certificates && \
         apt-get clean

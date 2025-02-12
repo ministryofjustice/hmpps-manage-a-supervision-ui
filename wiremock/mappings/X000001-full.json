@@ -324,6 +324,30 @@
               "description": "Householder (Owner - freehold or leasehold)"
             }
           ],
+          "staffContacts": [
+            {
+              "name": "Arhsimna Xolfo",
+              "email": "arhsimna.xolfo@moj.gov.uk",
+              "telephoneNumber": "07321165373",
+              "provider": "London",
+              "probationDeliveryUnit": "All London",
+              "team": "Unallocated Team (N07)",
+              "allocatedDate": "2025-04-22",
+              "lastUpdated": "2024-04-30",
+              "responsibleOfficer": true,
+              "prisonOffenderManager": false
+            },
+            {
+              "name": "Bruce Wayne",
+              "provider": "Leicester",
+              "probationDeliveryUnit": "Leicestershire All",
+              "team": "OMU B",
+              "allocatedDate": "2025-01-12",
+              "lastUpdated": "2023-03-03",
+              "responsibleOfficer": false,
+              "prisonOffenderManager": true
+            }
+          ],
           "mainAddress": {
             "buildingNumber": "32",
             "streetName": "SCOTLAND STREET",

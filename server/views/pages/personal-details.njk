@@ -348,9 +348,39 @@
         attributes: {'data-qa': 'identityNumberCard'},
         titleText: "Identity numbers",
         classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-        html: identityNumbers,
-        actions: {}
+        html: identityNumbers
     }) }}
+
+{% if personalDetails.staffContacts %}
+    {% set staffContactRows = [] %}
+    {% for staffContact in personalDetails.staffContacts %}
+        {% set staffContactRows = (staffContactRows.push({
+                key: { html: '<span data-qa="staffContactRoleLabel">' + staffContact | roleDescription(true) + '</span><br><span class="govuk-body-s secondary-text" data-qa="staffContactLastUpdatedLabel">Last updated ' + staffContact.lastUpdated | dateWithYear + '</span>' },
+                value: { html: '<span data-qa="staffContactNameValue">' + staffContact.name + '</span>' }
+        }), staffContactRows) %}
+    {% endfor %}
+
+{% set staffContactList %}
+      {{ govukSummaryList({
+        rows: staffContactRows
+      }) }}
+{% endset %}
+
+     {{ appSummaryCard({
+        attributes: {'data-qa': 'staffContactsCard'},
+        titleText: "Staff contacts",
+        classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+        html: staffContactList,
+        actions: {
+        items: [
+          {
+            text: 'View staff contacts',
+            href:  '/case/' + crn + '/personal-details/staff-contacts'
+          }
+        ]
+      }
+    }) }}
+{% endif %}
 
     {% set equality %}
       {{ govukSummaryList({

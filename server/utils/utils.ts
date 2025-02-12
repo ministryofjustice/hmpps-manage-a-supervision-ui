@@ -14,6 +14,7 @@ import { CaseSearchFilter, SelectElement } from '../data/model/caseload'
 import { RecentlyViewedCase, UserAccess } from '../data/model/caseAccess'
 import { RiskScoresDto, RoshRiskWidgetDto, TimelineItem } from '../data/model/risk'
 import type { AppResponse } from '../@types'
+import { Contact } from '../data/model/professionalContact'
 
 interface Item {
   checked?: string
@@ -729,4 +730,12 @@ export const toPredictors = (predictors: RiskScoresDto[] | ErrorSummary | null):
   }
 
   return predictorScores
+}
+
+export const roleDescription = (contact: Contact, addBreak?: boolean): string => {
+  const breakTag = addBreak ? '<br>' : ' '
+  const responsibleOfficer = contact.responsibleOfficer ? `${breakTag}(responsible officer)` : ''
+  return contact.prisonOffenderManager
+    ? `Prison Offender Manager (POM)${responsibleOfficer}`
+    : `Community Offender Manager (COM)${responsibleOfficer}`
 }

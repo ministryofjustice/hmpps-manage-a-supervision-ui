@@ -587,6 +587,8 @@ describe('groupByLevel()', () => {
       },
     ]
     expect(groupByLevel('MEDIUM', mockRiskFlags)).toEqual(mockRiskFlags.filter(riskFlag => riskFlag.level === 'MEDIUM'))
+  })
+})
 describe('toSentenceCase()', () => {
   it('should expect one argument', () => {
     expect(toSentenceCase.length).toEqual(1)

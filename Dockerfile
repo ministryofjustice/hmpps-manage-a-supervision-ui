@@ -38,9 +38,9 @@ ARG GIT_REF
 ARG GIT_BRANCH
 
 ## hadolint ignore=DL3008
-#RUN apt-get update && \
-#        apt-get install -y --no-install-recommends make python g++ ca-certificates && \
-#        apt-get clean
+RUN apt-get update && \
+        apt-get install -y --no-install-recommends make python g++ ca-certificates && \
+        apt-get clean
 
 COPY package*.json ./
 RUN CYPRESS_INSTALL_BINARY=0 npm ci --no-audit

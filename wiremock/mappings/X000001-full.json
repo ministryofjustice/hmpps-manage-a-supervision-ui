@@ -118,7 +118,16 @@
             "priorBreachesOnCurrentOrderCount": 1,
             "failureToComplyCount": 3
           },
-          "registrations": ["Restraining Order", "Domestic Abuse Perpetrator", "Risk to Known Adult"]
+          "registrations": ["Restraining Order", "Domestic Abuse Perpetrator", "Risk to Known Adult"],
+          "mappa": {
+            "level": 3,
+            "levelDescription": "M3 Desc",
+            "category": 2,
+            "categoryDescription": "X2 Desc",
+            "startDate": "2024-12-12",
+            "reviewDate": "2024-12-13",
+            "lastUpdated": "2024-10-08"
+          }
         },
         "headers": {
           "Content-Type": "application/json"

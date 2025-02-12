@@ -2,26 +2,6 @@
   "mappings": [
     {
       "request": {
-        "urlPattern": "/mas/risk/crn/X000001/mappa",
-        "method": "GET"
-      },
-      "response": {
-        "status": 200,
-        "jsonBody": {
-          "level": 2,
-          "levelDescription": "M2 Desc",
-          "category": 0,
-          "categoryDescription": "X9 Desc",
-          "startDate": "2024-12-12",
-          "reviewDate": "2024-12-13"
-        },
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      }
-    },
-    {
-      "request": {
         "urlPattern": "/arns/risks/crn/X000001/widget",
         "method": "GET"
       },
@@ -178,6 +158,7 @@
           "riskFlags": [
             {
               "id": 1,
+              "level": "HIGH",
               "description": "Restraining Order",
               "notes": "Some notes",
               "createdDate": "2022-12-18",
@@ -191,6 +172,7 @@
             {
               "id": 2,
               "description": "Domestic Abuse Perpetrator",
+              "level": "MEDIUM",
               "notes": "Some notes",
               "nextReviewDate": "2025-08-18",
               "mostRecentReviewDate": "2023-12-18",
@@ -204,6 +186,21 @@
             {
               "id": 3,
               "description": "Risk to Known Adult",
+              "level": "LOW",
+              "notes": "Some notes",
+              "nextReviewDate": "2025-08-18",
+              "mostRecentReviewDate": "2023-12-18",
+              "createdDate": "2022-12-18",
+              "createdBy": {
+                "forename": "Paul",
+                "surname": "Smith"
+              },
+              "removed": false
+            },
+            {
+              "id": 4,
+              "description": "Domestic Abuse Perpetrator",
+              "level": "INFORMATION_ONLY",
               "notes": "Some notes",
               "nextReviewDate": "2025-08-18",
               "mostRecentReviewDate": "2023-12-18",

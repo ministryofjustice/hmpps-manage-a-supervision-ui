@@ -1,6 +1,7 @@
 {% extends "../partials/case.njk" %}
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% set pageTitle = makePageTitle({ pageHeading: "Overview" }) %}
+{% set noOasysRiskAssessmentFlag = "There is no OASys risk assessment" %}
 {% set currentNavSection = 'overview' %}
 {% set currentSectionName = 'Overview' %}
 {% set appointmentsWithoutAnOutcomeCount = overview.appointmentsWithoutOutcome %}
@@ -9,6 +10,100 @@
 {% set headerCRN = crn %}
 {% set headerDob = overview.personalDetails.dateOfBirth  %}
 {% set headerGender = overview.personalDetails.preferredGender  %}
+{% set severeScoring = groupByLevel("SEVERE", needs.identifiedNeeds) %}
+{% set standardScoring = groupByLevel("STANDARD", needs.identifiedNeeds) %}
+{% set withoutScore = needs.notIdentifiedNeeds %}
+{% set highRiskLevel = groupByLevel("HIGH", personRisks.riskFlags) %}
+{% set mediumRiskLevel = groupByLevel("MEDIUM", personRisks.riskFlags) %}
+{% set lowRiskLevel = groupByLevel("LOW", personRisks.riskFlags) %}
+{% set infoOnlyRiskLevel = groupByLevel("INFORMATION_ONLY", personRisks.riskFlags) %}
+{% set criminogenicNeedsHtml %}
+{% if needs.identifiedNeeds.length %}
+<dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+{% if severeScoring.length > 0 %}
+  <dt class="govuk-!-font-weight-bold">Severe</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list">
+  {% for need in severeScoring %}
+<li>{{ need.name }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+{% endif %}
+{% if standardScoring.length > 0 %}
+  <dt class="govuk-!-font-weight-bold">Standard</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list">
+  {% for need in standardScoring %}
+<li>{{ need.name }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+{% endif %}
+{% if withoutScore.length %}
+  <dt class="govuk-!-font-weight-bold">Areas without a need score</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list govuk-!-margin-bottom-0">
+  {% for need in withoutScore %}
+<li>{{ need.name }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+{% endif %}
+  </dl>
+  {% else %}
+  {{ noOasysRiskAssessmentFlag }}
+  {% endif %}
+{% endset %}
+
+{% set riskFlagsHtml %}
+{% if personRisks.riskFlags.length %}
+  <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+  {% if highRiskLevel.length %}
+<dt class="govuk-!-font-weight-bold rosh--high">High</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list">
+  {% for risk in highRiskLevel %}
+<li>{{ risk.description }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+  {% endif %}
+    {% if mediumRiskLevel.length %}
+<dt class="govuk-!-font-weight-bold rosh--medium">Medium</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list">
+  {% for risk in mediumRiskLevel %}
+<li>{{ risk.description }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+  {% endif %}
+      {% if lowRiskLevel.length %}
+<dt class="govuk-!-font-weight-bold rosh--low">Low</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list">
+  {% for risk in lowRiskLevel %}
+<li>{{ risk.description }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+  {% endif %}
+      {% if infoOnlyRiskLevel.length %}
+<dt class="govuk-!-font-weight-bold">Information only</dt>
+  <dd class="govuk-!-margin-left-0">
+  <ul class="govuk-list govuk-!-margin-bottom-0">
+  {% for risk in infoOnlyRiskLevel %}
+<li>{{ risk.description }}</li>
+  {% endfor %}
+  </ul>
+  </dd>
+  {% endif %}
+  </dl>
+  {% else %}
+{{ noOasysRiskAssessmentFlag }}
+  {% endif %}
+{% endset %}
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -231,18 +326,39 @@
       {% set riskLastUpdated %}
         {% if hasRiskAssessment %}
           <br />
-          <span class="govuk-!-font-size-16 govuk-!-font-weight-regular">
-            Last updated {{ risks.assessedOn | dateWithYearShortMonth }}
+          <span class="govuk-body-s secondary-text govuk-!-font-weight-regular">
+            Last updated {{ risks.assessedOn | dateWithYear }}
           </span>
         {% endif %}
       {% endset %}
+      {% set mappaLastUpdated %}
+      {% if overview.mappa %}
+          <br />
+          <span class="govuk-body-s secondary-text govuk-!-font-weight-regular">
+            Last updated (NDelius): {{ overview.mappa.lastUpdated | dateWithYear }}
+          </span>
+          {% endif %}
+      {% endset %}
+      {% if not overview.mappa %}
+{% set mappaValue = noOasysRiskAssessmentFlag %}
+      {% else %}
+      {% set mappaCat = '' %}
+      {% set mappaLevel = '' %}
+      {% if overview.mappa.category %}
+      {% set mappaCat = 'Cat ' + overview.mappa.category %}
+      {% endif %}
+      {% if overview.mappa.level %}
+      {% set mappaLevel = ('/' if mappaCat) + 'Level ' + overview.mappa.level %}
+      {% endif %}
+      {% set mappaValue =  '<span class="govuk-!-font-weight-bold">' + mappaCat + mappaLevel + '</span>' %}
+      {% endif %}
       {% set overallRosh %}
       {% if hasRiskAssessment %}
       <table><tr>
       <td class="govuk-tag {{ getTagClass(risks.summary.overallRiskLevel) }}" align="center">{{ risks.summary.overallRiskLevel + ' risk of serious harm' | replace('_',' ') }}</td>
       </table>
       {% else %}
-        There is no OASys risk assessment
+        {{ noOasysRiskAssessmentFlag }}
       {% endif %}
       {% endset %}
 
@@ -253,12 +369,16 @@
             value: { html: '<span data-qa="roshValue">' + overallRosh  + '</span>'}
           },
           {
-            key: { html: '<span data-qa="harmToSelfLabel">Risk of serious harm to themselves' + riskLastUpdated + '</span>'},
-            value: { html: '<span data-qa="harmToSelfValue">' + riskToThemselves if hasRiskAssessment else 'There is no OASys risk assessment' + '</span>' }
+            key: { html: '<span data-qa="mappaLabel">MAPPA' + mappaLastUpdated + '</span>' },
+            value: { html: '<span data-qa="mappaValue">' + mappaValue + '</span>'}
           },
           {
-            key: { html: '<span data-qa="riskFlagsLabel">Risk flags</span>' },
-            value: { html: '<span data-qa="riskFlagsValue">' + riskFlags + '</span>'}
+            key: { html: '<span data-qa="criminogenicNeedsLabel">Criminogenic needs</span>' },
+            value: { html: '<span data-qa="criminogenicNeedsValue">' + criminogenicNeedsHtml + '</span>'}
+          },
+          {
+            key: { html: '<span data-qa="riskFlagsLabel">NDelius risk flags</span>' },
+            value: { html: '<span data-qa="riskFlagsValue">' + riskFlagsHtml + '</span>'}
           }
         ]
       }) }}

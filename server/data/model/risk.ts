@@ -176,6 +176,7 @@ export interface RemovalHistory {
 export interface RiskFlag {
   id: number
   description: string
+  level: 'HIGH' | 'MEDIUM' | 'LOW' | 'INFORMATION_ONLY'
   notes?: string
   nextReviewDate?: string
   mostRecentReviewDate?: string

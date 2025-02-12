@@ -31,7 +31,7 @@ import {
   getRisksWithScore,
   getTagClass,
   govukTime,
-  groupNeeds,
+  groupByLevel,
   hasValue,
   initialiseName,
   interventionsLink,
@@ -130,7 +130,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   })
 
   njkEnv.addFilter('dateWithYearShortMonthAndTime', dateWithYearShortMonthAndTime)
-  njkEnv.addGlobal('groupNeeds', groupNeeds)
+  njkEnv.addGlobal('groupByLevel', groupByLevel)
   njkEnv.addGlobal('getComplianceStatus', getComplianceStatus)
   njkEnv.addGlobal('timeFromTo', timeFromTo)
   njkEnv.addGlobal('getRisksWithScore', getRisksWithScore)

@@ -85,7 +85,7 @@ export interface Needs {
 export interface Need {
   section: string
   name: string
-  riskOfHarm: false
-  riskOfReoffending: false
+  riskOfHarm: boolean
+  riskOfReoffending: boolean
   severity: string
 }

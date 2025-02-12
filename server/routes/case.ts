@@ -28,18 +28,21 @@ export default function caseRoutes(router: Router, { hmppsAuthClient }: Services
       service: 'hmpps-manage-people-on-probation-ui',
     })
 
-    const [overview, risks, tierCalculation, predictors] = await Promise.all([
+    const [overview, risks, needs, personRisks, tierCalculation, predictors] = await Promise.all([
       masClient.getOverview(crn, sentenceNumber),
       arnsClient.getRisks(crn),
+      arnsClient.getNeeds(crn),
+      masClient.getPersonRiskFlags(crn),
       tierClient.getCalculationDetails(crn),
       arnsClient.getPredictorsAll(crn),
     ])
 
     const risksWidget = toRoshWidget(risks)
-
     const predictorScores = toPredictors(predictors)
     res.render('pages/overview', {
       overview,
+      needs,
+      personRisks,
       risks,
       crn,
       tierCalculation,

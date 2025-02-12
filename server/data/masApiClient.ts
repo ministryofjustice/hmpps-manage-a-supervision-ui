@@ -13,15 +13,15 @@ import {
 import { AddressOverview, PersonSummary } from './model/common'
 import { SentenceDetails, Sentences } from './model/sentenceDetails'
 import { PersonActivity } from './model/activityLog'
-import { Mappa, PersonRiskFlag, PersonRiskFlags } from './model/risk'
+import { PersonRiskFlag, PersonRiskFlags } from './model/risk'
 import { PersonCompliance } from './model/compliance'
 import { PreviousOrderHistory } from './model/previousOrderHistory'
 import { Offences } from './model/offences'
-import { TeamCaseload, UserCaseload, UserTeam, UserLocations } from './model/caseload'
+import { TeamCaseload, UserCaseload, UserLocations, UserTeam } from './model/caseload'
 import { ProfessionalContact } from './model/professionalContact'
 import { CaseAccess, UserAccess } from './model/caseAccess'
 import { LicenceConditionNoteDetails } from './model/licenceConditionNoteDetails'
-import { AppointmentRequestBody, ActivityLogRequestBody } from '../@types'
+import { ActivityLogRequestBody, AppointmentRequestBody } from '../@types'
 import { RequirementNoteDetails } from './model/requirementNoteDetails'
 import { PreviousOrderDetail } from './model/previousOrderDetail'
 
@@ -162,7 +162,13 @@ export default class MasApiClient extends RestClient {
   }
 
   async getPersonRiskFlags(crn: string): Promise<PersonRiskFlags> {
-    return this.get({ path: `/risk-flags/${crn}`, handle404: false })
+    return this.get({
+      path: `/risk-flags/${crn}`,
+      handle404: true,
+      handle500: true,
+      errorMessageFor500:
+        'OASys is experiencing technical difficulties. It has not been possible to provide the Criminogenic needs information held in OASys',
+    })
   }
 
   async getPersonRiskFlag(crn: string, id: string): Promise<PersonRiskFlag> {
@@ -214,9 +220,5 @@ export default class MasApiClient extends RestClient {
 
   async checkUserAccess(username: string, crns: Record<never, never>): Promise<UserAccess> {
     return this.post({ data: crns, path: `/user/${username}/access`, handle404: false })
-  }
-
-  async getMappa(crn: string): Promise<Mappa> {
-    return this.get({ path: `/risk/${crn}/mappa`, handle404: true })
   }
 }

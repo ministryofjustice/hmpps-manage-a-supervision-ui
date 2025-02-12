@@ -1,4 +1,5 @@
 import { Name, PersonalCircumstance } from './common'
+import { Mappa } from './risk'
 
 export interface Overview {
   appointmentsWithoutOutcome: number
@@ -10,6 +11,7 @@ export interface Overview {
   schedule: Schedule
   sentences: Sentence[]
   registrations: string[]
+  mappa?: Mappa
 }
 
 export interface Offence {

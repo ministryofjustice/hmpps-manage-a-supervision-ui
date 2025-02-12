@@ -14,17 +14,17 @@
 {% set headerDob = personRisk.personSummary.dateOfBirth  %}
 {% set headerGender = personRisk.personSummary.gender  %}
 {% set hasRiskAssessment = risks.assessedOn %}
-{% set severeScoring = groupByLevel("SEVERE", needs.identifiedNeeds) %}
-{% set standardScoring = groupByLevel("STANDARD", needs.identifiedNeeds) %}
+{% set highScoring = groupByLevel("SEVERE", needs.identifiedNeeds) %}
+{% set lowScoring = groupByLevel("STANDARD", needs.identifiedNeeds) %}
 {% set withoutScore = needs.notIdentifiedNeeds %}
   {% if risks.assessedOn %}
       {% set lastUpdatedDate = 'Last updated (OASys):' + risks.assessedOn | dateWithYear %}
   {% endif %}
 
-{% set severeScoringNeeds %}
-  {% if severeScoring.length > 0 %}
+{% set highScoringNeeds %}
+  {% if highScoring.length > 0 %}
     <ul class="govuk-list">
-      {% for need in severeScoring %}
+      {% for need in highScoring %}
         <li>
           {{ need.name }}
         </li>
@@ -35,10 +35,10 @@
   {% endif %}
 {% endset %}
 
-{% set standardScoringNeeds %}
-  {% if standardScoring.length > 0 %}
+{% set lowScoringNeeds %}
+  {% if lowScoring.length > 0 %}
     <ul class="govuk-list">
-      {% for need in standardScoring %}
+      {% for need in lowScoring %}
         <li>
           {{ need.name }}
         </li>
@@ -93,12 +93,12 @@
       {{ govukSummaryList({
         rows: [
           {
-            key: { html: '<span data-qa="severeScoringNeedsLabel">Severe</span>' },
-            value: { html: '<span data-qa="severeScoringNeedsValue">' + severeScoringNeeds + '</span>' }
+            key: { html: '<span data-qa="highScoringNeedsLabel">High-scoring areas from the assessment</span>' },
+            value: { html: '<span data-qa="highScoringNeedsValue">' + highScoringNeeds + '</span>' }
           },
           {
-            key: { html: '<span data-qa="standardScoringNeedsLabel">Standard</span>' },
-            value: { html: '<span data-qa="standardScoringNeedsValue">' + standardScoringNeeds + '</span>'}
+            key: { html: '<span data-qa="lowScoringNeedsLabel">Low-scoring areas from the assessment</span>' },
+            value: { html: '<span data-qa="lowScoringNeedsValue">' + lowScoringNeeds + '</span>'}
           },
           {
             key: { html: '<span data-qa="noScoreNeedsLabel">Areas without a need score</span>' },

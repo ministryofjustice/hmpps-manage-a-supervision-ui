@@ -221,14 +221,4 @@ export default class MasApiClient extends RestClient {
   async checkUserAccess(username: string, crns: Record<never, never>): Promise<UserAccess> {
     return this.post({ data: crns, path: `/user/${username}/access`, handle404: false })
   }
-
-  async getMappa(crn: string): Promise<Mappa> {
-    return this.get({
-      path: `/risk/${crn}/mappa`,
-      handle404: true,
-      handle500: true,
-      errorMessageFor500:
-        'OASys is experiencing technical difficulties. It has not been possible to provide the Criminogenic needs information held in OASys',
-    })
-  }
 }

@@ -332,23 +332,23 @@
         {% endif %}
       {% endset %}
       {% set mappaLastUpdated %}
-      {% if mappa %}
+      {% if overview.mappa %}
           <br />
           <span class="govuk-body-s secondary-text govuk-!-font-weight-regular">
-            Last updated (NDelius): {{ mappa.lastUpdated | dateWithYear }}
+            Last updated (NDelius): {{ overview.mappa.lastUpdated | dateWithYear }}
           </span>
           {% endif %}
       {% endset %}
-      {% if not mappa %}
+      {% if not overview.mappa %}
 {% set mappaValue = noOasysRiskAssessmentFlag %}
       {% else %}
       {% set mappaCat = '' %}
       {% set mappaLevel = '' %}
-      {% if mappa.category %}
-      {% set mappaCat = 'Cat ' + mappa.category %}
+      {% if overview.mappa.category %}
+      {% set mappaCat = 'Cat ' + overview.mappa.category %}
       {% endif %}
-      {% if mappa.level %}
-      {% set mappaLevel = ('/' if mappaCat) + 'Level ' + mappa.level %}
+      {% if overview.mappa.level %}
+      {% set mappaLevel = ('/' if mappaCat) + 'Level ' + overview.mappa.level %}
       {% endif %}
       {% set mappaValue =  '<span class="govuk-!-font-weight-bold">' + mappaCat + mappaLevel + '</span>' %}
       {% endif %}

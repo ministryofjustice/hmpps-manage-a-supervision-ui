@@ -13,36 +13,63 @@
             "middleName": "",
             "surname": "Schmeler"
           },
-          "mainOffence": {
-            "description": "Possessing etc firearm or ammunition without firearm certificate (Group 1) - 08103",
-            "category": "Firearms offences",
-            "code": "08103",
-            "date": "2024-04-23",
-            "count": 1,
-            "notes": "overview"
-          },
-          "contacts": [
+          "currentContacts": [
             {
-              "name": "Peter Parker",
-              "email": "peter.parker@moj.gov.uk",
+              "name": "Arhsimna Xolfo",
+              "email": "arhsimna.xolfo@moj.gov.uk",
               "telephoneNumber": "07321165373",
               "provider": "London",
-              "probationDeliveryUnit": "N07 Cluster 1",
-              "team": "OMU B"
+              "probationDeliveryUnit": "All London",
+              "team": "Unallocated Team (N07)",
+              "allocationDate": "2025-04-22",
+              "responsibleOfficer": true,
+              "prisonOffenderManager": false
             },
             {
               "name": "Bruce Wayne",
               "provider": "Leicester",
               "probationDeliveryUnit": "Leicestershire All",
               "team": "OMU B",
-              "allocatedUntil": "2024-04-30"
+              "allocationDate": "2025-01-12",
+              "responsibleOfficer": false,
+              "prisonOffenderManager": true
+            }
+          ],
+          "previousContacts": [
+            {
+              "name": "Yrhreender Hanandra",
+              "role": "Community Offender Manager (COM)",
+              "email": "yrhreender.hanandra@moj.gov.uk",
+              "telephoneNumber": "07321165373",
+              "provider": "London",
+              "probationDeliveryUnit": "All London",
+              "team": "Unallocated Team (N07)",
+              "allocationDate": "2025-04-21",
+              "allocatedUntil": "2025-04-22",
+              "responsibleOfficer": false,
+              "prisonOffenderManager": false
+            },
+            {
+              "name": "Peter Parker",
+              "email": "peter.parker@moj.gov.uk",
+              "telephoneNumber": "07321165373",
+              "provider": "London",
+              "probationDeliveryUnit": "N07 Cluster 1",
+              "team": "OMU B",
+              "allocationDate": "2025-03-02",
+              "allocatedUntil": "2024-04-21",
+              "responsibleOfficer": false,
+              "prisonOffenderManager": false
             },
             {
               "name": "Jon Smith",
               "provider": "Public Protection Unit",
               "probationDeliveryUnit": "Bradford",
               "team": "CPA West Yorkshire",
-              "allocatedUntil": "2026-06-30"
+              "allocationDate": "2024-10-23",
+              "allocatedUntil": "2024-01-12",
+              "responsibleOfficer": false,
+              "prisonOffenderManager": true
             }
           ]
         },

@@ -66,7 +66,7 @@
                     classes: "columnWidth15 verticalAlign"
                 },
                 {
-                    html: '<a href="' + interventionsLink(intervention.id) + '" target="_blank">View</a>' ,
+                    html: '<a href="' + interventionsLink(intervention.id) + '" target="_blank" aria-label="View referral ' + intervention.referenceNumber + ' for ' + intervention.interventionTitle + '" data-qa="referral' + loop.index + 'Link">View</a>' ,
                     classes: "columnWidth15 verticalAlign"
                 }
               ]

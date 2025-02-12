@@ -1,6 +1,6 @@
 {% extends "../../partials/layout.njk" %}
 {% set headerPersonName = previousOrderHistory.name.forename + ' ' + previousOrderHistory.name.surname %}
-{% set pageTitle = makePageTitle({ pageHeading: ["Sentence", "Previous orders"] }) %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Sentence", "Probation history", "Previous orders"] }) %}
 
 {% block beforeContent %}
 {{ govukBreadcrumbs({

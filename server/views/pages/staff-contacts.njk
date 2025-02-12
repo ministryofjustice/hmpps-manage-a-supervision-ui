@@ -1,0 +1,144 @@
+{% extends "../partials/layout.njk" %}
+{% set title = 'Staff contacts' %}
+{% if isSentenceJourney %}
+{% set pageTitle = 'Sentence - Probation history - Staff contacts' %}
+{% else %}
+{% set pageTitle = 'Personal details - Staff contacts' %}
+{% endif %}
+{% set headerPersonName = professionalContact.name.forename + ' ' + professionalContact.name.surname %}
+{% set handOffDelius = "/case/" + crn + "/handoff/delius" %}
+
+{% block beforeContent %}
+{% set breadcrumbItems = [
+   {
+      text: "My cases",
+      href: "/case"
+    },
+    {
+      text: headerPersonName,
+      href: "/case/" + crn,
+      attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
+    }
+] %}
+{% if isSentenceJourney %}
+ {% set breadcrumbItems = (breadcrumbItems.push({
+    text: "Sentence",
+    href: "/case/" + crn + "/sentence"
+  },
+   {
+      text: "Probation history",
+      href: "/case/" + crn + "/sentence/probation-history"
+   }
+  ), breadcrumbItems) %}
+{% else %}
+ {% set breadcrumbItems = (breadcrumbItems.push({
+      text: "Personal details",
+      href: "/case/" + crn + "/personal-details"
+    }
+  ), breadcrumbItems) %}
+{% endif %}
+ {% set breadcrumbItems = (breadcrumbItems.push({
+      text: "Staff contacts"
+    }
+  ), breadcrumbItems) %}
+{{ govukBreadcrumbs({
+  items: breadcrumbItems
+}) }}
+{% endblock %}
+
+{% block content %}
+    <h1 class="govuk-heading-l" data-qa="pageHeading">{{ title }}</h1>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+      {% if currentContacts.length %}
+      <h2 class="govuk-heading-m">Current contacts</h2>
+       {% for contact in currentContacts %}
+          <div class="govuk-!-margin-bottom-0">
+            <h3 class="govuk-heading-s">{{ contact.name }}</h3>
+            {{ govukSummaryList({
+              classes: 'govuk-summary-list--no-border',
+              rows: [
+                {
+                  key: { text: "Role" },
+                  value: { html: contact | roleDescription }
+                },
+                {
+                  key: { text: "Phone number" },
+                  value: { text: contact.telephoneNumber }
+                } if contact.telephoneNumber,
+                {
+                  key: { text: "Email" },
+                  value: { text: contact.email }
+                } if contact.email,
+                {
+                  key: { text: "Provider" },
+                  value: { text: contact.provider }
+                },
+                {
+                  key: { text: "Probation Delivery Unit (PDU)" },
+                  value: { text: contact.probationDeliveryUnit }
+                },
+                {
+                  key: { text: "Team" },
+                  value: { text: contact.team }
+                },
+                {
+                  key: { text: "Allocated from" },
+                  value: { text: contact.allocationDate | dateWithYear }
+                } if contact.allocationDate
+              ]
+            }) }}
+          </div>
+         
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-top-4 {% if loop.index == currentContacts.length %}govuk-!-margin-bottom-8{% endif %}">
+        {% endfor %}
+        {% endif %}
+        {% if previousContacts.length %}
+        <h2 class="govuk-heading-m" id="previous">Previous contacts</h2>
+        {% set hr = joiner('<hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">') %}
+
+        {% for contact in previousContacts %}
+          <div class="govuk-!-margin-bottom-0">
+            <h3 class="govuk-heading-s">{{ contact.name }}</h3>
+            {{ govukSummaryList({
+              classes: 'govuk-summary-list--no-border',
+              rows: [
+                {
+                  key: { text: "Role" },
+                  value: { html: contact | roleDescription }
+                },
+                {
+                  key: { text: "Phone number" },
+                  value: { text: contact.telephoneNumber }
+                } if contact.telephoneNumber,
+                {
+                  key: { text: "Email" },
+                  value: { text: contact.email }
+                } if contact.email,
+                {
+                  key: { text: "Provider" },
+                  value: { text: contact.provider }
+                },
+                {
+                  key: { text: "Probation Delivery Unit (PDU)" },
+                  value: { text: contact.probationDeliveryUnit }
+                },
+                {
+                  key: { text: "Team" },
+                  value: { text: contact.team }
+                },
+                {
+                  key: { text: "Allocated until" },
+                  value: { text: contact.allocatedUntil | dateWithYear },
+                  classes: "xxxx"
+                } if contact.allocatedUntil
+              ]
+            }) }}
+          </div>
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible govuk-!-margin-top-4">
+        {% endfor %}
+{% endif %}
+      </div>
+    </div>
+{% endblock %}
+

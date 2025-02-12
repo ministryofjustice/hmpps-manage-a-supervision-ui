@@ -1,6 +1,6 @@
 {% extends "../partials/layout.njk" %}
 {% set title = 'Professional contacts' %}
-{% block pageTitle %}{{ title }}{% endblock %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Sentence", "Probation history", title] }) %}
 {% set headerPersonName = professionalContact.name.forename + ' ' + professionalContact.name.surname %}
 {% set handOffDelius = "/case/" + crn + "/handoff/delius" %}
 

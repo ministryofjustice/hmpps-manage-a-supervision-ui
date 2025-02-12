@@ -2,7 +2,8 @@ import { Name } from './common'
 
 export interface ProfessionalContact {
   name: Name
-  contacts: [Contact]
+  currentContacts: Contact[]
+  previousContacts: Contact[]
 }
 
 export interface Contact {
@@ -12,5 +13,8 @@ export interface Contact {
   provider: string
   probationDeliveryUnit: string
   team: string
-  allocatedUntil: string
+  allocationDate: string
+  allocatedUntil?: string
+  responsibleOfficer: boolean
+  prisonOffenderManager: boolean
 }

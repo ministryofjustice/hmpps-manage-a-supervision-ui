@@ -1,5 +1,8 @@
 {% extends "../../../partials/layout.njk" %}
 {% set headerPersonName = previousOrderDetail.name.forename + ' ' + previousOrderDetail.name.surname %}
+{% set title =  previousOrderDetail.title %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Sentence", "Probation history", "Previous orders", title] }) %}
+
 
 {% block beforeContent %}
     {{ govukBreadcrumbs({
@@ -25,15 +28,12 @@
     }) }}
 {% endblock %}
 {% block content %}
-    <div class="govuk-!-margin-bottom-0">
-        <h2 class="govuk-caption-l" data-qa="pageHeading">Previous orders</h2>
-    </div>
-
+<h1 class="govuk-heading-l" data-qa="pageHeading">
+  <span class="govuk-caption-l">Previous orders</span>
+  {{ title }}
+</h1>
     {% set sentence = previousOrderDetail.sentence %}
     {% if sentence %}
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-4">
-            {{ previousOrderDetail.title }}
-        </h2>
         {% include '../_sentence-offence.njk' %}
         {% include '../_conviction.njk' %}
         {% include '../_sentence.njk' %}

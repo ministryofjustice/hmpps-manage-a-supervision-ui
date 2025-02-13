@@ -9,6 +9,7 @@ import TierApiClient from '../data/tierApiClient'
 import { TimelineItem } from '../data/model/risk'
 import { toRoshWidget, toTimeline } from '../utils/utils'
 import type { Route } from '../@types'
+import config from '../config'
 
 export default function risksRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
@@ -47,6 +48,7 @@ export default function risksRoutes(router: Router, { hmppsAuthClient }: Service
     }
 
     const risksWidget = toRoshWidget(risks)
+    const oasysLink = config.oaSys.link
 
     res.render('pages/risk', {
       personRisk,
@@ -57,6 +59,7 @@ export default function risksRoutes(router: Router, { hmppsAuthClient }: Service
       predictorScores,
       timeline,
       needs,
+      oasysLink,
     })
   })
 

@@ -106,7 +106,10 @@
           }
         ]
       }) }}
-      <p><a class="govuk-link--no-visited-state" target="_blank" href="/case/{{ crn }}/handoff/oasys">View the full risk assessment on OASys (opens in new tab)</a></p>
+      <p>
+      <a class="govuk-link--no-visited-state" target="_blank" rel="external noopener noreferrer" href="{{oasysLink}}" data-qa="oasysRiskAssessmentLink">
+      {% if not needs.assessedOn %}Create a risk assessment on OASys (opens in new tab){% else %}View the full risk assessment on OASys (opens in new tab){% endif %}</a>
+      </p>
     </div>
 
     <div class='govuk-!-margin-bottom-4'>
@@ -238,7 +241,9 @@
       <p class='govuk-body' data-qa='ogp-missing'>Eligible</p>
       {% else %}
          <p class='govuk-body' data-qa='ogp-missing'>Not eligible</p>
+        </div>
       {% endif %}
+      
   </div>
   <div class="govuk-grid-column-one-third">
       {{ roshWidget(risksWidget) }}

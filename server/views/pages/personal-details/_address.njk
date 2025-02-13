@@ -1,9 +1,11 @@
 {% set addressTitle %}
+<span class="govuk-heading-m govuk-!-margin-bottom-0 govuk-!-font-weight-bold">
   {% if address.to %}
     {{ address.status }} address – {{ address.from | dateWithYearShortMonth }} to {{ address.to | dateWithYearShortMonth }}
   {% else %}
     {{ address.status }} address – Since {{ address.from | dateWithYearShortMonth }}
   {% endif %}
+  </span>
 {% endset %}
 
 {% set addressHtml %}
@@ -54,7 +56,8 @@
 {% endset %}
 
 {{ appSummaryCard({
-    titleText: addressTitle,
-    classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+    titleHtml: addressTitle,
+    headingLevel: 3,
+    classes: 'govuk-!-margin-bottom-6',
     html: addressHtml
 }) }}

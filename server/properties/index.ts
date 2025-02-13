@@ -21,8 +21,12 @@ export default validate
 
 export const personDetailsValidation: ValidationSpec = {
   phoneNumber: {
-    optional: true,
+    optional: false,
     checks: [
+      {
+        validator: isNotEmpty,
+        msg: 'Enter a phone number.',
+      },
       {
         validator: isNumeric,
         msg: 'Enter a phone number in the correct format.',
@@ -35,8 +39,12 @@ export const personDetailsValidation: ValidationSpec = {
     ],
   },
   mobileNumber: {
-    optional: true,
+    optional: false,
     checks: [
+      {
+        validator: isNotEmpty,
+        msg: 'Enter a mobile number.',
+      },
       {
         validator: isNumeric,
         msg: 'Enter a mobile number in the correct format.',
@@ -49,8 +57,12 @@ export const personDetailsValidation: ValidationSpec = {
     ],
   },
   emailAddress: {
-    optional: true,
+    optional: false,
     checks: [
+      {
+        validator: isNotEmpty,
+        msg: 'Enter an email address.',
+      },
       {
         validator: isEmail,
         msg: 'Enter an email address in the correct format.',
@@ -123,8 +135,12 @@ export const personDetailsValidation: ValidationSpec = {
     ],
   },
   postcode: {
-    optional: true,
+    optional: false,
     checks: [
+      {
+        validator: isNotEmpty,
+        msg: 'Enter a postcode.',
+      },
       {
         validator: isUkPostcode,
         msg: 'Enter a full UK postcode.',

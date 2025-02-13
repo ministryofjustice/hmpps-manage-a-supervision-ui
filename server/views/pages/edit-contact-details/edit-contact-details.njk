@@ -79,7 +79,7 @@
             {{ govukInput({
                 value: personalDetails.telephoneNumber if personalDetails.telephoneNumber,
                 label: {
-                    text: "Phone number (optional)",
+                    text: "Phone number",
                     classes: "govuk-label--s govuk-!-font-weight-bold"
                 },
                 hint: {
@@ -104,7 +104,7 @@
             {{ govukInput({
                 value: personalDetails.mobileNumber if personalDetails.mobileNumber,
                 label: {
-                    text: "Mobile number (optional)",
+                    text: "Mobile number",
                     classes: "govuk-label--s govuk-!-font-weight-bold"
                 },
                 hint: {
@@ -130,7 +130,7 @@
             {{ govukInput({
                 value: personalDetails.email if personalDetails.email,
                 label: {
-                    text: "Email address (optional)",
+                    text: "Email address",
                     classes: "govuk-label--s govuk-!-font-weight-bold"
                 },
                 hint: {
@@ -308,7 +308,7 @@
                 {{ govukInput({
                     value: personalDetails.mainAddress.postcode if personalDetails.mainAddress.postcode,
                     label: {
-                        text: "Postcode (optional)",
+                        text: "Postcode",
                         classes: "govuk-label--s govuk-!-font-weight-regular"
                     },
                     id: 'postcode',

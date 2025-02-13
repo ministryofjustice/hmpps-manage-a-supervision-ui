@@ -1,3 +1,4 @@
+import { toCamelCase } from '../../../server/utils/utils'
 import Page from '../../pages/page'
 import EditContactDetails from '../../pages/personalDetails/editContactDetails'
 
@@ -89,33 +90,23 @@ context('Edit contact details', () => {
     page.getElement('startDateError').should('contain.text', 'Start date can not be later than today.')
   })
 
-  it('Submitting with no phone number should show error messages', () => {
-    cy.visit('/case/X000001/personal-details/edit-contact-details')
-    const page = Page.verifyOnPage(EditContactDetails)
-    page.getElementInput('phoneNumber').clear()
-    page.getElement('submit-btn').click()
-    page.getElement('errorList').should('contain.text', 'Enter a phone number.')
-  })
-  it('Submitting with no mobile number should show error messages', () => {
-    cy.visit('/case/X000001/personal-details/edit-contact-details')
-    const page = Page.verifyOnPage(EditContactDetails)
-    page.getElementInput('mobileNumber').clear()
-    page.getElement('submit-btn').click()
-    page.getElement('errorList').should('contain.text', 'Enter a mobile number.')
-  })
-  it('Submitting with no email address should show error messages', () => {
-    cy.visit('/case/X000001/personal-details/edit-contact-details')
-    const page = Page.verifyOnPage(EditContactDetails)
-    page.getElementInput('emailAddress').clear()
-    page.getElement('submit-btn').click()
-    page.getElement('errorList').should('contain.text', 'Enter an email address.')
-  })
-  it('Submitting with no postcode should show error messages', () => {
-    cy.visit('/case/X000001/personal-details/edit-contact-details')
-    const page = Page.verifyOnPage(EditContactDetails)
-    page.getCheckboxField('noFixedAddress').click()
-    page.getElementInput('postcode').clear()
-    page.getElement('submit-btn').click()
-    page.getElement('errorList').should('contain.text', 'Enter a postcode.')
-  })
+  const mandatoryFields = [
+    ['phone number', 'Enter a phone number.'],
+    ['mobile number', 'Enter a mobile number.'],
+    ['email address', 'Enter an email address.'],
+    ['postcode', 'Enter a postcode.'],
+  ]
+
+  for (const field of mandatoryFields) {
+    it(`Submitting with no ${field[0]} should show error messages`, () => {
+      cy.visit('/case/X000001/personal-details/edit-contact-details')
+      const page = Page.verifyOnPage(EditContactDetails)
+      if (field[0] === 'postcode') {
+        page.getCheckboxField('noFixedAddress').click()
+      }
+      page.getElementInput(toCamelCase(field[0])).clear()
+      page.getElement('submit-btn').click()
+      page.getElement('errorList').should('contain.text', field[1])
+    })
+  }
 })

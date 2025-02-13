@@ -3,6 +3,15 @@ import RiskPage from '../pages/risk'
 import RemovedRiskPage from '../pages/removedRisk'
 import RemovedRiskDetailPage from '../pages/removedRiskDetail'
 import RiskDetailPage from '../pages/riskDetail'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import mockRiskData from '../../wiremock/mappings/X000001-risk.json'
+import { RiskFlag } from '../../server/data/model/risk'
+import { dateWithYear, toSentenceCase } from '../../server/utils/utils'
+
+const mockRiskFlags: RiskFlag[] = mockRiskData.mappings.find(
+  (mapping: any) => mapping.request.urlPattern === '/mas/risk-flags/X000001',
+).response.jsonBody.riskFlags
 
 context('Risk', () => {
   it('Risk overview page is rendered', () => {
@@ -12,6 +21,40 @@ context('Risk', () => {
     page.getElementData('lowScoringNeedsValue').should('contain.text', 'Accommodation')
     page.getElementData('noScoreNeedsValue').should('contain.text', 'Emotional wellbeing')
     page.getElementData('mappa-heading').should('contain.text', 'Cat 0/Level 2')
+    page.getCardHeader('riskFlags').should('contain.text', 'NDelius risk flags')
+    page
+      .getElementData('addRiskFlagLink')
+      .should('contain.text', 'Add a risk flag in NDelius (opens in new tab)')
+      .parent()
+      .should('have.attr', 'href', '/case/X000001/handoff/delius')
+
+    for (let i = 0; i < mockRiskFlags.length; i += 1) {
+      const index = i + 1
+      const { level, description, notes, createdDate, nextReviewDate } = mockRiskFlags[i]
+      page.getRowData('riskFlags', `risk${index}Level`, 'Value').should('contain.text', toSentenceCase(level))
+      const classes = level !== 'INFORMATION_ONLY' ? ` rosh--${level.toLowerCase()}` : ''
+      page
+        .getElementData(`risk${index}LevelValue`)
+        .find('span')
+        .should('have.attr', 'class', `govuk-!-font-weight-bold${classes}`)
+      page.getRowData('riskFlags', `risk${index}Description`, 'Value').should('contain.text', description)
+      page
+        .getElementData(`risk${index}DescriptionValue`)
+        .find('a')
+        .should('have.attr', 'href', `/case/X000001/risk/flag/${index}`)
+      page.getRowData('riskFlags', `risk${index}Notes`, 'Value').should('contain.text', notes)
+      page.getRowData('riskFlags', `risk${index}DateAdded`, 'Value').should('contain.text', dateWithYear(createdDate))
+      page
+        .getRowData('riskFlags', `risk${index}NextReviewDate`, 'Value')
+        .should('contain.text', dateWithYear(nextReviewDate))
+      if (level === 'HIGH') {
+        page.getRowData('riskFlags', `risk${index}NextReviewDate`, 'Value').should('contain.text', 'Overdue')
+      }
+    }
+    page
+      .getElementData('viewRemovedRiskFlagsLink')
+      .should('contain.text', 'View removed risk flags (3)')
+      .should('have.attr', 'href', '/case/X000001/risk/removed-risk-flags')
   })
   it('Removed risk page is rendered', () => {
     cy.visit('/case/X000001/risk/removed-risk-flags')

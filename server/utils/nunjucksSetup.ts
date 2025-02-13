@@ -53,6 +53,7 @@ import {
   timeForSort,
   timeFromTo,
   toErrorList,
+  toSentenceCase,
   toIsoDateFromPicker,
   toSlug,
   toYesNo,
@@ -123,6 +124,7 @@ export default function nunjucksSetup(app: express.Express, applicationInfo: App
   njkEnv.addFilter('timeForSort', timeForSort)
   njkEnv.addFilter('toErrorList', toErrorList)
   njkEnv.addFilter('roleDescription', roleDescription)
+  njkEnv.addFilter('toSentenceCase', toSentenceCase)
 
   app.use((req: Request, res: AppResponse, next: NextFunction) => {
     njkEnv.addFilter('decorateFormAttributes', decorateFormAttributes(req, res))

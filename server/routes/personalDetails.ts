@@ -202,6 +202,41 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
     })
   })
 
+  get('/case/:crn/personal-details/main-address/note/:noteId', async (req, res, _next) => {
+    const { crn, noteId } = req.params
+    const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+    const arnsClient = new ArnsApiClient(token)
+    const masClient = new MasApiClient(token)
+    const tierClient = new TierApiClient(token)
+
+    await auditService.sendAuditMessage({
+      action: 'VIEW_MAS_PERSONAL_CONTACT_NOTE',
+      who: res.locals.user.username,
+      subjectId: crn,
+      subjectType: 'CRN',
+      correlationId: v4(),
+      service: 'hmpps-manage-people-on-probation-ui',
+    })
+
+    const [personalDetails, tierCalculation, risks, predictors] = await Promise.all([
+      masClient.getMainAddressNote(crn, noteId),
+      tierClient.getCalculationDetails(crn),
+      arnsClient.getRisks(crn),
+      arnsClient.getPredictorsAll(crn),
+    ])
+
+    const risksWidget = toRoshWidget(risks)
+
+    const predictorScores = toPredictors(predictors)
+    res.render('pages/personal-details/main-address/address-note', {
+      personalDetails,
+      tierCalculation,
+      crn,
+      risksWidget,
+      predictorScores,
+    })
+  })
+
   get('/case/:crn/personal-details/addresses', async (req, res, _next) => {
     const { crn } = req.params
     const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)

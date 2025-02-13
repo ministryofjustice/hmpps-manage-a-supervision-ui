@@ -1,9 +1,9 @@
 {% extends "../partials/layout.njk" %}
 {% set title = 'Staff contacts' %}
 {% if isSentenceJourney %}
-{% set pageTitle = 'Sentence - Probation history - Staff contacts' %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Sentence", "Probation history", "Staff contacts"] }) %}
 {% else %}
-{% set pageTitle = 'Personal details - Staff contacts' %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Personal details", "Staff contacts"] }) %}
 {% endif %}
 {% set headerPersonName = professionalContact.name.forename + ' ' + professionalContact.name.surname %}
 {% set handOffDelius = "/case/" + crn + "/handoff/delius" %}

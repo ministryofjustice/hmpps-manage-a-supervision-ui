@@ -59,7 +59,34 @@
                     </p>
                     <p class="govuk-!-margin-top-2 govuk-!-margin-bottom-0">
                         <span class="govuk-summary-list__key govuk-!-padding-bottom-0" data-qa="mainAddressNotesLabel">Notes</span>
-                        <span data-qa="mainAddressNotesValue">{{  mainAddress.notes | nl2br if mainAddress.notes else 'No notes'  }} </span>
+                        <span data-qa="mainAddressNotesValue">
+                            {% if mainAddress.addressNotes %}
+                                {% for addressNote in mainAddress.addressNotes %}
+                                    {% if addressNote.hasNoteBeenTruncated === true  %}
+                                        <p class="govuk-body line-break govuk-!-margin-bottom-1">{{ addressNote.note }}...<a href="/case/{{ crn }}/personal-details/main-address/note/{{ addressNote.id }}">View full note</a>
+                                        </p>
+                                    {% else %}
+                                        <p class="govuk-body line-break govuk-!-margin-bottom-1" >{{ addressNote.note }} </p>
+                                    {% endif %}
+
+                                {% if addressNote.createdBy %}
+                                    {% if loop.last %}
+                                        <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by {{ addressNote.createdBy }} on {{ addressNote.createdByDate | dateWithYear }}</p>
+                                    {% else %}
+                                        <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by {{ addressNote.createdBy }} on {{ addressNote.createdByDate | dateWithYear }}</p>
+                                    {% endif %}
+                                {% else %}
+                                    {% if loop.last %}
+                                        <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by not entered</p>
+                                    {% else %}
+                                        <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by not entered</p>
+                                    {% endif %}
+                                {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                No notes
+                            {% endif %}
+                        </span>
                     </p>
             {% else %}
                 No main address
@@ -133,7 +160,7 @@
               },
               {
                 key: { html: '<span data-qa="mainAddressLabel">' + 'Main address<br><span class="govuk-!-font-size-16 govuk-!-font-weight-regular">' + mainAddress.lastUpdated | lastUpdatedDate + '</span></span>' },
-                value: { html: '<span data-qa="mainAddressValue">' + address + '</br></span>' }
+                value: { html: '<span data-qa="mainAddressValue">' + address + '</span>' }
               },
               {
                 key: { html: '<span data-qa="otherAddressesLabel">Other addresses</span>' },

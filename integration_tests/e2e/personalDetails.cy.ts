@@ -2,12 +2,12 @@ import Page from '../pages/page'
 import PersonalDetailsPage from '../pages/personalDetails'
 
 context('Personal Details', () => {
-  it('Overview page is rendered', () => {
+  it('Personal Details page is rendered', () => {
     cy.visit('/case/X000001/personal-details')
     const page = Page.verifyOnPage(PersonalDetailsPage)
     page.assertRiskTags()
     page.headerCrn().should('contain.text', 'X000001')
-    page.headerName().should('contain.text', 'Eula Schmeler')
+    page.headerName().should('contain.text', 'Caroline Wolff')
     page.pageHeading().should('contain.text', 'Personal details')
     page.getTab('overview').should('contain.text', 'Overview')
     page.getTab('personalDetails').should('contain.text', 'Personal details')
@@ -26,8 +26,9 @@ context('Personal Details', () => {
     page.getRowData('contactDetails', 'mainAddress', 'Value').should('contain.text', 'No fixed address')
     page.getRowData('contactDetails', 'otherAddresses', 'Value').should('contain.text', '1 other address')
     page.getRowData('contactDetails', 'contacts', 'Value').should('contain.text', 'Steve Wilson – GP (secondary)')
+    page.getRowData('contactDetails', 'mainAddressNotes', 'Value').should('contain.text', 'Main Address')
 
-    page.getRowData('personalDetails', 'name', 'Value').should('contain.text', 'Eula Schmeler')
+    page.getRowData('personalDetails', 'name', 'Value').should('contain.text', 'Caroline Wolff')
     page.getRowData('personalDetails', 'dateOfBirth', 'Value').should('contain.text', '18 August 1979')
     page.getRowData('personalDetails', 'aliases', 'Value').should('contain.text', 'Jonny Smith')
     page.getRowData('personalDetails', 'preferredLanguage', 'Value').should('contain.text', 'Urdu')
@@ -72,5 +73,17 @@ context('Personal Details', () => {
     page.getRowData('equalityMonitoring', 'sex', 'Value').should('contain.text', 'Female')
     page.getRowData('equalityMonitoring', 'genderIdentity', 'Value').should('contain.text', 'Non-Binary')
     page.getRowData('equalityMonitoring', 'sexualOrientation', 'Value').should('contain.text', 'Heterosexual')
+  })
+
+  it('Personal Details page is rendered', () => {
+    cy.visit('/case/X000001/personal-details/main-address/note/0')
+    const page = Page.verifyOnPage(PersonalDetailsPage)
+    page.getRowData('contactDetails', 'mobileNumber', 'Value').should('contain.text', '071838893')
+    page.getRowData('contactDetails', 'telephoneNumber', 'Value').should('contain.text', '0123456999')
+    page.getRowData('contactDetails', 'otherAddresses', 'Value').should('contain.text', '1 other address')
+    page.getRowData('contactDetails', 'contacts', 'Value').should('contain.text', 'Steve Wilson – GP (secondary)')
+    page.getRowData('contactDetails', 'mainAddress', 'Value').should('contain.text', 'No fixed address')
+    page.getRowData('contactDetails', 'mainAddressNotes', 'Value').should('contain.text', 'Main Address')
+    page.getRowData('contactDetails', 'emailAddress', 'Value').should('contain.text', 'address1@gmail.com')
   })
 })

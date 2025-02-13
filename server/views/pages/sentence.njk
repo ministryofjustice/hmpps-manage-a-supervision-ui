@@ -332,7 +332,7 @@
                               value: { html: '<span data-qa="orderTimeElapsedValue">' + sentence.order.startDate | monthsOrDaysElapsed + ' elasped (of ' + sentence.order.length + ' months)' | nl2br if sentence.order.startDate else 'No details'  + '</span>' }
                           },
                           {
-                              key: { text: "Licence Conditions" },
+                              key: { text: "Licence conditions" },
                               value: { html: '<span data-qa="licenceConditionsValue">' + licenceConditions + '</span>'}
                           } if hasLicenceConditions,
                           {
@@ -340,11 +340,11 @@
                               value: { html: '<span data-qa="requirementsValue">' + requirements + '</span>'}
                           } if hasRequirements,
                           {
-                              key: { text: "Unpaid Work Progress" },
+                              key: { text: "Unpaid work progress" },
                               value: { html: '<span data-qa="unpaidWorkProgress">' + sentence.unpaidWorkProgress + '</span>' }
                           } if sentence.unpaidWorkProgress,
                           {
-                              key: { text: "Court Documents" },
+                              key: { text: "Court documents" },
                               value: { html: '<span data-qa="courtDocumentsValue">' + courtDocuments if hasCourtDocuments else 'No court documents' + '</span>' }
                           }
                       ]

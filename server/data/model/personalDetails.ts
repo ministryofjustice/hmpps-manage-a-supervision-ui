@@ -28,6 +28,12 @@ export interface PersonalDetails {
   addressTypes: AddressType[]
 }
 
+export interface PersonalDetailsMainAddress {
+  crn: string
+  name: Name
+  contacts: PersonalContact[]
+  mainAddress?: PersonAddress
+}
 export interface PersonalDetailsUpdateRequest extends Validateable {
   phoneNumber?: string
   mobileNumber?: string

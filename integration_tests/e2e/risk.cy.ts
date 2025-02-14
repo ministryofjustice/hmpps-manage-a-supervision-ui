@@ -26,7 +26,11 @@ context('Risk', () => {
       .getElementData('addRiskFlagLink')
       .should('contain.text', 'Add a risk flag in NDelius (opens in new tab)')
       .parent()
-      .should('have.attr', 'href', '/case/X000001/handoff/delius')
+      .should(
+        'have.attr',
+        'href',
+        'https://ndelius-dummy-url/NDelius-war/delius/JSP/deeplink.xhtml?component=RegisterSummary&CRN=X000001',
+      )
 
     for (let i = 0; i < mockRiskFlags.length; i += 1) {
       const index = i + 1

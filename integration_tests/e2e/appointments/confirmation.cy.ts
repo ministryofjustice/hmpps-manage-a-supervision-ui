@@ -42,11 +42,11 @@ describe('Appointments arranged', () => {
     confirmPage
       .getWhatHappensNext()
       .find('p:nth-of-type(1)')
-      .should('contain.text', `You need to send Berge the appointment details.`)
+      .should('contain.text', `You need to send Alton the appointment details.`)
     confirmPage
       .getWhatHappensNext()
       .find('p:nth-of-type(2)')
-      .should('contain.text', `Berge’s phone number is 0123456999.`)
+      .should('contain.text', `Alton’s phone number is 0123456999.`)
 
     confirmPage.getSubmitBtn().should('contain.text', 'Finish')
     confirmPage.getSubmitBtn().click()

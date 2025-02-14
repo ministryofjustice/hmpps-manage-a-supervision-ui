@@ -19,7 +19,7 @@ describe('Arrange an appointment in another location', () => {
       .getElement('p:nth-of-type(2)')
       .should(
         'contain.text',
-        'You’ll need to open Berge’s case on NDelius to arrange an appointment in another location.',
+        'You’ll need to open Alton’s case on NDelius to arrange an appointment in another location.',
       )
     locationNotInListPage
       .getElement('p:nth-of-type(3)')

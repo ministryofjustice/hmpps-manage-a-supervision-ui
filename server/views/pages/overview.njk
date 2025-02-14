@@ -355,7 +355,7 @@
       {% set overallRosh %}
       {% if hasRiskAssessment %}
       <table><tr>
-      <td class="govuk-tag {{ getTagClass(risks.summary.overallRiskLevel) }}" align="center">{{ risks.summary.overallRiskLevel + ' risk of serious harm' | replace('_',' ') }}</td>
+      <td class="govuk-tag govuk-!-font-weight-bold {{ getTagClass(risks.summary.overallRiskLevel) }}" align="center">{{ risks.summary.overallRiskLevel + ' risk of serious harm' | replace('_',' ') | upper }}</td>
       </table>
       {% else %}
         {{ noOasysRiskAssessmentFlag }}

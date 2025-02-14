@@ -52,7 +52,7 @@
 {% endif %}
   </dl>
   {% else %}
-  {{ noOasysRiskAssessmentFlag }}
+  {{'There is no OASys risk assessment.'}}
   {% endif %}
 {% endset %}
 
@@ -101,7 +101,7 @@
   {% endif %}
   </dl>
   {% else %}
-{{ noOasysRiskAssessmentFlag }}
+{{ 'There are no active risk flags.' }}
   {% endif %}
 {% endset %}
 
@@ -340,7 +340,7 @@
           {% endif %}
       {% endset %}
       {% if not overview.mappa %}
-{% set mappaValue = noOasysRiskAssessmentFlag %}
+{% set mappaValue = 'No MAPPA data found in NDelius.' %}
       {% else %}
       {% set mappaCat = '' %}
       {% set mappaLevel = '' %}
@@ -358,7 +358,7 @@
       <td class="govuk-tag govuk-!-font-weight-bold {{ getTagClass(risks.summary.overallRiskLevel) }}" align="center">{{ risks.summary.overallRiskLevel + ' risk of serious harm' | replace('_',' ') | upper }}</td>
       </table>
       {% else %}
-        {{ noOasysRiskAssessmentFlag }}
+      {{'There is no RoSH summary.'}}
       {% endif %}
       {% endset %}
 

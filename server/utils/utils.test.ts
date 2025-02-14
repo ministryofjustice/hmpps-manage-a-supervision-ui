@@ -534,7 +534,7 @@ describe('groupByLevel()', () => {
         severity: 'SEVERE',
       },
     ]
-    expect(groupByLevel('STANDARD', mockNeeds)).toEqual(mockNeeds.filter(need => need.severity === 'STANDARD'))
+    expect(groupByLevel('STANDARD', mockNeeds)).toEqual(mockNeeds.filter(need => need?.severity === 'STANDARD'))
   })
   it('should return filtered risk flags', () => {
     const mockRiskFlags: RiskFlag[] = [

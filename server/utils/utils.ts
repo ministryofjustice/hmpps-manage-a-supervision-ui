@@ -663,7 +663,7 @@ export const riskLevelLabel = (level: string) => {
 }
 
 const isRisk = (data: Need[] | RiskFlag[]): data is Need[] => {
-  return (data as Need[])[0].severity !== undefined
+  return (data as Need[])[0]?.severity !== undefined
 }
 
 export const groupByLevel = (level: string, data: Need[] | RiskFlag[]) => {
@@ -671,7 +671,7 @@ export const groupByLevel = (level: string, data: Need[] | RiskFlag[]) => {
     return []
   }
   if (isRisk(data)) {
-    return data.filter(item => item.severity === level)
+    return data.filter(item => item?.severity === level)
   }
   return data.filter(item => item.level === level)
 }

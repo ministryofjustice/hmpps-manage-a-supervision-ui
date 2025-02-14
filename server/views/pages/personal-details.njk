@@ -71,13 +71,13 @@
 
                                 {% if addressNote.createdBy %}
                                     {% if loop.last %}
-                                        <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by {{ addressNote.createdBy }} on {{ addressNote.createdByDate | dateWithYear }}</p>
+                                        <p class="govuk-body-s secondary-text">Comment added by {{ addressNote.createdBy }} on {{ addressNote.createdByDate | dateWithYear }}</p>
                                     {% else %}
                                         <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by {{ addressNote.createdBy }} on {{ addressNote.createdByDate | dateWithYear }}</p>
                                     {% endif %}
                                 {% else %}
                                     {% if loop.last %}
-                                        <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by not entered</p>
+                                        <p class="govuk-body-s secondary-text">Comment added by not entered</p>
                                     {% else %}
                                         <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by not entered</p>
                                     {% endif %}

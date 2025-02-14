@@ -241,10 +241,9 @@
       <p class='govuk-body' data-qa='ogp-missing'>Eligible</p>
       {% else %}
          <p class='govuk-body' data-qa='ogp-missing'>Not eligible</p>
-        </div>
       {% endif %}
-      
-  </div>
+   </div>   
+
   <div class="govuk-grid-column-one-third">
       {{ roshWidget(risksWidget) }}
       {{ mappaWidget({ mappa: personRisk.mappa, lastUpdatedDate: personRisk.mappa.startDate | dateWithYearShortMonth }) }}

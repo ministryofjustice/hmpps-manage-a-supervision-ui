@@ -126,7 +126,6 @@ context('Overview', () => {
       })
   })
   it('Risk information and tier is not provided due to 500 from ARNS and TIER', () => {
-    const errorMsg = 'There is no OASys risk assessment'
     cy.visit('/case/X000002')
     const page = Page.verifyOnPage(OverviewPage)
     page.headerCrn().should('contain.text', 'X000002')
@@ -148,9 +147,9 @@ context('Overview', () => {
       'contain.text',
       'The tier service is experiencing technical difficulties. It has not been possible to provide tier information',
     )
-    page.getRowData('risk', 'rosh', 'Value').should('contain.text', errorMsg)
-    page.getRowData('risk', 'mappa', 'Value').should('contain.text', errorMsg)
-    page.getRowData('risk', 'criminogenicNeeds', 'Value').should('contain.text', errorMsg)
-    page.getRowData('risk', 'riskFlags', 'Value').should('contain.text', errorMsg)
+    page.getRowData('risk', 'rosh', 'Value').should('contain.text', 'There is no RoSH summary.')
+    page.getRowData('risk', 'mappa', 'Value').should('contain.text', 'No MAPPA data found in NDelius.')
+    page.getRowData('risk', 'criminogenicNeeds', 'Value').should('contain.text', 'There is no OASys risk assessment.')
+    page.getRowData('risk', 'riskFlags', 'Value').should('contain.text', 'There are no active risk flags.')
   })
 })

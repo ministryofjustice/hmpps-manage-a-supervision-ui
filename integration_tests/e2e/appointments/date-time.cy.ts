@@ -19,7 +19,7 @@ describe('Enter the date and time of the appointment', () => {
       dateTimePage.getSummaryLink().click()
     })
     it('should display the circumstances link', () => {
-      dateTimePage.getSummaryLink().should('contain.text', `Berge’s circumstances`)
+      dateTimePage.getSummaryLink().should('contain.text', `Alton’s circumstances`)
     })
     it('should display the circumstances', () => {
       dateTimePage.getSummaryLink().click()

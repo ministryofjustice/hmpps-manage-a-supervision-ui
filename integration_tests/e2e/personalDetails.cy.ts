@@ -75,7 +75,7 @@ context('Personal Details', () => {
     page.getRowData('equalityMonitoring', 'sexualOrientation', 'Value').should('contain.text', 'Heterosexual')
   })
 
-  it('Personal Details page is rendered', () => {
+  it('Personal Details page for a main address with a single note is rendered', () => {
     cy.visit('/case/X000001/personal-details/main-address/note/0')
     const page = Page.verifyOnPage(PersonalDetailsPage)
     page.getRowData('contactDetails', 'mobileNumber', 'Value').should('contain.text', '071838893')
@@ -85,5 +85,11 @@ context('Personal Details', () => {
     page.getRowData('contactDetails', 'mainAddress', 'Value').should('contain.text', 'No fixed address')
     page.getRowData('contactDetails', 'mainAddressNotes', 'Value').should('contain.text', 'Main Address')
     page.getRowData('contactDetails', 'emailAddress', 'Value').should('contain.text', 'address1@gmail.com')
+  })
+
+  it('Personal Details page where the main address does not any notes is rendered', () => {
+    cy.visit('/case/X778160/personal-details')
+    const page = Page.verifyOnPage(PersonalDetailsPage)
+    page.getRowData('contactDetails', 'mainAddressNotes', 'Value').should('contain.text', 'No notes')
   })
 })

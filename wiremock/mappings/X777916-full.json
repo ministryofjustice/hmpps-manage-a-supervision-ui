@@ -2,8 +2,12 @@
   "mappings": [
     {
       "request": {
-        "urlPattern": "/mas/overview/X777916",
-        "method": "GET"
+        "urlPathPattern": "/mas/overview/X777916",
+        "queryParameters": {
+          "sentenceNumber": {
+            "equalTo": ""
+          }
+        }
       },
       "response": {
         "status": 200,
@@ -36,11 +40,16 @@
           },
           "sentences": [
             {
-              "additionalOffences": [],
-              "eventNumber": "3",
+              "additionalOffences": [
+                {
+                  "code": "00410",
+                  "description": "Management of an organisation whose activities cause death by gross breach of duty of care - 00410"
+                }
+              ],
+              "eventNumber": "11",
               "mainOffence": {
-                "code": "18502",
-                "description": "Breach of Restraining Order (Protection from Harassment Act 1997) - 00831"
+                "code": "10300",
+                "description": "(Aggravated assaults - 10300)"
               }
             }
           ],

@@ -1,6 +1,6 @@
 {% extends "../../partials/layout.njk" %}
 {% set appointment = personAppointment.appointment %}
-{% set pageTitle = makePageTitle({ pageHeading: ["Appointments" if not isActivityLog else "Activity log", appointment.type] }) %}
+{% set pageTitle = makePageTitle({ pageHeading: [appointment.type, "Appointments" if not isActivityLog else "Activity log"] }) %}
 {% set extraBreadcrumb = '?' + queryParams.join('&') if queryParams.length > 0  else ''  %}
 {% set category = '/' + category + '/' + extraBreadcrumb if category else extraBreadcrumb  %}
 

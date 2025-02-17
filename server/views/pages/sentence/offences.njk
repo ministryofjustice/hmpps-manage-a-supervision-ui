@@ -1,7 +1,7 @@
 {% extends "../../partials/layout.njk" %}
 {% set title = 'Offences' %}
 {% set headerPersonName = offences.name.forename + ' ' + offences.name.surname %}
-{% set pageTitle = makePageTitle({ pageHeading: ["Sentence", "Offences"] }) %}
+{% set pageTitle = makePageTitle({ pageHeading: ["Offences", "Sentence"] }) %}
 {% block beforeContent %}
 {{ govukBreadcrumbs({
   items: [

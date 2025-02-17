@@ -375,7 +375,7 @@
     },
     {
       "request": {
-        "urlPattern": "/mas/personal-details/X000001/addresses",
+        "urlPattern": "/mas/personal-details/X777916/addresses",
         "method": "GET"
       },
       "response": {

@@ -247,7 +247,7 @@
     },
     {
       "request": {
-        "urlPattern": "/mas/personal-details/X000001/addresses",
+        "urlPattern": "/mas/personal-details/X778160/addresses",
         "method": "GET"
       },
       "response": {
@@ -261,24 +261,7 @@
             "crn": "X000001",
             "dateOfBirth": "1979-08-18"
           },
-          "mainAddress": {
-            "buildingNumber": "32",
-            "streetName": "SCOTLAND STREET",
-            "town": "Sheffield",
-            "county": "South Yorkshire",
-            "postcode": "S3 7BS",
-            "telephoneNumber": "0191765438",
-            "from": "2023-03-14",
-            "verified": true,
-            "lastUpdated": "2023-03-20",
-            "type": "Householder (Owner - freehold or leasehold)",
-            "notes": "Some Notes",
-            "status": "Main",
-            "lastUpdatedBy": {
-              "forename": "Paul",
-              "surname": "Smith"
-            }
-          },
+          "mainAddress": null,
           "otherAddresses": [
             {
               "buildingNumber": "32",
@@ -727,7 +710,7 @@
     },
     {
       "request": {
-        "urlPattern": "/mas/personal-details/X000001/addresses",
+        "urlPattern": "/mas/personal-details/X778160/addresses",
         "method": "GET"
       },
       "response": {
@@ -741,24 +724,7 @@
             "crn": "X000001",
             "dateOfBirth": "1979-08-18"
           },
-          "mainAddress": {
-            "buildingNumber": "32",
-            "streetName": "SCOTLAND STREET",
-            "town": "Sheffield",
-            "county": "South Yorkshire",
-            "postcode": "S3 7BS",
-            "telephoneNumber": "0191765438",
-            "from": "2023-03-14",
-            "verified": true,
-            "lastUpdated": "2023-03-20",
-            "type": "Householder (Owner - freehold or leasehold)",
-            "notes": "Some Notes",
-            "status": "Main",
-            "lastUpdatedBy": {
-              "forename": "Paul",
-              "surname": "Smith"
-            }
-          },
+          "mainAddress": null,
           "otherAddresses": [
             {
               "buildingNumber": "32",

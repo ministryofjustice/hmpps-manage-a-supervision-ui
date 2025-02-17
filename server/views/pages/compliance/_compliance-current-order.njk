@@ -92,10 +92,11 @@
       }) }}
     {% endset %}
 
+    {% set sentenceDesription = sentence.order.description | toSentenceDescription %}
     {{ appSummaryCard({
       attributes: {'data-qa': 'sentence' + loop.index + 'Card'},
       classes: lastSentence,
-      titleText: 'Sentence (' + sentence.eventNumber + ')',
+      titleText: sentenceDesription,
       html: orderDetailsList,
       actions: {
         items: [

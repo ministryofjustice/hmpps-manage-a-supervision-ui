@@ -6,7 +6,7 @@ context('Compliance', () => {
     cy.visit('/case/X000001/compliance')
     const page = Page.verifyOnPage(CompliancePage)
     page.assertRiskTags()
-    page.getCardHeader('sentence1').should('contain.text', 'Sentence (3)')
+    page.getCardHeader('sentence1').should('contain.text', 'ORA Community Order')
     page
       .getRowData('sentence1', 'mainOffenceDescription', 'Value')
       .should('contain.text', 'Having possession a picklock')
@@ -30,7 +30,7 @@ context('Compliance', () => {
     page.getRowData('activity1', 'acceptableAbsences', 'Value').should('contain.text', '1 acceptable absences')
     page.getRowData('activity1', 'rescheduled', 'Value').should('contain.text', '1 rescheduled')
 
-    page.getCardHeader('sentence2').should('contain.text', 'Sentence (1)')
+    page.getCardHeader('sentence2').should('contain.text', 'ORA Community Order')
     page
       .getRowData('sentence2', 'mainOffenceDescription', 'Value')
       .should('contain.text', 'Another main offence - 18502')

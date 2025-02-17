@@ -751,3 +751,5 @@ export const roleDescription = (contact: Contact, addBreak?: boolean): string =>
     ? `Prison Offender Manager (POM)${responsibleOfficer}`
     : `Community Offender Manager (COM)${responsibleOfficer}`
 }
+
+export const toSentenceDescription = (value?: string): string => (!value ? 'Pre-Sentence' : value)

@@ -153,4 +153,9 @@ context('Overview', () => {
     page.getRowData('risk', 'criminogenicNeeds', 'Value').should('contain.text', errorMsg)
     page.getRowData('risk', 'riskFlags', 'Value').should('contain.text', errorMsg)
   })
+  it('Overview page with pre-sentence is rendered', () => {
+    cy.visit('/case/X777916')
+    const page = Page.verifyOnPage(OverviewPage)
+    page.getCardHeader('sentence11').should('contain.text', 'Pre-Sentence')
+  })
 })

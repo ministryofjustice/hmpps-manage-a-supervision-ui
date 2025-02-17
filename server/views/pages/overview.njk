@@ -451,8 +451,9 @@
           }) }}
         {% endset %}
 
+        {% set sentenceDesription = sentence.order.description | toSentenceDescription %}
         {{ appSummaryCard({
-            titleText: sentence.order.description,
+            titleText: sentenceDesription,
             classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
             attributes: {'data-qa': 'sentence' + sentence.eventNumber + 'Card'},
             html: sentenceHtml,
@@ -466,12 +467,6 @@
             }
         }) }}
     {%- endfor %}
-    {{ appSummaryCard({
-            titleText: 'Sentence',
-            classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-            attributes: {'data-qa': 'sentence' + sentence.eventNumber + 'Card'},
-            html: sentenceHtml
-        }) }}
     {% else %}
     {% set sentenceHtml %}
 {{ govukSummaryList({

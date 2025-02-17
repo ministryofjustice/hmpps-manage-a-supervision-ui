@@ -15,6 +15,38 @@
     {% endif %}
   {% endset %}
 
+  {% set notes = '' %}
+  {% set hasNote = address.addressNote %}
+  {% if address.addressNotes  %}
+    {% for addressNote in address.addressNotes %}
+      {% set note %}
+        {% if addressNote.hasNoteBeenTruncated === true  %}
+          <p class="govuk-body line-break govuk-!-margin-bottom-1">{{ addressNote.note }}...<a href="/case/{{ crn }}/personal-details/addresses/{{ address.id }}/note/{{ addressNote.id }}">View full note</a>
+          </p>
+        {% else %}
+          <p class="govuk-body line-break govuk-!-margin-bottom-1">{{ addressNote.note }} </p>
+        {% endif %}
+
+        {% if addressNote.createdBy %}
+          {% if loop.last %}
+            <p class="govuk-body-s secondary-text">Comment added by {{ addressNote.createdBy }} on {{ addressNote.createdByDate | dateWithYear }}</p>
+          {% else %}
+            <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by {{ addressNote.createdBy }} on {{ addressNote.createdByDate | dateWithYear }}</p>
+          {% endif %}
+        {% else %}
+          {% if loop.last %}
+            <p class="govuk-body-s secondary-text">Comment added by not entered</p>
+          {% else %}
+            <p class="govuk-body-s secondary-text govuk-!-padding-bottom-2">Comment added by not entered</p>
+          {% endif %}
+        {% endif %}
+      {% endset %}
+      {% set notes = notes.concat(note) %}
+    {% endfor  %}
+  {% elseif address.addressNote %}
+    {% set note = address.addressNote.note %}
+  {% endif %}
+
   {{ govukSummaryList({
     rows: [
       {
@@ -42,9 +74,21 @@
         value: { html: '<span data-qa="' + addressType + 'EndDateValue' + loopIndex +'">' + address.endDate | dateWithYear + '</span>' }
       } if address.endDate,
       {
+        key: { html: '<span data-qa="' + addressType + 'NoteBaddedByLabel' + loopIndex +'">Note added by</span>' },
+        value: { html: '<span data-qa="' + addressType + 'NoteBaddedByValue' + loopIndex +'">' + address.addressNote.createdBy + '</span>' }
+      } if address.addressNote.createdBy,
+      {
+        key: { html: '<span data-qa="' + addressType + 'DateAddedLabel' + loopIndex +'">Date added</span>' },
+        value: { html: '<span data-qa="' + addressType + 'DateAddedValue' + loopIndex +'">' + address.addressNote.createdByDate | dateWithYear + '</span>' }
+      } if address.addressNote.createdByDate,
+      {
         key: { html: '<span data-qa="' + addressType + 'NotesLabel' + loopIndex +'">Notes</span>' },
-        value: { html: '<span data-qa="' + addressType + 'NotesValue' + loopIndex +'">' + address.notes + '</span>' | nl2br if address.notes else '<span data-qa="' + addressType + 'NotesValue' + loopIndex +'">No notes</span>'}
-      }
+        value: { html: notes if notes else 'No notes' }
+      } if not hasNote,
+      {
+        key: { html: '<span data-qa="' + addressType + 'NotesLabel' + loopIndex +'">Note</span>' },
+        value: { html: '<span class="govuk-body line-break">' + note + '</span>' if note else 'No note' }
+      } if hasNote
     ]
   }) }}
 

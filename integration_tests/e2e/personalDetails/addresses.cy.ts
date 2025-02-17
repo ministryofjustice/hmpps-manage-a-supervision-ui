@@ -23,7 +23,7 @@ context('Addresses', () => {
       .getRowData('mainAddress', 'addressType', 'Value')
       .should('contain.text', 'Householder (Owner - freehold or leasehold) (verified)')
     page.getRowData('mainAddress', 'addressStartDate', 'Value').should('contain.text', '14 March 2023')
-    page.getRowData('mainAddress', 'addressNotes', 'Value').should('contain.text', 'Some Notes')
+    page.assertPageElementAtIndexWithin('section', 0, 'dd', 5, 'No notes')
     page
       .getRowData('mainAddress', 'addressLastUpdatedBy', 'Value')
       .should('contain.text', 'Last updated by Paul Smith on 20 Mar 2023')
@@ -34,7 +34,7 @@ context('Addresses', () => {
       .getRowData('otherAddress1', 'otherAddressType', 'Value1')
       .should('contain.text', 'Householder (Owner - freehold or leasehold) (not verified)')
     page.getRowData('otherAddress1', 'otherAddressStartDate', 'Value1').should('contain.text', '14 March 2023')
-    page.getRowData('otherAddress1', 'otherAddressNotes', 'Value1').should('contain.text', 'No notes')
+    page.assertPageElementAtIndexWithin('section', 1, 'dd', 4, 'Other Address')
     page
       .getRowData('otherAddress1', 'otherAddressLastUpdatedBy', 'Value1')
       .should('contain.text', 'Last updated by Joe Bloggs on 20 Mar 2023')
@@ -45,7 +45,7 @@ context('Addresses', () => {
       .getRowData('previousAddress1', 'previousAddressType', 'Value1')
       .should('contain.text', 'Householder (Owner - freehold or leasehold) (verified)')
     page.getRowData('previousAddress1', 'previousAddressStartDate', 'Value1').should('contain.text', '14 March 2022')
-    page.getRowData('previousAddress1', 'previousAddressNotes', 'Value1').should('contain.text', 'Left this property')
+    page.assertPageElementAtIndexWithin('section', 2, 'dd', 4, 'Previous Address')
     page
       .getRowData('previousAddress1', 'previousAddressLastUpdatedBy', 'Value1')
       .should('contain.text', 'Last updated by Jim Smith on 20 Mar 2023')

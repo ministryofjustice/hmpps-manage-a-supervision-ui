@@ -18,6 +18,11 @@ export interface AddressOverview {
   previousAddresses: PersonAddress[]
 }
 
+export interface AddressOverviewSummary {
+  personSummary: PersonSummary
+  address: PersonAddress[]
+}
+
 export interface PersonSummary {
   name: Name
   crn: string

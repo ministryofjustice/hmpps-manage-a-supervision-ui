@@ -11,7 +11,7 @@ import {
   PersonalDetailsUpdateRequest,
   ProvisionOverview,
 } from './model/personalDetails'
-import { AddressOverview, PersonSummary } from './model/common'
+import { AddressOverview, AddressOverviewSummary, PersonSummary } from './model/common'
 import { SentenceDetails, Sentences } from './model/sentenceDetails'
 import { PersonActivity } from './model/activityLog'
 import { PersonRiskFlag, PersonRiskFlags } from './model/risk'
@@ -114,6 +114,14 @@ export default class MasApiClient extends RestClient {
 
   async getPersonalAddresses(crn: string): Promise<AddressOverview | null> {
     return this.get({ path: `/personal-details/${crn}/addresses`, handle404: false })
+  }
+
+  async getPersonalAddressesNote(
+    crn: string,
+    addressId: string,
+    noteId: string,
+  ): Promise<AddressOverviewSummary | null> {
+    return this.get({ path: `/personal-details/${crn}/addresses/${addressId}/note/${noteId}`, handle404: false })
   }
 
   async getPersonSummary(crn: string): Promise<PersonSummary | null> {

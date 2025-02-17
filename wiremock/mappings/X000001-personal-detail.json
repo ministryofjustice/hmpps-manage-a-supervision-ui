@@ -173,10 +173,13 @@
               },
               {
                 "id": 1,
-                "createdBy": "Harry Kane",
-                "createdByDate": "2024-10-29",
-                "note": "main address note 1",
+                "note": "main address note 2",
                 "hasNoteBeenTruncated": false
+              },
+              {
+                "id": 2,
+                "note": "main address note 1",
+                "hasNoteBeenTruncated": true
               }
             ],
             "noFixedAddress": true,
@@ -395,6 +398,152 @@
               "createdBy": "Tom Brady",
               "createdByDate": "2024-10-29",
               "note": "Main Address created automatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Main Address(s) unless otherwise authorised by your supervising officer. Main Address created automatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Main Address(s) unless otherwise authorised by your supervising officer.Main Address created automatically from the Create and Vary a licence system of\nAllow person(s) as desi"
+            },
+            "noFixedAddress": true,
+            "lastUpdatedBy": {
+              "forename": "NDelius03",
+              "surname": "NDelius03"
+            }
+          },
+          "otherAddressCount": 1,
+          "previousAddressCount": 1,
+          "telephoneNumber": "0123456999",
+          "mobileNumber": "071838893",
+          "email": "address1@gmail.com"
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/personal-details/X000001/main-address/note/2"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "crn": "X000001",
+          "pnc": "1954/0018147W",
+          "noms": "G9566GQ",
+          "name": {
+            "forename": "Caroline",
+            "surname": "Wolff"
+          },
+          "contacts": [
+            {
+              "personSummary": {
+                "name": {
+                  "forename": "Eula",
+                  "surname": "Schmeler"
+                },
+                "crn": "X000001",
+                "dateOfBirth": "1979-08-18"
+              },
+              "contactId": 2500233993,
+              "name": {
+                "forename": "Steve",
+                "surname": "Wilson"
+              },
+              "relationship": "GP (secondary)",
+              "relationshipType": "GP",
+              "address": {
+                "buildingName": "The Building",
+                "buildingNumber": "77",
+                "streetName": "Some Street",
+                "district": "Some City Centre",
+                "town": "London",
+                "county": "Essex",
+                "postcode": "NW10 1EP",
+                "lastUpdated": "2023-03-14"
+              }
+            },
+            {
+              "personSummary": {
+                "name": {
+                  "forename": "Eula",
+                  "surname": "Schmeler"
+                },
+                "crn": "X000001",
+                "dateOfBirth": "1979-08-18"
+              },
+              "contactId": 2500232995,
+              "name": {
+                "forename": "Brian",
+                "surname": "Smith"
+              },
+              "relationship": "Father",
+              "relationshipType": "Emergency Contact",
+              "address": {
+                "buildingNumber": "36",
+                "streetName": "Fifth Street",
+                "district": "South City Centre",
+                "town": "London",
+                "county": "South London",
+                "postcode": "W10 4DN",
+                "lastUpdated": "2023-03-14"
+              }
+            },
+            {
+              "personSummary": {
+                "name": {
+                  "forename": "Eula",
+                  "surname": "Schmeler"
+                },
+                "crn": "X000001",
+                "dateOfBirth": "1979-08-18"
+              },
+              "contactId": 2500232996,
+              "name": {
+                "forename": "Nick",
+                "surname": "Riviera"
+              },
+              "relationship": "GP",
+              "relationshipType": "GP",
+              "address": {
+                "buildingName": "The practice",
+                "buildingNumber": "38",
+                "streetName": "East Street",
+                "district": "East City Centre",
+                "town": "Bristol",
+                "county": "East London",
+                "postcode": "E5 7BS",
+                "lastUpdated": "2023-03-14"
+              }
+            },
+            {
+              "personSummary": {
+                "name": {
+                  "forename": "Eula",
+                  "surname": "Schmeler"
+                },
+                "crn": "X000001",
+                "dateOfBirth": "1979-08-18"
+              },
+              "contactId": 2500244492,
+              "name": {
+                "forename": "Ms",
+                "surname": "Schmeler"
+              },
+              "relationship": "Mother",
+              "relationshipType": "Emergency Contact"
+            }
+          ],
+          "mainAddress": {
+            "buildingNumber": "32",
+            "streetName": "SCOTLAND STREET",
+            "town": "Sheffield",
+            "county": "South Yorkshire",
+            "postcode": "S3 7BS",
+            "from": "2023-03-14",
+            "verified": true,
+            "lastUpdated": "2023-03-20",
+            "type": "Householder (Owner - freehold or leasehold)",
+            "typeCode": "HO",
+            "status": "Main",
+            "addressNote": {
+              "id": 2,
+              "note": "main address note 1"
             },
             "noFixedAddress": true,
             "lastUpdatedBy": {

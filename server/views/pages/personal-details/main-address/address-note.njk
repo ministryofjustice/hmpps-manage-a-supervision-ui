@@ -57,8 +57,19 @@
                         <span class="govuk-summary-list__key govuk-!-padding-bottom-0" data-qa="mainAddressStartDateLabel">Start date</span>
                         <span data-qa="mainAddressStartDateValue">{{ mainAddress.from | dateWithYear }} </span>
                     </p>
+
+                    {% if mainAddress.addressNote.createdBy %}
+                        <p class="govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                            <span class="govuk-summary-list__key govuk-!-padding-bottom-0" data-qa="mainAddressNoteAddedByLabel">Note added by</span>
+                            <span data-qa="mainAddressStartDateValue">{{ mainAddress.addressNote.createdBy }} </span>
+                        </p>
+                        <p class="govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+                            <span class="govuk-summary-list__key govuk-!-padding-bottom-0" data-qa="mainAddressNoteDateAddedLabel">Date added</span>
+                            <span data-qa="mainAddressStartDateValue">{{ mainAddress.addressNote.createdByDate | dateWithYear }} </span>
+                        </p>
+                    {% endif %}
                     <p class="govuk-!-margin-top-2 govuk-!-margin-bottom-0">
-                        <span class="govuk-summary-list__key govuk-!-padding-bottom-0" data-qa="mainAddressNotesLabel">Notes</span>
+                        <span class="govuk-summary-list__key govuk-!-padding-bottom-0" data-qa="mainAddressNoteLabel">Note</span>
                         <span data-qa="mainAddressNotesValue">
                             {% if mainAddress.addressNote %}
                                 <p class="govuk-body line-break"> {{ mainAddress.addressNote.note }} </p>

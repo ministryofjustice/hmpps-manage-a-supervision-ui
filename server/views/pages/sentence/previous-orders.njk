@@ -27,9 +27,8 @@
 
 {% block content %}
     <div class="govuk-!-margin-bottom-8">
-      <h2 class="govuk-heading-l">Previous orders</h2>
+      <h1 class="govuk-heading-l" data-qa="pageHeading">Previous orders</h1>
     </div>
-
     {% for order in previousOrderHistory.previousOrders %}
         <p class="govuk-heading-s govuk-!-margin-bottom-0">
           <a class="govuk-link govuk-link--no-visited-state" href="/case/{{ crn }}/sentence/previous-orders/{{ order.eventNumber }}">

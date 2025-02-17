@@ -250,8 +250,8 @@ export default function personalDetailRoutes(router: Router, { hmppsAuthClient }
       correlationId: v4(),
       service: 'hmpps-manage-people-on-probation-ui',
     })
-    const addressOverview = await masClient.getPersonalAddresses(crn)
 
+    const addressOverview = await masClient.getPersonalAddresses(crn)
     res.render('pages/personal-details/addresses', {
       addressOverview,
       crn,

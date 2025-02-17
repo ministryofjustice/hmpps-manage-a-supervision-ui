@@ -50,4 +50,18 @@ context('Addresses', () => {
       .getRowData('previousAddress1', 'previousAddressLastUpdatedBy', 'Value1')
       .should('contain.text', 'Last updated by Jim Smith on 20 Mar 2023')
   })
+
+  it('Addresses page for a single note for a Other Address is rendered', () => {
+    cy.visit('/case/X000001/personal-details/addresses/3/note/0')
+    const page = Page.verifyOnPage(AddressPage)
+
+    page.assertPageElementAtIndexWithin('section', 0, 'dd', 4, 'Other Address')
+  })
+
+  it('Addresses page for a single note for a Previous Address is rendered', () => {
+    cy.visit('/case/X000001/personal-details/addresses/7/note/0')
+    const page = Page.verifyOnPage(AddressPage)
+
+    page.assertPageElementAtIndexWithin('section', 0, 'dd', 6, 'Previous Address')
+  })
 })

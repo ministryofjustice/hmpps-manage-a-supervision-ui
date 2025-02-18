@@ -28,15 +28,19 @@
 {% block content %}
 <h1 class="govuk-heading-l" data-qa="pageHeading">{{ title }}</h1>
 {% set address = addressOverview.mainAddress %}
-{% if addressOverview.mainAddress %}
+
     <h2 class="govuk-heading-m govuk-!-margin-top-8">Main address</h2>
+  
     <span data-qa="mainAddressSection">
+      {% if addressOverview.mainAddress %}
         {% set addressType = 'address' %}
         {% set loopIndex = '' %}
         {% include './_address.njk' %}
+        {% else %}
+        <p class="govuk-!-margin-bottom-2">There is no main address.</p>
+        <p><a href="/case/{{crn}}/personal-details/edit-contact-details">Add main address</a>.</p>
+        {% endif %}
     </span>
-{% endif %}
-
     {% if addressOverview.otherAddresses.length > 0 %}
     <h2 class="govuk-heading-m govuk-!-margin-top-8">Other addresses</h2>
     <p>

@@ -133,14 +133,14 @@
     "timepicker": "^1.14.1",
     "url-value-parser": "^2.2.0",
     "uuid": "^11.0.5",
-    "wiremock": "^3.11.0",
+    "wiremock": "^3.12.0",
     "dotenv": "^16.4.7"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.5.0",
     "@jgoz/esbuild-plugin-typecheck": "^4.0.3",
     "@ministryofjustice/eslint-config-hmpps": "^0.0.1-beta.2",
-    "@ministryofjustice/hmpps-probation-integration-e2e-tests": "^1.57.0",
+    "@ministryofjustice/hmpps-probation-integration-e2e-tests": "^1.58.0",
     "@playwright/test": "^1.50.1",
     "@types/bunyan": "^1.8.11",
     "@types/bunyan-format": "^0.2.9",

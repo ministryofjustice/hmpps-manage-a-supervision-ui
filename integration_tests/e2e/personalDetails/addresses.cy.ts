@@ -64,4 +64,16 @@ context('Addresses', () => {
 
     page.assertPageElementAtIndexWithin('section', 0, 'dd', 6, 'Previous Address')
   })
+
+  it('should render the page for a PP with no main address', () => {
+    cy.visit('/case/X778160/personal-details/addresses')
+    cy.get('[data-qa="mainAddressSection"]').find('p').eq(0).should('contain.text', 'There is no main address.')
+    cy.get('[data-qa="mainAddressSection"]')
+      .find('p')
+      .eq(1)
+      .find('a')
+      .should('contain.text', 'Add main address')
+      .should('have.attr', 'href', '/case/X778160/personal-details/edit-contact-details')
+    cy.get('[data-qa="mainAddressSection"] section').should('not.exist')
+  })
 })

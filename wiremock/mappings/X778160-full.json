@@ -308,27 +308,6 @@
     },
     {
       "request": {
-        "urlPattern": "/mas/personal-details/X000001/summary",
-        "method": "GET"
-      },
-      "response": {
-        "status": 200,
-        "jsonBody": {
-          "name": {
-            "forename": "Eula",
-            "surname": "Schmeler"
-          },
-          "crn": "X000001",
-          "dateOfBirth": "1979-08-18",
-          "pnc": "PNC/12345"
-        },
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      }
-    },
-    {
-      "request": {
         "urlPattern": "/mas/personal-details/X000001/provisions",
         "method": "GET"
       },
@@ -692,27 +671,6 @@
               }
             }
           ]
-        },
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      }
-    },
-    {
-      "request": {
-        "urlPattern": "/mas/personal-details/X000001/summary",
-        "method": "GET"
-      },
-      "response": {
-        "status": 200,
-        "jsonBody": {
-          "name": {
-            "forename": "Eula",
-            "surname": "Schmeler"
-          },
-          "crn": "X000001",
-          "dateOfBirth": "1979-08-18",
-          "pnc": "PNC/12345"
         },
         "headers": {
           "Content-Type": "application/json"

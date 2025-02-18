@@ -1,0 +1,38 @@
+{% extends "../../../partials/layout.njk" %}
+{% set title = 'Addresses' %}
+{% set pageTitle = makePageTitle({ pageHeading: [title, "Personal details"] }) %}
+
+{% block beforeContent %}
+    {{ govukBreadcrumbs({
+        items: [
+            {
+                text: "My cases",
+                href: "/case"
+            },
+            {
+                text: addressOverview.personSummary.name | fullName,
+                href: "/case/" + crn,
+                attributes: { "data-ai-id": "breadcrumbPersonNameLink" }
+            },
+            {
+                text: "Personal details",
+                href: "/case/" + crn + "/personal-details"
+            },
+            {
+                text: title
+            }
+        ]
+    }) }}
+{% endblock %}
+
+{% block content %}
+    <h1 class="govuk-heading-l" data-qa="pageHeading">{{ title }}</h1>
+    {% set address = addressOverview.address %}
+    {% if addressOverview.address %}
+        <span data-qa="addressSection">
+        {% set addressType = 'address' %}
+            {% set loopIndex = '' %}
+            {% include '../_address.njk' %}
+    </span>
+    {% endif %}
+{% endblock %}

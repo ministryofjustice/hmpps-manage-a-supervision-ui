@@ -236,8 +236,8 @@
         "jsonBody": {
           "personSummary": {
             "name": {
-              "forename": "Eula",
-              "surname": "Schmeler"
+              "forename": "Caroline",
+              "surname": "Wolff"
             },
             "crn": "X000001",
             "dateOfBirth": "1979-08-18"
@@ -262,6 +262,7 @@
           },
           "otherAddresses": [
             {
+              "id": 3,
               "buildingNumber": "32",
               "streetName": "Other Street",
               "town": "Sheffield",
@@ -272,6 +273,26 @@
               "lastUpdated": "2023-03-20",
               "type": "Householder (Owner - freehold or leasehold)",
               "status": "Postal",
+              "addressNotes": [
+                {
+                  "id": 0,
+                  "note": "Other Address created\nautomatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Other Address(s) unless otherwise authorised by your supervising officer. Other Address created automatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Other Address(s) unless otherwise authorised by your supervising officer.Other Address created automatically from the Create and Vary a licence system of\nAllow person(s) as desi",
+                  "hasNoteBeenTruncated": true
+                },
+                {
+                  "id": 1,
+                  "createdBy": "Harry Kane",
+                  "createdByDate": "2024-10-29",
+                  "note": "Left this property",
+                  "hasNoteBeenTruncated": false
+                },
+                {
+                  "id": 2,
+                  "createdByDate": "2022-01-07",
+                  "note": "Arrived at property",
+                  "hasNoteBeenTruncated": false
+                }
+              ],
               "lastUpdatedBy": {
                 "forename": "Joe",
                 "surname": "Bloggs"
@@ -280,6 +301,7 @@
           ],
           "previousAddresses": [
             {
+              "id": 7,
               "buildingNumber": "32",
               "streetName": "Previous Street",
               "town": "Newcastle",
@@ -291,13 +313,122 @@
               "lastUpdated": "2023-03-20",
               "type": "Householder (Owner - freehold or leasehold)",
               "status": "Previous",
-              "notes": "Left this property",
+              "addressNotes": [
+                {
+                  "id": 0,
+                  "createdBy": "Tom Brady",
+                  "createdByDate": "2024-10-29",
+                  "note": "Previous Address created\nautomatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Previous Address(s) unless otherwise authorised by your supervising officer. Previous Address created automatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Previous Address(s) unless otherwise authorised by your supervising officer.Previous Address created automatically from the Create and Vary a licence system of\nAllow person(s) as desi",
+                  "hasNoteBeenTruncated": true
+                },
+                {
+                  "id": 1,
+                  "createdBy": "Harry Kane",
+                  "createdByDate": "2024-10-29",
+                  "note": "Left this property",
+                  "hasNoteBeenTruncated": false
+                },
+                {
+                  "id": 2,
+                  "createdByDate": "2022-01-07",
+                  "note": "Arrived at property",
+                  "hasNoteBeenTruncated": false
+                }
+              ],
               "lastUpdatedBy": {
                 "forename": "Jim",
                 "surname": "Smith"
               }
             }
           ]
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/personal-details/X000001/addresses/3/note/0",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Caroline",
+              "surname": "Wolff"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "address": {
+            "id": 3,
+            "buildingNumber": "32",
+            "streetName": "Other Street",
+            "town": "Sheffield",
+            "county": "South Yorkshire",
+            "postcode": "S3 7BS",
+            "from": "2023-03-14",
+            "verified": false,
+            "lastUpdated": "2023-03-20",
+            "type": "Householder (Owner - freehold or leasehold)",
+            "status": "Postal",
+            "addressNote": {
+              "id": 0,
+              "note": "Other Address created\nautomatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Other Address(s) unless otherwise authorised by your supervising officer. Other Address created automatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Other Address(s) unless otherwise authorised by your supervising officer.Other Address created automatically from the Create and Vary a licence system of\nAllow person(s) as desi"
+            },
+            "lastUpdatedBy": {
+              "forename": "Joe",
+              "surname": "Bloggs"
+            }
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/personal-details/X000001/addresses/7/note/0",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Caroline",
+              "surname": "Wolff"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
+          },
+          "address": {
+            "id": 7,
+            "buildingNumber": "32",
+            "streetName": "Other Street",
+            "town": "Sheffield",
+            "county": "South Yorkshire",
+            "postcode": "S3 7BS",
+            "from": "2023-03-14",
+            "verified": false,
+            "lastUpdated": "2023-03-20",
+            "type": "Householder (Owner - freehold or leasehold)",
+            "status": "Previous Address",
+            "addressNote": {
+              "id": 0,
+              "createdBy": "Tom Brady",
+              "createdByDate": "2024-10-29",
+              "note": "Previous Address created\nautomatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Other Address(s) unless otherwise authorised by your supervising officer. Other Address created automatically from the Create and Vary a licence system of\nAllow person(s) as designated by your supervising officer to install an electronic monitoring tag on you and access to install any associated equipment in your property, and for the purpose of ensuring that equipment is functioning correctly. You must not damage or tamper with these devices and ensure that the tag is charged, and report to your supervising officer and the EM provider immediately if the tag or the associated equipment are not working correctly. This will be for the purpose of monitoring your alcohol abstinence Other Address(s) unless otherwise authorised by your supervising officer.Other Address created automatically from the Create and Vary a licence system of\nAllow person(s) as desi"
+            },
+            "lastUpdatedBy": {
+              "forename": "Joe",
+              "surname": "Bloggs"
+            }
+          }
         },
         "headers": {
           "Content-Type": "application/json"

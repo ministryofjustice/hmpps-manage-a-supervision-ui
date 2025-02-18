@@ -216,8 +216,43 @@
               "LOW": ["Children", "Public", "Known Adult", "Staff", "Prisoners"]
             },
             "overallRiskLevel": "HIGH"
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "request": {
+        "urlPattern": "/mas/risk-flags/X778160",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "personSummary": {
+            "name": {
+              "forename": "Alton",
+              "surname": "Berge"
+            },
+            "crn": "X000001",
+            "dateOfBirth": "1979-08-18"
           },
-          "assessedOn": "2024-01-24T08:07:15"
+          "opd": {
+            "eligible": true,
+            "date": "2024-12-12"
+          },
+          "mappa": {
+            "level": 2,
+            "levelDescription": "M2 Desc",
+            "category": 0,
+            "categoryDescription": "X9 Desc",
+            "startDate": "2024-12-12",
+            "reviewDate": "2024-12-13"
+          },
+          "riskFlags": [],
+          "removedRiskFlags": []
         },
         "headers": {
           "Content-Type": "application/json"
@@ -487,8 +522,7 @@
               "LOW": ["Children", "Public", "Known Adult", "Staff", "Prisoners"]
             },
             "overallRiskLevel": "HIGH"
-          },
-          "assessedOn": "2024-01-24T08:07:15"
+          }
         },
         "headers": {
           "Content-Type": "application/json"

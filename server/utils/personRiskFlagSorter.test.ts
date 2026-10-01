@@ -159,8 +159,8 @@ describe('utils/getRiskBadgeGroups', () => {
       expect(result.groups).toHaveLength(1)
 
       expect(result.groups[0].badges.map(badge => badge.text)).toEqual([
-        'Risk to known adult - High',
         'Weapons',
+        'Risk to known adult - High',
         'Alert notice',
       ])
     })
@@ -398,7 +398,9 @@ describe('utils/getRiskBadgeGroups', () => {
 
       const result = getRiskBadgeGroups(riskFlags)
 
-      expect(result.groups[0].badges.map(badge => badge.text)).toEqual(['Risk to public - High'])
+      expect(result.groups[0].badges.map(badge => badge.text)).toEqual([
+        'Risk to public - High'
+      ])
     })
   })
 

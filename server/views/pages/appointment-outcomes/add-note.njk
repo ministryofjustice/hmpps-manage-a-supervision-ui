@@ -32,7 +32,7 @@
         label: {
             text: "Note",
             classes: "govuk-label--s"
-        } if flags.enableCRISSV2,
+        },
         attributes: {
             "aria-labelledby": "title"
         },
@@ -104,44 +104,32 @@
             }) }}
     {% endif %}
 
-    {% if flags.enableCRISSV2 %}
-        {{ govukRadios({
-            classes: "govuk-radios--inline",
-            name: "noteFormat",
-            fieldset: {
-                legend: {
-                    text: "Select note format",
-                    classes: "govuk-fieldset__legend--m"
-                }
-            },
-            items: [
-                {
-                    value: "freeform",
-                    text:"Single text box",
-                    id:"format-freeform",
-                    checked: true
-                },
-                {
-                    value: "structured",
-                    text:"CRISS sections",
-                    id:"format-structured"
-                }
-            ],
-            attributes: {
-                "data-qa": "crissRadio"
+    {{ govukRadios({
+        classes: "govuk-radios--inline",
+        name: "noteFormat",
+        fieldset: {
+            legend: {
+                text: "Select note format",
+                classes: "govuk-fieldset__legend--m"
             }
-        }) }}
-    {% else %}
-        {{ govukButton({
-            text: "Show CRISS headers",
-            classes: "govuk-button--secondary",
-            id: "crissButton",
-            attributes: {
-                'data-qa': 'crissButton'
+        },
+        items: [
+            {
+                value: "freeform",
+                text:"Single text box",
+                id:"format-freeform",
+                checked: true
             },
-            type: 'button'
-        }) }}
-    {% endif %}
+            {
+                value: "structured",
+                text:"CRISS sections",
+                id:"format-structured"
+            }
+        ],
+        attributes: {
+            "data-qa": "crissRadio"
+        }
+    }) }}
 
     {{ govukDetails({
         classes: 'govuk-!-margin-bottom-6',
@@ -159,7 +147,6 @@
         <div class="govuk-form-group" id="fileOrNote" data-qa="fileOrNote">
     {% endif %}
 
-    {% if flags.enableCRISSV2 %}
     <!-- Screen reader announcement -->
     <div id="format-status" class="govuk-visually-hidden" aria-live="polite" role="status"></div>
 
@@ -211,11 +198,6 @@
         You have {{ maxCharCount }} characters remaining
     </div>
     </div>
-
-    {% else %}
-        {{ govukCharacterCount(notesConfig) }}
-        <div id="crissStatus" role="status" aria-live="polite" class="govuk-visually-hidden"></div>
-    {% endif %}
 
     {% if appointmentOutcome.contactId %}
     <div class="govuk-!-margin-bottom-6">

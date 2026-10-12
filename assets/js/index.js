@@ -40,23 +40,6 @@ const resetConditionals = () => {
   }
 }
 
-// REMOVE once enableCRISSV2 flag rolled out
-const crissHeaders = () => {
-  const btn = document.getElementById('crissButton')
-  if (btn) {
-    const textarea = document.querySelector('textarea')
-    const status = document.getElementById('crissStatus')
-    btn.addEventListener('click', () => {
-      if (textarea.value.trim() === '') {
-        textarea.value = `Check in\n\nReview\n\nIntervention\n\nSummarise\n\nSet tasks`
-        status.textContent = 'CRISS headers inserted'
-        textarea.focus()
-      }
-    })
-  }
-}
-//= =================
-
 const setNoFixedAddressConditional = () => {
   const fixedAddressSection = document.querySelector('div[fixed-address-section]')
   const fixedAddressCheckbox = document.querySelector('input[name="noFixedAddress"]')
@@ -538,7 +521,6 @@ if (doc) {
 }
 
 homeSearch()
-crissHeaders() // REMOVE once enableCRISSV2 flag rolled out
 recentCaseDisplay()
 setupAlertsPage()
 setupTechnicalUpdates()

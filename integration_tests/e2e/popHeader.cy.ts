@@ -96,34 +96,30 @@ context('PoP Header partial', () => {
     cy.get('[data-qa="risk-badge-5"]')
       .should('be.visible')
       .and('contain.text', 'Risk to public')
-      .and('contain.text', 'High')
       .find('strong')
       .should('contain.text', 'High')
 
     cy.get('[data-qa="risk-badge-1"]')
       .should('be.visible')
       .and('contain.text', 'Risk to staff')
-      .and('contain.text', 'Medium')
-      .find('strong')
-      .should('contain.text', 'Medium')
-
-    cy.get('[data-qa="risk-badge-2"]')
-      .should('be.visible')
-      .and('contain.text', 'Risk to children')
-      .and('contain.text', 'Medium')
       .find('strong')
       .should('contain.text', 'Medium')
 
     cy.get('[data-qa="risk-badge-3"]')
       .should('be.visible')
       .and('contain.text', 'Risk to known adult')
-      .and('contain.text', 'Low')
+      .find('strong')
+      .should('contain.text', 'Low')
+
+    cy.get('[data-qa="risk-badge-10"]')
+      .should('be.visible')
+      .and('contain.text', 'Risk to children')
       .find('strong')
       .should('contain.text', 'Low')
 
     cy.get('[data-qa="risk-badge-8"]').should('be.visible').and('contain.text', 'Sexual conviction')
 
-    cy.get('[data-qa="risk-badge-7"]').should('be.visible').and('contain.text', 'Stalking')
+    cy.get('[data-qa="risk-badge-9"]').should('be.visible').and('contain.text', 'Stalking')
 
     cy.get('[data-qa="risk-badge-6"]').should('be.visible').and('contain.text', 'County lines - victim')
 

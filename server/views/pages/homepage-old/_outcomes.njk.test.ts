@@ -12,7 +12,7 @@ describe('pages/homepage-old/_outcomes.njk', () => {
     const $ = cheerio.load(html)
 
     expect($('[data-qa="outcomesFeatureDisabled"]').text()).toContain('Outcomes to log are currently unavailable.')
-    expect($('[data-qa="outcomesTimeoutError"]').length).toBe(0)
+    expect($('[data-qa="outcomesTimeoutError"]')).toHaveLength(0)
   })
 
   it('renders the timeout error message when appointmentsTimeoutError is set and disableUserAppointments is not', () => {
@@ -20,7 +20,7 @@ describe('pages/homepage-old/_outcomes.njk', () => {
     const $ = cheerio.load(html)
 
     expect($('[data-qa="outcomesTimeoutError"]').text()).toContain('Outcomes to log are currently unavailable.')
-    expect($('[data-qa="outcomesFeatureDisabled"]').length).toBe(0)
+    expect($('[data-qa="outcomesFeatureDisabled"]')).toHaveLength(0)
   })
 
   it('renders the no outcomes message when neither flag nor timeout error is set', () => {
@@ -28,7 +28,7 @@ describe('pages/homepage-old/_outcomes.njk', () => {
     const $ = cheerio.load(html)
 
     expect(html).toContain('There are no outcomes to log.')
-    expect($('[data-qa="outcomesFeatureDisabled"]').length).toBe(0)
-    expect($('[data-qa="outcomesTimeoutError"]').length).toBe(0)
+    expect($('[data-qa="outcomesFeatureDisabled"]')).toHaveLength(0)
+    expect($('[data-qa="outcomesTimeoutError"]')).toHaveLength(0)
   })
 })

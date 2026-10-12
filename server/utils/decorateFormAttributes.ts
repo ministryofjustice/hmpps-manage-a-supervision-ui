@@ -46,7 +46,7 @@ export const decorateFormAttributes = (req: Request, res: AppResponse) => (obj: 
   }
   if (sections?.length) {
     const id = sections.join('-')
-    if (typeof newObj.id === 'undefined') {
+    if (newObj.id === undefined) {
       newObj.id = id
     }
     newObj.name = sections.map((s: string) => `[${s}]`).join('')

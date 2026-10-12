@@ -74,7 +74,7 @@ const res = mockAppResponse({
 
 describe('middleware/overrideDeliusManagedFlag', () => {
   it('should accept one parameter', () => {
-    expect(overrideDeliusManagedFlag.length).toEqual(1)
+    expect(overrideDeliusManagedFlag).toHaveLength(1)
   })
   it('should override deliusManaged flag to true if appointment sentence is PRE_SENTENCE and deliusManaged is false', () => {
     const result = overrideDeliusManagedFlag(mockAppointments)(req, res)

@@ -43,8 +43,6 @@ import { returnOptions } from '../middleware/returnOptions'
 import { routeChangeSmsConsent } from '../middleware/routeChangeSmsConsent'
 
 const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient, arnsComponents }: Services) => {
-  const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
-
   router.all(
     '/case/:crn/arrange-appointment/:id/*path',
     getAppointmentTypes(hmppsAuthClient),

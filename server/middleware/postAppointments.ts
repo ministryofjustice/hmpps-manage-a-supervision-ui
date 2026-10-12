@@ -89,19 +89,19 @@ export const postAppointments = (hmppsAuthClient: HmppsAuthClient): Route<Promis
       visorReport: visorReport === 'Yes',
     }
     if (eventId !== 'PERSON_LEVEL_CONTACT') {
-      body.eventId = parseInt(eventId, 10)
+      body.eventId = Number.parseInt(eventId, 10)
     }
     if (requirementId) {
-      body.requirementId = parseInt(requirementId as string, 10)
+      body.requirementId = Number.parseInt(requirementId as string, 10)
     }
     if (licenceConditionId) {
-      body.licenceConditionId = parseInt(licenceConditionId as string, 10)
+      body.licenceConditionId = Number.parseInt(licenceConditionId as string, 10)
     }
 
     body.outcomeRecorded = !!outcome?.outcomeCode
 
     if (nsiId) {
-      body.nsiId = parseInt(nsiId as string, 10)
+      body.nsiId = Number.parseInt(nsiId as string, 10)
     }
     const response = await masClient.postAppointments(crn, body)
     let email: string | undefined

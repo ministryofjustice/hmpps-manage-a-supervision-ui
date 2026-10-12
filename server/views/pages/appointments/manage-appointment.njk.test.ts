@@ -235,7 +235,7 @@ describe('Manage an appointment', () => {
   describe('Alert banner', () => {
     it('should display the alert banner', () => {
       const $ = render()
-      expect($('.moj-alert').length).toBe(1)
+      expect($('.moj-alert')).toHaveLength(1)
     })
   })
 
@@ -278,7 +278,7 @@ describe('Manage an appointment', () => {
           },
         } as AppointmentOutcomeProps<Activity>,
       })
-      expect($('[data-qa="evidenceWarning"]').length).toBe(0)
+      expect($('[data-qa="evidenceWarning"]')).toHaveLength(0)
     })
   })
 
@@ -399,7 +399,7 @@ describe('Manage an appointment', () => {
           } as PersonAppointment,
         })
 
-        expect($('[data-qa="appointmentActions"]').length).toBe(0)
+        expect($('[data-qa="appointmentActions"]')).toHaveLength(0)
       })
     })
   })
@@ -590,7 +590,7 @@ describe('Manage an appointment', () => {
           return getRelatedContact(index).find('.govuk-link')
         }
         expect(relatedContacts.find('h3').text()).toContain('Related contacts')
-        expect(relatedContacts.find('li').length).toBe(3)
+        expect(relatedContacts.find('li')).toHaveLength(3)
         expect(getRelatedContactLink(0).text()).toContain('Breach action - breach letter sent')
         expect(getRelatedContactLink(0).attr('target')).toBe('_blank')
         expect(getRelatedContactLink(0).attr('href')).toBe(

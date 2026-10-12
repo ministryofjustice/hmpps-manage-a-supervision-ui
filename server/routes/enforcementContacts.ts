@@ -6,8 +6,6 @@ import controllers from '../controllers'
 
 export default function enforcementContactRoutes(router: Router, { hmppsAuthClient }: Services) {
   const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
-  const post = (path: string, handler: RequestHandler) => router.post(path, asyncMiddleware(handler))
-
   get(
     '/caseload/appointments/enforcement-actions',
     controllers.enforcementActions.getAllEnforcementContacts(hmppsAuthClient),

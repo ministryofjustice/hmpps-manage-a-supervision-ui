@@ -90,21 +90,21 @@ export const getAppointment = (hmppsAuthClient: HmppsAuthClient): Route<Promise<
         }
       }
 
-      if (parseInt(eventId, 10) !== 1 && req?.session?.data?.sentences?.[crn]) {
+      if (Number.parseInt(eventId, 10) !== 1 && req?.session?.data?.sentences?.[crn]) {
         sentenceObj = req.session.data.sentences[crn].find(_sentence => _sentence.id === parseInt(eventId, 10))
-        sentence = parseInt(eventId, 10) !== 1 ? sentenceObj?.order?.description : forename
+        sentence = Number.parseInt(eventId, 10) !== 1 ? sentenceObj?.order?.description : forename
         if (requirementId) {
           sentenceRequirement = sentenceObj?.requirements?.find(
-            requirement => requirement.id === parseInt(requirementId, 10),
+            requirement => requirement.id === Number.parseInt(requirementId, 10),
           )
         }
         if (licenceConditionId) {
           sentenceLicenceCondition = sentenceObj?.licenceConditions?.find(
-            lc => lc.id === parseInt(licenceConditionId, 10),
+            lc => lc.id === Number.parseInt(licenceConditionId, 10),
           )
         }
         if (nsiId) {
-          sentenceNsi = sentenceObj?.nsis.find(n => n.id === parseInt(nsiId, 10))
+          sentenceNsi = sentenceObj?.nsis.find(n => n.id === Number.parseInt(nsiId, 10))
         }
       }
 
@@ -156,7 +156,7 @@ export const getAppointment = (hmppsAuthClient: HmppsAuthClient): Route<Promise<
         type,
         visorReport: visorReport ? upperFirst(visorReport) : null,
         appointmentFor: {
-          sentence: parseInt(eventId, 10) !== 0 ? sentence : null,
+          sentence: Number.parseInt(eventId, 10) !== 0 ? sentence : null,
           requirement: sentenceRequirement?.description ?? null,
           licenceCondition: sentenceLicenceCondition?.mainDescription ?? null,
           nsi: sentenceNsi?.description ?? null,

@@ -4,7 +4,7 @@ import { AppResponse } from '../../models/Locals'
 import { createNunjucksTestEnv } from '../../testutils/nunjucksTestEnv'
 import { UserAlerts } from '../../models/Alerts'
 import { RiskRoshScoreMap } from '../../controllers/alerts'
-import { CrnToRiskWidgetMap } from '../../data/model/risk'
+import { CrnToRiskWidgetMap, RoshBadgeLevel } from '../../data/model/risk'
 
 const mockAlertsData: UserAlerts = {
   content: [
@@ -85,15 +85,28 @@ describe('Alerts nunjucks render tests', () => {
     ).toContain('LOW')
   })
 
-  it('should render the correct rosh score when enableNDeliusRosh feature flag is enabled', () => {
-    const $ = render({ flags: { enableNDeliusRosh: true } })
-    expect(
-      $('[data-qa=alertsTable]')
-        .find('.govuk-table__body')
-        .find('.govuk-table__row')
-        .eq(0)
-        .find('[data-qa=alertRisk]')
-        .text(),
-    ).toContain('MEDIUM')
-  })
+  it.each([
+    ['LOW', 'LOW'],
+    ['MEDIUM', 'MEDIUM'],
+    ['HIGH', 'HIGH'],
+    ['VERY_HIGH', 'VERY HIGH'],
+  ])(
+    'should render the correct rosh score when enableNDeliusRosh feature flag is enabled',
+    (score: RoshBadgeLevel, expected: string) => {
+      const $ = render({
+        flags: { enableNDeliusRosh: true },
+        riskRoshScoreMap: {
+          X643390: score,
+        },
+      })
+      expect(
+        $('[data-qa=alertsTable]')
+          .find('.govuk-table__body')
+          .find('.govuk-table__row')
+          .eq(0)
+          .find('[data-qa=alertRisk]')
+          .text(),
+      ).toContain(expected)
+    },
+  )
 })

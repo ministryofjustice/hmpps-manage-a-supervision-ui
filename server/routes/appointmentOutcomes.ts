@@ -1,7 +1,5 @@
 import { Router } from 'express'
-import { Route } from '../@types'
 import controllers from '../controllers'
-import asyncMiddleware from '../middleware/asyncMiddleware'
 import { Services } from '../services'
 import {
   autoStoreSessionData,

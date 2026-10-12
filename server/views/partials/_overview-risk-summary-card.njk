@@ -8,7 +8,7 @@
   {% set assessedOn = risks.assessedOn %}
   {% set overallRiskLevel = risks.summary.overallRiskLevel %}
 {% endif %}
-{% set hasRosh = assessedOn and overallRiskLevel %}
+{% set hasRosh = overallRiskLevel and (flags.enableNDeliusRosh or assessedOn) %}
 
 {% set risk %}
     {% set riskToThemselves %}
@@ -53,7 +53,7 @@
     {% endset %}
 
     {% set riskLastUpdated %}
-        {% if assessedOn %}
+        {% if hasRosh and assessedOn %}
             <br/>
             <span class="govuk-body-s secondary-text govuk-!-font-weight-regular">
                     Last updated {{ assessedOn | dateWithYear }}
@@ -88,7 +88,7 @@
         {% if hasRosh %}
             <table>
                 <tr>
-                    <td data-qa="overallRiskValue" class="govuk-tag govuk-!-font-weight-bold {{ getTagClass(overallRiskLevel) }}" align="center">{{ roshText + ' risk of serious harm' | upper }}</td>
+                     <td data-qa="overallRiskValue" class="govuk-tag govuk-!-font-weight-bold {{ getTagClass(overallRiskLevel | replace(" ", "_")) }}" align="center">{{ roshText + ' risk of serious harm' | upper }}</td>
                 </tr>
             </table>
         {% else %}

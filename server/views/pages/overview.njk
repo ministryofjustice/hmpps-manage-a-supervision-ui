@@ -454,14 +454,6 @@
         ]
       }
     }) }}
-{% if flags.enableNDeliusRosh %}
-  {% set assessedOn = rosh.assessedOn %}
-  {% set overallRiskLevel = rosh.level %}
-{% else %}
-  {% set assessedOn = risks.assessedOn %}
-  {% set overallRiskLevel = risks.summary.overallRiskLevel %}
-{% endif %}
-{% set hasRosh = assessedOn and overallRiskLevel %}
 
  {% include "../partials/_overview-risk-summary-card.njk" %}
 

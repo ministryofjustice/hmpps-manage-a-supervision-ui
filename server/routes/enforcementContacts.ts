@@ -1,4 +1,4 @@
-import { type RequestHandler, Router } from 'express'
+import { Router } from 'express'
 import asyncMiddleware from '../middleware/asyncMiddleware'
 import type { Services } from '../services'
 import type { Route } from '../@types'

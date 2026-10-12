@@ -87,34 +87,41 @@ context('PoP Header partial', () => {
     cy.get('.moj-page-header-actions').should('exist')
     cy.get('.person-header').should('not.exist')
   })
-
   it('person risk flags are displayed when enablePersonHeader is true', () => {
     cy.task('stubFeatureFlag', { key: 'enablePersonHeader', enabled: true })
     cy.visit('/case/X000001')
+
     cy.get('.person-header [data-qa="crn"]').should('exist').and('contain.text', 'X000001')
-
-    cy.get('[data-qa="risk-badge-1"]')
-      .should('be.visible')
-      .and('contain.text', 'Risk to staff')
-      .and('contain.text', 'Medium')
-
-    cy.get('[data-qa="risk-badge-2"]').should('be.visible').and('contain.text', 'Domestic abuse perpetrator')
-
-    cy.get('[data-qa="risk-badge-3"]')
-      .should('be.visible')
-      .and('contain.text', 'Risk to known adult')
-      .and('contain.text', 'Low')
 
     cy.get('[data-qa="risk-badge-5"]')
       .should('be.visible')
       .and('contain.text', 'Risk to public')
-      .and('contain.text', 'High')
+      .find('strong')
+      .should('contain.text', 'High')
+
+    cy.get('[data-qa="risk-badge-1"]')
+      .should('be.visible')
+      .and('contain.text', 'Risk to staff')
+      .find('strong')
+      .should('contain.text', 'Medium')
+
+    cy.get('[data-qa="risk-badge-3"]')
+      .should('be.visible')
+      .and('contain.text', 'Risk to known adult')
+      .find('strong')
+      .should('contain.text', 'Low')
+
+    cy.get('[data-qa="risk-badge-10"]')
+      .should('be.visible')
+      .and('contain.text', 'Risk to children')
+      .find('strong')
+      .should('contain.text', 'Low')
 
     cy.get('[data-qa="risk-badge-8"]').should('be.visible').and('contain.text', 'Sexual conviction')
 
-    cy.get('[data-qa="risk-badge-6"]').should('be.visible').and('contain.text', 'County lines - victim')
+    cy.get('[data-qa="risk-badge-9"]').should('be.visible').and('contain.text', 'Stalking')
 
-    cy.get('[data-qa="risk-badge-7"]').should('be.visible').and('contain.text', 'Contact suspended')
+    cy.get('[data-qa="risk-badge-6"]').should('be.visible').and('contain.text', 'County lines - victim')
 
     cy.get('[data-qa="risk-badge-more"]').should('be.visible').and('contain.text', '+1 active risk flags')
   })

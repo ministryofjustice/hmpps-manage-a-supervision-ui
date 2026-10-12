@@ -77,10 +77,8 @@ describe('partials/_overview-risk-summary-card.njk', () => {
       $('.app-summary-card__body .govuk-summary-list .govuk-summary-list__row')
         .eq(0)
         .find('.govuk-summary-list__key')
-        .find('span')
-        .eq(1)
         .text(),
-    ).not.toContain('Last updated 9 June 2026')
+    ).not.toContain('Last updated')
     expect(
       $('.app-summary-card__body .govuk-summary-list .govuk-summary-list__row')
         .eq(0)

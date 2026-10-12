@@ -147,7 +147,7 @@ jobs:
           path: output.txt
       - name: send a failure slack message
         if: failure()  && inputs.channel_id != 'NO_SLACK'
-        uses: ministryofjustice/hmpps-github-shared-actions/.github/actions/slack_failure_results@cd6fbead3223fc36e047987f45af2ffacfd41c70 # v1.1.6
+        uses: ministryofjustice/hmpps-github-shared-actions/.github/actions/slack_failure_results@2848496f6e2f4144b17fd3f23519c851789e4b87 # v1.1.7
         with:
           SLACK_BOT_TOKEN: ${{ secrets.HMPPS_SRE_SLACK_BOT_TOKEN }}
           channel_id: ${{ inputs.channel_id }}

@@ -107,12 +107,11 @@ describe('utils/getRiskBadgeGroups', () => {
         },
       ])
     })
-
-    it('uses level for non-Public Protection risk flags', () => {
+    it('uses levelDescription for Public Protection risk flags and level for all other risk flags', () => {
       const riskFlags = [
         createRiskFlag({
           id: 1,
-          description: 'Child Concerns',
+          description: 'Risk to Staff',
           level: 'LOW',
           levelDescription: 'HIGH',
         }),
@@ -124,7 +123,7 @@ describe('utils/getRiskBadgeGroups', () => {
         }),
         createRiskFlag({
           id: 3,
-          description: 'Domestic Abuse Perpetrator',
+          description: 'Domestic Abuse',
           level: 'HIGH',
           levelDescription: 'LOW',
         }),
@@ -132,7 +131,7 @@ describe('utils/getRiskBadgeGroups', () => {
 
       const result = getRiskBadgeGroups(riskFlags)
 
-      expect(result.groups.map(group => group.severity)).toEqual(['HIGH', 'MEDIUM', 'LOW'])
+      expect(result.groups.map(group => group.severity)).toEqual(['HIGH', 'MEDIUM'])
     })
 
     it('sorts by register description when severity is the same', () => {
@@ -145,6 +144,7 @@ describe('utils/getRiskBadgeGroups', () => {
         createRiskFlag({
           id: 2,
           description: 'Risk to Known Adult',
+          level: 'LOW',
           levelDescription: 'HIGH',
         }),
         createRiskFlag({
@@ -159,8 +159,8 @@ describe('utils/getRiskBadgeGroups', () => {
       expect(result.groups).toHaveLength(1)
 
       expect(result.groups[0].badges.map(badge => badge.text)).toEqual([
-        'Weapons',
         'Risk to known adult - High',
+        'Weapons',
         'Alert notice',
       ])
     })
@@ -464,20 +464,20 @@ describe('utils/getRiskBadgeGroups', () => {
       createRiskFlag({
         id: 1,
         description: 'MAPPA',
-        level: 'HIGH',
+        level: 'LOW',
         levelDescription: 'MAPPA Level 3',
       }),
     ])
 
     expect(result.groups).toEqual([
       {
-        severity: 'HIGH',
+        severity: 'LOW',
         badges: [
           {
             id: 1,
             text: 'MAPPA - Level 3',
-            level: 'HIGH',
-            badgeClass: 'risk-badge--high',
+            level: 'LOW',
+            badgeClass: 'risk-badge--low',
           },
         ],
       },

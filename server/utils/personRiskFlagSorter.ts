@@ -1,5 +1,6 @@
 import { RiskFlag } from '../data/model/risk'
 import { toSentenceCase } from './toSentenceCase'
+import logger from '../../logger'
 
 const riskLevelBadgeClass: Record<string, string> = {
   'VERY HIGH': 'risk-badge--very-high',
@@ -28,76 +29,66 @@ const riskLevelPriority: Record<string, number> = {
 export const registerTypes = {
   publicProtection: [
     { code: 'AV2S', description: 'Risk to Staff' },
-    { code: 'RTPS', description: 'Risk to Probation Staff' },
     { code: 'REG17', description: 'Risk to Public' },
-    { code: 'REG26', description: 'Organised Crime' },
-    { code: 'RCHD', description: 'Risk to Children' },
-    { code: 'REG15', description: 'Risk to Known Adult' },
     { code: 'REG16', description: 'Risk to Prisoner' },
+    { code: 'CPPC', description: 'CPPC registered case' },
+    { code: 'ADVP', description: 'Domestic Abuse' },
+    { code: 'MAPP', description: 'MAPPA' },
+    { code: 'IMAR', description: 'MARAC' },
+    { code: 'REG15', description: 'Risk to Known Adult' },
     { code: 'RSC', description: 'Sexual Conviction' },
-    {
-      code: 'SHPO',
-      description: 'Sexual Harm Prevention Order / Sexual Risk Order',
-    },
+    { code: 'SPO', description: 'Stalking' },
     { code: 'RTAO', description: 'Terrorism Act Offender' },
-    { code: 'WEAP', description: 'Weapons' },
-    { code: 'STRG', description: 'Street Gangs' },
-    { code: 'COC', description: 'Organised Crime - Overt' },
-    { code: 'CUCK', description: 'Cuckooing - Potential Victim' },
   ],
 
   safeguardingRisk: [
     { code: 'BWWA', description: 'Barred from working with Adults' },
     { code: 'ADWC', description: 'Barred from working with Children' },
+    { code: 'RCCO', description: 'Child Concerns' },
+    { code: 'CCE', description: 'Child Criminal Exploitation (CCE) perpetrator' },
+    { code: 'RCPR', description: 'Child Protection' },
+    { code: 'CSEP', description: 'Child Sexual Exploitation - Perpetrator' },
     { code: 'CL1', description: 'County Lines - Perpetrator' },
-    { code: 'CL2', description: 'County Lines - Victim' },
-    {
-      code: 'CCE',
-      description: 'Child Criminal Exploitation (CCE) perpetrator',
-    },
-    {
-      code: 'CSEP',
-      description: 'Child Sexual Exploitation - Perpetrator',
-    },
     { code: 'MSP', description: 'Modern Slavery - Perpetrator' },
-    { code: 'MSV', description: 'Modern Slavery - Victim' },
-    { code: 'DASO', description: 'Domestic Abuse Safety Officer' },
-    { code: 'ADVP', description: 'Domestic Abuse Perpetrator' },
-    { code: 'COR', description: 'Corruptor' },
-    { code: 'CYB1', description: 'Cyber - Enabled' },
-    { code: 'CYB2', description: 'Cyber - Dependent' },
+    { code: 'RCHD', description: 'Risk to Children' },
   ],
 
   alerts: [
     { code: 'ALERT', description: 'Alert Notice' },
-    { code: 'PRC', description: 'Contact Suspended' },
+    { code: 'COR', description: 'Corruptor' },
+    { code: 'DASO', description: 'Domestic Abuse Safety Officer' },
+    { code: 'DORIS', description: 'DoRIS (Disruption of Recorded Internal Secretors)' },
     { code: 'ICC', description: 'Information on Closed Case' },
-    { code: 'HOIE', description: 'Home Office Interest' },
-    { code: 'RCCO', description: 'Child Concerns' },
+    { code: 'IIOM', description: 'Integrated Offender Management' },
+    { code: 'JIP', description: 'Joint Intelligence Programme' },
+    { code: 'REG26', description: 'Organised Crime' },
     { code: 'RSTO', description: 'Restraining Order' },
-    { code: 'WRSM', description: 'Warrant / Summons' },
-    { code: 'INLL', description: 'Lifer' },
-  ],
-
-  safeguardingNeed: [
-    { code: 'RVAD', description: 'Safeguarding - "Adult At Risk"' },
-    { code: 'RCPR', description: 'Child Protection' },
-    { code: 'ADVV', description: 'Domestic Abuse Victim' },
-    { code: 'INVI', description: 'Victim Contact' },
-    { code: 'IMAR', description: 'MARAC' },
+    { code: 'RTPS', description: 'Risk to Probation Staff' },
+    { code: 'SHPO', description: 'Sexual Harm Prevention Order / Sexual Risk Order' },
+    { code: 'ASFO', description: 'SFO' },
     { code: 'ALSH', description: 'Suicide/Self Harm' },
+    { code: 'INVI', description: 'Victim Contact' },
+    { code: 'WRSM', description: 'Warrant / Summons' },
+    { code: 'WEAP', description: 'Weapons' },
+  ],
+  safeguardingNeed: [
+    { code: 'CL2', description: 'County Lines - Victim' },
+    { code: 'CUCK', description: 'Cuckooing - Potential Victim' },
+    { code: 'ADVV', description: 'Domestic Abuse Victim' },
+    { code: 'MSV', description: 'Modern Slavery - Victim' },
+    { code: 'RVAD', description: 'Safeguarding - "Adult At Risk"' },
   ],
 
   cohort: [
-    { code: 'MAPP', description: 'MAPPA' },
-    { code: 'IIOM', description: 'Integrated Offender Management' },
-    { code: 'SSS', description: 'Short Sentence Service' },
+    { code: 'PRC', description: 'Contact Suspended' },
+    { code: 'CYB2', description: 'Cyber - Dependent' },
+    { code: 'CYB1', description: 'Cyber - Enabled' },
     { code: 'GA', description: 'Grand Avenues Cohort' },
-    { code: 'JIP', description: 'Joint Intelligence Programme' },
-    {
-      code: 'DORIS',
-      description: 'DoRIS (Disruption of Recorded Internal Secretors)',
-    },
+    { code: 'HOIE', description: 'Home Office Interest' },
+    { code: 'INLL', description: 'Lifer' },
+    { code: 'COC', description: 'Organised Crime - Overt' },
+    { code: 'SSS', description: 'Short Sentence Service' },
+    { code: 'STRG', description: 'Street Gangs' },
   ],
 }
 
@@ -118,16 +109,6 @@ interface RiskBadgeGroup {
 export interface RiskBadgeData {
   groups: RiskBadgeGroup[]
   remainingCount: number
-}
-
-function getRiskDescriptionPriority(description: string, registerType: string | undefined): number {
-  if (!registerType) {
-    return Number.MAX_SAFE_INTEGER
-  }
-
-  const registers = registerTypes[registerType as keyof typeof registerTypes]
-
-  return registers.findIndex(register => register.description.trim().toLowerCase() === description.trim().toLowerCase())
 }
 
 const MAX_RISK_BADGES = 7
@@ -217,14 +198,7 @@ export function getRiskBadgeGroups(riskFlags: RiskFlag[]): RiskBadgeData {
       ? registerTypePriority.indexOf(bRegisterType as (typeof registerTypePriority)[number])
       : Number.MAX_SAFE_INTEGER
 
-    if (aRegisterPriority !== bRegisterPriority) {
-      return aRegisterPriority - bRegisterPriority
-    }
-
-    const aDescriptionPriority = getRiskDescriptionPriority(a.description, aRegisterType)
-    const bDescriptionPriority = getRiskDescriptionPriority(b.description, bRegisterType)
-
-    return aDescriptionPriority - bDescriptionPriority
+    return aRegisterPriority - bRegisterPriority
   })
 
   const visibleRiskFlags = sortedRiskFlags.slice(0, MAX_RISK_BADGES)

@@ -93,7 +93,7 @@ describe('pages/arrange-appointment/confirmation.njk', () => {
       const $ = render({ isOutlookEventPending: true })
 
       const alert = $('[data-qa="outlook-pending-msg"]')
-      expect(alert.length).toBe(1)
+      expect(alert).toHaveLength(1)
       expect(alert.text()).toContain('There may be a problem sending your calendar invitation')
       expect(alert.text()).toContain(
         'You may not receive a calendar invitation. If it does not arrive within a few minutes, create your own calendar event.',
@@ -104,11 +104,11 @@ describe('pages/arrange-appointment/confirmation.njk', () => {
       const $ = render({ isOutlookEventPending: true })
 
       const message = $('[data-qa="outlook-pending-msg-2"]')
-      expect(message.length).toBe(1)
+      expect(message).toHaveLength(1)
       expect(message.text().replace(/\s+/g, ' ').trim()).toBe(
         'The appointment has been added to the NDelius contact log and officer diary, along with any supporting information.',
       )
-      expect($('[data-qa="outlook-msg"]').length).toBe(0)
+      expect($('[data-qa="outlook-msg"]')).toHaveLength(0)
     })
 
     it('should reference "updated on" rather than "added to" when the appointment is a reschedule', () => {
@@ -123,22 +123,22 @@ describe('pages/arrange-appointment/confirmation.njk', () => {
     it('should not display the pending alert or message when isOutlookEventPending is false', () => {
       const $ = render({ isOutlookEventPending: false })
 
-      expect($('[data-qa="outlook-pending-msg"]').length).toBe(0)
-      expect($('[data-qa="outlook-pending-msg-2"]').length).toBe(0)
+      expect($('[data-qa="outlook-pending-msg"]')).toHaveLength(0)
+      expect($('[data-qa="outlook-pending-msg-2"]')).toHaveLength(0)
     })
 
     it('should prioritise the failed message over the pending message when both flags are true', () => {
       const $ = render({ isOutLookEventFailed: true, isOutlookEventPending: true })
 
-      expect($('[data-qa="outlook-err-msg-1"]').length).toBe(1)
-      expect($('[data-qa="outlook-pending-msg"]').length).toBe(0)
-      expect($('[data-qa="outlook-pending-msg-2"]').length).toBe(0)
+      expect($('[data-qa="outlook-err-msg-1"]')).toHaveLength(1)
+      expect($('[data-qa="outlook-pending-msg"]')).toHaveLength(0)
+      expect($('[data-qa="outlook-pending-msg-2"]')).toHaveLength(0)
     })
 
     it('should not display the pending alert for past appointments', () => {
       const $ = render({ isOutlookEventPending: true, isInPast: true })
 
-      expect($('[data-qa="outlook-pending-msg"]').length).toBe(0)
+      expect($('[data-qa="outlook-pending-msg"]')).toHaveLength(0)
     })
   })
 
@@ -147,7 +147,7 @@ describe('pages/arrange-appointment/confirmation.njk', () => {
       const $ = render({ isOutLookEventFailed: false, isOutlookEventPending: false })
 
       const list = $('[data-qa="outlook-msg"]')
-      expect(list.length).toBe(1)
+      expect(list).toHaveLength(1)
       expect(list.text()).toContain('Their calendar')
       expect(list.text()).toContain('the NDelius contact log and officer diary, along with any supporting information')
     })

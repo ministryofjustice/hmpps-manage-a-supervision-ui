@@ -67,7 +67,6 @@ const buildRequest = ({ req = {}, params = {}, query = {}, user = {}, data = {} 
 
 const res = mockAppResponse({
   user: { username: loggedInUsername, teamCode, providerCode },
-  flags: { enableAttendeeUpdates: true },
 })
 
 const getUserProvidersSpy = jest

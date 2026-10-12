@@ -40,23 +40,6 @@ const resetConditionals = () => {
   }
 }
 
-// REMOVE once enableCRISSV2 flag rolled out
-const crissHeaders = () => {
-  const btn = document.getElementById('crissButton')
-  if (btn) {
-    const textarea = document.querySelector('textarea')
-    const status = document.getElementById('crissStatus')
-    btn.addEventListener('click', () => {
-      if (textarea.value.trim() === '') {
-        textarea.value = `Check in\n\nReview\n\nIntervention\n\nSummarise\n\nSet tasks`
-        status.textContent = 'CRISS headers inserted'
-        textarea.focus()
-      }
-    })
-  }
-}
-//= =================
-
 const setNoFixedAddressConditional = () => {
   const fixedAddressSection = document.querySelector('div[fixed-address-section]')
   const fixedAddressCheckbox = document.querySelector('input[name="noFixedAddress"]')
@@ -81,36 +64,7 @@ function removeOptions(selectElement) {
   }
 }
 
-const attendanceSelectorsOld = () => {
-  const providerSelect = document.querySelector('[data-qa="providerCode"]')
-  const teamSelect = document.querySelector('[data-qa="teamCode"]')
-  const params = new URL(window.location.toString()).searchParams
-  const change = params.get('change')
-  let providerCode = ''
-  if (providerSelect) {
-    providerCode = providerSelect.value
-    providerSelect.addEventListener('change', event => {
-      const { value } = event.target
-      const urlParts = location.href.split('?')[0].split('/')
-      const crn = urlParts[4]
-      const uuid = urlParts[6]
-      const baseUrl = `/case/${crn}/arrange-appointment/${uuid}/attendance`
-      location.href = `${baseUrl}?providerCode=${value}${change ? `&change=${change}` : ''}`
-    })
-  }
-  if (teamSelect) {
-    teamSelect.addEventListener('change', event => {
-      const { value } = event.target
-      const urlParts = location.href.split('?')[0].split('/')
-      const crn = urlParts[4]
-      const uuid = urlParts[6]
-      const baseUrl = `/case/${crn}/arrange-appointment/${uuid}/attendance`
-      location.href = `${baseUrl}?${providerCode ? `providerCode=${providerCode}&` : ''}teamCode=${value}${change ? `&change=${change}` : ''}`
-    })
-  }
-}
-
-const attendanceSelectorsNew = () => {
+const attendanceSelectors = () => {
   const providerSelect = document.querySelector('[data-qa="providerCode"]')
   const teamSelect = document.querySelector('[data-qa="teamCode"]')
   const userSelect = document.querySelector('[data-qa="username"]')
@@ -530,15 +484,8 @@ function standardiseTimeValue(timeValue) {
 
 setNoFixedAddressConditional()
 resetConditionals()
-const doc = document.getElementById('enableAttendeeUpdates')
-if (doc) {
-  attendanceSelectorsNew()
-} else {
-  attendanceSelectorsOld()
-}
-
+attendanceSelectors()
 homeSearch()
-crissHeaders() // REMOVE once enableCRISSV2 flag rolled out
 recentCaseDisplay()
 setupAlertsPage()
 setupTechnicalUpdates()

@@ -7,6 +7,7 @@ import { OffenderEligibility } from '../../data/model/esupervision'
 type TestModel = {
   flags: {
     enableSupervisionPackageAppointments?: boolean
+    enableEsupEligibilityCheck?: boolean
   }
   upcomingAppointments: Schedule
   pastAppointments: Schedule
@@ -24,6 +25,7 @@ type TestModel = {
 const baseModel: TestModel = {
   flags: {
     enableSupervisionPackageAppointments: true,
+    enableEsupEligibilityCheck: true,
   },
   headerPersonName: {
     forename: 'James',
@@ -210,22 +212,22 @@ describe('Appointments', () => {
       $('[data-qa=pastAppointmentsSection]').find('table.appointments tbody tr:nth-child(1) td:nth-child(4)').text(),
     ).toContain('Manage')
     expect($('.supervision-package-summary').find('h3').text()).toContain('Supervision package summary')
-    expect($('[data-qa=pastAppointmentNotes1]').length).toBe(1)
-    expect($('[data-qa=pastAppointmentTags1]').length).toBe(1)
+    expect($('[data-qa=pastAppointmentNotes1]')).toHaveLength(1)
+    expect($('[data-qa=pastAppointmentTags1]')).toHaveLength(1)
   })
   it('should render the page with no supervision package summary if supa feature flag is disabled', () => {
     const $ = render({ flags: { enableSupervisionPackageAppointments: false } })
-    expect($('aside').length).toBe(0)
-    expect($('.govuk-grid-column-three-quarters').length).toBe(0)
-    expect($('.govuk-grid-column-one-quarter').length).toBe(0)
-    expect($('.supervision-package-summary').length).toBe(0)
+    expect($('aside')).toHaveLength(0)
+    expect($('.govuk-grid-column-three-quarters')).toHaveLength(0)
+    expect($('.govuk-grid-column-one-quarter')).toHaveLength(0)
+    expect($('.supervision-package-summary')).toHaveLength(0)
   })
   it('should render the page with no supervision package summary if no supervision package for crn', () => {
     const $ = render({ supervisionPackageDetails: null })
-    expect($('aside').length).toBe(0)
-    expect($('.govuk-grid-column-three-quarters').length).toBe(0)
-    expect($('.govuk-grid-column-one-quarter').length).toBe(0)
-    expect($('.supervision-package-summary').length).toBe(0)
+    expect($('aside')).toHaveLength(0)
+    expect($('.govuk-grid-column-three-quarters')).toHaveLength(0)
+    expect($('.govuk-grid-column-one-quarter')).toHaveLength(0)
+    expect($('.supervision-package-summary')).toHaveLength(0)
   })
   it('should render the page with no supervision package summary if primary sentence has been terminated', () => {
     const $ = render({
@@ -233,10 +235,10 @@ describe('Appointments', () => {
         context: { sentences: [{ supervisionPackage: { code: 'SPA' }, custody: { status: { code: 'T' } } }] },
       },
     })
-    expect($('aside').length).toBe(0)
-    expect($('.govuk-grid-column-three-quarters').length).toBe(0)
-    expect($('.govuk-grid-column-one-quarter').length).toBe(0)
-    expect($('.supervision-package-summary').length).toBe(0)
+    expect($('aside')).toHaveLength(0)
+    expect($('.govuk-grid-column-three-quarters')).toHaveLength(0)
+    expect($('.govuk-grid-column-one-quarter')).toHaveLength(0)
+    expect($('.supervision-package-summary')).toHaveLength(0)
   })
   it('should render the page with risk to staff banner', () => {
     const $ = render({ riskToStaff: { id: 2500930998, level: 'HIGH' } })
@@ -246,42 +248,59 @@ describe('Appointments', () => {
     const $ = render({ riskToProbationStaff: { id: 2500930998, level: 'HIGH' } })
     expect($('[data-qa=riskToStaffAlert]').text()).toContain('James is a risk to probation staff')
   })
+  it('should render the page with manage check-ins button', () => {
+    const $ = render({ flags: { enableEsupEligibilityCheck: false }, canAccessCheckins: true })
+    expect($('[data-qa="online-manage-btn"]')).toHaveLength(1)
+    expect($('[data-qa="online-manage-btn"]').text()).toContain('Manage online check ins')
+  })
+  it('should render the page with set up check-ins button', () => {
+    const $ = render({
+      flags: { enableEsupEligibilityCheck: false },
+      canAccessCheckins: true,
+      offenderCheckinsByCRNResponse: null,
+    })
+    expect($('[data-qa="online-checkin-btn"]')).toHaveLength(1)
+    expect($('[data-qa="online-checkin-btn"]').text()).toContain('Set up online check ins')
+  })
   it('should render the page with manage check-ins button when eligible', () => {
     const $ = render({
+      flags: { enableEsupEligibilityCheck: true },
       canAccessCheckins: true,
       checkinEligibility: { outcome: 'ELIGIBLE', message: 'This person is eligible for online check ins' },
     })
-    expect($('[data-qa="online-manage-btn"]').length).toBe(1)
+    expect($('[data-qa="online-manage-btn"]')).toHaveLength(1)
     expect($('[data-qa="online-manage-btn"]').text()).toContain('Manage online check ins')
   })
   it('should render the page with set up check-ins button when eligible', () => {
     const $ = render({
+      flags: { enableEsupEligibilityCheck: true },
       canAccessCheckins: true,
       offenderCheckinsByCRNResponse: null,
       checkinEligibility: { outcome: 'ELIGIBLE', message: 'This person is eligible for online check ins' },
     })
-    expect($('[data-qa="online-checkin-btn"]').length).toBe(1)
+    expect($('[data-qa="online-checkin-btn"]')).toHaveLength(1)
     expect($('[data-qa="online-checkin-btn"]').text()).toContain('Set up online check ins')
   })
   it('should render the page without manage check-ins button when ineligible', () => {
     const $ = render({
+      flags: { enableEsupEligibilityCheck: true },
       canAccessCheckins: true,
       checkinEligibility: { outcome: 'INELIGIBLE', message: 'This person is eligible for online check ins' },
     })
-    expect($('[data-qa="online-manage-btn"]').length).toBe(0)
+    expect($('[data-qa="online-manage-btn"]')).toHaveLength(0)
   })
-  it('should render the page without set up check-ins button when ineligible', () => {
+  it('should render the page without manage check-ins button when ineligible', () => {
     const $ = render({
+      flags: { enableEsupEligibilityCheck: true },
       canAccessCheckins: true,
-      offenderCheckinsByCRNResponse: null,
       checkinEligibility: { outcome: 'INELIGIBLE', message: 'This person is eligible for online check ins' },
     })
-    expect($('[data-qa="online-checkin-btn"]').length).toBe(0)
+    expect($('[data-qa="online-checkin-btn"]')).toHaveLength(0)
   })
   it('should render the page with no buttons', () => {
     const $ = render({ hasDeceased: true })
-    expect($('[data-qa="arrange-appointment-btn"]').length).toBe(0)
-    expect($('[data-qa="online-checkin-btn"]').length).toBe(0)
-    expect($('[data-qa="online-manage-btn"]').length).toBe(0)
+    expect($('[data-qa="arrange-appointment-btn"]')).toHaveLength(0)
+    expect($('[data-qa="online-checkin-btn"]')).toHaveLength(0)
+    expect($('[data-qa="online-manage-btn"]')).toHaveLength(0)
   })
 })

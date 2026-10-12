@@ -16,17 +16,10 @@ export class FeatureFlags {
   enableUserEditableActions?: boolean = undefined
   enableBreachOrRecallAndSendLetterAction?: boolean = undefined
   enableSessionCacheLogging?: boolean = undefined
-  enableESUPCheckinNewStop?: boolean = undefined
-  enableESUPCheckinNewRestart?: boolean = undefined
-  enableESUPCheckinNewSetup?: boolean = undefined
-  enableESUPCheckinNewSettings?: boolean = undefined
-  enableESUPCheckinNewReview?: boolean = undefined
-  enableESUPCheckinNewQuestions?: boolean = undefined
   enableSparksFilter?: boolean = undefined
   enableSupervisionPackageFilter?: boolean = undefined
   enableSupervisionPackageAppointments?: boolean = undefined
   enableRescheduleFutureAppointmentWithOutcome?: boolean = undefined
-  enableCRISSV2?: boolean = undefined
   enableSemanticSearch?: boolean = undefined
   enablePreSentence?: boolean = undefined
   enableSearchV2?: boolean = undefined
@@ -34,11 +27,14 @@ export class FeatureFlags {
   enableMAN3255?: boolean = undefined
   enableCombinedCYAPage?: boolean = undefined
   enable3MonthsOutcomes?: boolean = undefined
-  enableAttendeeUpdates?: boolean = undefined
+  enableEsupEligibilityCheck?: boolean = undefined
   showContactInformationWarning?: boolean = undefined
   enableAllowSms?: boolean = undefined
   enableLastTextMessage?: boolean = undefined
   enableAlertsCountCaching?: boolean = undefined
-  enableFeedback?: boolean = undefined
   enableAlertsCountApi?: boolean = undefined
+  disableUserAppointments?: boolean = undefined
+  enableDraftSentencePlanAccess?: boolean = undefined
+  enableNDeliusRosh?: boolean = undefined
+  enableAppointmentPatchAlerts?: boolean = undefined
 }

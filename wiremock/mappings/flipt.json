@@ -13,17 +13,6 @@
           },
           "flags": [
             {
-              "key": "enableCRISSV2",
-              "name": "enableCRISSV2",
-              "description": "",
-              "enabled": true,
-              "type": "BOOLEAN_FLAG_TYPE",
-              "createdAt": "2025-11-17T15:28:37.920581Z",
-              "updatedAt": "2025-11-17T17:06:39.269084Z",
-              "rules": [],
-              "rollouts": []
-            },
-            {
               "key": "enableSmsReminders",
               "name": "enableSmsReminders",
               "description": "",
@@ -95,39 +84,6 @@
               "type": "BOOLEAN_FLAG_TYPE",
               "createdAt": "2026-06-12T12:00:00.000000Z",
               "updatedAt": "2026-06-12T12:00:00.000000Z",
-              "rules": [],
-              "rollouts": []
-            },
-            {
-              "key": "enableESUPCheckinNewStop",
-              "name": "enableESUPCheckinNewStop",
-              "description": "",
-              "enabled": true,
-              "type": "BOOLEAN_FLAG_TYPE",
-              "createdAt": "2026-07-08T12:00:00.000000Z",
-              "updatedAt": "2026-07-08T12:00:00.000000Z",
-              "rules": [],
-              "rollouts": []
-            },
-            {
-              "key": "enableESUPCheckinNewReview",
-              "name": "enableESUPCheckinNewReview",
-              "description": "",
-              "enabled": false,
-              "type": "BOOLEAN_FLAG_TYPE",
-              "createdAt": "2026-07-15T12:00:00.000000Z",
-              "updatedAt": "2026-07-15T12:00:00.000000Z",
-              "rules": [],
-              "rollouts": []
-            },
-            {
-              "key": "enableESUPCheckinNewQuestions",
-              "name": "enableESUPCheckinNewQuestions",
-              "description": "",
-              "enabled": false,
-              "type": "BOOLEAN_FLAG_TYPE",
-              "createdAt": "2026-07-08T12:00:00.000000Z",
-              "updatedAt": "2026-07-08T12:00:00.000000Z",
               "rules": [],
               "rollouts": []
             },
@@ -220,17 +176,6 @@
               "rollouts": []
             },
             {
-              "key": "enableAttendeeUpdates",
-              "name": "enableAttendeeUpdates",
-              "description": "",
-              "enabled": true,
-              "type": "BOOLEAN_FLAG_TYPE",
-              "createdAt": "2026-07-08T12:00:00.000000Z",
-              "updatedAt": "2026-07-08T12:00:00.000000Z",
-              "rules": [],
-              "rollouts": []
-            },
-            {
               "key": "enablePersonHeader",
               "name": "enablePersonHeader",
               "description": "",
@@ -262,8 +207,8 @@
               "rollouts": []
             },
             {
-              "key": "enableFeedback",
-              "name": "enableFeedback",
+              "key": "enableAlertsCountCaching",
+              "name": "enableAlertsCountCaching",
               "description": "",
               "enabled": true,
               "type": "BOOLEAN_FLAG_TYPE",
@@ -273,13 +218,35 @@
               "rollouts": []
             },
             {
-              "key": "enableAlertsCountCaching",
-              "name": "enableAlertsCountCaching",
+              "key": "enableNDeliusRosh",
+              "name": "enableNDeliusRosh",
+              "description": "",
+              "enabled": false,
+              "type": "BOOLEAN_FLAG_TYPE",
+              "createdAt": "2026-07-08T12:00:00.000000Z",
+              "updatedAt": "2026-07-08T12:00:00.000000Z",
+              "rules": [],
+              "rollouts": []
+            },
+            {
+              "key": "enableAppointmentPatchAlerts",
+              "name": "enableAppointmentPatchAlerts",
               "description": "",
               "enabled": true,
               "type": "BOOLEAN_FLAG_TYPE",
               "createdAt": "2026-07-08T12:00:00.000000Z",
               "updatedAt": "2026-07-08T12:00:00.000000Z",
+              "rules": [],
+              "rollouts": []
+            },
+            {
+              "key": "enableDraftSentencePlanAccess",
+              "name": "enableDraftSentencePlanAccess",
+              "description": "",
+              "enabled": true,
+              "type": "BOOLEAN_FLAG_TYPE",
+              "createdAt": "2026-10-06T12:00:00.000000Z",
+              "updatedAt": "2026-10-06T12:00:00.000000Z",
               "rules": [],
               "rollouts": []
             }

@@ -5,7 +5,6 @@ import { Provider, Team, User } from '../data/model/caseload'
 import { convertToTitleCase, getDataValue, setDataValue } from '../utils'
 import logger from '../../logger'
 import { logSessionCacheChange } from '../utils/logSessionCacheChange'
-import { getUserProviders } from './getUserProviders'
 
 export const getUserOptions = (hmppsAuthClient: HmppsAuthClient): Route<Promise<void>> => {
   return async function getUserOptionsInner(req, res, next?) {
@@ -26,7 +25,7 @@ export const getUserOptions = (hmppsAuthClient: HmppsAuthClient): Route<Promise<
       enabled: res.locals.flags?.enableSessionCacheLogging,
     }
 
-    if (req.query['update-btn'] === '' && res.locals.flags?.enableAttendeeUpdates) {
+    if (req.query['update-btn'] === '') {
       const noJSProvider = req.query[`[appointments][${crn}][${id}][temp][providerCode]`] as string
       providerCodeQuery = noJSProvider
       const noJSTeam = req.query[`[appointments][${crn}][${id}][temp][teamCode]`] as string

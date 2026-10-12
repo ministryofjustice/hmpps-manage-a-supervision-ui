@@ -64,22 +64,44 @@ describe('partials/_overview-risk-summary-card.njk', () => {
         .text(),
     ).toContain('HIGH RISK OF SERIOUS HARM')
   })
-  it('renders the summary card with rosh score from NDelius source if enableNDeliusRosh feature flag is enabled', () => {
-    const html = render({ risks: mockRisks, overview: mockOverview, rosh, flags: { enableNDeliusRosh: true } })
-    const $ = cheerio.load(html)
-    expect(
-      $('.app-summary-card__body .govuk-summary-list .govuk-summary-list__row')
-        .eq(0)
-        .find('.govuk-summary-list__key')
-        .find('span')
-        .eq(1)
-        .text(),
-    ).toContain('Last updated 11 October 2026')
-    expect(
-      $('.app-summary-card__body .govuk-summary-list .govuk-summary-list__row')
-        .eq(0)
-        .find('.govuk-summary-list__value')
-        .text(),
-    ).toContain('MEDIUM RISK OF SERIOUS HARM')
-  })
+
+  it.each([
+    ['LOW', 'LOW', 'govuk-tag--green'],
+    ['MEDIUM', 'MEDIUM', 'govuk-tag--yellow'],
+    ['HIGH', 'HIGH', 'govuk-tag--red'],
+    ['VERY HIGH', 'VERY HIGH', 'govuk-tag--red'],
+  ])(
+    'renders the summary card with rosh score from NDelius source if enableNDeliusRosh feature flag is enabled',
+    (level: RoshBadgeLevel, expectedLevel: RoshBadgeLevel, expectedClass: string) => {
+      const html = render({
+        risks: mockRisks,
+        overview: mockOverview,
+        rosh: { ...rosh, level },
+        flags: { enableNDeliusRosh: true },
+      })
+      const $ = cheerio.load(html)
+      expect(
+        $('.app-summary-card__body .govuk-summary-list .govuk-summary-list__row')
+          .eq(0)
+          .find('.govuk-summary-list__key')
+          .find('span')
+          .eq(1)
+          .text(),
+      ).toContain('Last updated 11 October 2026')
+      expect(
+        $('.app-summary-card__body .govuk-summary-list .govuk-summary-list__row')
+          .eq(0)
+          .find('.govuk-summary-list__value')
+          .find('[data-qa=overallRiskValue]')
+          .hasClass(expectedClass),
+      ).toBe(true)
+      expect(
+        $('.app-summary-card__body .govuk-summary-list .govuk-summary-list__row')
+          .eq(0)
+          .find('.govuk-summary-list__value')
+          .find('[data-qa=overallRiskValue]')
+          .text(),
+      ).toContain(`${expectedLevel} RISK OF SERIOUS HARM`)
+    },
+  )
 })

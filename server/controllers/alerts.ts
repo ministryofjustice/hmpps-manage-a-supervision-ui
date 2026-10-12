@@ -2,7 +2,7 @@ import getPaginationLinks, { Pagination } from '@ministryofjustice/probation-sea
 import { addParameters } from '@ministryofjustice/probation-search-frontend/utils/url'
 import { Controller } from '../@types'
 import MasApiClient from '../data/masApiClient'
-import { UserAlerts, UserAlertsContent } from '../models/Alerts'
+import { UserAlerts, UserAlertsBase, UserAlertsContent } from '../models/Alerts'
 import ArnsApiClient from '../data/arnsApiClient'
 import { toRoshWidget, getRiskRoshScore } from '../utils'
 import {
@@ -34,7 +34,7 @@ interface Params {
   queryString: string
   url: string
   back: string
-  alertsData: UserAlerts
+  alertsData: UserAlertsBase | UserAlerts
   crnToRiskWidgetMap?: CrnToRiskWidgetMap
   riskRoshScoreMap?: RiskRoshScoreMap
   pagination?: Pagination
@@ -188,7 +188,7 @@ const alertsController: Controller<typeof routes, void> = {
       const masClient = new MasApiClient(token)
       await sendAuditMessage(res, 'VIEW_MAS_ALERT_NOTE', res.locals.user.username, SubjectType.USER)
       const alertNote: UserAlertsContent = await masClient.getUserAlertNote(contactId, noteId)
-      const alertsData: UserAlerts = { content: [alertNote] }
+      const alertsData: UserAlertsBase = { content: [alertNote] }
 
       const arnsClient = new ArnsApiClient(token)
       let crnToRiskWidgetMap: CrnToRiskWidgetMap

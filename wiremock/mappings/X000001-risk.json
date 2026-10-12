@@ -272,7 +272,7 @@
             },
             {
               "id": 2,
-              "description": "Domestic Abuse Perpetrator",
+              "description": "Risk to Children",
               "level": "MEDIUM",
               "riskNotes": [
                 {
@@ -404,22 +404,9 @@
               "removed": false
             },
             {
-              "id": 9,
+              "id": 7,
               "level": "LOW",
               "description": "Stalking",
-              "notes": "Some notes",
-              "createdDate": "2022-12-18",
-              "nextReviewDate": "2024-12-15",
-              "createdBy": {
-                "forename": "Paul",
-                "surname": "Smith"
-              },
-              "removed": false
-            },
-            {
-              "id": 10,
-              "level": "LOW",
-              "description": "Risk to children",
               "notes": "Some notes",
               "createdDate": "2022-12-18",
               "nextReviewDate": "2024-12-15",

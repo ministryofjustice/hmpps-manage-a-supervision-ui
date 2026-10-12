@@ -138,7 +138,7 @@ interface Locals {
   personRiskFlags?: PersonRiskFlags
   riskBadgeData?: RiskBadgeData
   risksWidget?: RoshRiskWidgetDto
-  rosh?: { level?: RoshBadgeLevel; assessedOn?: string | null }
+  rosh?: { level?: RoshBadgeLevel | null; assessedOn?: string | null }
   tierCalculation?: TierCalculation | ErrorSummary
   tierDetails?: LatestTierResponse
   tierChangePrompt?: TierChangePrompt

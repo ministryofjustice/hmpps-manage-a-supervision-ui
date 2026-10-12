@@ -65,6 +65,36 @@ describe('partials/_overview-risk-summary-card.njk', () => {
     ).toContain('HIGH RISK OF SERIOUS HARM')
   })
 
+  it('renders the summary card when no rosh score exists', () => {
+    const html = render({
+      risks: mockRisks,
+      overview: mockOverview,
+      rosh: { ...rosh, level: null },
+      flags: { enableNDeliusRosh: true },
+    })
+    const $ = cheerio.load(html)
+    expect(
+      $('.app-summary-card__body .govuk-summary-list .govuk-summary-list__row')
+        .eq(0)
+        .find('.govuk-summary-list__key')
+        .find('span')
+        .eq(1)
+        .text(),
+    ).not.toContain('Last updated 9 June 2026')
+    expect(
+      $('.app-summary-card__body .govuk-summary-list .govuk-summary-list__row')
+        .eq(0)
+        .find('.govuk-summary-list__value')
+        .find('[data-qa=overallRiskValue]').length,
+    ).toBe(0)
+    expect(
+      $('.app-summary-card__body .govuk-summary-list .govuk-summary-list__row')
+        .eq(0)
+        .find('.govuk-summary-list__value')
+        .text(),
+    ).toContain('There is no ROSH summary.')
+  })
+
   it.each([
     ['LOW', 'LOW', 'govuk-tag--green'],
     ['MEDIUM', 'MEDIUM', 'govuk-tag--yellow'],

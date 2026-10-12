@@ -86,11 +86,11 @@
     {% set roshText = overallRiskLevel | replace("_", " ") %}
     {% set overallRosh %}
         {% if hasRosh %}
-            <table>
+             <table>
                 <tr>
                      <td data-qa="overallRiskValue" class="govuk-tag govuk-!-font-weight-bold {{ getTagClass(overallRiskLevel | replace(" ", "_")) }}" align="center">{{ roshText + ' risk of serious harm' | upper }}</td>
                 </tr>
-            </table>
+            </table> 
         {% else %}
             {{'There is no ROSH summary.'}}
         {% endif %}

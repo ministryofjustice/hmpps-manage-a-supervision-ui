@@ -369,11 +369,11 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/activity/${crn}/preload`, handle404: false })
   }
 
-  async getPersonRiskFlags(crn: string): Promise<PersonRiskFlags | ErrorSummary | null> {
+  async getPersonRiskFlags<TResponse>(crn: string, handle500 = false): Promise<TResponse> {
     return this.get({
       path: `/risk-flags/${crn}`,
       handle404: false,
-      handle500: true,
+      handle500,
       errorMessage: 'Risk flag information is currently unavailable. Try again later or use NDelius.',
     })
   }

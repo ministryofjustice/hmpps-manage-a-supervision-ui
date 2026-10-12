@@ -59,7 +59,9 @@ const getRiskRoshScoreMap = async (
   let risksErrors: ErrorSummaryItem[] = []
   const uniqueCrns = [...new Set(alertsData.map(item => item.crn))].filter(Boolean)
   try {
-    allPersonRiskFlagsResponses = await Promise.all(uniqueCrns.map(crn => masClient.getPersonRiskFlags(crn)))
+    allPersonRiskFlagsResponses = await Promise.all(
+      uniqueCrns.map(crn => masClient.getPersonRiskFlags<PersonRiskFlags | ErrorSummary>(crn)),
+    )
     const responseErrorIndex = allPersonRiskFlagsResponses.findIndex(riskResponse => responseIsError(riskResponse))
     if (responseErrorIndex >= 0) {
       masUnavailableError = (allPersonRiskFlagsResponses[responseErrorIndex] as ErrorSummary).errors[0].text

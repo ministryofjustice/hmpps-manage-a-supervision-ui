@@ -13,7 +13,7 @@ export const getPersonRiskFlags = (hmppsAuthClient: HmppsAuthClient): Route<Prom
     if (!req.session?.data?.risks?.[crn]) {
       const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
       const masClient = new MasApiClient(token)
-      personRisks = await masClient.getPersonRiskFlags(crn)
+      personRisks = await masClient.getPersonRiskFlags<PersonRiskFlags>(crn)
 
       if (personRisks?.riskFlags) {
         riskBadgeData = getRiskBadgeGroups(personRisks.riskFlags)

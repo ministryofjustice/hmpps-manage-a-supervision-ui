@@ -416,7 +416,7 @@ describe('alertsController', () => {
     it('should render the alerts page when person risk flags api request returns a 500 error', async () => {
       const expectedRiskRoshScoreMap = {}
       const mockErrorResponse: ErrorSummary = { errors: [{ text: '500 error' }] }
-      getPersonRiskFlagsSpy.mockImplementationOnce(() => Promise.resolve(mockErrorResponse))
+      getPersonRiskFlagsSpy.mockResolvedValueOnce(mockErrorResponse)
       await controllers.alerts.getAlerts(hmppsAuthClient)(req, res)
       const expectedRiskErrors = [{ text: '500 error' }]
       expect(renderSpy).toHaveBeenCalledWith('pages/alerts', {

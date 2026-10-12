@@ -369,7 +369,7 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/activity/${crn}/preload`, handle404: false })
   }
 
-  async getPersonRiskFlags(crn: string): Promise<PersonRiskFlags> {
+  async getPersonRiskFlags<TResponse>(crn: string): Promise<TResponse> {
     return this.get({
       path: `/risk-flags/${crn}`,
       handle404: false,

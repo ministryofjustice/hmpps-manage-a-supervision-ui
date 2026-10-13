@@ -50,7 +50,7 @@ type TestModel = {
 
 const baseModel: TestModel = {
   flags: {
-    enableNDeliusRosh: false,
+    enableNDeliusRoshAlertsPage: false,
   },
   alertsData: mockAlertsData,
   riskRoshScoreMap: {
@@ -73,7 +73,7 @@ const render = (model = {} as Partial<TestModel>) => {
 }
 
 describe('Alerts nunjucks render tests', () => {
-  it('should render the correct rosh score when enableNDeliusRosh feature flag is disabled', () => {
+  it('should render the correct rosh score when enableNDeliusRoshAlertsPage feature flag is disabled', () => {
     const $ = render()
     expect(
       $('[data-qa=alertsTable]')
@@ -91,10 +91,10 @@ describe('Alerts nunjucks render tests', () => {
     ['HIGH', 'HIGH'],
     ['VERY_HIGH', 'VERY HIGH'],
   ])(
-    'should render the correct rosh score when enableNDeliusRosh feature flag is enabled',
+    'should render the correct rosh score when enableNDeliusRoshAlertsPage feature flag is enabled',
     (score: RoshBadgeLevel, expected: string) => {
       const $ = render({
-        flags: { enableNDeliusRosh: true },
+        flags: { enableNDeliusRoshAlertsPage: true },
         riskRoshScoreMap: {
           X643390: score,
         },

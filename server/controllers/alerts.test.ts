@@ -389,8 +389,8 @@ describe('alertsController', () => {
       })
     })
   })
-  describe('enableNDeliusRosh feature flag enabled', () => {
-    const res = mockAppResponse({ flags: { enableNDeliusRosh: true } })
+  describe('enableNDeliusRoshAlertsPage feature flag enabled', () => {
+    const res = mockAppResponse({ flags: { enableNDeliusRoshAlertsPage: true } })
     const renderSpy = jest.spyOn(res, 'render')
     const req = httpMocks.createRequest({ query: {}, url })
 
@@ -472,8 +472,8 @@ describe('alertsController', () => {
       })
     })
 
-    describe('enableNDeliusRosh feature flag enabled', () => {
-      const res = mockAppResponse({ flags: { enableNDeliusRosh: true } })
+    describe('enableNDeliusRoshAlertsPage feature flag enabled', () => {
+      const res = mockAppResponse({ flags: { enableNDeliusRoshAlertsPage: true } })
       const renderSpy = jest.spyOn(res, 'render')
 
       it('should render the alert note page when person risk flags api request throws an error', async () => {

@@ -69,7 +69,7 @@ const getRiskRoshScoreMap = async (
         (acc, personRiskFlagsResponse, i) => {
           return {
             ...acc,
-            [uniqueCrns[i]]: getRiskRoshScore(personRiskFlagsResponse?.riskFlags),
+            [uniqueCrns[i]]: getRiskRoshScore(personRiskFlagsResponse?.riskFlags).score,
           }
         },
         {},
@@ -164,7 +164,7 @@ const alertsController: Controller<typeof routes, void> = {
         sortedBy,
         risksErrors: null,
       }
-      if (res.locals?.flags?.enableNDeliusRosh) {
+      if (res.locals?.flags?.enableNDeliusRoshAlertsPage) {
         ;({ riskRoshScoreMap, risksErrors } = await getRiskRoshScoreMap(alertsData.content, masClient))
         params.riskRoshScoreMap = riskRoshScoreMap
       } else {
@@ -205,7 +205,7 @@ const alertsController: Controller<typeof routes, void> = {
         risksErrors: null,
       }
 
-      if (res.locals?.flags?.enableNDeliusRosh) {
+      if (res.locals?.flags?.enableNDeliusRoshAlertsPage) {
         ;({ riskRoshScoreMap, risksErrors } = await getRiskRoshScoreMap(alertsData.content, masClient))
         params.riskRoshScoreMap = riskRoshScoreMap
       } else {

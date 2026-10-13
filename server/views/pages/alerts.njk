@@ -54,7 +54,7 @@
             </a>
             <p class="govuk-!-font-weight-bold secondary-text">{{ alert.crn }}</p>
             {% endset %}
-            {% if flags.enableNDeliusRosh %}
+            {% if flags.enableNDeliusRoshAlertsPage %}
                 {% set roshScore = "VERY_HIGH" if riskRoshScoreMap[alert.crn] == "VERY HIGH" else riskRoshScoreMap[alert.crn] %}
             {% else %}
                 {% set risksWidget = crnToRiskWidgetMap[alert.crn] %}
@@ -112,7 +112,7 @@
                     attributes: { "data-qa":"alertPerson" }
                 },
                 {
-                    html: predictorTimelineItem({ type: "ROSH", level: roshScore if flags.enableNDeliusRosh else risksWidget.overallRisk }),
+                    html: predictorTimelineItem({ type: "ROSH", level: roshScore if flags.enableNDeliusRoshAlertsPage else risksWidget.overallRisk }),
                     attributes: {"data-qa": "alertRisk" }
                 },
                 {

@@ -38,6 +38,9 @@ export interface Data {
   isOutLookEventFailed?: any
   isEnglishNotificationFailed?: boolean
   isWelshNotificationFailed?: boolean
+  isVisor?: {
+    [crn: string]: boolean
+  }
   temp?: {
     [crn: string]: {
       linkedContactId?: string

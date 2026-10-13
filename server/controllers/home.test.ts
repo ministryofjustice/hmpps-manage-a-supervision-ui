@@ -394,6 +394,24 @@ describe('homeController', () => {
           }),
         )
       })
+
+      it('should not call getEnforcementContacts and should render empty enforcement actions when disableEnforcementContacts is set', async () => {
+        const resOld = mockAppResponse({ flags: { enableDeliusClient: false, disableEnforcementContacts: true } })
+        const renderSpyOld = jest.spyOn(resOld, 'render')
+        const getEnforcementContactsSpy = jest.spyOn(MasApiClient.prototype, 'getEnforcementContacts')
+        getEnforcementContactsSpy.mockClear()
+
+        await controllers.home.getHomeOld(hmppsAuthClient)(req, resOld)
+
+        expect(getEnforcementContactsSpy).not.toHaveBeenCalled()
+        expect(renderSpyOld).toHaveBeenCalledWith(
+          'pages/homepage-old/homepage',
+          expect.objectContaining({
+            enforcementActions: [],
+            disableEnforcementContacts: true,
+          }),
+        )
+      })
     })
 
     describe('GET /sentry-test-error', () => {

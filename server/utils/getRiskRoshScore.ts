@@ -6,17 +6,13 @@ export const getRiskRoshScore = (
   let score = null
   let assessedOn = null
   if (riskFlags?.length) {
-    score =
-      (riskFlags
-        ?.filter(riskFlag => !riskFlag.removed)
-        ?.find(riskFlag => riskFlag?.description?.toLowerCase()?.includes('rosh'))
-        ?.description.toLowerCase()
-        .replace('rosh', '')
-        .trim()
-        .toUpperCase() as RoshBadgeLevel) ?? null
-    assessedOn =
-      riskFlags?.filter(riskFlag => !riskFlag.removed).find(riskFlag => riskFlag?.mostRecentReviewDate)
-        ?.mostRecentReviewDate ?? null
+    const roshRiskFlag = riskFlags
+      ?.filter(riskFlag => !riskFlag.removed)
+      ?.find(riskFlag => riskFlag?.description?.toLowerCase()?.includes('rosh'))
+    if (roshRiskFlag) {
+      score = roshRiskFlag.description.toLowerCase().replace('rosh', '').trim().toUpperCase() as RoshBadgeLevel
+      assessedOn = roshRiskFlag?.mostRecentReviewDate ?? null
+    }
   }
   return { score, assessedOn }
 }

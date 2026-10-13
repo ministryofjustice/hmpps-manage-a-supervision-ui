@@ -11,7 +11,7 @@ export const checkUpdateTextMessageConfirmation = (
   getCrn().then(pageCrn => {
     getUuid().then(pageUuid => {
       const optionIndex = updateMobileNumber ? 2 : 3
-      const number = '07703123456'
+      const number = '07183889311'
       page.getSummaryListRow(6).find('.govuk-link').click()
       const textMessageConfirmPage = new TextMessageConfirmationPage()
       textMessageConfirmPage.getSmsOptIn().find(`#appointments-${pageCrn}-${pageUuid}-smsOptIn`).should('be.checked')
@@ -22,7 +22,7 @@ export const checkUpdateTextMessageConfirmation = (
         editContactDetailsPage.checkOnPage()
         cy.get('[name=phoneNumber]').should('not.exist')
         cy.get('[name=emailAddress]').should('not.exist')
-        page.getElementInput('mobileNumber').clear().type('07703123456')
+        page.getElementInput('mobileNumber').clear().type('07183889311')
         cy.get('[data-qa=submitBtn]').click()
       }
       if (page instanceof AppointmentCheckYourAnswersPage) {

@@ -118,7 +118,7 @@ export const checkAppointmentSummary = ({
     page
       .getSummaryListRow(6 + index)
       .find('.govuk-summary-list__value')
-      .should(sendTextMessage ? 'contain.text' : 'not.contain.text', '07703123456')
+      .should(sendTextMessage ? 'contain.text' : 'not.contain.text', '07183889311')
   }
   if (!dateInPast) {
     page

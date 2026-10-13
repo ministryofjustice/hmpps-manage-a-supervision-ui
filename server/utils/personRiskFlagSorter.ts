@@ -9,6 +9,69 @@ const riskLevelBadgeClass: Record<string, string> = {
   LOW: 'risk-badge--low',
 }
 
+const riskTypeBadgeClass: Record<string, string> = {
+  cohort: 'risk-badge--cohort',
+  misc: 'risk-badge--misc',
+}
+
+const riskLevelByDescription: Record<string, string> = {
+  // LOW
+  'county lines - victim': 'LOW',
+  'domestic abuse safety officer': 'LOW',
+
+  // MEDIUM
+  'child concerns': 'MEDIUM',
+  'victim contact': 'MEDIUM',
+  'county lines - perpetrator': 'MEDIUM',
+  'cuckooing - potential victim': 'MEDIUM',
+  'domestic abuse victim': 'MEDIUM',
+  'doris (disruption of recorded internal secretors)': 'MEDIUM',
+  'information on closed case': 'MEDIUM',
+  'joint intelligence programme': 'MEDIUM',
+  'modern slavery - perpetrator': 'MEDIUM',
+  'modern slavery - victim': 'MEDIUM',
+  'organised crime': 'MEDIUM',
+  'restraining order': 'MEDIUM',
+  stalking: 'MEDIUM',
+  'warrant / summons': 'MEDIUM',
+
+  // HIGH
+  'alert notice': 'HIGH',
+  'barred from working with adults': 'HIGH',
+  'barred from working with children': 'HIGH',
+  'child criminal exploitation (cce) perpetrator': 'HIGH',
+  'child protection': 'HIGH',
+  'child sexual exploitation - perpetrator': 'HIGH',
+  corruptor: 'HIGH',
+  'domestic abuse': 'HIGH',
+  mappa: 'HIGH',
+  marac: 'HIGH',
+  'safeguarding - "adult at risk"': 'HIGH',
+  'sexual conviction': 'HIGH',
+  'sexual harm prevention order / sexual risk order': 'HIGH',
+  sfo: 'HIGH',
+  'suicide/self harm': 'HIGH',
+  'terrorism act offender': 'HIGH',
+  weapons: 'HIGH',
+}
+
+const cohortDescriptions = new Set([
+  'contact suspended',
+  'cyber - dependent',
+  'cyber - enabled',
+  'grand avenues cohort',
+  'home office interest',
+  'lifer - supervised',
+  'lifer - not supervised',
+  'organised crime - overt',
+  'short sentence service',
+  'final third excluded',
+  'final third - supervision continues',
+  'street gangs',
+])
+
+const miscDescriptions = new Set(['cppc registered case', 'integrated offender management'])
+
 const risksWithLevelDescription = new Set([
   'risk to public',
   'risk to known adult',
@@ -121,15 +184,30 @@ function getRiskRegisterType(description: string): string | undefined {
   )
 }
 
-function getRiskLevel(flag: RiskFlag): string {
+function getRiskBadgeClass(description: string, severity: string): string {
+  const normalisedDescription = description.trim().toLowerCase()
+
+  if (cohortDescriptions.has(normalisedDescription)) {
+    return riskTypeBadgeClass.cohort
+  }
+
+  if (miscDescriptions.has(normalisedDescription)) {
+    return riskTypeBadgeClass.misc
+  }
+
+  return riskLevelBadgeClass[severity] ?? riskLevelBadgeClass.LOW
+}
+
+function getRiskLevel(flag: RiskFlag): string | undefined {
   const normalisedDescription = flag.description.trim().toLowerCase()
 
-  const level = risksWithLevelDescription.has(normalisedDescription)
-    ? (flag.levelDescription ?? flag.level)
-    : flag.level
+  if (risksWithLevelDescription.has(normalisedDescription)) {
+    return (flag.levelDescription ?? flag.level)?.toUpperCase()
+  }
 
-  return (level ?? 'LOW').toUpperCase()
+  return riskLevelByDescription[normalisedDescription] ?? flag.level?.toUpperCase()
 }
+
 function getGroupedRiskBadges(visibleRiskFlags: RiskFlag[]) {
   return visibleRiskFlags.reduce<RiskBadgeGroup[]>((result, flag) => {
     const severity = getRiskLevel(flag)
@@ -146,7 +224,7 @@ function getGroupedRiskBadges(visibleRiskFlags: RiskFlag[]) {
 
     const normalisedDescription = flag.description.trim().toLowerCase()
     const description = toSentenceCase(flag.description, [], null, true, false)
-    const displayDescription = description.replace(/^Mappa\b/, 'MAPPA')
+    const displayDescription = description.replace(/^Mappa\b/, 'MAPPA').replace(/^Cppc\b/, 'CPPC')
 
     let text = description
 
@@ -161,7 +239,7 @@ function getGroupedRiskBadges(visibleRiskFlags: RiskFlag[]) {
       id: flag.id,
       text,
       level: severity,
-      badgeClass: riskLevelBadgeClass[severity],
+      badgeClass: getRiskBadgeClass(flag.description, severity),
     })
 
     return result
@@ -176,8 +254,12 @@ const validRiskDescriptions = new Set(
 
 export function getRiskBadgeGroups(riskFlags: RiskFlag[]): RiskBadgeData {
   const activeRiskFlags = riskFlags.filter(
-    flag => !flag.removed && validRiskDescriptions.has(flag.description.trim().toLowerCase()),
+    flag =>
+      !flag.removed &&
+      validRiskDescriptions.has(flag.description.trim().toLowerCase()) &&
+      getRiskLevel(flag) !== undefined,
   )
+
   const sortedRiskFlags = [...activeRiskFlags].sort((a, b) => {
     const severityPriority =
       (riskLevelPriority[getRiskLevel(a)] ?? Number.MAX_SAFE_INTEGER) -

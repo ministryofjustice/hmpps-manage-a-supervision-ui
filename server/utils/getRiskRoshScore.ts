@@ -2,7 +2,7 @@ import { RiskFlag, RoshBadgeLevel } from '../data/model/risk'
 
 export const getRiskRoshScore = (
   riskFlags: RiskFlag[],
-): { score: RoshBadgeLevel | null; assessedOn: string | null } => {
+): { score: RoshBadgeLevel | null | undefined; assessedOn: string | null | undefined } => {
   let score = null
   let assessedOn = null
   if (riskFlags?.length) {

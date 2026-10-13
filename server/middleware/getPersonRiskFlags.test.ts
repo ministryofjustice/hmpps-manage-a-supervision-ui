@@ -246,7 +246,7 @@ describe('middleware/getPersonRiskFlags', () => {
     expect(mockRes.locals.rosh).toEqual({ level: 'VERY HIGH', assessedOn: '2026-10-01' })
   })
 
-  it('should not throw and should set res.locals.rosh.level to undefined when enableNDeliusRosh is enabled and riskFlags is absent', async () => {
+  it('should not throw and should set res.locals.rosh.level to null when enableNDeliusRosh is enabled and riskFlags is absent', async () => {
     getPersonRiskFlagsSpy.mockResolvedValueOnce({
       ...mockRisks,
       riskFlags: undefined,

@@ -13,14 +13,18 @@ export const getAppointment = (hmppsAuthClient: HmppsAuthClient): Route<Promise<
     const { crn, id: uuid, contactId } = req.params as Record<string, string>
     const id = uuid ?? contactId
     const { username: loggedInUsername = '' } = res.locals.user
-    const token = await hmppsAuthClient.getSystemClientToken(loggedInUsername)
-    const masClient = new MasApiClient(token)
-    const currentCase = await masClient.getOverview(crn)
-    const overview = res.locals.case
-    const { forename } = currentCase.personalDetails.name
-    const mobileNumber = currentCase?.personalDetails?.mobileNumber ?? ''
-    const allowSms = overview?.allowSms
+    const { forename } = res.locals.headerPersonName
+    const mobileNumber = res.locals.case.mobileNumber ?? ''
+    const allowSms = res.locals.case.allowSms ?? false
     const { data } = req.session
+
+    let isVisor = req?.session?.data?.isVisor?.[crn]
+    if (isVisor === undefined) {
+      const token = await hmppsAuthClient.getSystemClientToken(loggedInUsername)
+      const masClient = new MasApiClient(token)
+      const currentCase = await masClient.getOverview(crn)
+      isVisor = currentCase.registrations.map(reg => reg.toLowerCase()).includes('visor')
+    }
 
     // eslint-disable-next-line no-useless-escape
     const regexIgnoreValuesInParentheses = /[\(\)]/
@@ -31,7 +35,7 @@ export const getAppointment = (hmppsAuthClient: HmppsAuthClient): Route<Promise<
     }
     let appointment: AppointmentLocals = {
       meta: {
-        isVisor: currentCase.registrations.map(reg => reg.toLowerCase()).includes('visor'),
+        isVisor,
         forename,
         change: (req?.query?.change as string) ?? null,
         userIsAttending,

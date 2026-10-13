@@ -100,6 +100,10 @@ const mockResponse = ({ allowSms = true } = {}): AppResponse => {
     case: {
       allowSms,
     },
+    headerPersonName: {
+      forename: 'Joe',
+      surname: 'Bloggs',
+    },
   }
   return mockAppResponse(locals)
 }
@@ -362,6 +366,35 @@ describe('/middleware/getAppointment', () => {
         userIsAttending: null,
       },
     })
+    expect(nextSpy).toHaveBeenCalled()
+  })
+
+  it('should not fetch overview if isVisor already in session', async () => {
+    const getOverviewSpy = jest
+      .spyOn(MasApiClient.prototype, 'getOverview')
+      .mockImplementation(() => Promise.resolve(mockOverview))
+    const req = httpMocks.createRequest({
+      params: {
+        crn: 'X000002',
+        id: 100,
+      },
+      session: {
+        data: {
+          appointmentTypes: mockTypes,
+          appointments: {
+            X000002: {
+              100: mockAppt,
+            },
+          },
+          isVisor: {
+            X000002: true,
+          },
+        },
+      },
+    })
+    const res = mockResponse()
+    await getAppointment(hmppsAuthClient)(req, res, nextSpy)
+    expect(getOverviewSpy).not.toHaveBeenCalled()
     expect(nextSpy).toHaveBeenCalled()
   })
 })

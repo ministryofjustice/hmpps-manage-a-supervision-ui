@@ -91,18 +91,18 @@ describe('Location, date and time nunjucks render tests', () => {
           enableAllowSms: false,
         },
       } as Partial<TestModel>)
-      expect($('[data-qa="allowSms"]').length).toBe(0)
+      expect($('[data-qa="allowSms"]')).toHaveLength(0)
     })
     it('should not display if enableAllowSms feature flag is enabled and pop does not have mobile number', () => {
       const $ = render({ case: { ...baseModel.case, mobileNumber: null } })
-      expect($('[data-qa="allowSms"]').length).toBe(0)
+      expect($('[data-qa="allowSms"]')).toHaveLength(0)
     })
     it('should display if enableAllowSms feature flag is enabled and consent is set to true', () => {
       const $ = render()
       expect($('[data-qa="allowSms"]').find(`h3`).text()).toContain(
         'Has Caroline given permission to receive text messages? (optional)',
       )
-      expect($('[data-qa="allowSmsHint"]').length).toBe(0)
+      expect($('[data-qa="allowSmsHint"]')).toHaveLength(0)
       expect($('[data-qa="allowSmsAnswer"]').text()).toContain('Yes')
       expect($('[data-qa="changeAllowSmsLink"]').text()).toContain('Change')
       expect($('[data-qa="changeAllowSmsLink"]').attr('href')).toContain(
@@ -128,7 +128,7 @@ describe('Location, date and time nunjucks render tests', () => {
       expect($('[data-qa="allowSms"]').find(`h3`).text()).toContain(
         'Has Caroline given permission to receive text messages? (optional)',
       )
-      expect($('[data-qa="allowSmsHint"]').length).toBe(0)
+      expect($('[data-qa="allowSmsHint"]')).toHaveLength(0)
       expect($('[data-qa="allowSmsAnswer"]').text()).toContain('Not provided')
       expect($('[data-qa="changeAllowSmsLink"]').text()).toContain('Change')
       expect($('[data-qa="changeAllowSmsLink"]').attr('href')).toContain(

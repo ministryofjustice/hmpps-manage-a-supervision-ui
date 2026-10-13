@@ -20,7 +20,7 @@ describe('merge', () => {
 
   it('should return the first object when the second object is null', () => {
     const obj1 = { a: 1, b: 2 }
-    expect(merge(obj1, null)).toEqual(null)
+    expect(merge(obj1, null)).toBeNull()
   })
 
   it('should return the second object when the first object is a non-object type (e.g., string)', () => {

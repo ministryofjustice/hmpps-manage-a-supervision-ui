@@ -14,7 +14,7 @@ describe('pages/homepage-old/_appointments.njk', () => {
     expect($('[data-qa="appointmentsFeatureDisabled"]').text()).toContain(
       'Upcoming appointments are currently unavailable.',
     )
-    expect($('[data-qa="appointmentsTimeoutError"]').length).toBe(0)
+    expect($('[data-qa="appointmentsTimeoutError"]')).toHaveLength(0)
   })
 
   it('renders the timeout error message when appointmentsTimeoutError is set and disableUserAppointments is not', () => {
@@ -24,7 +24,7 @@ describe('pages/homepage-old/_appointments.njk', () => {
     expect($('[data-qa="appointmentsTimeoutError"]').text()).toContain(
       'Upcoming appointments are currently unavailable.',
     )
-    expect($('[data-qa="appointmentsFeatureDisabled"]').length).toBe(0)
+    expect($('[data-qa="appointmentsFeatureDisabled"]')).toHaveLength(0)
   })
 
   it('renders the no appointments message when neither flag nor timeout error is set', () => {
@@ -32,7 +32,7 @@ describe('pages/homepage-old/_appointments.njk', () => {
     const $ = cheerio.load(html)
 
     expect(html).toContain('There are no upcoming appointments.')
-    expect($('[data-qa="appointmentsFeatureDisabled"]').length).toBe(0)
-    expect($('[data-qa="appointmentsTimeoutError"]').length).toBe(0)
+    expect($('[data-qa="appointmentsFeatureDisabled"]')).toHaveLength(0)
+    expect($('[data-qa="appointmentsTimeoutError"]')).toHaveLength(0)
   })
 })

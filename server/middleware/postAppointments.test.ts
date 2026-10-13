@@ -953,7 +953,7 @@ describe('/middleware/postAppointments', () => {
         })
         const res = buildResponse()
         await postAppointments(hmppsAuthClient)(mockReq, res)
-        expect(mockReq.session.data.isEnglishNotificationFailed).toEqual(undefined)
+        expect(mockReq.session.data.isEnglishNotificationFailed).toBeUndefined()
       })
 
       it('should set req.session.data.isEnglishNotificationFailed to undefined if request has a englishNotificationId ', async () => {
@@ -987,7 +987,7 @@ describe('/middleware/postAppointments', () => {
         })
         const res = buildResponse()
         await postAppointments(hmppsAuthClient)(mockReq, res)
-        expect(mockReq.session.data.isWelshNotificationFailed).toEqual(undefined)
+        expect(mockReq.session.data.isWelshNotificationFailed).toBeUndefined()
       })
     })
   })

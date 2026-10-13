@@ -46,8 +46,13 @@ const render = (input: Record<string, unknown>) => {
 }
 
 describe('partials/_overview-risk-summary-card.njk', () => {
-  it('renders the summary card with rosh score from ARNS source if enableNDeliusRosh feature flag is disabled', () => {
-    const html = render({ risks: mockRisks, overview: mockOverview, rosh, flags: { enableNDeliusRosh: false } })
+  it('renders the summary card with rosh score from ARNS source if enableNDeliusRoshOverviewPage feature flag is disabled', () => {
+    const html = render({
+      risks: mockRisks,
+      overview: mockOverview,
+      rosh,
+      flags: { enableNDeliusRoshOverviewPage: false },
+    })
     const $ = cheerio.load(html)
     expect(
       $('.app-summary-card__body .govuk-summary-list .govuk-summary-list__row')
@@ -70,7 +75,7 @@ describe('partials/_overview-risk-summary-card.njk', () => {
       risks: mockRisks,
       overview: mockOverview,
       rosh: { ...rosh, level: null },
-      flags: { enableNDeliusRosh: true },
+      flags: { enableNDeliusRoshOverviewPage: true },
     })
     const $ = cheerio.load(html)
     expect(
@@ -99,13 +104,13 @@ describe('partials/_overview-risk-summary-card.njk', () => {
     ['HIGH', 'HIGH', 'govuk-tag--red'],
     ['VERY HIGH', 'VERY HIGH', 'govuk-tag--red'],
   ])(
-    'renders the summary card with rosh score from NDelius source if enableNDeliusRosh feature flag is enabled',
+    'renders the summary card with rosh score from NDelius source if enableNDeliusRoshOverviewPage feature flag is enabled',
     (level: RoshBadgeLevel, expectedLevel: RoshBadgeLevel, expectedClass: string) => {
       const html = render({
         risks: mockRisks,
         overview: mockOverview,
         rosh: { ...rosh, level },
-        flags: { enableNDeliusRosh: true },
+        flags: { enableNDeliusRoshOverviewPage: true },
       })
       const $ = cheerio.load(html)
       expect(

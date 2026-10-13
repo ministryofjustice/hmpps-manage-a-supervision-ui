@@ -38,5 +38,6 @@ export class FeatureFlags {
   disableUserAppointments?: boolean = undefined
   enableDraftSentencePlanAccess?: boolean = undefined
   enableNDeliusRosh?: boolean = undefined
+  enableNDeliusRoshOverviewPage?: boolean = undefined
   enableAppointmentPatchAlerts?: boolean = undefined
 }

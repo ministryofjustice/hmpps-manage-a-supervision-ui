@@ -1,14 +1,14 @@
 {% from "_components/summary-card/macro.njk" import appSummaryCard %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
-{% if flags.enableNDeliusRosh %}
+{% if flags.enableNDeliusRoshOverviewPage %}
   {% set assessedOn = rosh.assessedOn %}
   {% set overallRiskLevel = rosh.level %}
 {% else %}
   {% set assessedOn = risks.assessedOn %}
   {% set overallRiskLevel = risks.summary.overallRiskLevel %}
 {% endif %}
-{% set hasRosh = overallRiskLevel and (flags.enableNDeliusRosh or assessedOn) %}
+{% set hasRosh = overallRiskLevel and (flags.enableNDeliusRoshOverviewPage or assessedOn) %}
 
 {% set risk %}
     {% set riskToThemselves %}

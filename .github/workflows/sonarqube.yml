@@ -21,6 +21,10 @@ jobs:
           pattern: cypress_results_*
           merge-multiple: true
           path: test_results/
+      - name: see files
+        run: ls -lR
+      - name: see coverage
+        run: cat ./coverage/lcov.info
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v8
         env:

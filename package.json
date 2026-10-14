@@ -51,13 +51,12 @@
       "^uuid$": "<rootDir>/node_modules/uuid/dist/index.js"
     },
     "transform": {
-      "^.+\\.tsx?$": [
+      "^.+\\.[jt]sx?$": [
         "ts-jest",
         {
           "isolatedModules": true
         }
-      ],
-      "^.+\\.js$": "babel-jest"
+      ]
     },
     "collectCoverageFrom": [
       "server/**/*.{ts,js,jsx,mjs}"
@@ -189,8 +188,6 @@
     "wiremock": "^3.13.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.29.7",
-    "@babel/preset-env": "^7.29.7",
     "@cypress/code-coverage": "4.0.3",
     "@faker-js/faker": "^10.6.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
@@ -224,7 +221,6 @@
     "@typescript-eslint/parser": "^8.32.0",
     "audit-ci": "^7.1.0",
     "autoprefixer": "^10.6.1",
-    "babel-jest": "^30.5.2",
     "cheerio": "1.2.0",
     "concurrently": "^10.0.5",
     "cookie-session": "^2.1.0",

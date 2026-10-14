@@ -20,8 +20,10 @@ export interface UserAlertsContent {
   riskLevel?: 'VERY HIGH ROSH' | 'HIGH ROSH' | 'MEDIUM ROSH' | 'LOW ROSH'
 }
 
-export interface UserAlerts {
+export interface UserAlertsBase {
   content: UserAlertsContent[]
+}
+export interface UserAlerts extends UserAlertsBase {
   totalResults: number
   totalPages: number
   page: number

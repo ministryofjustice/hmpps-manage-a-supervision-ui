@@ -37,5 +37,6 @@ export class FeatureFlags {
   disableEnforcementContacts?: boolean = undefined
   enableDraftSentencePlanAccess?: boolean = undefined
   enableNDeliusRosh?: boolean = undefined
+  enableNDeliusRoshOverviewPage?: boolean = undefined
   enableAppointmentPatchAlerts?: boolean = undefined
 }

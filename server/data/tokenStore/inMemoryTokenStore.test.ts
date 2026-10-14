@@ -14,6 +14,6 @@ describe('inMemoryTokenStore', () => {
 
   it('Expires token', async () => {
     await tokenStore.setToken('user-2', 'token-2', -1)
-    expect(await tokenStore.getToken('user-2')).toBe(null)
+    expect(await tokenStore.getToken('user-2')).toBeNull()
   })
 })

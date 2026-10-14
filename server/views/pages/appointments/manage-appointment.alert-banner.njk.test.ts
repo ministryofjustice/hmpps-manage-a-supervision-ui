@@ -115,7 +115,7 @@ describe('Alert banner', () => {
         },
       })
 
-      expect($('.moj-alert').length).toBe(0)
+      expect($('.moj-alert')).toHaveLength(0)
     })
   })
 
@@ -132,7 +132,7 @@ describe('Alert banner', () => {
         },
       })
 
-      expect($('.moj-alert').length).toBe(0)
+      expect($('.moj-alert')).toHaveLength(0)
     })
   })
 

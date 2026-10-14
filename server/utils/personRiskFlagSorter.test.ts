@@ -131,7 +131,7 @@ describe('utils/getRiskBadgeGroups', () => {
 
       const result = getRiskBadgeGroups(riskFlags)
 
-      expect(result.groups.map(group => group.severity)).toEqual(['HIGH', 'MEDIUM'])
+      expect(result.groups.map(group => group.severity)).toEqual(['HIGH'])
     })
 
     it('sorts by register description when severity is the same', () => {
@@ -346,7 +346,7 @@ describe('utils/getRiskBadgeGroups', () => {
   })
 
   describe('handles missing risk level', () => {
-    it('defaults Public Protection severity to LOW when levelDescription is missing', () => {
+    it('ignores Public Protection flags when levelDescription and level are missing', () => {
       const result = getRiskBadgeGroups([
         createRiskFlag({
           id: 1,
@@ -356,19 +356,8 @@ describe('utils/getRiskBadgeGroups', () => {
         }),
       ])
 
-      expect(result.groups).toEqual([
-        {
-          severity: 'LOW',
-          badges: [
-            {
-              id: 1,
-              text: 'Risk to public - Low',
-              level: 'LOW',
-              badgeClass: 'risk-badge--low',
-            },
-          ],
-        },
-      ])
+      expect(result.groups).toEqual([])
+      expect(result.remainingCount).toBe(0)
     })
   })
 
@@ -471,13 +460,13 @@ describe('utils/getRiskBadgeGroups', () => {
 
     expect(result.groups).toEqual([
       {
-        severity: 'LOW',
+        severity: 'HIGH',
         badges: [
           {
             id: 1,
             text: 'MAPPA - Level 3',
-            level: 'LOW',
-            badgeClass: 'risk-badge--low',
+            level: 'HIGH',
+            badgeClass: 'risk-badge--high',
           },
         ],
       },

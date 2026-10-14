@@ -198,13 +198,13 @@ const render = (model = {} as Partial<TestModel>) => {
 describe('Appointments', () => {
   it('should render the page', () => {
     const $ = render()
-    expect($('.govuk-grid-column-three-quarters').length).toBe(1)
-    expect($('.govuk-grid-column-one-quarter').length).toBe(1)
-    expect($('aside').length).toBe(1)
+    expect($('.govuk-grid-column-three-quarters')).toHaveLength(1)
+    expect($('.govuk-grid-column-one-quarter')).toHaveLength(1)
+    expect($('aside')).toHaveLength(1)
     expect($('[data-qa=upcomingAppointmentsSection]').find('h3').text()).toContain('Upcoming appointments')
     expect($('[data-qa=upcomingAppointmentsSection]').find('p').text()).toContain('There are no upcoming appointments.')
     expect($('[data-qa=pastAppointmentsSection]').find('h3').text()).toContain('Past appointments')
-    expect($('[data-qa=pastAppointmentsSection]').find('table.appointments tbody tr').length).toBe(1)
+    expect($('[data-qa=pastAppointmentsSection]').find('table.appointments tbody tr')).toHaveLength(1)
     expect($('[data-qa=pastAppointmentType1]').text()).toContain('Planned office visit (NS)')
     expect($('[data-qa=pastAppointmentDate1]').text()).toContain('13 August 2026')
     expect($('[data-qa=pastAppointmentTime1]').text()).toContain('12pm to 12:01pm')

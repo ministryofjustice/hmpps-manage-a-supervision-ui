@@ -364,4 +364,97 @@ describe('/middleware/getAppointment', () => {
     })
     expect(nextSpy).toHaveBeenCalled()
   })
+
+  it('should populate appointment details using the selected sentence, requirement, licence condition and NSI', async () => {
+    const overview: Overview = {
+      ...mockOverview,
+      personalDetails: {
+        ...mockOverview.personalDetails,
+        mobileNumber: '07123456789',
+      },
+    }
+
+    jest.spyOn(MasApiClient.prototype, 'getOverview').mockResolvedValue(overview)
+
+    const req = httpMocks.createRequest({
+      params: {
+        crn,
+        id: '100',
+      },
+      session: {
+        data: {
+          appointments: {
+            [crn]: {
+              '100': {
+                ...mockAppt,
+                eventId: '12345',
+                requirementId: '10',
+                licenceConditionId: '20',
+                nsiId: '30',
+              },
+            },
+          },
+          appointmentTypes: mockTypes,
+          sentences: {
+            [crn]: [
+              {
+                id: 12345,
+                mainOffence: {
+                  code: '18502',
+                  description: 'Breach of Restraining Order (Protection from Harassment Act 1997) - 00831',
+                },
+                order: {
+                  description: '12 month Community order',
+                  startDate: '2023-12-01',
+                  endDate: '2024-12-01',
+                },
+                requirements: [
+                  {
+                    id: 10,
+                    description: 'Rehabilitation Activity Requirement',
+                  },
+                ],
+                licenceConditions: [
+                  {
+                    id: 20,
+                    mainDescription: 'Not to contact the victim directly or indirectly',
+                  },
+                ],
+                nsis: [
+                  {
+                    id: 30,
+                    description: 'Accommodation support',
+                  },
+                ],
+              },
+            ],
+          },
+          providers: {
+            [username]: [],
+          },
+          teams: {
+            [username]: [],
+          },
+          staff: {
+            [username]: [],
+          },
+        },
+      },
+    })
+
+    const res = mockResponse()
+
+    await getAppointment(hmppsAuthClient)(req, res, nextSpy)
+
+    expect(res.locals.appointment.appointmentFor).toStrictEqual({
+      sentence: '12 month Community order',
+      requirement: 'Rehabilitation Activity Requirement',
+      licenceCondition: 'Not to contact the victim directly or indirectly',
+      nsi: 'Accommodation support',
+      forename: null,
+      mobileNumber: '07123456789',
+    })
+
+    expect(nextSpy).toHaveBeenCalled()
+  })
 })

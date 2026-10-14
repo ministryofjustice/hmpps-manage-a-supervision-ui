@@ -1,8 +1,8 @@
 import { HmppsAuthClient } from '../data'
 import MasApiClient from '../data/masApiClient'
 import { Route } from '../@types'
-import { PersonRiskFlags, RiskFlag, RiskScore, RoshBadgeLevel } from '../data/model/risk'
-import { setDataValue, findReplace, getStaffRisk, getProbationRisk } from '../utils'
+import { PersonRiskFlags, RiskFlag, RiskScore } from '../data/model/risk'
+import { setDataValue, findReplace, getStaffRisk, getProbationRisk, getRiskRoshScore } from '../utils'
 import { getRiskBadgeGroups, RiskBadgeData } from '../utils/personRiskFlagSorter'
 
 export const getPersonRiskFlags = (hmppsAuthClient: HmppsAuthClient): Route<Promise<void>> => {
@@ -13,9 +13,9 @@ export const getPersonRiskFlags = (hmppsAuthClient: HmppsAuthClient): Route<Prom
     if (!req.session?.data?.risks?.[crn]) {
       const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
       const masClient = new MasApiClient(token)
-      personRisks = await masClient.getPersonRiskFlags(crn)
+      personRisks = (await masClient.getPersonRiskFlags(crn)) as PersonRiskFlags
 
-      if (personRisks.riskFlags) {
+      if (personRisks?.riskFlags) {
         riskBadgeData = getRiskBadgeGroups(personRisks.riskFlags)
       }
 
@@ -59,15 +59,10 @@ export const getPersonRiskFlags = (hmppsAuthClient: HmppsAuthClient): Route<Prom
     })
 
     if (res.locals?.flags?.enableNDeliusRosh) {
-      const riskScore = personRisks.riskFlags
-        ?.filter(riskFlag => !riskFlag.removed)
-        ?.find(riskFlag => riskFlag.description.toLowerCase().includes('rosh'))
-        ?.description?.toLowerCase()
-        .replace('rosh', '')
-        .trim()
-        .toUpperCase() as RoshBadgeLevel
+      const { score, assessedOn } = getRiskRoshScore(personRisks.riskFlags)
       res.locals.rosh = {
-        level: riskScore,
+        level: score,
+        assessedOn,
       }
     }
     res.locals.personRisks = personRisks

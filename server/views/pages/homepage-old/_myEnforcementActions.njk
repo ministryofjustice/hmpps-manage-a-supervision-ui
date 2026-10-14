@@ -86,6 +86,8 @@
   <div class="govuk-!-padding-3 govuk-!-padding-top-1">
     {{ govukTable(tableData) }}
   </div>
+{% elseif disableEnforcementContacts %}
+    <p class="govuk-body govuk-!-padding-3" data-qa="enforcementFeatureDisabled">Enforcement actions are currently unavailable.</p>
 {% elseif enforcementTimeoutError %}
     <p class="govuk-body govuk-!-padding-3" data-qa="enforcementTimeoutError">Enforcement actions are currently unavailable.</p>
 {% else %}

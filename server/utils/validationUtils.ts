@@ -41,7 +41,7 @@ export const isValidDateFormat = (args: any[]): boolean => {
   return regex.test(args[0])
 }
 export const isStringNumber = (args: any[]): boolean => {
-  return !Number.isNaN(parseInt(args[0], 10))
+  return !Number.isNaN(Number.parseInt(args[0], 10))
 }
 export const isNotLaterThanToday = (args: any[]) => {
   if (!args[0]) {
@@ -176,7 +176,7 @@ export const isValidCharCount = (args: any[]) => {
     return true
   }
   const lineBreaks = value.split('\r\n').length - 1
-  const textLength = value.split('\r\n').join('').length
+  const textLength = value.replaceAll('\r\n', '').length
   return value.trim() !== '' && textLength + lineBreaks <= maxCharCount
 }
 
@@ -188,7 +188,7 @@ export const isValidMobileNumber = (input: string) => {
 export function validateWithSpec(request: Request, validationSpec: ValidationSpec, mocks: { now?: DateTime } = {}) {
   const errors: Record<string, string> = {}
   Object.entries(validationSpec).forEach(([fieldName, checks]) => {
-    const formattedFieldName = fieldName.split('][').join('-').replace('[', '').replace(']', '')
+    const formattedFieldName = fieldName.replaceAll('][', '-').replace('[', '').replace(']', '')
     if (checks.mandatoryWhenFieldSet && !request?.body?.[fieldName] && request?.body?.[checks.mandatoryWhenFieldSet]) {
       errors[fieldName] = checks.mandatoryMsg
       return

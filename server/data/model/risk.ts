@@ -153,8 +153,8 @@ export type RiskResponse = 'YES' | 'NO' | 'DK'
 export interface Risk {
   [index: string]: string
   risk: RiskResponse | null
-  current: RiskResponse | null
-  currentConcernsText: string | null
+  current?: RiskResponse | null
+  currentConcernsText?: string | null
   previous?: RiskResponse | null
   previousConcernsText?: string | null
 }
@@ -184,8 +184,12 @@ export interface RiskSummary {
   assessedOn?: string | null
 }
 
+export interface CrnToRiskWidgetMap {
+  [crn: string]: RoshRiskWidgetDto | string
+}
+
 export interface RiskInfo {
-  crnToRiskWidgetMap: { [crn: string]: RiskSummary | string }
+  crnToRiskWidgetMap: CrnToRiskWidgetMap
   risksErrors: { text: string }[]
 }
 

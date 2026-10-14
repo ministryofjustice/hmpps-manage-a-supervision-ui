@@ -3,7 +3,7 @@ import { appointmentsValidation, appointmentOutcomesValidation, AppointmentsVali
 import { getDataValue } from '../utils'
 
 export const forceValidation = (req: Request, res: Response, next: NextFunction): void => {
-  const errorKey = (key: string) => key.split('][').join('-').split('[').join('').split(']').join('')
+  const errorKey = (key: string) => key.replaceAll('][', '-').replaceAll('[', '').replaceAll(']', '')
 
   const { validation } = req.query
   const {

@@ -25,11 +25,9 @@ const homeController: Controller<typeof routes, void> = {
       const masClient = new MasApiClient(token)
 
       let enforcementActions: EnforcementContact[] = []
-      const enforcementContactResponse: EnforcementContactsResponse = await masClient.getEnforcementContacts(
-        res.locals.user.username,
-        (pageNum - 1).toString(),
-        true,
-      )
+      const enforcementContactResponse: EnforcementContactsResponse = res.locals.flags?.disableEnforcementContacts
+        ? { size: 0, page: 0, totalResults: 0, totalPages: 0, enforcementContacts: [], timeoutError: undefined }
+        : await masClient.getEnforcementContacts(res.locals.user.username, (pageNum - 1).toString(), true)
       enforcementActions = enforcementContactResponse.enforcementContacts
 
       const { upcomingAppointments } = homePage
@@ -85,11 +83,9 @@ const homeController: Controller<typeof routes, void> = {
       const pageNum: number = req.query.page ? Number.parseInt(req.query.page as string, 10) : 1
 
       let enforcementActions: EnforcementContact[] = []
-      const enforcementContactResponse: EnforcementContactsResponse = await masClient.getEnforcementContacts(
-        res.locals.user.username,
-        (pageNum - 1).toString(),
-        true,
-      )
+      const enforcementContactResponse: EnforcementContactsResponse = res.locals.flags?.disableEnforcementContacts
+        ? { size: 0, page: 0, totalResults: 0, totalPages: 0, enforcementContacts: [], timeoutError: undefined }
+        : await masClient.getEnforcementContacts(res.locals.user.username, (pageNum - 1).toString(), true)
       enforcementActions = enforcementContactResponse.enforcementContacts
       let appointmentsRequiringOutcome = outcomes
       if (res.locals.flags.enableHomePageOutcomesWithFilter) {
@@ -116,6 +112,7 @@ const homeController: Controller<typeof routes, void> = {
         enforcementTimeoutError: enforcementContactResponse.timeoutError,
         appointmentsTimeoutError,
         disableUserAppointments: res.locals.flags?.disableUserAppointments,
+        disableEnforcementContacts: res.locals.flags?.disableEnforcementContacts,
         url,
         delius_link: config.delius.link,
         oasys_link: config.oaSys.link,

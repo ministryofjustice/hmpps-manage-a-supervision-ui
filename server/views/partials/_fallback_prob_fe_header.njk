@@ -75,13 +75,16 @@
             </a>
 
             {% if environmentName === 'PRE-PRODUCTION' %}
-                  <strong class="govuk-tag {{environmentNameColour}}" data-qa="probation-common-environment-tag">
-                        PRE-PRODUCTION
-                  </strong>
+                  {{ govukTag({
+                    classes:  environmentNameColour,
+                    text: "PRE-PRODUCTION",
+                    attribute: { qa: "probation-common-environment-tag"}
+                  }) }}
             {% elif environmentName === 'DEV' or environmentName === 'local' %}
-                  <strong class="govuk-tag" data-qa="probation-common-environment-tag">
-                        DEV
-                  </strong>
+                  {{ govukTag({
+                    text: "DEV",
+                    attribute: { qa: "probation-common-environment-tag"}
+                  }) }}
             {% endif %}
 
 

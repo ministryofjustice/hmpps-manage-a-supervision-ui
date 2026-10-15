@@ -57,6 +57,10 @@ export default {
   applicationName: 'Manage people on probation',
   env: get('ENVIRONMENT', 'local', requiredInProduction) as 'local' | 'dev' | 'preprod' | 'prod',
   staticResourceCacheDuration: '1h',
+  rateLimit: {
+    windowMs: Number(get('RATE_LIMIT_WINDOW_MS', 60_000)),
+    limit: Number(get('RATE_LIMIT_MAX_REQUESTS', 1000)),
+  },
   redis: {
     enabled: get('REDIS_ENABLED', 'false', requiredInProduction) === 'true',
     host: get('REDIS_HOST', 'localhost', requiredInProduction),

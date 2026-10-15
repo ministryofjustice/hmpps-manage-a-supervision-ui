@@ -13,6 +13,7 @@ import setUpAuthentication from './middleware/setUpAuthentication'
 import setUpCsrf from './middleware/setUpCsrf'
 import setUpCurrentUser from './middleware/setUpCurrentUser'
 import setUpHealthChecks from './middleware/setUpHealthChecks'
+import setUpRateLimiter from './middleware/setUpRateLimiter'
 import setUpStaticResources from './middleware/setUpStaticResources'
 import setUpWebRequestParsing from './middleware/setupRequestParsing'
 import setUpWebSecurity from './middleware/setUpWebSecurity'
@@ -61,6 +62,7 @@ export default function createApp(services: Services): express.Application {
   })
 
   app.use(setUpHealthChecks(services.applicationInfo))
+  app.use(setUpRateLimiter())
   app.use(setUpWebSecurity())
   app.use(setUpWebSession())
   app.use(setUpWebRequestParsing())

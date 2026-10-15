@@ -86,7 +86,7 @@ export default function healthCheck(
       callback(addAppInfo(result, applicationInfo))
     })
     .catch(err => {
-      // Handle unexpected failures in the health check process
-      logger.error('Unexpected error while running health checks:', err)
+      logger.error(err, 'Unexpected error while running health checks')
+      callback(addAppInfo({ status: 'DOWN', components: {} }, applicationInfo))
     })
 }

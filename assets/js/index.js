@@ -2,6 +2,7 @@
 /* eslint-disable no-restricted-globals */
 
 import * as arnsFrontend from '@ministryofjustice/hmpps-arns-frontend-components-lib/dist/js/all'
+import * as mpopFrontend from '@ministryofjustice/hmpps-mpop-frontend-components-lib/dist/js/all'
 import { DateTime } from 'luxon'
 import './appInsights'
 import './predictors'
@@ -15,6 +16,7 @@ import './photo'
 import initGovUkBackLink from './back-link'
 
 arnsFrontend.initAll()
+mpopFrontend.initAll()
 
 const $backendSortableTable = document.querySelector('table[data-module="moj-backend-sortable-table"]')
 if ($backendSortableTable) {

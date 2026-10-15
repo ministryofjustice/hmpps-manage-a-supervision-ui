@@ -41,6 +41,7 @@ import { dateIsInPast } from '../utils'
 import { getUserOptions } from '../middleware/getUserOptions'
 import { returnOptions } from '../middleware/returnOptions'
 import { routeChangeSmsConsent } from '../middleware/routeChangeSmsConsent'
+import { setCollapsibleRiskFlags } from '../middleware/setCollapsibleRiskFlags'
 
 const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient, arnsComponents }: Services) => {
   router.all(
@@ -48,6 +49,7 @@ const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient, arnsC
     getAppointmentTypes(hmppsAuthClient),
     getPersonalDetails(hmppsAuthClient, arnsComponents),
     getAppointment(hmppsAuthClient),
+    setCollapsibleRiskFlags,
   )
   router.all(
     ['/case/:crn/arrange-appointment/:id/sentence', '/case/:crn/arrange-appointment/:id/appointments'],

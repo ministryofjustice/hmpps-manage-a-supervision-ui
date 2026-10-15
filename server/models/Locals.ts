@@ -137,6 +137,7 @@ interface Locals {
   dateOfDeath?: string
   personRiskFlags?: PersonRiskFlags
   riskBadgeData?: RiskBadgeData
+  collapsibleRiskFlags?: boolean
   risksWidget?: RoshRiskWidgetDto
   rosh?: { level?: RoshBadgeLevel | null; assessedOn?: string | null }
   tierCalculation?: TierCalculation | ErrorSummary

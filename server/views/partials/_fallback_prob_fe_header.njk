@@ -1,18 +1,5 @@
 {%- from "govuk/components/tag/macro.njk" import govukTag -%}
 
-{% set envPrefix = '' %}
-{% set ndEnvPrefix = '.' %}
-{% set oasysEnvPrefix = 'int.' %}
-{% if environmentName === 'DEV' or environmentName === 'local' %}
-      {% set envPrefix = '-dev' %}
-      {% set ndEnvPrefix = '.test.' %}
-      {% set oasysEnvPrefix = 't2.' %}
-{% elif environmentName === 'PRE-PRODUCTION' %}
-      {% set envPrefix = '-preprod' %}
-      {% set ndEnvPrefix = '.pre-prod.' %}
-      {% set oasysEnvPrefix = 'pp-int.' %}
-{% endif %}
-
 <header class="probation-common-header govuk-!-display-none-print" role="banner">
     <div class="govuk-clearfix">
         <div class="govuk-width-container probation-common-header__title">
@@ -173,7 +160,7 @@
                                         <span
                                             data-qa="probation-common-header-user-name"
                                             class="probation-common-header__menu-toggle-label"
-                                            >J. Smith</span
+                                            >{{ user.displayName | initialiseName }}</span
                                         >
                                     </span>
                                 </span>
@@ -186,7 +173,7 @@
                                 <li>
                                     <a
                                         class="probation-common-header__submenu-link"
-                                        href="https://sign-in{{ envPrefix }}.hmpps.service.justice.gov.uk/auth/account-details"
+                                        href="{{ authUrl }}/auth/account-details"
                                         >Your account</a
                                     >
                                 </li>
@@ -200,125 +187,14 @@
                             >
                                 <a
                                     class="probation-common-header__link"
-                                    href="https://sign-in{{ envPrefix }}.hmpps.service.justice.gov.uk/auth/account-details"
+                                    href="{{ authUrl }}/auth/account-details"
                                 >
                                     <span>
                                         <span class="govuk-visually-hidden"> Manage your account or sign out</span>
-                                        <span>J. Smith</span>
+                                        <span>{{ user.displayName | initialiseName }}</span>
                                     </span>
                                 </a>
                             </div>
-                        </div>
-
-                        <div class="probation-common-header__navigation__item">
-                            <button
-                                data-qa="probation-common-header__menu-toggle"
-                                class="probation-common-header__menu-toggle probation-common-header__services-menu-toggle"
-                                aria-controls="probation-common-header-services-menu"
-                                aria-expanded="false"
-                                data-text-for-show="Show services menu"
-                                data-text-for-hide="Hide services menu"
-                                type="button"
-                                hidden="hidden"
-                            >
-                                <span>
-                                    <span class="govuk-!-font-size-19 govuk-!-font-weight-bold">Menu</span>
-                                </span>
-                            </button>
-
-                            <div
-                                class="probation-common-header__icon-link-wrapper probation-common-header__services-menu-link"
-                            >
-                                <a
-                                    class="probation-common-header__link"
-                                    href="https://probation-frontend-components{{ envPrefix }}.hmpps.service.justice.gov.uk/services"
-                                >
-                                    <span>
-                                        <span class="govuk-visually-hidden"> Services</span>
-                                        <span>Menu</span>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div
-                id="probation-common-header-services-menu"
-                class="probation-common-header__pushdown-menu probation-common-header__services-menu"
-                hidden="hidden"
-            >
-                <div class="govuk-width-container">
-                    <div class="govuk-grid-row">
-                        <div class="govuk-grid-column-full">
-                            <h3 class="govuk-heading-m">Services</h3>
-                            <ul class="govuk-list">
-                                <li>
-                                    <a
-                                        href="https://approved-premises{{ envPrefix }}.hmpps.service.justice.gov.uk"
-                                        class="probation-common-header__submenu-link"
-                                        target="_self"
-                                        >Approved Premises (CAS1)</a
-                                    >
-                                </li>
-
-                                <li>
-                                    <a
-                                        href="https://manage-people-on-probation{{ envPrefix }}.hmpps.service.justice.gov.uk"
-                                        class="probation-common-header__submenu-link"
-                                        target="_self"
-                                        >Manage people on probation</a
-                                    >
-                                </li>
-
-                                <li>
-                                    <a
-                                        href="https://ndelius{{ndEnvPrefix}}probation.service.justice.gov.uk"
-                                        class="probation-common-header__submenu-link"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        >NDelius (opens in a new tab)</a
-                                    >
-                                </li>
-
-                                <li>
-                                    <a
-                                        href="https://{{oasysEnvPrefix}}oasys.service.justice.gov.uk"
-                                        class="probation-common-header__submenu-link"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        >OASys (opens in a new tab)</a
-                                    >
-                                </li>
-
-                                <li>
-                                    <a
-                                        href="https://hmpps-interventions-ui{{ envPrefix }}.apps.live-1.cloud-platform.service.justice.gov.uk"
-                                        class="probation-common-header__submenu-link"
-                                        target="_self"
-                                        >Refer and monitor an intervention</a
-                                    >
-                                </li>
-
-                                <li>
-                                    <a
-                                        href="https://transitional-accommodation{{ envPrefix }}.hmpps.service.justice.gov.uk"
-                                        class="probation-common-header__submenu-link"
-                                        target="_self"
-                                        >Transitional Accommodation (CAS3)</a
-                                    >
-                                </li>
-
-                                <li>
-                                    <a
-                                        href="https://workload-measurement{{ envPrefix }}.hmpps.service.justice.gov.uk"
-                                        class="probation-common-header__submenu-link"
-                                        target="_self"
-                                        >Workload Measurement Tool (WMT)</a
-                                    >
-                                </li>
-                            </ul>
                         </div>
                     </div>
                 </div>

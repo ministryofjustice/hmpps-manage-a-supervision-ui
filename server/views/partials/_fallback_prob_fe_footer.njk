@@ -1,10 +1,3 @@
-{% set envPrefix = '' %}
-{% if environmentName === 'DEV' or environmentName === 'local' %}
-      {% set envPrefix = '-dev' %}
-{% elif environmentName === 'PRE-PRODUCTION' %}
-      {% set envPrefix = '-preprod' %}
-{% endif %}
-
 <footer class="probation-common-footer govuk-!-display-none-print" role="contentinfo">
     <div class="govuk-width-container">
         <div class="govuk-grid-row">
@@ -14,7 +7,7 @@
 
                     <ul class="probation-common-footer__inline-list">
                         <li class="probation-common-footer__inline-list-item">
-                            <a class="probation-common-footer__link" href="https://probation-frontend-components{{ envPrefix }}.hmpps.service.justice.gov.uk/accessibility">Accessibility</a>
+                            <a class="probation-common-footer__link" href="{{ frontendComponentsUrl }}/accessibility">Accessibility</a>
                         </li>
                         <li class="probation-common-footer__inline-list-item">
                             <a class="probation-common-footer__link" href="/cookies-policy">Cookies policy</a>

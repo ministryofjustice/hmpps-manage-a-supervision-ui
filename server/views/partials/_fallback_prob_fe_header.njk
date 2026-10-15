@@ -1,3 +1,16 @@
+{% set envPrefix = '' %}
+{% set ndEnvPrefix = '.' %}
+{% set oasysEnvPrefix = 'int.' %}
+{% if environmentName === 'DEV' or environmentName === 'local' %}
+      {% set envPrefix = '-dev' %}
+      {% set ndEnvPrefix = '.test.' %}
+      {% set oasysEnvPrefix = 't2.' %}
+{% elif environmentName === 'PRE-PRODUCTION' %}
+      {% set envPrefix = '-preprod' %}
+      {% set ndEnvPrefix = '.pre-prod.' %}
+      {% set oasysEnvPrefix = 'pp-int.' %}
+{% endif %}
+
 <header class="probation-common-header govuk-!-display-none-print" role="banner">
     <div class="govuk-clearfix">
         <div class="govuk-width-container probation-common-header__title">
@@ -65,7 +78,7 @@
                   <strong class="govuk-tag {{environmentNameColour}}" data-qa="probation-common-environment-tag">
                         PRE-PRODUCTION
                   </strong>
-            {% elif environmentName === 'DEV' %}
+            {% elif environmentName === 'DEV' or environmentName === 'local' %}
                   <strong class="govuk-tag" data-qa="probation-common-environment-tag">
                         DEV
                   </strong>
@@ -106,7 +119,7 @@
                                 class="govuk-list probation-common-header__user-menu" hidden="hidden">
                                 <li>
                                     <a class="probation-common-header__submenu-link"
-                                       href="https://sign-in-dev.hmpps.service.justice.gov.uk/auth/account-details">Your
+                                       href="https://sign-in{{ envPrefix }}.hmpps.service.justice.gov.uk/auth/account-details">Your
                                         account</a>
                                 </li>
                                 <li>
@@ -116,7 +129,7 @@
 
                             <div class="probation-common-header__icon-link-wrapper probation-common-header__user-menu-link">
                                 <a class="probation-common-header__link"
-                                   href="https://sign-in-dev.hmpps.service.justice.gov.uk/auth/account-details">
+                                   href="https://sign-in{{ envPrefix }}.hmpps.service.justice.gov.uk/auth/account-details">
                   <span>
                     <span class="govuk-visually-hidden"> Manage your account or sign out</span>
                     <span>J. Smith</span>
@@ -139,7 +152,7 @@
 
                             <div class="probation-common-header__icon-link-wrapper probation-common-header__services-menu-link">
                                 <a class="probation-common-header__link"
-                                   href="https://probation-frontend-components-dev.hmpps.service.justice.gov.uk/services">
+                                   href="https://probation-frontend-components{{ envPrefix }}.hmpps.service.justice.gov.uk/services">
                     <span>
                       <span class="govuk-visually-hidden"> Services</span>
                       <span>Menu</span>
@@ -165,38 +178,38 @@
                             <ul class='govuk-list'>
 
 
-                                <li><a href='https://approved-premises-dev.hmpps.service.justice.gov.uk'
+                                <li><a href='https://approved-premises{{ envPrefix }}.hmpps.service.justice.gov.uk'
                                        class='probation-common-header__submenu-link' target="_self">Approved Premises
                                         (CAS1)</a></li>
 
 
-                                <li><a href='https://manage-people-on-probation-dev.hmpps.service.justice.gov.uk'
+                                <li><a href='https://manage-people-on-probation{{ envPrefix }}.hmpps.service.justice.gov.uk'
                                        class='probation-common-header__submenu-link' target="_self">Manage people on
                                         probation</a></li>
 
 
-                                <li><a href='https://ndelius.test.probation.service.justice.gov.uk'
+                                <li><a href='https://ndelius{{ndEnvPrefix}}probation.service.justice.gov.uk'
                                        class='probation-common-header__submenu-link' target="_blank"
                                        rel="noopener noreferrer">NDelius (opens in a new tab)</a></li>
 
 
-                                <li><a href='https://t2.oasys.service.justice.gov.uk'
+                                <li><a href='https://{{oasysEnvPrefix}}oasys.service.justice.gov.uk'
                                        class='probation-common-header__submenu-link' target="_blank"
                                        rel="noopener noreferrer">OASys (opens in a new tab)</a></li>
 
 
                                 <li>
-                                    <a href='https://hmpps-interventions-ui-dev.apps.live-1.cloud-platform.service.justice.gov.uk'
+                                    <a href='https://hmpps-interventions-ui{{ envPrefix }}.apps.live-1.cloud-platform.service.justice.gov.uk'
                                        class='probation-common-header__submenu-link' target="_self">Refer and monitor an
                                         intervention</a></li>
 
 
-                                <li><a href='https://transitional-accommodation-dev.hmpps.service.justice.gov.uk'
+                                <li><a href='https://transitional-accommodation{{ envPrefix }}.hmpps.service.justice.gov.uk'
                                        class='probation-common-header__submenu-link' target="_self">Transitional
                                         Accommodation (CAS3)</a></li>
 
 
-                                <li><a href='https://workload-measurement-dev.hmpps.service.justice.gov.uk'
+                                <li><a href='https://workload-measurement{{ envPrefix }}.hmpps.service.justice.gov.uk'
                                        class='probation-common-header__submenu-link' target="_self">Workload Measurement
                                         Tool (WMT)</a></li>
 

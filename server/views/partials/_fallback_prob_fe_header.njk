@@ -120,10 +120,18 @@
                 Probation Digital Services
             </a>
 
-            {% if environmentName === 'PRE-PRODUCTION' %} {{ govukTag({ classes: environmentNameColour, text:
-            "PRE-PRODUCTION", attributes: { "data-qa": "probation-common-environment-tag" } }) }} {% elif
-            environmentName === 'DEV' or environmentName === 'local' %} {{ govukTag({ text: "DEV", attributes: {
-            "data-qa": "probation-common-environment-tag" } }) }} {% endif %}
+            {% if environmentName === 'PRE-PRODUCTION' %}
+                  {{ govukTag({
+                        classes: environmentNameColour,
+                        text: "PRE-PRODUCTION",
+                        attributes: { "data-qa": "probation-common-environment-tag" } })
+                  }}
+            {% elif environmentName === 'DEV' or environmentName === 'local' %}
+                  {{ govukTag({
+                        text: "DEV",
+                        attributes: { "data-qa": "probation-common-environment-tag" } })
+                  }}
+            {% endif %}
         </div>
 
         <nav aria-labelledby="probation-common-navigation-heading">

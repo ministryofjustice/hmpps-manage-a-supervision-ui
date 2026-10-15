@@ -114,6 +114,8 @@ export default function nunjucksSetup(
   app.locals.applicationName = 'Manage people on probation'
   app.locals.environmentName = config.environmentName
   app.locals.environmentNameColour = config.environmentName === 'PRE-PRODUCTION' ? 'govuk-tag--green' : ''
+  app.locals.authUrl = config?.apis?.hmppsAuth?.url
+  app.locals.frontendComponentsUrl = config?.apis?.probationFrontendComponentsApi?.url
 
   if (production) {
     app.locals.version = applicationInfo.gitShortHash

@@ -27,6 +27,7 @@ import {
   getPreviousRisksToThemselves,
   getTagClass,
   setSortOrder,
+  initialiseName,
 } from '../utils'
 import { to12HourTimeWithMinutes } from '../utils/to12HourTimeWithMinutes'
 import logger from '../../logger'
@@ -52,6 +53,7 @@ export const createNunjucksTestEnv = (req?: Request, res?: AppResponse) => {
     },
   )
 
+  env.addFilter('initialiseName', initialiseName)
   env.addGlobal('addressToList', addressToList)
   env.addGlobal('deliusDeepLinkUrl', deliusDeepLinkUrl)
   env.addGlobal('activityLinkUrl', activityLinkUrl)

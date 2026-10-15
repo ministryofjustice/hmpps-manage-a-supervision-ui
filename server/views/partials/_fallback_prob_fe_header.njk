@@ -61,13 +61,15 @@
                 Probation Digital Services
             </a>
 
-
-            <strong class="govuk-tag"
-
-
-                    data-qa="probation-common-environment-tag">
-                DEV
-            </strong>
+            {% if environmentName === 'PRE-PRODUCTION' %}
+                  <strong class="govuk-tag {{environmentNameColour}}" data-qa="probation-common-environment-tag">
+                        PRE-PRODUCTION
+                  </strong>
+            {% elif environmentName === 'DEV' %}
+                  <strong class="govuk-tag" data-qa="probation-common-environment-tag">
+                        DEV
+                  </strong>
+            {% endif %}
 
 
         </div>

@@ -1,4 +1,5 @@
-export const addReplaceBackParameter = (url: string, backParam: string) => {
+export const addReplaceBackParameter = (url: unknown, backParam: string): string => {
+  if (typeof url !== 'string') return ''
   if (url.includes('back=')) {
     return url.replace(/back=[^&]*/, backParam)
   }

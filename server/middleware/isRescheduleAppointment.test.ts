@@ -24,4 +24,8 @@ describe('middleware/isRescheduleAppointment', () => {
     })
     expect(isRescheduleAppointment(req)).toEqual(true)
   })
+  it('should return false if req.query.change is not a string', () => {
+    const req = httpMocks.createRequest({ query: { change: ['/case/X756510/appointments/reschedule/1'] } })
+    expect(isRescheduleAppointment(req)).toEqual(false)
+  })
 })

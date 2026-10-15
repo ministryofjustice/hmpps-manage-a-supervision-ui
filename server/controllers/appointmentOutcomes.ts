@@ -89,7 +89,8 @@ const appointmentOutcomesController: Controller<typeof appointmentOutcomeRequest
   postAddNote: hmppsAuthClient => {
     return async function postAddNote(req, res) {
       const { crn, isValidParams, id, contactId, uuid, baseOutcomeUrl } = res.locals.appointmentOutcome
-      const { change, put } = req.query as Record<string, string>
+      const { put } = req.query as Record<string, string>
+      const change = typeof req.query.change === 'string' ? req.query.change : undefined
       const notes = req.body?.appointments?.[crn]?.[id]?.notes
       const sensitive = req.body?.appointments?.[crn]?.[id]?.sensitive
       const { data } = req.session

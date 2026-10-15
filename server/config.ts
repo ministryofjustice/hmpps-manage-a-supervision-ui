@@ -2,7 +2,9 @@ import { getPositiveIntOr } from './utils/getPositiveIntOr'
 
 const production = process.env.NODE_ENV === 'production'
 
-function get<T>(name: string, fallback: T, options = { requireInProduction: false }): T | string {
+const defaultOptions = { requireInProduction: false }
+
+function get<T>(name: string, fallback: T, options = defaultOptions): T | string {
   if (process.env[name]) {
     return process.env[name]
   }

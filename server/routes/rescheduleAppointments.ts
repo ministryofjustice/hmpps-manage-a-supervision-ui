@@ -18,7 +18,7 @@ import {
 } from '../middleware'
 import validate from '../middleware/validation'
 
-const rescheduleAppointmentRoutes = async (router: Router, { hmppsAuthClient, arnsComponents }: Services) => {
+const rescheduleAppointmentRoutes = (router: Router, { hmppsAuthClient, arnsComponents }: Services) => {
   const get = (path: string | string[], handler: Route<void>) => router.get(path, asyncMiddleware(handler))
 
   get(

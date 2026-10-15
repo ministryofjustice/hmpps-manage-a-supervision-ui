@@ -9,7 +9,7 @@ import { renderError } from '../renderError'
 import { EnforcementActionCode } from '../../properties/appointment-outcomes'
 import { AppointmentOutcomeProps } from '../../models/Locals'
 
-const ENFORCEMENT_LETTER_REQUEST_CODES: EnforcementActionCode[] = ['EA05', 'EA02', 'EA03', 'EA08', 'LCL']
+const ENFORCEMENT_LETTER_REQUEST_CODES: Set<EnforcementActionCode> = new Set(['EA05', 'EA02', 'EA03', 'EA08', 'LCL'])
 
 interface PutAppointment {
   id: string
@@ -115,6 +115,6 @@ export function getMappedEnforcementActionCodes(
   letterSentBy?: EnforcementActionCreatedBy,
 ): EnforcementActionCode[] {
   return enforcementActionCodes.map(code =>
-    letterSentBy === 'CASE_ADMIN' && ENFORCEMENT_LETTER_REQUEST_CODES.includes(code) ? 'WLS' : code,
+    letterSentBy === 'CASE_ADMIN' && ENFORCEMENT_LETTER_REQUEST_CODES.has(code) ? 'WLS' : code,
   )
 }

@@ -3,6 +3,7 @@ import { serviceCheckFactory } from '../data/healthCheck'
 import config from '../config'
 import type { AgentConfig } from '../config'
 import type { ApplicationInfo } from '../applicationInfo'
+import logger from '../../logger'
 
 const healthCheckGauge = new promClient.Gauge({
   name: 'upstream_healthcheck',
@@ -68,19 +69,24 @@ export default function healthCheck(
   callback: HealthCheckCallback,
   checks = apiChecks,
 ): void {
-  Promise.all(checks.map(fn => fn())).then(checkResults => {
-    const allOk = checkResults.every(item => item.status === 'UP') ? 'UP' : 'DOWN'
+  Promise.all(checks.map(fn => fn()))
+    .then(checkResults => {
+      const allOk = checkResults.every(item => item.status === 'UP') ? 'UP' : 'DOWN'
 
-    const result = {
-      status: allOk,
-      components: checkResults.reduce(gatherCheckInfo, {}),
-    }
+      const result = {
+        status: allOk,
+        components: checkResults.reduce((accumulator, checkResult) => gatherCheckInfo(accumulator, checkResult), {}),
+      }
 
-    checkResults.forEach(item => {
-      const val = item.status === 'UP' ? 1 : 0
-      healthCheckGauge.labels(item.name).set(val)
+      checkResults.forEach(item => {
+        const val = item.status === 'UP' ? 1 : 0
+        healthCheckGauge.labels(item.name).set(val)
+      })
+
+      callback(addAppInfo(result, applicationInfo))
     })
-
-    callback(addAppInfo(result, applicationInfo))
-  })
+    .catch(err => {
+      // Handle unexpected failures in the health check process
+      logger.error('Unexpected error while running health checks:', err)
+    })
 }

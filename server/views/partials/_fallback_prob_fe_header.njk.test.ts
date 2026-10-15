@@ -15,11 +15,11 @@ describe('partials/_fallback_prob_fe_header.njk', () => {
   })
 
   it('renders the preprod tag if pre-production environment', () => {
-    const html = render({ environmentName: 'PRE-PRODUCTION', environmentNameColour: 'govuk_tag--green' })
+    const html = render({ environmentName: 'PRE-PRODUCTION', environmentNameColour: 'govuk-tag--green' })
     const $ = cheerio.load(html)
 
-    expect($('.govuk-tag.govuk_tag--green').length).toBe(1)
-    expect($('.govuk-tag.govuk_tag--green').text().trim()).toBe('PRE-PRODUCTION')
+    expect($('.govuk-tag.govuk-tag--green').length).toBe(1)
+    expect($('.govuk-tag.govuk-tag--green').text().trim()).toBe('PRE-PRODUCTION')
   })
 
   it('no tag appears if prod environment', () => {

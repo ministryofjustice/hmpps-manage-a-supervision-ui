@@ -80,12 +80,12 @@
                   {{ govukTag({
                     classes:  environmentNameColour,
                     text: "PRE-PRODUCTION",
-                    attribute: { qa: "probation-common-environment-tag"}
+                    attributes: { "data-qa": "probation-common-environment-tag" }
                   }) }}
             {% elif environmentName === 'DEV' or environmentName === 'local' %}
                   {{ govukTag({
                     text: "DEV",
-                    attribute: { qa: "probation-common-environment-tag"}
+                    attributes: { "data-qa": "probation-common-environment-tag" }
                   }) }}
             {% endif %}
 

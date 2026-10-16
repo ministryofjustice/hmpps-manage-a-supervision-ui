@@ -4,7 +4,6 @@ import { checkPopHeader, checkRiskToStaffAlert } from './appointments/imports'
 
 context('Overview', () => {
   const stubSupervisionPackage = (enabled: boolean) => {
-    cy.task('stubFeatureFlag', {})
     if (enabled) {
       cy.task('stubSupervisionPackageFrontendContext', { crn: 'X000001' })
     }
@@ -38,7 +37,7 @@ context('Overview', () => {
     {
       title: 'Supervision package renders a blank tier with a Missing tag when the tier score is MISSING',
       setup: () => {
-        stubSupervisionPackage()
+        stubSupervisionPackage(true)
         cy.task('stubTierDetails', { crn: 'X000001', tierScore: 'MISSING', provisional: false })
       },
       url: '/case/X000001',
@@ -58,7 +57,7 @@ context('Overview', () => {
     {
       title: 'Supervision package renders the tier score with a Provisional tag when the calculation is provisional',
       setup: () => {
-        stubSupervisionPackage()
+        stubSupervisionPackage(true)
         cy.task('stubTierDetails', { crn: 'X000001', tierScore: 'B2', provisional: true })
       },
       url: '/case/X000001',

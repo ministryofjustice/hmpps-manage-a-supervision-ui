@@ -65,41 +65,49 @@ context('Upcoming appointments', () => {
         'href',
         '/case/X778160/appointments/appointment/1/manage?back=/caseload/appointments/upcoming',
       )
-    page.getTableCell(1, 5).should('contain.text', '27 August 2026').should('contain.text', '9:30am')
-    page.getTableCell(2, 5).should('contain.text', '28 August 2026').should('contain.text', '9:30am to 10:30am')
+    page.getTableCell(1, 5).should('contain.text', '27 August 2026').and('contain.text', '10:30am')
+
+    page.getTableCell(2, 5).should('contain.text', '28 August 2026').and('contain.text', '10:30am to 11:30am')
+
     cy.get('.govuk-pagination').should('exist')
+
     page
       .getPaginationItem(1)
       .find('a')
       .should('contain.text', '1')
-      .should('have.attr', 'href', 'http://localhost:3007/caseload/appointments/upcoming?page=1')
-      .should('have.attr', 'aria-current', 'page')
+      .and('have.attr', 'href', 'http://localhost:3007/caseload/appointments/upcoming?page=1')
+      .and('have.attr', 'aria-current', 'page')
+
     page
       .getPaginationItem(2)
       .find('a')
       .should('contain.text', '2')
-      .should('have.attr', 'href', 'http://localhost:3007/caseload/appointments/upcoming?page=2')
-      .should('not.have.attr', 'aria-current', 'page')
+      .and('have.attr', 'href', 'http://localhost:3007/caseload/appointments/upcoming?page=2')
+      .and('not.have.attr', 'aria-current')
+
     page
       .getPaginationItem(3)
       .find('a')
       .should('contain.text', '3')
-      .should('have.attr', 'href', 'http://localhost:3007/caseload/appointments/upcoming?page=3')
-      .should('not.have.attr', 'aria-current', 'page')
+      .and('have.attr', 'href', 'http://localhost:3007/caseload/appointments/upcoming?page=3')
+      .and('not.have.attr', 'aria-current')
+
     page
       .getPaginationItem(4)
       .find('a')
       .should('contain.text', '4')
-      .should('have.attr', 'href', 'http://localhost:3007/caseload/appointments/upcoming?page=4')
-      .should('not.have.attr', 'aria-current', 'page')
+      .and('have.attr', 'href', 'http://localhost:3007/caseload/appointments/upcoming?page=4')
+      .and('not.have.attr', 'aria-current')
 
     page.getPaginationItem(5).should('contain.text', '⋯')
+
     cy.get('.govuk-pagination__previous').should('not.exist')
+
     cy.get('.govuk-pagination__next')
       .should('exist')
       .find('a')
       .should('contain.text', 'Next')
-      .should('have.attr', 'href', 'http://localhost:3007/caseload/appointments/upcoming?page=2')
+      .and('have.attr', 'href', 'http://localhost:3007/caseload/appointments/upcoming?page=2')
   })
   it('upcoming appointments page is rendered ordered by appointment ascending', () => {
     cy.visit('/caseload/appointments/upcoming')

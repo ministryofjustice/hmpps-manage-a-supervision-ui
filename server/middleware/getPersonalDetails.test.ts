@@ -169,7 +169,6 @@ const mock = ({ crn = 'X000001', ogrs4Enabled = true } = {}): PersonalDetailsSes
     probationPractitioner,
     professionalContact: mockContacts,
     arnsUnavailable: false,
-    prisonsUnavailable: false,
   }
   if (ogrs4Enabled) {
     mockPersonalDetails.riskData = mockRiskData
@@ -340,6 +339,25 @@ describe('/middleware/getPersonalDetails', () => {
     })
   })
 
+  describe('partial session entry', () => {
+    it('requests the personal details again when the session entry for the crn has no overview', async () => {
+      const masGetPersonalDetailsSpy = jest
+        .spyOn(MasApiClient.prototype, 'getPersonalDetails')
+        .mockResolvedValueOnce(overview('X000002'))
+      req = httpMocks.createRequest({
+        params: { crn: 'X000002' },
+        // e.g. created by getNextAppointment after the personal details weren't cached because an API was unavailable
+        session: { data: { personalDetails: { X000002: { nextAppointmentResponse: {} } } } },
+      })
+      res = getRes()
+      await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
+      expect(masGetPersonalDetailsSpy).toHaveBeenCalledWith('X000002')
+      expect(res.locals.case).toEqual(overview('X000002'))
+      expect(res.locals.headerPersonName).toEqual({ forename: 'Caroline', surname: 'Wolff' })
+      expect(nextSpy).toHaveBeenCalled()
+    })
+  })
+
   describe('photo', () => {
     it('sets personPhotoSrc to the prisoner-image route when a photo exists', async () => {
       jest
@@ -348,7 +366,7 @@ describe('/middleware/getPersonalDetails', () => {
       jest.spyOn(PrisonApiClient.prototype, 'getImageData').mockResolvedValueOnce(Readable.from(['image-bytes']))
       req = getReq()
       res = getRes()
-      res.locals.flags = { enablePersonHeader: true }
+      res.locals.flags = { enablePersonHeader: true, enablePersonHeaderPhoto: true }
       await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
       expect(res.locals.personPhotoSrc).toBe('/search/prisoner-image/A1234BC')
     })
@@ -360,7 +378,7 @@ describe('/middleware/getPersonalDetails', () => {
       jest.spyOn(PrisonApiClient.prototype, 'getImageData').mockResolvedValueOnce(null)
       req = getReq()
       res = getRes()
-      res.locals.flags = { enablePersonHeader: true }
+      res.locals.flags = { enablePersonHeader: true, enablePersonHeaderPhoto: true }
       await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
       expect(res.locals.personPhotoSrc).toBeUndefined()
       expect(res.locals.prisonsUnavailable).toBe(false)
@@ -373,7 +391,7 @@ describe('/middleware/getPersonalDetails', () => {
       jest.spyOn(PrisonApiClient.prototype, 'getImageData').mockRejectedValueOnce(new Error('500'))
       req = getReq()
       res = getRes()
-      res.locals.flags = { enablePersonHeader: true }
+      res.locals.flags = { enablePersonHeader: true, enablePersonHeaderPhoto: true }
       await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
       expect(res.locals.personPhotoSrc).toBeUndefined()
       expect(res.locals.prisonsUnavailable).toBe(true)
@@ -394,12 +412,109 @@ describe('/middleware/getPersonalDetails', () => {
       expect(nextSpy).toHaveBeenCalled()
     })
 
+    it('does not request a photo, or show the photos unavailable error, when enablePersonHeaderPhoto is off', async () => {
+      const getImageDataSpy = jest.spyOn(PrisonApiClient.prototype, 'getImageData')
+      jest
+        .spyOn(MasApiClient.prototype, 'getPersonalDetails')
+        .mockResolvedValueOnce({ ...overview('X000002'), noms: 'A1234BC' })
+      req = getReq()
+      res = getRes()
+      res.locals.flags = { enablePersonHeader: true, enablePersonHeaderPhoto: false }
+      await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
+      expect(getImageDataSpy).not.toHaveBeenCalled()
+      expect(res.locals.personPhotoSrc).toBeUndefined()
+      expect(res.locals.prisonsUnavailable).toBe(false)
+      expect(nextSpy).toHaveBeenCalled()
+    })
+
+    const cachedReq = (cached: Partial<PersonalDetailsSession> = {}) =>
+      httpMocks.createRequest({
+        params: { crn: 'X000002' },
+        session: {
+          data: {
+            personalDetails: {
+              X000002: {
+                ...mock({ crn: 'X000002' }),
+                overview: { ...overview('X000002'), noms: 'A1234BC' },
+                ...cached,
+              },
+            },
+          },
+        },
+      })
+
+    it('still caches the other personal details, but not the photo, when the Prisons API fails', async () => {
+      jest
+        .spyOn(MasApiClient.prototype, 'getPersonalDetails')
+        .mockResolvedValueOnce({ ...overview('X000002'), noms: 'A1234BC' })
+      jest.spyOn(PrisonApiClient.prototype, 'getImageData').mockRejectedValueOnce(new Error('500'))
+      req = getReq()
+      res = getRes()
+      res.locals.flags = { enablePersonHeader: true, enablePersonHeaderPhoto: true }
+      await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
+      expect(req.session.data.personalDetails.X000002.overview).toEqual({ ...overview('X000002'), noms: 'A1234BC' })
+      expect('personPhotoSrc' in req.session.data.personalDetails.X000002).toBe(false)
+      expect(res.locals.prisonsUnavailable).toBe(true)
+    })
+
+    it('requests only the photo when enablePersonHeaderPhoto is turned on for a crn already in the session', async () => {
+      const masSpy = jest.spyOn(MasApiClient.prototype, 'getPersonalDetails')
+      jest.spyOn(PrisonApiClient.prototype, 'getImageData').mockResolvedValueOnce(Readable.from(['image-bytes']))
+      req = cachedReq()
+      res = getRes()
+      res.locals.flags = { enablePersonHeader: true, enablePersonHeaderPhoto: true }
+      await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
+      expect(masSpy).not.toHaveBeenCalled()
+      expect(res.locals.personPhotoSrc).toBe('/search/prisoner-image/A1234BC')
+      expect(req.session.data.personalDetails.X000002.personPhotoSrc).toBe('/search/prisoner-image/A1234BC')
+    })
+
+    it('does not look up the photo again when the session has it cached as having no image', async () => {
+      const getImageDataSpy = jest.spyOn(PrisonApiClient.prototype, 'getImageData')
+      req = cachedReq({ personPhotoSrc: null })
+      res = getRes()
+      res.locals.flags = { enablePersonHeader: true, enablePersonHeaderPhoto: true }
+      await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
+      expect(getImageDataSpy).not.toHaveBeenCalled()
+      expect(res.locals.personPhotoSrc).toBeUndefined()
+    })
+
+    it('does not look up the photo again for a crn with no image after the session is saved and reloaded', async () => {
+      const getImageDataSpy = jest.spyOn(PrisonApiClient.prototype, 'getImageData').mockResolvedValue(null)
+      jest
+        .spyOn(MasApiClient.prototype, 'getPersonalDetails')
+        .mockResolvedValueOnce({ ...overview('X000002'), noms: 'A1234BC' })
+      req = getReq()
+      res = getRes()
+      res.locals.flags = { enablePersonHeader: true, enablePersonHeaderPhoto: true }
+      await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
+
+      const savedSession = JSON.parse(JSON.stringify(req.session.data))
+      req = httpMocks.createRequest({ params: { crn: 'X000002' }, session: { data: savedSession } })
+      res = getRes()
+      res.locals.flags = { enablePersonHeader: true, enablePersonHeaderPhoto: true }
+      await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
+
+      expect(getImageDataSpy).toHaveBeenCalledTimes(1)
+      expect(savedSession.personalDetails.X000002.personPhotoSrc).toBeNull()
+      expect(res.locals.personPhotoSrc).toBeUndefined()
+    })
+
+    it('hides a photo in the session when enablePersonHeaderPhoto is turned off', async () => {
+      req = cachedReq({ personPhotoSrc: '/search/prisoner-image/A1234BC' })
+      res = getRes()
+      res.locals.flags = { enablePersonHeader: true, enablePersonHeaderPhoto: false }
+      await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
+      expect(res.locals.personPhotoSrc).toBeUndefined()
+      expect(res.locals.prisonsUnavailable).toBe(false)
+    })
+
     it('does not request a photo when there is no NOMS number', async () => {
       const getImageDataSpy = jest.spyOn(PrisonApiClient.prototype, 'getImageData')
       jest.spyOn(MasApiClient.prototype, 'getPersonalDetails').mockResolvedValueOnce(overview('X000002'))
       req = getReq()
       res = getRes()
-      res.locals.flags = { enablePersonHeader: true }
+      res.locals.flags = { enablePersonHeader: true, enablePersonHeaderPhoto: true }
       await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
       expect(getImageDataSpy).not.toHaveBeenCalled()
       expect(res.locals.personPhotoSrc).toBeUndefined()

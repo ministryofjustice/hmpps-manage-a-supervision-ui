@@ -4,7 +4,7 @@ import { checkPopHeader, checkRiskToStaffAlert } from './appointments/imports'
 
 context('Overview', () => {
   const stubSupervisionPackage = (enabled: boolean) => {
-    cy.task('stubFeatureFlag', { key: 'enableSupervisionPackage', enabled })
+    cy.task('stubFeatureFlag', {})
     if (enabled) {
       cy.task('stubSupervisionPackageFrontendContext', { crn: 'X000001' })
     }
@@ -30,16 +30,10 @@ context('Overview', () => {
     assertions: (page: OverviewPage) => void
   }> = [
     {
-      title: 'Overview page is rendered when enableSupervisionPackage is true',
+      title: 'Overview page is rendered',
       setup: () => stubSupervisionPackage(true),
       url: '/case/X000001',
       assertions: () => cy.get('.supervision-package').should('exist'),
-    },
-    {
-      title: 'Overview page is rendered when enableSupervisionPackage is false',
-      setup: () => stubSupervisionPackage(false),
-      url: '/case/X000001',
-      assertions: () => cy.get('.supervision-package').should('not.exist'),
     },
     {
       title: 'Overview page is rendered with OGRS4 risk predictor scores',

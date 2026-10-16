@@ -210,22 +210,20 @@
             }) }}
   {% endset %}
 
-  {% if flags.enableSupervisionPackage %}
-    {% set tierCalculation = tierDetails.calculation if tierDetails else null %}
-    {{ supervisionPackage({
-      tierScore: (tierCalculation.tierScore if tierCalculation.tierScore !== 'MISSING' else null) if tierCalculation else null,
-      tag: tierCalculation.tag if tierCalculation else null,
-      historyHref: tierUrlV3 + '/history',
-      arrangeAppointmentHref: '/case/' + crn + '/arrange-appointment/sentence?back=' + url,
-      updateRiskFlagHref: deliusDeepLinkUrl('RegisterSummary', crn),
-      crn: crn,
-      oasysReviewHref: oasysLink,
-      deliusBaseURL: deliusHomepageUrl(),
-      openInNewTab: true,
-      nextAppointmentHref: ('/case/' + crn + '/appointments/appointment/' + supervisionPackageDetails.nextAppointment.id + '/manage?back=' + url) if supervisionPackageDetails.nextAppointment.id else '',
-      allAppointmentsHref: '/case/' + crn + '/appointments'
-    } | merge(supervisionPackageDetails or {})) }}
-  {% endif %}
+  {% set tierCalculation = tierDetails.calculation if tierDetails else null %}
+  {{ supervisionPackage({
+    tierScore: (tierCalculation.tierScore if tierCalculation.tierScore !== 'MISSING' else null) if tierCalculation else null,
+    tag: tierCalculation.tag if tierCalculation else null,
+    historyHref: tierUrlV3 + '/history',
+    arrangeAppointmentHref: '/case/' + crn + '/arrange-appointment/sentence?back=' + url,
+    updateRiskFlagHref: deliusDeepLinkUrl('RegisterSummary', crn),
+    crn: crn,
+    oasysReviewHref: oasysLink,
+    deliusBaseURL: deliusHomepageUrl(),
+    openInNewTab: true,
+    nextAppointmentHref: ('/case/' + crn + '/appointments/appointment/' + supervisionPackageDetails.nextAppointment.id + '/manage?back=' + url) if supervisionPackageDetails.nextAppointment.id else '',
+    allAppointmentsHref: '/case/' + crn + '/appointments'
+  } | merge(supervisionPackageDetails or {})) }}
 
   {{ appSummaryCard({
       titleText: 'Appointments',

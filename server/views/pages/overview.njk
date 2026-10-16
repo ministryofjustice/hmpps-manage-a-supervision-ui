@@ -211,10 +211,7 @@
   {% endset %}
 
   {% if flags.enableSupervisionPackage %}
-    {% set tierCalculation = tierDetails.calculation if tierDetails else null %}
     {{ supervisionPackage({
-      tierScore: (tierCalculation.tierScore if tierCalculation.tierScore !== 'MISSING' else null) if tierCalculation else null,
-      tag: tierCalculation.tag if tierCalculation else null,
       historyHref: tierUrlV3 + '/history',
       arrangeAppointmentHref: '/case/' + crn + '/arrange-appointment/sentence?back=' + url,
       updateRiskFlagHref: deliusDeepLinkUrl('RegisterSummary', crn),
@@ -224,7 +221,7 @@
       openInNewTab: true,
       nextAppointmentHref: ('/case/' + crn + '/appointments/appointment/' + supervisionPackageDetails.nextAppointment.id + '/manage?back=' + url) if supervisionPackageDetails.nextAppointment.id else '',
       allAppointmentsHref: '/case/' + crn + '/appointments'
-    } | merge(supervisionPackageDetails or {})) }}
+    } | merge(supervisionPackageDetails or {}) | merge(tierDetails.calculation or {})) }}
   {% endif %}
 
   {{ appSummaryCard({
@@ -661,7 +658,7 @@
                   <input type="hidden" id="name" name="name" value="{{ overview.personalDetails.name.surname }}, {{ overview.personalDetails.name.forename }}">
                   <input type="hidden" id="dob" name="dob" value="{{ headerDob | dateWithYear }}">
                   <input type="hidden" id="age" name="age" value="{{ headerDob | yearsSince }}">
-                  <input type="hidden" id="tier" name="age" value="{{ tierCalculation.tierScore }}">
+                  <input type="hidden" id="tier" name="age" value="{{ tierDetails.calculation.tierScore }}">
                   <input type="hidden" id="numberOfAdditionalSentences" name="numberOfSentences" value="{{ numberOfSentences - 1 }}">
 
                   <script nonce="{{ cspNonce }}">

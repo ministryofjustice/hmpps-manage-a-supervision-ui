@@ -42,6 +42,42 @@ context('Overview', () => {
       assertions: () => cy.get('.supervision-package').should('not.exist'),
     },
     {
+      title: 'Supervision package renders a blank tier with a Missing tag when the tier score is MISSING',
+      setup: () => {
+        stubSupervisionPackage(true)
+        cy.task('stubTierDetails', { crn: 'X000001', tierScore: 'MISSING', provisional: false })
+      },
+      url: '/case/X000001',
+      assertions: () => {
+        cy.get('.supervision-package .app-tier-header h4')
+          .should('have.attr', 'aria-label', 'Tier Missing')
+          .find('span[aria-hidden="true"]')
+          .invoke('text')
+          .then(text => expect(text.trim()).to.eq('Tier'))
+        cy.get('.supervision-package .app-tier-header').should('not.contain.text', 'MISSING')
+        cy.get('.supervision-package__tier-tag')
+          .should('have.length', 1)
+          .and('contain.text', 'Missing')
+          .and('have.class', 'govuk-tag--red')
+      },
+    },
+    {
+      title: 'Supervision package renders the tier score with a Provisional tag when the calculation is provisional',
+      setup: () => {
+        stubSupervisionPackage(true)
+        cy.task('stubTierDetails', { crn: 'X000001', tierScore: 'B2', provisional: true })
+      },
+      url: '/case/X000001',
+      assertions: () => {
+        cy.get('.supervision-package .app-tier-header h4').should('have.attr', 'aria-label', 'Tier B2 Provisional')
+        cy.get('.supervision-package .app-tier-header').should('contain.text', 'Tier B2')
+        cy.get('.supervision-package__tier-tag')
+          .should('have.length', 1)
+          .and('contain.text', 'Provisional')
+          .and('have.class', 'govuk-tag--orange')
+      },
+    },
+    {
       title: 'Overview page is rendered with OGRS4 risk predictor scores',
       setup: () => cy.task('stubPredictorScoresOGRS4'),
       url: '/case/X000001',

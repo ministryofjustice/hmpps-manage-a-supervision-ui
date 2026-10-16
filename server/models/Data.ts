@@ -27,7 +27,6 @@ export interface PersonalDetailsSession {
   professionalContact?: ProfessionalContact | null
   personPhotoSrc?: string
   arnsUnavailable?: boolean
-  prisonsUnavailable?: boolean
   tierDetails?: LatestTierResponse
   supervisionPackageResponse?: SupervisionPackageResponse
   nextAppointmentResponse?: NextAppointmentResponse

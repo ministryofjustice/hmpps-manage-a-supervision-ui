@@ -54,19 +54,22 @@ export const getPersonalDetails = (
         professionalContact,
         personPhotoSrc,
         arnsUnavailable,
-        prisonsUnavailable,
       } = req.session.data.personalDetails[crn])
     }
 
-    if (refreshCache || !req?.session?.data?.personalDetails?.[crn]) {
+    // Other middleware (e.g. getNextAppointment) can create a partial session entry for the crn, and the
+    // personal details aren't cached when ARNS is unavailable, so only treat it as cached with an overview
+    const isCached = Boolean(req?.session?.data?.personalDetails?.[crn]?.overview)
+
+    if (refreshCache || !isCached) {
       token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
       masClient = new MasApiClient(token)
     }
-    if (refreshCache && req?.session?.data?.personalDetails?.[crn]) {
+    if (refreshCache && isCached) {
       overview = await masClient.getPersonalDetails(crn)
       req.session.data.personalDetails[crn].overview = overview
       getDataFromCache()
-    } else if (!req?.session?.data?.personalDetails?.[crn]) {
+    } else if (!isCached) {
       const { username } = res.locals.user
       const arnsClient = new ArnsApiClient(token)
       const tierClient = new TierApiClient(token)
@@ -108,14 +111,6 @@ export const getPersonalDetails = (
           riskData = null as unknown as RiskData
         }
       }
-      if (res.locals.flags?.enablePersonHeader && overview.noms) {
-        const photoData = await new PrisonApiClient(token).getImageData(overview.noms).catch((): null => {
-          prisonsUnavailable = true
-          return null
-        })
-        personPhotoSrc = photoData ? `/search/prisoner-image/${encodeURIComponent(overview.noms)}` : undefined
-      }
-
       const popInUsersCaseload = userCaseload?.caseload?.[0]?.crn === crn
       sentencePlan = { showLink: false, showText: false, lastUpdatedDate: '' }
       if (res.locals?.user?.roles?.includes('SENTENCE_PLAN')) {
@@ -140,7 +135,7 @@ export const getPersonalDetails = (
 
       req.session.data = req?.session?.data ?? {}
 
-      if (!arnsUnavailable && !prisonsUnavailable) {
+      if (!arnsUnavailable) {
         req.session.data.personalDetails = {
           ...(req.session.data.personalDetails ?? {}),
           [crn]: {
@@ -151,15 +146,33 @@ export const getPersonalDetails = (
             riskData,
             probationPractitioner,
             professionalContact,
-            personPhotoSrc,
             arnsUnavailable,
-            prisonsUnavailable,
           },
         }
       }
     } else {
       getDataFromCache()
     }
+
+    const photoEnabled = res.locals.flags?.enablePersonHeader && res.locals.flags?.enablePersonHeaderPhoto
+    const cachedDetails = req.session?.data?.personalDetails?.[crn]
+    if (photoEnabled && overview?.noms && !(cachedDetails && 'personPhotoSrc' in cachedDetails)) {
+      token ??= await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
+      const photoData = await new PrisonApiClient(token).getImageData(overview.noms).catch((): null => {
+        prisonsUnavailable = true
+        return null
+      })
+      personPhotoSrc = photoData ? `/search/prisoner-image/${encodeURIComponent(overview.noms)}` : undefined
+
+      if (cachedDetails?.overview && !prisonsUnavailable) {
+        cachedDetails.personPhotoSrc = personPhotoSrc
+      }
+    }
+    if (!photoEnabled) {
+      personPhotoSrc = undefined
+      prisonsUnavailable = false
+    }
+
     res.locals.sentencePlan = sentencePlan
     res.locals.case = overview
     res.locals.tierCalculation = tierCalculation

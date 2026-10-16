@@ -473,12 +473,13 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
       }
       const linkedContactId = getDataValue<string>(req.session.data, ['temp', crn, 'linkedContactId']) || null
       if (change && !linkedContactId) {
-        return res.redirect(change)
+        return res.redirect(safeRedirect(change))
       }
       const path = linkedContactId
         ? `/case/${crn}/appointments/appointment/${linkedContactId}/outcome/check-your-answers`
         : `/case/${crn}/arrange-appointment/${id}/check-your-answers`
-      return res.redirect(path)
+      return res.redirect(safeRedirect(path))
+
     }
   },
   getTextMessageConfirmation: _hmppsAuthClient => {
@@ -594,7 +595,7 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
         const dateFromCya = getDataValue(data, ['appointments', crn, id, 'temp', 'dateFromCya'])
         const startTime = getDataValue(data, ['appointments', crn, id, 'temp', 'startTimeFromCya'])
         const endTime = getDataValue(data, ['appointments', crn, id, 'temp', 'endTimeFromCya'])
-        ;({ isInPast } = dateIsInPast(dateFromCya, startTime))
+          ; ({ isInPast } = dateIsInPast(dateFromCya, startTime))
         setDataValue(data, ['appointments', crn, id, 'start'], startTime)
         setDataValue(data, ['appointments', crn, id, 'end'], endTime)
         setDataValue(data, ['appointments', crn, id, 'date'], dateFromCya)
@@ -755,7 +756,7 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
       const { date, start } = appointment
       let isInPast = null
       if (date) {
-        ;({ isInPast } = dateIsInPast(date, start))
+        ; ({ isInPast } = dateIsInPast(date, start))
       }
       return res.render(`pages/arrange-appointment/arrange-another-appointment`, {
         url,

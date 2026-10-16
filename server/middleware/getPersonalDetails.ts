@@ -33,7 +33,7 @@ export const getPersonalDetails = (
     let riskData: RiskData
     let probationPractitioner: ProbationPractitioner
     let professionalContact: ProfessionalContact | null
-    let personPhotoSrc: string | undefined
+    let personPhotoSrc: string | null | undefined
     let arnsUnavailable = false
     let prisonsUnavailable = false
     let token: string
@@ -156,13 +156,13 @@ export const getPersonalDetails = (
 
     const photoEnabled = res.locals.flags?.enablePersonHeader && res.locals.flags?.enablePersonHeaderPhoto
     const cachedDetails = req.session?.data?.personalDetails?.[crn]
-    if (photoEnabled && overview?.noms && !(cachedDetails && 'personPhotoSrc' in cachedDetails)) {
+    if (photoEnabled && overview?.noms && cachedDetails?.personPhotoSrc === undefined) {
       token ??= await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
       const photoData = await new PrisonApiClient(token).getImageData(overview.noms).catch((): null => {
         prisonsUnavailable = true
         return null
       })
-      personPhotoSrc = photoData ? `/search/prisoner-image/${encodeURIComponent(overview.noms)}` : undefined
+      personPhotoSrc = photoData ? `/search/prisoner-image/${encodeURIComponent(overview.noms)}` : null
 
       if (cachedDetails?.overview && !prisonsUnavailable) {
         cachedDetails.personPhotoSrc = personPhotoSrc
@@ -181,7 +181,7 @@ export const getPersonalDetails = (
     res.locals.riskData = riskData
     res.locals.probationPractitioner = probationPractitioner
     res.locals.managedBy = getManagedByDetails(crn, professionalContact)
-    res.locals.personPhotoSrc = personPhotoSrc
+    res.locals.personPhotoSrc = personPhotoSrc ?? undefined
     res.locals.arnsUnavailable = arnsUnavailable
     res.locals.prisonsUnavailable = prisonsUnavailable
     res.locals.headerPersonName = { forename: overview.name.forename, surname: overview.name.surname }

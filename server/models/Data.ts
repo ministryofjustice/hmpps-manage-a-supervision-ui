@@ -25,7 +25,7 @@ export interface PersonalDetailsSession {
   predictors?: RiskScoresDto[] | ErrorSummary
   probationPractitioner?: ProbationPractitioner
   professionalContact?: ProfessionalContact | null
-  personPhotoSrc?: string
+  personPhotoSrc?: string | null
   arnsUnavailable?: boolean
   tierDetails?: LatestTierResponse
   supervisionPackageResponse?: SupervisionPackageResponse

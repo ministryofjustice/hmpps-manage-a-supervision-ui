@@ -57,6 +57,10 @@ export default {
   applicationName: 'Manage people on probation',
   env: get('ENVIRONMENT', 'local', requiredInProduction) as 'local' | 'dev' | 'preprod' | 'prod',
   staticResourceCacheDuration: '1h',
+  // Number of proxy hops in front of the app (ingress). Keep this a count, not `true`:
+  // Express then uses the client address appended by the ingress rather than a
+  // client-supplied X-Forwarded-For value, which matters for rate limiting.
+  trustProxyHops: Number(get('TRUST_PROXY_HOPS', 1)),
   rateLimit: {
     windowMs: Number(get('RATE_LIMIT_WINDOW_MS', 60_000)),
     limit: Number(get('RATE_LIMIT_MAX_REQUESTS', 1000)),

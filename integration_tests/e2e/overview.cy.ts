@@ -148,12 +148,163 @@ context('Overview', () => {
           .should('contain.text', 'Location Monitoring View GPS location monitoring data')
       },
     },
+    {
+      title: 'Overview page is rendered when enableNewOverview is true',
+      setup: () => cy.task('stubFeatureFlag', { key: 'enableNewOverview', enabled: true }),
+      url: '/case/X000001',
+      assertions: page => {
+        page.headerCrn().should('contain.text', 'X000001')
+        page.headerName().should('contain.text', 'Caroline Wolff')
+        page.pageHeading().should('contain.text', 'Overview')
+        page.headerTier().should('contain.text', 'Tier: B2').and('have.attr', 'href')
+        page.getTab('overview').should('contain.text', 'Overview')
+        page.getTab('personalDetails').should('contain.text', 'Personal details')
+        page.getTab('risk').should('contain.text', 'Risk')
+        page.getTab('sentence').should('contain.text', 'Sentence')
+        page.getTab('activityLog').should('contain.text', 'Contacts')
+        page.getTab('compliance').should('contain.text', 'Compliance')
+        page.getCardHeader('schedule').should('contain.text', 'Appointments')
+        checkPopHeader()
+        page
+          .getAppointmentsLink('X000001')
+          .should('exist')
+          .invoke('text')
+          .then(text => {
+            const normalized = text.replace(/\s+/g, ' ').trim()
+            expect(normalized).to.include('You need to record an outcome for 2 appointments')
+          })
+
+        page
+          .getRowData('schedule', 'nextAppointment', 'Value')
+          .should('contain.text', 'Saturday 9 March at 2:59pm (Initial appointment - in office (NS))')
+        page.getRowData('personalDetails', 'name', 'Value').should('contain.text', 'Caroline Wolff')
+        page.getRowData('personalDetails', 'preferredName', 'Value').should('contain.text', 'Caz')
+        page.getRowData('personalDetails', 'preferredGender', 'Value').should('contain.text', 'Female')
+        page.getRowData('personalDetails', 'dateOfBirthAndAge', 'Value').should('contain.text', '9 January 2002')
+        cy.get('[data-qa="dateOfDeathAndAgeLabel"]').should('not.exist')
+        cy.get('[data-qa="dateOfDeathAndAgeValue"]').should('not.exist')
+        page.getRowData('personalDetails', 'contactNumber', 'Value').should('contain.text', '07989654824')
+        page
+          .getRowData('personalDetails', 'currentCircumstances', 'Value')
+          .should('contain.text', 'Committed/ Transferred to Crown: Life imprisonment (Adult)')
+        page.getRowData('personalDetails', 'disabilities', 'Value').should('contain.text', 'Dyslexia')
+        page.getRowData('personalDetails', 'adjustments', 'Value').should('contain.text', 'Special Furniture')
+        page.getCardHeader('sentence2').should('contain.text', 'ORA Community Order')
+        page
+          .getRowData('sentence2', 'mainOffence', 'Value')
+          .should(
+            'contain.text',
+            '(Having possession a picklock or other implement with intent to break into any premises - 18502)',
+          )
+        page.getRowData('sentence2', 'order', 'Value').should('contain.text', 'ORA Community Order')
+        page.getRowData('sentence2', 'requirements', 'Value').should('contain.text', '10 of 10 RAR days completed')
+        page.getCardHeader('sentence3').should('contain.text', '12 month Community order')
+        page
+          .getRowData('sentence3', 'mainOffence', 'Value')
+          .should('contain.text', 'Breach of Restraining Order (Protection from Harassment Act 1997) - 00831')
+        page.getRowData('sentence3', 'order', 'Value').should('contain.text', '12 month Community order')
+        page.getRowData('sentence3', 'requirements', 'Value').should('contain.text', '16 of 20 RAR days completed')
+        page
+          .getRowData('activityAndCompliance', 'previousOrders', 'Value')
+          .should('contain.text', '1 previous orders (No breaches on previous orders)')
+        page
+          .getRowData('activityAndCompliance', 'compliance', 'Value')
+          .should('contain.text', '2 without a recorded outcome')
+        page
+          .getRowData('activityAndCompliance', 'activityLog', 'Value')
+          .should('contain.text', '2 national standard appointments')
+
+        page.getCardHeader('risk').should('contain.text', 'Risk')
+        page
+          .getCardHeader('risk')
+          .find('a')
+          .should('contain.text', 'View all risk details')
+          .should('have.attr', 'href', 'X000001/risk')
+        page
+          .getRowData('risk', 'rosh', 'Label')
+          .should('contain.text', 'Risk of serious harm (ROSH) in the community')
+          .should('contain.text', 'Last updated 24 January 2024')
+        page
+          .getRowData('risk', 'rosh', 'Value')
+          .find('.govuk-tag--red')
+          .should('contain.text', 'HIGH RISK OF SERIOUS HARM')
+        page
+          .getRowData('risk', 'mappa', 'Label')
+          .should('contain.text', 'MAPPA')
+          .should('contain.text', 'Last updated (NDelius): 8 October 2024')
+        page.getRowData('risk', 'mappa', 'Value').should('contain.text', 'Cat 2/Level 3')
+        page.getRowData('risk', 'criminogenicNeeds', 'Label').should('contain.text', 'Criminogenic needs')
+        cy.get('[data-qa="criminogenicNeedsValue"] dt').eq(0).should('contain.text', 'Need identified')
+        cy.get('[data-qa="criminogenicNeedsValue"]')
+          .find('ul')
+          .eq(0)
+          .should('contain.text', 'Relationships')
+          .should('contain.text', 'Lifestyle and Associates')
+          .should('contain.text', 'Accommodation')
+          .should('contain.text', 'Education, Training and Employability')
+          .should('contain.text', 'Drug Misuse')
+          .should('contain.text', 'Alcohol Misuse')
+        cy.get('[data-qa="criminogenicNeedsValue"] dt').eq(1).should('contain.text', 'No need identified')
+        cy.get('[data-qa="criminogenicNeedsValue"]').find('ul').eq(1).should('contain.text', 'Emotional wellbeing')
+
+        cy.get('[data-qa="criminogenicNeedsValue"] dt').eq(2).should('contain.text', 'Not enough information provided')
+        cy.get('[data-qa="criminogenicNeedsValue"]')
+          .find('ul')
+          .eq(2)
+          .should('contain.text', 'Thinking and Behaviour')
+          .should('contain.text', 'Attitudes')
+        page.getRowData('risk', 'riskFlags', 'Label').should('contain.text', 'NDelius risk flags')
+
+        cy.get('[data-qa="riskFlagsValue"] dt')
+          .eq(0)
+          .should('contain.text', 'High')
+          .should('have.attr', 'class', 'govuk-!-font-weight-bold rosh--high')
+
+        cy.get('[data-qa="riskFlagsValue"] ul').eq(0).should('contain.text', 'Risk to public')
+
+        cy.get('[data-qa="riskFlagsValue"] dt')
+          .eq(1)
+          .should('contain.text', 'Medium')
+          .should('have.attr', 'class', 'govuk-!-font-weight-bold rosh--medium')
+
+        cy.get('[data-qa="riskFlagsValue"] ul').eq(1).should('contain.text', 'Domestic Abuse Perpetrator')
+
+        cy.get('[data-qa="riskFlagsValue"] dt')
+          .eq(2)
+          .should('contain.text', 'Low')
+          .should('have.attr', 'class', 'govuk-!-font-weight-bold rosh--low')
+
+        cy.get('[data-qa="riskFlagsValue"] ul').eq(2).should('contain.text', 'Risk to Known Adult')
+
+        cy.get('[data-qa="riskFlagsValue"] dt')
+          .eq(3)
+          .should('contain.text', 'Information only')
+          .should('have.attr', 'class', 'govuk-!-font-weight-bold')
+
+        cy.get('[data-qa="riskFlagsValue"] ul').eq(3).should('contain.text', 'Domestic Abuse Perpetrator')
+        page.getElementData('overallRiskValue').should('contain.text', 'VERY HIGH RISK OF SERIOUS HARM')
+
+        page.getAlert().should('contain.text', 'medium')
+
+        const expected =
+          '{"name":"Wolff,Caroline","crn":"X000001","dob":"9 January 2002","age":"22","tierScore":"B2","sentence":"12 month Community order"}'
+
+        cy.window()
+          .its('localStorage')
+          .invoke('getItem', 'recentCases')
+          .then(result => {
+            const recentCase = JSON.parse(JSON.stringify(result))
+            expect(expected, recentCase)
+          })
+      },
+    },
   ]
 
   beforeEach(() => {
     cy.task('resetMocks')
   })
-  it('Overview page is rendered', () => {
+
+  it('Overview page is rendered when enableNewOverview is false', () => {
     cy.visit('/case/X000001')
     const page = Page.verifyOnPage(OverviewPage)
     page.headerCrn().should('contain.text', 'X000001')

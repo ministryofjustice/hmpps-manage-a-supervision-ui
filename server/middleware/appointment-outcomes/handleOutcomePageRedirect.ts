@@ -7,7 +7,6 @@ import {
   OtherEnforcementActionsLetterType,
 } from '../../models/Appointments'
 import { findUncompleted } from '../findUncompleted'
-import { safeRedirect } from '../../utils/safeRedirect'
 
 type EnforcementRedirectMap = {
   [K in AppointmentEnforcementAction]?: string
@@ -41,6 +40,6 @@ export const handleOutcomePageRedirect = (pageKey: EnforcementActionPage | Outco
     } else {
       redirect = `${baseOutcomeUrl}/add-note`
     }
-    return res.redirect(safeRedirect(redirect))
+    return res.redirect(redirect)
   }
 }

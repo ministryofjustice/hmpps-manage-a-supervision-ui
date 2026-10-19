@@ -4,7 +4,7 @@ import controllers from '.'
 import HmppsAuthClient from '../data/hmppsAuthClient'
 import MasApiClient from '../data/masApiClient'
 import { isValidCrn, isNumericString, setDataValue, canRescheduleAppointment } from '../utils'
-import { mockAppResponse, mockPersonSchedule, mockPersonAppointment } from './mocks'
+import { mockAppResponse, mockPersonSchedule, mockPersonAppointment, mockTierCalculation } from './mocks'
 import { checkAuditMessage, checkSendAuditMessage } from './testutils'
 import { cloneAppointmentAndRedirect, renderError, overrideDeliusManagedFlag } from '../middleware'
 import { AppointmentSession, NextAppointmentResponse, AttendedCompliedAppointment } from '../models/Appointments'
@@ -232,6 +232,7 @@ describe('controllers/appointments', () => {
   describe('get appointments', () => {
     it('should request previous and upcoming appointments from the api', async () => {
       const mockRes = mockAppResponse({
+        tierCalculation: mockTierCalculation,
         flags: { enablePreSentence: true, enableSupervisionPackageAppointments: true },
         supervisionPackageDetails: { context: { sentences: [] } },
       })
@@ -242,6 +243,7 @@ describe('controllers/appointments', () => {
 
     it('should render the appointments page', async () => {
       const mockRes = mockAppResponse({
+        tierCalculation: mockTierCalculation,
         flags: { enablePreSentence: true, enableSupervisionPackageAppointments: true },
         supervisionPackageDetails: { context: { sentences: [] } },
       })
@@ -262,6 +264,7 @@ describe('controllers/appointments', () => {
 
     it('should override deliusManaged flag when enablePreSentence flag is false', async () => {
       const mockRes = mockAppResponse({
+        tierCalculation: mockTierCalculation,
         flags: { enablePreSentence: false, enableSupervisionPackageAppointments: true },
         supervisionPackageDetails: { context: { sentences: [] } },
       })
@@ -285,6 +288,7 @@ describe('controllers/appointments', () => {
   describe('get appointments - no practitioner', () => {
     it('should render the appointments page', async () => {
       const mockRes = mockAppResponse({
+        tierCalculation: mockTierCalculation,
         flags: { enablePreSentence: true, enableSupervisionPackageAppointments: true },
         supervisionPackageDetails: { context: { sentences: [] } },
       })
@@ -307,6 +311,7 @@ describe('controllers/appointments', () => {
   describe('get appointments - checkins flag enabled and practitioner allocated', () => {
     it('should render the appointments page with canAccessCheckins true', async () => {
       const mockRes = mockAppResponse({
+        tierCalculation: mockTierCalculation,
         flags: { enableESupervisionCheckins: true, enableSupervisionPackageAppointments: true },
         supervisionPackageDetails: { context: { sentences: [] } },
       })
@@ -325,6 +330,7 @@ describe('controllers/appointments', () => {
   describe('get appointments - checkins eligibility', () => {
     it('should render the appointments page with checkinEligibility details', async () => {
       const mockRes = mockAppResponse({
+        tierCalculation: mockTierCalculation,
         flags: {
           enableESupervisionCheckins: true,
           enableSupervisionPackageAppointments: true,
@@ -338,6 +344,25 @@ describe('controllers/appointments', () => {
         'pages/appointments',
         expect.objectContaining({
           checkinEligibility: { message: 'This person is eligible for online check ins', outcome: 'ELIGIBLE' },
+        }),
+      )
+    })
+
+    it('should mark the person as ineligible for check ins when no tier has been assigned', async () => {
+      const mockRes = mockAppResponse({
+        flags: { enableESupervisionCheckins: true },
+        tierCalculation: null,
+        headerPersonName: { forename: 'Alton', surname: 'Berge' },
+      })
+      const spy = jest.spyOn(mockRes, 'render')
+      await controllers.appointments.getAppointments(hmppsAuthClient)(req, mockRes)
+      expect(spy).toHaveBeenCalledWith(
+        'pages/appointments',
+        expect.objectContaining({
+          checkinEligibility: {
+            outcome: 'INELIGIBLE',
+            message: 'Alton Berge is not eligible for online check ins because they have not been assigned a tier yet.',
+          },
         }),
       )
     })

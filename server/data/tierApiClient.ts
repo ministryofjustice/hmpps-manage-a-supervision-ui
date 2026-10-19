@@ -73,6 +73,8 @@ export interface TierCalculation {
   calculationId: string
   calculationDate: string
   data: {
+    /** 'MISSING' when the Tier service has not been able to assign a tier */
+    tier?: string
     protect: TierLevel
     change: TierLevel
     calculationVersion: string

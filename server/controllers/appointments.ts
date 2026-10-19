@@ -13,6 +13,8 @@ import {
   getDataValue,
   canRescheduleAppointment,
   addressToList,
+  resolveCheckinEligibility,
+  fullName,
 } from '../utils'
 import {
   renderError,
@@ -59,7 +61,11 @@ const appointmentsController: Controller<typeof routes, void> = {
         masClient.getProbationPractitioner(crn),
       ])
 
-      const checkinEligibility = await esupClient.getOffenderEligibility(crn)
+      const checkinEligibility = resolveCheckinEligibility(
+        await esupClient.getOffenderEligibility(crn),
+        res.locals.tierCalculation,
+        fullName(res.locals.headerPersonName),
+      )
 
       let pastAppointments = pastAppointmentsResponse
       let upcomingAppointments = upcomingAppointmentsResponse

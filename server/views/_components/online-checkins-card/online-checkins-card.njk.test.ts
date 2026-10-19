@@ -33,15 +33,21 @@ describe('appOnlineCheckinsCard', () => {
   describe('when check ins are verified', () => {
     it('shows the upcoming check in date and the manage link', () => {
       const $ = render({ checkin: verifiedCheckin, upcomingCheckinDate: '2025-11-10' })
-      expect($('[data-qa="nextCheckinDueLabel"]').text()).toBe('Next online check in')
-      expect($('[data-qa="nextCheckInValue"]').text()).toBe('10 November 2025')
+      expect($('[data-qa="checkinLabel"]').text()).toBe('Next online check in')
+      expect($('[data-qa="checkinValue"]').text()).toBe('10 November 2025')
       expect(visibleLinkText($)).toBe('Manage online check ins')
       expect($('[data-qa="checkinCard"] a').attr('href')).toBe(manageHref)
     })
 
     it('falls back to the first check in date when there is no upcoming check in', () => {
       const $ = render({ checkin: verifiedCheckin })
-      expect($('[data-qa="nextCheckInValue"]').text()).toBe('3 November 2025')
+      expect($('[data-qa="checkinValue"]').text()).toBe('3 November 2025')
+    })
+
+    it('shows a message when there is no scheduled check in', () => {
+      const $ = render({ checkin: { status: 'VERIFIED' } })
+      expect($('[data-qa="checkinValue"]').text()).toBe('No online check in scheduled')
+      expect(visibleLinkText($)).toBe('Manage online check ins')
     })
   })
 
@@ -51,27 +57,27 @@ describe('appOnlineCheckinsCard', () => {
       ['the check in status is INITIAL', { status: 'INITIAL' }],
     ])('shows the eligibility message and the set up link when %s', (_, checkin) => {
       const $ = render({ checkin })
-      expect($('[data-qa="checkinDueValue"]').text()).toBe(eligible.message)
+      expect($('[data-qa="checkinValue"]').text()).toBe(eligible.message)
       expect(visibleLinkText($)).toBe('Set up online check ins')
       expect($('[data-qa="checkinCard"] a').attr('href')).toBe(setupHref)
     })
 
     it('shows a default status and the set up link when eligible with no message', () => {
       const $ = render({ eligibility: { outcome: 'ELIGIBLE', message: null } })
-      expect($('[data-qa="checkinDueValue"]').text()).toBe('Online check ins not set up')
+      expect($('[data-qa="checkinValue"]').text()).toBe('Online check ins not set up')
       expect($('[data-qa="checkinCard"] a').attr('href')).toBe(setupHref)
     })
 
     it('escapes the eligibility message', () => {
       const $ = render({ eligibility: { outcome: 'ELIGIBLE', message: 'Eligible <b>now</b>' } })
-      expect($('[data-qa="checkinDueValue"]').text()).toBe('Eligible <b>now</b>')
-      expect($('[data-qa="checkinDueValue"] b').length).toBe(0)
+      expect($('[data-qa="checkinValue"]').text()).toBe('Eligible <b>now</b>')
+      expect($('[data-qa="checkinValue"] b').length).toBe(0)
     })
   })
 
   it('shows check ins stopped and the view details link when check ins are inactive', () => {
     const $ = render({ checkin: { status: 'INACTIVE' } })
-    expect($('[data-qa="checkinDueValue"]').text()).toBe('Check ins stopped')
+    expect($('[data-qa="checkinValue"]').text()).toBe('Check ins stopped')
     expect(visibleLinkText($)).toBe('View all online check in details')
     expect($('[data-qa="checkinCard"] a').attr('href')).toBe(manageHref)
   })
@@ -84,13 +90,13 @@ describe('appOnlineCheckinsCard', () => {
 
     it('hides the link when the person is ineligible', () => {
       const $ = render({ eligibility: ineligible })
-      expect($('[data-qa="checkinDueValue"]').text()).toBe('Not eligible')
+      expect($('[data-qa="checkinValue"]').text()).toBe('Not eligible')
       expect($('[data-qa="checkinCard"] a').length).toBe(0)
     })
 
     it('hides the link and shows a default status when there is no eligibility result', () => {
       const $ = render({ eligibility: null })
-      expect($('[data-qa="checkinDueValue"]').text()).toBe('Online check ins not set up')
+      expect($('[data-qa="checkinValue"]').text()).toBe('Online check ins not set up')
       expect($('[data-qa="checkinCard"] a').length).toBe(0)
     })
   })

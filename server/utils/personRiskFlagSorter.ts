@@ -62,8 +62,7 @@ const cohortDescriptions = new Set([
   'cyber - enabled',
   'grand avenues cohort',
   'Home Office Interest',
-  'lifer - supervised',
-  'lifer - not supervised',
+  'lifer',
   'organised crime - overt',
   'short sentence service',
   'final third excluded',
@@ -261,7 +260,10 @@ function getGroupedRiskBadges(visibleRiskFlags: RiskFlag[]) {
 
     let text = displayDescription
 
-    if (lowRiskLevelWithDescription.has(normalisedDescription)) {
+    if (normalisedDescription === 'lifer') {
+      const levelDescription = flag.levelDescription?.replace(/^Lifer\s*-\s*/i, '').toLowerCase()
+      text = levelDescription ? `Lifer - ${levelDescription}` : displayDescription
+    } else if (lowRiskLevelWithDescription.has(normalisedDescription)) {
       const levelDescription = flag.levelDescription?.replace('MAPPA ', '') ?? ''
       text = `${displayDescription} - ${levelDescription}`
     } else if (risksWithLevelDescription.has(normalisedDescription)) {

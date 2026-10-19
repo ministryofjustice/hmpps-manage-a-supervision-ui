@@ -502,4 +502,65 @@ describe('utils/getRiskBadgeGroups', () => {
     expect(badgeIds).toEqual([1, 3])
     expect(result.remainingCount).toBe(0)
   })
+
+  describe('Lifer risk badges', () => {
+    const createLiferRiskFlag = (levelDescription?: string): RiskFlag =>
+      ({
+        id: 2501027491,
+        description: 'Lifer',
+        levelCode: levelDescription === 'Lifer - Supervised' ? 'L1' : 'L2',
+        levelDescription,
+        riskNotes: [],
+        createdDate: '2026-10-19',
+        createdBy: {
+          forename: 'A',
+          surname: 'B',
+        },
+        removed: false,
+        removalHistory: [],
+      }) as RiskFlag
+
+    it.each([
+      ['Lifer - Supervised', 'Lifer - supervised'],
+      ['Lifer - Not Supervised', 'Lifer - not supervised'],
+    ])('displays "%s" as "%s"', (levelDescription, expectedText) => {
+      const result = getRiskBadgeGroups([createLiferRiskFlag(levelDescription)])
+
+      expect(result.remainingCount).toBe(0)
+      expect(result.groups).toHaveLength(1)
+      expect(result.groups[0].badges).toHaveLength(1)
+      expect(result.groups[0].badges[0]).toEqual(
+        expect.objectContaining({
+          id: 2501027491,
+          text: expectedText,
+          level: 'LOW',
+          badgeClass: 'risk-badge--cohort',
+        }),
+      )
+    })
+
+    it('falls back to Lifer when levelDescription is missing', () => {
+      const result = getRiskBadgeGroups([createLiferRiskFlag(undefined)])
+
+      expect(result.groups.flatMap(group => group.badges)).toContainEqual(
+        expect.objectContaining({
+          text: 'Lifer',
+          level: 'LOW',
+          badgeClass: 'risk-badge--cohort',
+        }),
+      )
+    })
+
+    it('does not display a removed Lifer flag', () => {
+      const result = getRiskBadgeGroups([
+        {
+          ...createLiferRiskFlag('Lifer - Supervised'),
+          removed: true,
+        },
+      ])
+
+      expect(result.groups).toEqual([])
+      expect(result.remainingCount).toBe(0)
+    })
+  })
 })

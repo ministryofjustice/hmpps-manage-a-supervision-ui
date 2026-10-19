@@ -25,7 +25,6 @@ export class FeatureFlags {
   enablePreSentence?: boolean = undefined
   enableSearchV2?: boolean = undefined
   enableAsYouTypeSearch?: boolean = undefined
-  enableCombinedCYAPage?: boolean = undefined
   enable3MonthsOutcomes?: boolean = undefined
   enableEsupEligibilityCheck?: boolean = undefined
   showContactInformationWarning?: boolean = undefined

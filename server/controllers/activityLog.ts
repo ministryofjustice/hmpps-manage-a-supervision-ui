@@ -50,9 +50,7 @@ const activityLogController: Controller<typeof routes, void> = {
         cleanParams.delete('showSuccessBanner')
         cleanParams.delete('uploadFailed')
         const cleanQuery = cleanParams.toString()
-        return res.redirect(
-          safeRedirect(cleanQuery ? `${req.path}?${cleanQuery}` : req.path, `/case/${crn}/activity-log`),
-        )
+        return res.redirect(safeRedirect(cleanQuery ? `${req.path}?${cleanQuery}` : req.path))
       }
 
       const { query } = req
@@ -121,9 +119,7 @@ const activityLogController: Controller<typeof routes, void> = {
         cleanParams.delete('showSuccessBanner')
         cleanParams.delete('uploadFailed')
         const cleanQuery = cleanParams.toString()
-        return res.redirect(
-          safeRedirect(cleanQuery ? `${req.path}?${cleanQuery}` : req.path, `/case/${crn}/activity-log`),
-        )
+        return res.redirect(safeRedirect(cleanQuery ? `${req.path}?${cleanQuery}` : req.path))
       }
       const contactUpdatedFlash = req.flash('contactUpdated')?.[0]
       const showSuccessBanner = !!contactUpdatedFlash

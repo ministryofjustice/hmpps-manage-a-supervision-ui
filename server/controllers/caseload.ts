@@ -210,7 +210,7 @@ const caseloadController: Controller<typeof routes, void, Args> = {
 
       query.set('outcomeFilter', outcomesFilter)
 
-      return res.redirect(safeRedirect(`${path}?${query.toString()}`, '/caseload/appointments'))
+      return res.redirect(safeRedirect(`${path}?${query.toString()}`))
     }
   },
   getTeams: hmppsAuthClient => {

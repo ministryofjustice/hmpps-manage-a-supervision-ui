@@ -29,7 +29,7 @@ export const handlePostAppointment = (hmppsAuthClient: HmppsAuthClient): Route<P
     if (!isOutcomeCYAPage) {
       const uncompleted = findUncompleted({ forceValidation: true })(req, res)
       if (uncompleted?.includes('?change')) {
-        return res.redirect(safeRedirect(uncompleted, `/case/${crn}/arrange-appointment/${id}/check-your-answers`))
+        return res.redirect(safeRedirect(uncompleted))
       }
     }
 

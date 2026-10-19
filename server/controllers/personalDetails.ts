@@ -264,7 +264,7 @@ const personalDetailsController: Controller<typeof routes, void> = {
         if (res.locals?.flags?.enableAllowSms && origin === 'allowSms' && back) {
           redirect = typeof back === 'string' && back.startsWith(`/case/${crn}/`) ? back : redirect
         }
-        res.redirect(safeRedirect(redirect, `/case/${crn}/personal-details`))
+        res.redirect(safeRedirect(redirect))
       }
     }
   },

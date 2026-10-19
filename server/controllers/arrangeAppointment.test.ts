@@ -1092,13 +1092,13 @@ describe('controllers/arrangeAppointment', () => {
     it('should not redirect to an external change url when the combined CYA page is enabled', async () => {
       const mockReq = createMockRequest({ query: { change: 'https://evil.example' } })
       await controllers.arrangeAppointments.postAddNote(hmppsAuthClient)(mockReq, res)
-      expect(redirectSpy).toHaveBeenCalledWith(cyaUrl)
+      expect(redirectSpy).toHaveBeenCalledWith('/')
     })
     it('should not redirect to an external change url when the combined CYA page is disabled', async () => {
       const mockReq = createMockRequest({ query: { change: '//evil.example' } })
       const mockRes = createMockResponse({ flags: { enableCombinedCYAPage: false } })
       await controllers.arrangeAppointments.postAddNote(hmppsAuthClient)(mockReq, mockRes)
-      expect(mockRes.redirect).toHaveBeenCalledWith(cyaUrl)
+      expect(mockRes.redirect).toHaveBeenCalledWith('/')
     })
     it('should redirect to the check your answers page if no change url', async () => {
       const mockReq = createMockRequest()

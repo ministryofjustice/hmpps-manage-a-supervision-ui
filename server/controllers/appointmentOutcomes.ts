@@ -134,7 +134,7 @@ const appointmentOutcomesController: Controller<typeof appointmentOutcomeRequest
       if (!put) {
         redirect = addReplaceBackParameter(redirect, backParam)
       }
-      return res.redirect(safeRedirect(redirect, `${baseOutcomeUrl}/next-appointment`))
+      return res.redirect(safeRedirect(redirect))
     }
   },
   getCheckYourAnswers: _hmppsAuthClient => {

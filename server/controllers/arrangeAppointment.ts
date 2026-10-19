@@ -161,7 +161,7 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
       if (change) {
         redirect = findUncompleted()(req, res)
       }
-      return res.redirect(safeRedirect(redirect, `/case/${crn}/arrange-appointment/${id}/check-your-answers`))
+      return res.redirect(safeRedirect(redirect))
     }
   },
   getTypeAttendance: () => {
@@ -211,7 +211,7 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
       if (change) {
         redirect = findUncompleted()(req, res)
       }
-      return res.redirect(safeRedirect(redirect, `/case/${crn}/arrange-appointment/${id}/check-your-answers`))
+      return res.redirect(safeRedirect(redirect))
     }
   },
   getWhoWillAttend: () => {
@@ -304,7 +304,7 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
       if (change) {
         redirect = findUncompleted()(req, res)
       }
-      return res.redirect(safeRedirect(redirect, `/case/${crn}/arrange-appointment/${id}/check-your-answers`))
+      return res.redirect(safeRedirect(redirect))
     }
   },
 
@@ -412,7 +412,7 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
       if (change && nextPage === 'location-not-in-list') {
         redirect = `${redirect}?change=${change}`
       }
-      return res.redirect(safeRedirect(redirect, `/case/${crn}/arrange-appointment/${id}/check-your-answers`))
+      return res.redirect(safeRedirect(redirect))
     }
   },
   getLocationNotInList: () => {
@@ -479,7 +479,6 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
         ? `/case/${crn}/appointments/appointment/${linkedContactId}/outcome/check-your-answers`
         : `/case/${crn}/arrange-appointment/${id}/check-your-answers`
       return res.redirect(safeRedirect(path))
-
     }
   },
   getTextMessageConfirmation: _hmppsAuthClient => {
@@ -511,7 +510,7 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
       if (isEditingMobileNumber) {
         redirect = `/case/${crn}/personal-details/${id}/edit-contact-details?origin=appointments&back=${url}${change ? `&change=${change}` : ''}`
       }
-      return res.redirect(safeRedirect(redirect, `/case/${crn}/arrange-appointment/${id}/check-your-answers`))
+      return res.redirect(safeRedirect(redirect))
     }
   },
   getSupportingInformation: () => {
@@ -560,7 +559,7 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
         const nextAppointmentOutcome = res.locals.appointmentOutcome
         setDataValue(req.session.data, ['temp', crn, 'nextAppointment'], nextAppointmentOutcome)
       }
-      return res.redirect(safeRedirect(redirect, `/case/${crn}/arrange-appointment/${id}/check-your-answers`))
+      return res.redirect(safeRedirect(redirect))
     }
   },
   getCheckYourAnswers: () => {
@@ -595,7 +594,7 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
         const dateFromCya = getDataValue(data, ['appointments', crn, id, 'temp', 'dateFromCya'])
         const startTime = getDataValue(data, ['appointments', crn, id, 'temp', 'startTimeFromCya'])
         const endTime = getDataValue(data, ['appointments', crn, id, 'temp', 'endTimeFromCya'])
-          ; ({ isInPast } = dateIsInPast(dateFromCya, startTime))
+        ;({ isInPast } = dateIsInPast(dateFromCya, startTime))
         setDataValue(data, ['appointments', crn, id, 'start'], startTime)
         setDataValue(data, ['appointments', crn, id, 'end'], endTime)
         setDataValue(data, ['appointments', crn, id, 'date'], dateFromCya)
@@ -756,7 +755,7 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
       const { date, start } = appointment
       let isInPast = null
       if (date) {
-        ; ({ isInPast } = dateIsInPast(date, start))
+        ;({ isInPast } = dateIsInPast(date, start))
       }
       return res.render(`pages/arrange-appointment/arrange-another-appointment`, {
         url,

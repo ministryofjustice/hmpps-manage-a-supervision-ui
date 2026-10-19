@@ -6,10 +6,7 @@ context('PoP Header partial', () => {
   })
 
   const enablePopHeaderWithTier = (tier: { tierScore: string; provisional?: boolean }) => {
-    cy.task('stubFeatureFlags', [
-      { key: 'enableSupervisionPackagePoPHeader', enabled: true },
-      { key: 'enableSupervisionPackage', enabled: true },
-    ])
+    cy.task('stubFeatureFlags', [{ key: 'enableSupervisionPackagePoPHeader', enabled: true }])
     cy.task('stubTierDetails', { crn: CRN, ...tier })
   }
 
@@ -51,10 +48,7 @@ context('PoP Header partial', () => {
   // Known gap: same as above but for the Unavailable tag returned when the calculation can't
   // be found (404) - the API/library always reports provisional: false in this case.
   it('shows no tag when the tier calculation cannot be found', () => {
-    cy.task('stubFeatureFlags', [
-      { key: 'enableSupervisionPackagePoPHeader', enabled: true },
-      { key: 'enableSupervisionPackage', enabled: true },
-    ])
+    cy.task('stubFeatureFlags', [{ key: 'enableSupervisionPackagePoPHeader', enabled: true }])
     cy.task('stubTierDetails', { crn: CRN, tierScore: '', status: 404 })
     cy.visit('/case/X000001')
 
@@ -124,5 +118,15 @@ context('PoP Header partial', () => {
     cy.get('[data-qa="risk-badge-6"]').should('be.visible').and('contain.text', 'County lines - victim')
 
     cy.get('[data-qa="risk-badge-more"]').should('be.visible').and('contain.text', '+1 active risk flags')
+  })
+
+  it('person status tag is displayed when enablePersonHeader is true', () => {
+    cy.task('stubFeatureFlag', { key: 'enablePersonHeader', enabled: true })
+    cy.visit('/case/X000001')
+
+    cy.get('[data-qa="personStatusTag"]')
+      .should('be.visible')
+      .and('have.class', 'govuk-tag--yellow')
+      .and('contain.text', 'In custody')
   })
 })

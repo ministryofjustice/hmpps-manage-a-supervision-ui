@@ -416,9 +416,9 @@ describe('controllers/appointmentOutcomes', () => {
       expect(setDataValueSpy).toHaveBeenCalledWith(req.session.data, ['note', crn, contactId, 'noteAdded'], 'None')
     })
 
-    it('should redirect to combined check your answers page if flag set and linked contact', async () => {
+    it('should redirect to the linked contact check your answers page', async () => {
       const req = mockReq({ linkedContactId: '5678' })
-      const res = mockRes({ flags: { enableCombinedCYAPage: true } })
+      const res = mockRes({})
       const spy = jest.spyOn(res, 'redirect')
       await controllers.appointmentOutcomes.postAddNote(hmppsAuthClient)(req, res)
       expect(spy).toHaveBeenCalledWith(

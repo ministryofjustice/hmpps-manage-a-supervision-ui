@@ -4,10 +4,10 @@ export class FeatureFlags {
   enableSmsReminders?: boolean = undefined
   enableCompliancePage?: boolean = undefined
   enableDeliusClient?: boolean = undefined
-  enableSupervisionPackage?: boolean = undefined
   enableSupervisionPackagePoPHeader?: boolean = undefined
   enablePersonHeader?: boolean = undefined
   enablePersonHeaderTierV3?: boolean = undefined
+  enablePersonHeaderPhoto?: boolean = undefined
   enableTierChangePrompt?: boolean = undefined
   enableFinalThirdPrompt?: boolean = undefined
   enableESupervisionCheckins?: boolean = undefined
@@ -24,8 +24,6 @@ export class FeatureFlags {
   enablePreSentence?: boolean = undefined
   enableSearchV2?: boolean = undefined
   enableAsYouTypeSearch?: boolean = undefined
-  enableMAN3255?: boolean = undefined
-  enableCombinedCYAPage?: boolean = undefined
   enable3MonthsOutcomes?: boolean = undefined
   enableEsupEligibilityCheck?: boolean = undefined
   showContactInformationWarning?: boolean = undefined

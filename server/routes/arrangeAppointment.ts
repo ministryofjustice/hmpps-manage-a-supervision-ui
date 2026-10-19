@@ -1,5 +1,5 @@
 import { type Router } from 'express'
-import asyncMiddleware from '../middleware/asyncMiddleware'
+
 import {
   autoStoreSessionData,
   getPersonalDetails,
@@ -33,7 +33,6 @@ import {
 import type { Services } from '../services'
 import validate from '../middleware/validation/index'
 import { getTimeOptions } from '../middleware/getTimeOptions'
-import type { Route } from '../@types'
 import controllers from '../controllers'
 import { checkAppointments } from '../middleware/checkAppointments'
 import { checkAnswers } from '../middleware/checkAnswers'
@@ -41,13 +40,15 @@ import { dateIsInPast } from '../utils'
 import { getUserOptions } from '../middleware/getUserOptions'
 import { returnOptions } from '../middleware/returnOptions'
 import { routeChangeSmsConsent } from '../middleware/routeChangeSmsConsent'
+import { setCollapsibleRiskFlags } from '../middleware/setCollapsibleRiskFlags'
 
-const arrangeAppointmentRoutes = async (router: Router, { hmppsAuthClient, arnsComponents }: Services) => {
+const arrangeAppointmentRoutes = (router: Router, { hmppsAuthClient, arnsComponents }: Services) => {
   router.all(
     '/case/:crn/arrange-appointment/:id/*path',
     getAppointmentTypes(hmppsAuthClient),
     getPersonalDetails(hmppsAuthClient, arnsComponents),
     getAppointment(hmppsAuthClient),
+    setCollapsibleRiskFlags,
   )
   router.all(
     ['/case/:crn/arrange-appointment/:id/sentence', '/case/:crn/arrange-appointment/:id/appointments'],

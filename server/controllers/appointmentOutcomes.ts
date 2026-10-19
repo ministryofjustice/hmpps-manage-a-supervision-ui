@@ -6,7 +6,7 @@ import sendAuditMessage, { SubjectType } from '../middleware/sendAuditMessage'
 import MasApiClient from '../data/masApiClient'
 import { isSuccessfulUpload } from './appointments'
 import { outcomeRedirectMap, type OutcomeRedirectMap } from '../properties/appointment-outcomes/outcome-redirect-map'
-import { getDataValue, setDataValue } from '../utils'
+import { getDataValue, setDataValue, safeRedirect } from '../utils'
 import { deleteOutcomeVars } from '../middleware/appointment-outcomes'
 import { addReplaceBackParameter } from '../utils/addReplaceBackParameter'
 
@@ -127,14 +127,14 @@ const appointmentOutcomesController: Controller<typeof appointmentOutcomeRequest
         if (notes) setDataValue(data, ['note', crn, id, 'noteAdded'], 'Success')
         else if (!file) setDataValue(data, ['note', crn, id, 'noteAdded'], 'None')
       }
-      if (linkedContactId && res.locals.flags.enableCombinedCYAPage)
+      if (linkedContactId)
         redirect = `/case/${crn}/appointments/appointment/${linkedContactId}/outcome/check-your-answers`
 
       const backParam = `back=${baseOutcomeUrl}/add-note`
       if (!put) {
         redirect = addReplaceBackParameter(redirect, backParam)
       }
-      return res.redirect(redirect)
+      return res.redirect(safeRedirect(redirect))
     }
   },
   getCheckYourAnswers: _hmppsAuthClient => {
@@ -157,15 +157,15 @@ const appointmentOutcomesController: Controller<typeof appointmentOutcomeRequest
   getConfirmation: _hmppsAuthClient => {
     return async function getConfirmation(req, res) {
       let nextAppointmentId: string = null
-      if (res.locals.flags.enableCombinedCYAPage) {
-        const { crn } = res.locals.appointmentOutcome
-        const responseContactId = req?.session?.data?.temp?.[crn]?.responseContactId
-        if (responseContactId) {
-          delete req.session.data.temp[crn].responseContactId
-        }
-        nextAppointmentId = getDataValue<string>(req.session.data, ['temp', crn, 'nextAppointmentId'])
-        deleteOutcomeVars(crn)(req, res)
+
+      const { crn } = res.locals.appointmentOutcome
+      const responseContactId = req?.session?.data?.temp?.[crn]?.responseContactId
+      if (responseContactId) {
+        delete req.session.data.temp[crn].responseContactId
       }
+      nextAppointmentId = getDataValue<string>(req.session.data, ['temp', crn, 'nextAppointmentId'])
+      deleteOutcomeVars(crn)(req, res)
+
       return res.render('pages/appointment-outcomes/confirmation', { nextAppointmentId })
     }
   },

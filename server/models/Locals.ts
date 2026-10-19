@@ -51,6 +51,7 @@ import {
 import { PersonExistsResponse } from '../data/emdiClient'
 import { ProbationSearchRequest, ProbationSearchResponse, ProbationSearchResults } from '../data/model/search'
 import { RiskBadgeData } from '../utils/personRiskFlagSorter'
+import { Prisoner } from '../data/prisonerSearchApiClient'
 
 export interface AppointmentLocals {
   meta: {
@@ -211,6 +212,7 @@ interface Locals {
   searchResponse?: ProbationSearchResponse
   searchRequest?: ProbationSearchRequest
   searchResults?: ProbationSearchResults
+  prisoner?: Prisoner
 }
 
 export interface AppointmentOutcomeSentence {

@@ -982,7 +982,11 @@ describe('/middleware/getPersonalDetails', () => {
 
       await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
 
-      expect(mockedGetStatusTag).toHaveBeenCalledWith('token', personOverview, res.locals.supervisionPackageDetails)
+      expect(mockedGetStatusTag).toHaveBeenCalledWith(
+        personOverview,
+        res.locals.supervisionPackageDetails,
+        res.locals.prisoner,
+      )
       expect(res.locals.personStatusTag).toBe('In custody')
       expect(nextSpy).toHaveBeenCalled()
     })
@@ -1012,7 +1016,11 @@ describe('/middleware/getPersonalDetails', () => {
 
       await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
 
-      expect(mockedGetStatusTag).toHaveBeenCalledWith('token', personOverview, res.locals.supervisionPackageDetails)
+      expect(mockedGetStatusTag).toHaveBeenCalledWith(
+        personOverview,
+        res.locals.supervisionPackageDetails,
+        res.locals.prisoner,
+      )
       expect(res.locals.personStatusTag).toBeUndefined()
       expect(nextSpy).toHaveBeenCalled()
     })

@@ -4,24 +4,28 @@ import { PersonalDetails } from '../data/model/personalDetails'
 import { SupervisionPackage } from '../models/SupervisionPackage'
 
 export async function getStatusTag(
-  token: string,
   personalDetails: PersonalDetails,
   supervisionPackage: SupervisionPackage,
+  prisoner?: Prisoner,
 ): Promise<string | undefined> {
   if (personalDetails?.dateOfDeath !== undefined) {
     return 'Deceased'
   }
 
+  const statusTagForPersonInCustody = await getStatusTagForPersonInCustody(prisoner)
+
+  if (statusTagForPersonInCustody !== undefined) {
+    return statusTagForPersonInCustody
+  }
+  // determine from community sentence
   if (supervisionPackage?.outcome === 'success') {
     const activePrimarySentences = supervisionPackage?.context?.sentences?.filter(
       sentence => sentence.isPrimarySentence,
     )
 
-    // custodial sentence
+    // has custodial sentence and custody status cannot be determined
     if (activePrimarySentences?.filter(sentence => sentence.type.isCustodial)?.length) {
-      const status = await getStatusTagForPersonInCustody(token, personalDetails)
-      // As this is a custodial sentence, we can assume that the person is in custody
-      return status === undefined ? 'In custody' : status
+      return 'In custody'
     }
     // check for breach in community sentence
     const inBreach = activePrimarySentences?.filter(sentence => sentence.inBreach)?.length > 0
@@ -29,19 +33,11 @@ export async function getStatusTag(
       return 'In breach'
     }
   }
-  return undefined
-}
-
-export async function getStatusTagForPersonInCustody(token: string, personalDetails: PersonalDetails): Promise<string> {
-  if (personalDetails.noms) {
-    const prisoner = await getPrisonerDetails(token, personalDetails.noms, personalDetails.crn)
-    return prisoner ? determinePersonStatusTag(prisoner) : undefined
-  }
 
   return undefined
 }
 
-export function determinePersonStatusTag(prisoner: Prisoner): string | undefined {
+export async function getStatusTagForPersonInCustody(prisoner?: Prisoner): Promise<string> {
   if (prisoner?.legalStatus === 'DEAD') {
     return 'Deceased'
   }

@@ -1,18 +1,14 @@
 import PrisonerSearchApiClient, { Prisoner } from '../data/prisonerSearchApiClient'
-import logger from '../../logger'
+import * as logger from '../../logger'
 import { PersonalDetails } from '../data/model/personalDetails'
 import { SupervisionPackage } from '../models/SupervisionPackage'
-import {
-  determinePersonStatusTag,
-  getPrisonerDetails,
-  getStatusTag,
-  getStatusTagForPersonInCustody,
-} from './personStatusTag'
+import { getPrisonerDetails, getStatusTag, getStatusTagForPersonInCustody } from './personStatusTag'
 
 jest.mock('../data/prisonerSearchApiClient')
 jest.mock('../../logger')
 
 const mockedPrisonerSearchApiClient = PrisonerSearchApiClient as jest.MockedClass<typeof PrisonerSearchApiClient>
+
 const mockedLogger = logger as jest.Mocked<typeof logger>
 
 const createPersonalDetails = (overrides: Partial<PersonalDetails> = {}): PersonalDetails =>
@@ -50,12 +46,24 @@ const createSupervisionPackage = (overrides: Record<string, unknown> = {}): Supe
 describe('getStatusTag', () => {
   const personalDetails = createPersonalDetails()
 
-  it('returns the custody status when a primary custodial sentence exists', async () => {
+  it('returns Deceased when the person has a date of death', async () => {
+    const details = createPersonalDetails({
+      dateOfDeath: '2025-01-01',
+    })
+
+    await expect(getStatusTag(details, createSupervisionPackage())).resolves.toBe('Deceased')
+  })
+
+  it('returns the custody status for a primary custodial sentence', async () => {
     const supervisionPackage = createSupervisionPackage({
       context: {
         sentences: [
           createSentence({
-            type: { isCustodial: true },
+            type: {
+              code: 'SC',
+              description: 'Custodial',
+              isCustodial: true,
+            },
           }),
         ],
       },
@@ -66,39 +74,68 @@ describe('getStatusTag', () => {
       recall: false,
     }
 
-    const prisonerSearchApiClient = {
-      getPrisonerDetails: jest.fn().mockResolvedValue(prisoner),
-    }
-
-    mockedPrisonerSearchApiClient.mockImplementation(
-      () => prisonerSearchApiClient as unknown as PrisonerSearchApiClient,
-    )
-
-    await expect(getStatusTag('token', personalDetails, supervisionPackage)).resolves.toBe('In custody')
-
-    expect(prisonerSearchApiClient.getPrisonerDetails).toHaveBeenCalledWith('A1234BC')
+    await expect(getStatusTag(personalDetails, supervisionPackage, prisoner)).resolves.toBe('In custody')
   })
 
-  it('defaults to In custody when a primary custodial sentence exists but no prisoner status is available', async () => {
+  it('returns Deceased when the prisoner legal status is DEAD', async () => {
+    const prisoner: Prisoner = {
+      legalStatus: 'DEAD',
+      status: 'ACTIVE IN',
+      recall: false,
+    }
+
+    await expect(getStatusTag(personalDetails, createSupervisionPackage(), prisoner)).resolves.toBe('Deceased')
+  })
+
+  it('returns Recalled - In custody when the prisoner is recalled', async () => {
+    const prisoner: Prisoner = {
+      status: 'ACTIVE IN',
+      recall: true,
+    }
+
+    await expect(getStatusTag(personalDetails, createSupervisionPackage(), prisoner)).resolves.toBe(
+      'Recalled - In custody',
+    )
+  })
+
+  it('returns Unlawfully at large when the last movement reason is UAL', async () => {
+    const prisoner: Prisoner = {
+      lastMovementReasonCode: 'UAL',
+      recall: false,
+    }
+
+    await expect(getStatusTag(personalDetails, createSupervisionPackage(), prisoner)).resolves.toBe(
+      'Unlawfully at large',
+    )
+  })
+
+  it('returns Recalled - Unlawfully at large when the prisoner is recalled and UAL', async () => {
+    const prisoner: Prisoner = {
+      lastMovementReasonCode: 'UAL',
+      recall: true,
+    }
+
+    await expect(getStatusTag(personalDetails, createSupervisionPackage(), prisoner)).resolves.toBe(
+      'Recalled - Unlawfully at large',
+    )
+  })
+
+  it('defaults to In custody when a primary custodial sentence exists but prisoner details are unavailable', async () => {
     const supervisionPackage = createSupervisionPackage({
       context: {
         sentences: [
           createSentence({
-            type: { isCustodial: true },
+            type: {
+              code: 'SC',
+              description: 'Custodial',
+              isCustodial: true,
+            },
           }),
         ],
       },
     })
 
-    const prisonerSearchApiClient = {
-      getPrisonerDetails: jest.fn().mockResolvedValue(null),
-    }
-
-    mockedPrisonerSearchApiClient.mockImplementation(
-      () => prisonerSearchApiClient as unknown as PrisonerSearchApiClient,
-    )
-
-    await expect(getStatusTag('token', personalDetails, supervisionPackage)).resolves.toBe('In custody')
+    await expect(getStatusTag(personalDetails, supervisionPackage)).resolves.toBe('In custody')
   })
 
   it('returns In breach when a primary community sentence is in breach', async () => {
@@ -107,13 +144,12 @@ describe('getStatusTag', () => {
         sentences: [
           createSentence({
             inBreach: true,
-            type: { isCustodial: false },
           }),
         ],
       },
     })
 
-    await expect(getStatusTag('token', personalDetails, supervisionPackage)).resolves.toBe('In breach')
+    await expect(getStatusTag(personalDetails, supervisionPackage)).resolves.toBe('In breach')
   })
 
   it('does not return In breach when only a non-primary sentence is in breach', async () => {
@@ -128,7 +164,7 @@ describe('getStatusTag', () => {
       },
     })
 
-    await expect(getStatusTag('token', personalDetails, supervisionPackage)).resolves.toBeUndefined()
+    await expect(getStatusTag(personalDetails, supervisionPackage)).resolves.toBeUndefined()
   })
 
   it('returns undefined when there are no primary sentences', async () => {
@@ -142,7 +178,7 @@ describe('getStatusTag', () => {
       },
     })
 
-    await expect(getStatusTag('token', personalDetails, supervisionPackage)).resolves.toBeUndefined()
+    await expect(getStatusTag(personalDetails, supervisionPackage)).resolves.toBeUndefined()
   })
 
   it('returns undefined when the supervision package outcome is not success', async () => {
@@ -150,124 +186,99 @@ describe('getStatusTag', () => {
       outcome: 'failure',
     })
 
-    await expect(getStatusTag('token', personalDetails, supervisionPackage)).resolves.toBeUndefined()
+    await expect(getStatusTag(personalDetails, supervisionPackage)).resolves.toBeUndefined()
   })
 
-  it('prioritises custodial status over community breach', async () => {
+  it('prioritises a determined prisoner status over a community breach', async () => {
     const supervisionPackage = createSupervisionPackage({
       context: {
         sentences: [
           createSentence({
             inBreach: true,
-            type: { isCustodial: true },
           }),
         ],
       },
     })
 
-    const prisonerSearchApiClient = {
-      getPrisonerDetails: jest.fn().mockResolvedValue({
-        status: 'ACTIVE IN',
-        recall: false,
-      }),
+    const prisoner: Prisoner = {
+      status: 'ACTIVE IN',
+      recall: false,
     }
 
-    mockedPrisonerSearchApiClient.mockImplementation(
-      () => prisonerSearchApiClient as unknown as PrisonerSearchApiClient,
-    )
+    await expect(getStatusTag(personalDetails, supervisionPackage, prisoner)).resolves.toBe('In custody')
+  })
 
-    await expect(getStatusTag('token', personalDetails, supervisionPackage)).resolves.toBe('In custody')
+  it('does not return a custody status for a non-custodial sentence when prisoner status is unknown', async () => {
+    const supervisionPackage = createSupervisionPackage()
+
+    await expect(getStatusTag(personalDetails, supervisionPackage)).resolves.toBeUndefined()
   })
 })
 
 describe('getStatusTagForPersonInCustody', () => {
-  let prisonerSearchApiClient: jest.Mocked<PrisonerSearchApiClient>
-
-  beforeEach(() => {
-    jest.clearAllMocks()
-
-    prisonerSearchApiClient = {
-      getPrisonerDetails: jest.fn(),
-    } as unknown as jest.Mocked<PrisonerSearchApiClient>
-
-    mockedPrisonerSearchApiClient.mockImplementation(() => prisonerSearchApiClient)
-  })
-
-  it('returns the determined status tag for a prisoner', async () => {
-    prisonerSearchApiClient.getPrisonerDetails.mockResolvedValue({
+  it('returns In custody for an active prisoner who is not recalled', async () => {
+    const prisoner: Prisoner = {
       status: 'ACTIVE IN',
       recall: false,
-    })
-
-    await expect(getStatusTagForPersonInCustody('token', createPersonalDetails())).resolves.toBe('In custody')
-
-    expect(prisonerSearchApiClient.getPrisonerDetails).toHaveBeenCalledWith('A1234BC')
-  })
-
-  it('returns undefined when prisoner details are unavailable', async () => {
-    prisonerSearchApiClient.getPrisonerDetails.mockResolvedValue(null)
-
-    await expect(getStatusTagForPersonInCustody('token', createPersonalDetails())).resolves.toBeUndefined()
-  })
-})
-
-describe('determinePersonStatusTag', () => {
-  const personalDetails = createPersonalDetails()
-
-  it('returns Deceased when the legal status is DEAD', () => {
-    const prisoner: Prisoner = {
-      legalStatus: 'DEAD',
-      status: 'ACTIVE IN',
-      lastMovementReasonCode: 'UAL',
-      recall: true,
     }
 
-    expect(determinePersonStatusTag(prisoner)).toBe('Deceased')
+    await expect(getStatusTagForPersonInCustody(prisoner)).resolves.toBe('In custody')
   })
 
-  it('returns Unlawfully at large when the last movement reason is UAL', () => {
+  it('returns In custody for an active-out prisoner who is not recalled', async () => {
     const prisoner: Prisoner = {
-      lastMovementReasonCode: 'UAL',
+      status: 'ACTIVE OUT',
       recall: false,
     }
 
-    expect(determinePersonStatusTag(prisoner)).toBe('Unlawfully at large')
-  })
-
-  it('returns Recalled - Unlawfully at large when the prisoner is recalled', () => {
-    const prisoner: Prisoner = {
-      lastMovementReasonCode: 'UAL',
-      recall: true,
-    }
-
-    expect(determinePersonStatusTag(prisoner)).toBe('Recalled - Unlawfully at large')
+    await expect(getStatusTagForPersonInCustody(prisoner)).resolves.toBe('In custody')
   })
 
   it.each(['ACTIVE IN', 'ACTIVE OUT'])(
-    'returns In custody when the status is %s and the prisoner is not recalled',
-    status => {
-      const prisoner: Prisoner = {
-        status,
-        recall: false,
-      }
-
-      expect(determinePersonStatusTag(prisoner)).toBe('In custody')
-    },
-  )
-
-  it.each(['ACTIVE IN', 'ACTIVE OUT'])(
-    'returns Recalled - In custody when the status is %s and the prisoner is recalled',
-    status => {
+    'returns Recalled - In custody when status is %s and the prisoner is recalled',
+    async status => {
       const prisoner: Prisoner = {
         status,
         recall: true,
       }
 
-      expect(determinePersonStatusTag(prisoner)).toBe('Recalled - In custody')
+      await expect(getStatusTagForPersonInCustody(prisoner)).resolves.toBe('Recalled - In custody')
     },
   )
 
-  it('returns undefined when there is no matching status', () => {
+  it('returns Deceased when legal status is DEAD', async () => {
+    const prisoner: Prisoner = {
+      legalStatus: 'DEAD',
+      status: 'ACTIVE IN',
+      recall: false,
+    }
+
+    await expect(getStatusTagForPersonInCustody(prisoner)).resolves.toBe('Deceased')
+  })
+
+  it('returns Unlawfully at large when the last movement reason is UAL', async () => {
+    const prisoner: Prisoner = {
+      lastMovementReasonCode: 'UAL',
+      recall: false,
+    }
+
+    await expect(getStatusTagForPersonInCustody(prisoner)).resolves.toBe('Unlawfully at large')
+  })
+
+  it('returns Recalled - Unlawfully at large when the prisoner is recalled and UAL', async () => {
+    const prisoner: Prisoner = {
+      lastMovementReasonCode: 'UAL',
+      recall: true,
+    }
+
+    await expect(getStatusTagForPersonInCustody(prisoner)).resolves.toBe('Recalled - Unlawfully at large')
+  })
+
+  it('returns undefined when prisoner details are not supplied', async () => {
+    await expect(getStatusTagForPersonInCustody()).resolves.toBeUndefined()
+  })
+
+  it('returns undefined when the prisoner has no matching status', async () => {
     const prisoner: Prisoner = {
       status: 'INACTIVE',
       legalStatus: 'SENTENCED',
@@ -275,7 +286,7 @@ describe('determinePersonStatusTag', () => {
       recall: false,
     }
 
-    expect(determinePersonStatusTag(prisoner)).toBeUndefined()
+    await expect(getStatusTagForPersonInCustody(prisoner)).resolves.toBeUndefined()
   })
 })
 
@@ -309,16 +320,9 @@ describe('getPrisonerDetails', () => {
     expect(prisonerSearchApiClient.getPrisonerDetails).toHaveBeenCalledWith('A1234BC')
   })
 
-  it('returns undefined and logs an error when the API fails', async () => {
-    const error = new Error('API failed')
+  it('returns null when the Prisoner Search API returns null', async () => {
+    prisonerSearchApiClient.getPrisonerDetails.mockResolvedValue(null)
 
-    prisonerSearchApiClient.getPrisonerDetails.mockRejectedValue(error)
-
-    await expect(getPrisonerDetails('token', 'A1234BC', 'X123456')).resolves.toBeUndefined()
-
-    expect(mockedLogger.error).toHaveBeenCalledWith(
-      'Failed to get prisoner details for NOMS number: A1234BC CRN: X123456',
-      error,
-    )
+    await expect(getPrisonerDetails('token', 'A1234BC', 'X123456')).resolves.toBeNull()
   })
 })

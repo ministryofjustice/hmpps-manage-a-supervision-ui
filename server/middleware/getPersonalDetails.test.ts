@@ -1001,20 +1001,6 @@ describe('/middleware/getPersonalDetails', () => {
       expect(nextSpy).toHaveBeenCalled()
     })
 
-    it('does not call getStatusTag when the NOMS number is missing', async () => {
-      const personOverview = { ...overview('X000002'), noms: '' }
-
-      jest.spyOn(MasApiClient.prototype, 'getPersonalDetails').mockResolvedValueOnce(personOverview)
-
-      res.locals.flags = { enablePersonHeader: true }
-
-      await getPersonalDetails(hmppsAuthClient, arnsComponents)(req, res, nextSpy)
-
-      expect(mockedGetStatusTag).not.toHaveBeenCalled()
-      expect(res.locals.personStatusTag).toBeUndefined()
-      expect(nextSpy).toHaveBeenCalled()
-    })
-
     it('sets personStatusTag to undefined when getStatusTag returns undefined', async () => {
       const personOverview = { ...overview('X000002'), noms: 'A1234BC' }
 

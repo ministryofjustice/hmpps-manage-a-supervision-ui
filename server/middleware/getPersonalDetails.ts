@@ -174,7 +174,7 @@ export const getPersonalDetails = (
       prisonsUnavailable = false
     }
 
-    if (res.locals.flags?.enablePersonHeader && overview.noms) {
+    if (res.locals.flags?.enablePersonHeader) {
       res.locals.personStatusTag = await getStatusTag(token, overview, res.locals.supervisionPackageDetails)
     }
 

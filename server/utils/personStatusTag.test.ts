@@ -222,15 +222,7 @@ describe('determinePersonStatusTag', () => {
       recall: true,
     }
 
-    expect(determinePersonStatusTag(prisoner, personalDetails)).toBe('Deceased')
-  })
-
-  it('returns Deceased when the personal details contain a date of death', () => {
-    const prisoner: Prisoner = {
-      status: 'ACTIVE IN',
-    }
-
-    expect(determinePersonStatusTag(prisoner, createPersonalDetails({ dateOfDeath: '2025-01-01' }))).toBe('Deceased')
+    expect(determinePersonStatusTag(prisoner)).toBe('Deceased')
   })
 
   it('returns Unlawfully at large when the last movement reason is UAL', () => {
@@ -239,7 +231,7 @@ describe('determinePersonStatusTag', () => {
       recall: false,
     }
 
-    expect(determinePersonStatusTag(prisoner, personalDetails)).toBe('Unlawfully at large')
+    expect(determinePersonStatusTag(prisoner)).toBe('Unlawfully at large')
   })
 
   it('returns Recalled - Unlawfully at large when the prisoner is recalled', () => {
@@ -248,7 +240,7 @@ describe('determinePersonStatusTag', () => {
       recall: true,
     }
 
-    expect(determinePersonStatusTag(prisoner, personalDetails)).toBe('Recalled - Unlawfully at large')
+    expect(determinePersonStatusTag(prisoner)).toBe('Recalled - Unlawfully at large')
   })
 
   it.each(['ACTIVE IN', 'ACTIVE OUT'])(
@@ -259,7 +251,7 @@ describe('determinePersonStatusTag', () => {
         recall: false,
       }
 
-      expect(determinePersonStatusTag(prisoner, personalDetails)).toBe('In custody')
+      expect(determinePersonStatusTag(prisoner)).toBe('In custody')
     },
   )
 
@@ -271,7 +263,7 @@ describe('determinePersonStatusTag', () => {
         recall: true,
       }
 
-      expect(determinePersonStatusTag(prisoner, personalDetails)).toBe('Recalled - In custody')
+      expect(determinePersonStatusTag(prisoner)).toBe('Recalled - In custody')
     },
   )
 
@@ -283,7 +275,7 @@ describe('determinePersonStatusTag', () => {
       recall: false,
     }
 
-    expect(determinePersonStatusTag(prisoner, personalDetails)).toBeUndefined()
+    expect(determinePersonStatusTag(prisoner)).toBeUndefined()
   })
 })
 

@@ -8,6 +8,10 @@ export async function getStatusTag(
   personalDetails: PersonalDetails,
   supervisionPackage: SupervisionPackage,
 ): Promise<string | undefined> {
+  if (personalDetails?.dateOfDeath !== undefined) {
+    return 'Deceased'
+  }
+
   if (supervisionPackage?.outcome === 'success') {
     const activePrimarySentences = supervisionPackage?.context?.sentences?.filter(
       sentence => sentence.isPrimarySentence,
@@ -29,12 +33,16 @@ export async function getStatusTag(
 }
 
 export async function getStatusTagForPersonInCustody(token: string, personalDetails: PersonalDetails): Promise<string> {
-  const prisoner = await getPrisonerDetails(token, personalDetails.noms, personalDetails.crn)
-  return prisoner ? determinePersonStatusTag(prisoner, personalDetails) : undefined
+  if (personalDetails.noms) {
+    const prisoner = await getPrisonerDetails(token, personalDetails.noms, personalDetails.crn)
+    return prisoner ? determinePersonStatusTag(prisoner) : undefined
+  }
+
+  return undefined
 }
 
-export function determinePersonStatusTag(prisoner: Prisoner, personalDetails: PersonalDetails): string | undefined {
-  if (prisoner?.legalStatus === 'DEAD' || personalDetails?.dateOfDeath !== undefined) {
+export function determinePersonStatusTag(prisoner: Prisoner): string | undefined {
+  if (prisoner?.legalStatus === 'DEAD') {
     return 'Deceased'
   }
 

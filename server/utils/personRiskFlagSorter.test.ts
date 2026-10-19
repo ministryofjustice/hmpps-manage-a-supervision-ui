@@ -187,14 +187,14 @@ describe('utils/getRiskBadgeGroups', () => {
           severity: 'HIGH',
           badges: [
             {
-              id: 1,
-              text: 'Risk to public - High',
+              id: 2,
+              text: 'Risk to probation staff',
               level: 'HIGH',
               badgeClass: 'risk-badge--high',
             },
             {
-              id: 2,
-              text: 'Risk to probation staff',
+              id: 1,
+              text: 'Risk to public - High',
               level: 'HIGH',
               badgeClass: 'risk-badge--high',
             },
@@ -248,14 +248,14 @@ describe('utils/getRiskBadgeGroups', () => {
           severity: 'HIGH',
           badges: [
             {
-              id: 1,
-              text: 'Risk to public - High',
+              id: 2,
+              text: 'Risk to probation staff',
               level: 'HIGH',
               badgeClass: 'risk-badge--high',
             },
             {
-              id: 2,
-              text: 'Risk to probation staff',
+              id: 1,
+              text: 'Risk to public - High',
               level: 'HIGH',
               badgeClass: 'risk-badge--high',
             },

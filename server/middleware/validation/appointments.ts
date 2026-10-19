@@ -64,6 +64,11 @@ const appointments: Route<void> = (req, res, next) => {
     }
   }
 
+  if (req.url.includes('/supporting-information')) {
+    const allowSms = getDataValue(data, ['personalDetails', crn, 'overview', 'allowSms'])
+    localParams = { ...localParams, allowSms: !!allowSms }
+  }
+
   const baseUrl = req.url.split('?')[0]
   let isAddNotePage: boolean
   let render = res?.locals?.renderPath || urlToRenderPath(req, res)

@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon'
 import AppointmentLocationDateTimePage from '../../../pages/appointments/location-date-time.page'
+import EditContactDetails from '../../../pages/personalDetails/editContactDetails'
 import { crn, uuid, startTime, endTime } from '../imports/common'
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
   next?: boolean
   dateInPast?: boolean
   dateOverride?: DateTime
+  allowSms?: boolean
 }
 
 export const completeLocationDateTimePage = ({
@@ -17,9 +19,11 @@ export const completeLocationDateTimePage = ({
   uuidOveride = '',
   dateInPast = false,
   dateOverride,
+  allowSms = true,
 }: Props = {}) => {
   const suffix = index > 1 ? `-${index}` : ''
-  const locationDateTimePage = new AppointmentLocationDateTimePage()
+  let locationDateTimePage = new AppointmentLocationDateTimePage()
+  let editContactDetailsPage: EditContactDetails
   const yesterday = DateTime.now().minus({ days: 1 })
   const future = DateTime.now().plus({ days: 2 })
   if (dateOverride) {
@@ -47,9 +51,19 @@ export const completeLocationDateTimePage = ({
     .focus()
     .clear()
     .type(endTime)
+
   locationDateTimePage
     .getElement(`#appointments-${crnOverride || crn}-${uuidOveride || uuid}-user-locationCode${suffix}`)
     .click()
+  if (!allowSms) {
+    cy.get('[data-qa=changeAllowSmsLink]').click()
+    editContactDetailsPage = new EditContactDetails()
+    cy.get('#mobileNumber').clear()
+    cy.get('#mobileNumber').type('07800765432')
+    cy.get('#allowSms-no').click()
+    cy.get('[data-qa=submitBtn]').click()
+    locationDateTimePage = new AppointmentLocationDateTimePage()
+  }
   locationDateTimePage.getSubmitBtn().click()
   locationDateTimePage.getSubmitBtn().click()
 }

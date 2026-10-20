@@ -145,7 +145,7 @@ describe('Attended - failed to comply', () => {
       expect($(element).find('input').attr('checked')).toBeUndefined()
       if ($(element).find('label').length) {
         expect($(element).find('label').text().trim()).toBe(options[index].text)
-        if ($(element).find('.govuk-hint').length) {
+        if (options[index]?.hint) {
           expect($(element).find('.govuk-hint').text().trim()).toBe(options[index].hint.text)
         }
       } else {

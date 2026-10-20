@@ -102,7 +102,7 @@
               "key": "enableHomePageV2API",
               "name": "enableHomePageV2API",
               "description": "",
-              "enabled": false,
+              "enabled": true,
               "type": "BOOLEAN_FLAG_TYPE",
               "createdAt": "2026-06-12T12:00:00.000000Z",
               "updatedAt": "2026-06-12T12:00:00.000000Z",

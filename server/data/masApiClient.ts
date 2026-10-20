@@ -87,8 +87,16 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/user/${username}/appointments`, handleTimeout: true })
   }
 
-  async getUserAppointmentsV2(username: string): Promise<UserAppontment> {
-    return this.get({ path: `/v2/user/${username}/appointments`, handleTimeout: true })
+  async getUserAppointmentsV2(username: string, fromDate?: string, toDate?: string): Promise<UserAppontment> {
+    const queryParameters = new URLSearchParams({
+      fromDate,
+      toDate,
+    })
+
+    if (fromDate) queryParameters.append('fromDate', fromDate)
+    if (toDate) queryParameters.append('toDate', toDate)
+
+    return this.get({ path: `/v2/user/${username}/appointments?${queryParameters.toString()}`, handleTimeout: true })
   }
 
   async getOverview(crn: string, sentenceNumber = '1'): Promise<Overview | null> {

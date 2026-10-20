@@ -8,30 +8,52 @@ import {
   completeLocationDateTimePage,
   completeTextMessageConfirmationPage,
 } from './utils'
+import TextMessageConfirmationPage from '../../pages/appointments/text-message-confirmation.page'
+import AppointmentLocationDateTimePage from '../../pages/appointments/location-date-time.page'
 
-const loadPage = (_crn = crn) => {
+const loadPage = ({ _crn = crn, allowSms = true } = {}) => {
   cy.visit(`/case/${crn}/arrange-appointment/${uuid}/sentence`)
   completeSentencePage({ eventIndex: 1, crnOverride: _crn })
   completeTypePage()
-  completeLocationDateTimePage({ crnOverride: _crn })
-  completeTextMessageConfirmationPage({ _crn, _uuid: uuid, index: 1 })
+  completeLocationDateTimePage({ crnOverride: _crn, allowSms })
+  if (allowSms) {
+    completeTextMessageConfirmationPage({ _crn, _uuid: uuid, index: 1 })
+  }
 }
-
+let appointmentNotePage: AppointmentNotePage
+let textMessageConfirmationPage: TextMessageConfirmationPage
+let locationDateTimePage: AppointmentLocationDateTimePage
 describe('Add supporting information (optional)', () => {
-  let appointmentNotePage: AppointmentNotePage
   beforeEach(() => {
     cy.task('resetMocks')
-    loadPage()
-    appointmentNotePage = new AppointmentNotePage()
   })
 
-  it('should be on add supporting information (optional) page', () => {
-    appointmentNotePage.checkOnPage()
+  it('should link back to the text message confirmation page if allow sms consent is yes', () => {
+    loadPage()
+    appointmentNotePage = new AppointmentNotePage()
+    cy.get('.govuk-back-link').click()
+    textMessageConfirmationPage = new TextMessageConfirmationPage()
+    textMessageConfirmationPage.checkOnPage()
   })
+
+  it('should link back to the location, date and time page if allow sms consent is no', () => {
+    cy.task('stubAllowSmsFalse')
+    loadPage({ allowSms: false })
+    appointmentNotePage = new AppointmentNotePage()
+    cy.get('.govuk-back-link').click()
+    locationDateTimePage = new AppointmentLocationDateTimePage()
+    locationDateTimePage.checkOnPage()
+  })
+
   it('should render the pop header', () => {
+    loadPage()
+    appointmentNotePage = new AppointmentNotePage()
+    appointmentNotePage.checkOnPage()
     checkPopHeader({ name: 'Alton Berge', appointments: true, headerCrn: 'X778160' })
   })
   it('should display validation errors if note is more than 12000 character', () => {
+    loadPage()
+    appointmentNotePage = new AppointmentNotePage()
     const note = 'x'.repeat(12001)
     cy.get(`#appointments-${crn}-${uuid}-notes`).invoke('val', note).trigger('input')
     cy.get(`#appointments-${crn}-${uuid}-sensitivity-2`).click()
@@ -44,6 +66,8 @@ describe('Add supporting information (optional)', () => {
   })
 
   it('should count a return as 1 character', () => {
+    loadPage()
+    appointmentNotePage = new AppointmentNotePage()
     cy.get(`#appointments-${crn}-${uuid}-notes`).then($el => {
       const paragraph = 'x'.repeat(6000)
       const value = `${paragraph}\n\n${paragraph}`
@@ -59,6 +83,8 @@ describe('Add supporting information (optional)', () => {
     cy.get('.govuk-character-count__status').should('contain.text', 'You have 2 characters too many')
   })
   it('should show validation errors if sensitivity option is not selected', () => {
+    loadPage()
+    appointmentNotePage = new AppointmentNotePage()
     cy.get('textarea').clear()
     cy.get('textarea').type('A test note')
     appointmentNotePage.getSubmitBtn().click()
@@ -76,12 +102,16 @@ describe('Add supporting information (optional)', () => {
     })
   })
   it('should be on the check your answers page', () => {
+    loadPage()
+    appointmentNotePage = new AppointmentNotePage()
     cy.get(`#appointments-${crn}-${uuid}-sensitivity-2`).click()
     appointmentNotePage.getSubmitBtn().click()
     const checkYourAnswersPage = new AppointmentCheckYourAnswersPage()
     checkYourAnswersPage.checkPageTitle('Check your answers')
   })
   it('should check for correct text', () => {
+    loadPage()
+    appointmentNotePage = new AppointmentNotePage()
     cy.get('[data-qa="visorReport"]').should(
       'contain.text',
       'This is information that you believe must be recorded but not shared with a person on probation. If they make a request for their record, the Data Protection Team will decide whether the information can be shared.',
@@ -90,7 +120,8 @@ describe('Add supporting information (optional)', () => {
 })
 describe('Risk to staff alert', () => {
   it('should display the alert with medium risk to staff details', () => {
-    loadPage('X000001')
+    loadPage({ _crn: 'X000001' })
+    appointmentNotePage = new AppointmentNotePage()
     checkRiskToStaffAlert('X000001', 'Caroline', 'medium')
   })
 })

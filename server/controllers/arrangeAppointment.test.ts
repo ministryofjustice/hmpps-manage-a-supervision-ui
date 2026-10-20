@@ -1035,6 +1035,7 @@ describe('controllers/arrangeAppointment', () => {
         change,
         maxCharCount: 12000,
         isInPast: false,
+        allowSms: true,
       })
     })
   })

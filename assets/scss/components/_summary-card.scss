@@ -82,6 +82,10 @@
   @include govuk-font($size: 24, $weight: bold);
 }
 
+.app-summary-card--light .app-summary-card__header {
+  background: govuk-colour('white');
+}
+
 @media print {
   .app-summary-card__header {
     break-inside: avoid;

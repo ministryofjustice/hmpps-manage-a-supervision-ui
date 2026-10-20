@@ -20,6 +20,11 @@
 {% set manageCheckinLink = '/case/' + crn + '/appointments/check-in/manage/' + offenderCheckinsByCRNResponse.uuid %}
 {% set personForename = overview.personalDetails.name.forename %}
 
+{% set cardClasses = 'govuk-!-margin-bottom-6 app-summary-card--large-title app-summary-card--light' %}
+{% if not flags.enableNewOverview %}
+  {% set cardClasses = 'govuk-!-margin-bottom-6 app-summary-card--large-title' %}
+{% endif %}
+
 {% set dateOfBirthAndAge %}
   {{ overview.personalDetails.dateOfBirth | dateWithYear + (" (" + overview.personalDetails.dateOfBirth | yearsSince + " years old)" if not personalDetails.dateOfDeath ) }}
 {% endset %}
@@ -345,7 +350,7 @@
       titleText: 'Personal details',
       headingLevel: 3,
       attributes: {'data-qa': 'personalDetailsCard'},
-      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+      classes: cardClasses,
       html: govukSummaryList({
         rows: personalDetailsRows
       }),
@@ -363,7 +368,7 @@
   {{ appSummaryCard({
     titleText: 'Appointments',
     headingLevel: 3,
-    classes: ['govuk-!-margin-bottom-6 app-summary-card--large-title'],
+    classes: cardClasses,
     attributes: {'data-qa': 'scheduleCard'},
     html: schedule,
     actions: {
@@ -391,7 +396,7 @@
       titleText: 'Personal details',
       headingLevel: 3,
       attributes: {'data-qa': 'personalDetailsCard'},
-      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+      classes: cardClasses,
       html: govukSummaryList({
         rows: personalDetailsRows.concat(circumstancesRows)
       }),
@@ -412,7 +417,7 @@
       titleText: 'Addresses, disabilities and personal circumstances',
       headingLevel: 3,
       attributes: {'data-qa': 'personalCircumstancesCard'},
-      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+      classes: cardClasses,
       html: govukSummaryList({
         rows: circumstancesRows
       }),
@@ -512,7 +517,7 @@
       {{ appSummaryCard({
         titleText: sentenceDesription,
         headingLevel: 3,
-        classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+        classes: cardClasses,
         attributes: {'data-qa': 'sentence' + sentence.eventNumber + 'Card'},
         html: sentenceHtml,
         actions: {
@@ -539,7 +544,7 @@
     {{ appSummaryCard({
       titleText: 'Sentence',
       headingLevel: 3,
-      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+      classes: cardClasses,
       attributes: {'data-qa': 'sentenceCard'},
       html: sentenceHtml
     }) }}
@@ -631,7 +636,7 @@
     titleText: 'Activity and compliance',
     headingLevel: 3,
     attributes: {'data-qa': 'activityAndComplianceCard'},
-    classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+    classes: cardClasses,
     html: activityAndCompliance
   }) }}
 

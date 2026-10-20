@@ -112,7 +112,7 @@ const render = (model = {} as Partial<TestModel>, session = {}) => {
     params: {
       crn,
       id: contactId,
-      contactId: contactId,
+      contactId,
     },
     session: {
       data: {

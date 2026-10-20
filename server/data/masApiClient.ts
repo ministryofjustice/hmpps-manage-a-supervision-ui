@@ -87,6 +87,10 @@ export default class MasApiClient extends RestClient {
     return this.get({ path: `/user/${username}/appointments`, handleTimeout: true })
   }
 
+  async getUserAppointmentsV2(username: string): Promise<UserAppontment> {
+    return this.get({ path: `/v2/user/${username}/appointments`, handleTimeout: true })
+  }
+
   async getOverview(crn: string, sentenceNumber = '1'): Promise<Overview | null> {
     const queryParam = `?sentenceNumber=${sentenceNumber}`
     return this.get({ path: `/overview/${crn}${queryParam}`, handle404: false })
@@ -542,6 +546,27 @@ export default class MasApiClient extends RestClient {
     const pageQuery = `${new URLSearchParams(searchParams).toString()}`
     return this.get({
       path: `/user/${username}/schedule/${type}${pageQuery ? '?' : ''}${pageQuery}`,
+      handle404: false,
+      handle500: false,
+    })
+  }
+
+  async getUserScheduleV2({
+    username,
+    page,
+    sortBy,
+    ascending,
+    size,
+    type = 'upcoming',
+    fromDate,
+    toDate,
+  }: GetUserScheduleProps): Promise<UserSchedule> {
+    const searchParams = Object.fromEntries(
+      Object.entries({ size, page, sortBy, ascending, fromDate, toDate }).filter(([_k, v]) => v),
+    ) as Record<string, string>
+    const pageQuery = `${new URLSearchParams(searchParams).toString()}`
+    return this.get({
+      path: `/v2/user/${username}/schedule/${type}${pageQuery ? '?' : ''}${pageQuery}`,
       handle404: false,
       handle500: false,
     })

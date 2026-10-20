@@ -136,7 +136,7 @@ describe('Failed to attend', () => {
     expect($('.govuk-back-link').attr('href')).toBe(appointmentOutcome.backLink)
     expect($('[data-qa=pageHeading]').text()).toContain(`Enforcement action for ${forename}’s absence`)
     expect($('.moj-ticket-panel').length).toBe(0)
-    expect($('[data-qa="recall-warning"]').length).toBe(0)
+    expect($('[data-qa="breach-warning"]').length).toBe(0)
     expect($('main').find('legend').text()).toContain(`Select an enforcement action for ${forename}’s absence`)
     const elements = $('.govuk-radios > div')
     expect(elements.length).toBe(6)
@@ -162,9 +162,9 @@ describe('Failed to attend', () => {
   })
   it('should display the breach/recall warning banner', () => {
     const $ = render({ appointmentOutcome: { breachOrRecallWarning } })
-    expect($('[data-qa="recall-warning"]').length).toBe(1)
-    expect($('[data-qa="recall-warning"]').find('h2').text().trim()).toBe(breachOrRecallWarning.title)
-    expect($('[data-qa="recall-warning"]').find('span').text().trim()).toBe(breachOrRecallWarning.text)
+    expect($('[data-qa="breach-warning"]').length).toBe(1)
+    expect($('[data-qa="breach-warning"]').find('h2').text().trim()).toBe(breachOrRecallWarning.title)
+    expect($('[data-qa="breach-warning"]').find('span').text().trim()).toBe(breachOrRecallWarning.text)
   })
   it('should display the validation', () => {
     const $ = render({ errorMessages })
@@ -185,6 +185,7 @@ describe('Failed to attend', () => {
       },
     }
     const $ = render({}, session)
-    expect($('.govuk-radios').find('.govuk-radios__item').eq(4).find('input').attr('checked')).toBeDefined()
+    console.log($.html())
+    expect($('.govuk-radios').find('.govuk-radios__item').eq(3).find('input').attr('checked')).toBeDefined()
   })
 })

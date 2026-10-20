@@ -1,7 +1,13 @@
 import * as cheerio from 'cheerio'
 import httpMocks from 'node-mocks-http'
 import { createNunjucksTestEnv } from '../../../testutils/nunjucksTestEnv'
-import { AppointmentOutcomeProps, AppointmentOutcomeSentence, AppResponse, OutcomeTicket } from '../../../models/Locals'
+import {
+  AppointmentOutcomeProps,
+  AppointmentOutcomeSentence,
+  AppResponse,
+  BreachOrRecallWarning,
+  OutcomeTicket,
+} from '../../../models/Locals'
 import { Activity } from '../../../data/model/schedule'
 import { AppointmentEnforcementAction, AttendedCompliedAppointment } from '../../../models/Appointments'
 import { Option } from '../../../models/Option'
@@ -39,6 +45,12 @@ const ticket: OutcomeTicket = {
   title: 'James has had multiple counts of non-compliance in the past 12 months',
   html: '<p class="govuk-body">You should consider initiating a breach.</p><p class="govuk-body"><a class="govuk-link" href="" target="_blank" rel="noopener noreferrer">View a list of James’s non-compliance (opens in new tab)</a>.</p>',
   type: 'RED',
+}
+
+const breachOrRecallWarning: BreachOrRecallWarning = {
+  title: `There is a live recall for this sentence`,
+  text: `The recall for sentence order was initiated on 10 October 2026.`,
+  type: 'RECALL',
 }
 
 const errorMessages: Record<string, string> = {
@@ -125,6 +137,7 @@ describe('Attended - failed to comply', () => {
     expect($('.govuk-back-link').attr('href')).toBe(appointmentOutcome.backLink)
     expect($('[data-qa=pageHeading]').text()).toContain(`Enforcement action for ${forename}’s failure to comply`)
     expect($('.moj-ticket-panel').length).toBe(0)
+    expect($('[data-qa="recall-warning"]').length).toBe(0)
     expect($('main').find('legend').text()).toContain(`Select an action for ${forename}’s failure to comply`)
     const elements = $('.govuk-radios > div')
     expect(elements.length).toBe(7)
@@ -147,6 +160,12 @@ describe('Attended - failed to comply', () => {
     expect($('.moj-ticket-panel').find('h2').text().trim()).toBe(ticket.title)
     expect($('.moj-ticket-panel').html().trim()).toContain(ticket.html)
     expect($('.moj-ticket-panel').find('.moj-ticket-panel__content--red').length).toBe(1)
+  })
+  it('should display the breach/recall warning banner', () => {
+    const $ = render({ appointmentOutcome: { breachOrRecallWarning } })
+    expect($('[data-qa="recall-warning"]').length).toBe(1)
+    expect($('[data-qa="recall-warning"]').find('h2').text().trim()).toBe(breachOrRecallWarning.title)
+    expect($('[data-qa="recall-warning"]').find('span').text().trim()).toBe(breachOrRecallWarning.text)
   })
   it('should display the validation', () => {
     const $ = render({ errorMessages })

@@ -185,7 +185,6 @@ describe('Failed to attend', () => {
       },
     }
     const $ = render({}, session)
-    console.log($.html())
     expect($('.govuk-radios').find('.govuk-radios__item').eq(3).find('input').attr('checked')).toBeDefined()
   })
 })

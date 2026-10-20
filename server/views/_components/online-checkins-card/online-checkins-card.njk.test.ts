@@ -49,6 +49,20 @@ describe('appOnlineCheckinsCard', () => {
       expect($('[data-qa="checkinValue"]').text()).toBe('No online check in scheduled')
       expect(visibleLinkText($)).toBe('Manage online check ins')
     })
+
+    describe('when check ins are ad hoc', () => {
+      const adHocCheckin = { ...verifiedCheckin, mode: 'AD_HOC' }
+
+      it('shows the upcoming check in date', () => {
+        const $ = render({ checkin: adHocCheckin, upcomingCheckinDate: '2025-11-10' })
+        expect($('[data-qa="checkinValue"]').text()).toBe('10 November 2025')
+      })
+
+      it('does not fall back to the first check in date when there is no upcoming check in', () => {
+        const $ = render({ checkin: adHocCheckin })
+        expect($('[data-qa="checkinValue"]').text()).toBe('No online check in scheduled')
+      })
+    })
   })
 
   describe('when check ins have not been set up', () => {

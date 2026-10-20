@@ -5,7 +5,8 @@
 {% if checkin.status === 'VERIFIED' %}
   {% set linkText = 'Manage online check ins' %}
   {% set label = 'Next online check in' %}
-  {% set value = (params.upcomingCheckinDate or checkin.firstCheckin) | dateWithYear or 'No online check in scheduled' %}
+  {% set nextDate = params.upcomingCheckinDate if checkin.mode === 'AD_HOC' else (params.upcomingCheckinDate or checkin.firstCheckin) %}
+  {% set value = nextDate | dateWithYear if nextDate else 'No online check in scheduled' %}
 {% elif checkin.status === 'INACTIVE' %}
   {% set linkText = 'View all online check in details' %}
   {% set label = 'Status' %}
@@ -14,6 +15,11 @@
   {% set linkText = 'Set up online check ins' %}
   {% set label = 'Status' %}
   {% set value = params.eligibility.message or 'Online check ins not set up' %}
+{% endif %}
+
+{% if params.eligibility.outcome === 'INELIGIBLE' %}
+    {% set label = 'Status' %}
+    {% set value = params.eligibility.message %}
 {% endif %}
 
 {% set linkHref = params.manageHref if checkin.status in ['VERIFIED', 'INACTIVE'] else params.setupHref %}

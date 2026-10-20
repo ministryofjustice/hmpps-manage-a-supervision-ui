@@ -5,7 +5,7 @@
   pageHeading: [title, "Arrange appointment"]
 }) %}
 {% set backLink = change | default('/case/' + crn + '/arrange-appointment/' + id + '/text-message-confirmation') %}
-{% if not allowSms %}
+{% if not allowSms and not change %}
 {% set backLink = '/case/' + crn + '/arrange-appointment/' + id + '/location-date-time' %}
 {% endif %}
 {% set personForename = headerPersonName.forename %}

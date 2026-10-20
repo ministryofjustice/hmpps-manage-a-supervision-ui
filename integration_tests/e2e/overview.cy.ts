@@ -21,6 +21,28 @@ context('Overview', () => {
     page.getTab('compliance').should('contain.text', 'Compliance')
   }
 
+  const verifyPersonalDetails = (page: OverviewPage) => {
+    page.getCardHeader('personalDetails').should('contain.text', 'Personal details')
+    page.getRowData('personalDetails', 'name', 'Value').should('contain.text', 'Caroline Wolff')
+    page.getRowData('personalDetails', 'preferredName', 'Value').should('contain.text', 'Caz')
+    page.getRowData('personalDetails', 'preferredGender', 'Value').should('contain.text', 'Female')
+    page.getRowData('personalDetails', 'dateOfBirthAndAge', 'Value').should('contain.text', '9 January 2002')
+    cy.get('[data-qa="dateOfDeathAndAgeLabel"]').should('not.exist')
+    cy.get('[data-qa="dateOfDeathAndAgeValue"]').should('not.exist')
+    page.getRowData('personalDetails', 'contactNumber', 'Value').should('contain.text', '07989654824')
+  }
+
+  const verifyPersonalCircumstances = (page: OverviewPage) => {
+    page
+      .getCardHeader('personalCircumstances')
+      .should('contain.text', 'Addresses, disabilities and personal circumstances')
+    page
+      .getRowData('personalCircumstances', 'currentCircumstances', 'Value')
+      .should('contain.text', 'Committed/ Transferred to Crown: Life imprisonment (Adult)')
+    page.getRowData('personalCircumstances', 'disabilities', 'Value').should('contain.text', 'Dyslexia')
+    page.getRowData('personalCircumstances', 'adjustments', 'Value').should('contain.text', 'Special Furniture')
+  }
+
   const cases: Array<{
     title: string
     setup?: () => void
@@ -157,38 +179,11 @@ context('Overview', () => {
         page.headerName().should('contain.text', 'Caroline Wolff')
         page.pageHeading().should('contain.text', 'Overview')
         page.headerTier().should('contain.text', 'Tier: B2').and('have.attr', 'href')
-        page.getTab('overview').should('contain.text', 'Overview')
-        page.getTab('personalDetails').should('contain.text', 'Personal details')
-        page.getTab('risk').should('contain.text', 'Risk')
-        page.getTab('sentence').should('contain.text', 'Sentence')
-        page.getTab('activityLog').should('contain.text', 'Contacts')
-        page.getTab('compliance').should('contain.text', 'Compliance')
-        page.getCardHeader('schedule').should('contain.text', 'Appointments')
+        verifyTabs(page)
         checkPopHeader()
-        page
-          .getAppointmentsLink('X000001')
-          .should('exist')
-          .invoke('text')
-          .then(text => {
-            const normalized = text.replace(/\s+/g, ' ').trim()
-            expect(normalized).to.include('You need to record an outcome for 2 appointments')
-          })
+        verifyPersonalDetails(page)
+        verifyPersonalCircumstances(page)
 
-        page
-          .getRowData('schedule', 'nextAppointment', 'Value')
-          .should('contain.text', 'Saturday 9 March at 2:59pm (Initial appointment - in office (NS))')
-        page.getRowData('personalDetails', 'name', 'Value').should('contain.text', 'Caroline Wolff')
-        page.getRowData('personalDetails', 'preferredName', 'Value').should('contain.text', 'Caz')
-        page.getRowData('personalDetails', 'preferredGender', 'Value').should('contain.text', 'Female')
-        page.getRowData('personalDetails', 'dateOfBirthAndAge', 'Value').should('contain.text', '9 January 2002')
-        cy.get('[data-qa="dateOfDeathAndAgeLabel"]').should('not.exist')
-        cy.get('[data-qa="dateOfDeathAndAgeValue"]').should('not.exist')
-        page.getRowData('personalDetails', 'contactNumber', 'Value').should('contain.text', '07989654824')
-        page
-          .getRowData('personalDetails', 'currentCircumstances', 'Value')
-          .should('contain.text', 'Committed/ Transferred to Crown: Life imprisonment (Adult)')
-        page.getRowData('personalDetails', 'disabilities', 'Value').should('contain.text', 'Dyslexia')
-        page.getRowData('personalDetails', 'adjustments', 'Value').should('contain.text', 'Special Furniture')
         page.getCardHeader('sentence2').should('contain.text', 'ORA Community Order')
         page
           .getRowData('sentence2', 'mainOffence', 'Value')

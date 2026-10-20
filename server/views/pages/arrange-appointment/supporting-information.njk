@@ -5,7 +5,7 @@
   pageHeading: [title, "Arrange appointment"]
 }) %}
 {% set backLink = change | default('/case/' + crn + '/arrange-appointment/' + id + '/text-message-confirmation') %}
-{% if not allowSms and not change %}
+{% if not allowSms %}
 {% set backLink = '/case/' + crn + '/arrange-appointment/' + id + '/location-date-time' %}
 {% endif %}
 {% set personForename = headerPersonName.forename %}
@@ -16,7 +16,6 @@
     {% include "../../partials/_risk-to-staff-alert.njk" %}
 {% endblock %}
 {% block form %}
-
     {{ govukCharacterCount({
    hint: {
         text: "You can add any details that may help you with the appointment. Use paragraphs to make your notes easy to read."

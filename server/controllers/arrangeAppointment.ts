@@ -521,11 +521,9 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
       await sendAuditMessage(res, 'ADD_MAS_APPOINTMENT_SUPPORTING_INFO', crn, SubjectType.CRN)
       const isInPast = appointmentDateIsInPast(req, res)
       const back = 'date-time'
-
       const { data } = req.session
       const isSensitive = getDataValue(data, ['appointments', crn, id, 'sensitivityLocked'])
-      const allowSms = getDataValue<AllowSms>(data, ['personalDetails', crn, 'overview', 'allowSms'])
-
+      const allowSms = getDataValue<boolean>(data, ['personalDetails', crn, 'overview', 'allowSms'])
       return res.render(`pages/arrange-appointment/supporting-information`, {
         crn,
         id,
@@ -534,7 +532,7 @@ const arrangeAppointmentController: Controller<typeof routes, void | AppResponse
         maxCharCount,
         isInPast,
         isSensitive,
-        allowSms: allowSms !== 'NO',
+        allowSms: allowSms !== false,
       })
     }
   },

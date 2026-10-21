@@ -80,10 +80,7 @@ export const getSmsConfirmation = (hmppsAuthClient: HmppsAuthClient): Route<Prom
 
       if (res.locals?.flags?.enableLastTextMessage) {
         try {
-          console.log('Trying to get last sms status')
           lastSmsStatusResponse = await supervisionAppointmentClient.getLatestSmsStatusByCrn(crn)
-          console.log(lastSmsStatusResponse)
-
           lastSmsStatus = !responseIsErrorSummary<LastSmsStatusResponse>(lastSmsStatusResponse)
             ? lastSmsStatusResponse
             : null

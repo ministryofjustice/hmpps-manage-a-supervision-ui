@@ -35,7 +35,7 @@ const getLastSmsText = (lastSmsStatus: LastSmsStatusResponse | null): string | n
     }
   }
 
-  return null
+  return `${prefix} sent on ${sentAt} — delivery status unavailable`
 }
 
 export const getSmsConfirmation = (hmppsAuthClient: HmppsAuthClient): Route<Promise<void>> => {

@@ -207,6 +207,26 @@ describe('middleware/getSmsConfirmation', () => {
         )
         expect(nextSpy).toHaveBeenCalledWith()
       })
+
+      it('should show delivery status unavailable when the last SMS status is null', async () => {
+        jest
+          .spyOn(MasApiClient.prototype, 'getPersonalDetailsUpdated')
+          .mockResolvedValueOnce(mockPersonalDetailsUpdated)
+        jest
+          .spyOn(SupervisionAppointmentClient.prototype, 'getLatestSmsStatusByCrn')
+          .mockResolvedValueOnce(getLastSmsStatus({ status: null }))
+
+        const req = buildRequest()
+        getSmsPreviewSpy.mockImplementationOnce(() => () => Promise.resolve(mockPreview))
+
+        await getSmsConfirmation(hmppsAuthClient)(req, res, nextSpy)
+
+        expect(res.locals.smsConfirmation.overview).toContain(
+          'Last text message: sent on 16 October 2025 — delivery status unavailable',
+        )
+        expect(nextSpy).toHaveBeenCalledWith()
+      })
+
       it('should return the correct overview if no sms sent in last 90 days', async () => {
         jest
           .spyOn(MasApiClient.prototype, 'getPersonalDetailsUpdated')
@@ -235,6 +255,7 @@ describe('middleware/getSmsConfirmation', () => {
         expect(nextSpy).toHaveBeenCalledWith()
       })
     })
+
     it('should return the correct overview if sms preview returns a 500 error', async () => {
       jest.spyOn(MasApiClient.prototype, 'getPersonalDetailsUpdated').mockResolvedValueOnce(mockPersonalDetailsUpdated)
       jest

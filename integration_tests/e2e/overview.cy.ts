@@ -32,6 +32,22 @@ context('Overview', () => {
     page.getRowData('personalDetails', 'contactNumber', 'Value').should('contain.text', '07989654824')
   }
 
+  const verifyAppointments = (page: OverviewPage) => {
+    page.getCardHeader('schedule').should('contain.text', 'Appointments')
+    page
+      .getAppointmentsLink('X000001')
+      .should('exist')
+      .invoke('text')
+      .then(text => {
+        const normalized = text.replace(/\s+/g, ' ').trim()
+        expect(normalized).to.include('You need to record an outcome for 2 appointments')
+      })
+
+    page
+      .getRowData('schedule', 'nextAppointment', 'Value')
+      .should('contain.text', 'Saturday 9 March at 2:59pm (Initial appointment - in office (NS))')
+  }
+
   const verifySentences = (page: OverviewPage) => {
     page.getCardHeader('sentence2').should('contain.text', 'ORA Community Order')
     page
@@ -153,14 +169,21 @@ context('Overview', () => {
     assertions: (page: OverviewPage) => void
   }> = [
     {
-      title: 'Overview page is rendered',
+      title:
+        'Overview page is rendered with a supervision package and appointments card when enableNewOverview is false',
       setup: () => stubSupervisionPackage(true),
       url: '/case/X000001',
-      assertions: () => cy.get('.supervision-package').should('exist'),
+      assertions: page => {
+        cy.get('.supervision-package').should('exist')
+        page.getCardHeader('schedule').should('exist')
+      },
     },
     {
       title: 'Overview page is rendered when enableNewOverview is true',
-      setup: () => cy.task('stubFeatureFlag', { key: 'enableNewOverview', enabled: true }),
+      setup: () => {
+        cy.task('stubFeatureFlag', { key: 'enableNewOverview', enabled: true })
+        stubSupervisionPackage(true)
+      },
       url: '/case/X000001',
       assertions: page => {
         page.headerCrn().should('contain.text', 'X000001')
@@ -169,6 +192,8 @@ context('Overview', () => {
         page.headerTier().should('contain.text', 'Tier: B2').and('have.attr', 'href')
         verifyTabs(page)
         checkPopHeader()
+        cy.get('.supervision-package').should('exist')
+        page.getCardHeader('schedule').should('not.exist')
         verifyPersonalDetails(page)
         verifySentences(page)
         verifyPersonalCircumstances(page)
@@ -185,6 +210,15 @@ context('Overview', () => {
             const recentCase = JSON.parse(JSON.stringify(result))
             expect(expected, recentCase)
           })
+      },
+    },
+    {
+      title: 'Appointments card is rendered if no supervision package when enableNewOverview is true',
+      setup: () => cy.task('stubFeatureFlag', { key: 'enableNewOverview', enabled: true }),
+      url: '/case/X778160',
+      assertions: page => {
+        cy.get('.supervision-package').should('not.exist')
+        page.getCardHeader('schedule').should('exist')
       },
     },
     {

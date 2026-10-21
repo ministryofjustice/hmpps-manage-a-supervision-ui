@@ -333,17 +333,21 @@
     }) }}
   {% endset %}
 
-  {{ supervisionPackage({
-    historyHref: tierUrlV3 + '/history',
-    arrangeAppointmentHref: '/case/' + crn + '/arrange-appointment/sentence?back=' + url,
-    updateRiskFlagHref: deliusDeepLinkUrl('RegisterSummary', crn),
-    crn: crn,
-    oasysReviewHref: oasysLink,
-    deliusBaseURL: deliusHomepageUrl(),
-    openInNewTab: true,
-    nextAppointmentHref: ('/case/' + crn + '/appointments/appointment/' + supervisionPackageDetails.nextAppointment.id + '/manage?back=' + url) if supervisionPackageDetails.nextAppointment.id else '',
-    allAppointmentsHref: '/case/' + crn + '/appointments'
-  } | merge(supervisionPackageDetails or {}) | merge(tierDetails.calculation or {})) }}
+  {% set supervisionPackageHtml -%}
+    {{ supervisionPackage({
+      historyHref: tierUrlV3 + '/history',
+      arrangeAppointmentHref: '/case/' + crn + '/arrange-appointment/sentence?back=' + url,
+      updateRiskFlagHref: deliusDeepLinkUrl('RegisterSummary', crn),
+      crn: crn,
+      oasysReviewHref: oasysLink,
+      deliusBaseURL: deliusHomepageUrl(),
+      openInNewTab: true,
+      nextAppointmentHref: ('/case/' + crn + '/appointments/appointment/' + supervisionPackageDetails.nextAppointment.id + '/manage?back=' + url) if supervisionPackageDetails.nextAppointment.id else '',
+      allAppointmentsHref: '/case/' + crn + '/appointments'
+    } | merge(supervisionPackageDetails or {}) | merge(tierDetails.calculation or {})) }}
+  {%- endset %}
+
+  {{ supervisionPackageHtml | safe }}
 
   {% if flags.enableNewOverview %}
     {{ appSummaryCard({
@@ -365,21 +369,23 @@
     }) }}
   {% endif %}
 
-  {{ appSummaryCard({
-    titleText: 'Appointments',
-    headingLevel: 3,
-    classes: cardClasses,
-    attributes: {'data-qa': 'scheduleCard'},
-    html: schedule,
-    actions: {
-      items: [
-        {
-          text: 'View appointments',
-          href: crn + '/appointments'
-        }
-      ]
-    }
-  }) }}
+  {% if not (supervisionPackageHtml | trim) or not flags.enableNewOverview %}
+    {{ appSummaryCard({
+      titleText: 'Appointments',
+      headingLevel: 3,
+      classes: cardClasses,
+      attributes: {'data-qa': 'scheduleCard'},
+      html: schedule,
+      actions: {
+        items: [
+          {
+            text: 'View appointments',
+            href: crn + '/appointments'
+          }
+        ]
+      }
+    }) }}
+  {% endif %}
 
   {{ appOnlineCheckinsCard({
     checkin: offenderCheckinsByCRNResponse,

@@ -266,6 +266,7 @@
     "@opentelemetry/core": "2.10.0",
     "brace-expansion": "5.0.12",
     "shell-quote": "1.11.0",
+    "undici": "6.29.1",
     "@ministryofjustice/hmpps-auth-clients": "$@ministryofjustice/hmpps-auth-clients"
   }
 }

@@ -38,4 +38,5 @@ export class FeatureFlags {
   enableNDeliusRoshOverviewPage?: boolean = undefined
   enableNDeliusRoshAlertsPage?: boolean = undefined
   enableAppointmentPatchAlerts?: boolean = undefined
+  enableHomePageV2API?: boolean = undefined
 }

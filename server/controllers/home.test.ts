@@ -284,6 +284,12 @@ describe('homeController', () => {
           totalAppointments: 1,
           totalOutcomes: 1,
         } as any)
+        jest.spyOn(MasApiClient.prototype, 'getUserAppointmentsV2').mockResolvedValue({
+          appointments: mockAppointments,
+          outcomes: mockOutcomes,
+          totalAppointments: 1,
+          totalOutcomes: 1,
+        } as any)
         jest.spyOn(MasApiClient.prototype, 'getEnforcementContacts').mockResolvedValue({
           enforcementContacts: mockEnforcementContacts,
         } as any)
@@ -411,6 +417,15 @@ describe('homeController', () => {
             disableEnforcementContacts: true,
           }),
         )
+      })
+
+      it('should call getUserAppointmentsV2 if enableHomepageAPIV2 flag is true', async () => {
+        const resOld = mockAppResponse({ flags: { enableHomePageV2API: true } })
+        const getUserAppointmentsV2Spy = jest.spyOn(MasApiClient.prototype, 'getUserAppointmentsV2')
+
+        await controllers.home.getHomeOld(hmppsAuthClient)(req, resOld)
+
+        expect(getUserAppointmentsV2Spy).toHaveBeenCalled()
       })
     })
 

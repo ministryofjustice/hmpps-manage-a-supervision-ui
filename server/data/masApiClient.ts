@@ -76,6 +76,7 @@ interface GetUserScheduleProps {
   type: string
   fromDate?: string
   toDate?: string
+  version?: string
 }
 
 export default class MasApiClient extends RestClient {
@@ -85,6 +86,15 @@ export default class MasApiClient extends RestClient {
 
   async getUserAppointments(username: string): Promise<UserAppontment> {
     return this.get({ path: `/user/${username}/appointments`, handleTimeout: true })
+  }
+
+  async getUserAppointmentsV2(username: string, fromDate?: string, toDate?: string): Promise<UserAppontment> {
+    const queryParameters = new URLSearchParams({})
+
+    if (fromDate) queryParameters.append('fromDate', fromDate)
+    if (toDate) queryParameters.append('toDate', toDate)
+
+    return this.get({ path: `/v2/user/${username}/appointments?${queryParameters.toString()}`, handleTimeout: true })
   }
 
   async getOverview(crn: string, sentenceNumber = '1'): Promise<Overview | null> {
@@ -536,12 +546,49 @@ export default class MasApiClient extends RestClient {
     fromDate,
     toDate,
   }: GetUserScheduleProps): Promise<UserSchedule> {
+    return this.getUserScheduleShared({ username, page, sortBy, ascending, size, type, fromDate, toDate })
+  }
+
+  async getUserScheduleV2({
+    username,
+    page,
+    sortBy,
+    ascending,
+    size,
+    type = 'upcoming',
+    fromDate,
+    toDate,
+  }: GetUserScheduleProps): Promise<UserSchedule> {
+    return this.getUserScheduleShared({
+      username,
+      page,
+      sortBy,
+      ascending,
+      size,
+      type,
+      fromDate,
+      toDate,
+      version: '/v2',
+    })
+  }
+
+  async getUserScheduleShared({
+    username,
+    page,
+    sortBy,
+    ascending,
+    size,
+    type = 'upcoming',
+    fromDate,
+    toDate,
+    version = '',
+  }: GetUserScheduleProps): Promise<UserSchedule> {
     const searchParams = Object.fromEntries(
       Object.entries({ size, page, sortBy, ascending, fromDate, toDate }).filter(([_k, v]) => v),
     ) as Record<string, string>
     const pageQuery = `${new URLSearchParams(searchParams).toString()}`
     return this.get({
-      path: `/user/${username}/schedule/${type}${pageQuery ? '?' : ''}${pageQuery}`,
+      path: `${version}/user/${username}/schedule/${type}${pageQuery ? '?' : ''}${pageQuery}`,
       handle404: false,
       handle500: false,
     })

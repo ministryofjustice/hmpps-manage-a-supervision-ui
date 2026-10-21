@@ -5,6 +5,7 @@ import DeliusClient, { AppointmentSummary, Homepage } from '../data/deliusClient
 import MasApiClient from '../data/masApiClient'
 import sendAuditMessage, { SubjectType } from '../middleware/sendAuditMessage'
 import { EnforcementContact, EnforcementContactsResponse } from '../data/model/schedule'
+import { UserAppontment } from '../data/model/caseload'
 
 const routes = ['getHome', 'getHomeOld'] as const
 
@@ -71,15 +72,21 @@ const homeController: Controller<typeof routes, void> = {
     return async function getHomeOld(req, res) {
       const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
       const masClient = new MasApiClient(token)
+      let homepage: UserAppontment
+      if (!res.locals.flags?.disableUserAppointments) {
+        homepage = res.locals.flags?.enableHomePageV2API
+          ? await masClient.getUserAppointmentsV2(res.locals.user.username)
+          : await masClient.getUserAppointments(res.locals.user.username)
+      } else {
+        homepage = { appointments: [], outcomes: [], totalAppointments: 0, totalOutcomes: 0, timeoutError: undefined }
+      }
       const {
         appointments,
         outcomes,
         totalAppointments,
         totalOutcomes,
         timeoutError: appointmentsTimeoutError,
-      } = res.locals.flags?.disableUserAppointments
-        ? { appointments: [], outcomes: [], totalAppointments: 0, totalOutcomes: 0, timeoutError: undefined }
-        : await masClient.getUserAppointments(res.locals.user.username)
+      } = homepage
       const pageNum: number = req.query.page ? Number.parseInt(req.query.page as string, 10) : 1
 
       let enforcementActions: EnforcementContact[] = []

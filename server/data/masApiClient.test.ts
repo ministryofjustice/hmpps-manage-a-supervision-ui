@@ -46,6 +46,17 @@ describe('masApiClient', () => {
     it.each([
       ['getOverview', '/overview/X000001?sentenceNumber=1', () => masApiClient.getOverview('X000001')],
       ['getOverdueOutcomes', '/appointment/X000001/overdue-outcomes', () => masApiClient.getOverdueOutcomes('X000001')],
+      ['getUserAppointments', '/user/USER1/appointments', () => masApiClient.getUserAppointments('USER1')],
+      [
+        'getUserAppointmentsV2 no parameters',
+        '/v2/user/USER1/appointments',
+        () => masApiClient.getUserAppointmentsV2('USER1'),
+      ],
+      [
+        'getUserAppointmentsV2',
+        '/v2/user/USER1/appointments?fromDate=1&toDate=2',
+        () => masApiClient.getUserAppointmentsV2('USER1', '1', '2'),
+      ],
       ['getSentenceDetails', '/sentence/X000001', () => masApiClient.getSentenceDetails('X000001')],
       ['getSentences', '/sentences/X000001', () => masApiClient.getSentences('X000001')],
       ['getSentences', '/sentences/X000001?number=2', () => masApiClient.getSentences('X000001', '2')],
@@ -321,7 +332,6 @@ describe('masApiClient', () => {
             username: 'USER',
           }),
       ],
-
       [
         'getUserSchedule no params',
         '/user/USER/schedule/upcoming',
@@ -335,7 +345,45 @@ describe('masApiClient', () => {
             username: 'USER',
           }),
       ],
-
+      [
+        'getUserScheduleV2',
+        '/v2/user/USER/schedule/TYPE?size=1&page=1&sortBy=user&ascending=asc',
+        () =>
+          masApiClient.getUserScheduleV2({
+            ascending: 'asc',
+            page: '1',
+            size: '1',
+            sortBy: 'user',
+            type: 'TYPE',
+            username: 'USER',
+          }),
+      ],
+      [
+        'getUserScheduleV2',
+        '/v2/user/USER/schedule/upcoming?size=1&page=1&sortBy=user&ascending=asc',
+        () =>
+          masApiClient.getUserScheduleV2({
+            ascending: 'asc',
+            page: '1',
+            size: '1',
+            sortBy: 'user',
+            type: undefined,
+            username: 'USER',
+          }),
+      ],
+      [
+        'getUserScheduleV2 no params',
+        '/v2/user/USER/schedule/upcoming',
+        () =>
+          masApiClient.getUserScheduleV2({
+            ascending: undefined,
+            page: undefined,
+            size: undefined,
+            sortBy: undefined,
+            type: undefined,
+            username: 'USER',
+          }),
+      ],
       ['getTeamCaseload', '/caseload/team/TCCODE?size=10&page=1', () => masApiClient.getTeamCaseload('TCCODE', '1')],
       ['getTeamCaseload', '/caseload/team/TCCODE?size=10', () => masApiClient.getTeamCaseload('TCCODE', undefined)],
       ['getUserAccess', '/user/USER/access/X000001', () => masApiClient.getUserAccess('USER', 'X000001')],

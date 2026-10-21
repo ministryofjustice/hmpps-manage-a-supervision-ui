@@ -3,7 +3,7 @@ import superagent, { SuperAgentRequest } from 'superagent'
 const stubNoUpcomingAppointments = (): SuperAgentRequest =>
   superagent.post('http://localhost:9091/__admin/mappings').send({
     request: {
-      urlPathPattern: '/mas/user/USER1/schedule/upcoming',
+      urlPathPattern: '/mas/v2/user/USER1/schedule/upcoming',
       method: 'GET',
       queryParameters: {
         page: {
@@ -37,7 +37,7 @@ const stubNoUpcomingAppointments = (): SuperAgentRequest =>
 const stubUpcomingAppointments500Response = (): SuperAgentRequest =>
   superagent.post('http://localhost:9091/__admin/mappings').send({
     request: {
-      urlPathPattern: '/mas/user/USER1/schedule/upcoming',
+      urlPathPattern: '/mas/v2/user/USER1/schedule/upcoming',
       method: 'GET',
       queryParameters: {
         page: {

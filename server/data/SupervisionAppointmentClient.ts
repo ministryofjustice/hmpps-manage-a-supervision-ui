@@ -3,6 +3,7 @@ import RestClient from './restClient'
 
 import {
   EventResponse,
+  LastSmsStatusResponse,
   OutlookEventRequestBody,
   OutlookEventResponse,
   RescheduleEventRequest,
@@ -40,6 +41,14 @@ export default class SupervisionAppointmentClient extends RestClient {
     return this.post({
       data: body,
       path: `/sms/preview`,
+      handle404: true,
+      handle500: true,
+    })
+  }
+
+  async getLatestSmsStatusByCrn(crn: string): Promise<LastSmsStatusResponse | ErrorSummary | null> {
+    return this.get({
+      path: `/sms/status/latest/crn/${crn}`,
       handle404: true,
       handle500: true,
     })

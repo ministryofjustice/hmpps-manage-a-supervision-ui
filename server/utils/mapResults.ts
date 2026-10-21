@@ -1,8 +1,13 @@
 import { ProbationSearchResponse } from '@ministryofjustice/probation-search-frontend/data/probationSearchClient'
 import { DateTime } from 'luxon'
 import { ProbationSearchRequest } from '../data/model/search'
+import ESupervisionClient from '../data/eSupervisionClient'
 
-export function mapResults(response: ProbationSearchResponse, request: ProbationSearchRequest) {
+export async function mapResults(
+  response: ProbationSearchResponse,
+  request: ProbationSearchRequest,
+  onlineCheckInsClient: ESupervisionClient,
+) {
   const returnedProviders =
     response.probationAreaAggregations?.map(p => ({
       value: `${p.code}-${p.description}`,
@@ -18,19 +23,25 @@ export function mapResults(response: ProbationSearchResponse, request: Probation
         selected: true,
       })) ?? []
   return {
-    content: response.content?.map(result => {
-      const activeManager = result.offenderManagers?.filter(manager => manager.active).shift()
-      return {
-        ...result,
-        formattedDateOfBirth: result.dateOfBirth ? DateTime.fromISO(result.dateOfBirth).toFormat('dd/MM/yyyy') : '',
-        imageUrl:
-          result.otherIds?.nomsNumber && result.accessDenied !== true
-            ? `/search/prisoner-image/${result.otherIds?.nomsNumber}`
-            : '/assets/images/NoPhoto@2x.png',
-        officer: `${activeManager?.staff?.surname}, ${activeManager?.staff?.forenames}`,
-        provider: activeManager?.probationArea?.description,
-      }
-    }),
+    content: await Promise.all(
+      response.content?.map(async result => {
+        const activeManager = result.offenderManagers?.filter(manager => manager.active).shift()
+        const esupervisionDetails = await onlineCheckInsClient.getOffenderCheckinsByCRN(result.otherIds?.crn)
+        let imageUrl = '/assets/images/NoPhoto@2x.png'
+        if (esupervisionDetails?.photoUrl) {
+          imageUrl = esupervisionDetails.photoUrl
+        } else if (result.otherIds?.nomsNumber && result.accessDenied !== true) {
+          imageUrl = `/search/prisoner-image/${result.otherIds?.nomsNumber}`
+        }
+        return {
+          ...result,
+          formattedDateOfBirth: result.dateOfBirth ? DateTime.fromISO(result.dateOfBirth).toFormat('dd/MM/yyyy') : '',
+          imageUrl,
+          officer: `${activeManager?.staff?.surname}, ${activeManager?.staff?.forenames}`,
+          provider: activeManager?.probationArea?.description,
+        }
+      }),
+    ),
     query: request.query,
     providers: [...selectedProviders, ...returnedProviders].sort(
       (a, b) => +b.selected - +a.selected || a.text?.localeCompare(b.text),

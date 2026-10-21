@@ -15,6 +15,16 @@ describe('middleware/isRescheduleAppointment', () => {
     })
     expect(isRescheduleAppointment(req)).toEqual(false)
   })
+  it('should return false if req.query.change is not a string', () => {
+    const req = httpMocks.createRequest({
+      query: {
+        change:
+          '../case/X756510/appointments/reschedule/2510042440/d58022bc-d0c7-46b8-aa6f-39ad07741578/check-your-answers',
+      },
+    })
+    expect(() => isRescheduleAppointment(req)).toThrow(new Error('Invalid change parameter passed through'))
+  })
+
   it('should return true if reschedule directory exists in req.query.change', () => {
     const req = httpMocks.createRequest({
       query: {

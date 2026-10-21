@@ -108,17 +108,17 @@ describe('Unacceptable absence', () => {
   it('should render the page in the manage appointment journey', () => {
     loadPage()
     unacceptableAbsencePage = new UnacceptableAbsencePage()
-    unacceptableAbsencePage.checkPageTitle('enforcement action for Alton’s failure to comply')
+    unacceptableAbsencePage.checkPageTitle('Enforcement action for Alton’s unacceptable absence')
   })
   it('should render the page in the arrange appointment journey', () => {
     loadPage({ journey: 'ARRANGE' })
     unacceptableAbsencePage = new UnacceptableAbsencePage()
-    unacceptableAbsencePage.checkPageTitle('enforcement action for Alton’s failure to comply')
+    unacceptableAbsencePage.checkPageTitle('Enforcement action for Alton’s unacceptable absence')
   })
   it('should render the page in the reschedule appointment journey', () => {
     loadPage({ journey: 'RESCHEDULE' })
     unacceptableAbsencePage = new UnacceptableAbsencePage()
-    unacceptableAbsencePage.checkPageTitle('enforcement action for Alton’s failure to comply')
+    unacceptableAbsencePage.checkPageTitle('Enforcement action for Alton’s unacceptable absence')
   })
   it('should show validation error when no option is selected', () => {
     const msg = 'Select an action for their unacceptable absence'

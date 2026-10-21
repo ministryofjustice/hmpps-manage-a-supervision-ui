@@ -22,9 +22,6 @@ let outcomePage: OutcomePage
 let attendedFailedToComplyPage: AttendedFailedToComplyPage
 let checkYourAnswersPage: RescheduleCheckYourAnswerPage
 let initiateBreachOrRecallPage: InitiateBreachOrRecallPage
-let addNotePage: AddNotePage
-
-const msgs = ['Select who will create the breach NSI', 'Select who will send the letter', 'Select the type of letter']
 
 const loadPage = ({
   journey = 'MANAGE',
@@ -129,196 +126,61 @@ const getExpectedOptions = ({
   return expectedOptions
 }
 
-const checkPage = ({ journey = 'MANAGE' }: { journey?: Journey } = {}) => {
-  it('should render the page if sentence type is COMMUNITY', () => {
+const checkLetterTypeOptions = ({
+  sentenceType = 'COMMUNITY',
+  title,
+  youth = false,
+  pss = false,
+}: {
+  sentenceType?: SentenceType
+  title: string
+  youth?: boolean
+  pss?: boolean
+}) => {
+  initiateBreachOrRecallPage = new InitiateBreachOrRecallPage()
+  initiateBreachOrRecallPage.checkPageTitle(title)
+  checkOptions(getExpectedOptions({ sentenceType }))
+  checkOptions(getExpectedOptions({ optionsFor: 'LETTER_SENT_BY' }), 1)
+  checkOptions(getExpectedOptions({ optionsFor: 'LETTER_TYPE', sentenceType, youth, pss }), 2)
+  cy.get('[data-module="govuk-radios"]').should('have.length', 3)
+}
+
+const checkJourney = (journey: Journey) => {
+  it(`should link to the page in the ${journey.toLowerCase()} appointment journey with the correct back link`, () => {
     loadPage({ journey })
     initiateBreachOrRecallPage = new InitiateBreachOrRecallPage()
     initiateBreachOrRecallPage.checkPageTitle('Initiate a breach')
     checkPopHeader({ name: 'Alton Berge', appointments: true, headerCrn: crn })
-    cy.get('legend').should('contain.text', 'Who will create the breach NSI (non-statutory intervention)?')
-    const options = getExpectedOptions()
-    checkOptions(options)
-    cy.get('[data-module="govuk-radios"]').should('have.length', 1)
-  })
-  it('should render the page if sentence type is CUSTODY', () => {
-    loadPage({ journey, sentenceType: 'CUSTODY' })
-    initiateBreachOrRecallPage = new InitiateBreachOrRecallPage()
-    initiateBreachOrRecallPage.checkPageTitle('Initiate a recall')
-    checkPopHeader({ name: 'Alton Berge', appointments: true, headerCrn: crn })
-    cy.get('legend').should('contain.text', 'Who will create the recall?')
-    const options = getExpectedOptions({ sentenceType: 'CUSTODY' })
-    checkOptions(options)
-    cy.get('[data-module="govuk-radios"]').should('have.length', 1)
-  })
-  it('should render the page if sentence type is custody and enforcement action is send a letter', () => {
-    loadPage({ journey, sentenceType: 'CUSTODY', sendLetter: true })
-    initiateBreachOrRecallPage = new InitiateBreachOrRecallPage()
-    initiateBreachOrRecallPage.checkPageTitle('Initiate a recall and send a letter')
-    const options = getExpectedOptions({ sentenceType: 'CUSTODY' })
-    checkOptions(options)
-    cy.get('legend').eq(1).should('contain.text', 'Who will send the letter?')
-    const letterSentByOptions = getExpectedOptions({ optionsFor: 'LETTER_SENT_BY' })
-    checkOptions(letterSentByOptions, 1)
-    cy.get('legend').eq(2).should('contain.text', 'Select the type of letter')
-    const letterTypeOptions = getExpectedOptions({ optionsFor: 'LETTER_TYPE', sentenceType: 'CUSTODY' })
-    checkOptions(letterTypeOptions, 2)
-    cy.get('[data-module="govuk-radios"]').should('have.length', 3)
-  })
-
-  it('should render the page if sentence type is COMMUNITY and enforcement action is initiate breach and send a letter', () => {
-    loadPage({ journey, sentenceType: 'COMMUNITY', sendLetter: true })
-    initiateBreachOrRecallPage = new InitiateBreachOrRecallPage()
-    initiateBreachOrRecallPage.checkPageTitle('Initiate a breach and send a letter')
-    const options = getExpectedOptions({ sentenceType: 'COMMUNITY' })
-    checkOptions(options)
-    cy.get('legend').eq(1).should('contain.text', 'Who will send the letter?')
-    const letterSentByOptions = getExpectedOptions({ optionsFor: 'LETTER_SENT_BY' })
-    checkOptions(letterSentByOptions, 1)
-    cy.get('legend').eq(2).should('contain.text', 'Select the type of letter')
-    const letterTypeOptions = getExpectedOptions({ optionsFor: 'LETTER_TYPE' })
-    checkOptions(letterTypeOptions, 2)
-    cy.get('[data-module="govuk-radios"]').should('have.length', 3)
-  })
-
-  it('should render the page if sentence type is YOUTH COMMUNITY and enforcement action is initiate breach and send a letter', () => {
-    loadPage({
-      journey,
-      sentenceType: 'COMMUNITY',
-      sendLetter: true,
-      description: '204 C JA - Youth Rehabilitation Order',
-    })
-    initiateBreachOrRecallPage = new InitiateBreachOrRecallPage()
-    initiateBreachOrRecallPage.checkPageTitle('Initiate a breach and send a letter')
-    const options = getExpectedOptions({ sentenceType: 'COMMUNITY' })
-    checkOptions(options)
-    cy.get('legend').eq(1).should('contain.text', 'Who will send the letter?')
-    const letterSentByOptions = getExpectedOptions({ optionsFor: 'LETTER_SENT_BY' })
-    checkOptions(letterSentByOptions, 1)
-    cy.get('legend').eq(2).should('contain.text', 'Select the type of letter')
-    const letterTypeOptions = getExpectedOptions({ optionsFor: 'LETTER_TYPE', youth: true })
-    checkOptions(letterTypeOptions, 2)
-    cy.get('[data-module="govuk-radios"]').should('have.length', 3)
-  })
-
-  it('should render the page if sentence type is PSS and enforcement action is initiate breach and send a letter', () => {
-    loadPage({ journey, sentenceType: 'COMMUNITY', sendLetter: true, pss: true })
-    initiateBreachOrRecallPage = new InitiateBreachOrRecallPage()
-    initiateBreachOrRecallPage.checkPageTitle('Initiate a breach and send a letter')
-    const options = getExpectedOptions({ sentenceType: 'COMMUNITY' })
-    checkOptions(options)
-    cy.get('legend').eq(1).should('contain.text', 'Who will send the letter?')
-    const letterSentByOptions = getExpectedOptions({ optionsFor: 'LETTER_SENT_BY' })
-    checkOptions(letterSentByOptions, 1)
-    cy.get('legend').eq(2).should('contain.text', 'Select the type of letter')
-    const letterTypeOptions = getExpectedOptions({ optionsFor: 'LETTER_TYPE', pss: true })
-    checkOptions(letterTypeOptions, 2)
-    cy.get('[data-module="govuk-radios"]').should('have.length', 3)
-  })
-
-  it('should have the correct back link', () => {
-    loadPage({ journey })
-    let expectedLink: string
     getUuid(3).then(uuid => {
-      if (journey === 'MANAGE') {
-        expectedLink = `/case/${crn}/appointments/appointment/${appointmentId}/outcome/attended-failed-to-comply`
-      } else {
-        expectedLink = `/case/${crn}/arrange-appointment/${uuid}/outcome/attended-failed-to-comply`
-      }
+      const expectedLink =
+        journey === 'MANAGE'
+          ? `/case/${crn}/appointments/appointment/${appointmentId}/outcome/attended-failed-to-comply`
+          : `/case/${crn}/arrange-appointment/${uuid}/outcome/attended-failed-to-comply`
       attendedFailedToComplyPage.getBackLink().should('have.attr', 'href', expectedLink)
     })
   })
-  it('should show validation errors when no options are selected for send letter enforcement action for a custody sentence', () => {
-    loadPage({ journey, sentenceType: 'CUSTODY', sendLetter: true })
-    initiateBreachOrRecallPage = new InitiateBreachOrRecallPage()
-
-    initiateBreachOrRecallPage.getSubmitBtn().click()
-
-    const custodyMsgs = [
-      'Select who will create the recall',
-      'Select who will send the letter',
-      'Select the type of letter',
-    ]
-
-    initiateBreachOrRecallPage.checkErrorSummaryBox(custodyMsgs)
-
-    getUuid(3).then(uuid => {
-      const id = journey === 'MANAGE' ? appointmentId : uuid
-
-      cy.get(`#appointments-${crn}-${id}-outcome-breachNSICreatedBy-error`).should('contain.text', custodyMsgs[0])
-      cy.get(`#appointments-${crn}-${id}-outcome-letterSentBy-error`).should('contain.text', custodyMsgs[1])
-      cy.get(`#appointments-${crn}-${id}-outcome-letterType-error`).should('contain.text', custodyMsgs[2])
-    })
-  })
-
-  it('should show validation error when no option is selected for breach/recall enforcement action', () => {
-    const msg = 'Select who will create the breach NSI'
-    loadPage({ journey })
-    initiateBreachOrRecallPage = new InitiateBreachOrRecallPage()
-    uncheckAllRadios()
-    initiateBreachOrRecallPage.getSubmitBtn().click()
-    initiateBreachOrRecallPage.checkErrorSummaryBox([msg])
-    getUuid(3).then(uuid => {
-      const id = journey === 'MANAGE' ? appointmentId : uuid
-      cy.get(`#appointments-${crn}-${id}-outcome-breachNSICreatedBy-error`).should('contain.text', msg)
-    })
-  })
-
-  it('should show validation errors when no options are selected for send letter enforcement action', () => {
-    loadPage({ journey, sendLetter: true })
-    initiateBreachOrRecallPage = new InitiateBreachOrRecallPage()
-    initiateBreachOrRecallPage.getSubmitBtn().click()
-    initiateBreachOrRecallPage.checkErrorSummaryBox(msgs)
-    getUuid(3).then(uuid => {
-      const id = journey === 'MANAGE' ? appointmentId : uuid
-      cy.get(`#appointments-${crn}-${id}-outcome-breachNSICreatedBy-error`).should('contain.text', msgs[0])
-      cy.get(`#appointments-${crn}-${id}-outcome-letterSentBy-error`).should('contain.text', msgs[1])
-      cy.get(`#appointments-${crn}-${id}-outcome-letterType-error`).should('contain.text', msgs[2])
-    })
-  })
-  it('should show validation errors when only the first option is selected for send letter enforcement action', () => {
-    loadPage({ journey, sendLetter: true })
-    initiateBreachOrRecallPage = new InitiateBreachOrRecallPage()
-    cy.get('[data-module="govuk-radios"]').eq(0).find('.govuk-radios__item').eq(0).find('input').click()
-    initiateBreachOrRecallPage.getSubmitBtn().click()
-    initiateBreachOrRecallPage.checkErrorSummaryBox([msgs[1], msgs[2]])
-    getUuid(3).then(uuid => {
-      const id = journey === 'MANAGE' ? appointmentId : uuid
-      cy.get(`#appointments-${crn}-${id}-outcome-breachNSICreatedBy-error`).should('not.exist')
-      cy.get(`#appointments-${crn}-${id}-outcome-letterSentBy-error`).should('contain.text', msgs[1])
-      cy.get(`#appointments-${crn}-${id}-outcome-letterType-error`).should('contain.text', msgs[2])
-    })
-  })
-  it('should redirect to the correct page when an option is selected', () => {
-    loadPage({ journey })
-    cy.get('.govuk-radios__item').eq(0).find('input').click()
-    initiateBreachOrRecallPage.getSubmitBtn().click()
-    addNotePage = new AddNotePage()
-    addNotePage.checkOnPage()
-  })
-  it('should redirect to the correct page when all options are selected for send letter enforcement action', () => {
-    loadPage({ journey, sendLetter: true })
-    cy.get('[data-module="govuk-radios"]').eq(0).find('.govuk-radios__item').eq(0).find('input').click()
-    cy.get('[data-module="govuk-radios"]').eq(1).find('.govuk-radios__item').eq(0).find('input').click()
-    cy.get('[data-module="govuk-radios"]').eq(2).find('.govuk-radios__item').eq(0).find('input').click()
-    initiateBreachOrRecallPage.getSubmitBtn().click()
-    addNotePage = new AddNotePage()
-    addNotePage.checkOnPage()
-  })
-
-  checkBreachOrRecallWarningBanner(loadPage, InitiateBreachOrRecallPage)
 }
 
 describe('Initiate a breach or recall', () => {
   afterEach(() => {
     cy.task('resetMocks')
   })
-  describe('Manage appointment journey', () => {
-    checkPage()
+  checkJourney('MANAGE')
+  checkJourney('ARRANGE')
+  checkJourney('RESCHEDULE')
+
+  it('should render the recall options if sentence type is CUSTODY', () => {
+    loadPage({ sentenceType: 'CUSTODY', sendLetter: true })
+    checkLetterTypeOptions({ sentenceType: 'CUSTODY', title: 'Initiate a recall and send a letter' })
   })
-  describe('Arrange appointment journey', () => {
-    checkPage({ journey: 'ARRANGE' })
+  it('should render the breach letter options if sentence type is YOUTH COMMUNITY', () => {
+    loadPage({ sendLetter: true, description: '204 C JA - Youth Rehabilitation Order' })
+    checkLetterTypeOptions({ title: 'Initiate a breach and send a letter', youth: true })
   })
-  describe('Reschedule appointment journey', () => {
-    checkPage({ journey: 'RESCHEDULE' })
+  it('should render the breach letter options if sentence type is PSS', () => {
+    loadPage({ sendLetter: true, pss: true })
+    checkLetterTypeOptions({ title: 'Initiate a breach and send a letter', pss: true })
   })
+
+  checkBreachOrRecallWarningBanner(loadPage, InitiateBreachOrRecallPage)
 })

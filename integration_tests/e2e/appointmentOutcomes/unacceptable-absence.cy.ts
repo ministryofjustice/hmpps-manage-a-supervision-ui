@@ -17,11 +17,13 @@ import EnforcementActionPage from '../../pages/appointmentOutcomes/enforcement-a
 import { ExpectedOption, Journey, checkOptionRedirects } from './imports'
 import { SentenceType } from '../../../server/data/model/sentenceDetails'
 import RescheduleCheckYourAnswerPage from '../../pages/appointments/reschedule-check-your-answer.page'
+import UnacceptableAbsencePage from '../../pages/appointmentOutcomes/unacceptable-absence.page'
 
 let manageAppointmentPage: ManageAppointmentPage
 let outcomePage: OutcomePage
 let attendedFailedToComplyPage: AttendedFailedToComplyPage
 let checkYourAnswersPage: RescheduleCheckYourAnswerPage
+let unacceptableAbsencePage: UnacceptableAbsencePage
 
 const loadPage = ({
   journey = 'MANAGE',
@@ -105,12 +107,18 @@ describe('Unacceptable absence', () => {
   })
   it('should render the page in the manage appointment journey', () => {
     loadPage()
+    unacceptableAbsencePage = new UnacceptableAbsencePage()
+    unacceptableAbsencePage.checkPageTitle('enforcement action for Alton’s failure to comply')
   })
   it('should render the page in the arrange appointment journey', () => {
     loadPage({ journey: 'ARRANGE' })
+    unacceptableAbsencePage = new UnacceptableAbsencePage()
+    unacceptableAbsencePage.checkPageTitle('enforcement action for Alton’s failure to comply')
   })
   it('should render the page in the reschedule appointment journey', () => {
     loadPage({ journey: 'RESCHEDULE' })
+    unacceptableAbsencePage = new UnacceptableAbsencePage()
+    unacceptableAbsencePage.checkPageTitle('enforcement action for Alton’s failure to comply')
   })
   it('should show validation error when no option is selected', () => {
     const msg = 'Select an action for their unacceptable absence'

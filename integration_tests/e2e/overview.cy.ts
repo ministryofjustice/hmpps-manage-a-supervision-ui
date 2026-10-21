@@ -200,15 +200,20 @@ context('Overview', () => {
         verifyRisks(page)
         verifyActivityAndCompliance(page)
 
-        const expected =
-          '{"name":"Wolff,Caroline","crn":"X000001","dob":"9 January 2002","age":"22","tierScore":"B2","sentence":"12 month Community order"}'
+        const expected = {
+          name: 'Wolff, Caroline',
+          crn: 'X000001',
+          dob: '18 August 1979',
+          tierScore: 'B2',
+          sentence: '12 month Community order',
+        }
 
         cy.window()
           .its('localStorage')
           .invoke('getItem', 'recentCases')
           .then(result => {
-            const recentCase = JSON.parse(JSON.stringify(result))
-            expect(expected, recentCase)
+            const [recentCase] = JSON.parse(result)
+            expect(recentCase).to.include(expected)
           })
       },
     },

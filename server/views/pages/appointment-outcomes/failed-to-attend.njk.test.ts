@@ -88,6 +88,7 @@ type TestModel = {
   appointmentOutcome: Partial<AppointmentOutcomeProps<AttendedCompliedAppointment | Activity>>
   headerPersonName: Name
   errorMessages?: Record<string, string>
+  flags: Record<string, boolean>
 }
 
 const baseModel: TestModel = {
@@ -95,6 +96,9 @@ const baseModel: TestModel = {
   headerPersonName: {
     forename,
     surname: 'Morrison',
+  },
+  flags: {
+    enablePersonHeader: true,
   },
 }
 
@@ -133,7 +137,9 @@ const render = (model = {} as Partial<TestModel>, session = {}) => {
 describe('Failed to attend', () => {
   it('should render the page', () => {
     const $ = render()
+    console.log($.html())
     expect($('.govuk-back-link').attr('href')).toBe(appointmentOutcome.backLink)
+    expect($('main').find('.person-header').length).toBe(1)
     expect($('[data-qa=pageHeading]').text()).toContain(`Enforcement action for ${forename}’s absence`)
     expect($('.moj-ticket-panel').length).toBe(0)
     expect($('[data-qa="breach-warning"]').length).toBe(0)

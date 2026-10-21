@@ -18,7 +18,7 @@ export default function searchRoutes(router: Router, { hmppsAuthClient, searchSe
       }
       return searchService.get(req, res, next)
     },
-    controllers.search.getSearch(),
+    controllers.search.getSearch(hmppsAuthClient),
   )
 
   router.post('/search/filters', setSearchFilters())

@@ -5,21 +5,26 @@ import sendAuditMessage, { SubjectType } from '../middleware/sendAuditMessage'
 import { HmppsAuthClient } from '../data'
 import PrisonApiClient from '../data/prisonApiClient'
 import { mapResults } from '../utils/mapResults'
+import ESupervisionClient from '../data/eSupervisionClient'
 
 const routes = ['getSearch', 'getPhoto'] as const
 
 const searchController: Controller<typeof routes, void> = {
-  getSearch: () => {
+  getSearch: (hmppsAuthClient: HmppsAuthClient) => {
     return async function getSearch(req, res) {
       req.session.backLink = '/search'
       await sendAuditMessage(res, 'VIEW_MAS_SEARCH', res.locals.user.username, SubjectType.USER)
       if (res.locals.flags.enableSearchV2) {
+        const token = await hmppsAuthClient.getSystemClientToken(req.user.username)
+        const onlineCheckInsClient = new ESupervisionClient(token)
         const config = {
           results: {
             ...res.locals.searchResults,
             response: {
               ...res.locals.searchResults?.response,
-              ...(res.locals.searchResponse ? mapResults(res.locals.searchResponse, res.locals.searchRequest) : {}),
+              ...(res.locals.searchResponse
+                ? await mapResults(res.locals.searchResponse, res.locals.searchRequest, onlineCheckInsClient)
+                : {}),
             },
           },
         }

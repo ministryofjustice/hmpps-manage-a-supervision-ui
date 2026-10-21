@@ -73,7 +73,8 @@ export default function setUpWebSecurity(): Router {
           formAction: [`'self' ${config.apis.hmppsAuth.externalUrl}`],
         },
       },
-      crossOriginEmbedderPolicy: true,
+      // Disabled so cross-origin, check-in images served from S3 presigned URLs are not blocked.
+      crossOriginEmbedderPolicy: false,
     }),
   )
   return router

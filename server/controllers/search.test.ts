@@ -69,7 +69,7 @@ describe('searchController', () => {
         },
       })
       const renderSpy = jest.spyOn(resFlag, 'render')
-      await controllers.search.getSearch()(req, resFlag)
+      await controllers.search.getSearch(hmppsAuthClient)(req, resFlag)
       checkSendAuditMessage(resFlag, 'VIEW_MAS_SEARCH', resFlag.locals.user.username, SubjectType.USER)
       expect(renderSpy).toHaveBeenCalledWith('pages/search-new', { results: { response: {} } })
     })
@@ -80,7 +80,7 @@ describe('searchController', () => {
         },
       })
       const renderSpy = jest.spyOn(resFlag, 'render')
-      await controllers.search.getSearch()(req, resFlag)
+      await controllers.search.getSearch(hmppsAuthClient)(req, resFlag)
       checkSendAuditMessage(resFlag, 'VIEW_MAS_SEARCH', resFlag.locals.user.username, SubjectType.USER)
       expect(renderSpy).toHaveBeenCalledWith('pages/search')
     })

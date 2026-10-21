@@ -32,7 +32,7 @@ const token = { access_token: 'token-1', expires_in: 300 }
 const tokenStore = new TokenStore(null) as jest.Mocked<TokenStore>
 const crn = 'X000001'
 const url = 'manage-people-on-probation-dev.hmpps.service.justice.gov.uk'
-const res = mockAppResponse({ flags: { enableDeliusClient: true, enableHomePageOutcomesWithFilter: true } })
+const res = mockAppResponse({ flags: { enableDeliusClient: true } })
 const renderSpy = jest.spyOn(res, 'render')
 const hmppsAuthClient = new HmppsAuthClient(null) as jest.Mocked<HmppsAuthClient>
 tokenStore.getToken.mockResolvedValue(token.access_token)
@@ -113,7 +113,7 @@ describe('homeController', () => {
         expectHomePageToBeRendered(renderSpy, {
           upcomingAppointments,
           appointmentsRequiringOutcome,
-          appointmentsRequiringOutcomeCount: 1,
+          appointmentsRequiringOutcomeCount: 21,
           enforcementActions: [mockHomepage.enforcementContacts[0]],
           url,
           appointmentsTimeoutError: mockHomepage.timeoutError,
@@ -151,7 +151,7 @@ describe('homeController', () => {
         expectHomePageToBeRendered(renderSpy, {
           upcomingAppointments,
           appointmentsRequiringOutcome,
-          appointmentsRequiringOutcomeCount: 1,
+          appointmentsRequiringOutcomeCount: 21,
           enforcementActions: [mockHomepage.enforcementContacts[0]],
           url,
           appointmentsTimeoutError: mockHomepage.timeoutError,
@@ -171,56 +171,6 @@ describe('homeController', () => {
         expect(getHomeOldSpy).toHaveBeenCalledWith(hmppsAuthClient)
         expect(legacyHandler).toHaveBeenCalledWith(req, resWithLegacyFlag)
         getHomeOldSpy.mockRestore()
-      })
-    })
-
-    describe('outcomes filter with 3 month feature flag enabled', () => {
-      it('should filter appointments requiring outcomes to only include the last 3 months and update count', async () => {
-        const recentAppointment = {
-          id: 1,
-          name: { surname: 'Recent', forename: 'Person' },
-          crn: 'X000002',
-          type: 'Office appointment',
-          startDateTime: DateTime.now().startOf('day').minus({ months: 1 }).toISO() as string,
-        }
-        const boundaryAppointment = {
-          id: 3,
-          name: { surname: 'Boundary', forename: 'Person' },
-          crn: 'X000004',
-          type: 'Office appointment',
-          startDateTime: DateTime.now().startOf('day').minus({ months: 3 }).plus({ minutes: 1 }).toISO() as string,
-        }
-        const oldAppointment = {
-          id: 2,
-          name: { surname: 'Old', forename: 'Person' },
-          crn: 'X000003',
-          type: 'Office appointment',
-          startDateTime: DateTime.now().startOf('day').minus({ months: 3, days: 1 }).toISO() as string,
-        }
-        const homepageWithMixedOutcomeDates = {
-          ...mockHomepage,
-          appointmentsRequiringOutcome: [recentAppointment, boundaryAppointment, oldAppointment],
-          appointmentsRequiringOutcomeCount: 3,
-        }
-        const resWithFilterFlag = mockAppResponse({
-          flags: { enableDeliusClient: true, enable3MonthsOutcomes: true, enableHomePageOutcomesWithFilter: true },
-        })
-        const renderSpyWithFilter = jest.spyOn(resWithFilterFlag, 'render')
-        jest
-          .spyOn(DeliusClient.prototype, 'getHomepage')
-          .mockImplementation(() => Promise.resolve(homepageWithMixedOutcomeDates))
-
-        await controllers.home.getHome(hmppsAuthClient)(req, resWithFilterFlag)
-
-        expectHomePageToBeRendered(renderSpyWithFilter, {
-          upcomingAppointments: mockHomepage.upcomingAppointments,
-          appointmentsRequiringOutcome: [recentAppointment, boundaryAppointment],
-          appointmentsRequiringOutcomeCount: 2,
-          enforcementActions: [mockHomepage.enforcementContacts[0]],
-          url,
-          appointmentsTimeoutError: homepageWithMixedOutcomeDates.timeoutError,
-          enforcementTimeoutError: undefined,
-        })
       })
     })
 

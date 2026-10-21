@@ -15,11 +15,9 @@ const homeController: Controller<typeof routes, void> = {
       if (!res.locals.flags?.enableDeliusClient) return homeController.getHomeOld(hmppsAuthClient)(req, res)
       const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
       const deliusClient = new DeliusClient(token)
-      let appointmentsRequiringOutcome
-      let appointmentsRequiringOutcomeCount
       const homePage: Homepage = await deliusClient.getHomepage(res.locals.user.username)
-      appointmentsRequiringOutcome = homePage.appointmentsRequiringOutcome
-      appointmentsRequiringOutcomeCount = homePage.appointmentsRequiringOutcomeCount
+      const { appointmentsRequiringOutcome } = homePage
+      const { appointmentsRequiringOutcomeCount } = homePage
 
       const pageNum: number = req.query.page ? Number.parseInt(req.query.page as string, 10) : 1
 
@@ -32,20 +30,6 @@ const homeController: Controller<typeof routes, void> = {
       enforcementActions = enforcementContactResponse.enforcementContacts
 
       const { upcomingAppointments } = homePage
-      if (res.locals.flags.enableHomePageOutcomesWithFilter) {
-        let recentAppointmentsRequiringOutcome: AppointmentSummary[] = appointmentsRequiringOutcome
-        recentAppointmentsRequiringOutcome = appointmentsRequiringOutcome?.filter(contact => {
-          const contactDate = DateTime.fromISO(contact.startDateTime)
-          if (res.locals.flags.enable3MonthsOutcomes) {
-            const threeMonthsAgo = DateTime.now().setZone('Europe/London').startOf('day').minus({ months: 3 })
-            return contactDate >= threeMonthsAgo
-          }
-          const twoYearsAgo = DateTime.now().setZone('Europe/London').startOf('day').minus({ years: 2 })
-          return contactDate >= twoYearsAgo
-        })
-        appointmentsRequiringOutcome = recentAppointmentsRequiringOutcome
-        appointmentsRequiringOutcomeCount = recentAppointmentsRequiringOutcome?.length
-      }
       const url = encodeURIComponent(req.url)
       await sendAuditMessage(res, 'VIEW_MAS_HOME', res.locals.user.username, SubjectType.USER)
       return res.render('pages/homepage/homepage', {
@@ -74,8 +58,15 @@ const homeController: Controller<typeof routes, void> = {
       const masClient = new MasApiClient(token)
       let homepage: UserAppontment
       if (!res.locals.flags?.disableUserAppointments) {
+        const today = DateTime.now().setZone('Europe/London').startOf('day')
+        const fromDate = res.locals.flags?.enable3MonthsOutcomes
+          ? today.minus({ months: 3 })
+          : today.minus({ years: 2 })
         homepage = res.locals.flags?.enableHomePageV2API
-          ? await masClient.getUserAppointmentsV2(res.locals.user.username)
+          ? await masClient.getUserAppointmentsV2(
+              res.locals.user.username,
+              fromDate.toFormat('yyyy-MM-dd') as unknown as string,
+            )
           : await masClient.getUserAppointments(res.locals.user.username)
       } else {
         homepage = { appointments: [], outcomes: [], totalAppointments: 0, totalOutcomes: 0, timeoutError: undefined }
@@ -94,25 +85,11 @@ const homeController: Controller<typeof routes, void> = {
         ? { size: 0, page: 0, totalResults: 0, totalPages: 0, enforcementContacts: [], timeoutError: undefined }
         : await masClient.getEnforcementContacts(res.locals.user.username, (pageNum - 1).toString(), true)
       enforcementActions = enforcementContactResponse.enforcementContacts
-      let appointmentsRequiringOutcome = outcomes
-      if (res.locals.flags.enableHomePageOutcomesWithFilter) {
-        const recentAppointmentsRequiringOutcome = appointmentsRequiringOutcome?.filter(contact => {
-          const contactDate = DateTime.fromISO(contact.startDateTime)
-          if (res.locals.flags.enable3MonthsOutcomes) {
-            const threeMonthsAgo = DateTime.now().setZone('Europe/London').startOf('day').minus({ months: 3 })
-            return contactDate >= threeMonthsAgo
-          }
-          const twoYearsAgo = DateTime.now().setZone('Europe/London').startOf('day').minus({ years: 2 })
-          return contactDate >= twoYearsAgo
-        })
-        appointmentsRequiringOutcome = recentAppointmentsRequiringOutcome
-      }
+      const appointmentsRequiringOutcome = outcomes
       const url = encodeURIComponent(req.url)
       return res.render('pages/homepage-old/homepage', {
         totalAppointments,
-        totalOutcomes: res.locals.flags.enableHomePageOutcomesWithFilter
-          ? appointmentsRequiringOutcome?.length
-          : totalOutcomes,
+        totalOutcomes,
         appointments: appointments ?? [],
         outcomes: appointmentsRequiringOutcome ?? [],
         enforcementActions: enforcementActions ?? [],

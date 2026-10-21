@@ -137,7 +137,6 @@ const render = (model = {} as Partial<TestModel>, session = {}) => {
 describe('Failed to attend', () => {
   it('should render the page', () => {
     const $ = render()
-    console.log($.html())
     expect($('.govuk-back-link').attr('href')).toBe(appointmentOutcome.backLink)
     expect($('main').find('.person-header').length).toBe(1)
     expect($('[data-qa=pageHeading]').text()).toContain(`Enforcement action for ${forename}’s absence`)

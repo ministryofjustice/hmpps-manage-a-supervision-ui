@@ -1,3 +1,8 @@
+# Build args available to all stages
+ARG BUILD_NUMBER
+ARG GIT_REF
+ARG GIT_BRANCH
+
 # Stage: base image
 FROM ghcr.io/ministryofjustice/hmpps-node:24-alpine AS base
 
@@ -39,17 +44,24 @@ RUN --mount=type=secret,id=sentry SENTRY_AUTH_TOKEN=$(cat /run/secrets/sentry) \
 RUN npm prune --no-audit --omit=dev
 
 # Stage: copy production assets and dependencies
-FROM base
+FROM ghcr.io/ministryofjustice/hmpps-node:24-alpine-runtime
+
+ARG BUILD_NUMBER
+ARG GIT_REF
+ARG GIT_BRANCH
 
 COPY --from=build --chown=appuser:appgroup /app/package.json /app/package-lock.json /app/technicalUpdates.json ./
 
 COPY --from=build --chown=appuser:appgroup /app/assets ./assets
 COPY --from=build --chown=appuser:appgroup /app/dist ./dist
 COPY --from=build --chown=appuser:appgroup \
-        /app/node_modules ./node_modules
-        
+    /app/node_modules ./node_modules
+
 EXPOSE 3000 3001
+ENV BUILD_NUMBER=${BUILD_NUMBER}
+ENV GIT_REF=${GIT_REF}
+ENV GIT_BRANCH=${GIT_BRANCH}
 ENV NODE_ENV='production'
 USER 2000
 
-CMD [ "npm", "start" ]
+CMD [  "sh", "-c", "node $NODE_OPTIONS dist/server.js | ./node_modules/.bin/bunyan -o short" ]

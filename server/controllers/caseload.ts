@@ -160,27 +160,19 @@ const caseloadController: Controller<typeof routes, void, Args> = {
       const token = await hmppsAuthClient.getSystemClientToken(res.locals.user.username)
       const masClient = new MasApiClient(token)
       const ascending = dir ? (dir === 'asc').toString() : ''
+      const queryParameters = {
+        username: res.locals.user.username,
+        type,
+        page: (pageNum - 1).toString(),
+        sortBy: name,
+        ascending,
+        size: '',
+        fromDate,
+        toDate,
+      }
       let userSchedule: UserSchedule = res.locals.flags?.enableHomePageV2API
-        ? await masClient.getUserScheduleV2({
-            username: res.locals.user.username,
-            type,
-            page: (pageNum - 1).toString(),
-            sortBy: name,
-            ascending,
-            size: '',
-            fromDate,
-            toDate,
-          })
-        : await masClient.getUserSchedule({
-            username: res.locals.user.username,
-            type,
-            page: (pageNum - 1).toString(),
-            sortBy: name,
-            ascending,
-            size: '',
-            fromDate,
-            toDate,
-          })
+        ? await masClient.getUserScheduleV2(queryParameters)
+        : await masClient.getUserSchedule(queryParameters)
       const appointments: UserActivity[] = userSchedule.appointments.map((appointment: UserActivity) => {
         const [year, month, day] = appointment.dob.split('-')
         return { ...appointment, birthdate: { day, month, year } }

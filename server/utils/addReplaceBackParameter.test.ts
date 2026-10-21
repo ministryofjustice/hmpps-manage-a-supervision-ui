@@ -10,4 +10,12 @@ describe('utils/addReplaceBackParameter', () => {
   it('should add backParam to other params if they exist', () => {
     expect(addReplaceBackParameter('url?param1=one', 'back=new')).toEqual('url?param1=one&back=new')
   })
+
+  describe('when invalid url are passed in', () => {
+    it('throws an error when an relative path is used', () => {
+      expect(() => addReplaceBackParameter('../url?param1=one', 'back=new')).toThrow(
+        new Error('Invalid URL passed through'),
+      )
+    })
+  })
 })

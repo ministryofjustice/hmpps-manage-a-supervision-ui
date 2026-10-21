@@ -165,7 +165,7 @@ const baseModel: TestModel = {
   riskData,
   tierCalculation: { tierScore: 'C' },
   flags: {
-    enableSupervisionPackagePoPHeader: true,
+    enablePersonHeader: true,
   },
 }
 
@@ -205,7 +205,7 @@ describe('Unacceptable absence', () => {
   it('should render the page', () => {
     const $ = render()
     expect($('.govuk-back-link').attr('href')).toBe(appointmentOutcome.backLink)
-    expect($('main').find('[data-qa="new-pop-header"]').length).toBe(1)
+    expect($('main').find('.person-header').length).toBe(1)
     expect($('[data-qa=pageHeading]').text()).toContain(`Enforcement action for ${forename}’s unacceptable absence`)
     expect($('.moj-ticket-panel').length).toBe(0)
     expect($('[data-qa="recall-warning"]').length).toBe(0)

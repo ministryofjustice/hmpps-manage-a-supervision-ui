@@ -101,4 +101,18 @@ describe('middleware/appointment-outcomes/handleOutcomePageRedirect', () => {
     handleOutcomePageRedirect('otherEnforcementAction')(req, res)
     expect(redirectSpy).toHaveBeenCalledWith(`${baseOutcomeUrl}/add-note`)
   })
+  it('should redirect to the add note page after the breach/recall and letter options are selected', () => {
+    const req = httpMocks.createRequest()
+    const outcome: Partial<AppointmentSessionOutcome> = {
+      attendedFailedToComply: 'BREACH_RECALL_INITIATED_AND_SEND_LETTER',
+      breachNSICreatedBy: 'USER',
+      letterSentBy: 'USER',
+      letterType: 'BREACH_LETTER_SENT',
+    }
+    const res = buildResponse(outcome)
+    const redirectSpy = jest.spyOn(res, 'redirect')
+    handleOutcomePageRedirect('breachNSICreatedBy')(req, res)
+    expect(redirectSpy).toHaveBeenCalledTimes(1)
+    expect(redirectSpy).toHaveBeenCalledWith(`${baseOutcomeUrl}/add-note`)
+  })
 })

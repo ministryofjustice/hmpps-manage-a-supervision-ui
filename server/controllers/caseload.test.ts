@@ -2,6 +2,7 @@ import httpMocks from 'node-mocks-http'
 import getPaginationLinks, { Pagination } from '@ministryofjustice/probation-search-frontend/utils/pagination'
 import { v4 as uuidv4 } from 'uuid'
 import { addParameters } from '@ministryofjustice/probation-search-frontend/utils/url'
+import { DateTime } from 'luxon'
 import logger from '../../logger'
 import controllers from '.'
 import HmppsAuthClient from '../data/hmppsAuthClient'
@@ -89,9 +90,20 @@ const mockCaseload = { caseload: undefined, sortedBy: undefined } as UserCaseloa
 const tiers = { X801756: { tierScore: 'A0' }, X801758: { tierScore: 'D2' } }
 const mockFilters = {} as CaseSearchFilter
 
+const toDate = DateTime.now().setZone('Europe/London').endOf('day').toFormat('yyyy-MM-dd')
+const fromDate = DateTime.now()
+  .setZone('Europe/London')
+  .endOf('day')
+  .minus({ months: 3 })
+  .startOf('day')
+  .toFormat('yyyy-MM-dd')
+
 describe('caseloadController', () => {
   const getUserScheduleSpy = jest
     .spyOn(MasApiClient.prototype, 'getUserSchedule')
+    .mockImplementation(() => Promise.resolve(mockResponse))
+  const getUserScheduleV2Spy = jest
+    .spyOn(MasApiClient.prototype, 'getUserScheduleV2')
     .mockImplementation(() => Promise.resolve(mockResponse))
 
   const tiersSpy = jest.spyOn(TierApiClient.prototype, 'getTiers').mockImplementation(() => Promise.resolve(mockTiers))
@@ -417,15 +429,17 @@ describe('caseloadController', () => {
         },
         url: '/caseload/appointments/no-outcome?page=1',
       })
-      res.locals.flags = { enableHomePageOutcomesWithFilter: false, enable3MonthsOutcomes: true }
+      res.locals.flags = { enable3MonthsOutcomes: true, enableHomePageV2API: true }
       await controllers.caseload.userSchedule(hmppsAuthClient)(req, res)
-      expect(getUserScheduleSpy).toHaveBeenCalledWith({
+      expect(getUserScheduleV2Spy).toHaveBeenCalledWith({
         username: res.locals.user.username,
         page: (parseInt(req.query.page as string, 10) - 1).toString(),
         size: '',
         sortBy: '',
         ascending: '',
         type: 'no-outcome',
+        fromDate,
+        toDate,
       })
       expect(renderSpy).toHaveBeenCalledWith('pages/caseload/appointments', {
         userSchedule: expectedUserSchedule,
@@ -438,7 +452,7 @@ describe('caseloadController', () => {
           page => addParameters(req, { page: page.toString() }),
           mockResponse.size,
         ),
-        sortUrl: '/caseload/appointments/no-outcome',
+        sortUrl: '/caseload/appointments/no-outcome?outcomeFilter=PAST_THREE_MONTHS',
         url: req.url,
         outcomesFilter: 'PAST_THREE_MONTHS',
       })
@@ -456,15 +470,17 @@ describe('caseloadController', () => {
         },
         url: '/caseload/appointments/no-outcome?sortBy=sentence.desc',
       })
-      res.locals.flags = { enableHomePageOutcomesWithFilter: false, enable3MonthsOutcomes: true }
+      res.locals.flags = { enable3MonthsOutcomes: true, enableHomePageV2API: true }
       await controllers.caseload.userSchedule(hmppsAuthClient)(req, res)
-      expect(getUserScheduleSpy).toHaveBeenCalledWith({
+      expect(getUserScheduleV2Spy).toHaveBeenCalledWith({
         username: res.locals.user.username,
         page: '0',
         size: '',
         sortBy: 'sentence',
         ascending: 'false',
         type: 'no-outcome',
+        fromDate,
+        toDate,
       })
       expect(renderSpy).toHaveBeenCalledWith('pages/caseload/appointments', {
         userSchedule: expectedUserSchedule,
@@ -477,7 +493,7 @@ describe('caseloadController', () => {
           page => addParameters(req, { page: page.toString() }),
           mockResponse.size,
         ),
-        sortUrl: '/caseload/appointments/no-outcome',
+        sortUrl: '/caseload/appointments/no-outcome?outcomeFilter=PAST_THREE_MONTHS',
         url: req.url,
         outcomesFilter: 'PAST_THREE_MONTHS',
       })
@@ -494,12 +510,12 @@ describe('caseloadController', () => {
       const getNewDateRangeSpy = jest
         .spyOn(dateRangeUtils, 'getNewDateRange')
         .mockReturnValue({ fromDate: '2024-01-01', toDate: '2026-01-01' })
-      res.locals.flags = { enableHomePageOutcomesWithFilter: true, enable3MonthsOutcomes: true }
+      res.locals.flags = { enable3MonthsOutcomes: true, enableHomePageV2API: true }
 
       await controllers.caseload.userSchedule(hmppsAuthClient)(req, res)
 
       expect(getNewDateRangeSpy).toHaveBeenCalledWith('PAST_THREE_MONTHS')
-      expect(getUserScheduleSpy).toHaveBeenCalledWith({
+      expect(getUserScheduleV2Spy).toHaveBeenCalledWith({
         username: res.locals.user.username,
         page: '0',
         size: '',
@@ -542,7 +558,7 @@ describe('caseloadController', () => {
       const getDateRangeSpy = jest
         .spyOn(dateRangeUtils, 'getDateRange')
         .mockReturnValue({ fromDate: '2024-01-01', toDate: '2026-01-01' })
-      res.locals.flags = { enableHomePageOutcomesWithFilter: true }
+      res.locals.flags = { enableHomePageV2API: true }
 
       await controllers.caseload.userSchedule(hmppsAuthClient)(req, res)
       expect(getDateRangeSpy).toHaveBeenCalledWith('PAST_TWO_YEARS')

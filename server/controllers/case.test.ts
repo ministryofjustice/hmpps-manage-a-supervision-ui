@@ -1,6 +1,7 @@
 import httpMocks from 'node-mocks-http'
 import { v4 as uuidv4 } from 'uuid'
 import controllers from '.'
+import { eligibilityCheckDisabled } from '../utils'
 import HmppsAuthClient from '../data/hmppsAuthClient'
 import TokenStore from '../data/tokenStore/redisTokenStore'
 import MasApiClient from '../data/masApiClient'
@@ -195,7 +196,7 @@ describe('caseController', () => {
         url: encodeURIComponent(req.url),
         sanIndicator: true,
         personalDetails: req.session.data.personalDetails[crn].overview,
-        checkinEligibility: mockOffenderEligibilityResponse,
+        checkinEligibility: eligibilityCheckDisabled,
         appointmentsWithoutAnOutcomeCount: 2,
         hasDeceased: false,
         hasPractitioner: false,
@@ -236,7 +237,7 @@ describe('caseController', () => {
         url: encodeURIComponent(req.url),
         sanIndicator: true,
         personalDetails: req.session.data.personalDetails[crn].overview,
-        checkinEligibility: mockOffenderEligibilityResponse,
+        checkinEligibility: eligibilityCheckDisabled,
         appointmentsWithoutAnOutcomeCount: 2,
         hasDeceased: false,
         hasPractitioner: false,
@@ -286,7 +287,7 @@ describe('caseController', () => {
     })
     beforeEach(async () => {
       getProbationPractitionerSpy.mockImplementationOnce(() => Promise.resolve(mockPractitioner))
-      res.locals.flags = { enableOutcomesV1: true }
+      res.locals.flags = { enableOutcomesV1: true, enableEsupEligibilityCheck: true }
       await controllers.case.getCase(hmppsAuthClient)(req, res)
     })
     afterEach(() => {
@@ -309,7 +310,7 @@ describe('caseController', () => {
         message: '    Alton Berge are in Tiers D-G.',
       })
       const tierRes = mockAppResponse({
-        flags: { enableOutcomesV1: true },
+        flags: { enableOutcomesV1: true, enableEsupEligibilityCheck: true },
         tierCalculation: mockTierCalculation,
         headerPersonName: { forename: 'Alton', surname: 'Berge' },
       })
@@ -325,7 +326,7 @@ describe('caseController', () => {
 
     it('should mark the person as ineligible for check ins when no tier has been assigned', async () => {
       const noTierRes = mockAppResponse({
-        flags: { enableOutcomesV1: true },
+        flags: { enableOutcomesV1: true, enableEsupEligibilityCheck: true },
         tierCalculation: null,
         headerPersonName: { forename: 'Alton', surname: 'Berge' },
       })
@@ -339,6 +340,45 @@ describe('caseController', () => {
             message: 'Alton Berge is not eligible for online check ins because they have not been assigned a tier yet.',
           },
         }),
+      )
+    })
+
+    it('should keep the person eligible when no tier has been assigned but they are already set up for check ins', async () => {
+      jest.spyOn(ESupervisionClient.prototype, 'getOffenderCheckinsByCRN').mockResolvedValueOnce({
+        uuid: '3fa85f64-5717-4562-b3fc-2c963f66afa7',
+        crn,
+        status: 'VERIFIED',
+        firstCheckin: '2025-11-03',
+        checkinInterval: 'WEEKLY',
+        mode: 'SCHEDULED',
+        contactPreference: 'PHONE',
+      })
+      const noTierRes = mockAppResponse({
+        flags: { enableOutcomesV1: true, enableEsupEligibilityCheck: true },
+        tierCalculation: null,
+        headerPersonName: { forename: 'Alton', surname: 'Berge' },
+      })
+      const noTierRenderSpy = jest.spyOn(noTierRes, 'render')
+      await controllers.case.getCase(hmppsAuthClient)(req, noTierRes)
+      expect(noTierRenderSpy).toHaveBeenCalledWith(
+        'pages/overview',
+        expect.objectContaining({ checkinEligibility: mockOffenderEligibilityResponse }),
+      )
+    })
+
+    it('should skip the eligibility check and treat the person as eligible when the flag is off', async () => {
+      const flagOffRes = mockAppResponse({
+        flags: { enableOutcomesV1: true, enableEsupEligibilityCheck: false },
+        tierCalculation: null,
+        headerPersonName: { forename: 'Alton', surname: 'Berge' },
+      })
+      const flagOffRenderSpy = jest.spyOn(flagOffRes, 'render')
+      getOffenderEligibilitySpy.mockClear()
+      await controllers.case.getCase(hmppsAuthClient)(req, flagOffRes)
+      expect(getOffenderEligibilitySpy).not.toHaveBeenCalled()
+      expect(flagOffRenderSpy).toHaveBeenCalledWith(
+        'pages/overview',
+        expect.objectContaining({ checkinEligibility: eligibilityCheckDisabled }),
       )
     })
   })

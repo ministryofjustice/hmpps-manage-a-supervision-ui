@@ -12,7 +12,7 @@ import { existsInEMDI } from '../middleware/existsInEMDI'
 import { PersonExistsResponse } from '../data/emdiClient'
 import logger from '../../logger'
 import ESupervisionClient from '../data/eSupervisionClient'
-import { fullName, resolveCheckinEligibility } from '../utils'
+import { eligibilityCheckDisabled, fullName, resolveCheckinEligibility } from '../utils'
 
 const caseController: Controller<readonly ['getCase'], void> = {
   getCase: hmppsAuthClient => {
@@ -57,15 +57,19 @@ const caseController: Controller<readonly ['getCase'], void> = {
         ? filterContactsMonths(contactResponse?.content)
         : filterContacts(contactResponse?.content)
 
-      const checkinEligibility = resolveCheckinEligibility(
-        await esupClient.getOffenderEligibility(crn),
-        res.locals.tierCalculation,
-        fullName(res.locals.headerPersonName),
-      )
+      await getCheckinOffenderDetails(hmppsAuthClient)(req, res)
+      const checkinEligibility =
+        res.locals.flags?.enableEsupEligibilityCheck === true
+          ? resolveCheckinEligibility(
+              await esupClient.getOffenderEligibility(crn),
+              res.locals.tierCalculation,
+              fullName(res.locals.headerPersonName),
+              res.locals.offenderCheckinsByCRNResponse?.status,
+            )
+          : eligibilityCheckDisabled
       const hasDeceased = req.session.data.personalDetails?.[crn]?.overview?.dateOfDeath !== undefined
       const hasPractitioner = practitioner ? !practitioner.unallocated : false
       const canAccessCheckins = hasPractitioner && res.locals.flags?.enableESupervisionCheckins === true
-      await getCheckinOffenderDetails(hmppsAuthClient)(req, res)
       await getUpcomingCheckinDetails(hmppsAuthClient)(req, res)
       let personExistsResponse: PersonExistsResponse | undefined
       await getSentences(hmppsAuthClient)(req, res, () => {})

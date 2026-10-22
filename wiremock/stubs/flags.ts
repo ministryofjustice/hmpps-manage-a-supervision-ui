@@ -198,20 +198,7 @@ const stubDisableHomePageOutcome = (): SuperAgentRequest =>
         namespace: {
           key: 'manage-people-on-probation-ui',
         },
-        flags: [
-          ...flags.mappings[0].response.jsonBody.flags,
-          {
-            key: 'enableHomePageOutcomesWithFilter',
-            name: 'enableHomePageOutcomesWithFilter',
-            description: '',
-            enabled: false,
-            type: 'BOOLEAN_FLAG_TYPE',
-            createdAt: '2026-04-10T12:00:00.000000Z',
-            updatedAt: '2026-04-10T12:00:00.000000Z',
-            rules: [],
-            rollouts: [],
-          },
-        ],
+        flags: [...flags.mappings[0].response.jsonBody.flags],
       },
       headers: {
         'Content-Type': 'application/json',

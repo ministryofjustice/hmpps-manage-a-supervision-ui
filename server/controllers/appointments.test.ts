@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import controllers from '.'
 import HmppsAuthClient from '../data/hmppsAuthClient'
 import MasApiClient from '../data/masApiClient'
-import { isValidCrn, isNumericString, canRescheduleAppointment } from '../utils'
+import { isValidCrn, isNumericString, canRescheduleAppointment, eligibilityCheckDisabled } from '../utils'
 import { mockAppResponse, mockPersonSchedule, mockPersonAppointment, mockTierCalculation } from './mocks'
 import { checkAuditMessage, checkSendAuditMessage } from './testutils'
 import { cloneAppointmentAndRedirect, renderError, overrideDeliusManagedFlag } from '../middleware'
@@ -245,7 +245,7 @@ describe('controllers/appointments', () => {
       const spy = jest.spyOn(mockRes, 'render')
       await controllers.appointments.getAppointments(hmppsAuthClient)(req, mockRes)
       expect(spy).toHaveBeenCalledWith('pages/appointments', {
-        checkinEligibility: mockOffenderEligibility,
+        checkinEligibility: eligibilityCheckDisabled,
         upcomingAppointments: mockPersonSchedule,
         pastAppointments: mockPersonSchedule,
         crn,
@@ -267,7 +267,7 @@ describe('controllers/appointments', () => {
       await controllers.appointments.getAppointments(hmppsAuthClient)(req, mockRes)
       expect(mockOverrideDeliusManagedFlag).toHaveBeenCalledTimes(2)
       expect(spy).toHaveBeenCalledWith('pages/appointments', {
-        checkinEligibility: mockOffenderEligibility,
+        checkinEligibility: eligibilityCheckDisabled,
         upcomingAppointments: mockScheduleWithFlag,
         pastAppointments: mockScheduleWithFlag,
         crn,
@@ -291,7 +291,7 @@ describe('controllers/appointments', () => {
       getProbationPractitionerSpy.mockImplementationOnce(() => Promise.resolve(undefined))
       await controllers.appointments.getAppointments(hmppsAuthClient)(req, mockRes)
       expect(spy).toHaveBeenCalledWith('pages/appointments', {
-        checkinEligibility: mockOffenderEligibility,
+        checkinEligibility: eligibilityCheckDisabled,
         upcomingAppointments: mockPersonSchedule,
         pastAppointments: mockPersonSchedule,
         crn,
@@ -328,6 +328,7 @@ describe('controllers/appointments', () => {
         tierCalculation: mockTierCalculation,
         flags: {
           enableESupervisionCheckins: true,
+          enableEsupEligibilityCheck: true,
           enableSupervisionPackageAppointments: true,
         },
         supervisionPackageDetails: { context: { sentences: [] } },
@@ -345,7 +346,7 @@ describe('controllers/appointments', () => {
 
     it('should mark the person as ineligible for check ins when no tier has been assigned', async () => {
       const mockRes = mockAppResponse({
-        flags: { enableESupervisionCheckins: true },
+        flags: { enableESupervisionCheckins: true, enableEsupEligibilityCheck: true },
         tierCalculation: null,
         headerPersonName: { forename: 'Alton', surname: 'Berge' },
       })
@@ -359,6 +360,36 @@ describe('controllers/appointments', () => {
             message: 'Alton Berge is not eligible for online check ins because they have not been assigned a tier yet.',
           },
         }),
+      )
+    })
+
+    it('should keep the person eligible when no tier has been assigned but they are already set up for check ins', async () => {
+      const mockRes = mockAppResponse({
+        flags: { enableESupervisionCheckins: true, enableEsupEligibilityCheck: true },
+        tierCalculation: null,
+        headerPersonName: { forename: 'Alton', surname: 'Berge' },
+        offenderCheckinsByCRNResponse: { status: 'INACTIVE' },
+      })
+      const spy = jest.spyOn(mockRes, 'render')
+      await controllers.appointments.getAppointments(hmppsAuthClient)(req, mockRes)
+      expect(spy).toHaveBeenCalledWith(
+        'pages/appointments',
+        expect.objectContaining({ checkinEligibility: mockOffenderEligibility }),
+      )
+    })
+
+    it('should skip the eligibility check and treat the person as eligible when the flag is off', async () => {
+      const mockRes = mockAppResponse({
+        flags: { enableESupervisionCheckins: true, enableEsupEligibilityCheck: false },
+        tierCalculation: null,
+        headerPersonName: { forename: 'Alton', surname: 'Berge' },
+      })
+      const spy = jest.spyOn(mockRes, 'render')
+      await controllers.appointments.getAppointments(hmppsAuthClient)(req, mockRes)
+      expect(getOffenderEligibilitySpy).not.toHaveBeenCalled()
+      expect(spy).toHaveBeenCalledWith(
+        'pages/appointments',
+        expect.objectContaining({ checkinEligibility: eligibilityCheckDisabled }),
       )
     })
   })

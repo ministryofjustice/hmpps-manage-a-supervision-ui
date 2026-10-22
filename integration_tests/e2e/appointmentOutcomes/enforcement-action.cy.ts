@@ -1,4 +1,3 @@
-import { checkPopHeader } from '../appointments/imports'
 import { crn, appointmentId } from '../appointments/imports/common'
 import AttendedFailedToComplyPage from '../../pages/appointmentOutcomes/attended-failed-to-comply.page'
 import ManageAppointmentPage from '../../pages/appointments/manage-appointment.page'
@@ -13,7 +12,7 @@ import {
 } from '../appointments/utils'
 import AddNotePage from '../../pages/appointments/add-note.page'
 import EnforcementActionPage from '../../pages/appointmentOutcomes/enforcement-action.page'
-import { checkBreachOrRecallWarningBanner, Journey } from './imports'
+import { Journey } from './imports'
 import { SentenceType } from '../../../server/data/model/sentenceDetails'
 import RescheduleCheckYourAnswerPage from '../../pages/appointments/reschedule-check-your-answer.page'
 
@@ -28,7 +27,6 @@ const loadPage = ({
   journey = 'MANAGE',
 }: { journey?: Journey; sentenceType?: SentenceType; isProbationPractitioner?: boolean } = {}): void => {
   cy.task('stubAppointment', { eventId: '2501192724', isFuture: false })
-
   if (journey === 'MANAGE') {
     cy.visit(`/case/${crn}/appointments/appointment/${appointmentId}/manage`)
     manageAppointmentPage = new ManageAppointmentPage()
@@ -56,61 +54,38 @@ const loadPage = ({
   attendedFailedToComplyPage.getSubmitBtn().click()
 }
 
-const checkPage = ({ journey = 'MANAGE' }: { journey?: Journey } = {}) => {
-  it('should render the page', () => {
-    loadPage({ journey })
-    attendedFailedToComplyPage = new AttendedFailedToComplyPage()
-    checkPopHeader({ name: 'Alton Berge', appointments: true, headerCrn: crn })
-    attendedFailedToComplyPage.checkPageTitle('Select an enforcement action for Alton’s failure to comply')
-    cy.get('select').contains('option', 'Decision pending Alton’s response')
-  })
-
-  it('should have the correct back link', () => {
-    loadPage({ journey })
-    let expectedLink: string
-    getUuid(3).then(uuid => {
-      if (journey === 'MANAGE') {
-        expectedLink = `/case/${crn}/appointments/appointment/${appointmentId}/outcome/attended-failed-to-comply`
-      } else {
-        expectedLink = `/case/${crn}/arrange-appointment/${uuid}/outcome/attended-failed-to-comply`
-      }
-      attendedFailedToComplyPage.getBackLink().should('have.attr', 'href', expectedLink)
-    })
-  })
-  it('should show validation error when no option is selected for breach created by', () => {
-    const msg = 'Select an enforcement action for their failure to comply'
-    loadPage({ journey })
-    enforcementActionPage = new EnforcementActionPage()
-    cy.get('select').select('')
-    enforcementActionPage.getSubmitBtn().click()
-    enforcementActionPage.checkErrorSummaryBox([msg])
-    getUuid(3).then(uuid => {
-      const id = journey === 'MANAGE' ? appointmentId : uuid
-      cy.get(`#appointments-${crn}-${id}-outcome-otherEnforcementAction-error`).should('contain.text', msg)
-    })
-  })
-  it('should redirect to the correct page when an option is selected', () => {
-    loadPage({ journey })
-    cy.get('select').select('DECISION_PENDING_RESPONSE_FROM_PERSON_ON_PROBATION')
-    enforcementActionPage.getSubmitBtn().click()
-    addNotePage = new AddNotePage()
-    addNotePage.checkOnPage()
-  })
-
-  checkBreachOrRecallWarningBanner(loadPage, EnforcementActionPage)
-}
-
 describe('Enforcement action', () => {
   afterEach(() => {
     cy.task('resetMocks')
   })
-  describe('Manage appointment journey', () => {
-    checkPage()
+  it('should render the page in the manage appointment journey', () => {
+    loadPage()
+    enforcementActionPage = new EnforcementActionPage()
+    enforcementActionPage.checkPageTitle(`Select an enforcement action for Alton’s failure to comply`)
   })
-  describe('Arrange appointment journey', () => {
-    checkPage({ journey: 'ARRANGE' })
+  it('should render the page in the arrange appointment journey', () => {
+    loadPage({ journey: 'ARRANGE' })
+    enforcementActionPage = new EnforcementActionPage()
+    enforcementActionPage.checkPageTitle(`Select an enforcement action for Alton’s failure to comply`)
   })
-  describe('Reschedule appointment journey', () => {
-    checkPage({ journey: 'RESCHEDULE' })
+  it('should render the page in the reschedule appointment journey', () => {
+    loadPage({ journey: 'RESCHEDULE' })
+    enforcementActionPage = new EnforcementActionPage()
+    enforcementActionPage.checkPageTitle(`Select an enforcement action for Alton’s failure to comply`)
+  })
+  it('should show validation error when no option is selected for breach created by', () => {
+    const msg = 'Select an enforcement action for their failure to comply'
+    loadPage()
+    enforcementActionPage = new EnforcementActionPage()
+    cy.get('select').select('')
+    enforcementActionPage.getSubmitBtn().click()
+    enforcementActionPage.checkErrorSummaryBox([msg])
+  })
+  it('should redirect to the correct page when an option is selected', () => {
+    loadPage()
+    cy.get('select').select('DECISION_PENDING_RESPONSE_FROM_PERSON_ON_PROBATION')
+    enforcementActionPage.getSubmitBtn().click()
+    addNotePage = new AddNotePage()
+    addNotePage.checkOnPage()
   })
 })

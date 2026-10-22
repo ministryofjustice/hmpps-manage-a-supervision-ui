@@ -10,6 +10,9 @@ export const noTierEligibilityMessage = (name: string): string =>
 
 export const mayBeEligibleMessage = (name: string): string => `${name} may be eligible for online check ins.`
 
+// Used when the enableEsupEligibilityCheck flag is off so the eligibility check never blocks a journey
+export const eligibilityCheckDisabled: OffenderEligibility = { outcome: 'ELIGIBLE', message: null }
+
 export const isTierMissing = (tierCalculation?: TierCalculation | ErrorSummary | null): boolean => {
   if (!tierCalculation) return true
   if ('errors' in tierCalculation) return false

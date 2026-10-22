@@ -9,9 +9,9 @@ import MasApiClient from '../data/masApiClient'
 import { ErrorSummary } from '../data/model/common'
 import HmppsAuthClient from '../data/hmppsAuthClient'
 import TokenStore from '../data/tokenStore/redisTokenStore'
-import { LastSmsResponse } from '../models/LastSmsResponse'
-import { SmsPreviewResponse } from '../data/model/OutlookEvent'
+import { LastSmsStatusResponse, SmsPreviewResponse } from '../data/model/OutlookEvent'
 import { PersonalDetailsUpdatedResponse } from '../data/model/personalDetails'
+import SupervisionAppointmentClient from '../data/SupervisionAppointmentClient'
 
 const crn = 'X000001'
 
@@ -77,14 +77,16 @@ const mockPersonalDetailsUpdated: PersonalDetailsUpdatedResponse = {
   updatedDateTime: '2025-10-16T14:55:23.537Z',
 }
 
-const getLastSms = ({
-  dateSent = '2025-10-16T14:55:23.537Z',
-  dateDelivered = '2025-10-17T14:55:23.537Z',
-  dateRetryUntil = null,
-}: Partial<LastSmsResponse> = {}): LastSmsResponse => ({
-  dateSent,
-  dateDelivered,
-  dateRetryUntil,
+const getLastSmsStatus = ({
+  notificationId = 'notification-id',
+  sentAt = '2025-10-16T14:55:23.537Z',
+  status = 'delivered',
+  statusUpdatedAt = '2025-10-17T14:55:23.537Z',
+}: Partial<LastSmsStatusResponse> = {}): LastSmsStatusResponse => ({
+  notificationId,
+  sentAt,
+  status,
+  statusUpdatedAt,
 })
 
 describe('middleware/getSmsConfirmation', () => {
@@ -96,10 +98,10 @@ describe('middleware/getSmsConfirmation', () => {
       const res = buildResponse({ enableLastTextMessage: false })
       it('should return the correct overview if personal details update api request returns a 500 error', async () => {
         jest.spyOn(MasApiClient.prototype, 'getPersonalDetailsUpdated').mockResolvedValueOnce(mockErrorSummary)
-        const getLastSmsSpy = jest.spyOn(MasApiClient.prototype, 'getLastSms')
+        const getLastSmsStatusSpy = jest.spyOn(SupervisionAppointmentClient.prototype, 'getLatestSmsStatusByCrn')
         const req = buildRequest()
         getSmsPreviewSpy.mockImplementationOnce(() => () => Promise.resolve(mockPreview))
-        expect(getLastSmsSpy).not.toHaveBeenCalled()
+
         const expected: SmsConfirmation = {
           overview: [],
           options: mockOptions,
@@ -107,6 +109,7 @@ describe('middleware/getSmsConfirmation', () => {
           errors: null,
         }
         await getSmsConfirmation(hmppsAuthClient)(req, res, nextSpy)
+        expect(getLastSmsStatusSpy).not.toHaveBeenCalled()
         expect(res.locals.smsConfirmation).toStrictEqual(expected)
         expect(nextSpy).toHaveBeenCalledWith()
       })
@@ -114,7 +117,7 @@ describe('middleware/getSmsConfirmation', () => {
         jest
           .spyOn(MasApiClient.prototype, 'getPersonalDetailsUpdated')
           .mockResolvedValueOnce(mockPersonalDetailsUpdated)
-        const getLastSmsSpy = jest.spyOn(MasApiClient.prototype, 'getLastSms')
+        const getLatestSmsStatusSpy = jest.spyOn(SupervisionAppointmentClient.prototype, 'getLatestSmsStatusByCrn')
         const req = buildRequest()
         getSmsPreviewSpy.mockImplementationOnce(() => () => Promise.resolve(mockPreview))
         await getSmsConfirmation(hmppsAuthClient)(req, res, nextSpy)
@@ -124,7 +127,7 @@ describe('middleware/getSmsConfirmation', () => {
           preview: mockPreview,
           errors: null,
         }
-        expect(getLastSmsSpy).not.toHaveBeenCalled()
+        expect(getLatestSmsStatusSpy).not.toHaveBeenCalled()
         expect(res.locals.smsConfirmation).toStrictEqual(expected)
         expect(nextSpy).toHaveBeenCalledWith()
       })
@@ -133,7 +136,9 @@ describe('middleware/getSmsConfirmation', () => {
       const res = buildResponse()
       it('should return the correct overview if personal details update api request returns a 500 error', async () => {
         jest.spyOn(MasApiClient.prototype, 'getPersonalDetailsUpdated').mockResolvedValueOnce(mockErrorSummary)
-        jest.spyOn(MasApiClient.prototype, 'getLastSms').mockResolvedValueOnce(getLastSms())
+        jest
+          .spyOn(SupervisionAppointmentClient.prototype, 'getLatestSmsStatusByCrn')
+          .mockResolvedValueOnce(getLastSmsStatus())
         const req = buildRequest()
         getSmsPreviewSpy.mockImplementationOnce(() => () => Promise.resolve(mockPreview))
         const expected: SmsConfirmation = {
@@ -150,7 +155,9 @@ describe('middleware/getSmsConfirmation', () => {
         jest
           .spyOn(MasApiClient.prototype, 'getPersonalDetailsUpdated')
           .mockResolvedValueOnce(mockPersonalDetailsUpdated)
-        jest.spyOn(MasApiClient.prototype, 'getLastSms').mockResolvedValueOnce(mockErrorSummary)
+        jest
+          .spyOn(SupervisionAppointmentClient.prototype, 'getLatestSmsStatusByCrn')
+          .mockResolvedValueOnce(mockErrorSummary)
         const req = buildRequest()
         getSmsPreviewSpy.mockImplementationOnce(() => () => Promise.resolve(mockPreview))
         const expected: SmsConfirmation = {
@@ -167,7 +174,9 @@ describe('middleware/getSmsConfirmation', () => {
         jest
           .spyOn(MasApiClient.prototype, 'getPersonalDetailsUpdated')
           .mockResolvedValueOnce(mockPersonalDetailsUpdated)
-        jest.spyOn(MasApiClient.prototype, 'getLastSms').mockResolvedValueOnce(getLastSms())
+        jest
+          .spyOn(SupervisionAppointmentClient.prototype, 'getLatestSmsStatusByCrn')
+          .mockResolvedValueOnce(getLastSmsStatus())
         const req = buildRequest()
         getSmsPreviewSpy.mockImplementationOnce(() => () => Promise.resolve(mockPreview))
         await getSmsConfirmation(hmppsAuthClient)(req, res, nextSpy)
@@ -187,11 +196,9 @@ describe('middleware/getSmsConfirmation', () => {
         jest
           .spyOn(MasApiClient.prototype, 'getPersonalDetailsUpdated')
           .mockResolvedValueOnce(mockPersonalDetailsUpdated)
-        const lastSmsResponse: Partial<LastSmsResponse> = {
-          dateDelivered: null,
-          dateRetryUntil: null,
-        }
-        jest.spyOn(MasApiClient.prototype, 'getLastSms').mockResolvedValueOnce(getLastSms(lastSmsResponse))
+        jest
+          .spyOn(SupervisionAppointmentClient.prototype, 'getLatestSmsStatusByCrn')
+          .mockResolvedValueOnce(getLastSmsStatus({ status: 'permanent-failure' }))
         const req = buildRequest()
         getSmsPreviewSpy.mockImplementationOnce(() => () => Promise.resolve(mockPreview))
         await getSmsConfirmation(hmppsAuthClient)(req, res, nextSpy)
@@ -200,16 +207,32 @@ describe('middleware/getSmsConfirmation', () => {
         )
         expect(nextSpy).toHaveBeenCalledWith()
       })
+
+      it('should show delivery status unavailable when the last SMS status is null', async () => {
+        jest
+          .spyOn(MasApiClient.prototype, 'getPersonalDetailsUpdated')
+          .mockResolvedValueOnce(mockPersonalDetailsUpdated)
+        jest
+          .spyOn(SupervisionAppointmentClient.prototype, 'getLatestSmsStatusByCrn')
+          .mockResolvedValueOnce(getLastSmsStatus({ status: null }))
+
+        const req = buildRequest()
+        getSmsPreviewSpy.mockImplementationOnce(() => () => Promise.resolve(mockPreview))
+
+        await getSmsConfirmation(hmppsAuthClient)(req, res, nextSpy)
+
+        expect(res.locals.smsConfirmation.overview).toContain(
+          'Last text message: sent on 16 October 2025 — delivery status unavailable',
+        )
+        expect(nextSpy).toHaveBeenCalledWith()
+      })
+
       it('should return the correct overview if no sms sent in last 90 days', async () => {
         jest
           .spyOn(MasApiClient.prototype, 'getPersonalDetailsUpdated')
           .mockResolvedValueOnce(mockPersonalDetailsUpdated)
-        const lastSmsResponse: Partial<LastSmsResponse> = {
-          dateSent: null,
-          dateDelivered: null,
-          dateRetryUntil: null,
-        }
-        jest.spyOn(MasApiClient.prototype, 'getLastSms').mockResolvedValueOnce(getLastSms(lastSmsResponse))
+        jest.spyOn(SupervisionAppointmentClient.prototype, 'getLatestSmsStatusByCrn').mockResolvedValueOnce(null)
+
         const req = buildRequest()
         getSmsPreviewSpy.mockImplementationOnce(() => () => Promise.resolve(mockPreview))
         await getSmsConfirmation(hmppsAuthClient)(req, res, nextSpy)
@@ -220,23 +243,24 @@ describe('middleware/getSmsConfirmation', () => {
         jest
           .spyOn(MasApiClient.prototype, 'getPersonalDetailsUpdated')
           .mockResolvedValueOnce(mockPersonalDetailsUpdated)
-        const lastSmsResponse: Partial<LastSmsResponse> = {
-          dateDelivered: null,
-          dateRetryUntil: '2025-10-21T14:55:23.537Z',
-        }
-        jest.spyOn(MasApiClient.prototype, 'getLastSms').mockResolvedValueOnce(getLastSms(lastSmsResponse))
+        jest
+          .spyOn(SupervisionAppointmentClient.prototype, 'getLatestSmsStatusByCrn')
+          .mockResolvedValueOnce(getLastSmsStatus({ status: 'sending' }))
         const req = buildRequest()
         getSmsPreviewSpy.mockImplementationOnce(() => () => Promise.resolve(mockPreview))
         await getSmsConfirmation(hmppsAuthClient)(req, res, nextSpy)
         expect(res.locals.smsConfirmation.overview).toContain(
-          'Last text message: sent on 16 October 2025 and attempting delivery until 21 October 2025',
+          'Last text message: sent on 16 October 2025 and attempting delivery until 19 October 2025',
         )
         expect(nextSpy).toHaveBeenCalledWith()
       })
     })
+
     it('should return the correct overview if sms preview returns a 500 error', async () => {
       jest.spyOn(MasApiClient.prototype, 'getPersonalDetailsUpdated').mockResolvedValueOnce(mockPersonalDetailsUpdated)
-      jest.spyOn(MasApiClient.prototype, 'getLastSms').mockResolvedValueOnce(getLastSms())
+      jest
+        .spyOn(SupervisionAppointmentClient.prototype, 'getLatestSmsStatusByCrn')
+        .mockResolvedValueOnce(getLastSmsStatus())
       getSmsPreviewSpy.mockImplementation(() => () => Promise.resolve(mockErrorSummary))
       const req = buildRequest()
       const res = buildResponse()

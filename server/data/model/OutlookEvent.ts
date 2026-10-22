@@ -81,3 +81,10 @@ export interface SmsPreviewSession {
   request: SmsPreviewRequest
   preview: SmsPreviewResponse
 }
+
+export interface LastSmsStatusResponse {
+  notificationId: string
+  sentAt: string
+  status: string | null
+  statusUpdatedAt: string | null
+}

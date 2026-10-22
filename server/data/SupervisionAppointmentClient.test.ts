@@ -10,7 +10,9 @@ import {
   RescheduleEventRequest,
   EventResponse,
   SmsPreviewRequest,
+  LastSmsStatusResponse,
 } from './model/OutlookEvent'
+import { ErrorSummary } from './model/common'
 
 jest.mock('../utils', () => {
   const actualUtils = jest.requireActual('../utils')
@@ -181,6 +183,53 @@ describe('MasOutlookClient', () => {
       fakeApi.post(`/sms/preview`).matchHeader('authorization', `Bearer ${token.access_token}`).reply(200, response)
       const output = await client.postSmsPreview(body)
       expect(output).toEqual(response)
+    })
+  })
+
+  describe('getLatestSmsStatusByCrn', () => {
+    const crn = 'X000001'
+    const response: LastSmsStatusResponse = {
+      notificationId: 'notification-id',
+      sentAt: '2025-10-16T14:55:23.537Z',
+      status: 'delivered',
+      statusUpdatedAt: '2025-10-16T14:56:23.537Z',
+    }
+
+    it('should GET the latest SMS status by CRN and return the response', async () => {
+      fakeApi
+        .get(`/sms/status/latest/crn/${crn}`)
+        .matchHeader('authorization', `Bearer ${token.access_token}`)
+        .reply(200, response)
+
+      const output = await client.getLatestSmsStatusByCrn(crn)
+
+      expect(output).toEqual(response)
+      expect(nock.isDone()).toBe(true)
+    })
+
+    it('should return null when no recent SMS status is found', async () => {
+      fakeApi
+        .get(`/sms/status/latest/crn/${crn}`)
+        .matchHeader('authorization', `Bearer ${token.access_token}`)
+        .reply(404)
+
+      const output = await client.getLatestSmsStatusByCrn(crn)
+
+      expect(output).toBeNull()
+      expect(nock.isDone()).toBe(true)
+    })
+
+    it('should return an ErrorSummary when the latest SMS status API returns 500', async () => {
+      fakeApi
+        .get(`/sms/status/latest/crn/${crn}`)
+        .matchHeader('authorization', `Bearer ${token.access_token}`)
+        .times(3)
+        .reply(500)
+
+      const output = (await client.getLatestSmsStatusByCrn(crn)) as ErrorSummary
+
+      expect(output?.errors).toEqual([{ text: '' }])
+      expect(nock.isDone()).toBe(true)
     })
   })
 })

@@ -2,15 +2,16 @@
   "mappings": [
     {
       "request": {
-        "urlPathPattern": "/mas/last-sms/.*",
+        "urlPathPattern": "/supervision/sms/status/latest/crn/.*",
         "method": "GET"
       },
       "response": {
         "status": 200,
         "jsonBody": {
-          "dateSent": "2025-10-16T14:55:23.537Z",
-          "dateDelivered": "2025-10-16T14:56:23.537Z",
-          "dateRetryUntil": null
+          "notificationId": "notification-id",
+          "sentAt": "2025-10-16T14:55:23.537Z",
+          "status": "delivered",
+          "statusUpdatedAt": "2025-10-16T14:56:23.537Z"
         },
         "headers": {
           "Content-Type": "application/json"

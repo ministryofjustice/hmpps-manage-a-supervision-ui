@@ -14,6 +14,7 @@ import {
   canRescheduleAppointment,
   addressToList,
   resolveCheckinEligibility,
+  eligibilityCheckDisabled,
   fullName,
 } from '../utils'
 import {
@@ -61,11 +62,16 @@ const appointmentsController: Controller<typeof routes, void> = {
         masClient.getProbationPractitioner(crn),
       ])
 
-      const checkinEligibility = resolveCheckinEligibility(
-        await esupClient.getOffenderEligibility(crn),
-        res.locals.tierCalculation,
-        fullName(res.locals.headerPersonName),
-      )
+      await getCheckinOffenderDetails(hmppsAuthClient)(req, res)
+      const checkinEligibility =
+        res.locals.flags?.enableEsupEligibilityCheck === true
+          ? resolveCheckinEligibility(
+              await esupClient.getOffenderEligibility(crn),
+              res.locals.tierCalculation,
+              fullName(res.locals.headerPersonName),
+              res.locals.offenderCheckinsByCRNResponse?.status,
+            )
+          : eligibilityCheckDisabled
 
       let pastAppointments = pastAppointmentsResponse
       let upcomingAppointments = upcomingAppointmentsResponse
@@ -92,7 +98,6 @@ const appointmentsController: Controller<typeof routes, void> = {
       const hasPractitioner = practitioner ? !practitioner.unallocated : false
       const canAccessCheckins = hasPractitioner && res.locals.flags?.enableESupervisionCheckins === true
 
-      await getCheckinOffenderDetails(hmppsAuthClient)(req, res)
       return res.render('pages/appointments', {
         upcomingAppointments,
         pastAppointments,

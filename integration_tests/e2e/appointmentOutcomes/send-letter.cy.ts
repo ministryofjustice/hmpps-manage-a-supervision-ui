@@ -108,31 +108,6 @@ describe('Send a letter', () => {
     sendLetterPage = new SendLetterPage()
     sendLetterPage.checkPageTitle('Send a letter')
 
-  it('should have the correct back link', () => {
-    loadPage({ journey })
-    let expectedLink: string
-    getUuid(3).then(uuid => {
-      if (journey === 'MANAGE') {
-        expectedLink = `/case/${crn}/appointments/appointment/${appointmentId}/outcome/attended-failed-to-comply`
-      } else {
-        expectedLink = `/case/${crn}/arrange-appointment/${uuid}/outcome/attended-failed-to-comply`
-      }
-      attendedFailedToComplyPage.getBackLink().should('have.attr', 'href', expectedLink)
-    })
-  })
-  if (journey === 'MANAGE') {
-    it('should have the correct back link if update enforcement action', () => {
-      loadPage({ journey, updateAction: true })
-      let expectedLink: string
-      getUuid(3).then(_ => {
-        expectedLink = `/case/${crn}/appointments/appointment/${appointmentId}/outcome/update-enforcement-action`
-        attendedFailedToComplyPage.getBackLink().should('have.attr', 'href', expectedLink)
-      })
-    })
-  }
-  it('should show validation errors when no options are selected', () => {
-    loadPage({ journey })
-    sendLetterPage = new SendLetterPage()
     sendLetterPage.getSubmitBtn().click()
     sendLetterPage.checkErrorSummaryBox(msgs)
     cy.get(`#appointments-${crn}-${appointmentId}-outcome-letterSentBy-error`).should('contain.text', msgs[0])

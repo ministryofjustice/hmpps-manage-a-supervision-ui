@@ -341,6 +341,29 @@ describe('caseController', () => {
         }),
       )
     })
+
+    it('should keep the person eligible when no tier has been assigned but they are already set up for check ins', async () => {
+      jest.spyOn(ESupervisionClient.prototype, 'getOffenderCheckinsByCRN').mockResolvedValueOnce({
+        uuid: '3fa85f64-5717-4562-b3fc-2c963f66afa7',
+        crn,
+        status: 'VERIFIED',
+        firstCheckin: '2025-11-03',
+        checkinInterval: 'WEEKLY',
+        mode: 'SCHEDULED',
+        contactPreference: 'PHONE',
+      })
+      const noTierRes = mockAppResponse({
+        flags: { enableOutcomesV1: true },
+        tierCalculation: null,
+        headerPersonName: { forename: 'Alton', surname: 'Berge' },
+      })
+      const noTierRenderSpy = jest.spyOn(noTierRes, 'render')
+      await controllers.case.getCase(hmppsAuthClient)(req, noTierRes)
+      expect(noTierRenderSpy).toHaveBeenCalledWith(
+        'pages/overview',
+        expect.objectContaining({ checkinEligibility: mockOffenderEligibilityResponse }),
+      )
+    })
   })
   it('should default appointmentsWithoutAnOutcomeCount to 0 when no content is returned', async () => {
     jest.spyOn(MasApiClient.prototype, 'getOverdueOutcomes').mockResolvedValueOnce({} as any)

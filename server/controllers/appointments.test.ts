@@ -366,6 +366,21 @@ describe('controllers/appointments', () => {
         }),
       )
     })
+
+    it('should keep the person eligible when no tier has been assigned but they are already set up for check ins', async () => {
+      const mockRes = mockAppResponse({
+        flags: { enableESupervisionCheckins: true },
+        tierCalculation: null,
+        headerPersonName: { forename: 'Alton', surname: 'Berge' },
+        offenderCheckinsByCRNResponse: { status: 'INACTIVE' },
+      })
+      const spy = jest.spyOn(mockRes, 'render')
+      await controllers.appointments.getAppointments(hmppsAuthClient)(req, mockRes)
+      expect(spy).toHaveBeenCalledWith(
+        'pages/appointments',
+        expect.objectContaining({ checkinEligibility: mockOffenderEligibility }),
+      )
+    })
   })
 
   describe('get upcoming appointments', () => {

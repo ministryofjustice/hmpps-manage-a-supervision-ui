@@ -1,4 +1,5 @@
 import {
+  isRegisteredForCheckins,
   isTierBasedEligibility,
   isTierMissing,
   mayBeEligibleMessage,
@@ -81,6 +82,34 @@ describe('utils/checkinEligibility', () => {
 
     it('overrides a missing eligibility when no tier is assigned', () => {
       expect(resolveCheckinEligibility(null, undefined, 'Steve Jones')).toEqual(noTier)
+    })
+
+    it.each(['VERIFIED', 'INACTIVE'] as const)(
+      'does not override the eligibility when no tier is assigned but check ins are already %s',
+      status => {
+        expect(resolveCheckinEligibility(eligible, null, 'Steve Jones', status)).toBe(eligible)
+      },
+    )
+
+    it('still overrides the eligibility when no tier is assigned and check ins are not set up', () => {
+      expect(resolveCheckinEligibility(eligible, null, 'Steve Jones', 'INITIAL')).toEqual(noTier)
+      expect(resolveCheckinEligibility(eligible, null, 'Steve Jones', null)).toEqual(noTier)
+    })
+
+    it('still softens a tier-based message when check ins are already set up', () => {
+      expect(resolveCheckinEligibility(tierBased, null, 'Steve Jones', 'VERIFIED')).toEqual(mayBeEligible)
+    })
+  })
+
+  describe('isRegisteredForCheckins', () => {
+    it.each([
+      ['VERIFIED', true],
+      ['INACTIVE', true],
+      ['INITIAL', false],
+      [null, false],
+      [undefined, false],
+    ] as const)('returns the expected result for status %s', (status, expected) => {
+      expect(isRegisteredForCheckins(status)).toBe(expected)
     })
   })
 

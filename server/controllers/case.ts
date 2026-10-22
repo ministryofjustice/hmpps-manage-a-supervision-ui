@@ -59,15 +59,16 @@ const caseController: Controller<typeof routes, void> = {
         ? filterContactsMonths(contactResponse?.content)
         : filterContacts(contactResponse?.content)
 
+      await getCheckinOffenderDetails(hmppsAuthClient)(req, res)
       const checkinEligibility = resolveCheckinEligibility(
         await esupClient.getOffenderEligibility(crn),
         res.locals.tierCalculation,
         fullName(res.locals.headerPersonName),
+        res.locals.offenderCheckinsByCRNResponse?.status,
       )
       const hasDeceased = req.session.data.personalDetails?.[crn]?.overview?.dateOfDeath !== undefined
       const hasPractitioner = practitioner ? !practitioner.unallocated : false
       const canAccessCheckins = hasPractitioner && res.locals.flags?.enableESupervisionCheckins === true
-      await getCheckinOffenderDetails(hmppsAuthClient)(req, res)
       await getUpcomingCheckinDetails(hmppsAuthClient)(req, res)
       let personExistsResponse: PersonExistsResponse | undefined
       await getSentences(hmppsAuthClient)(req, res, () => {})

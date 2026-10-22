@@ -143,9 +143,10 @@ const caseloadController: Controller<typeof routes, void, Args> = {
         req.query?.outcomeFilter ?? (res.locals.flags.enable3MonthsOutcomes ? 'PAST_THREE_MONTHS' : 'PAST_TWO_YEARS')
       let fromDate
       let toDate
+
       if (type === 'no-outcome') {
         cols = cols.filter(col => col !== 'appointment')
-        if (outcomeFilter && res.locals.flags.enableHomePageOutcomesWithFilter) {
+        if (outcomeFilter && res.locals.flags?.enableHomePageV2API) {
           const result = res.locals.flags.enable3MonthsOutcomes
             ? getNewDateRange(outcomeFilter as NewRangeType)
             : getDateRange(outcomeFilter as RangeType)
@@ -153,6 +154,7 @@ const caseloadController: Controller<typeof routes, void, Args> = {
           toDate = result.toDate
         }
       }
+
       const sortBy = cols.reduce((acc, colName) => {
         const defaultSort = !dir && colName === 'date' ? 'ascending' : 'none'
         return { ...acc, [colName]: name === colName ? directions?.[dir] || defaultSort : defaultSort }
@@ -173,7 +175,7 @@ const caseloadController: Controller<typeof routes, void, Args> = {
       let userSchedule: UserSchedule = res.locals.flags?.enableHomePageV2API
         ? await masClient.getUserScheduleV2(queryParameters)
         : await masClient.getUserSchedule(queryParameters)
-      const appointments: UserActivity[] = userSchedule.appointments.map((appointment: UserActivity) => {
+      const appointments: UserActivity[] = userSchedule?.appointments?.map((appointment: UserActivity) => {
         const [year, month, day] = appointment.dob.split('-')
         return { ...appointment, birthdate: { day, month, year } }
       })
@@ -182,7 +184,7 @@ const caseloadController: Controller<typeof routes, void, Args> = {
         ...userSchedule,
         appointments,
       }
-      if (type === 'no-outcome' && res.locals.flags.enableHomePageOutcomesWithFilter) {
+      if (type === 'no-outcome' && res.locals.flags.enable3MonthsOutcomes && res.locals.flags?.enableHomePageV2API) {
         baseUrl = `${baseUrl}?outcomeFilter=${outcomeFilter}`
       }
 

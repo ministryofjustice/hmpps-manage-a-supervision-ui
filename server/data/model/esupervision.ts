@@ -150,8 +150,9 @@ export interface OffenderCheckinsByCRNResponse {
   uuid: string
   crn: string
   status: OffenderStatus
-  firstCheckin: string
+  firstCheckin: string | null
   checkinInterval: CheckInterval
+  mode: CheckinMode
   contactPreference: 'PHONE' | 'EMAIL'
   photoUrl?: string
 }
@@ -264,8 +265,9 @@ export interface EsupervisionUpcomingQuestionsResponse {
 
 export interface OffenderEligibility {
   outcome: 'ELIGIBLE' | 'INELIGIBLE'
-  message: string
+  message: string | null
 }
 
 export type OffenderStatus = 'INITIAL' | 'VERIFIED' | 'INACTIVE'
 export type CheckInterval = 'WEEKLY' | 'TWO_WEEKS' | 'FOUR_WEEKS' | 'EIGHT_WEEKS'
+export type CheckinMode = 'SCHEDULED' | 'AD_HOC'

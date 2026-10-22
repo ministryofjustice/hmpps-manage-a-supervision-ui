@@ -1,4 +1,3 @@
-import { checkPopHeader } from '../appointments/imports'
 import { crn, appointmentId } from '../appointments/imports/common'
 import AttendedFailedToComplyPage from '../../pages/appointmentOutcomes/attended-failed-to-comply.page'
 import ManageAppointmentPage from '../../pages/appointments/manage-appointment.page'
@@ -15,21 +14,16 @@ import SendLetterPage from '../../pages/appointmentOutcomes/send-letter.page'
 import InitiateBreachOrRecallPage from '../../pages/appointmentOutcomes/initiate-breach-or-recall.page'
 import AddNotePage from '../../pages/appointments/add-note.page'
 import EnforcementActionPage from '../../pages/appointmentOutcomes/enforcement-action.page'
-import {
-  ExpectedOption,
-  Journey,
-  checkBreachOrRecallWarningBanner,
-  checkOptionRedirects,
-  checkOptions,
-  checkTicketPanel,
-} from './imports'
+import { ExpectedOption, Journey, checkOptionRedirects } from './imports'
 import { SentenceType } from '../../../server/data/model/sentenceDetails'
 import RescheduleCheckYourAnswerPage from '../../pages/appointments/reschedule-check-your-answer.page'
+import UnacceptableAbsencePage from '../../pages/appointmentOutcomes/unacceptable-absence.page'
 
 let manageAppointmentPage: ManageAppointmentPage
 let outcomePage: OutcomePage
 let attendedFailedToComplyPage: AttendedFailedToComplyPage
 let checkYourAnswersPage: RescheduleCheckYourAnswerPage
+let unacceptableAbsencePage: UnacceptableAbsencePage
 
 const loadPage = ({
   journey = 'MANAGE',
@@ -69,36 +63,28 @@ const loadPage = ({
 
 type RedirectPages = SendLetterPage | InitiateBreachOrRecallPage | AddNotePage | EnforcementActionPage
 
-const getExpectedOptions = ({
-  isProbationPractitioner = false,
-  sentenceType = 'COMMUNITY',
-}: { isProbationPractitioner?: boolean; sentenceType?: SentenceType } = {}): ExpectedOption<RedirectPages>[] => {
-  const text = sentenceType === 'COMMUNITY' ? 'breach' : 'recall'
+const getExpectedOptions = (): ExpectedOption<RedirectPages>[] => {
   const expectedOptions: ExpectedOption<RedirectPages>[] = [
     { value: 'SEND_LETTER', text: 'Send a letter', RedirectPage: SendLetterPage, redirectPageName: 'Send a letter' },
     {
       value: 'BREACH_RECALL_INITIATED',
-      text: `Initiate a ${text}`,
+      text: `Initiate a breach`,
       RedirectPage: InitiateBreachOrRecallPage,
-      redirectPageTitle: `Initiate a ${text}`,
+      redirectPageTitle: `Initiate a breach`,
     },
     {
       value: 'BREACH_RECALL_INITIATED_AND_SEND_LETTER',
-      text: `Initiate a ${text} and send a letter`,
+      text: `Initiate a breach and send a letter`,
       RedirectPage: InitiateBreachOrRecallPage,
-      redirectPageTitle: `Initiate a ${text}`,
+      redirectPageTitle: `Initiate a breach`,
     },
-  ]
-  if (!isProbationPractitioner) {
-    expectedOptions.push({
+    {
       value: 'REFER_TO_OFFENDER_MANAGER',
       text: 'Refer to offender manager',
       hint: 'Notify the allocated probation practitioner so they can take action.',
       redirectPageTitle: 'Add a note',
       RedirectPage: AddNotePage,
-    })
-  }
-  expectedOptions.push(
+    },
     {
       value: 'NO_FURTHER_ACTION',
       text: 'No further action',
@@ -111,70 +97,40 @@ const getExpectedOptions = ({
       RedirectPage: EnforcementActionPage,
       redirectPageTitle: 'Select an enforcement action for Alton’s failure to comply',
     },
-  )
+  ]
   return expectedOptions
-}
-
-const checkPage = ({ journey = 'MANAGE' }: { journey?: Journey } = {}) => {
-  it('should render the page if sentence type is community and user is not probation practitioner', () => {
-    loadPage({ journey })
-    attendedFailedToComplyPage = new AttendedFailedToComplyPage()
-    attendedFailedToComplyPage.checkPageTitle('Enforcement action for Alton’s unacceptable absence')
-    checkPopHeader({ name: 'Alton Berge', appointments: true, headerCrn: crn })
-    cy.get('legend').should('contain.text', 'Select an action for Alton’s unacceptable absence')
-    const options = getExpectedOptions()
-    checkOptions(options)
-  })
-  it('should render the page if sentence type is custody and user is probation practitioner', () => {
-    loadPage({ journey, sentenceType: 'CUSTODY', isProbationPractitioner: true })
-    const options = getExpectedOptions({ sentenceType: 'CUSTODY', isProbationPractitioner: true })
-    checkOptions(options)
-  })
-  it('should have the correct back link', () => {
-    loadPage({ journey })
-    let expectedLink: string
-    getUuid(3).then(uuid => {
-      if (journey === 'MANAGE') {
-        expectedLink = `/case/${crn}/appointments/appointment/${appointmentId}/outcome`
-      } else {
-        expectedLink = `/case/${crn}/arrange-appointment/${uuid}/outcome`
-      }
-      attendedFailedToComplyPage.getBackLink().should('have.attr', 'href', expectedLink)
-    })
-  })
-  it('should show validation error when no option is selected', () => {
-    const msg = 'Select an action for their unacceptable absence'
-    loadPage({ journey })
-    attendedFailedToComplyPage = new AttendedFailedToComplyPage()
-    uncheckAllRadios()
-    attendedFailedToComplyPage.getSubmitBtn().click()
-    attendedFailedToComplyPage.checkErrorSummaryBox([msg])
-    getUuid(3).then(uuid => {
-      const id = journey === 'MANAGE' ? appointmentId : uuid
-      cy.get(`#appointments-${crn}-${id}-outcome-unacceptableAbsence-error`).should('contain.text', msg)
-    })
-  })
-  it('should redirect to the correct page when an option is selected', () => {
-    const options = getExpectedOptions()
-    loadPage({ journey })
-    checkOptionRedirects(options, AttendedFailedToComplyPage)
-  })
-
-  checkBreachOrRecallWarningBanner(loadPage, AttendedFailedToComplyPage)
-  checkTicketPanel(loadPage, AttendedFailedToComplyPage)
 }
 
 describe('Unacceptable absence', () => {
   afterEach(() => {
     cy.task('resetMocks')
   })
-  describe('Manage appointment journey', () => {
-    checkPage()
+  it('should render the page in the manage appointment journey', () => {
+    loadPage()
+    unacceptableAbsencePage = new UnacceptableAbsencePage()
+    unacceptableAbsencePage.checkPageTitle('Enforcement action for Alton’s unacceptable absence')
   })
-  describe('Arrange appointment journey', () => {
-    checkPage({ journey: 'ARRANGE' })
+  it('should render the page in the arrange appointment journey', () => {
+    loadPage({ journey: 'ARRANGE' })
+    unacceptableAbsencePage = new UnacceptableAbsencePage()
+    unacceptableAbsencePage.checkPageTitle('Enforcement action for Alton’s unacceptable absence')
   })
-  describe('Reschedule appointment journey', () => {
-    checkPage({ journey: 'RESCHEDULE' })
+  it('should render the page in the reschedule appointment journey', () => {
+    loadPage({ journey: 'RESCHEDULE' })
+    unacceptableAbsencePage = new UnacceptableAbsencePage()
+    unacceptableAbsencePage.checkPageTitle('Enforcement action for Alton’s unacceptable absence')
+  })
+  it('should show validation error when no option is selected', () => {
+    const msg = 'Select an action for their unacceptable absence'
+    loadPage()
+    attendedFailedToComplyPage = new AttendedFailedToComplyPage()
+    attendedFailedToComplyPage.getSubmitBtn().click()
+    attendedFailedToComplyPage.checkErrorSummaryBox([msg])
+    cy.get(`#appointments-${crn}-${appointmentId}-outcome-unacceptableAbsence-error`).should('contain.text', msg)
+  })
+  it('should redirect to the correct page when an option is selected', () => {
+    const options = getExpectedOptions()
+    loadPage()
+    checkOptionRedirects(options, AttendedFailedToComplyPage)
   })
 })

@@ -28,6 +28,7 @@ import {
   getTagClass,
   setSortOrder,
   initialiseName,
+  merge,
 } from '../utils'
 import { to12HourTimeWithMinutes } from '../utils/to12HourTimeWithMinutes'
 import logger from '../../logger'
@@ -67,6 +68,7 @@ export const createNunjucksTestEnv = (req?: Request, res?: AppResponse) => {
   env.addFilter('shortTime', shortTime)
   env.addFilter('toErrorList', toErrorList)
   env.addFilter('handleQuotes', handleQuotes)
+  env.addFilter('merge', merge)
   env.addGlobal('timeFromTo', timeFromTo)
   env.addFilter('to12HourTimeWithMinutes', to12HourTimeWithMinutes)
   env.addFilter('dateWithYearShortMonth', dateWithYearShortMonth)

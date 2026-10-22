@@ -11,6 +11,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.feature-dev
+      args:
+        BUILD_NUMBER: ${BUILD_NUMBER:-local}
+        GIT_REF: ${GIT_REF:-local}
+        GIT_BRANCH: ${GIT_BRANCH:-local}
     environment:
       - PORT=3007
       - NODE_ENV=development

@@ -20,125 +20,236 @@
 {% set manageCheckinLink = '/case/' + crn + '/appointments/check-in/manage/' + offenderCheckinsByCRNResponse.uuid %}
 {% set personForename = overview.personalDetails.name.forename %}
 
-{% set criminogenicNeedsHtml %}
-{% if needs.identifiedNeeds.length or needs.notIdentifiedNeeds.length or needs.unansweredNeeds.length %}
-  <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-0">
-    {% if needs.identifiedNeeds.length %}
-      <dt class="govuk-!-font-weight-bold">Need identified</dt>
-      <dd class="govuk-!-margin-left-0">
-        <ul class="govuk-list">
-          {% for need in needs.identifiedNeeds %}
-            <li>{{ need.name }}</li>
-          {% endfor %}
-        </ul>
-      </dd>
-    {% endif %}
-    {% if needs.notIdentifiedNeeds.length %}
-      <dt class="govuk-!-font-weight-bold">No need identified</dt>
-      <dd class="govuk-!-margin-left-0">
-        <ul class="govuk-list">
-          {% for need in needs.notIdentifiedNeeds %}
-            <li>{{ need.name }}</li>
-          {% endfor %}
-        </ul>
-      </dd>
-    {% endif %}
-    {% if needs.unansweredNeeds.length%}
-      <dt class="govuk-!-font-weight-bold">Not enough information provided</dt>
-      <dd class="govuk-!-margin-left-0">
-        <ul class="govuk-list govuk-!-margin-bottom-0">
-          {% for need in needs.unansweredNeeds %}
-            <li>{{ need.name }}</li>
-          {% endfor %}
-        </ul>
-      </dd>
-    {% endif %}
-  </dl>
-{% else %}
-  {{'There is no OASys risk assessment.'}}
+{% set cardClasses = 'govuk-!-margin-bottom-6 app-summary-card--large-title app-summary-card--light' %}
+{% if not flags.enableNewOverview %}
+  {% set cardClasses = 'govuk-!-margin-bottom-6 app-summary-card--large-title' %}
 {% endif %}
+
+{% set dateOfBirthAndAge %}
+  {{ overview.personalDetails.dateOfBirth | dateWithYear + (" (" + overview.personalDetails.dateOfBirth | yearsSince + " years old)" if not personalDetails.dateOfDeath ) }}
+{% endset %}
+
+{% if personalDetails.dateOfDeath %}
+  {% set dateOfDeathAndAge %}
+    {{ personalDetails.dateOfDeath | dateWithYear }} ({{ overview.personalDetails.dateOfBirth | yearsBetween(personalDetails.dateOfDeath) }} years old)
+  {% endset %}
+{% endif %}
+
+{% set contactNumber %}
+  {% if overview.personalDetails.telephoneNumber %}
+    {{ overview.personalDetails.telephoneNumber }}<br />
+  {% endif %}
+  {% if overview.personalDetails.mobileNumber %}
+    {{ overview.personalDetails.mobileNumber }}<br />
+  {% endif %}
+  {% if not overview.personalDetails.mobileNumber | length and not overview.personalDetails.mobileNumber | length %}
+    No contact number
+  {% endif %}
+{% endset %}
+
+{% set circumstances %}
+  {% if overview.personalDetails.personalCircumstances.length > 0 %}
+    <ul class="govuk-list">
+      {% for circumstance in overview.personalDetails.personalCircumstances %}
+        <li>
+          {{ circumstance.type }}: {{ circumstance.subType }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    None
+  {% endif %}
+{% endset %}
+
+{% set disabilities %}
+  {% if overview.personalDetails.disabilities.length > 0 %}
+    <ul class="govuk-list">
+      {% for adjustment in overview.personalDetails.disabilities %}
+        <li>
+          {{ adjustment.description }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    No disabilities
+  {% endif %}
+{% endset %}
+
+{% set adjustments %}
+  {% if overview.personalDetails.provisions.length > 0 %}
+    <ul class="govuk-list">
+      {% for provisions in overview.personalDetails.provisions %}
+        <li>
+          {{ provisions.description }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    No adjustments
+  {% endif %}
+{% endset %}
+
+{% set personalDetailsRows = [
+  {
+    key: { html: '<span data-qa="nameLabel">Name</span>'},
+    value: { html: '<span data-qa="nameValue">' + overview.personalDetails.name | fullName + '</span>'}
+  },
+  {
+    key: { html: '<span data-qa="preferredNameLabel">Preferred name/Known as</span>'},
+    value: { html: '<span data-qa="preferredNameValue">' + overview.personalDetails.preferredName + '</span>'}
+  } if (overview.personalDetails.preferredName),
+  {
+    key: { html: '<span data-qa="preferredGenderLabel">Gender</span>'},
+    value: { html: '<span data-qa="preferredGenderValue">' + overview.personalDetails.preferredGender + '</span>'}
+  },
+  {
+    key: { html: '<span data-qa="dateOfBirthAndAgeLabel">Date of birth</span>'},
+    value: { html: '<span data-qa="dateOfBirthAndAgeValue">' + dateOfBirthAndAge + '</span>'}
+  },
+  {
+    key: { html: '<span data-qa="dateOfDeathAndAgeLabel">Date of death</span>'},
+    value: { html: '<span data-qa="dateOfDeathAndAgeValue">' + dateOfDeathAndAge + '</span>'}
+  } if dateOfDeathAndAge,
+  {
+    key: { html: '<span data-qa="contactNumberLabel">Contact number</span>'},
+    value: { html: '<span class="app-!-font-family-tabular" data-qa="contactNumberValue">' + contactNumber + '</span>'}
+  }
+] %}
+
+{% set circumstancesRows = [
+  {
+    key: { html: '<span data-qa="currentCircumstancesLabel">Current circumstances</span>'},
+    value: { html: '<span data-qa="currentCircumstancesValue">' + circumstances + '</span>'}
+  },
+  {
+    key: { html: '<span data-qa="disabilitiesLabel">Disabilities</span>'},
+    value: { html: '<span data-qa="disabilitiesValue">' + disabilities + '</span>'}
+  },
+  {
+    key: { html: '<span data-qa="adjustmentsLabel">Adjustments</span>'},
+    value: { html: '<span data-qa="adjustmentsValue">' + adjustments + '</span>'}
+  }
+] %}
+
+{% set criminogenicNeedsHtml %}
+  {% if needs.identifiedNeeds.length or needs.notIdentifiedNeeds.length or needs.unansweredNeeds.length %}
+    <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+      {% if needs.identifiedNeeds.length %}
+        <dt class="govuk-!-font-weight-bold">Need identified</dt>
+        <dd class="govuk-!-margin-left-0">
+          <ul class="govuk-list">
+            {% for need in needs.identifiedNeeds %}
+              <li>{{ need.name }}</li>
+            {% endfor %}
+          </ul>
+        </dd>
+      {% endif %}
+      {% if needs.notIdentifiedNeeds.length %}
+        <dt class="govuk-!-font-weight-bold">No need identified</dt>
+        <dd class="govuk-!-margin-left-0">
+          <ul class="govuk-list">
+            {% for need in needs.notIdentifiedNeeds %}
+              <li>{{ need.name }}</li>
+            {% endfor %}
+          </ul>
+        </dd>
+      {% endif %}
+      {% if needs.unansweredNeeds.length %}
+        <dt class="govuk-!-font-weight-bold">Not enough information provided</dt>
+        <dd class="govuk-!-margin-left-0">
+          <ul class="govuk-list govuk-!-margin-bottom-0">
+            {% for need in needs.unansweredNeeds %}
+              <li>{{ need.name }}</li>
+            {% endfor %}
+          </ul>
+        </dd>
+      {% endif %}
+    </dl>
+  {% else %}
+    {{ 'There is no OASys risk assessment.' }}
+  {% endif %}
 {% endset %}
 
 {% set riskFlagsHtml %}
-{% if personRisks.riskFlags.length %}
-  <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-0">
-    {% if noRiskLevel.length %}
-      <dd class="govuk-!-margin-left-0">
-        <ul class="govuk-list">
-          {% for risk in noRiskLevel %}
-            <li>{{ risk.description }}</li>
-          {% endfor %}
-        </ul>
-      </dd>
-    {% endif %}
-    {% if veryHighRiskLevel.length %}
-      <dt class="govuk-!-font-weight-bold rosh--very-high">Very High</dt>
-      <dd class="govuk-!-margin-left-0">
-        <ul class="govuk-list">
-          {% for risk in veryHighRiskLevel %}
-            <li>{{ risk.description }}</li>
-          {% endfor %}
-        </ul>
-      </dd>
-    {% endif %}
-    {% if highRiskLevel.length %}
-      <dt class="govuk-!-font-weight-bold rosh--high">High</dt>
-      <dd class="govuk-!-margin-left-0">
-        <ul class="govuk-list">
-          {% for risk in highRiskLevel %}
-            <li>{{ risk.description }}</li>
-          {% endfor %}
-        </ul>
-      </dd>
-    {% endif %}
-    {% if mediumRiskLevel.length %}
-      <dt class="govuk-!-font-weight-bold rosh--medium">Medium</dt>
-      <dd class="govuk-!-margin-left-0">
-        <ul class="govuk-list">
-          {% for risk in mediumRiskLevel %}
-            <li>{{ risk.description }}</li>
-          {% endfor %}
-        </ul>
-      </dd>
-    {% endif %}
-    {% if lowRiskLevel.length %}
-      <dt class="govuk-!-font-weight-bold rosh--low">Low</dt>
-      <dd class="govuk-!-margin-left-0">
-        <ul class="govuk-list">
-          {% for risk in lowRiskLevel %}
-            <li>{{ risk.description }}</li>
-          {% endfor %}
-        </ul>
-      </dd>
-    {% endif %}
-    {% if infoOnlyRiskLevel.length %}
-      <dt class="govuk-!-font-weight-bold">Information only</dt>
-      <dd class="govuk-!-margin-left-0">
-        <ul class="govuk-list govuk-!-margin-bottom-0">
-          {% for risk in infoOnlyRiskLevel %}
-            <li>{{ risk.description }}</li>
-          {% endfor %}
-        </ul>
-      </dd>
-    {% endif %}
-  </dl>
-{% else %}
-  {{ 'There are no active risk flags.' }}
-{% endif %}
+  {% if personRisks.riskFlags.length %}
+    <dl class="govuk-!-margin-top-0 govuk-!-margin-bottom-0">
+      {% if noRiskLevel.length %}
+        <dd class="govuk-!-margin-left-0">
+          <ul class="govuk-list">
+            {% for risk in noRiskLevel %}
+              <li>{{ risk.description }}</li>
+            {% endfor %}
+          </ul>
+        </dd>
+      {% endif %}
+      {% if veryHighRiskLevel.length %}
+        <dt class="govuk-!-font-weight-bold rosh--very-high">Very High</dt>
+        <dd class="govuk-!-margin-left-0">
+          <ul class="govuk-list">
+            {% for risk in veryHighRiskLevel %}
+              <li>{{ risk.description }}</li>
+            {% endfor %}
+          </ul>
+        </dd>
+      {% endif %}
+      {% if highRiskLevel.length %}
+        <dt class="govuk-!-font-weight-bold rosh--high">High</dt>
+        <dd class="govuk-!-margin-left-0">
+          <ul class="govuk-list">
+            {% for risk in highRiskLevel %}
+              <li>{{ risk.description }}</li>
+            {% endfor %}
+          </ul>
+        </dd>
+      {% endif %}
+      {% if mediumRiskLevel.length %}
+        <dt class="govuk-!-font-weight-bold rosh--medium">Medium</dt>
+        <dd class="govuk-!-margin-left-0">
+          <ul class="govuk-list">
+            {% for risk in mediumRiskLevel %}
+              <li>{{ risk.description }}</li>
+            {% endfor %}
+          </ul>
+        </dd>
+      {% endif %}
+      {% if lowRiskLevel.length %}
+        <dt class="govuk-!-font-weight-bold rosh--low">Low</dt>
+        <dd class="govuk-!-margin-left-0">
+          <ul class="govuk-list">
+            {% for risk in lowRiskLevel %}
+              <li>{{ risk.description }}</li>
+            {% endfor %}
+          </ul>
+        </dd>
+      {% endif %}
+      {% if infoOnlyRiskLevel.length %}
+        <dt class="govuk-!-font-weight-bold">Information only</dt>
+        <dd class="govuk-!-margin-left-0">
+          <ul class="govuk-list govuk-!-margin-bottom-0">
+            {% for risk in infoOnlyRiskLevel %}
+              <li>{{ risk.description }}</li>
+            {% endfor %}
+          </ul>
+        </dd>
+      {% endif %}
+    </dl>
+  {% else %}
+    {{ 'There are no active risk flags.' }}
+  {% endif %}
 {% endset %}
 
 {% block beforeContent %}
   {{ govukBreadcrumbs({
-      items: [
-        {
-          text: "Cases",
-          href: "/case"
-        },
-        {
-          text: headerPersonName.forename + ' ' + headerPersonName.surname
-        }
-      ]
-    }) }}
+    items: [
+      {
+        text: "Cases",
+        href: "/case"
+      },
+      {
+        text: headerPersonName.forename + ' ' + headerPersonName.surname
+      }
+    ]
+  }) }}
 {% endblock %}
 
 {% block pageContent %}
@@ -153,211 +264,100 @@
     {% if hasTierChangeItem %}{% set itemCount = itemCount + 1 %}{% endif %}
     {% if hasFinalThirdItem %}{% set itemCount = itemCount + 1 %}{% endif %}
 
-    {% set outcomesItem %}<a href="/case/{{ crn }}/record-an-outcome/outcome">You need to record an outcome for {{ appointmentsWithoutAnOutcomeCount }} {{ 'appointment' if appointmentsWithoutAnOutcomeCount == 1 else 'appointments' }}</a>.{% endset %}
-    {% set tierChangeItem %}<a href="{{ tierChangePrompt.historyHref }}" data-qa="tierChangePromptLink">{{ personForename }}’s tier has changed from {{ tierChangePrompt.oldTier }} to {{ tierChangePrompt.newTier }}</a>.{% endset %}
+    {% set outcomesItem -%}
+      <a href="/case/{{ crn }}/record-an-outcome/outcome">
+        You need to record an outcome for {{ appointmentsWithoutAnOutcomeCount }} {{ 'appointment' if appointmentsWithoutAnOutcomeCount == 1 else 'appointments' }}
+      </a>.
+    {%- endset %}
+    {% set tierChangeItem -%}
+      <a href="{{ tierChangePrompt.historyHref }}" data-qa="tierChangePromptLink">
+        {{ personForename }}’s tier has changed from {{ tierChangePrompt.oldTier }} to {{ tierChangePrompt.newTier }}
+      </a>.
+    {%- endset %}
     {% set finalThirdItem %}{{ personForename }} is {{ 'eligible' if finalThirdPrompt.eligible else 'not eligible' }} for the final third stage.{% endset %}
 
     {% if itemCount > 0 %}
       {% set html %}
-      <h2 class="govuk-heading-m">Information that needs your attention</h2>
-      {% if itemCount == 1 %}
-        <p class="govuk-body govuk-!-margin-bottom-0">
-          {% if hasOutcomesItem %}{{ outcomesItem | safe }}{% endif %}
-          {% if hasTierChangeItem %}{{ tierChangeItem | safe }}{% endif %}
-          {% if hasFinalThirdItem %}{{ finalThirdItem | safe }}{% endif %}
-        </p>
-      {% else %}
-        <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-0">
-          {% if hasOutcomesItem %}<li data-qa="outcomesPromptItem">{{ outcomesItem | safe }}</li>{% endif %}
-          {% if hasTierChangeItem %}<li data-qa="tierChangePromptItem">{{ tierChangeItem | safe }}</li>{% endif %}
-          {% if hasFinalThirdItem %}<li data-qa="finalThirdPromptItem">{{ finalThirdItem | safe }}</li>{% endif %}
-        </ul>
-      {% endif %}
+        <h2 class="govuk-heading-m">Information that needs your attention</h2>
+        {% if itemCount == 1 %}
+          <p class="govuk-body govuk-!-margin-bottom-0">
+            {% if hasOutcomesItem %}{{ outcomesItem | safe }}{% endif %}
+            {% if hasTierChangeItem %}{{ tierChangeItem | safe }}{% endif %}
+            {% if hasFinalThirdItem %}{{ finalThirdItem | safe }}{% endif %}
+          </p>
+        {% else %}
+          <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-0">
+            {% if hasOutcomesItem %}
+              <li data-qa="outcomesPromptItem">{{ outcomesItem | safe }}</li>{% endif %}
+            {% if hasTierChangeItem %}
+              <li data-qa="tierChangePromptItem">{{ tierChangeItem | safe }}</li>{% endif %}
+            {% if hasFinalThirdItem %}
+              <li data-qa="finalThirdPromptItem">{{ finalThirdItem | safe }}</li>{% endif %}
+          </ul>
+        {% endif %}
       {% endset %}
       {{ govukNotificationBanner({ html: html }) }}
     {% endif %}
-  {% elif appointmentsWithoutAnOutcomeCount > 0 %}
+    {% elif appointmentsWithoutAnOutcomeCount > 0 %}
     {% set html %}
-    <h2 class="govuk-heading-m">You have appointments that need attention</h2>
-    <ul class="govuk-list govuk-!-margin-bottom-0">
-      {% if appointmentsWithoutAnOutcomeCount > 0 %}
-        <li>
-          <a href="/case/{{ crn }}/record-an-outcome/outcome">You need to record an outcome for {{ appointmentsWithoutAnOutcomeCount }}
-            {{ 'appointment' if appointmentsWithoutAnOutcomeCount == 1 else 'appointments' }}</a>
-        </li>
-      {% endif %}
-    </ul>
+      <h2 class="govuk-heading-m">You have appointments that need attention</h2>
+      <ul class="govuk-list govuk-!-margin-bottom-0">
+        {% if appointmentsWithoutAnOutcomeCount > 0 %}
+          <li>
+            <a href="/case/{{ crn }}/record-an-outcome/outcome">You need to record an outcome
+              for {{ appointmentsWithoutAnOutcomeCount }}
+              {{ 'appointment' if appointmentsWithoutAnOutcomeCount == 1 else 'appointments' }}</a>
+          </li>
+        {% endif %}
+      </ul>
     {% endset %}
     {{ govukNotificationBanner({ html: html }) }}
   {% endif %}
 
-
   {% set schedule %}
-  {% set nextApp = overview.schedule.nextAppointment %}
-  {% set nextAppointmentText %}
-  {% if nextApp %}
-    {{ nextApp['date'] | dateWithDayAndWithoutYear }} at {{ nextApp['date'] | govukTime }} ({{ nextApp['description'] | toSentenceCase }})
-                {% else %}
-                  No appointments scheduled
-  {% endif %}
-  {% endset %}
-  {{ govukSummaryList({
-            rows: [
-              {
-                key: { html: '<span data-qa="nextAppointmentLabel">Next appointment</span>'},
-                value: { html: '<span data-qa="nextAppointmentValue">' + nextAppointmentText + '</span'}
-              }
-            ]
-            }) }}
-  {% endset %}
-
-  {{ supervisionPackage({
-    historyHref: tierUrlV3 + '/history',
-    arrangeAppointmentHref: '/case/' + crn + '/arrange-appointment/sentence?back=' + url,
-    updateRiskFlagHref: deliusDeepLinkUrl('RegisterSummary', crn),
-    crn: crn,
-    oasysReviewHref: oasysLink,
-    deliusBaseURL: deliusHomepageUrl(),
-    openInNewTab: true,
-    nextAppointmentHref: ('/case/' + crn + '/appointments/appointment/' + supervisionPackageDetails.nextAppointment.id + '/manage?back=' + url) if supervisionPackageDetails.nextAppointment.id else '',
-    allAppointmentsHref: '/case/' + crn + '/appointments'
-  } | merge(supervisionPackageDetails or {}) | merge(tierDetails.calculation or {})) }}
-
-  {{ appSummaryCard({
-    titleText: 'Appointments',
-    headingLevel: 3,
-    classes: ['govuk-!-margin-bottom-6 app-summary-card--large-title'],
-    attributes: { 'data-qa': 'scheduleCard' },
-    html: schedule,
-    actions: {
-      items: [
+    {% set nextApp = overview.schedule.nextAppointment %}
+    {% set nextAppointmentText %}
+      {% if nextApp %}
+        {{ nextApp['date'] | dateWithDayAndWithoutYear }} at {{ nextApp['date'] | govukTime }} ({{ nextApp['description'] | toSentenceCase }})
+      {% else %}
+        No appointments scheduled
+      {% endif %}
+    {% endset %}
+    {{ govukSummaryList({
+      rows: [
         {
-          text: 'View appointments',
-          href: crn + '/appointments'
+          key: { html: '<span data-qa="nextAppointmentLabel">Next appointment</span>'},
+          value: { html: '<span data-qa="nextAppointmentValue">' + nextAppointmentText + '</span'}
         }
       ]
-    }
-  }) }}
-
-  {{ appOnlineCheckinsCard({
-    checkin: offenderCheckinsByCRNResponse,
-    upcomingCheckinDate: upcomingCheckin.expectedCheckinDate if upcomingCheckin,
-    eligibility: checkinEligibility,
-    canAccess: canAccessCheckins,
-    setupHref: checkinLink,
-    manageHref: manageCheckinLink
-  }) }}
-
-  {% set personalDetails %}
-  {% set dateOfBirthAndAge %}
-  {{ overview.personalDetails.dateOfBirth | dateWithYear + (" (" + overview.personalDetails.dateOfBirth | yearsSince + " years old)" if not personalDetails.dateOfDeath ) }}
-  {% set contactNumber %}
-  {% if overview.personalDetails.telephoneNumber %}
-    {{ overview.personalDetails.telephoneNumber }}<br/>
-  {% endif %}
-  {% if overview.personalDetails.mobileNumber %}
-    {{ overview.personalDetails.mobileNumber }}<br/>
-  {% endif %}
-  {% if not overview.personalDetails.mobileNumber | length and not overview.personalDetails.mobileNumber | length %}
-                    No contact number
-                {% endif %}
-  {% endset %}
-  {% endset %}
-  {% if personalDetails.dateOfDeath %}
-    {% set dateOfDeathAndAge %}
-    {{ personalDetails.dateOfDeath | dateWithYear }} ({{ overview.personalDetails.dateOfBirth | yearsBetween(personalDetails.dateOfDeath) }} years old)
-        {% endset %}
-  {% endif %}
-  {% set circumstances %}
-  {% if overview.personalDetails.personalCircumstances.length > 0 %}
-    <ul class="govuk-list">
-      {% for circumstance in overview.personalDetails.personalCircumstances %}
-        <li>
-          {{ circumstance.type }}: {{ circumstance.subType }}
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-                None
-            {% endif %}
+    }) }}
   {% endset %}
 
-  {% set disabilities %}
-  {% if overview.personalDetails.disabilities.length > 0 %}
-    <ul class="govuk-list">
-      {% for adjustment in overview.personalDetails.disabilities %}
-        <li>
-          {{ adjustment.description }}
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-                No disabilities
-            {% endif %}
-  {% endset %}
-  {% set adjustments %}
-  {% if overview.personalDetails.provisions.length > 0 %}
-    <ul class="govuk-list">
-      {% for provisions in overview.personalDetails.provisions %}
-        <li>
-          {{ provisions.description }}
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-                No adjustments
-            {% endif %}
-  {% endset %}
+  {% set supervisionPackageHtml -%}
+    {{ supervisionPackage({
+      historyHref: tierUrlV3 + '/history',
+      arrangeAppointmentHref: '/case/' + crn + '/arrange-appointment/sentence?back=' + url,
+      updateRiskFlagHref: deliusDeepLinkUrl('RegisterSummary', crn),
+      crn: crn,
+      oasysReviewHref: oasysLink,
+      deliusBaseURL: deliusHomepageUrl(),
+      openInNewTab: true,
+      nextAppointmentHref: ('/case/' + crn + '/appointments/appointment/' + supervisionPackageDetails.nextAppointment.id + '/manage?back=' + url) if supervisionPackageDetails.nextAppointment.id else '',
+      allAppointmentsHref: '/case/' + crn + '/appointments'
+    } | merge(supervisionPackageDetails or {}) | merge(tierDetails.calculation or {})) }}
+  {%- endset %}
 
-  {{ govukSummaryList({
-        rows: [
-          {
-            key: { html: '<span data-qa="nameLabel">Name</span>'},
-            value: { html: '<span data-qa="nameValue">' + overview.personalDetails.name | fullName + '</span>'}
-          },
-          {
-            key: { html: '<span data-qa="preferredNameLabel">Preferred name/Known as</span>'},
-            value: { html: '<span data-qa="preferredNameValue">' + overview.personalDetails.preferredName + '</span>'}
-          } if (overview.personalDetails.preferredName),
-          {
-            key: { html: '<span data-qa="preferredGenderLabel">Gender</span>'},
-            value: { html: '<span data-qa="preferredGenderValue">' + overview.personalDetails.preferredGender + '</span>'}
-          },
-          {
-            key: { html: '<span data-qa="dateOfBirthAndAgeLabel">Date of birth</span>'},
-            value: { html: '<span data-qa="dateOfBirthAndAgeValue">' + dateOfBirthAndAge + '</span>'}
-          },
-          {
-            key: { html: '<span data-qa="dateOfDeathAndAgeLabel">Date of death</span>'},
-            value: { html: '<span data-qa="dateOfDeathAndAgeValue">' + dateOfDeathAndAge + '</span>'}
-          } if dateOfDeathAndAge,
-          {
-            key: { html: '<span data-qa="contactNumberLabel">Contact number</span>'},
-            value: { html: '<span class="app-!-font-family-tabular" data-qa="contactNumberValue">' + contactNumber + '</span>'}
-          },
-          {
-            key: { html: '<span data-qa="currentCircumstancesLabel">Current circumstances</span>'},
-            value: { html: '<span data-qa="currentCircumstancesValue">' + circumstances + '</span>'}
-          },
-          {
-            key: { html: '<span data-qa="disabilitiesLabel">Disabilities</span>'},
-            value: { html: '<span data-qa="disabilitiesValue">' + disabilities + '</span>'}
-          },
-          {
-            key: { html: '<span data-qa="adjustmentsLabel">Adjustments</span>'},
-            value: { html: '<span data-qa="adjustmentsValue">' + adjustments + '</span>'}
-          }
+  {{ supervisionPackageHtml | safe }}
 
-        ]
-      }) }}
-  {% endset %}
-
-  {{ appSummaryCard({
+  {% if flags.enableNewOverview %}
+    {{ appSummaryCard({
       titleText: 'Personal details',
       headingLevel: 3,
       attributes: {'data-qa': 'personalDetailsCard'},
-      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-      html: personalDetails,
+      classes: cardClasses,
+      html: govukSummaryList({
+        rows: personalDetailsRows
+      }),
       actions: {
         items: [
           {
@@ -367,268 +367,345 @@
         ]
       }
     }) }}
+  {% endif %}
 
- {% include "../partials/_overview-risk-summary-card.njk" %}
+  {% if not (supervisionPackageHtml | trim) or not flags.enableNewOverview %}
+    {{ appSummaryCard({
+      titleText: 'Appointments',
+      headingLevel: 3,
+      classes: cardClasses,
+      attributes: {'data-qa': 'scheduleCard'},
+      html: schedule,
+      actions: {
+        items: [
+          {
+            text: 'View appointments',
+            href: crn + '/appointments'
+          }
+        ]
+      }
+    }) }}
+  {% endif %}
 
-    {% set numberOfSentences = overview.sentences.length %}
-    {% if numberOfSentences > 0 %}
-        {% for sentence in overview.sentences %}
-        {% set hasLocationMonitoring = { hasLicenceConditionsLMData: false, hasRequirementsLMData: false } %}
-        {% set sentenceHtml %}
+  {{ appOnlineCheckinsCard({
+    checkin: offenderCheckinsByCRNResponse,
+    upcomingCheckinDate: upcomingCheckin.expectedCheckinDate if upcomingCheckin,
+    eligibility: checkinEligibility,
+          canAccess: canAccessCheckins,
+      setupHref: checkinLink,
+        manageHref: manageCheckinLink
+          }) }}
+
+  {% if not flags.enableNewOverview %}
+    {#  Personal details card  #}
+    {{ appSummaryCard({
+      titleText: 'Personal details',
+      headingLevel: 3,
+      attributes: {'data-qa': 'personalDetailsCard'},
+      classes: cardClasses,
+      html: govukSummaryList({
+        rows: personalDetailsRows.concat(circumstancesRows)
+      }),
+      actions: {
+        items: [
+          {
+            text: 'View all personal details',
+            href: crn + '/personal-details'
+          }
+        ]
+      }
+    }) }}
+  {% endif %}
+
+  {% if flags.enableNewOverview %}
+    {#  Addresses, disabilities and personal circumstances card  #}
+    {{ appSummaryCard({
+      titleText: 'Addresses, disabilities and personal circumstances',
+      headingLevel: 3,
+      attributes: {'data-qa': 'personalCircumstancesCard'},
+      classes: cardClasses,
+      html: govukSummaryList({
+        rows: circumstancesRows
+      }),
+      actions: {
+        items: [
+          {
+            text: 'View all personal details',
+            href: crn + '/personal-details'
+          }
+        ]
+      }
+    }) }}
+  {% endif %}
+
+  {#  Risk flags and criminogenic needs card  #}
+  {% include "../partials/_overview-risk-summary-card.njk" %}
+
+  {% set numberOfSentences = overview.sentences.length %}
+  {% if numberOfSentences > 0 %}
+    {% for sentence in overview.sentences %}
+      {% set hasLocationMonitoring = { hasLicenceConditionsLMData: false, hasRequirementsLMData: false } %}
+      {% set sentenceHtml %}
         {% set order %}
-        {% set showLicenceRow = false %}
-        {% if sentence.order %}
-          {% if loop.first %}
-            <input type="hidden" id="sentence" name="sentence" value="{{ sentence.order.description }}">
+          {% set showLicenceRow = false %}
+          {% if sentence.order %}
+            {% if loop.first %}
+              <input type="hidden" id="sentence" name="sentence" value="{{ sentence.order.description }}">
+            {% endif %}
+            {% if locationMonitoringUri %}
+              {% set hasLocationMonitoring = sentence.eventNumber | checkLocationMonitoringByEventNumber(sentences) %}
+            {% endif %}
+            {{ sentence.order.description }} <br />
+            From {{ sentence.order.startDate | dateWithNoDay }} to {{ sentence.order.endDate | dateWithNoDay }}<br />
+            {{ sentence.order.startDate | monthsOrDaysElapsed }} elapsed
+          {% else %}
+            No order details
           {% endif %}
-          {% if locationMonitoringUri %}
-                {% set hasLocationMonitoring = sentence.eventNumber | checkLocationMonitoringByEventNumber(sentences) %}
-          {% endif %}
-          {{ sentence.order.description }} <br/>
-                    From {{ sentence.order.startDate | dateWithNoDay }} to {{ sentence.order.endDate | dateWithNoDay }}<br/>
-          {{  sentence.order.startDate | monthsOrDaysElapsed }} elapsed
-                    {% else %}
-                    No order details
-                {% endif %}
         {% endset %}
         {% set requirements %}
-         {% if sentence.rarDescription and hasLocationMonitoring.hasRequirementsLMData %}
-             {{ sentence.rarDescription }} <br/>
-             Location Monitoring <a class="govuk-link" href="{{ locationMonitoringUri }}" data-qa="requirementsEMDILink">View GPS location monitoring data</a>
-         {% elif sentence.rarDescription and not hasLocationMonitoring.hasRequirementsLMData %}
+          {% if sentence.rarDescription and hasLocationMonitoring.hasRequirementsLMData %}
+            {{ sentence.rarDescription }} <br />
+            Location Monitoring <a class="govuk-link" href="{{ locationMonitoringUri }}"
+                                   data-qa="requirementsEMDILink">View GPS location monitoring data</a>
+            {% elif sentence.rarDescription and not hasLocationMonitoring.hasRequirementsLMData %}
             {{ sentence.rarDescription }}
-         {% elif not sentence.rarDescription and hasLocationMonitoring.hasRequirementsLMData %}
-             Location Monitoring <a class="govuk-link" href="{{ locationMonitoringUri }}" data-qa="requirementsEMDILink">View GPS location monitoring data</a>
-        {% elif not sentence.rarDescription and not hasLocationMonitoring.hasRequirementsLMData %}
-                    Details not available
-                {% endif %}
+            {% elif not sentence.rarDescription and hasLocationMonitoring.hasRequirementsLMData %}
+            Location Monitoring <a class="govuk-link" href="{{ locationMonitoringUri }}"
+                                   data-qa="requirementsEMDILink">View GPS location monitoring data</a>
+            {% elif not sentence.rarDescription and not hasLocationMonitoring.hasRequirementsLMData %}
+            Details not available
+          {% endif %}
         {% endset %}
         {% set licences %}
-           {% if hasLocationMonitoring.hasLicenceConditionsLMData  %}
-                {% set showLicenceRow = true %}
-               Location Monitoring <a class="govuk-link" href="{{ locationMonitoringUri }}" data-qa="licencesEMDILink">View GPS location monitoring data</a>
-                {% endif %}
-            {% endset %}
-        {% set mainOffence %}
-        {% if loop.first %}
-          <input type="hidden" id="mainOffence" name="mainOffence" value="{{ sentence.mainOffence.description }}">
-        {% endif %}
-        {{ sentence.mainOffence.description }}
-        {%- if sentence.additionalOffences.length > 0 %}
-          {%- switch sentence.additionalOffences.length -%}
-          {%- case 1 -%}
-            <br/>1 additional offence
-                        {%- default -%}
-            <br/>{{ sentence.additionalOffences.length }} additional offences
-                    {%- endswitch -%}
+          {% if hasLocationMonitoring.hasLicenceConditionsLMData %}
+            {% set showLicenceRow = true %}
+            Location Monitoring <a class="govuk-link" href="{{ locationMonitoringUri }}" data-qa="licencesEMDILink">
+            View GPS location monitoring data</a>
           {% endif %}
-          {% endset %}
-          {{ govukSummaryList({
-            rows: [
-              {
-                key: { html: '<span data-qa="mainOffenceLabel">Main offence</span>'},
-                value: { html: '<span data-qa="mainOffenceValue">' + mainOffence + '</span>'}
-              },
-              {
-                key: { html: '<span data-qa="orderLabel">Order</span>'},
-                value: { html: '<span data-qa="orderValue">' + order + '</span>'}
-              },
-              {
-                key: { html: '<span data-qa="requirementsLabel">Requirements</span>' },
-                value: { html: '<span data-qa="requirementsValue">' + requirements + '</span>' }
-              } if not  showLicenceRow ,
-              {
-                key: { html: '<span data-qa="licenceConditionsLabel">Licence conditions</span>' },
-                 value: { html: '<span data-qa="licenceConditionsValue">' + licences + '</span>' }
-              } if showLicenceRow
-            ]
-          }) }}
-          {% endset %}
-
-          {% set sentenceDesription = sentence.order.description | toSentenceDescription %}
-          {{ appSummaryCard({
-            titleText: sentenceDesription,
-            headingLevel: 3,
-            classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-            attributes: {'data-qa': 'sentence' + sentence.eventNumber + 'Card'},
-            html: sentenceHtml,
-            actions: {
-              items: [
-                {
-                  text: 'View all sentence details',
-                  href: crn + '/sentence'
-                }
-              ]
-            }
-        }) }}
-        {%- endfor %}
-      {% else %}
-        {% set sentenceHtml %}
+        {% endset %}
+        {% set mainOffence %}
+          {% if loop.first %}
+            <input type="hidden" id="mainOffence" name="mainOffence" value="{{ sentence.mainOffence.description }}">
+          {% endif %}
+          {{ sentence.mainOffence.description }}
+          {%- if sentence.additionalOffences.length > 0 %}
+            {%- switch sentence.additionalOffences.length -%}
+            {%- case 1 -%}
+              <br />1 additional offence
+            {%- default -%}
+              <br />{{ sentence.additionalOffences.length }} additional offences
+            {%- endswitch -%}
+          {% endif %}
+        {% endset %}
         {{ govukSummaryList({
-            rows: [
-              {
-                key: { html: '<span data-qa="orderLabel">Order</span>'},
-                value: { html: '<span data-qa="orderValue">No active sentence</span>'}
-              }
-            ]
-          }) }}
-        {%- endset %}
-        {{ appSummaryCard({
-            titleText: 'Sentence',
-            headingLevel: 3,
-            classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-            attributes: {'data-qa': 'sentenceCard'},
-            html: sentenceHtml
+          rows: [
+            {
+              key: { html: '<span data-qa="mainOffenceLabel">Main offence</span>'},
+              value: { html: '<span data-qa="mainOffenceValue">' + mainOffence + '</span>'}
+            },
+            {
+              key: { html: '<span data-qa="orderLabel">Order</span>'},
+              value: { html: '<span data-qa="orderValue">' + order + '</span>'}
+            },
+            {
+              key: { html: '<span data-qa="requirementsLabel">Requirements</span>' },
+              value: { html: '<span data-qa="requirementsValue">' + requirements + '</span>' }
+            } if not  showLicenceRow ,
+            {
+              key: { html: '<span data-qa="licenceConditionsLabel">Licence conditions</span>' },
+              value: { html: '<span data-qa="licenceConditionsValue">' + licences + '</span>' }
+            } if showLicenceRow
+          ]
         }) }}
-      {%- endif %}
-      {% set activityAndCompliance %}
-      {% set previousOrders %}
-      {% if overview.previousOrders %}
-        {% set total%}
-        {%- switch overview.previousOrders.count -%}
-        {%- case 0 -%}
-                        No previous orders
-                    {%- default -%}
-          {{ overview.previousOrders.count }} previous orders
-                {%- endswitch -%}
-          {% endset %}
-          {% set breaches %}
-          {%- switch overview.previousOrders.breaches -%}
-          {%- case 0 -%}
-                        No breaches on previous orders
-                    {%- default -%}
-            {% set breachCount = overview.previousOrders.breaches %}
-            {{ breachCount }} breach{% if breachCount > 1 %}es{% endif %} on previous orders
-          {%- endswitch -%}
-            {% endset %}
-            {{ total}} ({{ breaches }})
-            {% endif %}
-          {% endset %}
-          {% set compliance %}
-          {% if overview.compliance.breachStarted %}
-            {%- switch overview.compliance.priorBreachesOnCurrentOrderCount -%}
-            {%- case 0 -%}
-                  No prior breaches on current order
-                {%- case 1 -%}
-                  1 prior breach on current order
-                {%- default -%}
-                {{ overview.compliance.priorBreachesOnCurrentOrderCount }} prior breaches on current order
-              {%- endswitch -%}
-              {% else %}
-                {%- switch overview.compliance.breachesOnCurrentOrderCount -%}
-                {%- case 0 -%}
-                  No breaches on current order
-                {%- case 1 -%}
-                  1 breach on current order
-                {%- default -%}
-                    {{ overview.compliance.breachesOnCurrentOrderCount }} breaches on current order
-              {%- endswitch -%}
-                  {% endif %}
+      {% endset %}
 
-              {% if flags.enableCompliancePage %}
-                  <p>
-                    <a href={{crn}}/compliance>View all compliance details</a>
-                  </p>
-              {% endif %}
-                  {% endset %}
-                  {% set activity %}
-                  {% if overview.activity %}
-                    {{ overview.activity.nationalStandardAppointmentsCount }} national standard appointments <br/>
-                    {{ overview.activity.outcomeNotRecordedCount }} without a recorded outcome <br/>
-                    {{ overview.activity.compliedAppointmentsCount }} complied <br/>
-                    {{ overview.activity.acceptableAbsenceCount }} acceptable absences <br/>
-                    {{ overview.activity.rescheduledCount }} rescheduled<br/>
-                    <p>
-                      <a href={{crn}}/activity-log>View all contacts details</a>
-                    </p>
-                  {% else %}
-                None
-            {% endif %}
-                  {% endset %}
-                  {{ govukSummaryList({
+      {% set sentenceDesription = sentence.order.description | toSentenceDescription %}
+      {{ appSummaryCard({
+        titleText: sentenceDesription,
+        headingLevel: 3,
+        classes: cardClasses,
+        attributes: {'data-qa': 'sentence' + sentence.eventNumber + 'Card'},
+        html: sentenceHtml,
+        actions: {
+          items: [
+            {
+              text: 'View all sentence details',
+              href: crn + '/sentence'
+            }
+          ]
+        }
+      }) }}
+    {%- endfor %}
+  {% else %}
+    {% set sentenceHtml %}
+      {{ govukSummaryList({
         rows: [
           {
-            key: { html: '<span data-qa="previousOrdersLabel">Previous orders</span>'},
-            value: { html: '<span data-qa="previousOrdersValue">' + previousOrders + '</span>'}
-          },
-          {
-            key: { html: '<span data-qa="complianceLabel">Compliance</span>'},
-            value: { html: '<span data-qa="complianceValue">' + compliance + '</span>'}
-          },
-          {
-            key: { html: '<span data-qa="activityLogLabel">Contacts across all orders</span><span class="govuk-!-font-weight-regular secondary-text secondary-text--with-break">Includes all previous orders</span>'},
-            value: { html: '<span data-qa="activityLogValue">' + activity + '</span>'}
+            key: { html: '<span data-qa="orderLabel">Order</span>'},
+            value: { html: '<span data-qa="orderValue">No active sentence</span>'}
           }
         ]
       }) }}
-                  {% endset %}
-                  {{ appSummaryCard({
-      titleText: 'Activity and compliance',
+    {%- endset %}
+    {{ appSummaryCard({
+      titleText: 'Sentence',
       headingLevel: 3,
-      attributes: {'data-qa': 'activityAndComplianceCard'},
-      classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
-      html: activityAndCompliance
+      classes: cardClasses,
+      attributes: {'data-qa': 'sentenceCard'},
+      html: sentenceHtml
     }) }}
+  {%- endif %}
 
-                  <input type="hidden" id="caseCrn" name="crn" value="{{ crn }}">
-                  <input type="hidden" id="name" name="name" value="{{ overview.personalDetails.name.surname }}, {{ overview.personalDetails.name.forename }}">
-                  <input type="hidden" id="dob" name="dob" value="{{ headerDob | dateWithYear }}">
-                  <input type="hidden" id="age" name="age" value="{{ headerDob | yearsSince }}">
-                  <input type="hidden" id="tier" name="age" value="{{ tierDetails.calculation.tierScore }}">
-                  <input type="hidden" id="numberOfAdditionalSentences" name="numberOfSentences" value="{{ numberOfSentences - 1 }}">
+  {#  Activity and compliance card  #}
+  {% set activityAndCompliance %}
+    {% set previousOrders %}
+      {% if overview.previousOrders %}
+        {% set total %}
+          {%- switch overview.previousOrders.count -%}
+          {%- case 0 -%}
+            No previous orders
+          {%- default -%}
+            {{ overview.previousOrders.count }} previous orders
+          {%- endswitch -%}
+        {% endset %}
+        {% set breaches %}
+          {%- switch overview.previousOrders.breaches -%}
+          {%- case 0 -%}
+            No breaches on previous orders
+          {%- default -%}
+            {% set breachCount = overview.previousOrders.breaches %}
+            {{ breachCount }} breach{% if breachCount > 1 %}es{% endif %} on previous orders
+          {%- endswitch -%}
+        {% endset %}
+        {{ total }} ({{ breaches }})
+      {% endif %}
+    {% endset %}
+    {% set compliance %}
+      {% if overview.compliance.breachStarted %}
+        {%- switch overview.compliance.priorBreachesOnCurrentOrderCount -%}
+        {%- case 0 -%}
+          No prior breaches on current order
+        {%- case 1 -%}
+          1 prior breach on current order
+        {%- default -%}
+          {{ overview.compliance.priorBreachesOnCurrentOrderCount }} prior breaches on current order
+        {%- endswitch -%}
+      {% else %}
+        {%- switch overview.compliance.breachesOnCurrentOrderCount -%}
+        {%- case 0 -%}
+          No breaches on current order
+        {%- case 1 -%}
+          1 breach on current order
+        {%- default -%}
+          {{ overview.compliance.breachesOnCurrentOrderCount }} breaches on current order
+        {%- endswitch -%}
+      {% endif %}
 
-                  <script nonce="{{ cspNonce }}">
-                    const crn = document
-                      .getElementById("caseCrn")
-                      .value
-                    const name = document
-                      .getElementById("name")
-                      .value
-                    const dob = document
-                      .getElementById("dob")
-                      .value
-                    const age = document
-                      .getElementById("age")
-                      .value
-                    const tier = document
-                      .getElementById("tier")
-                      .value
-                    const sentence = document.getElementById("sentence")
-                      ? document
-                        .getElementById("sentence")
-                        .value
-                      : document.getElementById("mainOffence")
-                        ? "Pre-sentence"
-                        : "No active sentence"
-                    const numberOfAdditionalSentences = document
-                      .getElementById("numberOfAdditionalSentences")
-                      .value
+      {% if flags.enableCompliancePage %}
+        <p>
+          <a href={{ crn }}/compliance>View all compliance details</a>
+        </p>
+      {% endif %}
+    {% endset %}
+    {% set activity %}
+      {% if overview.activity %}
+        {{ overview.activity.nationalStandardAppointmentsCount }} national standard appointments <br />
+        {{ overview.activity.outcomeNotRecordedCount }} without a recorded outcome <br />
+        {{ overview.activity.compliedAppointmentsCount }} complied <br />
+        {{ overview.activity.acceptableAbsenceCount }} acceptable absences <br />
+        {{ overview.activity.rescheduledCount }} rescheduled<br />
+        <p>
+          <a href={{ crn }}/activity-log>View all contacts details</a>
+        </p>
+      {% else %}
+        None
+      {% endif %}
+    {% endset %}
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { html: '<span data-qa="previousOrdersLabel">Previous orders</span>'},
+          value: { html: '<span data-qa="previousOrdersValue">' + previousOrders + '</span>'}
+        },
+        {
+          key: { html: '<span data-qa="complianceLabel">Compliance</span>'},
+          value: { html: '<span data-qa="complianceValue">' + compliance + '</span>'}
+        },
+        {
+          key: { html: '<span data-qa="activityLogLabel">Contacts across all orders</span><span class="govuk-!-font-weight-regular secondary-text secondary-text--with-break">Includes all previous orders</span>'},
+          value: { html: '<span data-qa="activityLogValue">' + activity + '</span>'}
+        }
+      ]
+    }) }}
+  {% endset %}
+  {{ appSummaryCard({
+    titleText: 'Activity and compliance',
+    headingLevel: 3,
+    attributes: {'data-qa': 'activityAndComplianceCard'},
+    classes: cardClasses,
+    html: activityAndCompliance
+  }) }}
 
-                    let recentCases = []
-                    let recentCase
+  <input type="hidden" id="caseCrn" name="crn" value="{{ crn }}">
+  <input type="hidden" id="name" name="name"
+         value="{{ overview.personalDetails.name.surname }}, {{ overview.personalDetails.name.forename }}">
+  <input type="hidden" id="dob" name="dob" value="{{ headerDob | dateWithYear }}">
+  <input type="hidden" id="age" name="age" value="{{ headerDob | yearsSince }}">
+  <input type="hidden" id="tier" name="age" value="{{ tierDetails.calculation.tierScore }}">
+  <input type="hidden" id="numberOfAdditionalSentences" name="numberOfSentences" value="{{ numberOfSentences - 1 }}">
 
-                    if (localStorage.getItem("recentCases") != null) {
-                      recentCases = JSON.parse(localStorage.getItem('recentCases'))
+  <script nonce="{{ cspNonce }}">
+    const crn = document
+      .getElementById('caseCrn')
+      .value
+    const name = document
+      .getElementById('name')
+      .value
+    const dob = document
+      .getElementById('dob')
+      .value
+    const age = document
+      .getElementById('age')
+      .value
+    const tier = document
+      .getElementById('tier')
+      .value
+    const sentence = document.getElementById('sentence')
+      ? document
+        .getElementById('sentence')
+        .value
+      : document.getElementById('mainOffence')
+        ? 'Pre-sentence'
+        : 'No active sentence'
+    const numberOfAdditionalSentences = document
+      .getElementById('numberOfAdditionalSentences')
+      .value
 
-                      recentCase = recentCases.findIndex(obj => obj.crn === crn)
+    let recentCases = []
+    let recentCase
 
-                      if (recentCase !== -1) {
-                        recentCases.splice(recentCase, 1);
-                      }
-                    }
+    if (localStorage.getItem('recentCases') != null) {
+      recentCases = JSON.parse(localStorage.getItem('recentCases'))
 
-                    recentCase = {
-                      name: name,
-                      crn: crn,
-                      dob: dob,
-                      age: age,
-                      tierScore: tier,
-                      sentence: sentence,
-                      numberOfAdditionalSentences: numberOfAdditionalSentences
-                    };
+      recentCase = recentCases.findIndex(obj => obj.crn === crn)
 
-                    recentCases.unshift(recentCase)
-                    recentCases.splice(25)
-                    localStorage.setItem('recentCases', JSON.stringify(recentCases))
-                  </script>
-                {% endblock %}
+      if (recentCase !== -1) {
+        recentCases.splice(recentCase, 1)
+      }
+    }
+
+    recentCase = {
+      name: name,
+      crn: crn,
+      dob: dob,
+      age: age,
+      tierScore: tier,
+      sentence: sentence,
+      numberOfAdditionalSentences: numberOfAdditionalSentences,
+    }
+
+    recentCases.unshift(recentCase)
+    recentCases.splice(25)
+    localStorage.setItem('recentCases', JSON.stringify(recentCases))
+  </script>
+{% endblock %}

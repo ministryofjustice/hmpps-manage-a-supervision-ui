@@ -90,7 +90,7 @@
                 <tr>
                      <td data-qa="overallRiskValue" class="govuk-tag govuk-!-font-weight-bold {{ getTagClass(overallRiskLevel | replace(" ", "_")) }}" align="center">{{ roshText + ' risk of serious harm' | upper }}</td>
                 </tr>
-            </table> 
+            </table>
         {% else %}
             {{'There is no ROSH summary.'}}
         {% endif %}
@@ -121,7 +121,7 @@
     titleText: 'Risk',
     headingLevel: 3,
     attributes: {'data-qa': 'riskCard'},
-    classes: 'govuk-!-margin-bottom-6 app-summary-card--large-title',
+    classes: cardClasses | default('govuk-!-margin-bottom-6 app-summary-card--large-title'),
     html: risk,
     actions: {
         items: [

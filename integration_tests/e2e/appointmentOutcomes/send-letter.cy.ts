@@ -220,7 +220,7 @@ const checkPage = ({ journey = 'MANAGE' }: { journey?: Journey } = {}) => {
     it('should have the correct back link if update enforcement action', () => {
       loadPage({ journey, updateAction: true })
       let expectedLink: string
-      getUuid(3).then(uuid => {
+      getUuid(3).then(_ => {
         expectedLink = `/case/${crn}/appointments/appointment/${appointmentId}/outcome/update-enforcement-action`
         attendedFailedToComplyPage.getBackLink().should('have.attr', 'href', expectedLink)
       })

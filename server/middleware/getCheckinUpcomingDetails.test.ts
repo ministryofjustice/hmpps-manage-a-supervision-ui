@@ -48,6 +48,7 @@ describe('getUpcomingCheckinDetails', () => {
         crn: '',
         firstCheckin: '',
         checkinInterval: 'WEEKLY',
+        mode: 'SCHEDULED',
         contactPreference: 'PHONE',
       },
     }
@@ -88,6 +89,7 @@ describe('getUpcomingCheckinDetails', () => {
       crn: '',
       firstCheckin: '',
       checkinInterval: 'WEEKLY',
+      mode: 'SCHEDULED',
       contactPreference: 'PHONE',
     }
 

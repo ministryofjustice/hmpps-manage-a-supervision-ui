@@ -1,0 +1,53 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set checkin = params.checkin %}
+
+{% if checkin.status === 'VERIFIED' %}
+  {% set linkText = 'Manage online check ins' %}
+  {% set label = 'Next online check in' %}
+  {% set nextDate = params.upcomingCheckinDate if checkin.mode === 'AD_HOC' else (params.upcomingCheckinDate or checkin.firstCheckin) %}
+  {% set value = nextDate | dateWithYear if nextDate else 'No online check in scheduled' %}
+{% elif checkin.status === 'INACTIVE' %}
+  {% set linkText = 'View all online check in details' %}
+  {% set label = 'Status' %}
+  {% set value = 'Check ins stopped' %}
+{% else %}
+  {% set linkText = 'Set up online check ins' %}
+  {% set label = 'Status' %}
+  {% set value = params.eligibility.message or 'Online check ins not set up' %}
+{% endif %}
+
+{% if params.eligibility.outcome === 'INELIGIBLE' %}
+    {% set label = 'Status' %}
+    {% set value = params.eligibility.message %}
+{% endif %}
+
+{% set linkHref = params.manageHref if checkin.status in ['VERIFIED', 'INACTIVE'] else params.setupHref %}
+{% set showActions = params.canAccess and params.eligibility.outcome === 'ELIGIBLE' %}
+
+{{ govukSummaryList({
+  card: {
+    title: {
+      text: 'Online check ins',
+      headingLevel: 3,
+      classes: 'govuk-!-font-size-24'
+    },
+    classes: 'govuk-!-margin-bottom-6',
+    attributes: { 'data-qa': 'checkinCard' },
+    actions: {
+      items: [
+        {
+          text: linkText,
+          href: linkHref,
+          classes: 'govuk-!-font-weight-regular'
+        }
+      ]
+    } if showActions
+  },
+  rows: [
+    {
+      key: { html: '<span data-qa="checkinLabel">' + (label | escape) + '</span>' },
+      value: { html: '<span data-qa="checkinValue">' + (value | escape) + '</span>' }
+    }
+  ]
+}) }}

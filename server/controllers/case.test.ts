@@ -149,6 +149,7 @@ const preloadActivitySearchSpy = jest
 
 const res = mockAppResponse({
   flags: { enable3MonthsOutcomes: true },
+  tierCalculation: mockTierCalculation,
 })
 const renderSpy = jest.spyOn(res, 'render')
 
@@ -194,6 +195,7 @@ describe('caseController', () => {
         url: encodeURIComponent(req.url),
         sanIndicator: true,
         personalDetails: req.session.data.personalDetails[crn].overview,
+        checkinEligibility: mockOffenderEligibilityResponse,
         appointmentsWithoutAnOutcomeCount: 2,
         hasDeceased: false,
         hasPractitioner: false,
@@ -234,6 +236,7 @@ describe('caseController', () => {
         url: encodeURIComponent(req.url),
         sanIndicator: true,
         personalDetails: req.session.data.personalDetails[crn].overview,
+        checkinEligibility: mockOffenderEligibilityResponse,
         appointmentsWithoutAnOutcomeCount: 2,
         hasDeceased: false,
         hasPractitioner: false,
@@ -283,7 +286,7 @@ describe('caseController', () => {
     })
     beforeEach(async () => {
       getProbationPractitionerSpy.mockImplementationOnce(() => Promise.resolve(mockPractitioner))
-      res.locals.flags = { enableEsupEligibilityCheck: true, enableOutcomesV1: true }
+      res.locals.flags = { enableOutcomesV1: true }
       await controllers.case.getCase(hmppsAuthClient)(req, res)
     })
     afterEach(() => {
@@ -296,6 +299,45 @@ describe('caseController', () => {
         'pages/overview',
         expect.objectContaining({
           checkinEligibility: { message: 'This person is eligible for online check ins', outcome: 'ELIGIBLE' },
+        }),
+      )
+    })
+
+    it('should soften a tier-based eligibility message to may be eligible', async () => {
+      getOffenderEligibilitySpy.mockResolvedValueOnce({
+        outcome: 'ELIGIBLE',
+        message: '    Alton Berge are in Tiers D-G.',
+      })
+      const tierRes = mockAppResponse({
+        flags: { enableOutcomesV1: true },
+        tierCalculation: mockTierCalculation,
+        headerPersonName: { forename: 'Alton', surname: 'Berge' },
+      })
+      const tierRenderSpy = jest.spyOn(tierRes, 'render')
+      await controllers.case.getCase(hmppsAuthClient)(req, tierRes)
+      expect(tierRenderSpy).toHaveBeenCalledWith(
+        'pages/overview',
+        expect.objectContaining({
+          checkinEligibility: { outcome: 'ELIGIBLE', message: 'Alton Berge may be eligible for online check ins.' },
+        }),
+      )
+    })
+
+    it('should mark the person as ineligible for check ins when no tier has been assigned', async () => {
+      const noTierRes = mockAppResponse({
+        flags: { enableOutcomesV1: true },
+        tierCalculation: null,
+        headerPersonName: { forename: 'Alton', surname: 'Berge' },
+      })
+      const noTierRenderSpy = jest.spyOn(noTierRes, 'render')
+      await controllers.case.getCase(hmppsAuthClient)(req, noTierRes)
+      expect(noTierRenderSpy).toHaveBeenCalledWith(
+        'pages/overview',
+        expect.objectContaining({
+          checkinEligibility: {
+            outcome: 'INELIGIBLE',
+            message: 'Alton Berge is not eligible for online check ins because they have not been assigned a tier yet.',
+          },
         }),
       )
     })

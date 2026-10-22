@@ -52,6 +52,30 @@
     ]
 } %}
 {% set riskBadges %}
+{% if flags.enablePersonHeader %}
+{% set showPredictorBadges = riskData.assessments[0].combinedSeriousReoffendingPredictor.band != "NOT APPLICABLE" %}
+{% if (flags.enableNDeliusRosh or showPredictorBadges) and overallRisk and overallRisk !== 'NOT_FOUND' %}
+{{ predictorBadge({
+    data: riskDataRosh,
+    predictor: 'rosh',
+    showScore: false
+ })}}
+{% endif %}
+{% if showPredictorBadges %}
+{{ predictorBadge({
+            data: riskData,
+            predictor: 'combinedSeriousReoffendingPredictor',
+            showScore: true
+        })}}
+{% if riskData.assessments[0].rsr.band %}
+{{ predictorBadge({
+                data: riskData,
+                predictor: 'rsr',
+                showScore: true
+            })}}
+{% endif %}
+{% endif %}
+{% else %}
 {% if riskData
         .assessments[0]
         .combinedSeriousReoffendingPredictor
@@ -87,6 +111,7 @@
     predictor: 'rosh',
     showScore: false
  })}}
+{% endif %}
 {% endif %}
 {% endset %}
 

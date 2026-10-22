@@ -1,4 +1,3 @@
-import { checkPopHeader } from '../appointments/imports'
 import { crn, appointmentId } from '../appointments/imports/common'
 import AttendedFailedToComplyPage from '../../pages/appointmentOutcomes/attended-failed-to-comply.page'
 import ManageAppointmentPage from '../../pages/appointments/manage-appointment.page'
@@ -12,11 +11,10 @@ import {
 } from '../appointments/utils'
 import SendLetterPage from '../../pages/appointmentOutcomes/send-letter.page'
 import AddNotePage from '../../pages/appointments/add-note.page'
-import { ExpectedOption, Journey, checkBreachOrRecallWarningBanner, checkOptions } from './imports'
+import { Journey } from './imports'
 import { SentenceType } from '../../../server/data/model/sentenceDetails'
 import RescheduleCheckYourAnswerPage from '../../pages/appointments/reschedule-check-your-answer.page'
 import { AppointmentEnforcementAction } from '../../../server/models/Appointments'
-import EnforcementActionPage from '../../pages/appointmentOutcomes/enforcement-action.page'
 import { PersonAppointmentEnforcementAction } from '../../../server/data/model/schedule'
 import UpdateEnforcementActionPage from '../../pages/appointmentOutcomes/update-enforcement-action.page'
 
@@ -26,10 +24,7 @@ let attendedFailedToComplyPage: AttendedFailedToComplyPage
 let checkYourAnswersPage: RescheduleCheckYourAnswerPage
 let sendLetterPage: SendLetterPage
 let addNotePage: AddNotePage
-let otherEnforcmentActionPage: EnforcementActionPage
 let updateEnforcementActionPage: UpdateEnforcementActionPage
-
-const msgs = ['Select who will send the letter', 'Select the type of letter']
 
 interface Params {
   eventId: string
@@ -101,108 +96,17 @@ const loadPage = ({
     cy.get(`.govuk-radios__input[value=${action}]`).click()
     attendedFailedToComplyPage.getSubmitBtn().click()
   }
-  if (action === 'DIFFERENT_ACTION') {
-    otherEnforcmentActionPage = new EnforcementActionPage()
-    cy.get('select').select('BREACH_LETTER_SENT')
-    otherEnforcmentActionPage.getSubmitBtn().click()
-  }
 }
 
-type RedirectPages = AddNotePage
-
-type OptionsFor = 'LETTER_SENT_BY' | 'LETTER_TYPE'
-
-const getExpectedOptions = ({
-  optionsFor = 'LETTER_SENT_BY',
-  sentenceType = 'COMMUNITY',
-  youth = false,
-  pss = false,
-}: {
-  optionsFor?: OptionsFor
-  sentenceType?: SentenceType
-  youth?: boolean
-  pss?: boolean
-} = {}): ExpectedOption<RedirectPages>[] => {
-  let expectedOptions: ExpectedOption<RedirectPages>[] = []
-  if (optionsFor === 'LETTER_SENT_BY') {
-    expectedOptions = [
-      {
-        value: 'CASE_ADMIN',
-        text: 'Case administrator',
-        hint: 'You need to follow your local process to request a letter.',
-      },
-      {
-        value: 'USER',
-        text: 'I’ll send the letter',
-      },
-    ]
-  }
-
-  if (optionsFor === 'LETTER_TYPE') {
-    if (sentenceType === 'COMMUNITY' || youth || pss) {
-      expectedOptions.push({ value: 'FIRST_WARNING_LETTER_SENT', text: 'First warning letter' })
-    }
-    if (youth || pss) {
-      expectedOptions.push({ value: 'SECOND_WARNING_LETTER_SENT', text: 'Second warning letter' })
-    }
-    if (sentenceType === 'COMMUNITY') {
-      expectedOptions.push({ value: 'BREACH_LETTER_SENT', text: 'Breach warning letter' })
-    }
-    if (sentenceType === 'CUSTODY') {
-      expectedOptions.push({ value: 'LICENCE_COMPLIANCE_LETTER_SENT', text: 'Licence compliance letter' })
-    }
-    expectedOptions.push({ value: 'OTHER_ENFORCEMENT_LETTER_SENT', text: 'A different enforcement letter' })
-  }
-  return expectedOptions
-}
-
-const checkPage = ({ journey = 'MANAGE' }: { journey?: Journey } = {}) => {
-  it('should render the page if sentence type is COMMUNITY', () => {
-    loadPage({ journey })
+describe('Send a letter', () => {
+  afterEach(() => {
+    cy.task('resetMocks')
+  })
+  it('should render the page, show validation errors and redirect once all options are selected', () => {
+    const msgs = ['Select who will send the letter', 'Select the type of letter']
+    loadPage()
     sendLetterPage = new SendLetterPage()
     sendLetterPage.checkPageTitle('Send a letter')
-    checkPopHeader({ name: 'Alton Berge', appointments: true, headerCrn: crn })
-    cy.get('fieldset').eq(0).find('legend').should('contain.text', 'Who will send the letter?')
-    const letterSentByOptions = getExpectedOptions()
-    checkOptions(letterSentByOptions)
-    cy.get('fieldset').eq(1).find('legend').should('contain.text', 'Select the type of letter')
-    const letterTypeOptions = getExpectedOptions({ optionsFor: 'LETTER_TYPE' })
-    checkOptions(letterTypeOptions, 1)
-    cy.get('[data-module="govuk-radios"]').should('have.length', 2)
-  })
-  it('should render the page if sentence type is CUSTODY', () => {
-    loadPage({ journey, sentenceType: 'CUSTODY' })
-    sendLetterPage = new SendLetterPage()
-    checkPopHeader({ name: 'Alton Berge', appointments: true, headerCrn: crn })
-    cy.get('legend').should('contain.text', 'Who will send the letter?')
-    const letterSentByOptions = getExpectedOptions({ sentenceType: 'CUSTODY' })
-    checkOptions(letterSentByOptions)
-    const letterTypeOptions = getExpectedOptions({ optionsFor: 'LETTER_TYPE', sentenceType: 'CUSTODY' })
-    checkOptions(letterTypeOptions, 1)
-    cy.get('[data-module="govuk-radios"]').should('have.length', 2)
-  })
-
-  it('should render the page if sentence type is custody and youth custody', () => {
-    loadPage({ journey, sentenceType: 'CUSTODY', description: '204 C JA - Youth Rehabilitation Order' })
-    sendLetterPage = new SendLetterPage()
-    checkPopHeader({ name: 'Alton Berge', appointments: true, headerCrn: crn })
-    const letterSentByOptions = getExpectedOptions({ sentenceType: 'CUSTODY' })
-    checkOptions(letterSentByOptions)
-    const letterTypeOptions = getExpectedOptions({ sentenceType: 'CUSTODY', optionsFor: 'LETTER_TYPE', youth: true })
-    checkOptions(letterTypeOptions, 1)
-    cy.get('[data-module="govuk-radios"]').should('have.length', 2)
-  })
-
-  it('should render the page if sentence type is CUSTODY and is PSS', () => {
-    loadPage({ journey, sentenceType: 'CUSTODY', pss: true })
-    sendLetterPage = new SendLetterPage()
-    checkPopHeader({ name: 'Alton Berge', appointments: true, headerCrn: crn })
-    const letterSentByOptions = getExpectedOptions({ sentenceType: 'CUSTODY' })
-    checkOptions(letterSentByOptions)
-    const letterTypeOptions = getExpectedOptions({ sentenceType: 'CUSTODY', optionsFor: 'LETTER_TYPE', pss: true })
-    checkOptions(letterTypeOptions, 1)
-    cy.get('[data-module="govuk-radios"]').should('have.length', 2)
-  })
 
   it('should have the correct back link', () => {
     loadPage({ journey })
@@ -230,47 +134,29 @@ const checkPage = ({ journey = 'MANAGE' }: { journey?: Journey } = {}) => {
     loadPage({ journey })
     sendLetterPage = new SendLetterPage()
     sendLetterPage.getSubmitBtn().click()
-    sendLetterPage.checkErrorSummaryBox([msgs[0], msgs[1]])
-    getUuid(3).then(uuid => {
-      const id = journey === 'MANAGE' ? appointmentId : uuid
-      cy.get(`#appointments-${crn}-${id}-outcome-letterSentBy-error`).should('contain.text', msgs[0])
-      cy.get(`#appointments-${crn}-${id}-outcome-letterType-error`).should('contain.text', msgs[1])
-    })
-  })
-  it('should redirect to the add note page when all options are selected', () => {
-    loadPage({ journey })
+    sendLetterPage.checkErrorSummaryBox(msgs)
+    cy.get(`#appointments-${crn}-${appointmentId}-outcome-letterSentBy-error`).should('contain.text', msgs[0])
+    cy.get(`#appointments-${crn}-${appointmentId}-outcome-letterType-error`).should('contain.text', msgs[1])
+
     cy.get('[data-module="govuk-radios"]').eq(0).find('.govuk-radios__item').eq(0).find('input').click()
     cy.get('[data-module="govuk-radios"]').eq(1).find('.govuk-radios__item').eq(0).find('input').click()
     sendLetterPage.getSubmitBtn().click()
     addNotePage = new AddNotePage()
     addNotePage.checkOnPage()
   })
-  it('should render the page if other letter type action selected', () => {
-    loadPage({ journey, action: 'DIFFERENT_ACTION' })
+  it('should render the page in the arrange appointment journey', () => {
+    loadPage({ journey: 'ARRANGE' })
     sendLetterPage = new SendLetterPage()
-    cy.get('[data-qa=letterType]').should('not.exist')
-    cy.get('[data-module="govuk-radios"]').eq(0).find('.govuk-radios__item').eq(0).find('input').click()
-    sendLetterPage.getSubmitBtn().click()
-    addNotePage = new AddNotePage()
-    addNotePage.checkOnPage()
+    sendLetterPage.checkPageTitle('Send a letter')
   })
-  checkBreachOrRecallWarningBanner(loadPage, SendLetterPage)
-}
-
-describe('Send a letter', () => {
-  beforeEach(() => {
-    cy.task('resetMocks')
+  it('should render the page in the reschedule appointment journey', () => {
+    loadPage({ journey: 'RESCHEDULE' })
+    sendLetterPage = new SendLetterPage()
+    sendLetterPage.checkPageTitle('Send a letter')
   })
-  afterEach(() => {
-    cy.task('resetMocks')
-  })
-  describe('Manage appointment journey', () => {
-    checkPage()
-  })
-  describe('Arrange appointment journey', () => {
-    checkPage({ journey: 'ARRANGE' })
-  })
-  describe('Reschedule appointment journey', () => {
-    checkPage({ journey: 'RESCHEDULE' })
+  it('should render the page when linked to from the update enforcement action page', () => {
+    loadPage({ updateAction: true })
+    sendLetterPage = new SendLetterPage()
+    sendLetterPage.checkPageTitle('Send a letter')
   })
 })

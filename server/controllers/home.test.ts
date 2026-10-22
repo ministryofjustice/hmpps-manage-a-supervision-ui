@@ -369,13 +369,28 @@ describe('homeController', () => {
         )
       })
 
-      it('should call getUserAppointmentsV2 if enableHomepageAPIV2 flag is true', async () => {
-        const resOld = mockAppResponse({ flags: { enableHomePageV2API: true } })
+      it('should call getUserAppointmentsV2 with 2 year limit if enableHomepageAPIV2 flag is true but enable3MonthsOutcomes is false', async () => {
+        const resOld = mockAppResponse({ flags: { enableHomePageV2API: true, enable3MonthsOutcomes: false } })
         const getUserAppointmentsV2Spy = jest.spyOn(MasApiClient.prototype, 'getUserAppointmentsV2')
 
         await controllers.home.getHomeOld(hmppsAuthClient)(req, resOld)
 
-        expect(getUserAppointmentsV2Spy).toHaveBeenCalled()
+        expect(getUserAppointmentsV2Spy).toHaveBeenCalledWith(
+          resOld.locals.user.username,
+          DateTime.now().setZone('Europe/London').startOf('day').minus({ years: 2 }).toFormat('yyyy-MM-dd'),
+        )
+      })
+
+      it('should call getUserAppointmentsV2 with 3 month limit if enableHomepageAPIV2 flag is true and enable3MonthsOutcomes is true', async () => {
+        const resOld = mockAppResponse({ flags: { enableHomePageV2API: true, enable3MonthsOutcomes: true } })
+        const getUserAppointmentsV2Spy = jest.spyOn(MasApiClient.prototype, 'getUserAppointmentsV2')
+
+        await controllers.home.getHomeOld(hmppsAuthClient)(req, resOld)
+
+        expect(getUserAppointmentsV2Spy).toHaveBeenCalledWith(
+          resOld.locals.user.username,
+          DateTime.now().setZone('Europe/London').startOf('day').minus({ months: 3 }).toFormat('yyyy-MM-dd'),
+        )
       })
     })
 

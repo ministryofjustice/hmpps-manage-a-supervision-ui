@@ -184,7 +184,7 @@ const caseloadController: Controller<typeof routes, void, Args> = {
         ...userSchedule,
         appointments,
       }
-      if (type === 'no-outcome' && res.locals.flags.enable3MonthsOutcomes) {
+      if (type === 'no-outcome' && res.locals.flags.enable3MonthsOutcomes && res.locals.flags?.enableHomePageV2API) {
         baseUrl = `${baseUrl}?outcomeFilter=${outcomeFilter}`
       }
 

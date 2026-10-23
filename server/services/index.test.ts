@@ -1,8 +1,8 @@
 import CaseSearchService from '@ministryofjustice/probation-search-frontend/service/caseSearchService'
+import { ProbationSearchResult } from '@ministryofjustice/probation-search-frontend/data/probationSearchClient'
 import { getPdu, getManagedBy, services } from './index'
 import config from '../config'
 import { dataAccess } from '../data'
-import auth from '../authentication/auth'
 
 jest.mock('../config', () => ({
   env: 'test-env',
@@ -42,7 +42,7 @@ describe('Probation search component extra columns:Managed by and PDU', () => {
           },
         ],
       }
-      expect(getPdu(result)).toBe('Test Borough')
+      expect(getPdu(result as ProbationSearchResult)).toBe('Test Borough')
     })
 
     it('should return "Unallocated" if no active manager is found', () => {
@@ -58,7 +58,7 @@ describe('Probation search component extra columns:Managed by and PDU', () => {
           },
         ],
       }
-      expect(getPdu(result)).toBe('Unallocated')
+      expect(getPdu(result as ProbationSearchResult)).toBe('Unallocated')
     })
 
     it('should return "Unallocated" if active manager has no borough description', () => {
@@ -72,7 +72,7 @@ describe('Probation search component extra columns:Managed by and PDU', () => {
           },
         ],
       }
-      expect(getPdu(result)).toBe('Unallocated')
+      expect(getPdu(result as ProbationSearchResult)).toBe('Unallocated')
     })
 
     it('should return "Unallocated" if active manager has no borough description as Unallocated', () => {
@@ -86,12 +86,12 @@ describe('Probation search component extra columns:Managed by and PDU', () => {
           },
         ],
       }
-      expect(getPdu(result)).toBe('Unallocated')
+      expect(getPdu(result as ProbationSearchResult)).toBe('Unallocated')
     })
 
     it('should handle null/undefined results gracefully', () => {
       expect(getPdu(null)).toBe('Unallocated')
-      expect(getPdu({})).toBe('Unallocated')
+      expect(getPdu({} as ProbationSearchResult)).toBe('Unallocated')
     })
   })
 
@@ -113,7 +113,7 @@ describe('Probation search component extra columns:Managed by and PDU', () => {
           },
         ],
       }
-      expect(getManagedBy(result)).toBe('Pacocha Leigh')
+      expect(getManagedBy(result as ProbationSearchResult)).toBe('Pacocha Leigh')
     })
 
     it('should return only the staff name if borough description is missing', () => {
@@ -131,7 +131,7 @@ describe('Probation search component extra columns:Managed by and PDU', () => {
           },
         ],
       }
-      expect(getManagedBy(result)).toBe('John Smith')
+      expect(getManagedBy(result as ProbationSearchResult)).toBe('John Smith')
     })
 
     it('should return "Unallocated" if no active manager is found', () => {
@@ -142,7 +142,7 @@ describe('Probation search component extra columns:Managed by and PDU', () => {
           },
         ],
       }
-      expect(getManagedBy(result)).toBe('Unallocated')
+      expect(getManagedBy(result as ProbationSearchResult)).toBe('Unallocated')
     })
 
     it('should return "Unallocated" if the active manager staff is marked as unallocated', () => {
@@ -156,7 +156,7 @@ describe('Probation search component extra columns:Managed by and PDU', () => {
           },
         ],
       }
-      expect(getManagedBy(result)).toBe('Unallocated')
+      expect(getManagedBy(result as ProbationSearchResult)).toBe('Unallocated')
     })
 
     it('should handle missing staff names gracefully', () => {
@@ -172,12 +172,12 @@ describe('Probation search component extra columns:Managed by and PDU', () => {
           },
         ],
       }
-      expect(getManagedBy(result)).toBe('')
+      expect(getManagedBy(result as ProbationSearchResult)).toBe('')
     })
 
     it('should handle null/undefined results gracefully', () => {
       expect(getManagedBy(null)).toBe('Unallocated')
-      expect(getManagedBy({})).toBe('Unallocated')
+      expect(getManagedBy({} as ProbationSearchResult)).toBe('Unallocated')
     })
   })
 
@@ -235,8 +235,28 @@ describe('Probation search component extra columns:Managed by and PDU', () => {
       services()
 
       const { extraColumns } = CaseSearchServiceMock.mock.calls[0][0]
-      const managedByColumn = extraColumns.find((c: any) => c.header === 'Managed by')
-      const pduColumn = extraColumns.find((c: any) => c.header === 'PDU')
+      const managedByColumn = extraColumns.find(
+        (c: {
+          header: string
+          value: (result: ProbationSearchResult) =>
+            | string
+            | {
+                html?: string
+                text?: string
+              }
+        }) => c.header === 'Managed by',
+      )
+      const pduColumn = extraColumns.find(
+        (c: {
+          header: string
+          value: (result: ProbationSearchResult) =>
+            | string
+            | {
+                html?: string
+                text?: string
+              }
+        }) => c.header === 'PDU',
+      )
 
       const record = { offenderManagers: [{ active: true, staff: { forenames: 'John', surname: 'Smith' } }] }
       expect(managedByColumn.value(record)).toBe('John Smith')

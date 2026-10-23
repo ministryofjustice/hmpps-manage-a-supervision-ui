@@ -4,17 +4,8 @@ import { Controller } from '../@types'
 import MasApiClient from '../data/masApiClient'
 import config from '../config'
 import ArnsApiClient from '../data/arnsApiClient'
-import { PersonRiskFlag, TimelineItem } from '../data/model/risk'
+import { PersonRiskFlag, RiskFlag, TimelineItem } from '../data/model/risk'
 import { findReplace } from '../utils'
-
-const routes = [
-  'getRisk',
-  'getRiskFlag',
-  'getRiskFlagSingleNote',
-  'getRiskRemovalFlagSingleNote',
-  'getRemovedRiskFlags',
-  'getRiskPredictorScoresDetail',
-] as const
 
 const riskFlagTypes: Set<string> = new Set([
   'Risk to Staff',
@@ -23,7 +14,17 @@ const riskFlagTypes: Set<string> = new Set([
   'Risk to Prisoner',
   'Risk to Public',
 ])
-const riskController: Controller<typeof routes, void> = {
+const riskController: Controller<
+  readonly [
+    'getRisk',
+    'getRiskFlag',
+    'getRiskFlagSingleNote',
+    'getRiskRemovalFlagSingleNote',
+    'getRemovedRiskFlags',
+    'getRiskPredictorScoresDetail',
+  ],
+  void
+> = {
   getRisk: hmppsAuthClient => {
     return async function getRisk(req, res) {
       const { crn } = req.params as Record<string, string>
@@ -70,7 +71,7 @@ const riskController: Controller<typeof routes, void> = {
       })
       let personRiskFlag = await masClient.getPersonRiskFlag(crn, id)
       const term = 'RoSH'
-      personRiskFlag = findReplace<PersonRiskFlag>({
+      personRiskFlag = findReplace<PersonRiskFlag, RiskFlag>({
         data: personRiskFlag,
         path: ['riskFlag', 'description'],
         find: term,
@@ -123,7 +124,7 @@ const riskController: Controller<typeof routes, void> = {
       })
     }
   },
-  getRemovedRiskFlags: hmppsAuthClient => {
+  getRemovedRiskFlags: _hmppsAuthClient => {
     return async function getRemovedRiskFlags(req, res) {
       const { crn } = req.params as Record<string, string>
       await auditService.sendAuditMessage({
@@ -139,7 +140,7 @@ const riskController: Controller<typeof routes, void> = {
       })
     }
   },
-  getRiskPredictorScoresDetail: hmppsAuthClient => {
+  getRiskPredictorScoresDetail: _hmppsAuthClient => {
     return async function getRiskPredictorScoresDetail(req, res) {
       const { crn } = req.params as Record<string, string>
       await auditService.sendAuditMessage({

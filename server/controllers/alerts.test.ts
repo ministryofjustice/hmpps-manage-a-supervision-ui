@@ -13,7 +13,7 @@ import { UserAlerts } from '../models/Alerts'
 import logger from '../../logger'
 import { checkSendAuditMessage } from './testutils'
 import { SubjectType } from '../middleware/sendAuditMessage'
-import { Mappa, Opd, PersonRiskFlags, RiskFlag } from '../data/model/risk'
+import { Mappa, Opd, PersonRiskFlags, RiskFlag, RiskSummary, RoshRiskWidgetDto } from '../data/model/risk'
 import { PersonSummary } from '../data/model/personalDetails'
 import { toRoshWidget } from '../utils'
 import { RiskRoshScoreMap } from './alerts'
@@ -46,7 +46,7 @@ const mockRoshWidget = {
   overallRisk: 'HIGH',
   assessedOn: '2025-11-19',
   risks: [{ riskTo: 'General Public', community: ['HIGH'], custody: ['MEDIUM'] }],
-} as any
+} as RoshRiskWidgetDto
 
 const defaultPagination = {
   from: '1',
@@ -169,19 +169,7 @@ const mockRisksData = {
     overallRiskLevel: 'LOW',
   },
   assessedOn: '2025-11-19',
-} as any
-
-const mockErrorSummary = {
-  errors: [
-    {
-      text: apiErrors.risks,
-    },
-    { text: 'A different unique error' },
-    {
-      text: 'Risk information from the Assess and plan service is currently unavailable.',
-    },
-  ],
-} as any
+} as RiskSummary
 
 const tokenStore = new TokenStore(null) as jest.Mocked<TokenStore>
 const hmppsAuthClient = new HmppsAuthClient(null) as jest.Mocked<HmppsAuthClient>
@@ -190,7 +178,7 @@ tokenStore.getToken.mockResolvedValue('token-alerts')
 const getUserAlertsSpy = jest
   .spyOn(MasApiClient.prototype, 'getUserAlerts')
   .mockImplementation(() => Promise.resolve(mockUserAlertsWithCrn))
-const getUserAlertNoteSpy = jest
+jest
   .spyOn(MasApiClient.prototype, 'getUserAlertNote')
   .mockImplementation(() => Promise.resolve(mockUserAlertsWithCrn.content[0]))
 const clearAlertsSpy = jest

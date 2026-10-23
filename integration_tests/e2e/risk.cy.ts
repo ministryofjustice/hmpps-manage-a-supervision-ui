@@ -17,6 +17,7 @@ import SentencePage from '../pages/sentence'
 import ActivityLogPage from '../pages/activityLog'
 import CompliancePage from '../pages/compliance'
 import InterventionsPage from '../pages/interventions'
+import { WiremockMapping } from '../utils'
 
 type NavPage =
   | typeof OverviewPage
@@ -29,8 +30,8 @@ type NavPage =
   | typeof InterventionsPage
 
 const mockRiskFlags: RiskFlag[] = (
-  mockRiskData.mappings.find((mapping: any) => mapping.request.urlPattern === '/mas/risk-flags/X000001').response
-    .jsonBody as unknown as { riskFlags: RiskFlag[] }
+  mockRiskData.mappings.find((mapping: WiremockMapping) => mapping.request.urlPattern === '/mas/risk-flags/X000001')
+    .response.jsonBody as unknown as { riskFlags: RiskFlag[] }
 ).riskFlags
 
 interface Args {
@@ -539,8 +540,6 @@ context('Risk', () => {
     cy.visit('/case/X000002/risk', {
       failOnStatusCode: false,
     })
-    const page = new RiskDetailPage()
-
     cy.get(`[data-qa=errors]`).should(
       'contain.text',
       'Risk information from the Assess and plan service is currently unavailable.',

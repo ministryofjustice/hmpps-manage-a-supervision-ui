@@ -8,7 +8,7 @@ import {
   mapAlertsWithApprovedContactDisplayNames,
 } from './contactDisplayNames'
 import { PersonActivity } from '../data/model/activityLog'
-import { PersonAppointment, EnforcementContactsResponse } from '../data/model/schedule'
+import { PersonAppointment, EnforcementContactsResponse, Schedule } from '../data/model/schedule'
 import { UserAlerts } from '../models/Alerts'
 
 describe('contactDisplayNames', () => {
@@ -94,7 +94,7 @@ describe('contactDisplayNames', () => {
       ],
     } as unknown as EnforcementContactsResponse
 
-    const result = mapEnforcementContactsWithApprovedContactDisplayNames(response)
+    mapEnforcementContactsWithApprovedContactDisplayNames(response)
     // TODO: Add assertion
   })
 
@@ -106,7 +106,7 @@ describe('contactDisplayNames', () => {
           { id: 2, type: 'Unknown' },
         ],
       },
-    } as any
+    } as unknown as Schedule
     const result = mapScheduleWithApprovedContactDisplayNames(schedule)
     expect(result.personSchedule.appointments[0].displayName).toBe('Telephone contact from person on probation')
     expect(result.personSchedule.appointments[1].displayName).toBeUndefined()

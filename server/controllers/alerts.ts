@@ -18,8 +18,6 @@ import logger from '../../logger'
 import { apiErrors } from '../properties'
 import sendAuditMessage, { SubjectType } from '../middleware/sendAuditMessage'
 
-const routes = ['getAlerts', 'getAlertNote', 'clearSelectedAlerts'] as const
-
 interface RestClientError {
   status: number
   errors: ErrorSummaryItem[]
@@ -75,7 +73,7 @@ const getRiskRoshScoreMap = async (
         {},
       )
     }
-  } catch (err: any) {
+  } catch (err: unknown) {
     const error = err as Error
     logger.error(error.message)
     masUnavailableError = apiErrors.personRiskFlags
@@ -104,8 +102,8 @@ const getCrnRiskMap = async (alertsData: UserAlertsContent[], arnsClient: ArnsAp
     // promise.all will complete and resolve even if response of any request is a 500 error, so check for error
     const responseErrorIndex = allRiskResponses.findIndex(riskResponse => responseIsError(riskResponse))
     if (responseErrorIndex >= 0) arnsUnavailableError = allRiskResponses[responseErrorIndex].errors[0].text
-  } catch (err: any) {
-    logger.error(err.message)
+  } catch (err: unknown) {
+    if (err instanceof Error) logger.error(err.message)
     arnsUnavailableError = apiErrors.risks
   }
   if (allRiskResponses.length) {
@@ -121,7 +119,7 @@ const getCrnRiskMap = async (alertsData: UserAlertsContent[], arnsClient: ArnsAp
   return { crnToRiskWidgetMap, risksErrors }
 }
 
-const alertsController: Controller<typeof routes, void> = {
+const alertsController: Controller<readonly ['getAlerts', 'getAlertNote', 'clearSelectedAlerts'], void> = {
   getAlerts: hmppsAuthClient => {
     return async function getAlerts(req, res) {
       const { user } = res.locals
